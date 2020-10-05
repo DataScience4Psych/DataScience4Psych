@@ -1,5 +1,5 @@
 --- 
-title: "A Minimal Book Example"
+title: "Data Science for Pychologists"
 author: "S. Mason Garrison"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -34,4 +34,76 @@ To compile this example to PDF, you need XeLaTeX. You are recommended to install
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, dev='pdf')
+mon <- as.Date("2020-08-24")
+cache=F
+number_of_classes=29
+number_of_weeks=15
+advdate <- function(obj, adv, topic = NULL,assignment=NULL) {
+ tmon <- obj + 7*(adv-1)
+ ttue <- obj + 1 + 7*(adv-1)
+ twed <- obj + 2 + 7*(adv-1)
+ tthu <- obj + 3 + 7*(adv-1)
+ tfri <- obj + 4 + 7*(adv-1)
+ tmon <- format(tmon, format="%m/%d")
+ ttue <- format(ttue, format="%m/%d")
+ twed <- format(twed, format="%m/%d")
+ tthu <- format(tthu, format="%m/%d")
+ tfri <- format(tfri, format="%m/%d")
+ zadv <- sprintf("%02d", adv)
+
+ if (is.null(topic)&is.null(assignment)){
+ tmp <- paste("Week ",zadv,sep='',", ", tmon," - ",tfri)
+ } else if(!is.null(assignment)){if(assignment %in% c("Friday","friday","f","fri")){
+  tmp <- paste0(tfri)
+ }else if(assignment %in% c("wednesday","Wednesday","w","wed","W")){
+  tmp <- paste0(twed)
+ } else if(assignment %in% c("monday","Monday","m")){
+  tmp <- paste0(tmon)
+ }
+ }
+ else{ 
+   tmp <- paste("Week ",zadv,sep='',", ", tmon," - ",tfri, " : ", topic[adv])}
+ return(tmp)
+}
+
+####
+#devtools::install_github("crsh/citr")
+library(tidyverse)
+library(citr)
+library(RefManageR)
+
+
+
+#bib <- ReadBib("library.bib")
+#bib <- c(bib, as.BibEntry(citation()))
+#bib[length(bib)]$key = "Rcite"
+
+
+
+
+
+
+
+
+topic=c(
+  "Introduction and What is Personality", 
+  "Research Design in Personality",
+  "Personality Assessment and Testing Controversies",
+  "How do people differ? Trait Approach (Assignment 1)",
+  "Big Five (Test 1)",
+  "Personality over the Lifespan",#  "Spring Break",#  "",
+  "Biological and Genetic Approaches to Psychology", 
+  "Evolutionary Psychology", 
+  "Personality Processes",
+  "The Self  (Test 2)", 
+  "Freud", 
+  "Positive Psychology  (Assignment 2)", 
+  "Cross-Cultural Psychology",
+  "Personality and Health",
+  "Special Topics (Assignment 3)" 
+  )
+```
 ```
