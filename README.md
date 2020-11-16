@@ -1,7 +1,25 @@
-<a alt = "TravisCI Build Status" href="https://travis-ci.org/rstudio-education/stat545"><img src="https://travis-ci.org/rstudio-education/stat545.svg?branch=master" height = 20 /></a>
-<a alt = "Netlify Deployments" href="https://app.netlify.com/sites/stat545-book/deploys"><img src="https://api.netlify.com/api/v1/badges/22cbd49d-9d4d-462f-9d28-a797fa14a11d/deploy-status" height = 20 /></a>
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" height = 20 /></a>
-<a alt = "Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" height = 20 /></a>
+
+
+
+# Class Description:
+
+Data Science for Psychologists (DSP) focuses on the basic principles of data science and links them to psychological methods and open science practices. Data science focuses on exploratory analyses and description, rather than confirmatory analyses and prediction. We'll work our way thru Wickham and Grolemund's R for Data Science text (http://r4ds.had.co.nz/) and develop expertise in tidyverse (https://www.tidyverse.org/). This class emphasizes replication and reproducibility. DSP is a more practical skilled-based class and should be useful to students aiming for academia as well as those interested in industry. 
+
+Both versions of this class cover the same five areas:
+Reproducibility;
+Replication;
+Robust Methods;
+Visualization (if anyone can come up with a word that starts with R...); and
+R, but with different emphases.
+
+In either class, students will have a portfolio on OSF or Github that highlights some of the skills they've developed throughout the course
+
+
+
+
+# Credits
+This book is adapted from a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "[Get Started](https://bookdown.org/yihui/bookdown/get-started.html)" at https://bookdown.org/yihui/bookdown/ for how to compile this example into HTML. You may generate a copy of the book in `bookdown::pdf_book` format by calling `bookdown::render_book('index.Rmd', 'bookdown::pdf_book')`. More detailed instructions are available here https://bookdown.org/yihui/bookdown/build-the-book.html.
+
 
 This bookdown book is a *work in progress*. We'll update this `README` and the repo status when ready! :rocket:
 
