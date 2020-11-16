@@ -1,5 +1,5 @@
 
-Class Description:
+# Class Description:
 
 Data Science for Psychologists (DSP) focuses on the basic principles of data science and links them to psychological methods and open science practices. Data science focuses on exploratory analyses and description, rather than confirmatory analyses and prediction. We'll work our way thru Wickham and Grolemund's R for Data Science text (http://r4ds.had.co.nz/) and develop expertise in tidyverse (https://www.tidyverse.org/). This class emphasizes replication and reproducibility. DSP is a more practical skilled-based class and should be useful to students aiming for academia as well as those interested in industry. 
 
