@@ -2,8 +2,9 @@
 
 
 # Class Description:
+Data Science for Psychologists introduces the principles of . These have real world applications in any psychological discipline, from visualizing neural networks to tracking eye saccades and quantifying the effects of socioeconomic status and vaccination rates
 
-Data Science for Psychologists (DSP) focuses on the basic principles of data science and links them to psychological methods and open science practices. Data science focuses on exploratory analyses and description, rather than confirmatory analyses and prediction. We'll work our way thru Wickham and Grolemund's R for Data Science text (http://r4ds.had.co.nz/) and develop expertise in tidyverse (https://www.tidyverse.org/). This class emphasizes replication and reproducibility. DSP is a more practical skilled-based class and should be useful to students aiming for academia as well as those interested in industry. 
+Data Science for Psychologists (DSP) introduces on the principles of data science, including data wrangling, modeling, visualization, and communication. In this class, we link those principles to psychological methods and open science practices by emphasizing exploratory analyses and description, rather than confirmatory analyses and prediction. We'll work our way thru Wickham and Grolemund's R for Data Science text (http://r4ds.had.co.nz/) and develop expertise in tidyverse (https://www.tidyverse.org/). This class emphasizes replication and reproducibility. DSP is a practical skilled-based class and should be useful to students aiming for academia as well as those interested in industry. Applications of these methods can be applied to a full range of psychological areas, including perception (e.g, eye-tracking data), neuroscience (e.g., visualizing neural networks), and individual differences (e.g., valence analysis).
 
 This class covers the five areas:
 + Reproducibility;
