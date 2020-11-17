@@ -29,4 +29,6 @@ This course is adapted from the following sources:
 + Computing for the Social Sciences (https://cfss.uchicago.edu/)
 
 
-This bookdown book is a *work in progress*. We'll update this `README` and the repo status when ready! :rocket:
+# License
+
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
