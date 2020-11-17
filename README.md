@@ -10,7 +10,7 @@ This class covers the five areas:
 + Replication;
 + Robust Methods;
 + Visualization (if anyone can come up with a word that starts with R...); and
-+ R, but with different emphases.
++ R.
 
 Students will have a portfolio on OSF or Github that highlights some of the skills they've developed throughout the course
 
