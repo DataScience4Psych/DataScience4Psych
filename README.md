@@ -20,9 +20,13 @@ Students will have a portfolio on OSF or Github that highlights some of the skil
 # Credits
 This course is adapted from the following sources: 
 
-a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown).
++ a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown);
 
-Stat545
++ Stat545 (https://github.com/rstudio-education/stat545);
+
++ Data Science Box (http://www.datasciencebox.org);
+
++ Computing for the Social Sciences (https://cfss.uchicago.edu/)
 
 
 This bookdown book is a *work in progress*. We'll update this `README` and the repo status when ready! :rocket:
