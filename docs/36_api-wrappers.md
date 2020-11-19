@@ -274,7 +274,7 @@ searchplos("materials_and_methods:France", fl = "title, materials_and_methods")
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1    15962     0
+#> 1    15968     0
 #> 
 #> $data
 #> # A tibble: 10 x 2
@@ -299,7 +299,7 @@ searchplos("materials_and_methods:study site", fl = "title, materials_and_method
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1   111289     0
+#> 1   111355     0
 #> 
 #> $data
 #> # A tibble: 10 x 2
@@ -324,7 +324,7 @@ searchplos("*:*", fl = "id")
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1  2454458     0
+#> 1  2456174     0
 #> 
 #> $data
 #> # A tibble: 10 x 1

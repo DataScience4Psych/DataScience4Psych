@@ -8,7 +8,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jvpnajqotv .gt_table {
+#yvslhnptyh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -33,7 +33,7 @@
   border-left-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_heading {
+#yvslhnptyh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -45,7 +45,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_title {
+#yvslhnptyh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -55,7 +55,7 @@
   border-bottom-width: 0;
 }
 
-#jvpnajqotv .gt_subtitle {
+#yvslhnptyh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -65,13 +65,13 @@
   border-top-width: 0;
 }
 
-#jvpnajqotv .gt_bottom_border {
+#yvslhnptyh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_col_headings {
+#yvslhnptyh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -86,7 +86,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_col_heading {
+#yvslhnptyh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -106,7 +106,7 @@
   overflow-x: hidden;
 }
 
-#jvpnajqotv .gt_column_spanner_outer {
+#yvslhnptyh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -118,15 +118,15 @@
   padding-right: 4px;
 }
 
-#jvpnajqotv .gt_column_spanner_outer:first-child {
+#yvslhnptyh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jvpnajqotv .gt_column_spanner_outer:last-child {
+#yvslhnptyh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jvpnajqotv .gt_column_spanner {
+#yvslhnptyh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -138,7 +138,7 @@
   width: 100%;
 }
 
-#jvpnajqotv .gt_group_heading {
+#yvslhnptyh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -160,7 +160,7 @@
   vertical-align: middle;
 }
 
-#jvpnajqotv .gt_empty_group_heading {
+#yvslhnptyh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -175,15 +175,15 @@
   vertical-align: middle;
 }
 
-#jvpnajqotv .gt_from_md > :first-child {
+#yvslhnptyh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jvpnajqotv .gt_from_md > :last-child {
+#yvslhnptyh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jvpnajqotv .gt_row {
+#yvslhnptyh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -202,7 +202,7 @@
   overflow-x: hidden;
 }
 
-#jvpnajqotv .gt_stub {
+#yvslhnptyh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -214,7 +214,7 @@
   padding-left: 12px;
 }
 
-#jvpnajqotv .gt_summary_row {
+#yvslhnptyh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -224,7 +224,7 @@
   padding-right: 5px;
 }
 
-#jvpnajqotv .gt_first_summary_row {
+#yvslhnptyh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -234,7 +234,7 @@
   border-top-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_grand_summary_row {
+#yvslhnptyh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -244,7 +244,7 @@
   padding-right: 5px;
 }
 
-#jvpnajqotv .gt_first_grand_summary_row {
+#yvslhnptyh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -254,11 +254,11 @@
   border-top-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_striped {
+#yvslhnptyh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jvpnajqotv .gt_table_body {
+#yvslhnptyh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -267,7 +267,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_footnotes {
+#yvslhnptyh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -281,13 +281,13 @@
   border-right-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_footnote {
+#yvslhnptyh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jvpnajqotv .gt_sourcenotes {
+#yvslhnptyh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -301,46 +301,46 @@
   border-right-color: #D3D3D3;
 }
 
-#jvpnajqotv .gt_sourcenote {
+#yvslhnptyh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jvpnajqotv .gt_left {
+#yvslhnptyh .gt_left {
   text-align: left;
 }
 
-#jvpnajqotv .gt_center {
+#yvslhnptyh .gt_center {
   text-align: center;
 }
 
-#jvpnajqotv .gt_right {
+#yvslhnptyh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jvpnajqotv .gt_font_normal {
+#yvslhnptyh .gt_font_normal {
   font-weight: normal;
 }
 
-#jvpnajqotv .gt_font_bold {
+#yvslhnptyh .gt_font_bold {
   font-weight: bold;
 }
 
-#jvpnajqotv .gt_font_italic {
+#yvslhnptyh .gt_font_italic {
   font-style: italic;
 }
 
-#jvpnajqotv .gt_super {
+#yvslhnptyh .gt_super {
   font-size: 65%;
 }
 
-#jvpnajqotv .gt_footnote_marks {
+#yvslhnptyh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jvpnajqotv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="yvslhnptyh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>Deprecated STAT 545 Content</th>
@@ -991,33 +991,6 @@ AFAIK, to do that in a slick automatic way across an entire repo/site, you need 
 <!--Original content: https://stat545.com/bit003_api-key-env-var.html-->
 
 This can be found [here](https://happygitwithr.com/credential-caching.html).
-
-## Data Carpentry lesson on tidy data {#data-carp-tidy-data}
-
-<!--Original content: https://stat545.com/bit002_tidying-lotr-data.html-->
-
-*A lesson I contributed to [Data Carpentry](https://software-carpentry.org/blog/2014/05/our-first-data-carpentry-workshop.html) on tidying data.*
-
-This is a lesson on tidying data. Specifically, what to do when a conceptual variable is spread out over 2 or more variables in a data frame.
-
-Data used: words spoken by characters of different races and gender in the Lord of the Rings movie trilogy
-
-* [Directory of this lesson](https://github.com/datacarpentry/datacarpentry/tree/master/lessons/tidy-data) in the Data Carpentry GitHub repo.
-* [01-intro](https://github.com/datacarpentry/datacarpentry/blob/master/lessons/tidy-data/01-intro.md) shows untidy and tidy data. Then we demonstrate how tidy data is more useful for analysis and visualization. Includes references, resources, and exercises.
-* [02-tidy](https://github.com/datacarpentry/datacarpentry/blob/master/lessons/tidy-data/02-tidy.md) shows __how__ to tidy data, using `gather()` from the tidyr package. Includes references, resources, and exercises.
-* [03-tidy-bonus-content](https://github.com/datacarpentry/datacarpentry/blob/master/lessons/tidy-data/03-tidy-bonus-content.md) is not part of the lesson but may be useful as learners try to apply the principles of tidy data in more general settings. Includes links to packages used.
-
-Learner-facing dependencies:
-
-* Files in the `tidy-data/` sub-directory of the Data Carpentry `data/` directory.
-* tidyr package (only true dependency).
-* ggplot2 is used for illustration but is not mission critical. 
-* dplyr and reshape2 are used in the bonus content.
-
-Instructor dependencies:
-
-* curl if you execute the code to grab the Lord of the Rings data used in examples from GitHub. Note that the files are also included in the `datacarpentry/data/tidy-data/` directory, so data download is avoidable.
-* rmarkdown, knitr, and xtable if you want to compile the `Rmd` to `md` and `html`.
 
 
 
