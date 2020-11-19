@@ -39,12 +39,12 @@ The main package we will be using is [readr][readr-web], which provides drop-in 
 
 ```r
 library(tidyverse)
-#> -- Attaching packages ------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
 #> v ggplot2 3.3.2     v purrr   0.3.4
-#> v tibble  3.0.3     v dplyr   1.0.2
+#> v tibble  3.0.4     v dplyr   1.0.2
 #> v tidyr   1.1.2     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.5.0
-#> -- Conflicts ---------------------------- tidyverse_conflicts() --
+#> v readr   1.4.0     v forcats 0.5.0
+#> -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ```
@@ -57,7 +57,7 @@ We could load the data from the package as usual, but instead we will load it fr
 ```r
 library(fs)
 (gap_tsv <- path_package("gapminder", "extdata", "gapminder.tsv"))
-#> C:/Users/smaso/Documents/R/win-library/4.0/gapminder/extdata/gapminder.tsv
+#> C:/Program Files/R/R-4.0.3/library/gapminder/extdata/gapminder.tsv
 ```
 
 ## Bring rectangular data in
@@ -67,7 +67,8 @@ The workhorse data import function of readr is `read_delim()`. Here we'll use a 
 
 ```r
 gapminder <- read_tsv(gap_tsv)
-#> Parsed with column specification:
+#> 
+#> -- Column specification --------------------------------------------------------
 #> cols(
 #>   country = col_character(),
 #>   continent = col_character(),
@@ -283,7 +284,8 @@ head(gap_life_exp) # will cause error! proving gap_life_exp is really gone
 #> Error in head(gap_life_exp): object 'gap_life_exp' not found
 gap_via_csv <- read_csv("gap_life_exp.csv") %>% 
   mutate(country = factor(country))
-#> Parsed with column specification:
+#> 
+#> -- Column specification --------------------------------------------------------
 #> cols(
 #>   country = col_character(),
 #>   continent = col_character(),
