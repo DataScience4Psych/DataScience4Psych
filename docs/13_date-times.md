@@ -42,9 +42,9 @@ Use base `Sys.Date()` or lubridate's `today()` to get today's date, without any 
 
 ```r
 Sys.Date()
-#> [1] "2020-11-18"
+#> [1] "2020-11-19"
 today()
-#> [1] "2020-11-18"
+#> [1] "2020-11-19"
 ```
 
 They both give you something of class `Date`.
@@ -52,11 +52,11 @@ They both give you something of class `Date`.
 
 ```r
 str(Sys.Date())
-#>  Date[1:1], format: "2020-11-18"
+#>  Date[1:1], format: "2020-11-19"
 class(Sys.Date())
 #> [1] "Date"
 str(today())
-#>  Date[1:1], format: "2020-11-18"
+#>  Date[1:1], format: "2020-11-19"
 class(today())
 #> [1] "Date"
 ```
@@ -66,9 +66,9 @@ Use base `Sys.time()` or lubridate's `now()` to get RIGHT NOW, meaning the date 
 
 ```r
 Sys.time()
-#> [1] "2020-11-18 12:55:22 EST"
+#> [1] "2020-11-19 15:13:51 EST"
 now()
-#> [1] "2020-11-18 12:55:22 EST"
+#> [1] "2020-11-19 15:13:51 EST"
 ```
 
 They both give you something of class `POSIXct` in R jargon.
@@ -76,11 +76,11 @@ They both give you something of class `POSIXct` in R jargon.
 
 ```r
 str(Sys.time())
-#>  POSIXct[1:1], format: "2020-11-18 12:55:22"
+#>  POSIXct[1:1], format: "2020-11-19 15:13:51"
 class(Sys.time())
 #> [1] "POSIXct" "POSIXt"
 str(now())
-#>  POSIXct[1:1], format: "2020-11-18 12:55:22"
+#>  POSIXct[1:1], format: "2020-11-19 15:13:51"
 class(now())
 #> [1] "POSIXct" "POSIXt"
 ```
