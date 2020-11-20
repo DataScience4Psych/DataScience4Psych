@@ -41,9 +41,6 @@ A God-awful and powerful language for expressing patterns to match in text or fo
   - Standardized on [ICU regular expressions][icu-regex], so you can stop toggling `perl = TRUE/FALSE` at random.
   - Results come back in a form that is much friendlier for downstream work.
 * The [Strings chapter][r4ds-strings] of [R for Data Science][r4ds] [@wickham2016] is a great resource.
-* Older STAT 545 lessons on regular expressions have some excellent content. This lesson draws on them, but makes more rigorous use of stringr and uses example data that is easier to support long-term.
-  - [2014 Intro to regular expressions](#oldies) by TA Gloria Li (Appendix \@ref(oldies)).
-  - [2015 Regular expressions and character data in R](#oldies) by TA Kieran Samuk (Appendix \@ref(oldies)).
 * RStudio Cheat Sheet on [Regular Expressions in R][rstudio-regex-cheatsheet].
 * Regex testers:
   - [regex101.com][regex101]
@@ -69,12 +66,12 @@ A God-awful and powerful language for expressing patterns to match in text or fo
 
 ```r
 library(tidyverse)
-#> -- Attaching packages ------------------------------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages -------------- tidyverse 1.3.0 --
 #> v ggplot2 3.3.2     v purrr   0.3.4
 #> v tibble  3.0.3     v dplyr   1.0.2
 #> v tidyr   1.1.2     v stringr 1.4.0
 #> v readr   1.3.1     v forcats 0.5.0
-#> -- Conflicts ---------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts ----------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ```
