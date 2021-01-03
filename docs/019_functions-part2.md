@@ -135,7 +135,7 @@ qdiff1
 #>   the_quantiles <- quantile(x = x, probs = probs)
 #>   max(the_quantiles) - min(the_quantiles)
 #> }
-#> <bytecode: 0x0000000018f2e598>
+#> <bytecode: 0x000000001aedecb8>
 ```
 
 We took this detour so you could see there is no *structural* relationship between my arguments (`x` and `probs`) and those of `quantile()` (also `x` and `probs`). The similarity or equivalence of the names __accomplishes nothing__ as far as R is concerned; it is solely for the benefit of humans reading, writing, and using the code. Which is very important!
@@ -212,7 +212,7 @@ qdiff3
 #>   the_quantiles <- quantile(x, probs)
 #>   max(the_quantiles) - min(the_quantiles)
 #> }
-#> <bytecode: 0x0000000019cf6e18>
+#> <bytecode: 0x000000001bca7538>
 ```
 
 What we've accomplished:
