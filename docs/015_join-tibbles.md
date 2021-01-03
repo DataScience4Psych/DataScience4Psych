@@ -82,7 +82,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rerdbjtrzq .gt_table {
+#bypoguuhgt .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -107,7 +107,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-left-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_heading {
+#bypoguuhgt .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -119,7 +119,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_title {
+#bypoguuhgt .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -129,7 +129,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-width: 0;
 }
 
-#rerdbjtrzq .gt_subtitle {
+#bypoguuhgt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -139,13 +139,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-width: 0;
 }
 
-#rerdbjtrzq .gt_bottom_border {
+#bypoguuhgt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_col_headings {
+#bypoguuhgt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -160,7 +160,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_col_heading {
+#bypoguuhgt .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -180,7 +180,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#rerdbjtrzq .gt_column_spanner_outer {
+#bypoguuhgt .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -192,15 +192,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 4px;
 }
 
-#rerdbjtrzq .gt_column_spanner_outer:first-child {
+#bypoguuhgt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rerdbjtrzq .gt_column_spanner_outer:last-child {
+#bypoguuhgt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rerdbjtrzq .gt_column_spanner {
+#bypoguuhgt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -212,7 +212,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   width: 100%;
 }
 
-#rerdbjtrzq .gt_group_heading {
+#bypoguuhgt .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -234,7 +234,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#rerdbjtrzq .gt_empty_group_heading {
+#bypoguuhgt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -249,15 +249,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#rerdbjtrzq .gt_from_md > :first-child {
+#bypoguuhgt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rerdbjtrzq .gt_from_md > :last-child {
+#bypoguuhgt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rerdbjtrzq .gt_row {
+#bypoguuhgt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -276,7 +276,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#rerdbjtrzq .gt_stub {
+#bypoguuhgt .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -288,7 +288,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-left: 12px;
 }
 
-#rerdbjtrzq .gt_summary_row {
+#bypoguuhgt .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -298,7 +298,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#rerdbjtrzq .gt_first_summary_row {
+#bypoguuhgt .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -308,7 +308,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_grand_summary_row {
+#bypoguuhgt .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -318,7 +318,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#rerdbjtrzq .gt_first_grand_summary_row {
+#bypoguuhgt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -328,11 +328,11 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_striped {
+#bypoguuhgt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rerdbjtrzq .gt_table_body {
+#bypoguuhgt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -341,7 +341,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_footnotes {
+#bypoguuhgt .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -355,13 +355,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_footnote {
+#bypoguuhgt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#rerdbjtrzq .gt_sourcenotes {
+#bypoguuhgt .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -375,46 +375,46 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#rerdbjtrzq .gt_sourcenote {
+#bypoguuhgt .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#rerdbjtrzq .gt_left {
+#bypoguuhgt .gt_left {
   text-align: left;
 }
 
-#rerdbjtrzq .gt_center {
+#bypoguuhgt .gt_center {
   text-align: center;
 }
 
-#rerdbjtrzq .gt_right {
+#bypoguuhgt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rerdbjtrzq .gt_font_normal {
+#bypoguuhgt .gt_font_normal {
   font-weight: normal;
 }
 
-#rerdbjtrzq .gt_font_bold {
+#bypoguuhgt .gt_font_bold {
   font-weight: bold;
 }
 
-#rerdbjtrzq .gt_font_italic {
+#bypoguuhgt .gt_font_italic {
   font-style: italic;
 }
 
-#rerdbjtrzq .gt_super {
+#bypoguuhgt .gt_super {
   font-size: 65%;
 }
 
-#rerdbjtrzq .gt_footnote_marks {
+#bypoguuhgt .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rerdbjtrzq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="bypoguuhgt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -484,7 +484,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pdcvxciqdl .gt_table {
+#llheatzwht .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -509,7 +509,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-left-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_heading {
+#llheatzwht .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -521,7 +521,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_title {
+#llheatzwht .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -531,7 +531,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-width: 0;
 }
 
-#pdcvxciqdl .gt_subtitle {
+#llheatzwht .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -541,13 +541,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-width: 0;
 }
 
-#pdcvxciqdl .gt_bottom_border {
+#llheatzwht .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_col_headings {
+#llheatzwht .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -562,7 +562,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_col_heading {
+#llheatzwht .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -582,7 +582,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#pdcvxciqdl .gt_column_spanner_outer {
+#llheatzwht .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -594,15 +594,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 4px;
 }
 
-#pdcvxciqdl .gt_column_spanner_outer:first-child {
+#llheatzwht .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pdcvxciqdl .gt_column_spanner_outer:last-child {
+#llheatzwht .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pdcvxciqdl .gt_column_spanner {
+#llheatzwht .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -614,7 +614,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   width: 100%;
 }
 
-#pdcvxciqdl .gt_group_heading {
+#llheatzwht .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -636,7 +636,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#pdcvxciqdl .gt_empty_group_heading {
+#llheatzwht .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -651,15 +651,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#pdcvxciqdl .gt_from_md > :first-child {
+#llheatzwht .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pdcvxciqdl .gt_from_md > :last-child {
+#llheatzwht .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pdcvxciqdl .gt_row {
+#llheatzwht .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -678,7 +678,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#pdcvxciqdl .gt_stub {
+#llheatzwht .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -690,7 +690,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-left: 12px;
 }
 
-#pdcvxciqdl .gt_summary_row {
+#llheatzwht .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -700,7 +700,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#pdcvxciqdl .gt_first_summary_row {
+#llheatzwht .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -710,7 +710,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_grand_summary_row {
+#llheatzwht .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -720,7 +720,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#pdcvxciqdl .gt_first_grand_summary_row {
+#llheatzwht .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -730,11 +730,11 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_striped {
+#llheatzwht .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pdcvxciqdl .gt_table_body {
+#llheatzwht .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -743,7 +743,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_footnotes {
+#llheatzwht .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -757,13 +757,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_footnote {
+#llheatzwht .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pdcvxciqdl .gt_sourcenotes {
+#llheatzwht .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -777,46 +777,46 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#pdcvxciqdl .gt_sourcenote {
+#llheatzwht .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pdcvxciqdl .gt_left {
+#llheatzwht .gt_left {
   text-align: left;
 }
 
-#pdcvxciqdl .gt_center {
+#llheatzwht .gt_center {
   text-align: center;
 }
 
-#pdcvxciqdl .gt_right {
+#llheatzwht .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pdcvxciqdl .gt_font_normal {
+#llheatzwht .gt_font_normal {
   font-weight: normal;
 }
 
-#pdcvxciqdl .gt_font_bold {
+#llheatzwht .gt_font_bold {
   font-weight: bold;
 }
 
-#pdcvxciqdl .gt_font_italic {
+#llheatzwht .gt_font_italic {
   font-style: italic;
 }
 
-#pdcvxciqdl .gt_super {
+#llheatzwht .gt_super {
   font-size: 65%;
 }
 
-#pdcvxciqdl .gt_footnote_marks {
+#llheatzwht .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pdcvxciqdl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="llheatzwht" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -854,7 +854,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nsebwygrut .gt_table {
+#vddyxpgsfx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -879,7 +879,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-left-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_heading {
+#vddyxpgsfx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -891,7 +891,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_title {
+#vddyxpgsfx .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -901,7 +901,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-width: 0;
 }
 
-#nsebwygrut .gt_subtitle {
+#vddyxpgsfx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -911,13 +911,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-width: 0;
 }
 
-#nsebwygrut .gt_bottom_border {
+#vddyxpgsfx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_col_headings {
+#vddyxpgsfx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -932,7 +932,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_col_heading {
+#vddyxpgsfx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -952,7 +952,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#nsebwygrut .gt_column_spanner_outer {
+#vddyxpgsfx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -964,15 +964,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 4px;
 }
 
-#nsebwygrut .gt_column_spanner_outer:first-child {
+#vddyxpgsfx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nsebwygrut .gt_column_spanner_outer:last-child {
+#vddyxpgsfx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nsebwygrut .gt_column_spanner {
+#vddyxpgsfx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -984,7 +984,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   width: 100%;
 }
 
-#nsebwygrut .gt_group_heading {
+#vddyxpgsfx .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1006,7 +1006,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#nsebwygrut .gt_empty_group_heading {
+#vddyxpgsfx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1021,15 +1021,15 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   vertical-align: middle;
 }
 
-#nsebwygrut .gt_from_md > :first-child {
+#vddyxpgsfx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nsebwygrut .gt_from_md > :last-child {
+#vddyxpgsfx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nsebwygrut .gt_row {
+#vddyxpgsfx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1048,7 +1048,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   overflow-x: hidden;
 }
 
-#nsebwygrut .gt_stub {
+#vddyxpgsfx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1060,7 +1060,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-left: 12px;
 }
 
-#nsebwygrut .gt_summary_row {
+#vddyxpgsfx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1070,7 +1070,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#nsebwygrut .gt_first_summary_row {
+#vddyxpgsfx .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1080,7 +1080,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_grand_summary_row {
+#vddyxpgsfx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1090,7 +1090,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   padding-right: 5px;
 }
 
-#nsebwygrut .gt_first_grand_summary_row {
+#vddyxpgsfx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1100,11 +1100,11 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-top-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_striped {
+#vddyxpgsfx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nsebwygrut .gt_table_body {
+#vddyxpgsfx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1113,7 +1113,7 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-bottom-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_footnotes {
+#vddyxpgsfx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1127,13 +1127,13 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_footnote {
+#vddyxpgsfx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#nsebwygrut .gt_sourcenotes {
+#vddyxpgsfx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1147,46 +1147,46 @@ We lose Hellboy in the join because, although he appears in `x = superheroes`, h
   border-right-color: #D3D3D3;
 }
 
-#nsebwygrut .gt_sourcenote {
+#vddyxpgsfx .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#nsebwygrut .gt_left {
+#vddyxpgsfx .gt_left {
   text-align: left;
 }
 
-#nsebwygrut .gt_center {
+#vddyxpgsfx .gt_center {
   text-align: center;
 }
 
-#nsebwygrut .gt_right {
+#vddyxpgsfx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nsebwygrut .gt_font_normal {
+#vddyxpgsfx .gt_font_normal {
   font-weight: normal;
 }
 
-#nsebwygrut .gt_font_bold {
+#vddyxpgsfx .gt_font_bold {
   font-weight: bold;
 }
 
-#nsebwygrut .gt_font_italic {
+#vddyxpgsfx .gt_font_italic {
   font-style: italic;
 }
 
-#nsebwygrut .gt_super {
+#vddyxpgsfx .gt_super {
   font-size: 65%;
 }
 
-#nsebwygrut .gt_footnote_marks {
+#vddyxpgsfx .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="nsebwygrut" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="vddyxpgsfx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>inner_join(x = superheroes, y = publishers)</th>
@@ -1287,7 +1287,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yyooenyqjl .gt_table {
+#vbqpcksyqm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -1312,7 +1312,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-left-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_heading {
+#vbqpcksyqm .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -1324,7 +1324,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_title {
+#vbqpcksyqm .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -1334,7 +1334,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-width: 0;
 }
 
-#yyooenyqjl .gt_subtitle {
+#vbqpcksyqm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1344,13 +1344,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-width: 0;
 }
 
-#yyooenyqjl .gt_bottom_border {
+#vbqpcksyqm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_col_headings {
+#vbqpcksyqm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1365,7 +1365,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_col_heading {
+#vbqpcksyqm .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -1385,7 +1385,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#yyooenyqjl .gt_column_spanner_outer {
+#vbqpcksyqm .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -1397,15 +1397,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 4px;
 }
 
-#yyooenyqjl .gt_column_spanner_outer:first-child {
+#vbqpcksyqm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yyooenyqjl .gt_column_spanner_outer:last-child {
+#vbqpcksyqm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yyooenyqjl .gt_column_spanner {
+#vbqpcksyqm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1417,7 +1417,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   width: 100%;
 }
 
-#yyooenyqjl .gt_group_heading {
+#vbqpcksyqm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -1439,7 +1439,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#yyooenyqjl .gt_empty_group_heading {
+#vbqpcksyqm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -1454,15 +1454,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#yyooenyqjl .gt_from_md > :first-child {
+#vbqpcksyqm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yyooenyqjl .gt_from_md > :last-child {
+#vbqpcksyqm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yyooenyqjl .gt_row {
+#vbqpcksyqm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1481,7 +1481,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#yyooenyqjl .gt_stub {
+#vbqpcksyqm .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -1493,7 +1493,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-left: 12px;
 }
 
-#yyooenyqjl .gt_summary_row {
+#vbqpcksyqm .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -1503,7 +1503,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#yyooenyqjl .gt_first_summary_row {
+#vbqpcksyqm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1513,7 +1513,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_grand_summary_row {
+#vbqpcksyqm .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -1523,7 +1523,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#yyooenyqjl .gt_first_grand_summary_row {
+#vbqpcksyqm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1533,11 +1533,11 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_striped {
+#vbqpcksyqm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yyooenyqjl .gt_table_body {
+#vbqpcksyqm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1546,7 +1546,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_footnotes {
+#vbqpcksyqm .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -1560,13 +1560,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_footnote {
+#vbqpcksyqm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#yyooenyqjl .gt_sourcenotes {
+#vbqpcksyqm .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -1580,46 +1580,46 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#yyooenyqjl .gt_sourcenote {
+#vbqpcksyqm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#yyooenyqjl .gt_left {
+#vbqpcksyqm .gt_left {
   text-align: left;
 }
 
-#yyooenyqjl .gt_center {
+#vbqpcksyqm .gt_center {
   text-align: center;
 }
 
-#yyooenyqjl .gt_right {
+#vbqpcksyqm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yyooenyqjl .gt_font_normal {
+#vbqpcksyqm .gt_font_normal {
   font-weight: normal;
 }
 
-#yyooenyqjl .gt_font_bold {
+#vbqpcksyqm .gt_font_bold {
   font-weight: bold;
 }
 
-#yyooenyqjl .gt_font_italic {
+#vbqpcksyqm .gt_font_italic {
   font-style: italic;
 }
 
-#yyooenyqjl .gt_super {
+#vbqpcksyqm .gt_super {
   font-size: 65%;
 }
 
-#yyooenyqjl .gt_footnote_marks {
+#vbqpcksyqm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yyooenyqjl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="vbqpcksyqm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -1689,7 +1689,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jfqutgfrca .gt_table {
+#gnpkgzjpcr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -1714,7 +1714,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-left-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_heading {
+#gnpkgzjpcr .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -1726,7 +1726,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_title {
+#gnpkgzjpcr .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -1736,7 +1736,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-width: 0;
 }
 
-#jfqutgfrca .gt_subtitle {
+#gnpkgzjpcr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1746,13 +1746,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-width: 0;
 }
 
-#jfqutgfrca .gt_bottom_border {
+#gnpkgzjpcr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_col_headings {
+#gnpkgzjpcr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1767,7 +1767,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_col_heading {
+#gnpkgzjpcr .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -1787,7 +1787,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#jfqutgfrca .gt_column_spanner_outer {
+#gnpkgzjpcr .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -1799,15 +1799,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 4px;
 }
 
-#jfqutgfrca .gt_column_spanner_outer:first-child {
+#gnpkgzjpcr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jfqutgfrca .gt_column_spanner_outer:last-child {
+#gnpkgzjpcr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jfqutgfrca .gt_column_spanner {
+#gnpkgzjpcr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1819,7 +1819,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   width: 100%;
 }
 
-#jfqutgfrca .gt_group_heading {
+#gnpkgzjpcr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -1841,7 +1841,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#jfqutgfrca .gt_empty_group_heading {
+#gnpkgzjpcr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -1856,15 +1856,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#jfqutgfrca .gt_from_md > :first-child {
+#gnpkgzjpcr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jfqutgfrca .gt_from_md > :last-child {
+#gnpkgzjpcr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jfqutgfrca .gt_row {
+#gnpkgzjpcr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1883,7 +1883,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#jfqutgfrca .gt_stub {
+#gnpkgzjpcr .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -1895,7 +1895,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-left: 12px;
 }
 
-#jfqutgfrca .gt_summary_row {
+#gnpkgzjpcr .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -1905,7 +1905,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#jfqutgfrca .gt_first_summary_row {
+#gnpkgzjpcr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1915,7 +1915,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_grand_summary_row {
+#gnpkgzjpcr .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -1925,7 +1925,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#jfqutgfrca .gt_first_grand_summary_row {
+#gnpkgzjpcr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1935,11 +1935,11 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_striped {
+#gnpkgzjpcr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jfqutgfrca .gt_table_body {
+#gnpkgzjpcr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1948,7 +1948,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_footnotes {
+#gnpkgzjpcr .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -1962,13 +1962,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_footnote {
+#gnpkgzjpcr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jfqutgfrca .gt_sourcenotes {
+#gnpkgzjpcr .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -1982,46 +1982,46 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#jfqutgfrca .gt_sourcenote {
+#gnpkgzjpcr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jfqutgfrca .gt_left {
+#gnpkgzjpcr .gt_left {
   text-align: left;
 }
 
-#jfqutgfrca .gt_center {
+#gnpkgzjpcr .gt_center {
   text-align: center;
 }
 
-#jfqutgfrca .gt_right {
+#gnpkgzjpcr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jfqutgfrca .gt_font_normal {
+#gnpkgzjpcr .gt_font_normal {
   font-weight: normal;
 }
 
-#jfqutgfrca .gt_font_bold {
+#gnpkgzjpcr .gt_font_bold {
   font-weight: bold;
 }
 
-#jfqutgfrca .gt_font_italic {
+#gnpkgzjpcr .gt_font_italic {
   font-style: italic;
 }
 
-#jfqutgfrca .gt_super {
+#gnpkgzjpcr .gt_super {
   font-size: 65%;
 }
 
-#jfqutgfrca .gt_footnote_marks {
+#gnpkgzjpcr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jfqutgfrca" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="gnpkgzjpcr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -2059,7 +2059,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#royllzqncr .gt_table {
+#enuxzkimea .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -2084,7 +2084,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-left-color: #D3D3D3;
 }
 
-#royllzqncr .gt_heading {
+#enuxzkimea .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2096,7 +2096,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#royllzqncr .gt_title {
+#enuxzkimea .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -2106,7 +2106,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-width: 0;
 }
 
-#royllzqncr .gt_subtitle {
+#enuxzkimea .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2116,13 +2116,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-width: 0;
 }
 
-#royllzqncr .gt_bottom_border {
+#enuxzkimea .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#royllzqncr .gt_col_headings {
+#enuxzkimea .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2137,7 +2137,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#royllzqncr .gt_col_heading {
+#enuxzkimea .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -2157,7 +2157,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#royllzqncr .gt_column_spanner_outer {
+#enuxzkimea .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -2169,15 +2169,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 4px;
 }
 
-#royllzqncr .gt_column_spanner_outer:first-child {
+#enuxzkimea .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#royllzqncr .gt_column_spanner_outer:last-child {
+#enuxzkimea .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#royllzqncr .gt_column_spanner {
+#enuxzkimea .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2189,7 +2189,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   width: 100%;
 }
 
-#royllzqncr .gt_group_heading {
+#enuxzkimea .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2211,7 +2211,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#royllzqncr .gt_empty_group_heading {
+#enuxzkimea .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2226,15 +2226,15 @@ We get a similar result as with `inner_join()` but the join result contains only
   vertical-align: middle;
 }
 
-#royllzqncr .gt_from_md > :first-child {
+#enuxzkimea .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#royllzqncr .gt_from_md > :last-child {
+#enuxzkimea .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#royllzqncr .gt_row {
+#enuxzkimea .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2253,7 +2253,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   overflow-x: hidden;
 }
 
-#royllzqncr .gt_stub {
+#enuxzkimea .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2265,7 +2265,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-left: 12px;
 }
 
-#royllzqncr .gt_summary_row {
+#enuxzkimea .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2275,7 +2275,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#royllzqncr .gt_first_summary_row {
+#enuxzkimea .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2285,7 +2285,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#royllzqncr .gt_grand_summary_row {
+#enuxzkimea .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2295,7 +2295,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   padding-right: 5px;
 }
 
-#royllzqncr .gt_first_grand_summary_row {
+#enuxzkimea .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2305,11 +2305,11 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-top-color: #D3D3D3;
 }
 
-#royllzqncr .gt_striped {
+#enuxzkimea .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#royllzqncr .gt_table_body {
+#enuxzkimea .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2318,7 +2318,7 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-bottom-color: #D3D3D3;
 }
 
-#royllzqncr .gt_footnotes {
+#enuxzkimea .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2332,13 +2332,13 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#royllzqncr .gt_footnote {
+#enuxzkimea .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#royllzqncr .gt_sourcenotes {
+#enuxzkimea .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2352,46 +2352,46 @@ We get a similar result as with `inner_join()` but the join result contains only
   border-right-color: #D3D3D3;
 }
 
-#royllzqncr .gt_sourcenote {
+#enuxzkimea .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#royllzqncr .gt_left {
+#enuxzkimea .gt_left {
   text-align: left;
 }
 
-#royllzqncr .gt_center {
+#enuxzkimea .gt_center {
   text-align: center;
 }
 
-#royllzqncr .gt_right {
+#enuxzkimea .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#royllzqncr .gt_font_normal {
+#enuxzkimea .gt_font_normal {
   font-weight: normal;
 }
 
-#royllzqncr .gt_font_bold {
+#enuxzkimea .gt_font_bold {
   font-weight: bold;
 }
 
-#royllzqncr .gt_font_italic {
+#enuxzkimea .gt_font_italic {
   font-style: italic;
 }
 
-#royllzqncr .gt_super {
+#enuxzkimea .gt_super {
   font-size: 65%;
 }
 
-#royllzqncr .gt_footnote_marks {
+#enuxzkimea .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="royllzqncr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="enuxzkimea" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>semi_join(x = superheroes, y = publishers)</th>
@@ -2485,7 +2485,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pnecobpsfi .gt_table {
+#kiwrvgybmh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -2510,7 +2510,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-left-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_heading {
+#kiwrvgybmh .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -2522,7 +2522,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_title {
+#kiwrvgybmh .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -2532,7 +2532,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-width: 0;
 }
 
-#pnecobpsfi .gt_subtitle {
+#kiwrvgybmh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2542,13 +2542,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-width: 0;
 }
 
-#pnecobpsfi .gt_bottom_border {
+#kiwrvgybmh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_col_headings {
+#kiwrvgybmh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2563,7 +2563,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_col_heading {
+#kiwrvgybmh .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -2583,7 +2583,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#pnecobpsfi .gt_column_spanner_outer {
+#kiwrvgybmh .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -2595,15 +2595,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 4px;
 }
 
-#pnecobpsfi .gt_column_spanner_outer:first-child {
+#kiwrvgybmh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pnecobpsfi .gt_column_spanner_outer:last-child {
+#kiwrvgybmh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pnecobpsfi .gt_column_spanner {
+#kiwrvgybmh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2615,7 +2615,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   width: 100%;
 }
 
-#pnecobpsfi .gt_group_heading {
+#kiwrvgybmh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -2637,7 +2637,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#pnecobpsfi .gt_empty_group_heading {
+#kiwrvgybmh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -2652,15 +2652,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#pnecobpsfi .gt_from_md > :first-child {
+#kiwrvgybmh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pnecobpsfi .gt_from_md > :last-child {
+#kiwrvgybmh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pnecobpsfi .gt_row {
+#kiwrvgybmh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2679,7 +2679,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#pnecobpsfi .gt_stub {
+#kiwrvgybmh .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -2691,7 +2691,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-left: 12px;
 }
 
-#pnecobpsfi .gt_summary_row {
+#kiwrvgybmh .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -2701,7 +2701,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#pnecobpsfi .gt_first_summary_row {
+#kiwrvgybmh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2711,7 +2711,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_grand_summary_row {
+#kiwrvgybmh .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -2721,7 +2721,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#pnecobpsfi .gt_first_grand_summary_row {
+#kiwrvgybmh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2731,11 +2731,11 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_striped {
+#kiwrvgybmh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pnecobpsfi .gt_table_body {
+#kiwrvgybmh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2744,7 +2744,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_footnotes {
+#kiwrvgybmh .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -2758,13 +2758,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_footnote {
+#kiwrvgybmh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pnecobpsfi .gt_sourcenotes {
+#kiwrvgybmh .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -2778,46 +2778,46 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#pnecobpsfi .gt_sourcenote {
+#kiwrvgybmh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pnecobpsfi .gt_left {
+#kiwrvgybmh .gt_left {
   text-align: left;
 }
 
-#pnecobpsfi .gt_center {
+#kiwrvgybmh .gt_center {
   text-align: center;
 }
 
-#pnecobpsfi .gt_right {
+#kiwrvgybmh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pnecobpsfi .gt_font_normal {
+#kiwrvgybmh .gt_font_normal {
   font-weight: normal;
 }
 
-#pnecobpsfi .gt_font_bold {
+#kiwrvgybmh .gt_font_bold {
   font-weight: bold;
 }
 
-#pnecobpsfi .gt_font_italic {
+#kiwrvgybmh .gt_font_italic {
   font-style: italic;
 }
 
-#pnecobpsfi .gt_super {
+#kiwrvgybmh .gt_super {
   font-size: 65%;
 }
 
-#pnecobpsfi .gt_footnote_marks {
+#kiwrvgybmh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pnecobpsfi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="kiwrvgybmh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -2887,7 +2887,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rtxyqlczjd .gt_table {
+#ztrcmhfbhw .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -2912,7 +2912,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-left-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_heading {
+#ztrcmhfbhw .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -2924,7 +2924,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_title {
+#ztrcmhfbhw .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -2934,7 +2934,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-width: 0;
 }
 
-#rtxyqlczjd .gt_subtitle {
+#ztrcmhfbhw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2944,13 +2944,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-width: 0;
 }
 
-#rtxyqlczjd .gt_bottom_border {
+#ztrcmhfbhw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_col_headings {
+#ztrcmhfbhw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2965,7 +2965,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_col_heading {
+#ztrcmhfbhw .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -2985,7 +2985,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#rtxyqlczjd .gt_column_spanner_outer {
+#ztrcmhfbhw .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -2997,15 +2997,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 4px;
 }
 
-#rtxyqlczjd .gt_column_spanner_outer:first-child {
+#ztrcmhfbhw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rtxyqlczjd .gt_column_spanner_outer:last-child {
+#ztrcmhfbhw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rtxyqlczjd .gt_column_spanner {
+#ztrcmhfbhw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3017,7 +3017,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   width: 100%;
 }
 
-#rtxyqlczjd .gt_group_heading {
+#ztrcmhfbhw .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -3039,7 +3039,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#rtxyqlczjd .gt_empty_group_heading {
+#ztrcmhfbhw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -3054,15 +3054,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#rtxyqlczjd .gt_from_md > :first-child {
+#ztrcmhfbhw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rtxyqlczjd .gt_from_md > :last-child {
+#ztrcmhfbhw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rtxyqlczjd .gt_row {
+#ztrcmhfbhw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3081,7 +3081,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#rtxyqlczjd .gt_stub {
+#ztrcmhfbhw .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -3093,7 +3093,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-left: 12px;
 }
 
-#rtxyqlczjd .gt_summary_row {
+#ztrcmhfbhw .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -3103,7 +3103,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#rtxyqlczjd .gt_first_summary_row {
+#ztrcmhfbhw .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3113,7 +3113,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_grand_summary_row {
+#ztrcmhfbhw .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -3123,7 +3123,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#rtxyqlczjd .gt_first_grand_summary_row {
+#ztrcmhfbhw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3133,11 +3133,11 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_striped {
+#ztrcmhfbhw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rtxyqlczjd .gt_table_body {
+#ztrcmhfbhw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3146,7 +3146,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_footnotes {
+#ztrcmhfbhw .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -3160,13 +3160,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_footnote {
+#ztrcmhfbhw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#rtxyqlczjd .gt_sourcenotes {
+#ztrcmhfbhw .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -3180,46 +3180,46 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#rtxyqlczjd .gt_sourcenote {
+#ztrcmhfbhw .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#rtxyqlczjd .gt_left {
+#ztrcmhfbhw .gt_left {
   text-align: left;
 }
 
-#rtxyqlczjd .gt_center {
+#ztrcmhfbhw .gt_center {
   text-align: center;
 }
 
-#rtxyqlczjd .gt_right {
+#ztrcmhfbhw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rtxyqlczjd .gt_font_normal {
+#ztrcmhfbhw .gt_font_normal {
   font-weight: normal;
 }
 
-#rtxyqlczjd .gt_font_bold {
+#ztrcmhfbhw .gt_font_bold {
   font-weight: bold;
 }
 
-#rtxyqlczjd .gt_font_italic {
+#ztrcmhfbhw .gt_font_italic {
   font-style: italic;
 }
 
-#rtxyqlczjd .gt_super {
+#ztrcmhfbhw .gt_super {
   font-size: 65%;
 }
 
-#rtxyqlczjd .gt_footnote_marks {
+#ztrcmhfbhw .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rtxyqlczjd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ztrcmhfbhw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -3257,7 +3257,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#njjvoqghxy .gt_table {
+#leezvbjgkx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -3282,7 +3282,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-left-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_heading {
+#leezvbjgkx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3294,7 +3294,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_title {
+#leezvbjgkx .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -3304,7 +3304,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-width: 0;
 }
 
-#njjvoqghxy .gt_subtitle {
+#leezvbjgkx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3314,13 +3314,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-width: 0;
 }
 
-#njjvoqghxy .gt_bottom_border {
+#leezvbjgkx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_col_headings {
+#leezvbjgkx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3335,7 +3335,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_col_heading {
+#leezvbjgkx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -3355,7 +3355,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#njjvoqghxy .gt_column_spanner_outer {
+#leezvbjgkx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -3367,15 +3367,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 4px;
 }
 
-#njjvoqghxy .gt_column_spanner_outer:first-child {
+#leezvbjgkx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#njjvoqghxy .gt_column_spanner_outer:last-child {
+#leezvbjgkx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#njjvoqghxy .gt_column_spanner {
+#leezvbjgkx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3387,7 +3387,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   width: 100%;
 }
 
-#njjvoqghxy .gt_group_heading {
+#leezvbjgkx .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3409,7 +3409,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#njjvoqghxy .gt_empty_group_heading {
+#leezvbjgkx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3424,15 +3424,15 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   vertical-align: middle;
 }
 
-#njjvoqghxy .gt_from_md > :first-child {
+#leezvbjgkx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#njjvoqghxy .gt_from_md > :last-child {
+#leezvbjgkx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#njjvoqghxy .gt_row {
+#leezvbjgkx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3451,7 +3451,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   overflow-x: hidden;
 }
 
-#njjvoqghxy .gt_stub {
+#leezvbjgkx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3463,7 +3463,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-left: 12px;
 }
 
-#njjvoqghxy .gt_summary_row {
+#leezvbjgkx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3473,7 +3473,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#njjvoqghxy .gt_first_summary_row {
+#leezvbjgkx .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3483,7 +3483,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_grand_summary_row {
+#leezvbjgkx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3493,7 +3493,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   padding-right: 5px;
 }
 
-#njjvoqghxy .gt_first_grand_summary_row {
+#leezvbjgkx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3503,11 +3503,11 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-top-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_striped {
+#leezvbjgkx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#njjvoqghxy .gt_table_body {
+#leezvbjgkx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3516,7 +3516,7 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-bottom-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_footnotes {
+#leezvbjgkx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3530,13 +3530,13 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_footnote {
+#leezvbjgkx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#njjvoqghxy .gt_sourcenotes {
+#leezvbjgkx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3550,46 +3550,46 @@ We basically get `x = superheroes` back, but with the addition of variable `yr_f
   border-right-color: #D3D3D3;
 }
 
-#njjvoqghxy .gt_sourcenote {
+#leezvbjgkx .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#njjvoqghxy .gt_left {
+#leezvbjgkx .gt_left {
   text-align: left;
 }
 
-#njjvoqghxy .gt_center {
+#leezvbjgkx .gt_center {
   text-align: center;
 }
 
-#njjvoqghxy .gt_right {
+#leezvbjgkx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#njjvoqghxy .gt_font_normal {
+#leezvbjgkx .gt_font_normal {
   font-weight: normal;
 }
 
-#njjvoqghxy .gt_font_bold {
+#leezvbjgkx .gt_font_bold {
   font-weight: bold;
 }
 
-#njjvoqghxy .gt_font_italic {
+#leezvbjgkx .gt_font_italic {
   font-style: italic;
 }
 
-#njjvoqghxy .gt_super {
+#leezvbjgkx .gt_super {
   font-size: 65%;
 }
 
-#njjvoqghxy .gt_footnote_marks {
+#leezvbjgkx .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="njjvoqghxy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="leezvbjgkx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>left_join(x = superheroes, y = publishers)</th>
@@ -3691,7 +3691,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#phlzuhccyc .gt_table {
+#ixrpevchnl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -3716,7 +3716,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-left-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_heading {
+#ixrpevchnl .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -3728,7 +3728,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_title {
+#ixrpevchnl .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -3738,7 +3738,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-width: 0;
 }
 
-#phlzuhccyc .gt_subtitle {
+#ixrpevchnl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3748,13 +3748,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-width: 0;
 }
 
-#phlzuhccyc .gt_bottom_border {
+#ixrpevchnl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_col_headings {
+#ixrpevchnl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3769,7 +3769,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_col_heading {
+#ixrpevchnl .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -3789,7 +3789,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#phlzuhccyc .gt_column_spanner_outer {
+#ixrpevchnl .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -3801,15 +3801,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 4px;
 }
 
-#phlzuhccyc .gt_column_spanner_outer:first-child {
+#ixrpevchnl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#phlzuhccyc .gt_column_spanner_outer:last-child {
+#ixrpevchnl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#phlzuhccyc .gt_column_spanner {
+#ixrpevchnl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3821,7 +3821,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   width: 100%;
 }
 
-#phlzuhccyc .gt_group_heading {
+#ixrpevchnl .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -3843,7 +3843,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#phlzuhccyc .gt_empty_group_heading {
+#ixrpevchnl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -3858,15 +3858,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#phlzuhccyc .gt_from_md > :first-child {
+#ixrpevchnl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#phlzuhccyc .gt_from_md > :last-child {
+#ixrpevchnl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#phlzuhccyc .gt_row {
+#ixrpevchnl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3885,7 +3885,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#phlzuhccyc .gt_stub {
+#ixrpevchnl .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -3897,7 +3897,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-left: 12px;
 }
 
-#phlzuhccyc .gt_summary_row {
+#ixrpevchnl .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -3907,7 +3907,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#phlzuhccyc .gt_first_summary_row {
+#ixrpevchnl .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3917,7 +3917,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_grand_summary_row {
+#ixrpevchnl .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -3927,7 +3927,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#phlzuhccyc .gt_first_grand_summary_row {
+#ixrpevchnl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3937,11 +3937,11 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_striped {
+#ixrpevchnl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#phlzuhccyc .gt_table_body {
+#ixrpevchnl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3950,7 +3950,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_footnotes {
+#ixrpevchnl .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -3964,13 +3964,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_footnote {
+#ixrpevchnl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#phlzuhccyc .gt_sourcenotes {
+#ixrpevchnl .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -3984,46 +3984,46 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#phlzuhccyc .gt_sourcenote {
+#ixrpevchnl .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#phlzuhccyc .gt_left {
+#ixrpevchnl .gt_left {
   text-align: left;
 }
 
-#phlzuhccyc .gt_center {
+#ixrpevchnl .gt_center {
   text-align: center;
 }
 
-#phlzuhccyc .gt_right {
+#ixrpevchnl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#phlzuhccyc .gt_font_normal {
+#ixrpevchnl .gt_font_normal {
   font-weight: normal;
 }
 
-#phlzuhccyc .gt_font_bold {
+#ixrpevchnl .gt_font_bold {
   font-weight: bold;
 }
 
-#phlzuhccyc .gt_font_italic {
+#ixrpevchnl .gt_font_italic {
   font-style: italic;
 }
 
-#phlzuhccyc .gt_super {
+#ixrpevchnl .gt_super {
   font-size: 65%;
 }
 
-#phlzuhccyc .gt_footnote_marks {
+#ixrpevchnl .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="phlzuhccyc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ixrpevchnl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -4093,7 +4093,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cdpzsczlxy .gt_table {
+#gpijxhqrcr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -4118,7 +4118,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-left-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_heading {
+#gpijxhqrcr .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -4130,7 +4130,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_title {
+#gpijxhqrcr .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -4140,7 +4140,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-width: 0;
 }
 
-#cdpzsczlxy .gt_subtitle {
+#gpijxhqrcr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4150,13 +4150,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-width: 0;
 }
 
-#cdpzsczlxy .gt_bottom_border {
+#gpijxhqrcr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_col_headings {
+#gpijxhqrcr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4171,7 +4171,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_col_heading {
+#gpijxhqrcr .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -4191,7 +4191,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#cdpzsczlxy .gt_column_spanner_outer {
+#gpijxhqrcr .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -4203,15 +4203,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 4px;
 }
 
-#cdpzsczlxy .gt_column_spanner_outer:first-child {
+#gpijxhqrcr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cdpzsczlxy .gt_column_spanner_outer:last-child {
+#gpijxhqrcr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cdpzsczlxy .gt_column_spanner {
+#gpijxhqrcr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4223,7 +4223,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   width: 100%;
 }
 
-#cdpzsczlxy .gt_group_heading {
+#gpijxhqrcr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -4245,7 +4245,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#cdpzsczlxy .gt_empty_group_heading {
+#gpijxhqrcr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -4260,15 +4260,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#cdpzsczlxy .gt_from_md > :first-child {
+#gpijxhqrcr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cdpzsczlxy .gt_from_md > :last-child {
+#gpijxhqrcr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cdpzsczlxy .gt_row {
+#gpijxhqrcr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4287,7 +4287,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#cdpzsczlxy .gt_stub {
+#gpijxhqrcr .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -4299,7 +4299,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-left: 12px;
 }
 
-#cdpzsczlxy .gt_summary_row {
+#gpijxhqrcr .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -4309,7 +4309,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#cdpzsczlxy .gt_first_summary_row {
+#gpijxhqrcr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4319,7 +4319,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_grand_summary_row {
+#gpijxhqrcr .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -4329,7 +4329,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#cdpzsczlxy .gt_first_grand_summary_row {
+#gpijxhqrcr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4339,11 +4339,11 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_striped {
+#gpijxhqrcr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cdpzsczlxy .gt_table_body {
+#gpijxhqrcr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4352,7 +4352,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_footnotes {
+#gpijxhqrcr .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -4366,13 +4366,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_footnote {
+#gpijxhqrcr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cdpzsczlxy .gt_sourcenotes {
+#gpijxhqrcr .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -4386,46 +4386,46 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#cdpzsczlxy .gt_sourcenote {
+#gpijxhqrcr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cdpzsczlxy .gt_left {
+#gpijxhqrcr .gt_left {
   text-align: left;
 }
 
-#cdpzsczlxy .gt_center {
+#gpijxhqrcr .gt_center {
   text-align: center;
 }
 
-#cdpzsczlxy .gt_right {
+#gpijxhqrcr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cdpzsczlxy .gt_font_normal {
+#gpijxhqrcr .gt_font_normal {
   font-weight: normal;
 }
 
-#cdpzsczlxy .gt_font_bold {
+#gpijxhqrcr .gt_font_bold {
   font-weight: bold;
 }
 
-#cdpzsczlxy .gt_font_italic {
+#gpijxhqrcr .gt_font_italic {
   font-style: italic;
 }
 
-#cdpzsczlxy .gt_super {
+#gpijxhqrcr .gt_super {
   font-size: 65%;
 }
 
-#cdpzsczlxy .gt_footnote_marks {
+#gpijxhqrcr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cdpzsczlxy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="gpijxhqrcr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -4463,7 +4463,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tuycdwtajp .gt_table {
+#iobudqkels .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -4488,7 +4488,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-left-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_heading {
+#iobudqkels .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4500,7 +4500,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_title {
+#iobudqkels .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -4510,7 +4510,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-width: 0;
 }
 
-#tuycdwtajp .gt_subtitle {
+#iobudqkels .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4520,13 +4520,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-width: 0;
 }
 
-#tuycdwtajp .gt_bottom_border {
+#iobudqkels .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_col_headings {
+#iobudqkels .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4541,7 +4541,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_col_heading {
+#iobudqkels .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -4561,7 +4561,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#tuycdwtajp .gt_column_spanner_outer {
+#iobudqkels .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -4573,15 +4573,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 4px;
 }
 
-#tuycdwtajp .gt_column_spanner_outer:first-child {
+#iobudqkels .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tuycdwtajp .gt_column_spanner_outer:last-child {
+#iobudqkels .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tuycdwtajp .gt_column_spanner {
+#iobudqkels .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4593,7 +4593,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   width: 100%;
 }
 
-#tuycdwtajp .gt_group_heading {
+#iobudqkels .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4615,7 +4615,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#tuycdwtajp .gt_empty_group_heading {
+#iobudqkels .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4630,15 +4630,15 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   vertical-align: middle;
 }
 
-#tuycdwtajp .gt_from_md > :first-child {
+#iobudqkels .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tuycdwtajp .gt_from_md > :last-child {
+#iobudqkels .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tuycdwtajp .gt_row {
+#iobudqkels .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4657,7 +4657,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   overflow-x: hidden;
 }
 
-#tuycdwtajp .gt_stub {
+#iobudqkels .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4669,7 +4669,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-left: 12px;
 }
 
-#tuycdwtajp .gt_summary_row {
+#iobudqkels .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4679,7 +4679,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#tuycdwtajp .gt_first_summary_row {
+#iobudqkels .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4689,7 +4689,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_grand_summary_row {
+#iobudqkels .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4699,7 +4699,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   padding-right: 5px;
 }
 
-#tuycdwtajp .gt_first_grand_summary_row {
+#iobudqkels .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4709,11 +4709,11 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-top-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_striped {
+#iobudqkels .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tuycdwtajp .gt_table_body {
+#iobudqkels .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4722,7 +4722,7 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-bottom-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_footnotes {
+#iobudqkels .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4736,13 +4736,13 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_footnote {
+#iobudqkels .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tuycdwtajp .gt_sourcenotes {
+#iobudqkels .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4756,46 +4756,46 @@ We keep __only__ Hellboy now (and do not get `yr_founded`).
   border-right-color: #D3D3D3;
 }
 
-#tuycdwtajp .gt_sourcenote {
+#iobudqkels .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tuycdwtajp .gt_left {
+#iobudqkels .gt_left {
   text-align: left;
 }
 
-#tuycdwtajp .gt_center {
+#iobudqkels .gt_center {
   text-align: center;
 }
 
-#tuycdwtajp .gt_right {
+#iobudqkels .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tuycdwtajp .gt_font_normal {
+#iobudqkels .gt_font_normal {
   font-weight: normal;
 }
 
-#tuycdwtajp .gt_font_bold {
+#iobudqkels .gt_font_bold {
   font-weight: bold;
 }
 
-#tuycdwtajp .gt_font_italic {
+#iobudqkels .gt_font_italic {
   font-style: italic;
 }
 
-#tuycdwtajp .gt_super {
+#iobudqkels .gt_super {
   font-size: 65%;
 }
 
-#tuycdwtajp .gt_footnote_marks {
+#iobudqkels .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tuycdwtajp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="iobudqkels" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>anti_join(x = superheroes, y = publishers)</th>
@@ -4858,7 +4858,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#adctkmgode .gt_table {
+#vndbvrskdp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -4883,7 +4883,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-left-color: #D3D3D3;
 }
 
-#adctkmgode .gt_heading {
+#vndbvrskdp .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -4895,7 +4895,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#adctkmgode .gt_title {
+#vndbvrskdp .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -4905,7 +4905,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-width: 0;
 }
 
-#adctkmgode .gt_subtitle {
+#vndbvrskdp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4915,13 +4915,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-width: 0;
 }
 
-#adctkmgode .gt_bottom_border {
+#vndbvrskdp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#adctkmgode .gt_col_headings {
+#vndbvrskdp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4936,7 +4936,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#adctkmgode .gt_col_heading {
+#vndbvrskdp .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -4956,7 +4956,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#adctkmgode .gt_column_spanner_outer {
+#vndbvrskdp .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -4968,15 +4968,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 4px;
 }
 
-#adctkmgode .gt_column_spanner_outer:first-child {
+#vndbvrskdp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#adctkmgode .gt_column_spanner_outer:last-child {
+#vndbvrskdp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#adctkmgode .gt_column_spanner {
+#vndbvrskdp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4988,7 +4988,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   width: 100%;
 }
 
-#adctkmgode .gt_group_heading {
+#vndbvrskdp .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -5010,7 +5010,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#adctkmgode .gt_empty_group_heading {
+#vndbvrskdp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -5025,15 +5025,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#adctkmgode .gt_from_md > :first-child {
+#vndbvrskdp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#adctkmgode .gt_from_md > :last-child {
+#vndbvrskdp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#adctkmgode .gt_row {
+#vndbvrskdp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5052,7 +5052,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#adctkmgode .gt_stub {
+#vndbvrskdp .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -5064,7 +5064,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-left: 12px;
 }
 
-#adctkmgode .gt_summary_row {
+#vndbvrskdp .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -5074,7 +5074,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#adctkmgode .gt_first_summary_row {
+#vndbvrskdp .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5084,7 +5084,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#adctkmgode .gt_grand_summary_row {
+#vndbvrskdp .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -5094,7 +5094,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#adctkmgode .gt_first_grand_summary_row {
+#vndbvrskdp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5104,11 +5104,11 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#adctkmgode .gt_striped {
+#vndbvrskdp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#adctkmgode .gt_table_body {
+#vndbvrskdp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5117,7 +5117,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-color: #D3D3D3;
 }
 
-#adctkmgode .gt_footnotes {
+#vndbvrskdp .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -5131,13 +5131,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#adctkmgode .gt_footnote {
+#vndbvrskdp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#adctkmgode .gt_sourcenotes {
+#vndbvrskdp .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -5151,46 +5151,46 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#adctkmgode .gt_sourcenote {
+#vndbvrskdp .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#adctkmgode .gt_left {
+#vndbvrskdp .gt_left {
   text-align: left;
 }
 
-#adctkmgode .gt_center {
+#vndbvrskdp .gt_center {
   text-align: center;
 }
 
-#adctkmgode .gt_right {
+#vndbvrskdp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#adctkmgode .gt_font_normal {
+#vndbvrskdp .gt_font_normal {
   font-weight: normal;
 }
 
-#adctkmgode .gt_font_bold {
+#vndbvrskdp .gt_font_bold {
   font-weight: bold;
 }
 
-#adctkmgode .gt_font_italic {
+#vndbvrskdp .gt_font_italic {
   font-style: italic;
 }
 
-#adctkmgode .gt_super {
+#vndbvrskdp .gt_super {
   font-size: 65%;
 }
 
-#adctkmgode .gt_footnote_marks {
+#vndbvrskdp .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="adctkmgode" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="vndbvrskdp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -5228,7 +5228,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#onvkpinjhm .gt_table {
+#cblvygqipq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -5253,7 +5253,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-left-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_heading {
+#cblvygqipq .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -5265,7 +5265,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_title {
+#cblvygqipq .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -5275,7 +5275,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-width: 0;
 }
 
-#onvkpinjhm .gt_subtitle {
+#cblvygqipq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5285,13 +5285,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-width: 0;
 }
 
-#onvkpinjhm .gt_bottom_border {
+#cblvygqipq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_col_headings {
+#cblvygqipq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5306,7 +5306,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_col_heading {
+#cblvygqipq .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -5326,7 +5326,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#onvkpinjhm .gt_column_spanner_outer {
+#cblvygqipq .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -5338,15 +5338,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 4px;
 }
 
-#onvkpinjhm .gt_column_spanner_outer:first-child {
+#cblvygqipq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#onvkpinjhm .gt_column_spanner_outer:last-child {
+#cblvygqipq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#onvkpinjhm .gt_column_spanner {
+#cblvygqipq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5358,7 +5358,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   width: 100%;
 }
 
-#onvkpinjhm .gt_group_heading {
+#cblvygqipq .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -5380,7 +5380,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#onvkpinjhm .gt_empty_group_heading {
+#cblvygqipq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -5395,15 +5395,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#onvkpinjhm .gt_from_md > :first-child {
+#cblvygqipq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#onvkpinjhm .gt_from_md > :last-child {
+#cblvygqipq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#onvkpinjhm .gt_row {
+#cblvygqipq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5422,7 +5422,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#onvkpinjhm .gt_stub {
+#cblvygqipq .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -5434,7 +5434,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-left: 12px;
 }
 
-#onvkpinjhm .gt_summary_row {
+#cblvygqipq .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -5444,7 +5444,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#onvkpinjhm .gt_first_summary_row {
+#cblvygqipq .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5454,7 +5454,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_grand_summary_row {
+#cblvygqipq .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -5464,7 +5464,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#onvkpinjhm .gt_first_grand_summary_row {
+#cblvygqipq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5474,11 +5474,11 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_striped {
+#cblvygqipq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#onvkpinjhm .gt_table_body {
+#cblvygqipq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5487,7 +5487,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_footnotes {
+#cblvygqipq .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -5501,13 +5501,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_footnote {
+#cblvygqipq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#onvkpinjhm .gt_sourcenotes {
+#cblvygqipq .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -5521,46 +5521,46 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#onvkpinjhm .gt_sourcenote {
+#cblvygqipq .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#onvkpinjhm .gt_left {
+#cblvygqipq .gt_left {
   text-align: left;
 }
 
-#onvkpinjhm .gt_center {
+#cblvygqipq .gt_center {
   text-align: center;
 }
 
-#onvkpinjhm .gt_right {
+#cblvygqipq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#onvkpinjhm .gt_font_normal {
+#cblvygqipq .gt_font_normal {
   font-weight: normal;
 }
 
-#onvkpinjhm .gt_font_bold {
+#cblvygqipq .gt_font_bold {
   font-weight: bold;
 }
 
-#onvkpinjhm .gt_font_italic {
+#cblvygqipq .gt_font_italic {
   font-style: italic;
 }
 
-#onvkpinjhm .gt_super {
+#cblvygqipq .gt_super {
   font-size: 65%;
 }
 
-#onvkpinjhm .gt_footnote_marks {
+#cblvygqipq .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="onvkpinjhm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="cblvygqipq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -5630,7 +5630,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hnfrvmdqqh .gt_table {
+#ubufrwebcw .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -5655,7 +5655,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-left-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_heading {
+#ubufrwebcw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5667,7 +5667,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_title {
+#ubufrwebcw .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -5677,7 +5677,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-width: 0;
 }
 
-#hnfrvmdqqh .gt_subtitle {
+#ubufrwebcw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5687,13 +5687,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-width: 0;
 }
 
-#hnfrvmdqqh .gt_bottom_border {
+#ubufrwebcw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_col_headings {
+#ubufrwebcw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5708,7 +5708,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_col_heading {
+#ubufrwebcw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -5728,7 +5728,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#hnfrvmdqqh .gt_column_spanner_outer {
+#ubufrwebcw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -5740,15 +5740,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 4px;
 }
 
-#hnfrvmdqqh .gt_column_spanner_outer:first-child {
+#ubufrwebcw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hnfrvmdqqh .gt_column_spanner_outer:last-child {
+#ubufrwebcw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hnfrvmdqqh .gt_column_spanner {
+#ubufrwebcw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5760,7 +5760,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   width: 100%;
 }
 
-#hnfrvmdqqh .gt_group_heading {
+#ubufrwebcw .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5782,7 +5782,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#hnfrvmdqqh .gt_empty_group_heading {
+#ubufrwebcw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5797,15 +5797,15 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   vertical-align: middle;
 }
 
-#hnfrvmdqqh .gt_from_md > :first-child {
+#ubufrwebcw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hnfrvmdqqh .gt_from_md > :last-child {
+#ubufrwebcw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hnfrvmdqqh .gt_row {
+#ubufrwebcw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5824,7 +5824,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   overflow-x: hidden;
 }
 
-#hnfrvmdqqh .gt_stub {
+#ubufrwebcw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5836,7 +5836,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-left: 12px;
 }
 
-#hnfrvmdqqh .gt_summary_row {
+#ubufrwebcw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5846,7 +5846,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#hnfrvmdqqh .gt_first_summary_row {
+#ubufrwebcw .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5856,7 +5856,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_grand_summary_row {
+#ubufrwebcw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5866,7 +5866,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   padding-right: 5px;
 }
 
-#hnfrvmdqqh .gt_first_grand_summary_row {
+#ubufrwebcw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5876,11 +5876,11 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-top-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_striped {
+#ubufrwebcw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hnfrvmdqqh .gt_table_body {
+#ubufrwebcw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5889,7 +5889,7 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-bottom-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_footnotes {
+#ubufrwebcw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5903,13 +5903,13 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_footnote {
+#ubufrwebcw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#hnfrvmdqqh .gt_sourcenotes {
+#ubufrwebcw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5923,46 +5923,46 @@ In a way, this does illustrate multiple matches, if you think about it from the 
   border-right-color: #D3D3D3;
 }
 
-#hnfrvmdqqh .gt_sourcenote {
+#ubufrwebcw .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#hnfrvmdqqh .gt_left {
+#ubufrwebcw .gt_left {
   text-align: left;
 }
 
-#hnfrvmdqqh .gt_center {
+#ubufrwebcw .gt_center {
   text-align: center;
 }
 
-#hnfrvmdqqh .gt_right {
+#ubufrwebcw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hnfrvmdqqh .gt_font_normal {
+#ubufrwebcw .gt_font_normal {
   font-weight: normal;
 }
 
-#hnfrvmdqqh .gt_font_bold {
+#ubufrwebcw .gt_font_bold {
   font-weight: bold;
 }
 
-#hnfrvmdqqh .gt_font_italic {
+#ubufrwebcw .gt_font_italic {
   font-style: italic;
 }
 
-#hnfrvmdqqh .gt_super {
+#ubufrwebcw .gt_super {
   font-size: 65%;
 }
 
-#hnfrvmdqqh .gt_footnote_marks {
+#ubufrwebcw .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hnfrvmdqqh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ubufrwebcw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>inner_join(x = publishers, y = superheroes)</th>
@@ -6058,7 +6058,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#txxaehnnlk .gt_table {
+#epovvarsan .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -6083,7 +6083,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-left-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_heading {
+#epovvarsan .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -6095,7 +6095,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_title {
+#epovvarsan .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -6105,7 +6105,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-width: 0;
 }
 
-#txxaehnnlk .gt_subtitle {
+#epovvarsan .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6115,13 +6115,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-width: 0;
 }
 
-#txxaehnnlk .gt_bottom_border {
+#epovvarsan .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_col_headings {
+#epovvarsan .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6136,7 +6136,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_col_heading {
+#epovvarsan .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -6156,7 +6156,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#txxaehnnlk .gt_column_spanner_outer {
+#epovvarsan .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -6168,15 +6168,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 4px;
 }
 
-#txxaehnnlk .gt_column_spanner_outer:first-child {
+#epovvarsan .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#txxaehnnlk .gt_column_spanner_outer:last-child {
+#epovvarsan .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#txxaehnnlk .gt_column_spanner {
+#epovvarsan .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6188,7 +6188,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   width: 100%;
 }
 
-#txxaehnnlk .gt_group_heading {
+#epovvarsan .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -6210,7 +6210,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#txxaehnnlk .gt_empty_group_heading {
+#epovvarsan .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -6225,15 +6225,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#txxaehnnlk .gt_from_md > :first-child {
+#epovvarsan .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#txxaehnnlk .gt_from_md > :last-child {
+#epovvarsan .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#txxaehnnlk .gt_row {
+#epovvarsan .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6252,7 +6252,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#txxaehnnlk .gt_stub {
+#epovvarsan .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -6264,7 +6264,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-left: 12px;
 }
 
-#txxaehnnlk .gt_summary_row {
+#epovvarsan .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -6274,7 +6274,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#txxaehnnlk .gt_first_summary_row {
+#epovvarsan .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6284,7 +6284,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_grand_summary_row {
+#epovvarsan .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -6294,7 +6294,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#txxaehnnlk .gt_first_grand_summary_row {
+#epovvarsan .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6304,11 +6304,11 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_striped {
+#epovvarsan .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#txxaehnnlk .gt_table_body {
+#epovvarsan .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6317,7 +6317,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_footnotes {
+#epovvarsan .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -6331,13 +6331,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_footnote {
+#epovvarsan .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#txxaehnnlk .gt_sourcenotes {
+#epovvarsan .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -6351,46 +6351,46 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#txxaehnnlk .gt_sourcenote {
+#epovvarsan .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#txxaehnnlk .gt_left {
+#epovvarsan .gt_left {
   text-align: left;
 }
 
-#txxaehnnlk .gt_center {
+#epovvarsan .gt_center {
   text-align: center;
 }
 
-#txxaehnnlk .gt_right {
+#epovvarsan .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#txxaehnnlk .gt_font_normal {
+#epovvarsan .gt_font_normal {
   font-weight: normal;
 }
 
-#txxaehnnlk .gt_font_bold {
+#epovvarsan .gt_font_bold {
   font-weight: bold;
 }
 
-#txxaehnnlk .gt_font_italic {
+#epovvarsan .gt_font_italic {
   font-style: italic;
 }
 
-#txxaehnnlk .gt_super {
+#epovvarsan .gt_super {
   font-size: 65%;
 }
 
-#txxaehnnlk .gt_footnote_marks {
+#epovvarsan .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="txxaehnnlk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="epovvarsan" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -6428,7 +6428,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bdelwvbajk .gt_table {
+#yijtqerhkd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -6453,7 +6453,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-left-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_heading {
+#yijtqerhkd .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -6465,7 +6465,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_title {
+#yijtqerhkd .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -6475,7 +6475,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-width: 0;
 }
 
-#bdelwvbajk .gt_subtitle {
+#yijtqerhkd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6485,13 +6485,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-width: 0;
 }
 
-#bdelwvbajk .gt_bottom_border {
+#yijtqerhkd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_col_headings {
+#yijtqerhkd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6506,7 +6506,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_col_heading {
+#yijtqerhkd .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -6526,7 +6526,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#bdelwvbajk .gt_column_spanner_outer {
+#yijtqerhkd .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -6538,15 +6538,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 4px;
 }
 
-#bdelwvbajk .gt_column_spanner_outer:first-child {
+#yijtqerhkd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bdelwvbajk .gt_column_spanner_outer:last-child {
+#yijtqerhkd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bdelwvbajk .gt_column_spanner {
+#yijtqerhkd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6558,7 +6558,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   width: 100%;
 }
 
-#bdelwvbajk .gt_group_heading {
+#yijtqerhkd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -6580,7 +6580,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#bdelwvbajk .gt_empty_group_heading {
+#yijtqerhkd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -6595,15 +6595,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#bdelwvbajk .gt_from_md > :first-child {
+#yijtqerhkd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bdelwvbajk .gt_from_md > :last-child {
+#yijtqerhkd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bdelwvbajk .gt_row {
+#yijtqerhkd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6622,7 +6622,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#bdelwvbajk .gt_stub {
+#yijtqerhkd .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -6634,7 +6634,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-left: 12px;
 }
 
-#bdelwvbajk .gt_summary_row {
+#yijtqerhkd .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -6644,7 +6644,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#bdelwvbajk .gt_first_summary_row {
+#yijtqerhkd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6654,7 +6654,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_grand_summary_row {
+#yijtqerhkd .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -6664,7 +6664,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#bdelwvbajk .gt_first_grand_summary_row {
+#yijtqerhkd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6674,11 +6674,11 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_striped {
+#yijtqerhkd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bdelwvbajk .gt_table_body {
+#yijtqerhkd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6687,7 +6687,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_footnotes {
+#yijtqerhkd .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -6701,13 +6701,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_footnote {
+#yijtqerhkd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bdelwvbajk .gt_sourcenotes {
+#yijtqerhkd .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -6721,46 +6721,46 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#bdelwvbajk .gt_sourcenote {
+#yijtqerhkd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bdelwvbajk .gt_left {
+#yijtqerhkd .gt_left {
   text-align: left;
 }
 
-#bdelwvbajk .gt_center {
+#yijtqerhkd .gt_center {
   text-align: center;
 }
 
-#bdelwvbajk .gt_right {
+#yijtqerhkd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bdelwvbajk .gt_font_normal {
+#yijtqerhkd .gt_font_normal {
   font-weight: normal;
 }
 
-#bdelwvbajk .gt_font_bold {
+#yijtqerhkd .gt_font_bold {
   font-weight: bold;
 }
 
-#bdelwvbajk .gt_font_italic {
+#yijtqerhkd .gt_font_italic {
   font-style: italic;
 }
 
-#bdelwvbajk .gt_super {
+#yijtqerhkd .gt_super {
   font-size: 65%;
 }
 
-#bdelwvbajk .gt_footnote_marks {
+#yijtqerhkd .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bdelwvbajk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="yijtqerhkd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -6830,7 +6830,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lfayfpyfuq .gt_table {
+#oecdcafnpw .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -6855,7 +6855,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-left-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_heading {
+#oecdcafnpw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -6867,7 +6867,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_title {
+#oecdcafnpw .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -6877,7 +6877,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-width: 0;
 }
 
-#lfayfpyfuq .gt_subtitle {
+#oecdcafnpw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6887,13 +6887,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-width: 0;
 }
 
-#lfayfpyfuq .gt_bottom_border {
+#oecdcafnpw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_col_headings {
+#oecdcafnpw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6908,7 +6908,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_col_heading {
+#oecdcafnpw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -6928,7 +6928,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#lfayfpyfuq .gt_column_spanner_outer {
+#oecdcafnpw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -6940,15 +6940,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 4px;
 }
 
-#lfayfpyfuq .gt_column_spanner_outer:first-child {
+#oecdcafnpw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lfayfpyfuq .gt_column_spanner_outer:last-child {
+#oecdcafnpw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lfayfpyfuq .gt_column_spanner {
+#oecdcafnpw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6960,7 +6960,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   width: 100%;
 }
 
-#lfayfpyfuq .gt_group_heading {
+#oecdcafnpw .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6982,7 +6982,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#lfayfpyfuq .gt_empty_group_heading {
+#oecdcafnpw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6997,15 +6997,15 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   vertical-align: middle;
 }
 
-#lfayfpyfuq .gt_from_md > :first-child {
+#oecdcafnpw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lfayfpyfuq .gt_from_md > :last-child {
+#oecdcafnpw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lfayfpyfuq .gt_row {
+#oecdcafnpw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7024,7 +7024,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   overflow-x: hidden;
 }
 
-#lfayfpyfuq .gt_stub {
+#oecdcafnpw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -7036,7 +7036,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-left: 12px;
 }
 
-#lfayfpyfuq .gt_summary_row {
+#oecdcafnpw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -7046,7 +7046,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#lfayfpyfuq .gt_first_summary_row {
+#oecdcafnpw .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7056,7 +7056,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_grand_summary_row {
+#oecdcafnpw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -7066,7 +7066,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   padding-right: 5px;
 }
 
-#lfayfpyfuq .gt_first_grand_summary_row {
+#oecdcafnpw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7076,11 +7076,11 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-top-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_striped {
+#oecdcafnpw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lfayfpyfuq .gt_table_body {
+#oecdcafnpw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -7089,7 +7089,7 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-bottom-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_footnotes {
+#oecdcafnpw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -7103,13 +7103,13 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_footnote {
+#oecdcafnpw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#lfayfpyfuq .gt_sourcenotes {
+#oecdcafnpw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -7123,46 +7123,46 @@ Now the effects of switching the `x` and `y` roles is more clear. The result res
   border-right-color: #D3D3D3;
 }
 
-#lfayfpyfuq .gt_sourcenote {
+#oecdcafnpw .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#lfayfpyfuq .gt_left {
+#oecdcafnpw .gt_left {
   text-align: left;
 }
 
-#lfayfpyfuq .gt_center {
+#oecdcafnpw .gt_center {
   text-align: center;
 }
 
-#lfayfpyfuq .gt_right {
+#oecdcafnpw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lfayfpyfuq .gt_font_normal {
+#oecdcafnpw .gt_font_normal {
   font-weight: normal;
 }
 
-#lfayfpyfuq .gt_font_bold {
+#oecdcafnpw .gt_font_bold {
   font-weight: bold;
 }
 
-#lfayfpyfuq .gt_font_italic {
+#oecdcafnpw .gt_font_italic {
   font-style: italic;
 }
 
-#lfayfpyfuq .gt_super {
+#oecdcafnpw .gt_super {
   font-size: 65%;
 }
 
-#lfayfpyfuq .gt_footnote_marks {
+#oecdcafnpw .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="lfayfpyfuq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="oecdcafnpw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>semi_join(x = publishers, y = superheroes)</th>
@@ -7226,7 +7226,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ovbuhwukvc .gt_table {
+#coxepynwvu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -7251,7 +7251,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-left-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_heading {
+#coxepynwvu .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -7263,7 +7263,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_title {
+#coxepynwvu .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -7273,7 +7273,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-width: 0;
 }
 
-#ovbuhwukvc .gt_subtitle {
+#coxepynwvu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -7283,13 +7283,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-width: 0;
 }
 
-#ovbuhwukvc .gt_bottom_border {
+#coxepynwvu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_col_headings {
+#coxepynwvu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -7304,7 +7304,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_col_heading {
+#coxepynwvu .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -7324,7 +7324,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#ovbuhwukvc .gt_column_spanner_outer {
+#coxepynwvu .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -7336,15 +7336,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 4px;
 }
 
-#ovbuhwukvc .gt_column_spanner_outer:first-child {
+#coxepynwvu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ovbuhwukvc .gt_column_spanner_outer:last-child {
+#coxepynwvu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ovbuhwukvc .gt_column_spanner {
+#coxepynwvu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -7356,7 +7356,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   width: 100%;
 }
 
-#ovbuhwukvc .gt_group_heading {
+#coxepynwvu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -7378,7 +7378,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#ovbuhwukvc .gt_empty_group_heading {
+#coxepynwvu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -7393,15 +7393,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#ovbuhwukvc .gt_from_md > :first-child {
+#coxepynwvu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ovbuhwukvc .gt_from_md > :last-child {
+#coxepynwvu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ovbuhwukvc .gt_row {
+#coxepynwvu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7420,7 +7420,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#ovbuhwukvc .gt_stub {
+#coxepynwvu .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -7432,7 +7432,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-left: 12px;
 }
 
-#ovbuhwukvc .gt_summary_row {
+#coxepynwvu .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -7442,7 +7442,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#ovbuhwukvc .gt_first_summary_row {
+#coxepynwvu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7452,7 +7452,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_grand_summary_row {
+#coxepynwvu .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -7462,7 +7462,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#ovbuhwukvc .gt_first_grand_summary_row {
+#coxepynwvu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7472,11 +7472,11 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_striped {
+#coxepynwvu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ovbuhwukvc .gt_table_body {
+#coxepynwvu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -7485,7 +7485,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_footnotes {
+#coxepynwvu .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -7499,13 +7499,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_footnote {
+#coxepynwvu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ovbuhwukvc .gt_sourcenotes {
+#coxepynwvu .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -7519,46 +7519,46 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#ovbuhwukvc .gt_sourcenote {
+#coxepynwvu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ovbuhwukvc .gt_left {
+#coxepynwvu .gt_left {
   text-align: left;
 }
 
-#ovbuhwukvc .gt_center {
+#coxepynwvu .gt_center {
   text-align: center;
 }
 
-#ovbuhwukvc .gt_right {
+#coxepynwvu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ovbuhwukvc .gt_font_normal {
+#coxepynwvu .gt_font_normal {
   font-weight: normal;
 }
 
-#ovbuhwukvc .gt_font_bold {
+#coxepynwvu .gt_font_bold {
   font-weight: bold;
 }
 
-#ovbuhwukvc .gt_font_italic {
+#coxepynwvu .gt_font_italic {
   font-style: italic;
 }
 
-#ovbuhwukvc .gt_super {
+#coxepynwvu .gt_super {
   font-size: 65%;
 }
 
-#ovbuhwukvc .gt_footnote_marks {
+#coxepynwvu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ovbuhwukvc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="coxepynwvu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -7596,7 +7596,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xyaruhqodr .gt_table {
+#kfzyjvjwdv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -7621,7 +7621,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-left-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_heading {
+#kfzyjvjwdv .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -7633,7 +7633,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_title {
+#kfzyjvjwdv .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -7643,7 +7643,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-width: 0;
 }
 
-#xyaruhqodr .gt_subtitle {
+#kfzyjvjwdv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -7653,13 +7653,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-width: 0;
 }
 
-#xyaruhqodr .gt_bottom_border {
+#kfzyjvjwdv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_col_headings {
+#kfzyjvjwdv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -7674,7 +7674,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_col_heading {
+#kfzyjvjwdv .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -7694,7 +7694,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#xyaruhqodr .gt_column_spanner_outer {
+#kfzyjvjwdv .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -7706,15 +7706,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 4px;
 }
 
-#xyaruhqodr .gt_column_spanner_outer:first-child {
+#kfzyjvjwdv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xyaruhqodr .gt_column_spanner_outer:last-child {
+#kfzyjvjwdv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xyaruhqodr .gt_column_spanner {
+#kfzyjvjwdv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -7726,7 +7726,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   width: 100%;
 }
 
-#xyaruhqodr .gt_group_heading {
+#kfzyjvjwdv .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -7748,7 +7748,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#xyaruhqodr .gt_empty_group_heading {
+#kfzyjvjwdv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -7763,15 +7763,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#xyaruhqodr .gt_from_md > :first-child {
+#kfzyjvjwdv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xyaruhqodr .gt_from_md > :last-child {
+#kfzyjvjwdv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xyaruhqodr .gt_row {
+#kfzyjvjwdv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7790,7 +7790,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#xyaruhqodr .gt_stub {
+#kfzyjvjwdv .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -7802,7 +7802,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-left: 12px;
 }
 
-#xyaruhqodr .gt_summary_row {
+#kfzyjvjwdv .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -7812,7 +7812,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#xyaruhqodr .gt_first_summary_row {
+#kfzyjvjwdv .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7822,7 +7822,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_grand_summary_row {
+#kfzyjvjwdv .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -7832,7 +7832,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#xyaruhqodr .gt_first_grand_summary_row {
+#kfzyjvjwdv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7842,11 +7842,11 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_striped {
+#kfzyjvjwdv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xyaruhqodr .gt_table_body {
+#kfzyjvjwdv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -7855,7 +7855,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_footnotes {
+#kfzyjvjwdv .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -7869,13 +7869,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_footnote {
+#kfzyjvjwdv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xyaruhqodr .gt_sourcenotes {
+#kfzyjvjwdv .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -7889,46 +7889,46 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xyaruhqodr .gt_sourcenote {
+#kfzyjvjwdv .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xyaruhqodr .gt_left {
+#kfzyjvjwdv .gt_left {
   text-align: left;
 }
 
-#xyaruhqodr .gt_center {
+#kfzyjvjwdv .gt_center {
   text-align: center;
 }
 
-#xyaruhqodr .gt_right {
+#kfzyjvjwdv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xyaruhqodr .gt_font_normal {
+#kfzyjvjwdv .gt_font_normal {
   font-weight: normal;
 }
 
-#xyaruhqodr .gt_font_bold {
+#kfzyjvjwdv .gt_font_bold {
   font-weight: bold;
 }
 
-#xyaruhqodr .gt_font_italic {
+#kfzyjvjwdv .gt_font_italic {
   font-style: italic;
 }
 
-#xyaruhqodr .gt_super {
+#kfzyjvjwdv .gt_super {
   font-size: 65%;
 }
 
-#xyaruhqodr .gt_footnote_marks {
+#kfzyjvjwdv .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xyaruhqodr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="kfzyjvjwdv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -7998,7 +7998,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xrafldsmsk .gt_table {
+#enesitwzdt .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -8023,7 +8023,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-left-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_heading {
+#enesitwzdt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -8035,7 +8035,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_title {
+#enesitwzdt .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -8045,7 +8045,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-width: 0;
 }
 
-#xrafldsmsk .gt_subtitle {
+#enesitwzdt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -8055,13 +8055,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-width: 0;
 }
 
-#xrafldsmsk .gt_bottom_border {
+#enesitwzdt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_col_headings {
+#enesitwzdt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8076,7 +8076,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_col_heading {
+#enesitwzdt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -8096,7 +8096,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#xrafldsmsk .gt_column_spanner_outer {
+#enesitwzdt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -8108,15 +8108,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 4px;
 }
 
-#xrafldsmsk .gt_column_spanner_outer:first-child {
+#enesitwzdt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xrafldsmsk .gt_column_spanner_outer:last-child {
+#enesitwzdt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xrafldsmsk .gt_column_spanner {
+#enesitwzdt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -8128,7 +8128,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   width: 100%;
 }
 
-#xrafldsmsk .gt_group_heading {
+#enesitwzdt .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -8150,7 +8150,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#xrafldsmsk .gt_empty_group_heading {
+#enesitwzdt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -8165,15 +8165,15 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   vertical-align: middle;
 }
 
-#xrafldsmsk .gt_from_md > :first-child {
+#enesitwzdt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xrafldsmsk .gt_from_md > :last-child {
+#enesitwzdt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xrafldsmsk .gt_row {
+#enesitwzdt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8192,7 +8192,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   overflow-x: hidden;
 }
 
-#xrafldsmsk .gt_stub {
+#enesitwzdt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -8204,7 +8204,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-left: 12px;
 }
 
-#xrafldsmsk .gt_summary_row {
+#enesitwzdt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -8214,7 +8214,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#xrafldsmsk .gt_first_summary_row {
+#enesitwzdt .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8224,7 +8224,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_grand_summary_row {
+#enesitwzdt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -8234,7 +8234,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   padding-right: 5px;
 }
 
-#xrafldsmsk .gt_first_grand_summary_row {
+#enesitwzdt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8244,11 +8244,11 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-top-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_striped {
+#enesitwzdt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xrafldsmsk .gt_table_body {
+#enesitwzdt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8257,7 +8257,7 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-bottom-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_footnotes {
+#enesitwzdt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8271,13 +8271,13 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_footnote {
+#enesitwzdt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xrafldsmsk .gt_sourcenotes {
+#enesitwzdt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8291,46 +8291,46 @@ We get a similar result as with `inner_join()` but the publisher Image survives 
   border-right-color: #D3D3D3;
 }
 
-#xrafldsmsk .gt_sourcenote {
+#enesitwzdt .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xrafldsmsk .gt_left {
+#enesitwzdt .gt_left {
   text-align: left;
 }
 
-#xrafldsmsk .gt_center {
+#enesitwzdt .gt_center {
   text-align: center;
 }
 
-#xrafldsmsk .gt_right {
+#enesitwzdt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xrafldsmsk .gt_font_normal {
+#enesitwzdt .gt_font_normal {
   font-weight: normal;
 }
 
-#xrafldsmsk .gt_font_bold {
+#enesitwzdt .gt_font_bold {
   font-weight: bold;
 }
 
-#xrafldsmsk .gt_font_italic {
+#enesitwzdt .gt_font_italic {
   font-style: italic;
 }
 
-#xrafldsmsk .gt_super {
+#enesitwzdt .gt_super {
   font-size: 65%;
 }
 
-#xrafldsmsk .gt_footnote_marks {
+#enesitwzdt .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xrafldsmsk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="enesitwzdt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>left_join(x = publishers, y = superheroes)</th>
@@ -8431,7 +8431,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xieomwspau .gt_table {
+#sbwnngthdr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -8456,7 +8456,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-left-color: #D3D3D3;
 }
 
-#xieomwspau .gt_heading {
+#sbwnngthdr .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -8468,7 +8468,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#xieomwspau .gt_title {
+#sbwnngthdr .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -8478,7 +8478,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-width: 0;
 }
 
-#xieomwspau .gt_subtitle {
+#sbwnngthdr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -8488,13 +8488,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-width: 0;
 }
 
-#xieomwspau .gt_bottom_border {
+#sbwnngthdr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xieomwspau .gt_col_headings {
+#sbwnngthdr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8509,7 +8509,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#xieomwspau .gt_col_heading {
+#sbwnngthdr .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -8529,7 +8529,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#xieomwspau .gt_column_spanner_outer {
+#sbwnngthdr .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -8541,15 +8541,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 4px;
 }
 
-#xieomwspau .gt_column_spanner_outer:first-child {
+#sbwnngthdr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xieomwspau .gt_column_spanner_outer:last-child {
+#sbwnngthdr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xieomwspau .gt_column_spanner {
+#sbwnngthdr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -8561,7 +8561,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   width: 100%;
 }
 
-#xieomwspau .gt_group_heading {
+#sbwnngthdr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -8583,7 +8583,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#xieomwspau .gt_empty_group_heading {
+#sbwnngthdr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -8598,15 +8598,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#xieomwspau .gt_from_md > :first-child {
+#sbwnngthdr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xieomwspau .gt_from_md > :last-child {
+#sbwnngthdr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xieomwspau .gt_row {
+#sbwnngthdr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8625,7 +8625,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#xieomwspau .gt_stub {
+#sbwnngthdr .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -8637,7 +8637,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-left: 12px;
 }
 
-#xieomwspau .gt_summary_row {
+#sbwnngthdr .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -8647,7 +8647,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#xieomwspau .gt_first_summary_row {
+#sbwnngthdr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8657,7 +8657,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#xieomwspau .gt_grand_summary_row {
+#sbwnngthdr .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -8667,7 +8667,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#xieomwspau .gt_first_grand_summary_row {
+#sbwnngthdr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8677,11 +8677,11 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#xieomwspau .gt_striped {
+#sbwnngthdr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xieomwspau .gt_table_body {
+#sbwnngthdr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8690,7 +8690,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-color: #D3D3D3;
 }
 
-#xieomwspau .gt_footnotes {
+#sbwnngthdr .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -8704,13 +8704,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#xieomwspau .gt_footnote {
+#sbwnngthdr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xieomwspau .gt_sourcenotes {
+#sbwnngthdr .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -8724,46 +8724,46 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#xieomwspau .gt_sourcenote {
+#sbwnngthdr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xieomwspau .gt_left {
+#sbwnngthdr .gt_left {
   text-align: left;
 }
 
-#xieomwspau .gt_center {
+#sbwnngthdr .gt_center {
   text-align: center;
 }
 
-#xieomwspau .gt_right {
+#sbwnngthdr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xieomwspau .gt_font_normal {
+#sbwnngthdr .gt_font_normal {
   font-weight: normal;
 }
 
-#xieomwspau .gt_font_bold {
+#sbwnngthdr .gt_font_bold {
   font-weight: bold;
 }
 
-#xieomwspau .gt_font_italic {
+#sbwnngthdr .gt_font_italic {
   font-style: italic;
 }
 
-#xieomwspau .gt_super {
+#sbwnngthdr .gt_super {
   font-size: 65%;
 }
 
-#xieomwspau .gt_footnote_marks {
+#sbwnngthdr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xieomwspau" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="sbwnngthdr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -8801,7 +8801,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yfymrplalf .gt_table {
+#eytjzovpge .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -8826,7 +8826,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-left-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_heading {
+#eytjzovpge .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -8838,7 +8838,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_title {
+#eytjzovpge .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -8848,7 +8848,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-width: 0;
 }
 
-#yfymrplalf .gt_subtitle {
+#eytjzovpge .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -8858,13 +8858,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-width: 0;
 }
 
-#yfymrplalf .gt_bottom_border {
+#eytjzovpge .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_col_headings {
+#eytjzovpge .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8879,7 +8879,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_col_heading {
+#eytjzovpge .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -8899,7 +8899,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#yfymrplalf .gt_column_spanner_outer {
+#eytjzovpge .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -8911,15 +8911,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 4px;
 }
 
-#yfymrplalf .gt_column_spanner_outer:first-child {
+#eytjzovpge .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yfymrplalf .gt_column_spanner_outer:last-child {
+#eytjzovpge .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yfymrplalf .gt_column_spanner {
+#eytjzovpge .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -8931,7 +8931,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   width: 100%;
 }
 
-#yfymrplalf .gt_group_heading {
+#eytjzovpge .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -8953,7 +8953,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#yfymrplalf .gt_empty_group_heading {
+#eytjzovpge .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -8968,15 +8968,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#yfymrplalf .gt_from_md > :first-child {
+#eytjzovpge .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yfymrplalf .gt_from_md > :last-child {
+#eytjzovpge .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yfymrplalf .gt_row {
+#eytjzovpge .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8995,7 +8995,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#yfymrplalf .gt_stub {
+#eytjzovpge .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -9007,7 +9007,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-left: 12px;
 }
 
-#yfymrplalf .gt_summary_row {
+#eytjzovpge .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -9017,7 +9017,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#yfymrplalf .gt_first_summary_row {
+#eytjzovpge .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9027,7 +9027,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_grand_summary_row {
+#eytjzovpge .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -9037,7 +9037,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#yfymrplalf .gt_first_grand_summary_row {
+#eytjzovpge .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9047,11 +9047,11 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_striped {
+#eytjzovpge .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yfymrplalf .gt_table_body {
+#eytjzovpge .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -9060,7 +9060,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_footnotes {
+#eytjzovpge .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -9074,13 +9074,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_footnote {
+#eytjzovpge .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#yfymrplalf .gt_sourcenotes {
+#eytjzovpge .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -9094,46 +9094,46 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#yfymrplalf .gt_sourcenote {
+#eytjzovpge .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#yfymrplalf .gt_left {
+#eytjzovpge .gt_left {
   text-align: left;
 }
 
-#yfymrplalf .gt_center {
+#eytjzovpge .gt_center {
   text-align: center;
 }
 
-#yfymrplalf .gt_right {
+#eytjzovpge .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yfymrplalf .gt_font_normal {
+#eytjzovpge .gt_font_normal {
   font-weight: normal;
 }
 
-#yfymrplalf .gt_font_bold {
+#eytjzovpge .gt_font_bold {
   font-weight: bold;
 }
 
-#yfymrplalf .gt_font_italic {
+#eytjzovpge .gt_font_italic {
   font-style: italic;
 }
 
-#yfymrplalf .gt_super {
+#eytjzovpge .gt_super {
   font-size: 65%;
 }
 
-#yfymrplalf .gt_footnote_marks {
+#eytjzovpge .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yfymrplalf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="eytjzovpge" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -9203,7 +9203,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jdiyyniwwu .gt_table {
+#nctyizplnr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -9228,7 +9228,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-left-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_heading {
+#nctyizplnr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -9240,7 +9240,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_title {
+#nctyizplnr .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -9250,7 +9250,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-width: 0;
 }
 
-#jdiyyniwwu .gt_subtitle {
+#nctyizplnr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -9260,13 +9260,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-width: 0;
 }
 
-#jdiyyniwwu .gt_bottom_border {
+#nctyizplnr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_col_headings {
+#nctyizplnr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -9281,7 +9281,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_col_heading {
+#nctyizplnr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -9301,7 +9301,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#jdiyyniwwu .gt_column_spanner_outer {
+#nctyizplnr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -9313,15 +9313,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 4px;
 }
 
-#jdiyyniwwu .gt_column_spanner_outer:first-child {
+#nctyizplnr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jdiyyniwwu .gt_column_spanner_outer:last-child {
+#nctyizplnr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jdiyyniwwu .gt_column_spanner {
+#nctyizplnr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -9333,7 +9333,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   width: 100%;
 }
 
-#jdiyyniwwu .gt_group_heading {
+#nctyizplnr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -9355,7 +9355,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#jdiyyniwwu .gt_empty_group_heading {
+#nctyizplnr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -9370,15 +9370,15 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   vertical-align: middle;
 }
 
-#jdiyyniwwu .gt_from_md > :first-child {
+#nctyizplnr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jdiyyniwwu .gt_from_md > :last-child {
+#nctyizplnr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jdiyyniwwu .gt_row {
+#nctyizplnr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9397,7 +9397,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   overflow-x: hidden;
 }
 
-#jdiyyniwwu .gt_stub {
+#nctyizplnr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -9409,7 +9409,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-left: 12px;
 }
 
-#jdiyyniwwu .gt_summary_row {
+#nctyizplnr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -9419,7 +9419,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#jdiyyniwwu .gt_first_summary_row {
+#nctyizplnr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9429,7 +9429,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_grand_summary_row {
+#nctyizplnr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -9439,7 +9439,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   padding-right: 5px;
 }
 
-#jdiyyniwwu .gt_first_grand_summary_row {
+#nctyizplnr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9449,11 +9449,11 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-top-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_striped {
+#nctyizplnr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jdiyyniwwu .gt_table_body {
+#nctyizplnr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -9462,7 +9462,7 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-bottom-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_footnotes {
+#nctyizplnr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -9476,13 +9476,13 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_footnote {
+#nctyizplnr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jdiyyniwwu .gt_sourcenotes {
+#nctyizplnr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -9496,46 +9496,46 @@ We keep __only__ publisher Image now (and the variables found in `x = publishers
   border-right-color: #D3D3D3;
 }
 
-#jdiyyniwwu .gt_sourcenote {
+#nctyizplnr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jdiyyniwwu .gt_left {
+#nctyizplnr .gt_left {
   text-align: left;
 }
 
-#jdiyyniwwu .gt_center {
+#nctyizplnr .gt_center {
   text-align: center;
 }
 
-#jdiyyniwwu .gt_right {
+#nctyizplnr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jdiyyniwwu .gt_font_normal {
+#nctyizplnr .gt_font_normal {
   font-weight: normal;
 }
 
-#jdiyyniwwu .gt_font_bold {
+#nctyizplnr .gt_font_bold {
   font-weight: bold;
 }
 
-#jdiyyniwwu .gt_font_italic {
+#nctyizplnr .gt_font_italic {
   font-style: italic;
 }
 
-#jdiyyniwwu .gt_super {
+#nctyizplnr .gt_super {
   font-size: 65%;
 }
 
-#jdiyyniwwu .gt_footnote_marks {
+#nctyizplnr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jdiyyniwwu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="nctyizplnr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>anti_join(x = publishers, y = superheroes)</th>
@@ -9595,7 +9595,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xoaxhkfpab .gt_table {
+#lkljbajegh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -9620,7 +9620,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-left-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_heading {
+#lkljbajegh .gt_heading {
   background-color: #edc7fc;
   text-align: center;
   border-bottom-color: #edc7fc;
@@ -9632,7 +9632,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_title {
+#lkljbajegh .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -9642,7 +9642,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-width: 0;
 }
 
-#xoaxhkfpab .gt_subtitle {
+#lkljbajegh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -9652,13 +9652,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-width: 0;
 }
 
-#xoaxhkfpab .gt_bottom_border {
+#lkljbajegh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_col_headings {
+#lkljbajegh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -9673,7 +9673,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_col_heading {
+#lkljbajegh .gt_col_heading {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -9693,7 +9693,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#xoaxhkfpab .gt_column_spanner_outer {
+#lkljbajegh .gt_column_spanner_outer {
   color: #333333;
   background-color: #edc7fc;
   font-size: 90%;
@@ -9705,15 +9705,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 4px;
 }
 
-#xoaxhkfpab .gt_column_spanner_outer:first-child {
+#lkljbajegh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xoaxhkfpab .gt_column_spanner_outer:last-child {
+#lkljbajegh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xoaxhkfpab .gt_column_spanner {
+#lkljbajegh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -9725,7 +9725,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   width: 100%;
 }
 
-#xoaxhkfpab .gt_group_heading {
+#lkljbajegh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #edc7fc;
@@ -9747,7 +9747,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#xoaxhkfpab .gt_empty_group_heading {
+#lkljbajegh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #edc7fc;
@@ -9762,15 +9762,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#xoaxhkfpab .gt_from_md > :first-child {
+#lkljbajegh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xoaxhkfpab .gt_from_md > :last-child {
+#lkljbajegh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xoaxhkfpab .gt_row {
+#lkljbajegh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9789,7 +9789,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#xoaxhkfpab .gt_stub {
+#lkljbajegh .gt_stub {
   color: #333333;
   background-color: #edc7fc;
   font-size: 100%;
@@ -9801,7 +9801,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-left: 12px;
 }
 
-#xoaxhkfpab .gt_summary_row {
+#lkljbajegh .gt_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -9811,7 +9811,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#xoaxhkfpab .gt_first_summary_row {
+#lkljbajegh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9821,7 +9821,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_grand_summary_row {
+#lkljbajegh .gt_grand_summary_row {
   color: #333333;
   background-color: #edc7fc;
   text-transform: inherit;
@@ -9831,7 +9831,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#xoaxhkfpab .gt_first_grand_summary_row {
+#lkljbajegh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -9841,11 +9841,11 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_striped {
+#lkljbajegh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xoaxhkfpab .gt_table_body {
+#lkljbajegh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -9854,7 +9854,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_footnotes {
+#lkljbajegh .gt_footnotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -9868,13 +9868,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_footnote {
+#lkljbajegh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xoaxhkfpab .gt_sourcenotes {
+#lkljbajegh .gt_sourcenotes {
   color: #333333;
   background-color: #edc7fc;
   border-bottom-style: none;
@@ -9888,46 +9888,46 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#xoaxhkfpab .gt_sourcenote {
+#lkljbajegh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xoaxhkfpab .gt_left {
+#lkljbajegh .gt_left {
   text-align: left;
 }
 
-#xoaxhkfpab .gt_center {
+#lkljbajegh .gt_center {
   text-align: center;
 }
 
-#xoaxhkfpab .gt_right {
+#lkljbajegh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xoaxhkfpab .gt_font_normal {
+#lkljbajegh .gt_font_normal {
   font-weight: normal;
 }
 
-#xoaxhkfpab .gt_font_bold {
+#lkljbajegh .gt_font_bold {
   font-weight: bold;
 }
 
-#xoaxhkfpab .gt_font_italic {
+#lkljbajegh .gt_font_italic {
   font-style: italic;
 }
 
-#xoaxhkfpab .gt_super {
+#lkljbajegh .gt_super {
   font-size: 65%;
 }
 
-#xoaxhkfpab .gt_footnote_marks {
+#lkljbajegh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xoaxhkfpab" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="lkljbajegh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="4" class="gt_heading gt_title gt_font_normal" style>superheroes</th>
@@ -9997,7 +9997,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yheowgqrpy .gt_table {
+#bzymmccbek .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -10022,7 +10022,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-left-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_heading {
+#bzymmccbek .gt_heading {
   background-color: #cce6f6;
   text-align: center;
   border-bottom-color: #cce6f6;
@@ -10034,7 +10034,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_title {
+#bzymmccbek .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -10044,7 +10044,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-width: 0;
 }
 
-#yheowgqrpy .gt_subtitle {
+#bzymmccbek .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -10054,13 +10054,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-width: 0;
 }
 
-#yheowgqrpy .gt_bottom_border {
+#bzymmccbek .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_col_headings {
+#bzymmccbek .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -10075,7 +10075,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_col_heading {
+#bzymmccbek .gt_col_heading {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -10095,7 +10095,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#yheowgqrpy .gt_column_spanner_outer {
+#bzymmccbek .gt_column_spanner_outer {
   color: #333333;
   background-color: #cce6f6;
   font-size: 90%;
@@ -10107,15 +10107,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 4px;
 }
 
-#yheowgqrpy .gt_column_spanner_outer:first-child {
+#bzymmccbek .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yheowgqrpy .gt_column_spanner_outer:last-child {
+#bzymmccbek .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yheowgqrpy .gt_column_spanner {
+#bzymmccbek .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -10127,7 +10127,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   width: 100%;
 }
 
-#yheowgqrpy .gt_group_heading {
+#bzymmccbek .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #cce6f6;
@@ -10149,7 +10149,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#yheowgqrpy .gt_empty_group_heading {
+#bzymmccbek .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #cce6f6;
@@ -10164,15 +10164,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#yheowgqrpy .gt_from_md > :first-child {
+#bzymmccbek .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yheowgqrpy .gt_from_md > :last-child {
+#bzymmccbek .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yheowgqrpy .gt_row {
+#bzymmccbek .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10191,7 +10191,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#yheowgqrpy .gt_stub {
+#bzymmccbek .gt_stub {
   color: #333333;
   background-color: #cce6f6;
   font-size: 100%;
@@ -10203,7 +10203,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-left: 12px;
 }
 
-#yheowgqrpy .gt_summary_row {
+#bzymmccbek .gt_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -10213,7 +10213,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#yheowgqrpy .gt_first_summary_row {
+#bzymmccbek .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10223,7 +10223,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_grand_summary_row {
+#bzymmccbek .gt_grand_summary_row {
   color: #333333;
   background-color: #cce6f6;
   text-transform: inherit;
@@ -10233,7 +10233,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#yheowgqrpy .gt_first_grand_summary_row {
+#bzymmccbek .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10243,11 +10243,11 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_striped {
+#bzymmccbek .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yheowgqrpy .gt_table_body {
+#bzymmccbek .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -10256,7 +10256,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_footnotes {
+#bzymmccbek .gt_footnotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -10270,13 +10270,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_footnote {
+#bzymmccbek .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#yheowgqrpy .gt_sourcenotes {
+#bzymmccbek .gt_sourcenotes {
   color: #333333;
   background-color: #cce6f6;
   border-bottom-style: none;
@@ -10290,46 +10290,46 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#yheowgqrpy .gt_sourcenote {
+#bzymmccbek .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#yheowgqrpy .gt_left {
+#bzymmccbek .gt_left {
   text-align: left;
 }
 
-#yheowgqrpy .gt_center {
+#bzymmccbek .gt_center {
   text-align: center;
 }
 
-#yheowgqrpy .gt_right {
+#bzymmccbek .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yheowgqrpy .gt_font_normal {
+#bzymmccbek .gt_font_normal {
   font-weight: normal;
 }
 
-#yheowgqrpy .gt_font_bold {
+#bzymmccbek .gt_font_bold {
   font-weight: bold;
 }
 
-#yheowgqrpy .gt_font_italic {
+#bzymmccbek .gt_font_italic {
   font-style: italic;
 }
 
-#yheowgqrpy .gt_super {
+#bzymmccbek .gt_super {
   font-size: 65%;
 }
 
-#yheowgqrpy .gt_footnote_marks {
+#bzymmccbek .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yheowgqrpy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="bzymmccbek" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>publishers</th>
@@ -10367,7 +10367,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jdslfmuoeq .gt_table {
+#xihuqvekgy .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -10392,7 +10392,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-left-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_heading {
+#xihuqvekgy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -10404,7 +10404,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_title {
+#xihuqvekgy .gt_title {
   color: #333333;
   font-size: 90%;
   font-weight: initial;
@@ -10414,7 +10414,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-width: 0;
 }
 
-#jdslfmuoeq .gt_subtitle {
+#xihuqvekgy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -10424,13 +10424,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-width: 0;
 }
 
-#jdslfmuoeq .gt_bottom_border {
+#xihuqvekgy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_col_headings {
+#xihuqvekgy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -10445,7 +10445,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_col_heading {
+#xihuqvekgy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -10465,7 +10465,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#jdslfmuoeq .gt_column_spanner_outer {
+#xihuqvekgy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 90%;
@@ -10477,15 +10477,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 4px;
 }
 
-#jdslfmuoeq .gt_column_spanner_outer:first-child {
+#xihuqvekgy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jdslfmuoeq .gt_column_spanner_outer:last-child {
+#xihuqvekgy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jdslfmuoeq .gt_column_spanner {
+#xihuqvekgy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -10497,7 +10497,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   width: 100%;
 }
 
-#jdslfmuoeq .gt_group_heading {
+#xihuqvekgy .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -10519,7 +10519,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#jdslfmuoeq .gt_empty_group_heading {
+#xihuqvekgy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -10534,15 +10534,15 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   vertical-align: middle;
 }
 
-#jdslfmuoeq .gt_from_md > :first-child {
+#xihuqvekgy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jdslfmuoeq .gt_from_md > :last-child {
+#xihuqvekgy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jdslfmuoeq .gt_row {
+#xihuqvekgy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10561,7 +10561,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   overflow-x: hidden;
 }
 
-#jdslfmuoeq .gt_stub {
+#xihuqvekgy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -10573,7 +10573,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-left: 12px;
 }
 
-#jdslfmuoeq .gt_summary_row {
+#xihuqvekgy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -10583,7 +10583,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#jdslfmuoeq .gt_first_summary_row {
+#xihuqvekgy .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10593,7 +10593,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_grand_summary_row {
+#xihuqvekgy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -10603,7 +10603,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   padding-right: 5px;
 }
 
-#jdslfmuoeq .gt_first_grand_summary_row {
+#xihuqvekgy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10613,11 +10613,11 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-top-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_striped {
+#xihuqvekgy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jdslfmuoeq .gt_table_body {
+#xihuqvekgy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -10626,7 +10626,7 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-bottom-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_footnotes {
+#xihuqvekgy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -10640,13 +10640,13 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_footnote {
+#xihuqvekgy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jdslfmuoeq .gt_sourcenotes {
+#xihuqvekgy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -10660,46 +10660,46 @@ We get all rows of `x = superheroes` plus a new row from `y = publishers`, conta
   border-right-color: #D3D3D3;
 }
 
-#jdslfmuoeq .gt_sourcenote {
+#xihuqvekgy .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jdslfmuoeq .gt_left {
+#xihuqvekgy .gt_left {
   text-align: left;
 }
 
-#jdslfmuoeq .gt_center {
+#xihuqvekgy .gt_center {
   text-align: center;
 }
 
-#jdslfmuoeq .gt_right {
+#xihuqvekgy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jdslfmuoeq .gt_font_normal {
+#xihuqvekgy .gt_font_normal {
   font-weight: normal;
 }
 
-#jdslfmuoeq .gt_font_bold {
+#xihuqvekgy .gt_font_bold {
   font-weight: bold;
 }
 
-#jdslfmuoeq .gt_font_italic {
+#xihuqvekgy .gt_font_italic {
   font-style: italic;
 }
 
-#jdslfmuoeq .gt_super {
+#xihuqvekgy .gt_super {
   font-size: 65%;
 }
 
-#jdslfmuoeq .gt_footnote_marks {
+#xihuqvekgy .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jdslfmuoeq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="xihuqvekgy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>full_join(x = superheroes, y = publishers)</th>

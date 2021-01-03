@@ -54,6 +54,7 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="libs/vembedr-0.1.4/css/vembedr.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.16/datatables.js"></script>
@@ -168,7 +169,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to PSY 703</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-introduction"><i class="fa fa-check"></i>Course Introduction</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#broad-topics"><i class="fa fa-check"></i>Broad Topics</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#materials"><i class="fa fa-check"></i>Materials</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#hardware"><i class="fa fa-check"></i>Hardware</a></li>
@@ -747,79 +747,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load-the-gapminder-data-2" class="section level2">
 <h2><span class="header-section-number">20.2</span> Load the Gapminder data</h2>
 <p>As usual, load gapminder.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="functions-part3.html#cb263-1"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="functions-part3.html#cb264-1"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
 </div>
 <div id="restore-our-max-minus-min-function-1" class="section level2">
 <h2><span class="header-section-number">20.3</span> Restore our max minus min function</h2>
 <p>Let’s keep our previous function around as a baseline.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="functions-part3.html#cb264-1"></a>qdiff3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
-<span id="cb264-2"><a href="functions-part3.html#cb264-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb264-3"><a href="functions-part3.html#cb264-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs)</span>
-<span id="cb264-4"><a href="functions-part3.html#cb264-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb264-5"><a href="functions-part3.html#cb264-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="functions-part3.html#cb265-1"></a>qdiff3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb265-2"><a href="functions-part3.html#cb265-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
+<span id="cb265-3"><a href="functions-part3.html#cb265-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs)</span>
+<span id="cb265-4"><a href="functions-part3.html#cb265-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb265-5"><a href="functions-part3.html#cb265-5"></a>}</span></code></pre></div>
 </div>
 <div id="be-proactive-about-nas" class="section level2">
 <h2><span class="header-section-number">20.4</span> Be proactive about <code>NA</code>s</h2>
 <p>I am being gentle by letting you practice with the Gapminder data. In real life, missing data will make your life a living hell. If you are lucky, it will be properly indicated by the special value <code>NA</code>, but don’t hold your breath. Many built-in R functions have an <code>na.rm =</code> argument through which you can specify how you want to handle <code>NA</code>s. Typically the default value is <code>na.rm = FALSE</code> and typical default behavior is to either let <code>NA</code>s propagate or to raise an error. Let’s see how <code>quantile()</code> handles <code>NA</code>s:</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="functions-part3.html#cb265-1"></a>z &lt;-<span class="st"> </span>gapminder<span class="op">$</span>lifeExp</span>
-<span id="cb265-2"><a href="functions-part3.html#cb265-2"></a>z[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb265-3"><a href="functions-part3.html#cb265-3"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb265-4"><a href="functions-part3.html#cb265-4"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
-<span id="cb265-5"><a href="functions-part3.html#cb265-5"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
-<span id="cb265-6"><a href="functions-part3.html#cb265-6"></a><span class="kw">quantile</span>(z)</span>
-<span id="cb265-7"><a href="functions-part3.html#cb265-7"></a><span class="co">#&gt; Error in quantile.default(z): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span>
-<span id="cb265-8"><a href="functions-part3.html#cb265-8"></a><span class="kw">quantile</span>(z, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb265-9"><a href="functions-part3.html#cb265-9"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
-<span id="cb265-10"><a href="functions-part3.html#cb265-10"></a><span class="co">#&gt; 23.6 48.2 60.8 70.8 82.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="functions-part3.html#cb266-1"></a>z &lt;-<span class="st"> </span>gapminder<span class="op">$</span>lifeExp</span>
+<span id="cb266-2"><a href="functions-part3.html#cb266-2"></a>z[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb266-3"><a href="functions-part3.html#cb266-3"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb266-4"><a href="functions-part3.html#cb266-4"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb266-5"><a href="functions-part3.html#cb266-5"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
+<span id="cb266-6"><a href="functions-part3.html#cb266-6"></a><span class="kw">quantile</span>(z)</span>
+<span id="cb266-7"><a href="functions-part3.html#cb266-7"></a><span class="co">#&gt; Error in quantile.default(z): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span>
+<span id="cb266-8"><a href="functions-part3.html#cb266-8"></a><span class="kw">quantile</span>(z, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb266-9"><a href="functions-part3.html#cb266-9"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb266-10"><a href="functions-part3.html#cb266-10"></a><span class="co">#&gt; 23.6 48.2 60.8 70.8 82.6</span></span></code></pre></div>
 <p>So <code>quantile()</code> simply will not operate in the presence of <code>NA</code>s unless <code>na.rm = TRUE</code>. How shall we modify our function?</p>
 <p>If we wanted to hardwire <code>na.rm = TRUE</code>, we could. Focus on our call to <code>quantile()</code> inside our function definition.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="functions-part3.html#cb266-1"></a>qdiff4 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
-<span id="cb266-2"><a href="functions-part3.html#cb266-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb266-3"><a href="functions-part3.html#cb266-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb266-4"><a href="functions-part3.html#cb266-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb266-5"><a href="functions-part3.html#cb266-5"></a>}</span>
-<span id="cb266-6"><a href="functions-part3.html#cb266-6"></a><span class="kw">qdiff4</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb266-7"><a href="functions-part3.html#cb266-7"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb266-8"><a href="functions-part3.html#cb266-8"></a><span class="kw">qdiff4</span>(z)</span>
-<span id="cb266-9"><a href="functions-part3.html#cb266-9"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
-<p>This works but it is dangerous to invert the default behavior of a well-known built-in function and to provide the user with no way to override this.</p>
-<p>We could add an <code>na.rm =</code> argument to our own function. We might even enforce our preferred default – but at least we’re giving the user a way to control the behavior around <code>NA</code>s.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="functions-part3.html#cb267-1"></a>qdiff5 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) {</span>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="functions-part3.html#cb267-1"></a>qdiff4 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
 <span id="cb267-2"><a href="functions-part3.html#cb267-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb267-3"><a href="functions-part3.html#cb267-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs, <span class="dt">na.rm =</span> na.rm)</span>
+<span id="cb267-3"><a href="functions-part3.html#cb267-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb267-4"><a href="functions-part3.html#cb267-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
 <span id="cb267-5"><a href="functions-part3.html#cb267-5"></a>}</span>
-<span id="cb267-6"><a href="functions-part3.html#cb267-6"></a><span class="kw">qdiff5</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb267-6"><a href="functions-part3.html#cb267-6"></a><span class="kw">qdiff4</span>(gapminder<span class="op">$</span>lifeExp)</span>
 <span id="cb267-7"><a href="functions-part3.html#cb267-7"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb267-8"><a href="functions-part3.html#cb267-8"></a><span class="kw">qdiff5</span>(z)</span>
-<span id="cb267-9"><a href="functions-part3.html#cb267-9"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb267-10"><a href="functions-part3.html#cb267-10"></a><span class="kw">qdiff5</span>(z, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb267-11"><a href="functions-part3.html#cb267-11"></a><span class="co">#&gt; Error in quantile.default(x, probs, na.rm = na.rm): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span></code></pre></div>
+<span id="cb267-8"><a href="functions-part3.html#cb267-8"></a><span class="kw">qdiff4</span>(z)</span>
+<span id="cb267-9"><a href="functions-part3.html#cb267-9"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>This works but it is dangerous to invert the default behavior of a well-known built-in function and to provide the user with no way to override this.</p>
+<p>We could add an <code>na.rm =</code> argument to our own function. We might even enforce our preferred default – but at least we’re giving the user a way to control the behavior around <code>NA</code>s.</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="functions-part3.html#cb268-1"></a>qdiff5 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) {</span>
+<span id="cb268-2"><a href="functions-part3.html#cb268-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
+<span id="cb268-3"><a href="functions-part3.html#cb268-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs, <span class="dt">na.rm =</span> na.rm)</span>
+<span id="cb268-4"><a href="functions-part3.html#cb268-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb268-5"><a href="functions-part3.html#cb268-5"></a>}</span>
+<span id="cb268-6"><a href="functions-part3.html#cb268-6"></a><span class="kw">qdiff5</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb268-7"><a href="functions-part3.html#cb268-7"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb268-8"><a href="functions-part3.html#cb268-8"></a><span class="kw">qdiff5</span>(z)</span>
+<span id="cb268-9"><a href="functions-part3.html#cb268-9"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb268-10"><a href="functions-part3.html#cb268-10"></a><span class="kw">qdiff5</span>(z, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb268-11"><a href="functions-part3.html#cb268-11"></a><span class="co">#&gt; Error in quantile.default(x, probs, na.rm = na.rm): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span></code></pre></div>
 </div>
 <div id="the-useful-but-mysterious-...-argument" class="section level2">
 <h2><span class="header-section-number">20.5</span> The useful but mysterious <code>...</code> argument</h2>
 <p>You probably could have lived a long and happy life without knowing there are at least 9 different algorithms for computing quantiles. <a href="https://rdrr.io/r/stats/quantile.html">Go read about the <code>type</code> argument</a> of <code>quantile()</code>. TLDR: If a quantile is not unambiguously equal to an observed data point, you must somehow average two data points. You can weight this average different ways, depending on the rest of the data, and <code>type =</code> controls this.</p>
 <p>Let’s say we want to give the user of our function the ability to specify how the quantiles are computed, but we want to accomplish with as little fuss as possible. In fact, we don’t even want to clutter our function’s interface with this! This calls for the very special <code>...</code> argument. In English, this set of three dots is frequently called an “ellipsis”.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="functions-part3.html#cb268-1"></a>qdiff6 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, ...) {</span>
-<span id="cb268-2"><a href="functions-part3.html#cb268-2"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs, <span class="dt">na.rm =</span> na.rm, ...)</span>
-<span id="cb268-3"><a href="functions-part3.html#cb268-3"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb268-4"><a href="functions-part3.html#cb268-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="functions-part3.html#cb269-1"></a>qdiff6 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, ...) {</span>
+<span id="cb269-2"><a href="functions-part3.html#cb269-2"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs, <span class="dt">na.rm =</span> na.rm, ...)</span>
+<span id="cb269-3"><a href="functions-part3.html#cb269-3"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb269-4"><a href="functions-part3.html#cb269-4"></a>}</span></code></pre></div>
 <p>The practical significance of the <code>type =</code> argument is virtually nonexistent, so we can’t demo with the Gapminder data. Thanks to <a href="https://twitter.com/wrathematics">@wrathematics</a>, here’s a small example where we can (barely) detect a difference due to <code>type</code>.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="functions-part3.html#cb269-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb269-2"><a href="functions-part3.html#cb269-2"></a>z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb269-3"><a href="functions-part3.html#cb269-3"></a><span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">1</span>)</span>
-<span id="cb269-4"><a href="functions-part3.html#cb269-4"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
-<span id="cb269-5"><a href="functions-part3.html#cb269-5"></a><span class="co">#&gt; -2.346 -0.890 -0.564  0.429  1.084</span></span>
-<span id="cb269-6"><a href="functions-part3.html#cb269-6"></a><span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">4</span>)</span>
-<span id="cb269-7"><a href="functions-part3.html#cb269-7"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
-<span id="cb269-8"><a href="functions-part3.html#cb269-8"></a><span class="co">#&gt; -2.346 -1.049 -0.564  0.353  1.084</span></span>
-<span id="cb269-9"><a href="functions-part3.html#cb269-9"></a><span class="kw">all.equal</span>(<span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">1</span>), <span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">4</span>))</span>
-<span id="cb269-10"><a href="functions-part3.html#cb269-10"></a><span class="co">#&gt; [1] &quot;Mean relative difference: 0.178&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="functions-part3.html#cb270-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb270-2"><a href="functions-part3.html#cb270-2"></a>z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb270-3"><a href="functions-part3.html#cb270-3"></a><span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">1</span>)</span>
+<span id="cb270-4"><a href="functions-part3.html#cb270-4"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
+<span id="cb270-5"><a href="functions-part3.html#cb270-5"></a><span class="co">#&gt; -2.346 -0.890 -0.564  0.429  1.084</span></span>
+<span id="cb270-6"><a href="functions-part3.html#cb270-6"></a><span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">4</span>)</span>
+<span id="cb270-7"><a href="functions-part3.html#cb270-7"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
+<span id="cb270-8"><a href="functions-part3.html#cb270-8"></a><span class="co">#&gt; -2.346 -1.049 -0.564  0.353  1.084</span></span>
+<span id="cb270-9"><a href="functions-part3.html#cb270-9"></a><span class="kw">all.equal</span>(<span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">1</span>), <span class="kw">quantile</span>(z, <span class="dt">type =</span> <span class="dv">4</span>))</span>
+<span id="cb270-10"><a href="functions-part3.html#cb270-10"></a><span class="co">#&gt; [1] &quot;Mean relative difference: 0.178&quot;</span></span></code></pre></div>
 <p>Now we can call our function, requesting that quantiles be computed in different ways.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="functions-part3.html#cb270-1"></a><span class="kw">qdiff6</span>(z, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type =</span> <span class="dv">1</span>)</span>
-<span id="cb270-2"><a href="functions-part3.html#cb270-2"></a><span class="co">#&gt; [1] 1.32</span></span>
-<span id="cb270-3"><a href="functions-part3.html#cb270-3"></a><span class="kw">qdiff6</span>(z, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type =</span> <span class="dv">4</span>)</span>
-<span id="cb270-4"><a href="functions-part3.html#cb270-4"></a><span class="co">#&gt; [1] 1.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="functions-part3.html#cb271-1"></a><span class="kw">qdiff6</span>(z, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type =</span> <span class="dv">1</span>)</span>
+<span id="cb271-2"><a href="functions-part3.html#cb271-2"></a><span class="co">#&gt; [1] 1.32</span></span>
+<span id="cb271-3"><a href="functions-part3.html#cb271-3"></a><span class="kw">qdiff6</span>(z, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type =</span> <span class="dv">4</span>)</span>
+<span id="cb271-4"><a href="functions-part3.html#cb271-4"></a><span class="co">#&gt; [1] 1.4</span></span></code></pre></div>
 <p>While the difference may be subtle, <strong>it’s there</strong>. Marvel at the fact that we have passed <code>type = 1</code> through to <code>quantile()</code> <em>even though it was not a formal argument of our own function</em>.</p>
 <p>The special argument <code>...</code> is very useful when you want the ability to pass arbitrary arguments down to another function, but without constantly expanding the formal arguments to your function. This leaves you with a less cluttered function definition and gives you future flexibility to specify these arguments only when you need to.</p>
 <p>You will also encounter the <code>...</code> argument in many built-in functions – read up on <a href="https://rdrr.io/r/base/c.html"><code>c()</code></a> or <a href="https://rdrr.io/r/base/list.html"><code>list()</code></a> – and now you have a better sense of what it means. It is not a breezy “and so on and so forth.”</p>
@@ -831,26 +831,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Until now, we’ve relied on informal tests of our evolving function. If you are going to use a function a lot, especially if it is part of a package, it is wise to use formal unit tests.</p>
 <p>The <a href="https://testthat.r-lib.org">testthat</a> package (<a href="https://CRAN.R-project.org/package=testthat">CRAN</a>; <a href="https://github.com/r-lib/testthat">GitHub</a>) provides excellent facilities for this, with a distinct emphasis on automated unit testing of entire packages. However, we can take it out for a test drive even with our one measly function.</p>
 <p>We will construct a test with <code>test_that()</code> and, within it, we put one or more <em>expectations</em> that check actual against expected results. You simply harden your informal, interactive tests into formal unit tests. Here are some examples of tests and indicative expectations.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="functions-part3.html#cb271-1"></a><span class="kw">library</span>(testthat)</span>
-<span id="cb271-2"><a href="functions-part3.html#cb271-2"></a></span>
-<span id="cb271-3"><a href="functions-part3.html#cb271-3"></a><span class="kw">test_that</span>(<span class="st">&#39;invalid args are detected&#39;</span>, {</span>
-<span id="cb271-4"><a href="functions-part3.html#cb271-4"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(<span class="st">&quot;eggplants are purple&quot;</span>))</span>
-<span id="cb271-5"><a href="functions-part3.html#cb271-5"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(iris))</span>
-<span id="cb271-6"><a href="functions-part3.html#cb271-6"></a>})</span>
-<span id="cb271-7"><a href="functions-part3.html#cb271-7"></a></span>
-<span id="cb271-8"><a href="functions-part3.html#cb271-8"></a><span class="kw">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
-<span id="cb271-9"><a href="functions-part3.html#cb271-9"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>), <span class="dt">na.rm =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb271-10"><a href="functions-part3.html#cb271-10"></a>  <span class="kw">expect_equal</span>(<span class="kw">qdiff6</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>)), <span class="dv">4</span>)</span>
-<span id="cb271-11"><a href="functions-part3.html#cb271-11"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="functions-part3.html#cb272-1"></a><span class="kw">library</span>(testthat)</span>
+<span id="cb272-2"><a href="functions-part3.html#cb272-2"></a></span>
+<span id="cb272-3"><a href="functions-part3.html#cb272-3"></a><span class="kw">test_that</span>(<span class="st">&#39;invalid args are detected&#39;</span>, {</span>
+<span id="cb272-4"><a href="functions-part3.html#cb272-4"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(<span class="st">&quot;eggplants are purple&quot;</span>))</span>
+<span id="cb272-5"><a href="functions-part3.html#cb272-5"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(iris))</span>
+<span id="cb272-6"><a href="functions-part3.html#cb272-6"></a>})</span>
+<span id="cb272-7"><a href="functions-part3.html#cb272-7"></a></span>
+<span id="cb272-8"><a href="functions-part3.html#cb272-8"></a><span class="kw">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
+<span id="cb272-9"><a href="functions-part3.html#cb272-9"></a>  <span class="kw">expect_error</span>(<span class="kw">qdiff6</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>), <span class="dt">na.rm =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb272-10"><a href="functions-part3.html#cb272-10"></a>  <span class="kw">expect_equal</span>(<span class="kw">qdiff6</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>)), <span class="dv">4</span>)</span>
+<span id="cb272-11"><a href="functions-part3.html#cb272-11"></a>})</span></code></pre></div>
 <p>No news is good news! Let’s see what test failure would look like. Let’s revert to a version of our function that does no <code>NA</code> handling, then test for proper <code>NA</code> handling. We can watch it fail.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="functions-part3.html#cb272-1"></a>qdiff_no_NA &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
-<span id="cb272-2"><a href="functions-part3.html#cb272-2"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs)</span>
-<span id="cb272-3"><a href="functions-part3.html#cb272-3"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb272-4"><a href="functions-part3.html#cb272-4"></a>}</span>
-<span id="cb272-5"><a href="functions-part3.html#cb272-5"></a></span>
-<span id="cb272-6"><a href="functions-part3.html#cb272-6"></a><span class="kw">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
-<span id="cb272-7"><a href="functions-part3.html#cb272-7"></a>  <span class="kw">expect_that</span>(<span class="kw">qdiff_no_NA</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>)), <span class="kw">equals</span>(<span class="dv">4</span>))</span>
-<span id="cb272-8"><a href="functions-part3.html#cb272-8"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="functions-part3.html#cb273-1"></a>qdiff_no_NA &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb273-2"><a href="functions-part3.html#cb273-2"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs)</span>
+<span id="cb273-3"><a href="functions-part3.html#cb273-3"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb273-4"><a href="functions-part3.html#cb273-4"></a>}</span>
+<span id="cb273-5"><a href="functions-part3.html#cb273-5"></a></span>
+<span id="cb273-6"><a href="functions-part3.html#cb273-6"></a><span class="kw">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
+<span id="cb273-7"><a href="functions-part3.html#cb273-7"></a>  <span class="kw">expect_that</span>(<span class="kw">qdiff_no_NA</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>)), <span class="kw">equals</span>(<span class="dv">4</span>))</span>
+<span id="cb273-8"><a href="functions-part3.html#cb273-8"></a>})</span></code></pre></div>
 <p>Similar to the advice to use assertions in data analytical scripts, I recommend you use unit tests to monitor the behavior of functions you (or others) will use often. If your tests cover the function’s important behavior, then you can edit the internals freely. You’ll rest easy in the knowledge that, if you broke anything important, the tests will fail and alert you to the problem. A function that is important enough for unit tests probably also belongs in a package, where there are obvious mechanisms for running the tests as part of overall package checks.</p>
 <!--JB:
 

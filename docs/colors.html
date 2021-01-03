@@ -54,6 +54,7 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="libs/vembedr-0.1.4/css/vembedr.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.16/datatables.js"></script>
@@ -168,7 +169,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to PSY 703</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-introduction"><i class="fa fa-check"></i>Course Introduction</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#broad-topics"><i class="fa fa-check"></i>Broad Topics</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#materials"><i class="fa fa-check"></i>Materials</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#hardware"><i class="fa fa-check"></i>Hardware</a></li>
@@ -747,14 +747,14 @@ Note that I SKIPPED THE R GRAPH CATALOG LINK
 -->
 <div id="load-dplyr-and-gapminder-2" class="section level2">
 <h2><span class="header-section-number">25.1</span> Load dplyr and gapminder</h2>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="colors.html#cb283-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb283-2"><a href="colors.html#cb283-2"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="colors.html#cb284-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb284-2"><a href="colors.html#cb284-2"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
 </div>
 <div id="change-the-default-plotting-symbol-to-a-solid-circle" class="section level2">
 <h2><span class="header-section-number">25.2</span> Change the default plotting symbol to a solid circle</h2>
 <p>The color demos below will be more effective if the default plotting symbol is a solid circle. We limit ourselves to base R graphics in this tutorial, therefore we use <code>par()</code>, the function that queries and sets base R graphical parameters. In an interactive session or in a plain R script, do this:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="colors.html#cb284-1"></a><span class="co">## how to change the plot symbol in a simple, non-knitr setting</span></span>
-<span id="cb284-2"><a href="colors.html#cb284-2"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="colors.html#cb285-1"></a><span class="co">## how to change the plot symbol in a simple, non-knitr setting</span></span>
+<span id="cb285-2"><a href="colors.html#cb285-2"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
 <p>Technically, you don’t need to make the assignment, but it’s a good practice. We’re killing two birds with one stone:</p>
 <ol style="list-style-type: decimal">
 <li>Changing the default plotting symbol to a filled circle, which has code 19 in R. (Below I link to some samplers showing all the plotting symbols, FYI.)</li>
@@ -767,57 +767,57 @@ Note that I SKIPPED THE R GRAPH CATALOG LINK
 <div id="basic-color-specification-and-the-default-palette" class="section level2">
 <h2><span class="header-section-number">25.3</span> Basic color specification and the default palette</h2>
 <p>I need a small well-behaved excerpt from the Gapminder data for demonstration purposes. I randomly draw 8 countries, keep their data from 2007, and sort the rows based on GDP per capita. Meet <code>jdat</code>.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="colors.html#cb285-1"></a>jdat</span>
-<span id="cb285-2"><a href="colors.html#cb285-2"></a><span class="co">#&gt; # A tibble: 8 x 6</span></span>
-<span id="cb285-3"><a href="colors.html#cb285-3"></a><span class="co">#&gt;   country                  continent  year lifeExp        pop gdpPercap</span></span>
-<span id="cb285-4"><a href="colors.html#cb285-4"></a><span class="co">#&gt;   &lt;fct&gt;                    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb285-5"><a href="colors.html#cb285-5"></a><span class="co">#&gt; 1 Central African Republic Africa     2007    44.7    4369038      706.</span></span>
-<span id="cb285-6"><a href="colors.html#cb285-6"></a><span class="co">#&gt; 2 Guinea                   Africa     2007    56.0    9947814      943.</span></span>
-<span id="cb285-7"><a href="colors.html#cb285-7"></a><span class="co">#&gt; 3 Cote d&#39;Ivoire            Africa     2007    48.3   18013409     1545.</span></span>
-<span id="cb285-8"><a href="colors.html#cb285-8"></a><span class="co">#&gt; 4 India                    Asia       2007    64.7 1110396331     2452.</span></span>
-<span id="cb285-9"><a href="colors.html#cb285-9"></a><span class="co">#&gt; 5 Pakistan                 Asia       2007    65.5  169270617     2606.</span></span>
-<span id="cb285-10"><a href="colors.html#cb285-10"></a><span class="co">#&gt; 6 South Africa             Africa     2007    49.3   43997828     9270.</span></span>
-<span id="cb285-11"><a href="colors.html#cb285-11"></a><span class="co">#&gt; 7 Costa Rica               Americas   2007    78.8    4133884     9645.</span></span>
-<span id="cb285-12"><a href="colors.html#cb285-12"></a><span class="co">#&gt; 8 Panama                   Americas   2007    75.5    3242173     9809.</span></span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="colors.html#cb286-1"></a>jdat</span>
+<span id="cb286-2"><a href="colors.html#cb286-2"></a><span class="co">#&gt; # A tibble: 8 x 6</span></span>
+<span id="cb286-3"><a href="colors.html#cb286-3"></a><span class="co">#&gt;   country                  continent  year lifeExp        pop gdpPercap</span></span>
+<span id="cb286-4"><a href="colors.html#cb286-4"></a><span class="co">#&gt;   &lt;fct&gt;                    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb286-5"><a href="colors.html#cb286-5"></a><span class="co">#&gt; 1 Central African Republic Africa     2007    44.7    4369038      706.</span></span>
+<span id="cb286-6"><a href="colors.html#cb286-6"></a><span class="co">#&gt; 2 Guinea                   Africa     2007    56.0    9947814      943.</span></span>
+<span id="cb286-7"><a href="colors.html#cb286-7"></a><span class="co">#&gt; 3 Cote d&#39;Ivoire            Africa     2007    48.3   18013409     1545.</span></span>
+<span id="cb286-8"><a href="colors.html#cb286-8"></a><span class="co">#&gt; 4 India                    Asia       2007    64.7 1110396331     2452.</span></span>
+<span id="cb286-9"><a href="colors.html#cb286-9"></a><span class="co">#&gt; 5 Pakistan                 Asia       2007    65.5  169270617     2606.</span></span>
+<span id="cb286-10"><a href="colors.html#cb286-10"></a><span class="co">#&gt; 6 South Africa             Africa     2007    49.3   43997828     9270.</span></span>
+<span id="cb286-11"><a href="colors.html#cb286-11"></a><span class="co">#&gt; 7 Costa Rica               Americas   2007    78.8    4133884     9645.</span></span>
+<span id="cb286-12"><a href="colors.html#cb286-12"></a><span class="co">#&gt; 8 Panama                   Americas   2007    75.5    3242173     9809.</span></span></code></pre></div>
 <p>A simple scatterplot, using <code>plot()</code> from the base package <code>graphics</code>.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="colors.html#cb286-1"></a>j_xlim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">460</span>, <span class="dv">60000</span>)</span>
-<span id="cb286-2"><a href="colors.html#cb286-2"></a>j_ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">47</span>, <span class="dv">82</span>)</span>
-<span id="cb286-3"><a href="colors.html#cb286-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb286-4"><a href="colors.html#cb286-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Start your engines ...&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="colors.html#cb287-1"></a>j_xlim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">460</span>, <span class="dv">60000</span>)</span>
+<span id="cb287-2"><a href="colors.html#cb287-2"></a>j_ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">47</span>, <span class="dv">82</span>)</span>
+<span id="cb287-3"><a href="colors.html#cb287-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb287-4"><a href="colors.html#cb287-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Start your engines ...&quot;</span>)</span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>You can specify color explicitly by name by supplying a character vector with one or more color names (more on those soon). If you need a color for 8 points and you input fewer, recycling will kick in. Here’s what happens when you specify one or two colors via the <code>col =</code> argument of <code>plot()</code>.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="colors.html#cb287-1"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb287-2"><a href="colors.html#cb287-2"></a>     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;col = &quot;red&quot;&#39;</span>)</span>
-<span id="cb287-3"><a href="colors.html#cb287-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb287-4"><a href="colors.html#cb287-4"></a>     <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="dt">main =</span> <span class="st">&#39;col = c(&quot;blue&quot;, &quot;orange&quot;)&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="colors.html#cb288-1"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb288-2"><a href="colors.html#cb288-2"></a>     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">main =</span> <span class="st">&#39;col = &quot;red&quot;&#39;</span>)</span>
+<span id="cb288-3"><a href="colors.html#cb288-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb288-4"><a href="colors.html#cb288-4"></a>     <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="dt">main =</span> <span class="st">&#39;col = c(&quot;blue&quot;, &quot;orange&quot;)&#39;</span>)</span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-8-1.png" width="50%" /><img src="025_colors_files/figure-html/unnamed-chunk-8-2.png" width="50%" /></p>
 <p>You can specify color explicitly with a small positive integer, which is interpreted as indexing into the current palette, which can be inspected via <code>palette()</code>. I’ve added these integers and the color names as labels to the figures below. The default palette contains 8 colors, which is why we’re looking at data from eight countries. The default palette is ugly.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="colors.html#cb288-1"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb288-2"><a href="colors.html#cb288-2"></a>     <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span>n_c, <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;col = 1:&#39;</span>, n_c))</span>
-<span id="cb288-3"><a href="colors.html#cb288-3"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">pos =</span> <span class="dv">1</span>))</span>
-<span id="cb288-4"><a href="colors.html#cb288-4"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb288-5"><a href="colors.html#cb288-5"></a>     <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span>n_c, <span class="dt">main =</span> <span class="st">&#39;the default palette()&#39;</span>)</span>
-<span id="cb288-6"><a href="colors.html#cb288-6"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> <span class="kw">palette</span>(),</span>
-<span id="cb288-7"><a href="colors.html#cb288-7"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>))))     </span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="colors.html#cb289-1"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb289-2"><a href="colors.html#cb289-2"></a>     <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span>n_c, <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&#39;col = 1:&#39;</span>, n_c))</span>
+<span id="cb289-3"><a href="colors.html#cb289-3"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">pos =</span> <span class="dv">1</span>))</span>
+<span id="cb289-4"><a href="colors.html#cb289-4"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb289-5"><a href="colors.html#cb289-5"></a>     <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span>n_c, <span class="dt">main =</span> <span class="st">&#39;the default palette()&#39;</span>)</span>
+<span id="cb289-6"><a href="colors.html#cb289-6"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> <span class="kw">palette</span>(),</span>
+<span id="cb289-7"><a href="colors.html#cb289-7"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>))))     </span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-9-1.png" width="50%" /><img src="025_colors_files/figure-html/unnamed-chunk-9-2.png" width="50%" /></p>
 <p>You can provide your own vector of colors instead. I am intentionally modelling best practice here too: if you’re going to use custom colors, store them as an object in exactly one place, and use that object in plot calls, legend-making, etc. This makes it much easier to fiddle with your custom colors, which few of us can resist.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="colors.html#cb289-1"></a>j_colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;chartreuse3&#39;</span>, <span class="st">&#39;cornflowerblue&#39;</span>, <span class="st">&#39;darkgoldenrod1&#39;</span>, <span class="st">&#39;peachpuff3&#39;</span>,</span>
-<span id="cb289-2"><a href="colors.html#cb289-2"></a>             <span class="st">&#39;mediumorchid2&#39;</span>, <span class="st">&#39;turquoise3&#39;</span>, <span class="st">&#39;wheat4&#39;</span>, <span class="st">&#39;slategray2&#39;</span>)</span>
-<span id="cb289-3"><a href="colors.html#cb289-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb289-4"><a href="colors.html#cb289-4"></a>     <span class="dt">col =</span> j_colors, <span class="dt">main =</span> <span class="st">&#39;custom colors!&#39;</span>)</span>
-<span id="cb289-5"><a href="colors.html#cb289-5"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> j_colors,</span>
-<span id="cb289-6"><a href="colors.html#cb289-6"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>)))) </span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="colors.html#cb290-1"></a>j_colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;chartreuse3&#39;</span>, <span class="st">&#39;cornflowerblue&#39;</span>, <span class="st">&#39;darkgoldenrod1&#39;</span>, <span class="st">&#39;peachpuff3&#39;</span>,</span>
+<span id="cb290-2"><a href="colors.html#cb290-2"></a>             <span class="st">&#39;mediumorchid2&#39;</span>, <span class="st">&#39;turquoise3&#39;</span>, <span class="st">&#39;wheat4&#39;</span>, <span class="st">&#39;slategray2&#39;</span>)</span>
+<span id="cb290-3"><a href="colors.html#cb290-3"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb290-4"><a href="colors.html#cb290-4"></a>     <span class="dt">col =</span> j_colors, <span class="dt">main =</span> <span class="st">&#39;custom colors!&#39;</span>)</span>
+<span id="cb290-5"><a href="colors.html#cb290-5"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> j_colors,</span>
+<span id="cb290-6"><a href="colors.html#cb290-6"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>)))) </span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="what-colors-are-available-ditto-for-symbols-and-line-types" class="section level2">
 <h2><span class="header-section-number">25.4</span> What colors are available? Ditto for symbols and line types</h2>
 <p>Who would have guessed that R knows about “peachpuff3”? To see the names of all 657 the built-in colors, use <code>colors()</code>.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="colors.html#cb290-1"></a><span class="kw">head</span>(<span class="kw">colors</span>())</span>
-<span id="cb290-2"><a href="colors.html#cb290-2"></a><span class="co">#&gt; [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot;</span></span>
-<span id="cb290-3"><a href="colors.html#cb290-3"></a><span class="co">#&gt; [5] &quot;antiquewhite2&quot; &quot;antiquewhite3&quot;</span></span>
-<span id="cb290-4"><a href="colors.html#cb290-4"></a><span class="kw">tail</span>(<span class="kw">colors</span>())</span>
-<span id="cb290-5"><a href="colors.html#cb290-5"></a><span class="co">#&gt; [1] &quot;yellow&quot;      &quot;yellow1&quot;     &quot;yellow2&quot;     &quot;yellow3&quot;     &quot;yellow4&quot;    </span></span>
-<span id="cb290-6"><a href="colors.html#cb290-6"></a><span class="co">#&gt; [6] &quot;yellowgreen&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="colors.html#cb291-1"></a><span class="kw">head</span>(<span class="kw">colors</span>())</span>
+<span id="cb291-2"><a href="colors.html#cb291-2"></a><span class="co">#&gt; [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot;</span></span>
+<span id="cb291-3"><a href="colors.html#cb291-3"></a><span class="co">#&gt; [5] &quot;antiquewhite2&quot; &quot;antiquewhite3&quot;</span></span>
+<span id="cb291-4"><a href="colors.html#cb291-4"></a><span class="kw">tail</span>(<span class="kw">colors</span>())</span>
+<span id="cb291-5"><a href="colors.html#cb291-5"></a><span class="co">#&gt; [1] &quot;yellow&quot;      &quot;yellow1&quot;     &quot;yellow2&quot;     &quot;yellow3&quot;     &quot;yellow4&quot;    </span></span>
+<span id="cb291-6"><a href="colors.html#cb291-6"></a><span class="co">#&gt; [6] &quot;yellowgreen&quot;</span></span></code></pre></div>
 <p>But it’s much more exciting to see the colors displayed! Lots of people have tackled this – for colors, plotting symbols, line types – and put their work on the internet. Some examples:</p>
 <ul>
 <li>I put color names <a href="img/r.col.white.bkgd.pdf">on a white background</a> and <a href="img/r.col.black.bkgd.pdf">on black</a> <em>(sorry, these are PDFs)</em></li>
@@ -831,10 +831,10 @@ Note that I SKIPPED THE R GRAPH CATALOG LINK
 <div id="rcolorbrewer" class="section level2">
 <h2><span class="header-section-number">25.5</span> RColorBrewer</h2>
 <p>Most of us are pretty lousy at choosing colors and it’s easy to spend too much time fiddling with them. <a href="https://en.wikipedia.org/wiki/Cynthia_Brewer">Cynthia Brewer</a>, a geographer and color specialist, has created sets of colors for print and the web and they are available in the add-on package <a href="https://CRAN.R-project.org/package=RColorBrewer">RColorBrewer</a>. You will need to install and load this package to use.</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="colors.html#cb291-1"></a><span class="co"># install.packages(&quot;RColorBrewer&quot;)</span></span>
-<span id="cb291-2"><a href="colors.html#cb291-2"></a><span class="kw">library</span>(RColorBrewer)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="colors.html#cb292-1"></a><span class="co"># install.packages(&quot;RColorBrewer&quot;)</span></span>
+<span id="cb292-2"><a href="colors.html#cb292-2"></a><span class="kw">library</span>(RColorBrewer)</span></code></pre></div>
 <p>Let’s look at all the associated palettes.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="colors.html#cb292-1"></a><span class="kw">display.brewer.all</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="colors.html#cb293-1"></a><span class="kw">display.brewer.all</span>()</span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>They fall into three classes. From top to bottom, they are</p>
 <ul>
@@ -843,15 +843,15 @@ Note that I SKIPPED THE R GRAPH CATALOG LINK
 <li><strong>diverging</strong>: great for things that range from “extreme and negative” to “extreme and positive”, going through “non extreme and boring” along the way, such as t-statistics and z-scores and signed correlations</li>
 </ul>
 <p>You can view a single RColorBrewer palette by specifying its name:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="colors.html#cb293-1"></a><span class="kw">display.brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&#39;Dark2&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="colors.html#cb294-1"></a><span class="kw">display.brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&#39;Dark2&#39;</span>)</span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>The package is, frankly, rather clunky, as evidenced by the requirement to specify <code>n</code> above. Sorry folks, you’ll just have to cope.</p>
 <p>Here we revisit specifying custom colors as we did above, but using a palette from RColorBrewer instead of our artisanal “peachpuff3” work of art. As before, I display the colors themselves but you’ll see we’re not getting the friendly names you’ve seen before, which brings us to our next topic.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="colors.html#cb294-1"></a>j_brew_colors &lt;-<span class="st"> </span><span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&quot;Dark2&quot;</span>)</span>
-<span id="cb294-2"><a href="colors.html#cb294-2"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
-<span id="cb294-3"><a href="colors.html#cb294-3"></a>     <span class="dt">col =</span> j_brew_colors, <span class="dt">main =</span> <span class="st">&#39;Dark2 qualitative palette from RColorBrewer&#39;</span>)</span>
-<span id="cb294-4"><a href="colors.html#cb294-4"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> j_brew_colors,</span>
-<span id="cb294-5"><a href="colors.html#cb294-5"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>)))) </span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="colors.html#cb295-1"></a>j_brew_colors &lt;-<span class="st"> </span><span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&quot;Dark2&quot;</span>)</span>
+<span id="cb295-2"><a href="colors.html#cb295-2"></a><span class="kw">plot</span>(lifeExp <span class="op">~</span><span class="st"> </span>gdpPercap, jdat, <span class="dt">log =</span> <span class="st">&#39;x&#39;</span>, <span class="dt">xlim =</span> j_xlim, <span class="dt">ylim =</span> j_ylim,</span>
+<span id="cb295-3"><a href="colors.html#cb295-3"></a>     <span class="dt">col =</span> j_brew_colors, <span class="dt">main =</span> <span class="st">&#39;Dark2 qualitative palette from RColorBrewer&#39;</span>)</span>
+<span id="cb295-4"><a href="colors.html#cb295-4"></a><span class="kw">with</span>(jdat, <span class="kw">text</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">labels =</span> j_brew_colors,</span>
+<span id="cb295-5"><a href="colors.html#cb295-5"></a>                <span class="dt">pos =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>)))) </span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 <div id="viridis" class="section level2">
@@ -862,11 +862,11 @@ Note that I SKIPPED THE R GRAPH CATALOG LINK
 </blockquote>
 <p>I encourage you to install viridis and read <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">the vignette</a>. It is easy to use these palettes in ggplot2 via <code>scale_color_viridis()</code> and <code>scale_fill_viridis()</code>. Taking control of color palettes in ggplot2 is covered elsewhere (see Chapter <a href="qualitative-colors.html#qualitative-colors">26</a>.</p>
 <p>Here are two examples that show the viridis palettes:</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="colors.html#cb295-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb295-2"><a href="colors.html#cb295-2"></a><span class="kw">library</span>(viridis)</span>
-<span id="cb295-3"><a href="colors.html#cb295-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
-<span id="cb295-4"><a href="colors.html#cb295-4"></a><span class="st">  </span><span class="kw">geom_hex</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>() <span class="op">+</span></span>
-<span id="cb295-5"><a href="colors.html#cb295-5"></a><span class="st">  </span><span class="kw">scale_fill_viridis</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="colors.html#cb296-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb296-2"><a href="colors.html#cb296-2"></a><span class="kw">library</span>(viridis)</span>
+<span id="cb296-3"><a href="colors.html#cb296-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
+<span id="cb296-4"><a href="colors.html#cb296-4"></a><span class="st">  </span><span class="kw">geom_hex</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>() <span class="op">+</span></span>
+<span id="cb296-5"><a href="colors.html#cb296-5"></a><span class="st">  </span><span class="kw">scale_fill_viridis</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="025_colors_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="figure"><span id="fig:unnamed-chunk-17"></span>
 <img src="img/viridis-sample2.png" alt="From [https://github.com/sjmgarnier/viridis](https://github.com/sjmgarnier/viridis)"  />
@@ -878,9 +878,9 @@ Figure 25.1: From <a href="https://github.com/sjmgarnier/viridis">https://github
 <div id="hexadecimal-rgb-color-specification" class="section level2">
 <h2><span class="header-section-number">25.7</span> Hexadecimal RGB color specification</h2>
 <p>Instead of small positive integers and Crayola-style names, a more general and machine-readable approach to color specification is as hexadecimal triplets. Here is how the RColorBrewer Dark2 palette is actually stored:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="colors.html#cb296-1"></a><span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&quot;Dark2&quot;</span>)</span>
-<span id="cb296-2"><a href="colors.html#cb296-2"></a><span class="co">#&gt; [1] &quot;#1B9E77&quot; &quot;#D95F02&quot; &quot;#7570B3&quot; &quot;#E7298A&quot; &quot;#66A61E&quot; &quot;#E6AB02&quot; &quot;#A6761D&quot;</span></span>
-<span id="cb296-3"><a href="colors.html#cb296-3"></a><span class="co">#&gt; [8] &quot;#666666&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="colors.html#cb297-1"></a><span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">name =</span> <span class="st">&quot;Dark2&quot;</span>)</span>
+<span id="cb297-2"><a href="colors.html#cb297-2"></a><span class="co">#&gt; [1] &quot;#1B9E77&quot; &quot;#D95F02&quot; &quot;#7570B3&quot; &quot;#E7298A&quot; &quot;#66A61E&quot; &quot;#E6AB02&quot; &quot;#A6761D&quot;</span></span>
+<span id="cb297-3"><a href="colors.html#cb297-3"></a><span class="co">#&gt; [8] &quot;#666666&quot;</span></span></code></pre></div>
 <p>The leading <code>#</code> is just there by convention. Parse the hexadecimal string like so: <code>#rrggbb</code>, where <code>rr</code>, <code>gg</code>, and <code>bb</code> refer to color intensity in the red, green, and blue channels, respectively. Each is specified as a two-digit base 16 number, which is the meaning of “hexadecimal” (or “hex” for short).</p>
 <p>Here’s a table relating base 16 numbers to the beloved base 10 system.</p>
 <style>html {
@@ -2084,8 +2084,8 @@ Figure 25.2: From <a href="https://ggplot2-book.org/index.html">ggplot2: Elegant
 <div id="accommodating-color-blindness" class="section level2">
 <h2><span class="header-section-number">25.9</span> Accommodating color blindness</h2>
 <p>The dichromat package (<a href="https://CRAN.R-project.org/package=dichromat">on CRAN</a>) will help you select a color scheme that will be effective for color blind readers.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="colors.html#cb297-1"></a><span class="co"># install.packages(&quot;dichromat&quot;)</span></span>
-<span id="cb297-2"><a href="colors.html#cb297-2"></a><span class="kw">library</span>(dichromat)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="colors.html#cb298-1"></a><span class="co"># install.packages(&quot;dichromat&quot;)</span></span>
+<span id="cb298-2"><a href="colors.html#cb298-2"></a><span class="kw">library</span>(dichromat)</span></code></pre></div>
 <p>This <code>colorschemes</code> list contains <code>length(colorschemes)</code> color schemes “suitable for people with deficient or anomalous red-green vision”:</p>
 <div class="figure"><span id="fig:dichromat-colorschemes"></span>
 <img src="025_colors_files/figure-html/dichromat-colorschemes-1.png" alt="Color schemes &quot;suitable for people with deficient or anomalous red-green vision&quot;" width="672" />
@@ -2097,11 +2097,11 @@ Figure 25.3: Color schemes “suitable for people with deficient or anomalous re
 </div>
 <div id="clean-up-1" class="section level2">
 <h2><span class="header-section-number">25.10</span> Clean up</h2>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="colors.html#cb298-1"></a><span class="co">## NOT RUN</span></span>
-<span id="cb298-2"><a href="colors.html#cb298-2"></a><span class="co">## execute this if you followed my code for</span></span>
-<span id="cb298-3"><a href="colors.html#cb298-3"></a><span class="co">## changing the default plot symbol in a simple, non-knitr setting</span></span>
-<span id="cb298-4"><a href="colors.html#cb298-4"></a><span class="co">## reversing the effects of this: opar &lt;- par(pch = 19)</span></span>
-<span id="cb298-5"><a href="colors.html#cb298-5"></a><span class="kw">par</span>(opar)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="colors.html#cb299-1"></a><span class="co">## NOT RUN</span></span>
+<span id="cb299-2"><a href="colors.html#cb299-2"></a><span class="co">## execute this if you followed my code for</span></span>
+<span id="cb299-3"><a href="colors.html#cb299-3"></a><span class="co">## changing the default plot symbol in a simple, non-knitr setting</span></span>
+<span id="cb299-4"><a href="colors.html#cb299-4"></a><span class="co">## reversing the effects of this: opar &lt;- par(pch = 19)</span></span>
+<span id="cb299-5"><a href="colors.html#cb299-5"></a><span class="kw">par</span>(opar)</span></code></pre></div>
 </div>
 <div id="resources-9" class="section level2">
 <h2><span class="header-section-number">25.11</span> Resources</h2>
