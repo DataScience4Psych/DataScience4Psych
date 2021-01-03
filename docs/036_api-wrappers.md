@@ -254,7 +254,7 @@ searchplos(q= "Helianthus", fl= "id", limit = 5)
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1      635     0
+#> 1      642     0
 #> 
 #> $data
 #> # A tibble: 5 x 1
@@ -264,7 +264,7 @@ searchplos(q= "Helianthus", fl= "id", limit = 5)
 #> 2 10.1371/journal.pone.0213065
 #> 3 10.1371/journal.pone.0148280
 #> 4 10.1371/journal.pone.0111982
-#> 5 10.1371/journal.pone.0139188
+#> 5 10.1371/journal.pone.0212371
 ```
 
 
@@ -274,7 +274,7 @@ searchplos("materials_and_methods:France", fl = "title, materials_and_methods")
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1    15968     0
+#> 1    16091     0
 #> 
 #> $data
 #> # A tibble: 10 x 2
@@ -299,7 +299,7 @@ searchplos("materials_and_methods:study site", fl = "title, materials_and_method
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1   111355     0
+#> 1   112212     0
 #> 
 #> $data
 #> # A tibble: 10 x 2
@@ -310,11 +310,11 @@ searchplos("materials_and_methods:study site", fl = "title, materials_and_method
 #>  3 Variance Component Analysis of a M~ "\n1) The study\nAddona et al. [6] condu~
 #>  4 Obtaining Valid Laboratory Data in~ "The study was a randomised, double-blin~
 #>  5 Transposable Prophage Mu Is Organi~ "\nStrain construction\nAll strains used~
-#>  6 Structural and functional dissecti~ "\nBacterial strains and culture conditi~
-#>  7 Retention in Care and Outpatient C~ "\nEthics Statement\nThe Boston Universi~
-#>  8 Global migration of clinical resea~ "\nPrimary data source\nOur primary data~
-#>  9 Risk of Injection-Site Abscess amo~ "\nStudy Sites\nThe VAEIK study is a Pha~
-#> 10 A-Site mRNA Cleavage Is Not Requir~ "\nBacterial strains and plasmids\nAll b~
+#>  6 Effects of land-use change and rel~ "\nBiodiversity data and species status\~
+#>  7 Structural and functional dissecti~ "\nBacterial strains and culture conditi~
+#>  8 Retention in Care and Outpatient C~ "\nEthics Statement\nThe Boston Universi~
+#>  9 Global migration of clinical resea~ "\nPrimary data source\nOur primary data~
+#> 10 Risk of Injection-Site Abscess amo~ "\nStudy Sites\nThe VAEIK study is a Pha~
 ```
 
 
@@ -324,22 +324,22 @@ searchplos("*:*", fl = "id")
 #> # A tibble: 1 x 2
 #>   numFound start
 #>      <int> <int>
-#> 1  2456202     0
+#> 1  2469527     0
 #> 
 #> $data
 #> # A tibble: 10 x 1
 #>    id                                                 
 #>    <chr>                                              
-#>  1 10.1371/journal.pbio.1000436/title                 
-#>  2 10.1371/journal.pbio.1000436/abstract              
-#>  3 10.1371/journal.pbio.1000436/references            
-#>  4 10.1371/journal.pbio.1000436/body                  
-#>  5 10.1371/journal.pbio.1000436/introduction          
-#>  6 10.1371/journal.pbio.1000436/results_and_discussion
-#>  7 10.1371/journal.pbio.1000436/materials_and_methods 
-#>  8 10.1371/journal.pbio.1000436/supporting_information
-#>  9 10.1371/journal.pbio.1000437/title                 
-#> 10 10.1371/journal.pbio.1000437/abstract
+#>  1 10.1371/journal.pbio.1000146/title                 
+#>  2 10.1371/journal.pbio.1000146/abstract              
+#>  3 10.1371/journal.pbio.1000146/references            
+#>  4 10.1371/journal.pbio.1000146/body                  
+#>  5 10.1371/journal.pbio.1000146/supporting_information
+#>  6 10.1371/journal.pbio.1000146/conclusions           
+#>  7 10.1371/journal.pbio.1000147/title                 
+#>  8 10.1371/journal.pbio.1000147/abstract              
+#>  9 10.1371/journal.pbio.1000147/references            
+#> 10 10.1371/journal.pbio.1000147/body
 ```
 
 Here is a list of [options for the search](http://api.plos.org/solr/search-fields/) or you can run `data(plosfields)` followed by `plosfields` in the R Console.
