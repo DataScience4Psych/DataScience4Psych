@@ -747,15 +747,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load-the-gapminder-data-1" class="section level2">
 <h2><span class="header-section-number">19.2</span> Load the Gapminder data</h2>
 <p>As usual, load gapminder.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="functions-part2.html#cb251-1"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="functions-part2.html#cb250-1"></a><span class="kw">library</span>(gapminder)</span></code></pre></div>
 </div>
 <div id="restore-our-max-minus-min-function" class="section level2">
 <h2><span class="header-section-number">19.3</span> Restore our max minus min function</h2>
 <p>Let’s keep our previous function around as a baseline.</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="functions-part2.html#cb252-1"></a>mmm &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
-<span id="cb252-2"><a href="functions-part2.html#cb252-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb252-3"><a href="functions-part2.html#cb252-3"></a>  <span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x)</span>
-<span id="cb252-4"><a href="functions-part2.html#cb252-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="functions-part2.html#cb251-1"></a>mmm &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb251-2"><a href="functions-part2.html#cb251-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
+<span id="cb251-3"><a href="functions-part2.html#cb251-3"></a>  <span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x)</span>
+<span id="cb251-4"><a href="functions-part2.html#cb251-4"></a>}</span></code></pre></div>
 </div>
 <div id="generalize-our-function-to-other-quantiles" class="section level2">
 <h2><span class="header-section-number">19.4</span> Generalize our function to other quantiles</h2>
@@ -773,115 +773,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">19.5</span> Get something that works, again</h2>
 <p>The eventual inputs to our new function will be the data <code>x</code> and two probabilities.</p>
 <p>First, play around with the <code>quantile()</code> function. Convince yourself you know how to use it, for example, by cross-checking your results with other built-in functions.</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="functions-part2.html#cb253-1"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb253-2"><a href="functions-part2.html#cb253-2"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
-<span id="cb253-3"><a href="functions-part2.html#cb253-3"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
-<span id="cb253-4"><a href="functions-part2.html#cb253-4"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="fl">0.5</span>)</span>
-<span id="cb253-5"><a href="functions-part2.html#cb253-5"></a><span class="co">#&gt;  50% </span></span>
-<span id="cb253-6"><a href="functions-part2.html#cb253-6"></a><span class="co">#&gt; 60.7</span></span>
-<span id="cb253-7"><a href="functions-part2.html#cb253-7"></a><span class="kw">median</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb253-8"><a href="functions-part2.html#cb253-8"></a><span class="co">#&gt; [1] 60.7</span></span>
-<span id="cb253-9"><a href="functions-part2.html#cb253-9"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
-<span id="cb253-10"><a href="functions-part2.html#cb253-10"></a><span class="co">#&gt;  25%  75% </span></span>
-<span id="cb253-11"><a href="functions-part2.html#cb253-11"></a><span class="co">#&gt; 48.2 70.8</span></span>
-<span id="cb253-12"><a href="functions-part2.html#cb253-12"></a><span class="kw">boxplot</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">plot =</span> <span class="ot">FALSE</span>)<span class="op">$</span>stats</span>
-<span id="cb253-13"><a href="functions-part2.html#cb253-13"></a><span class="co">#&gt;      [,1]</span></span>
-<span id="cb253-14"><a href="functions-part2.html#cb253-14"></a><span class="co">#&gt; [1,] 23.6</span></span>
-<span id="cb253-15"><a href="functions-part2.html#cb253-15"></a><span class="co">#&gt; [2,] 48.2</span></span>
-<span id="cb253-16"><a href="functions-part2.html#cb253-16"></a><span class="co">#&gt; [3,] 60.7</span></span>
-<span id="cb253-17"><a href="functions-part2.html#cb253-17"></a><span class="co">#&gt; [4,] 70.8</span></span>
-<span id="cb253-18"><a href="functions-part2.html#cb253-18"></a><span class="co">#&gt; [5,] 82.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="functions-part2.html#cb252-1"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb252-2"><a href="functions-part2.html#cb252-2"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb252-3"><a href="functions-part2.html#cb252-3"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
+<span id="cb252-4"><a href="functions-part2.html#cb252-4"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="fl">0.5</span>)</span>
+<span id="cb252-5"><a href="functions-part2.html#cb252-5"></a><span class="co">#&gt;  50% </span></span>
+<span id="cb252-6"><a href="functions-part2.html#cb252-6"></a><span class="co">#&gt; 60.7</span></span>
+<span id="cb252-7"><a href="functions-part2.html#cb252-7"></a><span class="kw">median</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb252-8"><a href="functions-part2.html#cb252-8"></a><span class="co">#&gt; [1] 60.7</span></span>
+<span id="cb252-9"><a href="functions-part2.html#cb252-9"></a><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb252-10"><a href="functions-part2.html#cb252-10"></a><span class="co">#&gt;  25%  75% </span></span>
+<span id="cb252-11"><a href="functions-part2.html#cb252-11"></a><span class="co">#&gt; 48.2 70.8</span></span>
+<span id="cb252-12"><a href="functions-part2.html#cb252-12"></a><span class="kw">boxplot</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">plot =</span> <span class="ot">FALSE</span>)<span class="op">$</span>stats</span>
+<span id="cb252-13"><a href="functions-part2.html#cb252-13"></a><span class="co">#&gt;      [,1]</span></span>
+<span id="cb252-14"><a href="functions-part2.html#cb252-14"></a><span class="co">#&gt; [1,] 23.6</span></span>
+<span id="cb252-15"><a href="functions-part2.html#cb252-15"></a><span class="co">#&gt; [2,] 48.2</span></span>
+<span id="cb252-16"><a href="functions-part2.html#cb252-16"></a><span class="co">#&gt; [3,] 60.7</span></span>
+<span id="cb252-17"><a href="functions-part2.html#cb252-17"></a><span class="co">#&gt; [4,] 70.8</span></span>
+<span id="cb252-18"><a href="functions-part2.html#cb252-18"></a><span class="co">#&gt; [5,] 82.6</span></span></code></pre></div>
 <p>Now write a code snippet that takes the difference between two quantiles.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="functions-part2.html#cb254-1"></a>the_probs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)</span>
-<span id="cb254-2"><a href="functions-part2.html#cb254-2"></a>the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> the_probs)</span>
-<span id="cb254-3"><a href="functions-part2.html#cb254-3"></a><span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb254-4"><a href="functions-part2.html#cb254-4"></a><span class="co">#&gt; [1] 22.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="functions-part2.html#cb253-1"></a>the_probs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)</span>
+<span id="cb253-2"><a href="functions-part2.html#cb253-2"></a>the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> the_probs)</span>
+<span id="cb253-3"><a href="functions-part2.html#cb253-3"></a><span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb253-4"><a href="functions-part2.html#cb253-4"></a><span class="co">#&gt; [1] 22.6</span></span></code></pre></div>
 </div>
 <div id="turn-the-working-interactive-code-into-a-function-again" class="section level2">
 <h2><span class="header-section-number">19.6</span> Turn the working interactive code into a function, again</h2>
 <p>I’ll use <code>qdiff</code> as the base of our function’s name. I copy the overall structure from our previous “max minus min” work but replace the guts of the function with the more general code we just developed.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="functions-part2.html#cb255-1"></a>qdiff1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, probs) {</span>
-<span id="cb255-2"><a href="functions-part2.html#cb255-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb255-3"><a href="functions-part2.html#cb255-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs)</span>
-<span id="cb255-4"><a href="functions-part2.html#cb255-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb255-5"><a href="functions-part2.html#cb255-5"></a>}</span>
-<span id="cb255-6"><a href="functions-part2.html#cb255-6"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
-<span id="cb255-7"><a href="functions-part2.html#cb255-7"></a><span class="co">#&gt; [1] 22.6</span></span>
-<span id="cb255-8"><a href="functions-part2.html#cb255-8"></a><span class="kw">IQR</span>(gapminder<span class="op">$</span>lifeExp) <span class="co"># hey, we&#39;ve reinvented IQR</span></span>
-<span id="cb255-9"><a href="functions-part2.html#cb255-9"></a><span class="co">#&gt; [1] 22.6</span></span>
-<span id="cb255-10"><a href="functions-part2.html#cb255-10"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb255-11"><a href="functions-part2.html#cb255-11"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb255-12"><a href="functions-part2.html#cb255-12"></a><span class="kw">mmm</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb255-13"><a href="functions-part2.html#cb255-13"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="functions-part2.html#cb254-1"></a>qdiff1 &lt;-<span class="st"> </span><span class="cf">function</span>(x, probs) {</span>
+<span id="cb254-2"><a href="functions-part2.html#cb254-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
+<span id="cb254-3"><a href="functions-part2.html#cb254-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> x, <span class="dt">probs =</span> probs)</span>
+<span id="cb254-4"><a href="functions-part2.html#cb254-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb254-5"><a href="functions-part2.html#cb254-5"></a>}</span>
+<span id="cb254-6"><a href="functions-part2.html#cb254-6"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb254-7"><a href="functions-part2.html#cb254-7"></a><span class="co">#&gt; [1] 22.6</span></span>
+<span id="cb254-8"><a href="functions-part2.html#cb254-8"></a><span class="kw">IQR</span>(gapminder<span class="op">$</span>lifeExp) <span class="co"># hey, we&#39;ve reinvented IQR</span></span>
+<span id="cb254-9"><a href="functions-part2.html#cb254-9"></a><span class="co">#&gt; [1] 22.6</span></span>
+<span id="cb254-10"><a href="functions-part2.html#cb254-10"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb254-11"><a href="functions-part2.html#cb254-11"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb254-12"><a href="functions-part2.html#cb254-12"></a><span class="kw">mmm</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb254-13"><a href="functions-part2.html#cb254-13"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
 <p>Again we do some informal tests against familiar results and external implementations.</p>
 </div>
 <div id="argument-names-freedom-and-conventions" class="section level2">
 <h2><span class="header-section-number">19.7</span> Argument names: freedom and conventions</h2>
 <p>I want you to understand the importance of argument names.</p>
 <p>I can name my arguments almost anything I like. Proof:</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="functions-part2.html#cb256-1"></a>qdiff2 &lt;-<span class="st"> </span><span class="cf">function</span>(zeus, hera) {</span>
-<span id="cb256-2"><a href="functions-part2.html#cb256-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(zeus))</span>
-<span id="cb256-3"><a href="functions-part2.html#cb256-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> zeus, <span class="dt">probs =</span> hera)</span>
-<span id="cb256-4"><a href="functions-part2.html#cb256-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb256-5"><a href="functions-part2.html#cb256-5"></a>}</span>
-<span id="cb256-6"><a href="functions-part2.html#cb256-6"></a><span class="kw">qdiff2</span>(<span class="dt">zeus =</span> gapminder<span class="op">$</span>lifeExp, <span class="dt">hera =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>)</span>
-<span id="cb256-7"><a href="functions-part2.html#cb256-7"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="functions-part2.html#cb255-1"></a>qdiff2 &lt;-<span class="st"> </span><span class="cf">function</span>(zeus, hera) {</span>
+<span id="cb255-2"><a href="functions-part2.html#cb255-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(zeus))</span>
+<span id="cb255-3"><a href="functions-part2.html#cb255-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(<span class="dt">x =</span> zeus, <span class="dt">probs =</span> hera)</span>
+<span id="cb255-4"><a href="functions-part2.html#cb255-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb255-5"><a href="functions-part2.html#cb255-5"></a>}</span>
+<span id="cb255-6"><a href="functions-part2.html#cb255-6"></a><span class="kw">qdiff2</span>(<span class="dt">zeus =</span> gapminder<span class="op">$</span>lifeExp, <span class="dt">hera =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>)</span>
+<span id="cb255-7"><a href="functions-part2.html#cb255-7"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
 <p>While I can name my arguments after Greek gods, it’s usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names.</p>
 <p>If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I’ve been doing all along and now you know why:</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="functions-part2.html#cb257-1"></a>qdiff1</span>
-<span id="cb257-2"><a href="functions-part2.html#cb257-2"></a><span class="co">#&gt; function(x, probs) {</span></span>
-<span id="cb257-3"><a href="functions-part2.html#cb257-3"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
-<span id="cb257-4"><a href="functions-part2.html#cb257-4"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x = x, probs = probs)</span></span>
-<span id="cb257-5"><a href="functions-part2.html#cb257-5"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
-<span id="cb257-6"><a href="functions-part2.html#cb257-6"></a><span class="co">#&gt; }</span></span>
-<span id="cb257-7"><a href="functions-part2.html#cb257-7"></a><span class="co">#&gt; &lt;bytecode: 0x000000001aed0388&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="functions-part2.html#cb256-1"></a>qdiff1</span>
+<span id="cb256-2"><a href="functions-part2.html#cb256-2"></a><span class="co">#&gt; function(x, probs) {</span></span>
+<span id="cb256-3"><a href="functions-part2.html#cb256-3"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
+<span id="cb256-4"><a href="functions-part2.html#cb256-4"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x = x, probs = probs)</span></span>
+<span id="cb256-5"><a href="functions-part2.html#cb256-5"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
+<span id="cb256-6"><a href="functions-part2.html#cb256-6"></a><span class="co">#&gt; }</span></span>
+<span id="cb256-7"><a href="functions-part2.html#cb256-7"></a><span class="co">#&gt; &lt;bytecode: 0x000000001aee0738&gt;</span></span></code></pre></div>
 <p>We took this detour so you could see there is no <em>structural</em> relationship between my arguments (<code>x</code> and <code>probs</code>) and those of <code>quantile()</code> (also <code>x</code> and <code>probs</code>). The similarity or equivalence of the names <strong>accomplishes nothing</strong> as far as R is concerned; it is solely for the benefit of humans reading, writing, and using the code. Which is very important!</p>
 </div>
 <div id="what-a-function-returns" class="section level2">
 <h2><span class="header-section-number">19.8</span> What a function returns</h2>
 <p>By this point, I expect someone will have asked about the last line in my function’s body. Look above for a reminder of the function’s definition.</p>
 <p>By default, a function returns the result of the last line of the body. I am just letting that happen with the line <code>max(the_quantiles) - min(the_quantiles)</code>. However, there is an explicit function for this: <code>return()</code>. I could just as easily make this the last line of my function’s body:</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="functions-part2.html#cb258-1"></a><span class="kw">return</span>(<span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles))</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="functions-part2.html#cb257-1"></a><span class="kw">return</span>(<span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles))</span></code></pre></div>
 <p>You absolutely must use <code>return()</code> if you want to return early based on some condition, i.e. before execution gets to the last line of the body. Otherwise, you can decide your own conventions about when you use <code>return()</code> and when you don’t.</p>
 </div>
 <div id="default-values-freedom-to-not-specify-the-arguments" class="section level2">
 <h2><span class="header-section-number">19.9</span> Default values: freedom to NOT specify the arguments</h2>
 <p>What happens if we call our function but neglect to specify the probabilities?</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="functions-part2.html#cb259-1"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb259-2"><a href="functions-part2.html#cb259-2"></a><span class="co">#&gt; Error in quantile(x = x, probs = probs): argument &quot;probs&quot; is missing, with no default</span></span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="functions-part2.html#cb258-1"></a><span class="kw">qdiff1</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb258-2"><a href="functions-part2.html#cb258-2"></a><span class="co">#&gt; Error in quantile(x = x, probs = probs): argument &quot;probs&quot; is missing, with no default</span></span></code></pre></div>
 <p>Oops! At the moment, this causes a fatal error. It can be nice to provide some reasonable default values for certain arguments. In our case, it would be crazy to specify a default value for the primary input <code>x</code>, but very kind to specify a default for <code>probs</code>.</p>
 <p>We started by focusing on the max and the min, so I think those make reasonable defaults. Here’s how to specify that in a function definition.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="functions-part2.html#cb260-1"></a>qdiff3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
-<span id="cb260-2"><a href="functions-part2.html#cb260-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
-<span id="cb260-3"><a href="functions-part2.html#cb260-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs)</span>
-<span id="cb260-4"><a href="functions-part2.html#cb260-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
-<span id="cb260-5"><a href="functions-part2.html#cb260-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="functions-part2.html#cb259-1"></a>qdiff3 &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb259-2"><a href="functions-part2.html#cb259-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(x))</span>
+<span id="cb259-3"><a href="functions-part2.html#cb259-3"></a>  the_quantiles &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, probs)</span>
+<span id="cb259-4"><a href="functions-part2.html#cb259-4"></a>  <span class="kw">max</span>(the_quantiles) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(the_quantiles)</span>
+<span id="cb259-5"><a href="functions-part2.html#cb259-5"></a>}</span></code></pre></div>
 <p>Again we check how the function works, in old examples and new, specifying the <code>probs</code> argument and not.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="functions-part2.html#cb261-1"></a><span class="kw">qdiff3</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb261-2"><a href="functions-part2.html#cb261-2"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb261-3"><a href="functions-part2.html#cb261-3"></a><span class="kw">mmm</span>(gapminder<span class="op">$</span>lifeExp)</span>
-<span id="cb261-4"><a href="functions-part2.html#cb261-4"></a><span class="co">#&gt; [1] 59</span></span>
-<span id="cb261-5"><a href="functions-part2.html#cb261-5"></a><span class="kw">qdiff3</span>(gapminder<span class="op">$</span>lifeExp, <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span>
-<span id="cb261-6"><a href="functions-part2.html#cb261-6"></a><span class="co">#&gt; [1] 33.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="functions-part2.html#cb260-1"></a><span class="kw">qdiff3</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb260-2"><a href="functions-part2.html#cb260-2"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb260-3"><a href="functions-part2.html#cb260-3"></a><span class="kw">mmm</span>(gapminder<span class="op">$</span>lifeExp)</span>
+<span id="cb260-4"><a href="functions-part2.html#cb260-4"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb260-5"><a href="functions-part2.html#cb260-5"></a><span class="kw">qdiff3</span>(gapminder<span class="op">$</span>lifeExp, <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span>
+<span id="cb260-6"><a href="functions-part2.html#cb260-6"></a><span class="co">#&gt; [1] 33.6</span></span></code></pre></div>
 </div>
 <div id="check-the-validity-of-arguments-again" class="section level2">
 <h2><span class="header-section-number">19.10</span> Check the validity of arguments, again</h2>
 <p><strong>Exercise:</strong> upgrade our argument validity checks in light of the new argument <code>probs</code>.</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="functions-part2.html#cb262-1"></a><span class="co">## problems identified during class</span></span>
-<span id="cb262-2"><a href="functions-part2.html#cb262-2"></a><span class="co">## we&#39;re not checking that probs is numeric</span></span>
-<span id="cb262-3"><a href="functions-part2.html#cb262-3"></a><span class="co">## we&#39;re not checking that probs is length 2</span></span>
-<span id="cb262-4"><a href="functions-part2.html#cb262-4"></a><span class="co">## we&#39;re not checking that probs are in [0,1]</span></span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="functions-part2.html#cb261-1"></a><span class="co">## problems identified during class</span></span>
+<span id="cb261-2"><a href="functions-part2.html#cb261-2"></a><span class="co">## we&#39;re not checking that probs is numeric</span></span>
+<span id="cb261-3"><a href="functions-part2.html#cb261-3"></a><span class="co">## we&#39;re not checking that probs is length 2</span></span>
+<span id="cb261-4"><a href="functions-part2.html#cb261-4"></a><span class="co">## we&#39;re not checking that probs are in [0,1]</span></span></code></pre></div>
 </div>
 <div id="wrap-up-and-whats-next-1" class="section level2">
 <h2><span class="header-section-number">19.11</span> Wrap-up and what’s next?</h2>
 <p>Here’s the function we’ve written so far:</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="functions-part2.html#cb263-1"></a>qdiff3</span>
-<span id="cb263-2"><a href="functions-part2.html#cb263-2"></a><span class="co">#&gt; function(x, probs = c(0, 1)) {</span></span>
-<span id="cb263-3"><a href="functions-part2.html#cb263-3"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
-<span id="cb263-4"><a href="functions-part2.html#cb263-4"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x, probs)</span></span>
-<span id="cb263-5"><a href="functions-part2.html#cb263-5"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
-<span id="cb263-6"><a href="functions-part2.html#cb263-6"></a><span class="co">#&gt; }</span></span>
-<span id="cb263-7"><a href="functions-part2.html#cb263-7"></a><span class="co">#&gt; &lt;bytecode: 0x000000001bc9aba8&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="functions-part2.html#cb262-1"></a>qdiff3</span>
+<span id="cb262-2"><a href="functions-part2.html#cb262-2"></a><span class="co">#&gt; function(x, probs = c(0, 1)) {</span></span>
+<span id="cb262-3"><a href="functions-part2.html#cb262-3"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
+<span id="cb262-4"><a href="functions-part2.html#cb262-4"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x, probs)</span></span>
+<span id="cb262-5"><a href="functions-part2.html#cb262-5"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
+<span id="cb262-6"><a href="functions-part2.html#cb262-6"></a><span class="co">#&gt; }</span></span>
+<span id="cb262-7"><a href="functions-part2.html#cb262-7"></a><span class="co">#&gt; &lt;bytecode: 0x000000001bcaaf58&gt;</span></span></code></pre></div>
 <p>What we’ve accomplished:</p>
 <ul>
 <li>We’ve generalized our first function to take a difference between arbitrary quantiles.</li>

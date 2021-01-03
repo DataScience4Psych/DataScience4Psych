@@ -767,67 +767,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load-the-tidyverse" class="section level2">
 <h2><span class="header-section-number">9.2</span> Load the tidyverse</h2>
 <p>The main package we will be using is <a href="https://readr.tidyverse.org">readr</a>, which provides drop-in substitute functions for <code>read.table()</code> and friends. However, to make some points about data export and import, it is nice to reorder factor levels. For that, we will use the <a href="https://forcats.tidyverse.org">forcats</a> package, which is also included in the tidyverse package.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="import-export.html#cb91-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb91-2"><a href="import-export.html#cb91-2"></a><span class="co">#&gt; -- Attaching packages ------------------</span></span>
-<span id="cb91-3"><a href="import-export.html#cb91-3"></a><span class="co">#&gt; v ggplot2 3.3.2     v purrr   0.3.4</span></span>
-<span id="cb91-4"><a href="import-export.html#cb91-4"></a><span class="co">#&gt; v tibble  3.0.3     v dplyr   1.0.2</span></span>
-<span id="cb91-5"><a href="import-export.html#cb91-5"></a><span class="co">#&gt; v tidyr   1.1.2     v stringr 1.4.0</span></span>
-<span id="cb91-6"><a href="import-export.html#cb91-6"></a><span class="co">#&gt; v readr   1.3.1     v forcats 0.5.0</span></span>
-<span id="cb91-7"><a href="import-export.html#cb91-7"></a><span class="co">#&gt; -- Conflicts -- tidyverse_conflicts() --</span></span>
-<span id="cb91-8"><a href="import-export.html#cb91-8"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
-<span id="cb91-9"><a href="import-export.html#cb91-9"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="import-export.html#cb90-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb90-2"><a href="import-export.html#cb90-2"></a><span class="co">#&gt; -- Attaching packages ------------------</span></span>
+<span id="cb90-3"><a href="import-export.html#cb90-3"></a><span class="co">#&gt; v ggplot2 3.3.2     v purrr   0.3.4</span></span>
+<span id="cb90-4"><a href="import-export.html#cb90-4"></a><span class="co">#&gt; v tibble  3.0.3     v dplyr   1.0.2</span></span>
+<span id="cb90-5"><a href="import-export.html#cb90-5"></a><span class="co">#&gt; v tidyr   1.1.2     v stringr 1.4.0</span></span>
+<span id="cb90-6"><a href="import-export.html#cb90-6"></a><span class="co">#&gt; v readr   1.3.1     v forcats 0.5.0</span></span>
+<span id="cb90-7"><a href="import-export.html#cb90-7"></a><span class="co">#&gt; -- Conflicts -- tidyverse_conflicts() --</span></span>
+<span id="cb90-8"><a href="import-export.html#cb90-8"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
+<span id="cb90-9"><a href="import-export.html#cb90-9"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span></code></pre></div>
 </div>
 <div id="locate-the-gapminder-data" class="section level2">
 <h2><span class="header-section-number">9.3</span> Locate the Gapminder data</h2>
 <p>We could load the data from the package as usual, but instead we will load it from tab delimited file. The gapminder package includes the data normally found in the <code>gapminder</code> data frame as a <code>.tsv</code>. So let’s get the path to that file on <em>your</em> system using the <a href="https://fs.r-lib.org/index.html"><code>fs</code> package</a>.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="import-export.html#cb92-1"></a><span class="kw">library</span>(fs)</span>
-<span id="cb92-2"><a href="import-export.html#cb92-2"></a>(gap_tsv &lt;-<span class="st"> </span><span class="kw">path_package</span>(<span class="st">&quot;gapminder&quot;</span>, <span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;gapminder.tsv&quot;</span>))</span>
-<span id="cb92-3"><a href="import-export.html#cb92-3"></a><span class="co">#&gt; C:/Users/smaso/Documents/R/win-library/4.0/gapminder/extdata/gapminder.tsv</span></span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="import-export.html#cb91-1"></a><span class="kw">library</span>(fs)</span>
+<span id="cb91-2"><a href="import-export.html#cb91-2"></a>(gap_tsv &lt;-<span class="st"> </span><span class="kw">path_package</span>(<span class="st">&quot;gapminder&quot;</span>, <span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;gapminder.tsv&quot;</span>))</span>
+<span id="cb91-3"><a href="import-export.html#cb91-3"></a><span class="co">#&gt; C:/Users/smaso/Documents/R/win-library/4.0/gapminder/extdata/gapminder.tsv</span></span></code></pre></div>
 </div>
 <div id="bring-rectangular-data-in" class="section level2">
 <h2><span class="header-section-number">9.4</span> Bring rectangular data in</h2>
 <p>The workhorse data import function of readr is <code>read_delim()</code>. Here we’ll use a variant, <code>read_tsv()</code>, that anticipates tab-delimited data:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="import-export.html#cb93-1"></a>gapminder &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(gap_tsv)</span>
-<span id="cb93-2"><a href="import-export.html#cb93-2"></a><span class="co">#&gt; Parsed with column specification:</span></span>
-<span id="cb93-3"><a href="import-export.html#cb93-3"></a><span class="co">#&gt; cols(</span></span>
-<span id="cb93-4"><a href="import-export.html#cb93-4"></a><span class="co">#&gt;   country = col_character(),</span></span>
-<span id="cb93-5"><a href="import-export.html#cb93-5"></a><span class="co">#&gt;   continent = col_character(),</span></span>
-<span id="cb93-6"><a href="import-export.html#cb93-6"></a><span class="co">#&gt;   year = col_double(),</span></span>
-<span id="cb93-7"><a href="import-export.html#cb93-7"></a><span class="co">#&gt;   lifeExp = col_double(),</span></span>
-<span id="cb93-8"><a href="import-export.html#cb93-8"></a><span class="co">#&gt;   pop = col_double(),</span></span>
-<span id="cb93-9"><a href="import-export.html#cb93-9"></a><span class="co">#&gt;   gdpPercap = col_double()</span></span>
-<span id="cb93-10"><a href="import-export.html#cb93-10"></a><span class="co">#&gt; )</span></span>
-<span id="cb93-11"><a href="import-export.html#cb93-11"></a><span class="kw">str</span>(gapminder, <span class="dt">give.attr =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb93-12"><a href="import-export.html#cb93-12"></a><span class="co">#&gt; tibble [1,704 x 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span id="cb93-13"><a href="import-export.html#cb93-13"></a><span class="co">#&gt;  $ country  : chr [1:1704] &quot;Afghanistan&quot; &quot;Afghanistan&quot; &quot;Afghanistan&quot; &quot;Afghani&quot;..</span></span>
-<span id="cb93-14"><a href="import-export.html#cb93-14"></a><span class="co">#&gt;  $ continent: chr [1:1704] &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; ...</span></span>
-<span id="cb93-15"><a href="import-export.html#cb93-15"></a><span class="co">#&gt;  $ year     : num [1:1704] 1952 1957 1962 1967 1972 ...</span></span>
-<span id="cb93-16"><a href="import-export.html#cb93-16"></a><span class="co">#&gt;  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...</span></span>
-<span id="cb93-17"><a href="import-export.html#cb93-17"></a><span class="co">#&gt;  $ pop      : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...</span></span>
-<span id="cb93-18"><a href="import-export.html#cb93-18"></a><span class="co">#&gt;  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="import-export.html#cb92-1"></a>gapminder &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(gap_tsv)</span>
+<span id="cb92-2"><a href="import-export.html#cb92-2"></a><span class="co">#&gt; Parsed with column specification:</span></span>
+<span id="cb92-3"><a href="import-export.html#cb92-3"></a><span class="co">#&gt; cols(</span></span>
+<span id="cb92-4"><a href="import-export.html#cb92-4"></a><span class="co">#&gt;   country = col_character(),</span></span>
+<span id="cb92-5"><a href="import-export.html#cb92-5"></a><span class="co">#&gt;   continent = col_character(),</span></span>
+<span id="cb92-6"><a href="import-export.html#cb92-6"></a><span class="co">#&gt;   year = col_double(),</span></span>
+<span id="cb92-7"><a href="import-export.html#cb92-7"></a><span class="co">#&gt;   lifeExp = col_double(),</span></span>
+<span id="cb92-8"><a href="import-export.html#cb92-8"></a><span class="co">#&gt;   pop = col_double(),</span></span>
+<span id="cb92-9"><a href="import-export.html#cb92-9"></a><span class="co">#&gt;   gdpPercap = col_double()</span></span>
+<span id="cb92-10"><a href="import-export.html#cb92-10"></a><span class="co">#&gt; )</span></span>
+<span id="cb92-11"><a href="import-export.html#cb92-11"></a><span class="kw">str</span>(gapminder, <span class="dt">give.attr =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb92-12"><a href="import-export.html#cb92-12"></a><span class="co">#&gt; tibble [1,704 x 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span id="cb92-13"><a href="import-export.html#cb92-13"></a><span class="co">#&gt;  $ country  : chr [1:1704] &quot;Afghanistan&quot; &quot;Afghanistan&quot; &quot;Afghanistan&quot; &quot;Afghani&quot;..</span></span>
+<span id="cb92-14"><a href="import-export.html#cb92-14"></a><span class="co">#&gt;  $ continent: chr [1:1704] &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; ...</span></span>
+<span id="cb92-15"><a href="import-export.html#cb92-15"></a><span class="co">#&gt;  $ year     : num [1:1704] 1952 1957 1962 1967 1972 ...</span></span>
+<span id="cb92-16"><a href="import-export.html#cb92-16"></a><span class="co">#&gt;  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...</span></span>
+<span id="cb92-17"><a href="import-export.html#cb92-17"></a><span class="co">#&gt;  $ pop      : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...</span></span>
+<span id="cb92-18"><a href="import-export.html#cb92-18"></a><span class="co">#&gt;  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</span></span></code></pre></div>
 <p>For full flexibility re: specifying the delimiter, you can always use <code>readr::read_delim()</code>.</p>
 <p>There’s a similar convenience wrapper for comma-separated values, <code>read_csv()</code>.</p>
 <p>The most noticeable difference between the readr functions and base is that readr does NOT convert strings to factors by default. In the grand scheme of things, this is better default behavior, although we go ahead and convert them to factor here. Do not be deceived – in general, you will do less post-import fussing if you use readr.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="import-export.html#cb94-1"></a>gapminder &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span></span>
-<span id="cb94-2"><a href="import-export.html#cb94-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">factor</span>(country),</span>
-<span id="cb94-3"><a href="import-export.html#cb94-3"></a>         <span class="dt">continent =</span> <span class="kw">factor</span>(continent))</span>
-<span id="cb94-4"><a href="import-export.html#cb94-4"></a><span class="kw">str</span>(gapminder)</span>
-<span id="cb94-5"><a href="import-export.html#cb94-5"></a><span class="co">#&gt; tibble [1,704 x 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span id="cb94-6"><a href="import-export.html#cb94-6"></a><span class="co">#&gt;  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb94-7"><a href="import-export.html#cb94-7"></a><span class="co">#&gt;  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...</span></span>
-<span id="cb94-8"><a href="import-export.html#cb94-8"></a><span class="co">#&gt;  $ year     : num [1:1704] 1952 1957 1962 1967 1972 ...</span></span>
-<span id="cb94-9"><a href="import-export.html#cb94-9"></a><span class="co">#&gt;  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...</span></span>
-<span id="cb94-10"><a href="import-export.html#cb94-10"></a><span class="co">#&gt;  $ pop      : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...</span></span>
-<span id="cb94-11"><a href="import-export.html#cb94-11"></a><span class="co">#&gt;  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</span></span>
-<span id="cb94-12"><a href="import-export.html#cb94-12"></a><span class="co">#&gt;  - attr(*, &quot;spec&quot;)=</span></span>
-<span id="cb94-13"><a href="import-export.html#cb94-13"></a><span class="co">#&gt;   .. cols(</span></span>
-<span id="cb94-14"><a href="import-export.html#cb94-14"></a><span class="co">#&gt;   ..   country = col_character(),</span></span>
-<span id="cb94-15"><a href="import-export.html#cb94-15"></a><span class="co">#&gt;   ..   continent = col_character(),</span></span>
-<span id="cb94-16"><a href="import-export.html#cb94-16"></a><span class="co">#&gt;   ..   year = col_double(),</span></span>
-<span id="cb94-17"><a href="import-export.html#cb94-17"></a><span class="co">#&gt;   ..   lifeExp = col_double(),</span></span>
-<span id="cb94-18"><a href="import-export.html#cb94-18"></a><span class="co">#&gt;   ..   pop = col_double(),</span></span>
-<span id="cb94-19"><a href="import-export.html#cb94-19"></a><span class="co">#&gt;   ..   gdpPercap = col_double()</span></span>
-<span id="cb94-20"><a href="import-export.html#cb94-20"></a><span class="co">#&gt;   .. )</span></span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="import-export.html#cb93-1"></a>gapminder &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span></span>
+<span id="cb93-2"><a href="import-export.html#cb93-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">factor</span>(country),</span>
+<span id="cb93-3"><a href="import-export.html#cb93-3"></a>         <span class="dt">continent =</span> <span class="kw">factor</span>(continent))</span>
+<span id="cb93-4"><a href="import-export.html#cb93-4"></a><span class="kw">str</span>(gapminder)</span>
+<span id="cb93-5"><a href="import-export.html#cb93-5"></a><span class="co">#&gt; tibble [1,704 x 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span id="cb93-6"><a href="import-export.html#cb93-6"></a><span class="co">#&gt;  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb93-7"><a href="import-export.html#cb93-7"></a><span class="co">#&gt;  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...</span></span>
+<span id="cb93-8"><a href="import-export.html#cb93-8"></a><span class="co">#&gt;  $ year     : num [1:1704] 1952 1957 1962 1967 1972 ...</span></span>
+<span id="cb93-9"><a href="import-export.html#cb93-9"></a><span class="co">#&gt;  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...</span></span>
+<span id="cb93-10"><a href="import-export.html#cb93-10"></a><span class="co">#&gt;  $ pop      : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...</span></span>
+<span id="cb93-11"><a href="import-export.html#cb93-11"></a><span class="co">#&gt;  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</span></span>
+<span id="cb93-12"><a href="import-export.html#cb93-12"></a><span class="co">#&gt;  - attr(*, &quot;spec&quot;)=</span></span>
+<span id="cb93-13"><a href="import-export.html#cb93-13"></a><span class="co">#&gt;   .. cols(</span></span>
+<span id="cb93-14"><a href="import-export.html#cb93-14"></a><span class="co">#&gt;   ..   country = col_character(),</span></span>
+<span id="cb93-15"><a href="import-export.html#cb93-15"></a><span class="co">#&gt;   ..   continent = col_character(),</span></span>
+<span id="cb93-16"><a href="import-export.html#cb93-16"></a><span class="co">#&gt;   ..   year = col_double(),</span></span>
+<span id="cb93-17"><a href="import-export.html#cb93-17"></a><span class="co">#&gt;   ..   lifeExp = col_double(),</span></span>
+<span id="cb93-18"><a href="import-export.html#cb93-18"></a><span class="co">#&gt;   ..   pop = col_double(),</span></span>
+<span id="cb93-19"><a href="import-export.html#cb93-19"></a><span class="co">#&gt;   ..   gdpPercap = col_double()</span></span>
+<span id="cb93-20"><a href="import-export.html#cb93-20"></a><span class="co">#&gt;   .. )</span></span></code></pre></div>
 <div id="bring-rectangular-data-in-summary" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> Bring rectangular data in – summary</h3>
 <p>Default to <code>readr::read_delim()</code> and friends. Use the arguments!</p>
@@ -837,32 +837,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="compute-something-worthy-of-export" class="section level2">
 <h2><span class="header-section-number">9.5</span> Compute something worthy of export</h2>
 <p>We need compute something worth writing to file. Let’s create a country-level summary of maximum life expectancy.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="import-export.html#cb95-1"></a>gap_life_exp &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span></span>
-<span id="cb95-2"><a href="import-export.html#cb95-2"></a><span class="st">  </span><span class="kw">group_by</span>(country, continent) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb95-3"><a href="import-export.html#cb95-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">life_exp =</span> <span class="kw">max</span>(lifeExp)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb95-4"><a href="import-export.html#cb95-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span>
-<span id="cb95-5"><a href="import-export.html#cb95-5"></a><span class="co">#&gt; `summarise()` regrouping output by &#39;country&#39; (override with `.groups` argument)</span></span>
-<span id="cb95-6"><a href="import-export.html#cb95-6"></a>gap_life_exp</span>
-<span id="cb95-7"><a href="import-export.html#cb95-7"></a><span class="co">#&gt; # A tibble: 142 x 3</span></span>
-<span id="cb95-8"><a href="import-export.html#cb95-8"></a><span class="co">#&gt;    country     continent life_exp</span></span>
-<span id="cb95-9"><a href="import-export.html#cb95-9"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
-<span id="cb95-10"><a href="import-export.html#cb95-10"></a><span class="co">#&gt;  1 Afghanistan Asia          43.8</span></span>
-<span id="cb95-11"><a href="import-export.html#cb95-11"></a><span class="co">#&gt;  2 Albania     Europe        76.4</span></span>
-<span id="cb95-12"><a href="import-export.html#cb95-12"></a><span class="co">#&gt;  3 Algeria     Africa        72.3</span></span>
-<span id="cb95-13"><a href="import-export.html#cb95-13"></a><span class="co">#&gt;  4 Angola      Africa        42.7</span></span>
-<span id="cb95-14"><a href="import-export.html#cb95-14"></a><span class="co">#&gt;  5 Argentina   Americas      75.3</span></span>
-<span id="cb95-15"><a href="import-export.html#cb95-15"></a><span class="co">#&gt;  6 Australia   Oceania       81.2</span></span>
-<span id="cb95-16"><a href="import-export.html#cb95-16"></a><span class="co">#&gt;  7 Austria     Europe        79.8</span></span>
-<span id="cb95-17"><a href="import-export.html#cb95-17"></a><span class="co">#&gt;  8 Bahrain     Asia          75.6</span></span>
-<span id="cb95-18"><a href="import-export.html#cb95-18"></a><span class="co">#&gt;  9 Bangladesh  Asia          64.1</span></span>
-<span id="cb95-19"><a href="import-export.html#cb95-19"></a><span class="co">#&gt; 10 Belgium     Europe        79.4</span></span>
-<span id="cb95-20"><a href="import-export.html#cb95-20"></a><span class="co">#&gt; # ... with 132 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="import-export.html#cb94-1"></a>gap_life_exp &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span></span>
+<span id="cb94-2"><a href="import-export.html#cb94-2"></a><span class="st">  </span><span class="kw">group_by</span>(country, continent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb94-3"><a href="import-export.html#cb94-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">life_exp =</span> <span class="kw">max</span>(lifeExp)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb94-4"><a href="import-export.html#cb94-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span>
+<span id="cb94-5"><a href="import-export.html#cb94-5"></a><span class="co">#&gt; `summarise()` regrouping output by &#39;country&#39; (override with `.groups` argument)</span></span>
+<span id="cb94-6"><a href="import-export.html#cb94-6"></a>gap_life_exp</span>
+<span id="cb94-7"><a href="import-export.html#cb94-7"></a><span class="co">#&gt; # A tibble: 142 x 3</span></span>
+<span id="cb94-8"><a href="import-export.html#cb94-8"></a><span class="co">#&gt;    country     continent life_exp</span></span>
+<span id="cb94-9"><a href="import-export.html#cb94-9"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
+<span id="cb94-10"><a href="import-export.html#cb94-10"></a><span class="co">#&gt;  1 Afghanistan Asia          43.8</span></span>
+<span id="cb94-11"><a href="import-export.html#cb94-11"></a><span class="co">#&gt;  2 Albania     Europe        76.4</span></span>
+<span id="cb94-12"><a href="import-export.html#cb94-12"></a><span class="co">#&gt;  3 Algeria     Africa        72.3</span></span>
+<span id="cb94-13"><a href="import-export.html#cb94-13"></a><span class="co">#&gt;  4 Angola      Africa        42.7</span></span>
+<span id="cb94-14"><a href="import-export.html#cb94-14"></a><span class="co">#&gt;  5 Argentina   Americas      75.3</span></span>
+<span id="cb94-15"><a href="import-export.html#cb94-15"></a><span class="co">#&gt;  6 Australia   Oceania       81.2</span></span>
+<span id="cb94-16"><a href="import-export.html#cb94-16"></a><span class="co">#&gt;  7 Austria     Europe        79.8</span></span>
+<span id="cb94-17"><a href="import-export.html#cb94-17"></a><span class="co">#&gt;  8 Bahrain     Asia          75.6</span></span>
+<span id="cb94-18"><a href="import-export.html#cb94-18"></a><span class="co">#&gt;  9 Bangladesh  Asia          64.1</span></span>
+<span id="cb94-19"><a href="import-export.html#cb94-19"></a><span class="co">#&gt; 10 Belgium     Europe        79.4</span></span>
+<span id="cb94-20"><a href="import-export.html#cb94-20"></a><span class="co">#&gt; # ... with 132 more rows</span></span></code></pre></div>
 <p>The <code>gap_life_exp</code> data frame is an example of an intermediate result that we want to store for the future and for downstream analyses or visualizations.</p>
 </div>
 <div id="write-rectangular-data-out" class="section level2">
 <h2><span class="header-section-number">9.6</span> Write rectangular data out</h2>
 <p>The workhorse export function for rectangular data in readr is <code>write_delim()</code> and friends. Let’s use <code>write_csv()</code> to get a comma-delimited file.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="import-export.html#cb96-1"></a><span class="kw">write_csv</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="import-export.html#cb95-1"></a><span class="kw">write_csv</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s look at the first few lines of <code>gap_life_exp.csv</code>. If you’re following along, you should be able to open this file or, in a shell, use <code>head()</code> on it.</p>
 <pre><code>country,continent,life_exp
 Afghanistan,Asia,43.828
@@ -891,102 +891,102 @@ Argentina,Americas,75.32</code></pre>
 <div id="reordering-the-levels-of-the-country-factor" class="section level2">
 <h2><span class="header-section-number">9.8</span> Reordering the levels of the country factor</h2>
 <p>The topic of factor level reordering is covered in Chapter <a href="factors-boss.html#factors-boss">10</a>, so let’s Just. Do. It. I reorder the country factor levels according to the life expectancy summary we’ve already computed.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="import-export.html#cb98-1"></a><span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country)) <span class="co"># alphabetical order</span></span>
-<span id="cb98-2"><a href="import-export.html#cb98-2"></a><span class="co">#&gt; [1] &quot;Afghanistan&quot; &quot;Albania&quot;     &quot;Algeria&quot;     &quot;Angola&quot;      &quot;Argentina&quot;  </span></span>
-<span id="cb98-3"><a href="import-export.html#cb98-3"></a><span class="co">#&gt; [6] &quot;Australia&quot;</span></span>
-<span id="cb98-4"><a href="import-export.html#cb98-4"></a>gap_life_exp &lt;-<span class="st"> </span>gap_life_exp <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb98-5"><a href="import-export.html#cb98-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">fct_reorder</span>(country, life_exp))</span>
-<span id="cb98-6"><a href="import-export.html#cb98-6"></a><span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country)) <span class="co"># in increasing order of maximum life expectancy</span></span>
-<span id="cb98-7"><a href="import-export.html#cb98-7"></a><span class="co">#&gt; [1] &quot;Sierra Leone&quot; &quot;Angola&quot;       &quot;Afghanistan&quot;  &quot;Liberia&quot;      &quot;Rwanda&quot;      </span></span>
-<span id="cb98-8"><a href="import-export.html#cb98-8"></a><span class="co">#&gt; [6] &quot;Mozambique&quot;</span></span>
-<span id="cb98-9"><a href="import-export.html#cb98-9"></a><span class="kw">head</span>(gap_life_exp)</span>
-<span id="cb98-10"><a href="import-export.html#cb98-10"></a><span class="co">#&gt; # A tibble: 6 x 3</span></span>
-<span id="cb98-11"><a href="import-export.html#cb98-11"></a><span class="co">#&gt;   country     continent life_exp</span></span>
-<span id="cb98-12"><a href="import-export.html#cb98-12"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
-<span id="cb98-13"><a href="import-export.html#cb98-13"></a><span class="co">#&gt; 1 Afghanistan Asia          43.8</span></span>
-<span id="cb98-14"><a href="import-export.html#cb98-14"></a><span class="co">#&gt; 2 Albania     Europe        76.4</span></span>
-<span id="cb98-15"><a href="import-export.html#cb98-15"></a><span class="co">#&gt; 3 Algeria     Africa        72.3</span></span>
-<span id="cb98-16"><a href="import-export.html#cb98-16"></a><span class="co">#&gt; 4 Angola      Africa        42.7</span></span>
-<span id="cb98-17"><a href="import-export.html#cb98-17"></a><span class="co">#&gt; 5 Argentina   Americas      75.3</span></span>
-<span id="cb98-18"><a href="import-export.html#cb98-18"></a><span class="co">#&gt; 6 Australia   Oceania       81.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="import-export.html#cb97-1"></a><span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country)) <span class="co"># alphabetical order</span></span>
+<span id="cb97-2"><a href="import-export.html#cb97-2"></a><span class="co">#&gt; [1] &quot;Afghanistan&quot; &quot;Albania&quot;     &quot;Algeria&quot;     &quot;Angola&quot;      &quot;Argentina&quot;  </span></span>
+<span id="cb97-3"><a href="import-export.html#cb97-3"></a><span class="co">#&gt; [6] &quot;Australia&quot;</span></span>
+<span id="cb97-4"><a href="import-export.html#cb97-4"></a>gap_life_exp &lt;-<span class="st"> </span>gap_life_exp <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb97-5"><a href="import-export.html#cb97-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">fct_reorder</span>(country, life_exp))</span>
+<span id="cb97-6"><a href="import-export.html#cb97-6"></a><span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country)) <span class="co"># in increasing order of maximum life expectancy</span></span>
+<span id="cb97-7"><a href="import-export.html#cb97-7"></a><span class="co">#&gt; [1] &quot;Sierra Leone&quot; &quot;Angola&quot;       &quot;Afghanistan&quot;  &quot;Liberia&quot;      &quot;Rwanda&quot;      </span></span>
+<span id="cb97-8"><a href="import-export.html#cb97-8"></a><span class="co">#&gt; [6] &quot;Mozambique&quot;</span></span>
+<span id="cb97-9"><a href="import-export.html#cb97-9"></a><span class="kw">head</span>(gap_life_exp)</span>
+<span id="cb97-10"><a href="import-export.html#cb97-10"></a><span class="co">#&gt; # A tibble: 6 x 3</span></span>
+<span id="cb97-11"><a href="import-export.html#cb97-11"></a><span class="co">#&gt;   country     continent life_exp</span></span>
+<span id="cb97-12"><a href="import-export.html#cb97-12"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
+<span id="cb97-13"><a href="import-export.html#cb97-13"></a><span class="co">#&gt; 1 Afghanistan Asia          43.8</span></span>
+<span id="cb97-14"><a href="import-export.html#cb97-14"></a><span class="co">#&gt; 2 Albania     Europe        76.4</span></span>
+<span id="cb97-15"><a href="import-export.html#cb97-15"></a><span class="co">#&gt; 3 Algeria     Africa        72.3</span></span>
+<span id="cb97-16"><a href="import-export.html#cb97-16"></a><span class="co">#&gt; 4 Angola      Africa        42.7</span></span>
+<span id="cb97-17"><a href="import-export.html#cb97-17"></a><span class="co">#&gt; 5 Argentina   Americas      75.3</span></span>
+<span id="cb97-18"><a href="import-export.html#cb97-18"></a><span class="co">#&gt; 6 Australia   Oceania       81.2</span></span></code></pre></div>
 <p>Note that the <strong>row order of <code>gap_life_exp</code> has not changed</strong>. I could choose to reorder the rows of the data frame if, for example, I was about to prepare a table to present to people. But I’m not, so I won’t.</p>
 </div>
 <div id="saverds-and-readrds" class="section level2">
 <h2><span class="header-section-number">9.9</span> <code>saveRDS()</code> and <code>readRDS()</code></h2>
 <p>If you have a data frame AND you have exerted yourself to rationalize the factor levels, you have my blessing to save it to file in a way that will preserve this hard work upon re-import. Use <code>saveRDS()</code>.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="import-export.html#cb99-1"></a><span class="kw">saveRDS</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="import-export.html#cb98-1"></a><span class="kw">saveRDS</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.rds&quot;</span>)</span></code></pre></div>
 <p><code>saveRDS()</code> serializes an R object to a binary file. It’s not a file you will able to open in an editor, diff nicely with Git(Hub), or share with non-R friends. It’s a special purpose, limited use function that I use in specific situations.</p>
 <p>The opposite of <code>saveRDS()</code> is <code>readRDS()</code>. You must assign the return value to an object. I highly recommend you assign back to the same name as before. Why confuse yourself?!?</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="import-export.html#cb100-1"></a><span class="kw">rm</span>(gap_life_exp)</span>
-<span id="cb100-2"><a href="import-export.html#cb100-2"></a>gap_life_exp</span>
-<span id="cb100-3"><a href="import-export.html#cb100-3"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;gap_life_exp&#39; not found</span></span>
-<span id="cb100-4"><a href="import-export.html#cb100-4"></a>gap_life_exp &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
-<span id="cb100-5"><a href="import-export.html#cb100-5"></a>gap_life_exp</span>
-<span id="cb100-6"><a href="import-export.html#cb100-6"></a><span class="co">#&gt; # A tibble: 142 x 3</span></span>
-<span id="cb100-7"><a href="import-export.html#cb100-7"></a><span class="co">#&gt;    country     continent life_exp</span></span>
-<span id="cb100-8"><a href="import-export.html#cb100-8"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
-<span id="cb100-9"><a href="import-export.html#cb100-9"></a><span class="co">#&gt;  1 Afghanistan Asia          43.8</span></span>
-<span id="cb100-10"><a href="import-export.html#cb100-10"></a><span class="co">#&gt;  2 Albania     Europe        76.4</span></span>
-<span id="cb100-11"><a href="import-export.html#cb100-11"></a><span class="co">#&gt;  3 Algeria     Africa        72.3</span></span>
-<span id="cb100-12"><a href="import-export.html#cb100-12"></a><span class="co">#&gt;  4 Angola      Africa        42.7</span></span>
-<span id="cb100-13"><a href="import-export.html#cb100-13"></a><span class="co">#&gt;  5 Argentina   Americas      75.3</span></span>
-<span id="cb100-14"><a href="import-export.html#cb100-14"></a><span class="co">#&gt;  6 Australia   Oceania       81.2</span></span>
-<span id="cb100-15"><a href="import-export.html#cb100-15"></a><span class="co">#&gt;  7 Austria     Europe        79.8</span></span>
-<span id="cb100-16"><a href="import-export.html#cb100-16"></a><span class="co">#&gt;  8 Bahrain     Asia          75.6</span></span>
-<span id="cb100-17"><a href="import-export.html#cb100-17"></a><span class="co">#&gt;  9 Bangladesh  Asia          64.1</span></span>
-<span id="cb100-18"><a href="import-export.html#cb100-18"></a><span class="co">#&gt; 10 Belgium     Europe        79.4</span></span>
-<span id="cb100-19"><a href="import-export.html#cb100-19"></a><span class="co">#&gt; # ... with 132 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="import-export.html#cb99-1"></a><span class="kw">rm</span>(gap_life_exp)</span>
+<span id="cb99-2"><a href="import-export.html#cb99-2"></a>gap_life_exp</span>
+<span id="cb99-3"><a href="import-export.html#cb99-3"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;gap_life_exp&#39; not found</span></span>
+<span id="cb99-4"><a href="import-export.html#cb99-4"></a>gap_life_exp &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
+<span id="cb99-5"><a href="import-export.html#cb99-5"></a>gap_life_exp</span>
+<span id="cb99-6"><a href="import-export.html#cb99-6"></a><span class="co">#&gt; # A tibble: 142 x 3</span></span>
+<span id="cb99-7"><a href="import-export.html#cb99-7"></a><span class="co">#&gt;    country     continent life_exp</span></span>
+<span id="cb99-8"><a href="import-export.html#cb99-8"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;</span></span>
+<span id="cb99-9"><a href="import-export.html#cb99-9"></a><span class="co">#&gt;  1 Afghanistan Asia          43.8</span></span>
+<span id="cb99-10"><a href="import-export.html#cb99-10"></a><span class="co">#&gt;  2 Albania     Europe        76.4</span></span>
+<span id="cb99-11"><a href="import-export.html#cb99-11"></a><span class="co">#&gt;  3 Algeria     Africa        72.3</span></span>
+<span id="cb99-12"><a href="import-export.html#cb99-12"></a><span class="co">#&gt;  4 Angola      Africa        42.7</span></span>
+<span id="cb99-13"><a href="import-export.html#cb99-13"></a><span class="co">#&gt;  5 Argentina   Americas      75.3</span></span>
+<span id="cb99-14"><a href="import-export.html#cb99-14"></a><span class="co">#&gt;  6 Australia   Oceania       81.2</span></span>
+<span id="cb99-15"><a href="import-export.html#cb99-15"></a><span class="co">#&gt;  7 Austria     Europe        79.8</span></span>
+<span id="cb99-16"><a href="import-export.html#cb99-16"></a><span class="co">#&gt;  8 Bahrain     Asia          75.6</span></span>
+<span id="cb99-17"><a href="import-export.html#cb99-17"></a><span class="co">#&gt;  9 Bangladesh  Asia          64.1</span></span>
+<span id="cb99-18"><a href="import-export.html#cb99-18"></a><span class="co">#&gt; 10 Belgium     Europe        79.4</span></span>
+<span id="cb99-19"><a href="import-export.html#cb99-19"></a><span class="co">#&gt; # ... with 132 more rows</span></span></code></pre></div>
 <p><code>saveRDS()</code> has more arguments, in particular <code>compress</code> for controlling compression, so read the help for more advanced usage. It is also very handy for saving non-rectangular objects, like a fitted regression model, that took a nontrivial amount of time to compute.</p>
 <p>You will eventually hear about <code>save()</code> + <code>load()</code> and even <code>save.image()</code>. You may even see them in documentation and tutorials, but don’t be tempted. Just say no. These functions encourage unsafe practices, like storing multiple objects together and even entire workspaces. There are legitimate uses of these functions, but not in your typical data analysis.</p>
 </div>
 <div id="retaining-factor-levels-upon-re-import" class="section level2">
 <h2><span class="header-section-number">9.10</span> Retaining factor levels upon re-import</h2>
 <p>Concrete demonstration of how non-alphabetical factor level order is lost with <code>write_delim()</code> / <code>read_delim()</code> workflows but maintained with <code>saveRDS()</code> / <code>readRDS()</code>.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="import-export.html#cb101-1"></a>(country_levels &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">original =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country))))</span>
-<span id="cb101-2"><a href="import-export.html#cb101-2"></a><span class="co">#&gt; # A tibble: 6 x 1</span></span>
-<span id="cb101-3"><a href="import-export.html#cb101-3"></a><span class="co">#&gt;   original    </span></span>
-<span id="cb101-4"><a href="import-export.html#cb101-4"></a><span class="co">#&gt;   &lt;chr&gt;       </span></span>
-<span id="cb101-5"><a href="import-export.html#cb101-5"></a><span class="co">#&gt; 1 Sierra Leone</span></span>
-<span id="cb101-6"><a href="import-export.html#cb101-6"></a><span class="co">#&gt; 2 Angola      </span></span>
-<span id="cb101-7"><a href="import-export.html#cb101-7"></a><span class="co">#&gt; 3 Afghanistan </span></span>
-<span id="cb101-8"><a href="import-export.html#cb101-8"></a><span class="co">#&gt; 4 Liberia     </span></span>
-<span id="cb101-9"><a href="import-export.html#cb101-9"></a><span class="co">#&gt; 5 Rwanda      </span></span>
-<span id="cb101-10"><a href="import-export.html#cb101-10"></a><span class="co">#&gt; 6 Mozambique</span></span>
-<span id="cb101-11"><a href="import-export.html#cb101-11"></a><span class="kw">write_csv</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.csv&quot;</span>)</span>
-<span id="cb101-12"><a href="import-export.html#cb101-12"></a><span class="kw">saveRDS</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
-<span id="cb101-13"><a href="import-export.html#cb101-13"></a><span class="kw">rm</span>(gap_life_exp)</span>
-<span id="cb101-14"><a href="import-export.html#cb101-14"></a><span class="kw">head</span>(gap_life_exp) <span class="co"># will cause error! proving gap_life_exp is really gone </span></span>
-<span id="cb101-15"><a href="import-export.html#cb101-15"></a><span class="co">#&gt; Error in head(gap_life_exp): object &#39;gap_life_exp&#39; not found</span></span>
-<span id="cb101-16"><a href="import-export.html#cb101-16"></a>gap_via_csv &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;gap_life_exp.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb101-17"><a href="import-export.html#cb101-17"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">factor</span>(country))</span>
-<span id="cb101-18"><a href="import-export.html#cb101-18"></a><span class="co">#&gt; Parsed with column specification:</span></span>
-<span id="cb101-19"><a href="import-export.html#cb101-19"></a><span class="co">#&gt; cols(</span></span>
-<span id="cb101-20"><a href="import-export.html#cb101-20"></a><span class="co">#&gt;   country = col_character(),</span></span>
-<span id="cb101-21"><a href="import-export.html#cb101-21"></a><span class="co">#&gt;   continent = col_character(),</span></span>
-<span id="cb101-22"><a href="import-export.html#cb101-22"></a><span class="co">#&gt;   life_exp = col_double()</span></span>
-<span id="cb101-23"><a href="import-export.html#cb101-23"></a><span class="co">#&gt; )</span></span>
-<span id="cb101-24"><a href="import-export.html#cb101-24"></a>gap_via_rds &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
-<span id="cb101-25"><a href="import-export.html#cb101-25"></a>country_levels &lt;-<span class="st"> </span>country_levels <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb101-26"><a href="import-export.html#cb101-26"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">via_csv =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_via_csv<span class="op">$</span>country)),</span>
-<span id="cb101-27"><a href="import-export.html#cb101-27"></a>         <span class="dt">via_rds =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_via_rds<span class="op">$</span>country)))</span>
-<span id="cb101-28"><a href="import-export.html#cb101-28"></a>country_levels</span>
-<span id="cb101-29"><a href="import-export.html#cb101-29"></a><span class="co">#&gt; # A tibble: 6 x 3</span></span>
-<span id="cb101-30"><a href="import-export.html#cb101-30"></a><span class="co">#&gt;   original     via_csv     via_rds     </span></span>
-<span id="cb101-31"><a href="import-export.html#cb101-31"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;       </span></span>
-<span id="cb101-32"><a href="import-export.html#cb101-32"></a><span class="co">#&gt; 1 Sierra Leone Afghanistan Sierra Leone</span></span>
-<span id="cb101-33"><a href="import-export.html#cb101-33"></a><span class="co">#&gt; 2 Angola       Albania     Angola      </span></span>
-<span id="cb101-34"><a href="import-export.html#cb101-34"></a><span class="co">#&gt; 3 Afghanistan  Algeria     Afghanistan </span></span>
-<span id="cb101-35"><a href="import-export.html#cb101-35"></a><span class="co">#&gt; 4 Liberia      Angola      Liberia     </span></span>
-<span id="cb101-36"><a href="import-export.html#cb101-36"></a><span class="co">#&gt; 5 Rwanda       Argentina   Rwanda      </span></span>
-<span id="cb101-37"><a href="import-export.html#cb101-37"></a><span class="co">#&gt; 6 Mozambique   Australia   Mozambique</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="import-export.html#cb100-1"></a>(country_levels &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">original =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp<span class="op">$</span>country))))</span>
+<span id="cb100-2"><a href="import-export.html#cb100-2"></a><span class="co">#&gt; # A tibble: 6 x 1</span></span>
+<span id="cb100-3"><a href="import-export.html#cb100-3"></a><span class="co">#&gt;   original    </span></span>
+<span id="cb100-4"><a href="import-export.html#cb100-4"></a><span class="co">#&gt;   &lt;chr&gt;       </span></span>
+<span id="cb100-5"><a href="import-export.html#cb100-5"></a><span class="co">#&gt; 1 Sierra Leone</span></span>
+<span id="cb100-6"><a href="import-export.html#cb100-6"></a><span class="co">#&gt; 2 Angola      </span></span>
+<span id="cb100-7"><a href="import-export.html#cb100-7"></a><span class="co">#&gt; 3 Afghanistan </span></span>
+<span id="cb100-8"><a href="import-export.html#cb100-8"></a><span class="co">#&gt; 4 Liberia     </span></span>
+<span id="cb100-9"><a href="import-export.html#cb100-9"></a><span class="co">#&gt; 5 Rwanda      </span></span>
+<span id="cb100-10"><a href="import-export.html#cb100-10"></a><span class="co">#&gt; 6 Mozambique</span></span>
+<span id="cb100-11"><a href="import-export.html#cb100-11"></a><span class="kw">write_csv</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.csv&quot;</span>)</span>
+<span id="cb100-12"><a href="import-export.html#cb100-12"></a><span class="kw">saveRDS</span>(gap_life_exp, <span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
+<span id="cb100-13"><a href="import-export.html#cb100-13"></a><span class="kw">rm</span>(gap_life_exp)</span>
+<span id="cb100-14"><a href="import-export.html#cb100-14"></a><span class="kw">head</span>(gap_life_exp) <span class="co"># will cause error! proving gap_life_exp is really gone </span></span>
+<span id="cb100-15"><a href="import-export.html#cb100-15"></a><span class="co">#&gt; Error in head(gap_life_exp): object &#39;gap_life_exp&#39; not found</span></span>
+<span id="cb100-16"><a href="import-export.html#cb100-16"></a>gap_via_csv &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;gap_life_exp.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb100-17"><a href="import-export.html#cb100-17"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">factor</span>(country))</span>
+<span id="cb100-18"><a href="import-export.html#cb100-18"></a><span class="co">#&gt; Parsed with column specification:</span></span>
+<span id="cb100-19"><a href="import-export.html#cb100-19"></a><span class="co">#&gt; cols(</span></span>
+<span id="cb100-20"><a href="import-export.html#cb100-20"></a><span class="co">#&gt;   country = col_character(),</span></span>
+<span id="cb100-21"><a href="import-export.html#cb100-21"></a><span class="co">#&gt;   continent = col_character(),</span></span>
+<span id="cb100-22"><a href="import-export.html#cb100-22"></a><span class="co">#&gt;   life_exp = col_double()</span></span>
+<span id="cb100-23"><a href="import-export.html#cb100-23"></a><span class="co">#&gt; )</span></span>
+<span id="cb100-24"><a href="import-export.html#cb100-24"></a>gap_via_rds &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
+<span id="cb100-25"><a href="import-export.html#cb100-25"></a>country_levels &lt;-<span class="st"> </span>country_levels <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb100-26"><a href="import-export.html#cb100-26"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">via_csv =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_via_csv<span class="op">$</span>country)),</span>
+<span id="cb100-27"><a href="import-export.html#cb100-27"></a>         <span class="dt">via_rds =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_via_rds<span class="op">$</span>country)))</span>
+<span id="cb100-28"><a href="import-export.html#cb100-28"></a>country_levels</span>
+<span id="cb100-29"><a href="import-export.html#cb100-29"></a><span class="co">#&gt; # A tibble: 6 x 3</span></span>
+<span id="cb100-30"><a href="import-export.html#cb100-30"></a><span class="co">#&gt;   original     via_csv     via_rds     </span></span>
+<span id="cb100-31"><a href="import-export.html#cb100-31"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;       </span></span>
+<span id="cb100-32"><a href="import-export.html#cb100-32"></a><span class="co">#&gt; 1 Sierra Leone Afghanistan Sierra Leone</span></span>
+<span id="cb100-33"><a href="import-export.html#cb100-33"></a><span class="co">#&gt; 2 Angola       Albania     Angola      </span></span>
+<span id="cb100-34"><a href="import-export.html#cb100-34"></a><span class="co">#&gt; 3 Afghanistan  Algeria     Afghanistan </span></span>
+<span id="cb100-35"><a href="import-export.html#cb100-35"></a><span class="co">#&gt; 4 Liberia      Angola      Liberia     </span></span>
+<span id="cb100-36"><a href="import-export.html#cb100-36"></a><span class="co">#&gt; 5 Rwanda       Argentina   Rwanda      </span></span>
+<span id="cb100-37"><a href="import-export.html#cb100-37"></a><span class="co">#&gt; 6 Mozambique   Australia   Mozambique</span></span></code></pre></div>
 <p>Note how the original, post-reordering country factor levels are restored using the <code>saveRDS()</code> / <code>readRDS()</code> strategy but revert to alphabetical ordering using <code>write_csv()</code> / <code>read_csv()</code>.</p>
 </div>
 <div id="dput-and-dget" class="section level2">
 <h2><span class="header-section-number">9.11</span> <code>dput()</code> and <code>dget()</code></h2>
 <p>One last method of saving and restoring data deserves a mention: <code>dput()</code> and <code>dget()</code>. <code>dput()</code> offers this odd combination of features: it creates a plain text representation of an R object which still manages to be quite opaque. If you use the <code>file =</code> argument, <code>dput()</code> can write this representation to file but you won’t be tempted to actually read that thing. <code>dput()</code> creates an R-specific-but-not-binary representation. Let’s try it out.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="import-export.html#cb102-1"></a><span class="co">## first restore gap_life_exp with our desired country factor level order</span></span>
-<span id="cb102-2"><a href="import-export.html#cb102-2"></a>gap_life_exp &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
-<span id="cb102-3"><a href="import-export.html#cb102-3"></a><span class="kw">dput</span>(gap_life_exp, <span class="st">&quot;gap_life_exp-dput.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="import-export.html#cb101-1"></a><span class="co">## first restore gap_life_exp with our desired country factor level order</span></span>
+<span id="cb101-2"><a href="import-export.html#cb101-2"></a>gap_life_exp &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;gap_life_exp.rds&quot;</span>)</span>
+<span id="cb101-3"><a href="import-export.html#cb101-3"></a><span class="kw">dput</span>(gap_life_exp, <span class="st">&quot;gap_life_exp-dput.txt&quot;</span>)</span></code></pre></div>
 <p>Now let’s look at the first few lines of the file <code>gap_life_exp-dput.txt</code>.</p>
 <pre><code>structure(list(country = structure(c(3L, 107L, 74L, 2L, 98L, 
 138L, 128L, 102L, 49L, 125L, 26L, 56L, 96L, 47L, 75L, 85L, 18L, 
@@ -995,19 +995,19 @@ Argentina,Americas,75.32</code></pre>
 29L, 20L, 122L, 134L, 40L, 35L, 123L, 38L, 126L, 60L, 25L, 7L, 
 39L, 59L, 141L, 86L, 140L, 51L, 63L, 64L, 52L, 121L, 135L, 132L, </code></pre>
 <p>Huh? Don’t worry about it. Remember we are <a href="https://twitter.com/vsbuffalo/statuses/358699162679787521">“writing data for computers”</a>. The partner function <code>dget()</code> reads this representation back in.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="import-export.html#cb104-1"></a>gap_life_exp_dget &lt;-<span class="st"> </span><span class="kw">dget</span>(<span class="st">&quot;gap_life_exp-dput.txt&quot;</span>)</span>
-<span id="cb104-2"><a href="import-export.html#cb104-2"></a>country_levels &lt;-<span class="st"> </span>country_levels <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb104-3"><a href="import-export.html#cb104-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">via_dput =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp_dget<span class="op">$</span>country)))</span>
-<span id="cb104-4"><a href="import-export.html#cb104-4"></a>country_levels</span>
-<span id="cb104-5"><a href="import-export.html#cb104-5"></a><span class="co">#&gt; # A tibble: 6 x 4</span></span>
-<span id="cb104-6"><a href="import-export.html#cb104-6"></a><span class="co">#&gt;   original     via_csv     via_rds      via_dput    </span></span>
-<span id="cb104-7"><a href="import-export.html#cb104-7"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;       </span></span>
-<span id="cb104-8"><a href="import-export.html#cb104-8"></a><span class="co">#&gt; 1 Sierra Leone Afghanistan Sierra Leone Sierra Leone</span></span>
-<span id="cb104-9"><a href="import-export.html#cb104-9"></a><span class="co">#&gt; 2 Angola       Albania     Angola       Angola      </span></span>
-<span id="cb104-10"><a href="import-export.html#cb104-10"></a><span class="co">#&gt; 3 Afghanistan  Algeria     Afghanistan  Afghanistan </span></span>
-<span id="cb104-11"><a href="import-export.html#cb104-11"></a><span class="co">#&gt; 4 Liberia      Angola      Liberia      Liberia     </span></span>
-<span id="cb104-12"><a href="import-export.html#cb104-12"></a><span class="co">#&gt; 5 Rwanda       Argentina   Rwanda       Rwanda      </span></span>
-<span id="cb104-13"><a href="import-export.html#cb104-13"></a><span class="co">#&gt; 6 Mozambique   Australia   Mozambique   Mozambique</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="import-export.html#cb103-1"></a>gap_life_exp_dget &lt;-<span class="st"> </span><span class="kw">dget</span>(<span class="st">&quot;gap_life_exp-dput.txt&quot;</span>)</span>
+<span id="cb103-2"><a href="import-export.html#cb103-2"></a>country_levels &lt;-<span class="st"> </span>country_levels <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb103-3"><a href="import-export.html#cb103-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">via_dput =</span> <span class="kw">head</span>(<span class="kw">levels</span>(gap_life_exp_dget<span class="op">$</span>country)))</span>
+<span id="cb103-4"><a href="import-export.html#cb103-4"></a>country_levels</span>
+<span id="cb103-5"><a href="import-export.html#cb103-5"></a><span class="co">#&gt; # A tibble: 6 x 4</span></span>
+<span id="cb103-6"><a href="import-export.html#cb103-6"></a><span class="co">#&gt;   original     via_csv     via_rds      via_dput    </span></span>
+<span id="cb103-7"><a href="import-export.html#cb103-7"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;       </span></span>
+<span id="cb103-8"><a href="import-export.html#cb103-8"></a><span class="co">#&gt; 1 Sierra Leone Afghanistan Sierra Leone Sierra Leone</span></span>
+<span id="cb103-9"><a href="import-export.html#cb103-9"></a><span class="co">#&gt; 2 Angola       Albania     Angola       Angola      </span></span>
+<span id="cb103-10"><a href="import-export.html#cb103-10"></a><span class="co">#&gt; 3 Afghanistan  Algeria     Afghanistan  Afghanistan </span></span>
+<span id="cb103-11"><a href="import-export.html#cb103-11"></a><span class="co">#&gt; 4 Liberia      Angola      Liberia      Liberia     </span></span>
+<span id="cb103-12"><a href="import-export.html#cb103-12"></a><span class="co">#&gt; 5 Rwanda       Argentina   Rwanda       Rwanda      </span></span>
+<span id="cb103-13"><a href="import-export.html#cb103-13"></a><span class="co">#&gt; 6 Mozambique   Australia   Mozambique   Mozambique</span></span></code></pre></div>
 <p>Note how the original, post-reordering country factor levels are restored using the <code>dput()</code> / <code>dget()</code> strategy.</p>
 <p>But why on earth would you ever do this?</p>
 <p>The main application of this is <a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">the creation of highly portable, self-contained minimal examples</a>. For example, if you want to pose a question on a forum or directly to an expert, it might be required or just plain courteous to NOT attach any data files. You will need a monolithic, plain text blob that defines any necessary objects and has the necessary code. <code>dput()</code> can be helpful for producing the piece of code that defines the object. If you <code>dput()</code> without specifying a file, you can copy the return value from Console and paste into a script. Or you can write to file and copy from there or add R commands below.</p>
@@ -1019,8 +1019,8 @@ Argentina,Americas,75.32</code></pre>
 <div id="clean-up" class="section level2">
 <h2><span class="header-section-number">9.13</span> Clean up</h2>
 <p>We’ve written several files in this tutorial. Some of them are not of lasting value or have confusing filenames. I choose to delete them, while demonstrating some of the many functions R offers for interacting with the filesystem. It’s up to you whether you want to submit this command or not.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="import-export.html#cb105-1"></a><span class="kw">file.remove</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;^gap_life_exp&quot;</span>))</span>
-<span id="cb105-2"><a href="import-export.html#cb105-2"></a><span class="co">#&gt; [1] TRUE TRUE TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="import-export.html#cb104-1"></a><span class="kw">file.remove</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;^gap_life_exp&quot;</span>))</span>
+<span id="cb104-2"><a href="import-export.html#cb104-2"></a><span class="co">#&gt; [1] TRUE TRUE TRUE</span></span></code></pre></div>
 </div>
 <div id="pitfalls-of-delimited-files" class="section level2">
 <h2><span class="header-section-number">9.14</span> Pitfalls of delimited files</h2>

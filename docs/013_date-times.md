@@ -66,9 +66,9 @@ Use base `Sys.time()` or lubridate's `now()` to get RIGHT NOW, meaning the date 
 
 ```r
 Sys.time()
-#> [1] "2021-01-03 12:32:31 EST"
+#> [1] "2021-01-03 12:39:59 EST"
 now()
-#> [1] "2021-01-03 12:32:31 EST"
+#> [1] "2021-01-03 12:39:59 EST"
 ```
 
 They both give you something of class `POSIXct` in R jargon.
@@ -76,11 +76,11 @@ They both give you something of class `POSIXct` in R jargon.
 
 ```r
 str(Sys.time())
-#>  POSIXct[1:1], format: "2021-01-03 12:32:31"
+#>  POSIXct[1:1], format: "2021-01-03 12:39:59"
 class(Sys.time())
 #> [1] "POSIXct" "POSIXt"
 str(now())
-#>  POSIXct[1:1], format: "2021-01-03 12:32:31"
+#>  POSIXct[1:1], format: "2021-01-03 12:39:59"
 class(now())
 #> [1] "POSIXct" "POSIXt"
 ```

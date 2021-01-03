@@ -771,20 +771,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="what-is-an-encoding" class="section level2">
 <h2><span class="header-section-number">12.3</span> What is an encoding?</h2>
 <p>Look at the string <code>"hello!"</code> in bytes. <em>Ruby</em></p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb155-1"><a href="character-encoding.html#cb155-1"></a>irb(main):<span class="dv">001</span>:<span class="dv">0</span>&gt; <span class="st">&quot;hello!&quot;</span>.bytes</span>
-<span id="cb155-2"><a href="character-encoding.html#cb155-2"></a>=&gt; [<span class="dv">104</span>, <span class="dv">101</span>, <span class="dv">108</span>, <span class="dv">108</span>, <span class="dv">111</span>, <span class="dv">33</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb154-1"><a href="character-encoding.html#cb154-1"></a>irb(main):<span class="dv">001</span>:<span class="dv">0</span>&gt; <span class="st">&quot;hello!&quot;</span>.bytes</span>
+<span id="cb154-2"><a href="character-encoding.html#cb154-2"></a>=&gt; [<span class="dv">104</span>, <span class="dv">101</span>, <span class="dv">108</span>, <span class="dv">108</span>, <span class="dv">111</span>, <span class="dv">33</span>]</span></code></pre></div>
 <p>The base function <code>charToRaw()</code> “converts a length-one character string to raw bytes. It does so without taking into account any declared encoding”. It displays bytes in hexadecimal. Use <code>as.integer()</code> to convert to decimal, which is more intuitive and allows us to compare against the Ruby results.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="character-encoding.html#cb156-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;hello!&quot;</span>)</span>
-<span id="cb156-2"><a href="character-encoding.html#cb156-2"></a><span class="co">#&gt; [1] 68 65 6c 6c 6f 21</span></span>
-<span id="cb156-3"><a href="character-encoding.html#cb156-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;hello!&quot;</span>))</span>
-<span id="cb156-4"><a href="character-encoding.html#cb156-4"></a><span class="co">#&gt; [1] 104 101 108 108 111  33</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="character-encoding.html#cb155-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;hello!&quot;</span>)</span>
+<span id="cb155-2"><a href="character-encoding.html#cb155-2"></a><span class="co">#&gt; [1] 68 65 6c 6c 6f 21</span></span>
+<span id="cb155-3"><a href="character-encoding.html#cb155-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;hello!&quot;</span>))</span>
+<span id="cb155-4"><a href="character-encoding.html#cb155-4"></a><span class="co">#&gt; [1] 104 101 108 108 111  33</span></span></code></pre></div>
 <p>Use a character less common in English: <em>Ruby</em></p>
 <pre><code>irb(main):002:0&gt; &quot;hellṏ!&quot;.bytes
 =&gt; [104, 101, 108, 108, 225, 185, 143, 33]</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="character-encoding.html#cb158-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;hellṏ!&quot;</span>)</span>
-<span id="cb158-2"><a href="character-encoding.html#cb158-2"></a><span class="co">#&gt;  [1] 68 65 6c 6c 3c 55 2b 31 45 34 46 3e 21</span></span>
-<span id="cb158-3"><a href="character-encoding.html#cb158-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;hellṏ!&quot;</span>))</span>
-<span id="cb158-4"><a href="character-encoding.html#cb158-4"></a><span class="co">#&gt;  [1] 104 101 108 108  60  85  43  49  69  52  70  62  33</span></span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="character-encoding.html#cb157-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;hellṏ!&quot;</span>)</span>
+<span id="cb157-2"><a href="character-encoding.html#cb157-2"></a><span class="co">#&gt;  [1] 68 65 6c 6c 3c 55 2b 31 45 34 46 3e 21</span></span>
+<span id="cb157-3"><a href="character-encoding.html#cb157-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;hellṏ!&quot;</span>))</span>
+<span id="cb157-4"><a href="character-encoding.html#cb157-4"></a><span class="co">#&gt;  [1] 104 101 108 108  60  85  43  49  69  52  70  62  33</span></span></code></pre></div>
 <p>Now we see that it takes more than one byte to represent <code>"ṏ"</code>. Three in fact: [60, 85, 43, 49, 69, 52, 70, 62]. The encoding of a string defines this relationship: encoding is a map between one or more bytes and a displayable character.</p>
 <p>Take a look at what a single set of bytes looks like when you try different encodings.</p>
 <p>Here’s, a string encoded as ISO-8859-1 (also known as “Latin1”) with a special character. <em>Ruby</em></p>
@@ -793,18 +793,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 irb(main):004:0&gt; str.bytes
 =&gt; [104, 101, 108, 108, 212, 33]</code></pre>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="character-encoding.html#cb160-1"></a>string_latin &lt;-<span class="st"> </span><span class="kw">iconv</span>(<span class="st">&quot;hellÔ!&quot;</span>, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Latin1&quot;</span>)</span>
-<span id="cb160-2"><a href="character-encoding.html#cb160-2"></a>string_latin</span>
-<span id="cb160-3"><a href="character-encoding.html#cb160-3"></a><span class="co">#&gt; [1] NA</span></span>
-<span id="cb160-4"><a href="character-encoding.html#cb160-4"></a><span class="kw">charToRaw</span>(string_latin)</span>
-<span id="cb160-5"><a href="character-encoding.html#cb160-5"></a><span class="co">#&gt; [1] 4e 41</span></span>
-<span id="cb160-6"><a href="character-encoding.html#cb160-6"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_latin))</span>
-<span id="cb160-7"><a href="character-encoding.html#cb160-7"></a><span class="co">#&gt; [1] 78 65</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="character-encoding.html#cb159-1"></a>string_latin &lt;-<span class="st"> </span><span class="kw">iconv</span>(<span class="st">&quot;hellÔ!&quot;</span>, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Latin1&quot;</span>)</span>
+<span id="cb159-2"><a href="character-encoding.html#cb159-2"></a>string_latin</span>
+<span id="cb159-3"><a href="character-encoding.html#cb159-3"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb159-4"><a href="character-encoding.html#cb159-4"></a><span class="kw">charToRaw</span>(string_latin)</span>
+<span id="cb159-5"><a href="character-encoding.html#cb159-5"></a><span class="co">#&gt; [1] 4e 41</span></span>
+<span id="cb159-6"><a href="character-encoding.html#cb159-6"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_latin))</span>
+<span id="cb159-7"><a href="character-encoding.html#cb159-7"></a><span class="co">#&gt; [1] 78 65</span></span></code></pre></div>
 <p>We’ve confirmed that we have the correct bytes (meaning the same as the Ruby example). What would that string look like interpreted as ISO-8859-5 instead? <em>Ruby</em></p>
 <pre><code>irb(main):005:0&gt; str.force_encoding(&quot;ISO-8859-5&quot;); str.encode(&quot;UTF-8&quot;)
 =&gt; &quot;hellд!&quot;</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="character-encoding.html#cb162-1"></a><span class="kw">iconv</span>(string_latin, <span class="dt">from =</span> <span class="st">&quot;ISO-8859-5&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb162-2"><a href="character-encoding.html#cb162-2"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="character-encoding.html#cb161-1"></a><span class="kw">iconv</span>(string_latin, <span class="dt">from =</span> <span class="st">&quot;ISO-8859-5&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb161-2"><a href="character-encoding.html#cb161-2"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <p>It’s garbled, which is your first tip-off to an encoding problem.</p>
 <p>Also not all strings can be represented in all encodings: <em>Ruby</em></p>
 <pre><code>irb(main):006:0&gt; &quot;hi∑&quot;.encode(&quot;Windows-1252&quot;)
@@ -812,17 +812,17 @@ Encoding::UndefinedConversionError: U+2211 to WINDOWS-1252 in conversion from UT
  from (irb):61:in `encode&#39;
  from (irb):61
  from /usr/local/bin/irb:11:in `&lt;main&gt;&#39;</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="character-encoding.html#cb164-1"></a>(string &lt;-<span class="st"> &quot;hi∑&quot;</span>)</span>
-<span id="cb164-2"><a href="character-encoding.html#cb164-2"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span>
-<span id="cb164-3"><a href="character-encoding.html#cb164-3"></a><span class="kw">Encoding</span>(string)</span>
-<span id="cb164-4"><a href="character-encoding.html#cb164-4"></a><span class="co">#&gt; [1] &quot;unknown&quot;</span></span>
-<span id="cb164-5"><a href="character-encoding.html#cb164-5"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string))</span>
-<span id="cb164-6"><a href="character-encoding.html#cb164-6"></a><span class="co">#&gt;  [1] 104 105  60  85  43  50  50  49  49  62</span></span>
-<span id="cb164-7"><a href="character-encoding.html#cb164-7"></a>(string_windows &lt;-<span class="st"> </span><span class="kw">iconv</span>(string, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>))</span>
-<span id="cb164-8"><a href="character-encoding.html#cb164-8"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="character-encoding.html#cb163-1"></a>(string &lt;-<span class="st"> &quot;hi∑&quot;</span>)</span>
+<span id="cb163-2"><a href="character-encoding.html#cb163-2"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span>
+<span id="cb163-3"><a href="character-encoding.html#cb163-3"></a><span class="kw">Encoding</span>(string)</span>
+<span id="cb163-4"><a href="character-encoding.html#cb163-4"></a><span class="co">#&gt; [1] &quot;unknown&quot;</span></span>
+<span id="cb163-5"><a href="character-encoding.html#cb163-5"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string))</span>
+<span id="cb163-6"><a href="character-encoding.html#cb163-6"></a><span class="co">#&gt;  [1] 104 105  60  85  43  50  50  49  49  62</span></span>
+<span id="cb163-7"><a href="character-encoding.html#cb163-7"></a>(string_windows &lt;-<span class="st"> </span><span class="kw">iconv</span>(string, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>))</span>
+<span id="cb163-8"><a href="character-encoding.html#cb163-8"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span></code></pre></div>
 <p>In Ruby, apparently that is an error. In R, we just get <code>NA</code>. Alternatively, and somewhat like Ruby, you can specify a substitution for non-convertible bytes.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="character-encoding.html#cb165-1"></a>(string_windows &lt;-<span class="st"> </span><span class="kw">iconv</span>(string, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>, <span class="dt">sub =</span> <span class="st">&quot;?&quot;</span>))</span>
-<span id="cb165-2"><a href="character-encoding.html#cb165-2"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="character-encoding.html#cb164-1"></a>(string_windows &lt;-<span class="st"> </span><span class="kw">iconv</span>(string, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>, <span class="dt">sub =</span> <span class="st">&quot;?&quot;</span>))</span>
+<span id="cb164-2"><a href="character-encoding.html#cb164-2"></a><span class="co">#&gt; [1] &quot;hi&lt;U+2211&gt;&quot;</span></span></code></pre></div>
 <p>In the Ruby post, we’ve seen 3 string functions so far. Review and note which R function was used in the translation.</p>
 <ul>
 <li><code>encode</code> translates a string to another encoding. We’ve used <code>iconv(x, from = "UTF-8", to = &lt;DIFFERENT_ENCODING&gt;)</code> here.</li>
@@ -835,21 +835,21 @@ Encoding::UndefinedConversionError: U+2211 to WINDOWS-1252 in conversion from UT
 <div id="discover-which-encoding-your-string-is-actually-in." class="section level3">
 <h3><span class="header-section-number">12.4.1</span> Discover which encoding your string is actually in.</h3>
 <p>Shhh. Secret: this is encoded as Windows-1252. <code>\x99</code> should be the trademark symbol ™. Ruby can guess at the encoding. <em>Ruby</em></p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb166-1"><a href="character-encoding.html#cb166-1"></a>irb(main):<span class="bn">07</span>8:<span class="dv">0</span>&gt; <span class="st">&quot;hi\x99!&quot;</span>.encoding</span>
-<span id="cb166-2"><a href="character-encoding.html#cb166-2"></a>=&gt; <span class="co">#&lt;Encoding:UTF-8&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb165-1"><a href="character-encoding.html#cb165-1"></a>irb(main):<span class="bn">07</span>8:<span class="dv">0</span>&gt; <span class="st">&quot;hi\x99!&quot;</span>.encoding</span>
+<span id="cb165-2"><a href="character-encoding.html#cb165-2"></a>=&gt; <span class="co">#&lt;Encoding:UTF-8&gt;</span></span></code></pre></div>
 <p>Ruby’s guess is bad. This is not encoded as UTF-8. R admits it doesn’t know and <code>stringi</code>’s guess is not good.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="character-encoding.html#cb167-1"></a>string &lt;-<span class="st"> &quot;hi</span><span class="ch">\x99</span><span class="st">!&quot;</span></span>
-<span id="cb167-2"><a href="character-encoding.html#cb167-2"></a>string</span>
-<span id="cb167-3"><a href="character-encoding.html#cb167-3"></a><span class="co">#&gt; [1] &quot;hi\231!&quot;</span></span>
-<span id="cb167-4"><a href="character-encoding.html#cb167-4"></a><span class="kw">Encoding</span>(string)</span>
-<span id="cb167-5"><a href="character-encoding.html#cb167-5"></a><span class="co">#&gt; [1] &quot;latin1&quot;</span></span>
-<span id="cb167-6"><a href="character-encoding.html#cb167-6"></a>stringi<span class="op">::</span><span class="kw">stri_enc_detect</span>(string)</span>
-<span id="cb167-7"><a href="character-encoding.html#cb167-7"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb167-8"><a href="character-encoding.html#cb167-8"></a><span class="co">#&gt;   Encoding Language Confidence</span></span>
-<span id="cb167-9"><a href="character-encoding.html#cb167-9"></a><span class="co">#&gt; 1 UTF-16BE                 0.1</span></span>
-<span id="cb167-10"><a href="character-encoding.html#cb167-10"></a><span class="co">#&gt; 2 UTF-16LE                 0.1</span></span>
-<span id="cb167-11"><a href="character-encoding.html#cb167-11"></a><span class="co">#&gt; 3   EUC-JP       ja        0.1</span></span>
-<span id="cb167-12"><a href="character-encoding.html#cb167-12"></a><span class="co">#&gt; 4   EUC-KR       ko        0.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="character-encoding.html#cb166-1"></a>string &lt;-<span class="st"> &quot;hi</span><span class="ch">\x99</span><span class="st">!&quot;</span></span>
+<span id="cb166-2"><a href="character-encoding.html#cb166-2"></a>string</span>
+<span id="cb166-3"><a href="character-encoding.html#cb166-3"></a><span class="co">#&gt; [1] &quot;hi\231!&quot;</span></span>
+<span id="cb166-4"><a href="character-encoding.html#cb166-4"></a><span class="kw">Encoding</span>(string)</span>
+<span id="cb166-5"><a href="character-encoding.html#cb166-5"></a><span class="co">#&gt; [1] &quot;latin1&quot;</span></span>
+<span id="cb166-6"><a href="character-encoding.html#cb166-6"></a>stringi<span class="op">::</span><span class="kw">stri_enc_detect</span>(string)</span>
+<span id="cb166-7"><a href="character-encoding.html#cb166-7"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb166-8"><a href="character-encoding.html#cb166-8"></a><span class="co">#&gt;   Encoding Language Confidence</span></span>
+<span id="cb166-9"><a href="character-encoding.html#cb166-9"></a><span class="co">#&gt; 1 UTF-16BE                 0.1</span></span>
+<span id="cb166-10"><a href="character-encoding.html#cb166-10"></a><span class="co">#&gt; 2 UTF-16LE                 0.1</span></span>
+<span id="cb166-11"><a href="character-encoding.html#cb166-11"></a><span class="co">#&gt; 3   EUC-JP       ja        0.1</span></span>
+<span id="cb166-12"><a href="character-encoding.html#cb166-12"></a><span class="co">#&gt; 4   EUC-KR       ko        0.1</span></span></code></pre></div>
 <p>Advice given in post is to sleuth it out based on where the data came from. With larger amounts of text, each language’s guessing facilities presumably do better than they do here. In real life, all of this advice can prove to be … overly optimistic?</p>
 <p>I find it helpful to scrutinize debugging charts and look for the weird stuff showing up in my text. Here’s <a href="http://www.i18nqa.com/debug/utf8-debug.html">one that shows what UTF-8 bytes look like</a> when erroneously interpreted under Windows-1252 encoding. This phenomenon is known as <a href="https://en.wikipedia.org/wiki/Mojibake"><em>mojibake</em></a>, which is a delightful word for a super-annoying phenomenon. If it helps, know that the most common encodings are UTF-8, ISO-8859-1 (or Latin1), and Windows-1252, so that really narrows things down.</p>
 </div>
@@ -861,12 +861,12 @@ Encoding::UndefinedConversionError: U+2211 to WINDOWS-1252 in conversion from UT
 <h3><span class="header-section-number">12.4.3</span> Re-encode your string</h3>
 <pre><code>irb(main):088:0&gt; &quot;hi\x99!&quot;.encode(&quot;UTF-8&quot;, &quot;Windows-1252&quot;)
 =&gt; &quot;hi™!&quot;</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="character-encoding.html#cb169-1"></a>string_windows &lt;-<span class="st"> &quot;hi</span><span class="ch">\x99</span><span class="st">!&quot;</span></span>
-<span id="cb169-2"><a href="character-encoding.html#cb169-2"></a>string_utf8 &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_windows, <span class="dt">from =</span> <span class="st">&quot;Windows-1252&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb169-3"><a href="character-encoding.html#cb169-3"></a><span class="kw">Encoding</span>(string_utf8)</span>
-<span id="cb169-4"><a href="character-encoding.html#cb169-4"></a><span class="co">#&gt; [1] &quot;UTF-8&quot;</span></span>
-<span id="cb169-5"><a href="character-encoding.html#cb169-5"></a>string_utf8</span>
-<span id="cb169-6"><a href="character-encoding.html#cb169-6"></a><span class="co">#&gt; [1] &quot;hi\231!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="character-encoding.html#cb168-1"></a>string_windows &lt;-<span class="st"> &quot;hi</span><span class="ch">\x99</span><span class="st">!&quot;</span></span>
+<span id="cb168-2"><a href="character-encoding.html#cb168-2"></a>string_utf8 &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_windows, <span class="dt">from =</span> <span class="st">&quot;Windows-1252&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb168-3"><a href="character-encoding.html#cb168-3"></a><span class="kw">Encoding</span>(string_utf8)</span>
+<span id="cb168-4"><a href="character-encoding.html#cb168-4"></a><span class="co">#&gt; [1] &quot;UTF-8&quot;</span></span>
+<span id="cb168-5"><a href="character-encoding.html#cb168-5"></a>string_utf8</span>
+<span id="cb168-6"><a href="character-encoding.html#cb168-6"></a><span class="co">#&gt; [1] &quot;hi\231!&quot;</span></span></code></pre></div>
 </div>
 </div>
 <div id="how-to-get-from-theyâre-to-theyre" class="section level2">
@@ -877,57 +877,57 @@ Encoding::UndefinedConversionError: U+2211 to WINDOWS-1252 in conversion from UT
 <p>Since we need to represent more than 256 characters, not all can be represented by a single byte. Let’s look at the curly single quote. <em>Ruby</em></p>
 <pre><code>irb(main):001:0&gt; &quot;they’re&quot;.bytes
 =&gt; [116, 104, 101, 121, 226, 128, 153, 114, 101]</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="character-encoding.html#cb171-1"></a>string_curly &lt;-<span class="st"> &quot;they’re&quot;</span></span>
-<span id="cb171-2"><a href="character-encoding.html#cb171-2"></a><span class="kw">charToRaw</span>(string_curly)</span>
-<span id="cb171-3"><a href="character-encoding.html#cb171-3"></a><span class="co">#&gt; [1] 74 68 65 79 92 72 65</span></span>
-<span id="cb171-4"><a href="character-encoding.html#cb171-4"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
-<span id="cb171-5"><a href="character-encoding.html#cb171-5"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
-<span id="cb171-6"><a href="character-encoding.html#cb171-6"></a><span class="kw">length</span>(<span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly)))</span>
-<span id="cb171-7"><a href="character-encoding.html#cb171-7"></a><span class="co">#&gt; [1] 7</span></span>
-<span id="cb171-8"><a href="character-encoding.html#cb171-8"></a><span class="kw">nchar</span>(string_curly)</span>
-<span id="cb171-9"><a href="character-encoding.html#cb171-9"></a><span class="co">#&gt; [1] 7</span></span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="character-encoding.html#cb170-1"></a>string_curly &lt;-<span class="st"> &quot;they’re&quot;</span></span>
+<span id="cb170-2"><a href="character-encoding.html#cb170-2"></a><span class="kw">charToRaw</span>(string_curly)</span>
+<span id="cb170-3"><a href="character-encoding.html#cb170-3"></a><span class="co">#&gt; [1] 74 68 65 79 92 72 65</span></span>
+<span id="cb170-4"><a href="character-encoding.html#cb170-4"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
+<span id="cb170-5"><a href="character-encoding.html#cb170-5"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
+<span id="cb170-6"><a href="character-encoding.html#cb170-6"></a><span class="kw">length</span>(<span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly)))</span>
+<span id="cb170-7"><a href="character-encoding.html#cb170-7"></a><span class="co">#&gt; [1] 7</span></span>
+<span id="cb170-8"><a href="character-encoding.html#cb170-8"></a><span class="kw">nchar</span>(string_curly)</span>
+<span id="cb170-9"><a href="character-encoding.html#cb170-9"></a><span class="co">#&gt; [1] 7</span></span></code></pre></div>
 <p>The string has 7 characters, but 9 bytes, because we’re using 3 bytes to represent the curly single quote. Let’s focus just on that. <em>Ruby</em></p>
 <pre><code>irb(main):002:0&gt; &quot;’&quot;.bytes
 =&gt; [226, 128, 153]</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="character-encoding.html#cb173-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>)</span>
-<span id="cb173-2"><a href="character-encoding.html#cb173-2"></a><span class="co">#&gt; [1] 92</span></span>
-<span id="cb173-3"><a href="character-encoding.html#cb173-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>))</span>
-<span id="cb173-4"><a href="character-encoding.html#cb173-4"></a><span class="co">#&gt; [1] 146</span></span>
-<span id="cb173-5"><a href="character-encoding.html#cb173-5"></a><span class="kw">length</span>(<span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>)))</span>
-<span id="cb173-6"><a href="character-encoding.html#cb173-6"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="character-encoding.html#cb172-1"></a><span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>)</span>
+<span id="cb172-2"><a href="character-encoding.html#cb172-2"></a><span class="co">#&gt; [1] 92</span></span>
+<span id="cb172-3"><a href="character-encoding.html#cb172-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>))</span>
+<span id="cb172-4"><a href="character-encoding.html#cb172-4"></a><span class="co">#&gt; [1] 146</span></span>
+<span id="cb172-5"><a href="character-encoding.html#cb172-5"></a><span class="kw">length</span>(<span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(<span class="st">&quot;’&quot;</span>)))</span>
+<span id="cb172-6"><a href="character-encoding.html#cb172-6"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
 <p>One of the most common encoding fiascos you’ll see is this: theyâ€™re. Note that the curly single quote has been turned into a 3 character monstrosity. This is no coincidence. Remember those 3 bytes?</p>
 <p>This is what happens when you interpret bytes that represent text in the UTF-8 encoding as if it’s encoded as Windows-1252. Learn to recognize it. <em>Ruby</em></p>
 <pre><code>irb(main):003:0&gt; &quot;they’re&quot;.force_encoding(&quot;Windows-1252&quot;).encode(&quot;UTF-8&quot;)
 =&gt; &quot;theyâ€™re&quot;</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="character-encoding.html#cb175-1"></a>(string_mis_encoded &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_curly, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">from =</span> <span class="st">&quot;windows-1252&quot;</span>))</span>
-<span id="cb175-2"><a href="character-encoding.html#cb175-2"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="character-encoding.html#cb174-1"></a>(string_mis_encoded &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_curly, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">from =</span> <span class="st">&quot;windows-1252&quot;</span>))</span>
+<span id="cb174-2"><a href="character-encoding.html#cb174-2"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span></code></pre></div>
 <p>Let’s assume this little gem is buried in some large file and you don’t immediately notice. So this string is interpreted with the wrong encoding, i.e. stored as the wrong bytes, either in an R object or in a file on disk. Now what?</p>
 <p>Let’s review the original, correct bytes vs. the current, incorrect bytes and print the associated strings.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="character-encoding.html#cb176-1"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
-<span id="cb176-2"><a href="character-encoding.html#cb176-2"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
-<span id="cb176-3"><a href="character-encoding.html#cb176-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_mis_encoded))</span>
-<span id="cb176-4"><a href="character-encoding.html#cb176-4"></a><span class="co">#&gt; [1] 116 104 101 121 226 128 153 114 101</span></span>
-<span id="cb176-5"><a href="character-encoding.html#cb176-5"></a>string_curly</span>
-<span id="cb176-6"><a href="character-encoding.html#cb176-6"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
-<span id="cb176-7"><a href="character-encoding.html#cb176-7"></a>string_mis_encoded</span>
-<span id="cb176-8"><a href="character-encoding.html#cb176-8"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="character-encoding.html#cb175-1"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
+<span id="cb175-2"><a href="character-encoding.html#cb175-2"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
+<span id="cb175-3"><a href="character-encoding.html#cb175-3"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_mis_encoded))</span>
+<span id="cb175-4"><a href="character-encoding.html#cb175-4"></a><span class="co">#&gt; [1] 116 104 101 121 226 128 153 114 101</span></span>
+<span id="cb175-5"><a href="character-encoding.html#cb175-5"></a>string_curly</span>
+<span id="cb175-6"><a href="character-encoding.html#cb175-6"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
+<span id="cb175-7"><a href="character-encoding.html#cb175-7"></a>string_mis_encoded</span>
+<span id="cb175-8"><a href="character-encoding.html#cb175-8"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span></code></pre></div>
 </div>
 <div id="encoding-repair" class="section level3">
 <h3><span class="header-section-number">12.5.2</span> Encoding repair</h3>
 <p>How do you fix this? You have to reverse your steps. You have a UTF-8 encoded string. Convert it back to Windows-1252, to get the original bytes. Then re-encode that as UTF-8. <em>Ruby</em></p>
 <pre><code>irb(main):006:0&gt; &quot;theyâ€™re&quot;.encode(&quot;Windows-1252&quot;).force_encoding(&quot;UTF-8&quot;)
 =&gt; &quot;they’re&quot;</code></pre>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="character-encoding.html#cb178-1"></a>string_mis_encoded</span>
-<span id="cb178-2"><a href="character-encoding.html#cb178-2"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
-<span id="cb178-3"><a href="character-encoding.html#cb178-3"></a>backwards_one &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_mis_encoded, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>)</span>
-<span id="cb178-4"><a href="character-encoding.html#cb178-4"></a>backwards_one</span>
-<span id="cb178-5"><a href="character-encoding.html#cb178-5"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
-<span id="cb178-6"><a href="character-encoding.html#cb178-6"></a><span class="kw">Encoding</span>(backwards_one)</span>
-<span id="cb178-7"><a href="character-encoding.html#cb178-7"></a><span class="co">#&gt; [1] &quot;unknown&quot;</span></span>
-<span id="cb178-8"><a href="character-encoding.html#cb178-8"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(backwards_one))</span>
-<span id="cb178-9"><a href="character-encoding.html#cb178-9"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
-<span id="cb178-10"><a href="character-encoding.html#cb178-10"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
-<span id="cb178-11"><a href="character-encoding.html#cb178-11"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="character-encoding.html#cb177-1"></a>string_mis_encoded</span>
+<span id="cb177-2"><a href="character-encoding.html#cb177-2"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
+<span id="cb177-3"><a href="character-encoding.html#cb177-3"></a>backwards_one &lt;-<span class="st"> </span><span class="kw">iconv</span>(string_mis_encoded, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Windows-1252&quot;</span>)</span>
+<span id="cb177-4"><a href="character-encoding.html#cb177-4"></a>backwards_one</span>
+<span id="cb177-5"><a href="character-encoding.html#cb177-5"></a><span class="co">#&gt; [1] &quot;they’re&quot;</span></span>
+<span id="cb177-6"><a href="character-encoding.html#cb177-6"></a><span class="kw">Encoding</span>(backwards_one)</span>
+<span id="cb177-7"><a href="character-encoding.html#cb177-7"></a><span class="co">#&gt; [1] &quot;unknown&quot;</span></span>
+<span id="cb177-8"><a href="character-encoding.html#cb177-8"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(backwards_one))</span>
+<span id="cb177-9"><a href="character-encoding.html#cb177-9"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span>
+<span id="cb177-10"><a href="character-encoding.html#cb177-10"></a><span class="kw">as.integer</span>(<span class="kw">charToRaw</span>(string_curly))</span>
+<span id="cb177-11"><a href="character-encoding.html#cb177-11"></a><span class="co">#&gt; [1] 116 104 101 121 146 114 101</span></span></code></pre></div>
 <!--RStudio Links-->
 <!--HappyGitWithR Links-->
 <!--Package Links-->
