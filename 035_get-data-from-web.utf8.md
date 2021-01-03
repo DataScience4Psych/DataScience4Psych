@@ -1,0 +1,9 @@
+# (PART) Get data from the web {-} 
+
+# Slides {#web-data-slides}
+
+
+
+<!--Original content: https://stat545.com/webdata01_slides.html-->
+
+See ["Getting data from the web - R packages" slides](supporting-docs/webdata01_slides.html) by Andrew MacDonald.
