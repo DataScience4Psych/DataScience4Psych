@@ -1,4 +1,4 @@
-# (MODULE) Get your R act together {-} 
+# (PART) Get your R act together {-} 
 
 # Install R and RStudio {#install}
 
