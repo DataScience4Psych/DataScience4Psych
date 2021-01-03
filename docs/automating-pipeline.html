@@ -789,8 +789,8 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="download-the-dictionary" class="section level3">
 <h3><span class="header-section-number">36.5.1</span> Download the dictionary</h3>
 <p>Our first <code>Makefile</code> rule will download the dictionary <code>words.txt</code>. The command of this rule is a one-line R script, so instead of putting the R script in a separate file, we’ll include the command directly in the <code>Makefile</code>, since it’s so short. <em>Sure, we could download a file without using R at all but humor us: this is a tutorial about <code>make</code> and R!</em></p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb355-1"><a href="automating-pipeline.html#cb355-1"></a><span class="dv">words.txt:</span></span>
-<span id="cb355-2"><a href="automating-pipeline.html#cb355-2"></a>    Rscript -e <span class="st">&#39;download.file(&quot;https://svnweb.freebsd.org/base/head/share/dict/web2?view=co&quot;, destfile = &quot;words.txt&quot;, quiet = TRUE)&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb356-1"><a href="automating-pipeline.html#cb356-1"></a><span class="dv">words.txt:</span></span>
+<span id="cb356-2"><a href="automating-pipeline.html#cb356-2"></a>    Rscript -e <span class="st">&#39;download.file(&quot;https://svnweb.freebsd.org/base/head/share/dict/web2?view=co&quot;, destfile = &quot;words.txt&quot;, quiet = TRUE)&#39;</span></span></code></pre></div>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
 <li><em>Git folks:</em> commit anything new/modified. Start with a clean working tree.</li>
@@ -805,11 +805,11 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="copy-the-dictionary" class="section level3">
 <h3><span class="header-section-number">36.5.2</span> Copy the dictionary</h3>
 <p>On Mac or Linux systems, rather than download the dictionary, we can simply copy the file <code>/usr/share/dict/words</code> that comes with the operating system. In this alternative rule, we use the <a href="https://happygitwithr.com/shell.html">shell</a> command <code>cp</code> to copy the file.</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb356-1"><a href="automating-pipeline.html#cb356-1"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
-<span id="cb356-2"><a href="automating-pipeline.html#cb356-2"></a>    cp /usr/share/dict/words words.txt</span></code></pre></div>
-<p>This rule copies the input file <code>/usr/share/dict/words</code> to create the output file <code>words.txt</code>. We then repeat these file names in the command rule, which is redundant and leaves us vulnerable to typos. <code>make</code> offers many automatic variables, so the revised rule below uses <code>$&lt;</code> and <code>$@</code> to represent the input file and output file, respectively.</p>
 <div class="sourceCode" id="cb357"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb357-1"><a href="automating-pipeline.html#cb357-1"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
-<span id="cb357-2"><a href="automating-pipeline.html#cb357-2"></a>    cp <span class="ch">$&lt;</span> <span class="ch">$@</span></span></code></pre></div>
+<span id="cb357-2"><a href="automating-pipeline.html#cb357-2"></a>    cp /usr/share/dict/words words.txt</span></code></pre></div>
+<p>This rule copies the input file <code>/usr/share/dict/words</code> to create the output file <code>words.txt</code>. We then repeat these file names in the command rule, which is redundant and leaves us vulnerable to typos. <code>make</code> offers many automatic variables, so the revised rule below uses <code>$&lt;</code> and <code>$@</code> to represent the input file and output file, respectively.</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb358-1"><a href="automating-pipeline.html#cb358-1"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
+<span id="cb358-2"><a href="automating-pipeline.html#cb358-2"></a>    cp <span class="ch">$&lt;</span> <span class="ch">$@</span></span></code></pre></div>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
 <li><em>Git folks:</em> commit anything new/modified. Start with a clean working tree.</li>
@@ -827,13 +827,13 @@ Figure 24.1: Dependency graph of the pipeline
 <h2><span class="header-section-number">36.6</span> Create rules for all and clean</h2>
 <p>It would be nice to execute our <code>make</code> rules from RStudio. So it’s urgent that we create phony targets <code>all</code> and <code>clean</code>, which are the only targets accessible from RStudio. These targets are phony in the sense that they do not specify an actual file to be made, rather they just make it easy to trigger a certain action. <code>all</code> and <code>clean</code> are phony targets that appear in most <code>Makefiles</code>, which is why RStudio makes it easy to access them from the IDE.</p>
 <p>Edit your <code>Makefile</code> to look like this (where your <code>words.txt</code> rule can be the copy or download version):</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb358-1"><a href="automating-pipeline.html#cb358-1"></a><span class="dv">all:</span><span class="dt"> words.txt</span></span>
-<span id="cb358-2"><a href="automating-pipeline.html#cb358-2"></a></span>
-<span id="cb358-3"><a href="automating-pipeline.html#cb358-3"></a><span class="dv">clean:</span></span>
-<span id="cb358-4"><a href="automating-pipeline.html#cb358-4"></a>    rm -f words.txt</span>
-<span id="cb358-5"><a href="automating-pipeline.html#cb358-5"></a></span>
-<span id="cb358-6"><a href="automating-pipeline.html#cb358-6"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
-<span id="cb358-7"><a href="automating-pipeline.html#cb358-7"></a>    cp /usr/share/dict/words words.txt</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb359-1"><a href="automating-pipeline.html#cb359-1"></a><span class="dv">all:</span><span class="dt"> words.txt</span></span>
+<span id="cb359-2"><a href="automating-pipeline.html#cb359-2"></a></span>
+<span id="cb359-3"><a href="automating-pipeline.html#cb359-3"></a><span class="dv">clean:</span></span>
+<span id="cb359-4"><a href="automating-pipeline.html#cb359-4"></a>    rm -f words.txt</span>
+<span id="cb359-5"><a href="automating-pipeline.html#cb359-5"></a></span>
+<span id="cb359-6"><a href="automating-pipeline.html#cb359-6"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
+<span id="cb359-7"><a href="automating-pipeline.html#cb359-7"></a>    cp /usr/share/dict/words words.txt</span></code></pre></div>
 <p>Since our only output so far is <code>words.txt</code>, that’s what we associate with the <code>all</code> target. Likewise, the only product we can re-make so far is <code>words.txt</code>, so it’s the only thing we delete via <code>clean</code>.</p>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
@@ -854,8 +854,8 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="create-a-table-of-word-lengths" class="section level2">
 <h2><span class="header-section-number">36.7</span> Create a table of word lengths</h2>
 <p>This rule will read the list of words and generate a table of word length frequency, stored in a tab-separated-values (TSV) file. This R script is a little longer, so we’ll put it in its own file, named <code>histogram.r</code>. If either the script <code>histogram.r</code> or the data file <code>words.txt</code> were to change, we’d need to rerun this command to get up-to-date results, so both files are dependencies of this rule. The input-file variable <code>$&lt;</code> refers to the <em>first</em> dependency, <code>histogram.r</code>.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb359-1"><a href="automating-pipeline.html#cb359-1"></a><span class="dv">histogram.tsv:</span><span class="dt"> histogram.r words.txt</span></span>
-<span id="cb359-2"><a href="automating-pipeline.html#cb359-2"></a>    Rscript <span class="ch">$&lt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb360-1"><a href="automating-pipeline.html#cb360-1"></a><span class="dv">histogram.tsv:</span><span class="dt"> histogram.r words.txt</span></span>
+<span id="cb360-2"><a href="automating-pipeline.html#cb360-2"></a>    Rscript <span class="ch">$&lt;</span></span></code></pre></div>
 <p>FYI: <code>Rscript</code> allows you to execute R scripts from the <a href="https://happygitwithr.com/shell.html">shell</a>. It is a more modern replacement for <code>R CMD BATCH</code> (don’t worry if you’ve never heard of that).</p>
 <p>Create the R script <code>histogram.r</code> that reads the list of words from <code>words.txt</code> and writes the table of word length frequency to <code>histogram.tsv</code>. It should be a tab-delimited TSV file with a header and two columns, named <code>Length</code> and <code>Freq</code>. Hint: you can accomplish this task using four functions: <code>readLines</code>, <code>nchar</code>, <code>table</code> and <code>write.table</code>. Here’s <a href="https://raw.githubusercontent.com/STAT545-UBC/STAT545-UBC.github.io/master/automation10_holding-area/activity/histogram.r">one solution</a>, but try not to peek until you’ve attempted this task yourself.</p>
 <p><strong>Suggested workflow:</strong></p>
@@ -871,10 +871,10 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="update-rules-for-all-and-clean" class="section level2">
 <h2><span class="header-section-number">36.8</span> Update rules for all and clean</h2>
 <p>The new output <code>histogram.tsv</code> can replace <code>words.txt</code> as our most definitive output. So it will go in the <code>all</code> rule. Likewise, we should add <code>histogram.tsv</code> to the <code>clean</code> rule. Edit your <code>all</code> and <code>clean</code> rules to look like this:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb360-1"><a href="automating-pipeline.html#cb360-1"></a><span class="dv">all:</span><span class="dt"> histogram.tsv</span></span>
-<span id="cb360-2"><a href="automating-pipeline.html#cb360-2"></a></span>
-<span id="cb360-3"><a href="automating-pipeline.html#cb360-3"></a><span class="dv">clean:</span></span>
-<span id="cb360-4"><a href="automating-pipeline.html#cb360-4"></a>    rm -f words.txt histogram.tsv</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb361-1"><a href="automating-pipeline.html#cb361-1"></a><span class="dv">all:</span><span class="dt"> histogram.tsv</span></span>
+<span id="cb361-2"><a href="automating-pipeline.html#cb361-2"></a></span>
+<span id="cb361-3"><a href="automating-pipeline.html#cb361-3"></a><span class="dv">clean:</span></span>
+<span id="cb361-4"><a href="automating-pipeline.html#cb361-4"></a>    rm -f words.txt histogram.tsv</span></code></pre></div>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
 <li>Use <code>make clean</code> from the shell and/or <em>RStudio &gt; Build &gt; More &gt; Clean All</em>.
@@ -894,8 +894,8 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="plot-a-histogram-of-word-lengths-update-all-and-clean" class="section level2">
 <h2><span class="header-section-number">36.9</span> Plot a histogram of word lengths, update all and clean</h2>
 <p>This rule will read the table of word lengths and plot a histogram using <code>ggplot2::qplot()</code>. The R snippet is three lines long, but we’ll still include the script in the <code>Makefile</code> directly, and use semicolons <code>;</code> to separate the R commands. The variable <code>$@</code> refers to the output file, <code>histogram.png</code>.</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb361-1"><a href="automating-pipeline.html#cb361-1"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
-<span id="cb361-2"><a href="automating-pipeline.html#cb361-2"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb362-1"><a href="automating-pipeline.html#cb362-1"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
+<span id="cb362-2"><a href="automating-pipeline.html#cb362-2"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
 <li>Test the histogram-drawing code in the R Console to make sure it works.</li>
@@ -916,9 +916,9 @@ Figure 24.1: Dependency graph of the pipeline
 <p>The code used above to create <code>histogram.png</code> usually leaves an empty <code>Rplots.pdf</code> file behind. You can read <a href="http://stackoverflow.com/questions/17348359/how-to-stop-r-from-creating-empty-rplots-pdf-file-when-using-ggsave-and-rscript">this thread on stackoverflow</a> if you’d like to know more.</p>
 <p>We’ll just use this as a teachable moment to demonstrate how handy an automated pipeline is for dealing with such annoyances and to show a multi-line <code>make</code> rule.</p>
 <p>Update the <code>histogram.png</code> rule like so:</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb362-1"><a href="automating-pipeline.html#cb362-1"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
-<span id="cb362-2"><a href="automating-pipeline.html#cb362-2"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span>
-<span id="cb362-3"><a href="automating-pipeline.html#cb362-3"></a>    rm Rplots.pdf</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb363-1"><a href="automating-pipeline.html#cb363-1"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
+<span id="cb363-2"><a href="automating-pipeline.html#cb363-2"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span>
+<span id="cb363-3"><a href="automating-pipeline.html#cb363-3"></a>    rm Rplots.pdf</span></code></pre></div>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
 <li>Remove <code>Rplots.pdf</code> manually</li>
@@ -932,11 +932,11 @@ Figure 24.1: Dependency graph of the pipeline
 <div id="render-an-html-report" class="section level2">
 <h2><span class="header-section-number">36.11</span> Render an HTML report</h2>
 <p>Finally, we’ll use <code>rmarkdown::render()</code> to generate an HTML report. If we think narrowly, we might say that the HTML report depends only on its Markdown predecessor, which would lead to a rule like this:</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb363-1"><a href="automating-pipeline.html#cb363-1"></a><span class="dv">report.html:</span><span class="dt"> report.md</span></span>
-<span id="cb363-2"><a href="automating-pipeline.html#cb363-2"></a>    Rscript -e <span class="st">&#39;rmarkdown::render(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
-<p>But we really shouldn’t hard-wire statements about word length in Markdown; we should use inline R code to compute that from the word length table. Similarly, if the plotted histogram were to change, we’d need to remake the HTML report. Here is a better rule that captures all of these dependencies:</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb364-1"><a href="automating-pipeline.html#cb364-1"></a><span class="dv">report.html:</span><span class="dt"> report.rmd histogram.tsv histogram.png</span></span>
+<div class="sourceCode" id="cb364"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb364-1"><a href="automating-pipeline.html#cb364-1"></a><span class="dv">report.html:</span><span class="dt"> report.md</span></span>
 <span id="cb364-2"><a href="automating-pipeline.html#cb364-2"></a>    Rscript -e <span class="st">&#39;rmarkdown::render(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
+<p>But we really shouldn’t hard-wire statements about word length in Markdown; we should use inline R code to compute that from the word length table. Similarly, if the plotted histogram were to change, we’d need to remake the HTML report. Here is a better rule that captures all of these dependencies:</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb365-1"><a href="automating-pipeline.html#cb365-1"></a><span class="dv">report.html:</span><span class="dt"> report.rmd histogram.tsv histogram.png</span></span>
+<span id="cb365-2"><a href="automating-pipeline.html#cb365-2"></a>    Rscript -e <span class="st">&#39;rmarkdown::render(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
 <p>Create the R Markdown file <code>report.rmd</code> that reads the table of word lengths <code>histogram.tsv</code>, reports the most common word length, and displays the pre-made histogram <code>histogram.png</code>. Here’s <a href="https://raw.githubusercontent.com/STAT545-UBC/STAT545-UBC.github.io/master/automation10_holding-area/activity/report.rmd">one solution</a>, but try not to peek until you’ve attempted this task yourself.</p>
 <p><strong>Suggested workflow:</strong></p>
 <ul>
@@ -963,32 +963,32 @@ Can you modify the `rmarkdown::render` command to generate a PDF report instead 
 <div id="the-final-makefile" class="section level2">
 <h2><span class="header-section-number">36.12</span> The final <code>Makefile</code></h2>
 <p>At this point, your <code>Makefile</code> should look something like this:</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb365-1"><a href="automating-pipeline.html#cb365-1"></a><span class="dv">all:</span><span class="dt"> report.html</span></span>
-<span id="cb365-2"><a href="automating-pipeline.html#cb365-2"></a></span>
-<span id="cb365-3"><a href="automating-pipeline.html#cb365-3"></a><span class="dv">clean:</span></span>
-<span id="cb365-4"><a href="automating-pipeline.html#cb365-4"></a>    rm -f words.txt histogram.tsv histogram.png report.md report.html</span>
-<span id="cb365-5"><a href="automating-pipeline.html#cb365-5"></a></span>
-<span id="cb365-6"><a href="automating-pipeline.html#cb365-6"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
-<span id="cb365-7"><a href="automating-pipeline.html#cb365-7"></a>    cp /usr/share/dict/words words.txt</span>
-<span id="cb365-8"><a href="automating-pipeline.html#cb365-8"></a></span>
-<span id="cb365-9"><a href="automating-pipeline.html#cb365-9"></a><span class="dv">histogram.tsv:</span><span class="dt"> histogram.r words.txt</span></span>
-<span id="cb365-10"><a href="automating-pipeline.html#cb365-10"></a>    Rscript <span class="ch">$&lt;</span></span>
-<span id="cb365-11"><a href="automating-pipeline.html#cb365-11"></a></span>
-<span id="cb365-12"><a href="automating-pipeline.html#cb365-12"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
-<span id="cb365-13"><a href="automating-pipeline.html#cb365-13"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span>
-<span id="cb365-14"><a href="automating-pipeline.html#cb365-14"></a>    rm Rplots.pdf</span>
-<span id="cb365-15"><a href="automating-pipeline.html#cb365-15"></a></span>
-<span id="cb365-16"><a href="automating-pipeline.html#cb365-16"></a><span class="dv">report.html:</span><span class="dt"> report.rmd histogram.tsv histogram.png</span></span>
-<span id="cb365-17"><a href="automating-pipeline.html#cb365-17"></a>    Rscript -e <span class="st">&#39;rmarkdown::render(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb366-1"><a href="automating-pipeline.html#cb366-1"></a><span class="dv">all:</span><span class="dt"> report.html</span></span>
+<span id="cb366-2"><a href="automating-pipeline.html#cb366-2"></a></span>
+<span id="cb366-3"><a href="automating-pipeline.html#cb366-3"></a><span class="dv">clean:</span></span>
+<span id="cb366-4"><a href="automating-pipeline.html#cb366-4"></a>    rm -f words.txt histogram.tsv histogram.png report.md report.html</span>
+<span id="cb366-5"><a href="automating-pipeline.html#cb366-5"></a></span>
+<span id="cb366-6"><a href="automating-pipeline.html#cb366-6"></a><span class="dv">words.txt:</span><span class="dt"> /usr/share/dict/words</span></span>
+<span id="cb366-7"><a href="automating-pipeline.html#cb366-7"></a>    cp /usr/share/dict/words words.txt</span>
+<span id="cb366-8"><a href="automating-pipeline.html#cb366-8"></a></span>
+<span id="cb366-9"><a href="automating-pipeline.html#cb366-9"></a><span class="dv">histogram.tsv:</span><span class="dt"> histogram.r words.txt</span></span>
+<span id="cb366-10"><a href="automating-pipeline.html#cb366-10"></a>    Rscript <span class="ch">$&lt;</span></span>
+<span id="cb366-11"><a href="automating-pipeline.html#cb366-11"></a></span>
+<span id="cb366-12"><a href="automating-pipeline.html#cb366-12"></a><span class="dv">histogram.png:</span><span class="dt"> histogram.tsv</span></span>
+<span id="cb366-13"><a href="automating-pipeline.html#cb366-13"></a>    Rscript -e <span class="st">&#39;library(ggplot2); qplot(Length, Freq, data=read.delim(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)); ggsave(&quot;</span><span class="ch">$@</span><span class="st">&quot;)&#39;</span></span>
+<span id="cb366-14"><a href="automating-pipeline.html#cb366-14"></a>    rm Rplots.pdf</span>
+<span id="cb366-15"><a href="automating-pipeline.html#cb366-15"></a></span>
+<span id="cb366-16"><a href="automating-pipeline.html#cb366-16"></a><span class="dv">report.html:</span><span class="dt"> report.rmd histogram.tsv histogram.png</span></span>
+<span id="cb366-17"><a href="automating-pipeline.html#cb366-17"></a>    Rscript -e <span class="st">&#39;rmarkdown::render(&quot;</span><span class="ch">$&lt;</span><span class="st">&quot;)&#39;</span></span></code></pre></div>
 <p>Remember, you can review the entire activity via the commit history of the sample project: <a href="https://github.com/STAT545-UBC/make-activity" class="uri">https://github.com/STAT545-UBC/make-activity</a>.</p>
 <p>And that’s how a data analytical pipeline gets built using <code>make</code>, the shell, R, RStudio, and optionally Git.</p>
 </div>
 <div id="extending-the-makefile" class="section level2">
 <h2><span class="header-section-number">36.13</span> Extending the <code>Makefile</code></h2>
 <p>Here are <a href="https://www.gnu.org/software/make/manual/html_node/Special-Targets.html">some additions</a> you might like to include in your <code>Makefile</code>:</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb366-1"><a href="automating-pipeline.html#cb366-1"></a><span class="ex">.PHONY</span>: all clean</span>
-<span id="cb366-2"><a href="automating-pipeline.html#cb366-2"></a><span class="ex">.DELETE_ON_ERROR</span>:</span>
-<span id="cb366-3"><a href="automating-pipeline.html#cb366-3"></a><span class="ex">.SECONDARY</span>:</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb367-1"><a href="automating-pipeline.html#cb367-1"></a><span class="ex">.PHONY</span>: all clean</span>
+<span id="cb367-2"><a href="automating-pipeline.html#cb367-2"></a><span class="ex">.DELETE_ON_ERROR</span>:</span>
+<span id="cb367-3"><a href="automating-pipeline.html#cb367-3"></a><span class="ex">.SECONDARY</span>:</span></code></pre></div>
 <p>The <code>.PHONY</code> line is where you declare which targets are <em>phony</em>, i.e. are not actual files to be made in the literal sense. It’s a good idea to explicitly tell <code>make</code> which targets are phony, instead of letting it try to deduce this. <code>make</code> can get confused if you create a file that has the same name as a phony target. If for example you create a directory named <code>clean</code> to hold your clean data and run <code>make clean</code>, then <code>make</code> will report <code>'clean' is up to date</code>, because a directory with that name already exists.</p>
 <p><code>.DELETE_ON_ERROR</code> causes <code>make</code> to “delete the target of a rule if it has changed and its recipe exits with a nonzero exit status”. In English, this means that – if a rule starts to run but then exits due to error – any outputs written in the course of that fiasco will be deleted. This can protect you from having half-baked, erroneous files lying around that will just confuse you later.</p>
 <p><code>.SECONDARY</code> tells <code>make</code> not to delete intermediate files of a chain of pattern rules. Consider creating a <code>Makefile</code> with two pattern rules, <code>%.md: %.rmd</code> and <code>%.html: %.md</code>, and then running <code>make report.html</code>. After <code>make</code> has created <code>report.md</code> and <code>report.html</code>, it will delete the intermediate file <code>report.md</code>. Adding <code>.SECONDARY</code> to your <code>Makefile</code> prevents the intermediate file from being deleted.</p>

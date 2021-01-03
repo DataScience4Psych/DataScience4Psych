@@ -748,79 +748,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">29.2</span> Meet the gridExtra package</h2>
 <p>Under the hood, ggplot2 uses the grid package to create figures. The gridExtra packages provides some extra goodies and we will draw on them to place multiple ggplot2 plots on a single virtual page.</p>
 <p>You may need to install gridExtra and you will certainly need to load it.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="multiple-plots.html#cb334-1"></a><span class="co"># install.packages(&quot;gridExtra&quot;)</span></span>
-<span id="cb334-2"><a href="multiple-plots.html#cb334-2"></a><span class="kw">library</span>(gridExtra)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="multiple-plots.html#cb335-1"></a><span class="co"># install.packages(&quot;gridExtra&quot;)</span></span>
+<span id="cb335-2"><a href="multiple-plots.html#cb335-2"></a><span class="kw">library</span>(gridExtra)</span></code></pre></div>
 </div>
 <div id="load-gapminder-and-ggplot2" class="section level2">
 <h2><span class="header-section-number">29.3</span> Load gapminder and ggplot2</h2>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="multiple-plots.html#cb335-1"></a><span class="kw">library</span>(gapminder)</span>
-<span id="cb335-2"><a href="multiple-plots.html#cb335-2"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="multiple-plots.html#cb336-1"></a><span class="kw">library</span>(gapminder)</span>
+<span id="cb336-2"><a href="multiple-plots.html#cb336-2"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
 </div>
 <div id="use-the-arrangegrob-function-and-friends" class="section level2">
 <h2><span class="header-section-number">29.4</span> Use the <code>arrangeGrob()</code> function and friends</h2>
 <p>Store the constituent plots to plot objects and then pass them to <code>grid.arrange()</code> or <code>arrangeGrob()</code>.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="multiple-plots.html#cb336-1"></a>p_dens &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></span>
-<span id="cb336-2"><a href="multiple-plots.html#cb336-2"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb336-3"><a href="multiple-plots.html#cb336-3"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb336-4"><a href="multiple-plots.html#cb336-4"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</span>
-<span id="cb336-5"><a href="multiple-plots.html#cb336-5"></a>p_scatter &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp)) <span class="op">+</span></span>
-<span id="cb336-6"><a href="multiple-plots.html#cb336-6"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>()</span>
-<span id="cb336-7"><a href="multiple-plots.html#cb336-7"></a><span class="co">#p_both &lt;- arrangeGrob(p_dens, p_scatter, nrow = 2, heights = c(0.35, 0.65))</span></span>
-<span id="cb336-8"><a href="multiple-plots.html#cb336-8"></a><span class="co">#print(p_both)</span></span>
-<span id="cb336-9"><a href="multiple-plots.html#cb336-9"></a><span class="kw">grid.arrange</span>(p_dens, p_scatter, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="fl">0.35</span>, <span class="fl">0.65</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="multiple-plots.html#cb337-1"></a>p_dens &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></span>
+<span id="cb337-2"><a href="multiple-plots.html#cb337-2"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb337-3"><a href="multiple-plots.html#cb337-3"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb337-4"><a href="multiple-plots.html#cb337-4"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</span>
+<span id="cb337-5"><a href="multiple-plots.html#cb337-5"></a>p_scatter &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp)) <span class="op">+</span></span>
+<span id="cb337-6"><a href="multiple-plots.html#cb337-6"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_log10</span>()</span>
+<span id="cb337-7"><a href="multiple-plots.html#cb337-7"></a><span class="co">#p_both &lt;- arrangeGrob(p_dens, p_scatter, nrow = 2, heights = c(0.35, 0.65))</span></span>
+<span id="cb337-8"><a href="multiple-plots.html#cb337-8"></a><span class="co">#print(p_both)</span></span>
+<span id="cb337-9"><a href="multiple-plots.html#cb337-9"></a><span class="kw">grid.arrange</span>(p_dens, p_scatter, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="fl">0.35</span>, <span class="fl">0.65</span>))</span></code></pre></div>
 <p><img src="029_multiple-plots_files/figure-html/arrangeGrob-demo-1.png" width="672" /></p>
 <p>You can find other examples of this workflow in the <a href="https://github.com/jennybc/r-graph-catalog">R Graph Catalog</a>.</p>
 </div>
 <div id="use-the-multiplot-function" class="section level2">
 <h2><span class="header-section-number">29.5</span> Use the <code>multiplot()</code> function</h2>
 <p>In the <a href="http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/">Graphs</a> chapter of his <a href="http://www.cookbook-r.com">Cookbook for R</a>, Winston Chang uses the grid package to define the <code>multiplot()</code> function:</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="multiple-plots.html#cb337-1"></a><span class="co"># Multiple plot function</span></span>
-<span id="cb337-2"><a href="multiple-plots.html#cb337-2"></a><span class="co">#</span></span>
-<span id="cb337-3"><a href="multiple-plots.html#cb337-3"></a><span class="co"># ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)</span></span>
-<span id="cb337-4"><a href="multiple-plots.html#cb337-4"></a><span class="co"># - cols:   Number of columns in layout</span></span>
-<span id="cb337-5"><a href="multiple-plots.html#cb337-5"></a><span class="co"># - layout: A matrix specifying the layout. If present, &#39;cols&#39; is ignored.</span></span>
-<span id="cb337-6"><a href="multiple-plots.html#cb337-6"></a><span class="co">#</span></span>
-<span id="cb337-7"><a href="multiple-plots.html#cb337-7"></a><span class="co"># If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),</span></span>
-<span id="cb337-8"><a href="multiple-plots.html#cb337-8"></a><span class="co"># then plot 1 will go in the upper left, 2 will go in the upper right, and</span></span>
-<span id="cb337-9"><a href="multiple-plots.html#cb337-9"></a><span class="co"># 3 will go all the way across the bottom.</span></span>
-<span id="cb337-10"><a href="multiple-plots.html#cb337-10"></a><span class="co">#</span></span>
-<span id="cb337-11"><a href="multiple-plots.html#cb337-11"></a>multiplot &lt;-<span class="st"> </span><span class="cf">function</span>(..., <span class="dt">plotlist=</span><span class="ot">NULL</span>, file, <span class="dt">cols=</span><span class="dv">1</span>, <span class="dt">layout=</span><span class="ot">NULL</span>) {</span>
-<span id="cb337-12"><a href="multiple-plots.html#cb337-12"></a>  <span class="kw">require</span>(grid)</span>
-<span id="cb337-13"><a href="multiple-plots.html#cb337-13"></a></span>
-<span id="cb337-14"><a href="multiple-plots.html#cb337-14"></a>  <span class="co"># Make a list from the ... arguments and plotlist</span></span>
-<span id="cb337-15"><a href="multiple-plots.html#cb337-15"></a>  plots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), plotlist)</span>
-<span id="cb337-16"><a href="multiple-plots.html#cb337-16"></a></span>
-<span id="cb337-17"><a href="multiple-plots.html#cb337-17"></a>  numPlots =<span class="st"> </span><span class="kw">length</span>(plots)</span>
-<span id="cb337-18"><a href="multiple-plots.html#cb337-18"></a></span>
-<span id="cb337-19"><a href="multiple-plots.html#cb337-19"></a>  <span class="co"># If layout is NULL, then use &#39;cols&#39; to determine layout</span></span>
-<span id="cb337-20"><a href="multiple-plots.html#cb337-20"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(layout)) {</span>
-<span id="cb337-21"><a href="multiple-plots.html#cb337-21"></a>    <span class="co"># Make the panel</span></span>
-<span id="cb337-22"><a href="multiple-plots.html#cb337-22"></a>    <span class="co"># ncol: Number of columns of plots</span></span>
-<span id="cb337-23"><a href="multiple-plots.html#cb337-23"></a>    <span class="co"># nrow: Number of rows needed, calculated from # of cols</span></span>
-<span id="cb337-24"><a href="multiple-plots.html#cb337-24"></a>    layout &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">seq</span>(<span class="dv">1</span>, cols <span class="op">*</span><span class="st"> </span><span class="kw">ceiling</span>(numPlots<span class="op">/</span>cols)),</span>
-<span id="cb337-25"><a href="multiple-plots.html#cb337-25"></a>                    <span class="dt">ncol =</span> cols, <span class="dt">nrow =</span> <span class="kw">ceiling</span>(numPlots<span class="op">/</span>cols))</span>
-<span id="cb337-26"><a href="multiple-plots.html#cb337-26"></a>  }</span>
-<span id="cb337-27"><a href="multiple-plots.html#cb337-27"></a></span>
-<span id="cb337-28"><a href="multiple-plots.html#cb337-28"></a> <span class="cf">if</span> (numPlots<span class="op">==</span><span class="dv">1</span>) {</span>
-<span id="cb337-29"><a href="multiple-plots.html#cb337-29"></a>    <span class="kw">print</span>(plots[[<span class="dv">1</span>]])</span>
-<span id="cb337-30"><a href="multiple-plots.html#cb337-30"></a></span>
-<span id="cb337-31"><a href="multiple-plots.html#cb337-31"></a>  } <span class="cf">else</span> {</span>
-<span id="cb337-32"><a href="multiple-plots.html#cb337-32"></a>    <span class="co"># Set up the page</span></span>
-<span id="cb337-33"><a href="multiple-plots.html#cb337-33"></a>    <span class="kw">grid.newpage</span>()</span>
-<span id="cb337-34"><a href="multiple-plots.html#cb337-34"></a>    <span class="kw">pushViewport</span>(<span class="kw">viewport</span>(<span class="dt">layout =</span> <span class="kw">grid.layout</span>(<span class="kw">nrow</span>(layout), <span class="kw">ncol</span>(layout))))</span>
-<span id="cb337-35"><a href="multiple-plots.html#cb337-35"></a></span>
-<span id="cb337-36"><a href="multiple-plots.html#cb337-36"></a>    <span class="co"># Make each plot, in the correct location</span></span>
-<span id="cb337-37"><a href="multiple-plots.html#cb337-37"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>numPlots) {</span>
-<span id="cb337-38"><a href="multiple-plots.html#cb337-38"></a>      <span class="co"># Get the i,j matrix positions of the regions that contain this subplot</span></span>
-<span id="cb337-39"><a href="multiple-plots.html#cb337-39"></a>      matchidx &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">which</span>(layout <span class="op">==</span><span class="st"> </span>i, <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb337-40"><a href="multiple-plots.html#cb337-40"></a></span>
-<span id="cb337-41"><a href="multiple-plots.html#cb337-41"></a>      <span class="kw">print</span>(plots[[i]], <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">layout.pos.row =</span> matchidx<span class="op">$</span>row,</span>
-<span id="cb337-42"><a href="multiple-plots.html#cb337-42"></a>                                      <span class="dt">layout.pos.col =</span> matchidx<span class="op">$</span>col))</span>
-<span id="cb337-43"><a href="multiple-plots.html#cb337-43"></a>    }</span>
-<span id="cb337-44"><a href="multiple-plots.html#cb337-44"></a>  }</span>
-<span id="cb337-45"><a href="multiple-plots.html#cb337-45"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="multiple-plots.html#cb338-1"></a><span class="co"># Multiple plot function</span></span>
+<span id="cb338-2"><a href="multiple-plots.html#cb338-2"></a><span class="co">#</span></span>
+<span id="cb338-3"><a href="multiple-plots.html#cb338-3"></a><span class="co"># ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)</span></span>
+<span id="cb338-4"><a href="multiple-plots.html#cb338-4"></a><span class="co"># - cols:   Number of columns in layout</span></span>
+<span id="cb338-5"><a href="multiple-plots.html#cb338-5"></a><span class="co"># - layout: A matrix specifying the layout. If present, &#39;cols&#39; is ignored.</span></span>
+<span id="cb338-6"><a href="multiple-plots.html#cb338-6"></a><span class="co">#</span></span>
+<span id="cb338-7"><a href="multiple-plots.html#cb338-7"></a><span class="co"># If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),</span></span>
+<span id="cb338-8"><a href="multiple-plots.html#cb338-8"></a><span class="co"># then plot 1 will go in the upper left, 2 will go in the upper right, and</span></span>
+<span id="cb338-9"><a href="multiple-plots.html#cb338-9"></a><span class="co"># 3 will go all the way across the bottom.</span></span>
+<span id="cb338-10"><a href="multiple-plots.html#cb338-10"></a><span class="co">#</span></span>
+<span id="cb338-11"><a href="multiple-plots.html#cb338-11"></a>multiplot &lt;-<span class="st"> </span><span class="cf">function</span>(..., <span class="dt">plotlist=</span><span class="ot">NULL</span>, file, <span class="dt">cols=</span><span class="dv">1</span>, <span class="dt">layout=</span><span class="ot">NULL</span>) {</span>
+<span id="cb338-12"><a href="multiple-plots.html#cb338-12"></a>  <span class="kw">require</span>(grid)</span>
+<span id="cb338-13"><a href="multiple-plots.html#cb338-13"></a></span>
+<span id="cb338-14"><a href="multiple-plots.html#cb338-14"></a>  <span class="co"># Make a list from the ... arguments and plotlist</span></span>
+<span id="cb338-15"><a href="multiple-plots.html#cb338-15"></a>  plots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">list</span>(...), plotlist)</span>
+<span id="cb338-16"><a href="multiple-plots.html#cb338-16"></a></span>
+<span id="cb338-17"><a href="multiple-plots.html#cb338-17"></a>  numPlots =<span class="st"> </span><span class="kw">length</span>(plots)</span>
+<span id="cb338-18"><a href="multiple-plots.html#cb338-18"></a></span>
+<span id="cb338-19"><a href="multiple-plots.html#cb338-19"></a>  <span class="co"># If layout is NULL, then use &#39;cols&#39; to determine layout</span></span>
+<span id="cb338-20"><a href="multiple-plots.html#cb338-20"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(layout)) {</span>
+<span id="cb338-21"><a href="multiple-plots.html#cb338-21"></a>    <span class="co"># Make the panel</span></span>
+<span id="cb338-22"><a href="multiple-plots.html#cb338-22"></a>    <span class="co"># ncol: Number of columns of plots</span></span>
+<span id="cb338-23"><a href="multiple-plots.html#cb338-23"></a>    <span class="co"># nrow: Number of rows needed, calculated from # of cols</span></span>
+<span id="cb338-24"><a href="multiple-plots.html#cb338-24"></a>    layout &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">seq</span>(<span class="dv">1</span>, cols <span class="op">*</span><span class="st"> </span><span class="kw">ceiling</span>(numPlots<span class="op">/</span>cols)),</span>
+<span id="cb338-25"><a href="multiple-plots.html#cb338-25"></a>                    <span class="dt">ncol =</span> cols, <span class="dt">nrow =</span> <span class="kw">ceiling</span>(numPlots<span class="op">/</span>cols))</span>
+<span id="cb338-26"><a href="multiple-plots.html#cb338-26"></a>  }</span>
+<span id="cb338-27"><a href="multiple-plots.html#cb338-27"></a></span>
+<span id="cb338-28"><a href="multiple-plots.html#cb338-28"></a> <span class="cf">if</span> (numPlots<span class="op">==</span><span class="dv">1</span>) {</span>
+<span id="cb338-29"><a href="multiple-plots.html#cb338-29"></a>    <span class="kw">print</span>(plots[[<span class="dv">1</span>]])</span>
+<span id="cb338-30"><a href="multiple-plots.html#cb338-30"></a></span>
+<span id="cb338-31"><a href="multiple-plots.html#cb338-31"></a>  } <span class="cf">else</span> {</span>
+<span id="cb338-32"><a href="multiple-plots.html#cb338-32"></a>    <span class="co"># Set up the page</span></span>
+<span id="cb338-33"><a href="multiple-plots.html#cb338-33"></a>    <span class="kw">grid.newpage</span>()</span>
+<span id="cb338-34"><a href="multiple-plots.html#cb338-34"></a>    <span class="kw">pushViewport</span>(<span class="kw">viewport</span>(<span class="dt">layout =</span> <span class="kw">grid.layout</span>(<span class="kw">nrow</span>(layout), <span class="kw">ncol</span>(layout))))</span>
+<span id="cb338-35"><a href="multiple-plots.html#cb338-35"></a></span>
+<span id="cb338-36"><a href="multiple-plots.html#cb338-36"></a>    <span class="co"># Make each plot, in the correct location</span></span>
+<span id="cb338-37"><a href="multiple-plots.html#cb338-37"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>numPlots) {</span>
+<span id="cb338-38"><a href="multiple-plots.html#cb338-38"></a>      <span class="co"># Get the i,j matrix positions of the regions that contain this subplot</span></span>
+<span id="cb338-39"><a href="multiple-plots.html#cb338-39"></a>      matchidx &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">which</span>(layout <span class="op">==</span><span class="st"> </span>i, <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb338-40"><a href="multiple-plots.html#cb338-40"></a></span>
+<span id="cb338-41"><a href="multiple-plots.html#cb338-41"></a>      <span class="kw">print</span>(plots[[i]], <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">layout.pos.row =</span> matchidx<span class="op">$</span>row,</span>
+<span id="cb338-42"><a href="multiple-plots.html#cb338-42"></a>                                      <span class="dt">layout.pos.col =</span> matchidx<span class="op">$</span>col))</span>
+<span id="cb338-43"><a href="multiple-plots.html#cb338-43"></a>    }</span>
+<span id="cb338-44"><a href="multiple-plots.html#cb338-44"></a>  }</span>
+<span id="cb338-45"><a href="multiple-plots.html#cb338-45"></a>}</span></code></pre></div>
 <p>Assuming that the plot objects <code>p1</code>, <code>p2</code>, <code>p3</code>, and <code>p4</code> are pre-defined, call the function like this:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="multiple-plots.html#cb338-1"></a><span class="kw">multiplot</span>(p1, p2, p3, p4, <span class="dt">cols =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="multiple-plots.html#cb339-1"></a><span class="kw">multiplot</span>(p1, p2, p3, p4, <span class="dt">cols =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p>Visit <a href="http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/">Multiple graphs on one page (ggplot2)</a> to see a complete worked example.</p>
 </div>
 <div id="use-the-cowplot-package" class="section level2">
