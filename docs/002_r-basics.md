@@ -36,7 +36,7 @@ and in my head I hear, e.g., "x gets 12".
 
 You will make lots of assignments and the operator `<-` is a pain to type. Don't be lazy and use `=`, although it would work, because it will just sow confusion later. Instead, utilize RStudio's keyboard shortcut: Alt + - (the minus sign).
 
-Notice that RStudio automagically surrounds `<-` with spaces, which demonstrates a useful code formatting practice. Code is miserable to read on a good day. Give your eyes a break and use spaces.
+Notice that RStudio auto-magically surrounds `<-` with spaces, which demonstrates a useful code formatting practice. Code is miserable to read on a good day. Give your eyes a break and use spaces.
 
 RStudio offers many handy [keyboard shortcuts][rstudio-key-shortcuts]. Also, Alt+Shift+K brings up a keyboard shortcut reference card.
 
@@ -59,16 +59,16 @@ To inspect this, try out RStudio's completion facility: type the first few chara
 Make another assignment:
 
 ```r
-jenny_rocks <- 2 ^ 3
+mason_rocks <- 2 ^ 3
 ```
 
 Let's try to inspect:
 
 ```r
-jennyrocks
-#> Error in eval(expr, envir, enclos): object 'jennyrocks' not found
-jeny_rocks
-#> Error in eval(expr, envir, enclos): object 'jeny_rocks' not found
+masonrocks
+#> Error in eval(expr, envir, enclos): object 'masonrocks' not found
+masn_rocks
+#> Error in eval(expr, envir, enclos): object 'masn_rocks' not found
 ```
 
 Implicit contract with the computer / scripting language: Computer will do tedious computation for you. In return, you will be completely precise in your instructions. Typos matter. Case matters. Get better at typing.
@@ -90,8 +90,7 @@ seq(1, 10)
 #>  [1]  1  2  3  4  5  6  7  8  9 10
 ```
 
-The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Since we didn't specify step size, the default value of `by` in the function definition is used, which ends up being 1 in this case. For functions I call often, I might use this resolve by position for the first
-argument or maybe the first two. After that, I always use `name = value`.
+The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Since we didn't specify step size, the default value of `by` in the function definition is used, which ends up being 1 in this case. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use `name = value`.
 
 
 Make this assignment and notice similar help with quotation marks.
@@ -121,7 +120,7 @@ Not all functions have (or require) arguments:
 
 ```r
 date()
-#> [1] "Sun Jan 03 14:46:16 2021"
+#> [1] "Mon Jan 04 16:15:40 2021"
 ```
 
 Now look at your workspace -- in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:
@@ -130,13 +129,13 @@ Now look at your workspace -- in the upper right pane. The workspace is where us
 ```r
 objects()
 #> [1] "check_quietly"              "install_quietly"           
-#> [3] "jenny_rocks"                "pretty_install"            
+#> [3] "mason_rocks"                "pretty_install"            
 #> [5] "shhh_check"                 "this_is_a_really_long_name"
 #> [7] "x"                          "y"                         
 #> [9] "yo"
 ls()
 #> [1] "check_quietly"              "install_quietly"           
-#> [3] "jenny_rocks"                "pretty_install"            
+#> [3] "mason_rocks"                "pretty_install"            
 #> [5] "shhh_check"                 "this_is_a_really_long_name"
 #> [7] "x"                          "y"                         
 #> [9] "yo"
@@ -176,7 +175,7 @@ To handle these real life situations, you need to make two decisions:
 As a beginning R user, it's OK to consider your workspace "real". _Very soon_, I urge you to evolve to the next level, where you consider your saved R scripts as "real". (In either case, of course the input data is very much real and requires preservation!) With the input data and the R code you used, you can reproduce
 _everything_. You can make your analysis fancier. You can get to the bottom of puzzling results and discover and fix bugs in your code. You can reuse the code to conduct similar analyses in new projects. You can remake a figure with different aspect ratio or save is as TIFF instead of PDF. You are ready to take questions. You are ready for the future.
 
-If you regard your workspace as "real" (saving and reloading all the time), if you need to redo analysis ... you're going to either redo a lot of typing (making mistakes all the way) or will have to mine your R history for the commands you used. Rather than [becoming an expert on managing the R history][rstudio-command-history], a better use of your time and psychic energy is to keep your "good" R code in a script for future reuse.
+If you regard your workspace as "real" (saving and reloading all the time), if you need to redo analysis ... you're going to either redo a lot of typing (making mistakes all the way) or will have to mine your R history for the commands you used. Rather than [becoming an expert on managing the R history][rstudio-command-history], a better use of your time and energy is to keep your "good" R code in a script for future reuse.
 
 Because it can be useful sometimes, note the commands you've recently run appear in the History pane.
 
@@ -257,7 +256,7 @@ sig_sq <- 0.5
 x <- runif(40)
 y <- a + b * x + rnorm(40, sd = sqrt(sig_sq))
 (avg_x <- mean(x))
-#> [1] 0.518
+#> [1] 0.48
 write(avg_x, "avg_x.txt")
 plot(x, y)
 abline(a, b, col = "purple")

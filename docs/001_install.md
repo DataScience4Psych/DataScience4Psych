@@ -10,7 +10,17 @@
 ## R and RStudio
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9bZkp7q19f0?rel=0" frameborder="0" allowfullscreen></iframe>
+```r
+library(vembedr)
+embed_url("https://www.youtube.com/watch?v=kVIZGCT5p9U") %>%
+  use_align("center")
+```
+
+<!--html_preserve--><div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div><!--/html_preserve-->
 
 * Install [R, a free software environment for statistical computing and graphics][r-proj] from [CRAN][cran], the Comprehensive R Archive Network. I __highly recommend__ you install a precompiled binary distribution for your operating system -- use the links up at the top of the CRAN page linked above!
 
@@ -28,9 +38,7 @@ If you have a pre-existing installation of R and/or RStudio, I __highly recommen
     update.packages(ask = FALSE, checkBuilt = TRUE)
     ```
 
-  __Note:__ this will only look for updates on CRAN. So if you use a package that lives *only* on GitHub or if you want a development version from GitHub, you will need to  update manually, e.g. via `devtools::install_github()`.
-
-
+  __Note:__ this  code will only look for updates on CRAN. So if you use a package that lives *only* on GitHub or if you want a development version from GitHub, you will need to  update manually, e.g. via `devtools::install_github()`.
 
 
 
