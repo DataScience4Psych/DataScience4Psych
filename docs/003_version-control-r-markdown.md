@@ -12,7 +12,7 @@ Working through subsequent material in R Markdown documents, possibly using Git 
 
 <!--Original content: https://stat545.com/git08_claim-stat545-repo.html-->
 
-At this point in DS4P, all students receive their own DS4P GitHub repository that they will use to develop their course work throughout the rest of the course.
+At this point in DS4P, all students create their own DS4P GitHub repository that they will use to develop their course work throughout the rest of the course.
 
 This has two purposes:
 
@@ -21,7 +21,7 @@ This has two purposes:
   * Learning to use Git and GitHub, with R and RStudio, is a legitimate
     pedagogical goal.
     
-Our instructions around installation, setup, and early Git usage eventually grew so extensive that we created a dedicated website. This content can now be found here:
+Jenny Bryan's instructions around installation, setup, and early Git usage eventually grew so extensive that she created a dedicated website. This content can now be found here:
 
 <https://happygitwithr.com>
 
