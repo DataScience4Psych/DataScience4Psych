@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 4 Git, GitHub, and RStudio | Data Science for Psychologists</title>
+  <title>Topic 1 What is Exploratory Data Analysis? | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 4 Git, GitHub, and RStudio | Data Science for Psychologists" />
+  <meta property="og:title" content="Topic 1 What is Exploratory Data Analysis? | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/R-Computing-Lab/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="R-Computing-Lab/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 4 Git, GitHub, and RStudio | Data Science for Psychologists" />
+  <meta name="twitter:title" content="Topic 1 What is Exploratory Data Analysis? | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="overview.html"/>
-<link rel="next" href="r-markdown.html"/>
+<link rel="prev" href="week-1-overview.html"/>
+<link rel="next" href="get-your-r-act-together.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -256,27 +256,134 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="version-control" class="section level1">
-<h1><span class="header-section-number">Topic 4</span> Git, GitHub, and RStudio</h1>
-<!--Original content: https://stat545.com/git08_claim-stat545-repo.html-->
-<p>At this point in DS4P, all students create their own DS4P GitHub repository that they will use to develop their course work throughout the rest of the course.</p>
-<p>This has two purposes:</p>
-<ul>
-<li>It is helpful for course mechanics, e.g. homework submission and grading,
-peer review.</li>
-<li>Learning to use Git and GitHub, with R and RStudio, is a legitimate
-pedagogical goal.</li>
-</ul>
-<p>Jenny Bryan’s instructions around installation, setup, and early Git usage eventually grew so extensive that she created a dedicated website. This content can now be found here:</p>
-<p><a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a></p>
+<div id="what-is-exploratory-data-analysis" class="section level1">
+<h1><span class="header-section-number">Topic 1</span> What is Exploratory Data Analysis?</h1>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<div id="a-first-example" class="section level2">
+<h2><span class="header-section-number">1.1</span> A first example</h2>
+<!--Original content: https://jfukuyama.github.io/teaching/stat670/notes/lecture-1.R -->
+<p>A first example: Heights of the highest points by state</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="what-is-exploratory-data-analysis.html#cb2-1"></a><span class="co"># data-read</span></span>
+<span id="cb2-2"><a href="what-is-exploratory-data-analysis.html#cb2-2"></a><span class="co">## load required packages and data</span></span>
+<span id="cb2-3"><a href="what-is-exploratory-data-analysis.html#cb2-3"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="what-is-exploratory-data-analysis.html#cb2-4"></a><span class="co">#&gt; -- Attaching packages -------------- tidyverse 1.3.0 --</span></span>
+<span id="cb2-5"><a href="what-is-exploratory-data-analysis.html#cb2-5"></a><span class="co">#&gt; v ggplot2 3.3.2     v purrr   0.3.4</span></span>
+<span id="cb2-6"><a href="what-is-exploratory-data-analysis.html#cb2-6"></a><span class="co">#&gt; v tibble  3.0.3     v dplyr   1.0.2</span></span>
+<span id="cb2-7"><a href="what-is-exploratory-data-analysis.html#cb2-7"></a><span class="co">#&gt; v tidyr   1.1.2     v stringr 1.4.0</span></span>
+<span id="cb2-8"><a href="what-is-exploratory-data-analysis.html#cb2-8"></a><span class="co">#&gt; v readr   1.3.1     v forcats 0.5.0</span></span>
+<span id="cb2-9"><a href="what-is-exploratory-data-analysis.html#cb2-9"></a><span class="co">#&gt; -- Conflicts ----------------- tidyverse_conflicts() --</span></span>
+<span id="cb2-10"><a href="what-is-exploratory-data-analysis.html#cb2-10"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
+<span id="cb2-11"><a href="what-is-exploratory-data-analysis.html#cb2-11"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span>
+<span id="cb2-12"><a href="what-is-exploratory-data-analysis.html#cb2-12"></a><span class="kw">options</span>(<span class="dt">tibble.print_min =</span> <span class="dv">15</span>)</span>
+<span id="cb2-13"><a href="what-is-exploratory-data-analysis.html#cb2-13"></a>heights =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/highest-points-by-state.csv&quot;</span>)</span>
+<span id="cb2-14"><a href="what-is-exploratory-data-analysis.html#cb2-14"></a><span class="co">#&gt; Parsed with column specification:</span></span>
+<span id="cb2-15"><a href="what-is-exploratory-data-analysis.html#cb2-15"></a><span class="co">#&gt; cols(</span></span>
+<span id="cb2-16"><a href="what-is-exploratory-data-analysis.html#cb2-16"></a><span class="co">#&gt;   elevation = col_double(),</span></span>
+<span id="cb2-17"><a href="what-is-exploratory-data-analysis.html#cb2-17"></a><span class="co">#&gt;   state = col_character()</span></span>
+<span id="cb2-18"><a href="what-is-exploratory-data-analysis.html#cb2-18"></a><span class="co">#&gt; )</span></span>
+<span id="cb2-19"><a href="what-is-exploratory-data-analysis.html#cb2-19"></a><span class="co">## switch from feet to meters</span></span>
+<span id="cb2-20"><a href="what-is-exploratory-data-analysis.html#cb2-20"></a>heights<span class="op">$</span>elevation =<span class="st"> </span>heights<span class="op">$</span>elevation <span class="op">*</span><span class="st"> </span><span class="fl">.3048</span></span>
+<span id="cb2-21"><a href="what-is-exploratory-data-analysis.html#cb2-21"></a></span>
+<span id="cb2-22"><a href="what-is-exploratory-data-analysis.html#cb2-22"></a><span class="co">## data-print</span></span>
+<span id="cb2-23"><a href="what-is-exploratory-data-analysis.html#cb2-23"></a>heights</span>
+<span id="cb2-24"><a href="what-is-exploratory-data-analysis.html#cb2-24"></a><span class="co">#&gt; # A tibble: 50 x 2</span></span>
+<span id="cb2-25"><a href="what-is-exploratory-data-analysis.html#cb2-25"></a><span class="co">#&gt;    elevation state      </span></span>
+<span id="cb2-26"><a href="what-is-exploratory-data-analysis.html#cb2-26"></a><span class="co">#&gt;        &lt;dbl&gt; &lt;chr&gt;      </span></span>
+<span id="cb2-27"><a href="what-is-exploratory-data-analysis.html#cb2-27"></a><span class="co">#&gt;  1      733. Alabama    </span></span>
+<span id="cb2-28"><a href="what-is-exploratory-data-analysis.html#cb2-28"></a><span class="co">#&gt;  2     6168. Alaska     </span></span>
+<span id="cb2-29"><a href="what-is-exploratory-data-analysis.html#cb2-29"></a><span class="co">#&gt;  3     3851. Arizona    </span></span>
+<span id="cb2-30"><a href="what-is-exploratory-data-analysis.html#cb2-30"></a><span class="co">#&gt;  4      839. Arkansas   </span></span>
+<span id="cb2-31"><a href="what-is-exploratory-data-analysis.html#cb2-31"></a><span class="co">#&gt;  5     4418. California </span></span>
+<span id="cb2-32"><a href="what-is-exploratory-data-analysis.html#cb2-32"></a><span class="co">#&gt;  6     4399. Colorado   </span></span>
+<span id="cb2-33"><a href="what-is-exploratory-data-analysis.html#cb2-33"></a><span class="co">#&gt;  7      725. Connecticut</span></span>
+<span id="cb2-34"><a href="what-is-exploratory-data-analysis.html#cb2-34"></a><span class="co">#&gt;  8      137. Delaware   </span></span>
+<span id="cb2-35"><a href="what-is-exploratory-data-analysis.html#cb2-35"></a><span class="co">#&gt;  9      105. Florida    </span></span>
+<span id="cb2-36"><a href="what-is-exploratory-data-analysis.html#cb2-36"></a><span class="co">#&gt; 10     1458. Georgia    </span></span>
+<span id="cb2-37"><a href="what-is-exploratory-data-analysis.html#cb2-37"></a><span class="co">#&gt; 11     4205. Hawaii     </span></span>
+<span id="cb2-38"><a href="what-is-exploratory-data-analysis.html#cb2-38"></a><span class="co">#&gt; 12     3859. Idaho      </span></span>
+<span id="cb2-39"><a href="what-is-exploratory-data-analysis.html#cb2-39"></a><span class="co">#&gt; 13      376. Illinois   </span></span>
+<span id="cb2-40"><a href="what-is-exploratory-data-analysis.html#cb2-40"></a><span class="co">#&gt; 14      383. Indiana    </span></span>
+<span id="cb2-41"><a href="what-is-exploratory-data-analysis.html#cb2-41"></a><span class="co">#&gt; 15      509. Iowa       </span></span>
+<span id="cb2-42"><a href="what-is-exploratory-data-analysis.html#cb2-42"></a><span class="co">#&gt; # ... with 35 more rows</span></span>
+<span id="cb2-43"><a href="what-is-exploratory-data-analysis.html#cb2-43"></a></span>
+<span id="cb2-44"><a href="what-is-exploratory-data-analysis.html#cb2-44"></a><span class="co">## data-arrange-ascending</span></span>
+<span id="cb2-45"><a href="what-is-exploratory-data-analysis.html#cb2-45"></a><span class="kw">arrange</span>(heights, elevation)</span>
+<span id="cb2-46"><a href="what-is-exploratory-data-analysis.html#cb2-46"></a><span class="co">#&gt; # A tibble: 50 x 2</span></span>
+<span id="cb2-47"><a href="what-is-exploratory-data-analysis.html#cb2-47"></a><span class="co">#&gt;    elevation state       </span></span>
+<span id="cb2-48"><a href="what-is-exploratory-data-analysis.html#cb2-48"></a><span class="co">#&gt;        &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span id="cb2-49"><a href="what-is-exploratory-data-analysis.html#cb2-49"></a><span class="co">#&gt;  1      105. Florida     </span></span>
+<span id="cb2-50"><a href="what-is-exploratory-data-analysis.html#cb2-50"></a><span class="co">#&gt;  2      137. Delaware    </span></span>
+<span id="cb2-51"><a href="what-is-exploratory-data-analysis.html#cb2-51"></a><span class="co">#&gt;  3      163. Louisiana   </span></span>
+<span id="cb2-52"><a href="what-is-exploratory-data-analysis.html#cb2-52"></a><span class="co">#&gt;  4      246. Mississippi </span></span>
+<span id="cb2-53"><a href="what-is-exploratory-data-analysis.html#cb2-53"></a><span class="co">#&gt;  5      247. Rhode Island</span></span>
+<span id="cb2-54"><a href="what-is-exploratory-data-analysis.html#cb2-54"></a><span class="co">#&gt;  6      376. Illinois    </span></span>
+<span id="cb2-55"><a href="what-is-exploratory-data-analysis.html#cb2-55"></a><span class="co">#&gt;  7      383. Indiana     </span></span>
+<span id="cb2-56"><a href="what-is-exploratory-data-analysis.html#cb2-56"></a><span class="co">#&gt;  8      472. Ohio        </span></span>
+<span id="cb2-57"><a href="what-is-exploratory-data-analysis.html#cb2-57"></a><span class="co">#&gt;  9      509. Iowa        </span></span>
+<span id="cb2-58"><a href="what-is-exploratory-data-analysis.html#cb2-58"></a><span class="co">#&gt; 10      540. Missouri    </span></span>
+<span id="cb2-59"><a href="what-is-exploratory-data-analysis.html#cb2-59"></a><span class="co">#&gt; 11      550. New Jersey  </span></span>
+<span id="cb2-60"><a href="what-is-exploratory-data-analysis.html#cb2-60"></a><span class="co">#&gt; 12      595. Wisconsin   </span></span>
+<span id="cb2-61"><a href="what-is-exploratory-data-analysis.html#cb2-61"></a><span class="co">#&gt; 13      603. Michigan    </span></span>
+<span id="cb2-62"><a href="what-is-exploratory-data-analysis.html#cb2-62"></a><span class="co">#&gt; 14      701. Minnesota   </span></span>
+<span id="cb2-63"><a href="what-is-exploratory-data-analysis.html#cb2-63"></a><span class="co">#&gt; 15      725. Connecticut </span></span>
+<span id="cb2-64"><a href="what-is-exploratory-data-analysis.html#cb2-64"></a><span class="co">#&gt; # ... with 35 more rows</span></span>
+<span id="cb2-65"><a href="what-is-exploratory-data-analysis.html#cb2-65"></a></span>
+<span id="cb2-66"><a href="what-is-exploratory-data-analysis.html#cb2-66"></a><span class="co">## data-arrange-descending</span></span>
+<span id="cb2-67"><a href="what-is-exploratory-data-analysis.html#cb2-67"></a><span class="kw">arrange</span>(heights, <span class="kw">desc</span>(elevation))</span>
+<span id="cb2-68"><a href="what-is-exploratory-data-analysis.html#cb2-68"></a><span class="co">#&gt; # A tibble: 50 x 2</span></span>
+<span id="cb2-69"><a href="what-is-exploratory-data-analysis.html#cb2-69"></a><span class="co">#&gt;    elevation state       </span></span>
+<span id="cb2-70"><a href="what-is-exploratory-data-analysis.html#cb2-70"></a><span class="co">#&gt;        &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span id="cb2-71"><a href="what-is-exploratory-data-analysis.html#cb2-71"></a><span class="co">#&gt;  1     6168. Alaska      </span></span>
+<span id="cb2-72"><a href="what-is-exploratory-data-analysis.html#cb2-72"></a><span class="co">#&gt;  2     4418. California  </span></span>
+<span id="cb2-73"><a href="what-is-exploratory-data-analysis.html#cb2-73"></a><span class="co">#&gt;  3     4399. Colorado    </span></span>
+<span id="cb2-74"><a href="what-is-exploratory-data-analysis.html#cb2-74"></a><span class="co">#&gt;  4     4392. Washington  </span></span>
+<span id="cb2-75"><a href="what-is-exploratory-data-analysis.html#cb2-75"></a><span class="co">#&gt;  5     4207. Wyoming     </span></span>
+<span id="cb2-76"><a href="what-is-exploratory-data-analysis.html#cb2-76"></a><span class="co">#&gt;  6     4205. Hawaii      </span></span>
+<span id="cb2-77"><a href="what-is-exploratory-data-analysis.html#cb2-77"></a><span class="co">#&gt;  7     4123. Utah        </span></span>
+<span id="cb2-78"><a href="what-is-exploratory-data-analysis.html#cb2-78"></a><span class="co">#&gt;  8     4011. New Mexico  </span></span>
+<span id="cb2-79"><a href="what-is-exploratory-data-analysis.html#cb2-79"></a><span class="co">#&gt;  9     4005. Nevada      </span></span>
+<span id="cb2-80"><a href="what-is-exploratory-data-analysis.html#cb2-80"></a><span class="co">#&gt; 10     3901. Montana     </span></span>
+<span id="cb2-81"><a href="what-is-exploratory-data-analysis.html#cb2-81"></a><span class="co">#&gt; 11     3859. Idaho       </span></span>
+<span id="cb2-82"><a href="what-is-exploratory-data-analysis.html#cb2-82"></a><span class="co">#&gt; 12     3851. Arizona     </span></span>
+<span id="cb2-83"><a href="what-is-exploratory-data-analysis.html#cb2-83"></a><span class="co">#&gt; 13     3426. Oregon      </span></span>
+<span id="cb2-84"><a href="what-is-exploratory-data-analysis.html#cb2-84"></a><span class="co">#&gt; 14     2667. Texas       </span></span>
+<span id="cb2-85"><a href="what-is-exploratory-data-analysis.html#cb2-85"></a><span class="co">#&gt; 15     2207. South Dakota</span></span>
+<span id="cb2-86"><a href="what-is-exploratory-data-analysis.html#cb2-86"></a><span class="co">#&gt; # ... with 35 more rows</span></span>
+<span id="cb2-87"><a href="what-is-exploratory-data-analysis.html#cb2-87"></a></span>
+<span id="cb2-88"><a href="what-is-exploratory-data-analysis.html#cb2-88"></a><span class="co">## stem-and-leaf</span></span>
+<span id="cb2-89"><a href="what-is-exploratory-data-analysis.html#cb2-89"></a><span class="kw">stem</span>(heights<span class="op">$</span>elevation)</span>
+<span id="cb2-90"><a href="what-is-exploratory-data-analysis.html#cb2-90"></a><span class="co">#&gt; </span></span>
+<span id="cb2-91"><a href="what-is-exploratory-data-analysis.html#cb2-91"></a><span class="co">#&gt;   The decimal point is 3 digit(s) to the right of the |</span></span>
+<span id="cb2-92"><a href="what-is-exploratory-data-analysis.html#cb2-92"></a><span class="co">#&gt; </span></span>
+<span id="cb2-93"><a href="what-is-exploratory-data-analysis.html#cb2-93"></a><span class="co">#&gt;   0 | 11222445555667778</span></span>
+<span id="cb2-94"><a href="what-is-exploratory-data-analysis.html#cb2-94"></a><span class="co">#&gt;   1 | 0011123355566779</span></span>
+<span id="cb2-95"><a href="what-is-exploratory-data-analysis.html#cb2-95"></a><span class="co">#&gt;   2 | 0027</span></span>
+<span id="cb2-96"><a href="what-is-exploratory-data-analysis.html#cb2-96"></a><span class="co">#&gt;   3 | 4999</span></span>
+<span id="cb2-97"><a href="what-is-exploratory-data-analysis.html#cb2-97"></a><span class="co">#&gt;   4 | 00122444</span></span>
+<span id="cb2-98"><a href="what-is-exploratory-data-analysis.html#cb2-98"></a><span class="co">#&gt;   5 | </span></span>
+<span id="cb2-99"><a href="what-is-exploratory-data-analysis.html#cb2-99"></a><span class="co">#&gt;   6 | 2</span></span>
+<span id="cb2-100"><a href="what-is-exploratory-data-analysis.html#cb2-100"></a></span>
+<span id="cb2-101"><a href="what-is-exploratory-data-analysis.html#cb2-101"></a><span class="co">## density-estimate</span></span>
+<span id="cb2-102"><a href="what-is-exploratory-data-analysis.html#cb2-102"></a><span class="kw">ggplot</span>(heights, <span class="kw">aes</span>(<span class="dt">x =</span> elevation)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p><img src="001_Week_01_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="what-is-exploratory-data-analysis.html#cb3-1"></a></span>
+<span id="cb3-2"><a href="what-is-exploratory-data-analysis.html#cb3-2"></a><span class="co">## density-estimate-plus-rug</span></span>
+<span id="cb3-3"><a href="what-is-exploratory-data-analysis.html#cb3-3"></a><span class="kw">ggplot</span>(heights, <span class="kw">aes</span>(<span class="dt">x =</span> elevation)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_rug</span>()</span></code></pre></div>
+<p><img src="001_Week_01_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-markdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-1-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="get-your-r-act-together.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -307,7 +414,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio-education/stat545/edit/master/004_version-control-r-markdown.Rmd",
+"link": "https://github.com/rstudio-education/stat545/edit/master/001_Week_01.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -318,7 +425,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/rstudio-education/stat545/raw/master/004_version-control-r-markdown.Rmd", "DS4P.epub"],
+"download": ["https://github.com/rstudio-education/stat545/raw/master/001_Week_01.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
