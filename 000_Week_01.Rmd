@@ -1,0 +1,50 @@
+# (PART) Week 1 {-}
+```{r include = FALSE}
+source("common.R")
+```
+# Week 1: Overview
+
+This module is designed to <>. Please watch the videos and work your way through the notes. Although the videos are embedded into the course course, you can find the video playlist [here](). 
+
+## Video Roadmap
+- Big Ideas
+	- What is Exploratory Data Analysis
+	- Exploratory vs. Confirmatory Analyses
+	- How to succeed
+- Getting Set Up with R
+
+
+# R Examples
+## Big Ideas
+
+A first example: Heights of the highest points by state
+
+```{r}
+# data-read
+## load required packages and data
+library(tidyverse)
+options(tibble.print_min = 15)
+heights = read_csv("data/highest-points-by-state.csv")
+## switch from feet to meters
+heights$elevation = heights$elevation * .3048
+
+## data-print
+heights
+
+## data-arrange-ascending
+arrange(heights, elevation)
+
+## data-arrange-descending
+arrange(heights, desc(elevation))
+
+## stem-and-leaf
+stem(heights$elevation)
+
+## density-estimate
+ggplot(heights, aes(x = elevation)) + geom_density()
+
+## density-estimate-plus-rug
+ggplot(heights, aes(x = elevation)) + geom_density() + geom_rug()
+
+```
+
