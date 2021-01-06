@@ -128,12 +128,14 @@ ggplot(singer, aes(x = voice.part, y = height)) +
 ```
 
 
-```{r}
+```{r,error=TRUE}
 ## ----setup, echo = FALSE-------------------------------------------------
 library(knitr)
 opts_chunk$set(fig.cap="", fig.width = 4, fig.height = 2.5, dpi=200, fig.path="lecture-3-fig/")
 
-## ----tidy-data-----------------------------------------------------------
+## ----tidy-data----------------------------------------------------------
+
+library(dplyr)
 library(tidyverse)
 table1
 table2
@@ -151,7 +153,7 @@ table2 %>%
 
 ## ----cytof-load-and-wrangle----------------------------------------------
 ## done in class
-cytof = read.csv("http://jfukuyama.github.io/teaching/stat670/notes/cytof_one_experiment.csv")
+cytof = read.csv("data/cytof_one_experiment.csv")
 ## Remember how we plotted ecdf etc plots for singers:
 library(lattice)
 head(singer)
@@ -160,7 +162,7 @@ ggplot(singer) + stat_ecdf(aes(x = height)) + facet_wrap(~ voice.part)
 cytof = cytof[1:10000,]
 cytof_melted = cytof %>% gather(colnames(cytof), key = "marker", value = "value")
 ## this isn't how we did it in class, but you can also use the "melt" function in dplyr
-cytof_melted_alt = melt(cytof)
+cytof_melted_alt = dplyr::melt(cytof)
 
 ## ----cytof-plots, fig.width = 8, fig.height = 8--------------------------
 ## make an ecdf plot
