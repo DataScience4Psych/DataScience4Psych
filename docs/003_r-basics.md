@@ -120,7 +120,7 @@ Not all functions have (or require) arguments:
 
 ```r
 date()
-#> [1] "Wed Jan 06 12:20:01 2021"
+#> [1] "Wed Jan 06 12:27:54 2021"
 ```
 
 Now look at your workspace -- in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:
@@ -256,7 +256,7 @@ sig_sq <- 0.5
 x <- runif(40)
 y <- a + b * x + rnorm(40, sd = sqrt(sig_sq))
 (avg_x <- mean(x))
-#> [1] 0.486
+#> [1] 0.462
 write(avg_x, "avg_x.txt")
 plot(x, y)
 abline(a, b, col = "purple")
