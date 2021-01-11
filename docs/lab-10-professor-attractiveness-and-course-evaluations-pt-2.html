@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Data Science for Psychologists</title>
+  <title>Lab 4 Lab 10 - Professor attractiveness and course evaluations, Pt. 2" | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Data Science for Psychologists" />
+  <meta property="og:title" content="Lab 4 Lab 10 - Professor attractiveness and course evaluations, Pt. 2" | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/R-Computing-Lab/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Data Science for Psychologists" />
+  <meta name="twitter:title" content="Lab 4 Lab 10 - Professor attractiveness and course evaluations, Pt. 2" | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="lab-13-collaborating-on-github.html"/>
-
+<link rel="prev" href="lab-09-professor-attractiveness-and-course-evaluations-pt-1.html"/>
+<link rel="next" href="lab-11-so-what-if-you-smoke-when-pregnant.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -308,17 +308,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="lab-10---professor-attractiveness-and-course-evaluations-pt.-2" class="section level1">
+<h1><span class="header-section-number">Lab 4</span> Lab 10 - Professor attractiveness and course evaluations, Pt. 2"</h1>
+<div id="modelling-with-multiple-predictors" class="section level2">
+<h2><span class="header-section-number">4.1</span> Modelling with multiple predictors"</h2>
+<p>In this lab we revisit the professor evaluations data we modeled in the previous lab. In the last lab we modeled evaluation scores using a single predictor at a time. However this time we use multiple predictors to model evaluation scores.</p>
+<p>If you don’t remember the data, review the previous lab’s introduction before continuing to the exercises.</p>
+</div>
+<div id="getting-started-3" class="section level2">
+<h2><span class="header-section-number">4.2</span> Getting started</h2>
+<div id="packages-3" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Packages</h3>
+<p>In this lab we will work with the <strong>tidyverse</strong>, <strong>openintro</strong>, and <strong>broom</strong> packages.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="lab-10-professor-attractiveness-and-course-evaluations-pt-2.html#cb50-1"></a><span class="kw">library</span>(tidyverse) </span>
+<span id="cb50-2"><a href="lab-10-professor-attractiveness-and-course-evaluations-pt-2.html#cb50-2"></a><span class="kw">library</span>(broom)</span>
+<span id="cb50-3"><a href="lab-10-professor-attractiveness-and-course-evaluations-pt-2.html#cb50-3"></a><span class="kw">library</span>(openintro)</span></code></pre></div>
+</div>
+<div id="housekeeping-3" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Housekeeping</h3>
+<div id="git-configuration-password-caching-1" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> Git configuration / password caching</h4>
+<p>Configure your Git user name and email. If you cannot remember the instructions, refer to an earlier lab. Also remember that you can cache your password for a limited amount of time.</p>
+</div>
+<div id="project-name-2" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> Project name</h4>
+<p>Update the name of your project to match the lab’s title.</p>
+</div>
+</div>
+</div>
+<div id="warm-up-2" class="section level2">
+<h2><span class="header-section-number">4.3</span> Warm up</h2>
+<p><strong>Pick one team member to complete the steps in this section while the others contribute to the discussion but do not actually touch the files on their computer.</strong></p>
+<p>Before we introduce the data, let’s warm up with some simple exercises.</p>
+<div id="yaml-2" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> YAML</h3>
+<p>Open the R Markdown (Rmd) file in your project, change the author name to your <strong>team</strong> name, and knit the document.</p>
+</div>
+<div id="commiting-and-pushing-changes-1" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Commiting and pushing changes</h3>
+<ul>
+<li>Go to the <strong>Git</strong> pane in your RStudio.</li>
+<li>View the <strong>Diff</strong> and confirm that you are happy with the changes.</li>
+<li>Add a commit message like “Update team name” in the <strong>Commit message</strong> box and hit <strong>Commit</strong>.</li>
+<li>Click on <strong>Push</strong>. This will prompt a dialogue box where you first need to enter your user name, and then your password.</li>
+</ul>
+</div>
+<div id="pulling-changes-1" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> Pulling changes</h3>
+<p>Now, the remaining team members who have not been concurrently making these changes on their projects should click on the <strong>Pull</strong> button in their Git pane and observe that the changes are now reflected on their projects as well.</p>
+</div>
+</div>
+<div id="the-data-3" class="section level2">
+<h2><span class="header-section-number">4.4</span> The data</h2>
+<p>The dataset we’ll be using is called <code>evals</code> from the <strong>openintro</strong> package. Take a peek at the codebook with <code>?evals</code>.</p>
+</div>
+<div id="exercises-3" class="section level2">
+<h2><span class="header-section-number">4.5</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Load the data by including the appropriate code in your R Markdown file.</li>
+</ol>
+<div id="part-1-simple-linear-regression" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Part 1: Simple linear regression</h3>
+<ol start="2" style="list-style-type: decimal">
+<li>Fit a linear model (one you have fit before): <code>m_bty</code>, predicting average
+professor evaluation <code>score</code> based on average beauty rating (<code>bty_avg</code>) only. Write the
+linear model, and note the <span class="math inline">\(R^2\)</span> and the adjusted <span class="math inline">\(R^2\)</span>.</li>
+</ol>
+</div>
+<div id="part-2-multiple-linear-regression" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Part 2: Multiple linear regression</h3>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Fit a linear model (one you have fit before): <code>m_bty_gen</code>, predicting average
+professor evaluation <code>score</code> based on average beauty rating (<code>bty_avg</code>) and <code>gender</code>.
+Write the linear model, and note the <span class="math inline">\(R^2\)</span> and the adjusted <span class="math inline">\(R^2\)</span>.</p></li>
+<li><p>Interpret the slope and intercept of <code>m_bty_gen</code> in context of the data.</p></li>
+<li><p>What percent of the variability in <code>score</code> is explained by the model <code>m_bty_gen</code>.</p></li>
+<li><p>What is the equation of the line corresponding to <em>just</em> male professors?</p></li>
+<li><p>For two professors who received the same beauty rating, which gender tends
+to have the higher course evaluation score?</p></li>
+<li><p>How does the relationship between beauty and evaluation score
+vary between male and female professors?</p></li>
+<li><p>How do the adjusted <span class="math inline">\(R^2\)</span> values of <code>m_bty_gen</code> and <code>m_bty</code> compare? What does this tell us
+about how useful <code>gender</code> is in explaining the variability in evaluation scores when we
+already have information on the beaty score of the professor.</p></li>
+<li><p>Compare the slopes of <code>bty_avg</code> under the two models (<code>m_bty</code> and <code>m_bty_gen</code>). Has the
+addition of <code>gender</code> to the model changed the parameter estimate (slope) for <code>bty_avg</code>?</p></li>
+<li><p>Create a new model called <code>m_bty_rank</code> with <code>gender</code> removed and <code>rank</code>
+added in. Write the equation of the linear model and interpret the slopes and intercept
+in context of the data.</p></li>
+</ol>
+</div>
+<div id="part-3-the-search-for-the-best-model" class="section level3">
+<h3><span class="header-section-number">4.5.3</span> Part 3: The search for the best model</h3>
+<p>Going forward, only consider the following variables as potential predictors: <code>rank</code>,
+<code>ethnicity</code>, <code>gender</code>, <code>language</code>, <code>age</code>, <code>cls_perc_eval</code>, <code>cls_did_eval</code>, <code>cls_students</code>,
+<code>cls_level</code>, <code>cls_profs</code>, <code>cls_credits</code>, <code>bty_avg</code>.</p>
+<ol start="11" style="list-style-type: decimal">
+<li><p>Which variable, on its own, would you expect to be the worst predictor of
+evaluation scores? Why? <em>Hint:</em> Think about which variable would you
+expect to not have any association with the professor’s score.</p></li>
+<li><p>Check your suspicions from the previous exercise. Include the model output
+for that variable in your response.</p></li>
+<li><p>Suppose you wanted to fit a full model with the variables listed above. If
+you are already going to include <code>cls_perc_eval</code> and <code>cls_students</code>, which variable
+should you not include as an additional predictor? Why?</p></li>
+<li><p>Fit a full model with all predictors listed above (except for the one you decided to
+exclude) in the previous question.</p></li>
+<li><p>Using backward-selection with adjusted R-squared as the selection
+criterion, determine the <em>best</em> model. You do not need to show all
+steps in your answer, just the output for the final model. Also,
+write out the linear model for predicting score based on the final
+model you settle on.</p></li>
+<li><p>Interpret the slopes of one numerical and one categorical predictor based on your final model.</p></li>
+<li><p>Based on your final model, describe the characteristics of a professor and
+course at University of Texas at Austin that would be associated with a high
+evaluation score.</p></li>
+<li><p>Would you be comfortable generalizing your conclusions to apply to professors
+generally (at any university)? Why or why not?</p></li>
+</ol>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="lab-13-collaborating-on-github.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lab-09-professor-attractiveness-and-course-evaluations-pt-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab-11-so-what-if-you-smoke-when-pregnant.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -349,7 +467,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/40_references.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/10-mlr-course-evals.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -360,7 +478,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/40_references.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/10-mlr-course-evals.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

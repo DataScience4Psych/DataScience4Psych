@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Data Science for Psychologists</title>
+  <title>Lab 2 Lab 02 - Global plastic waste | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Data Science for Psychologists" />
+  <meta property="og:title" content="Lab 2 Lab 02 - Global plastic waste | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/R-Computing-Lab/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Data Science for Psychologists" />
+  <meta name="twitter:title" content="Lab 2 Lab 02 - Global plastic waste | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/R-Computing-Lab/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="lab-13-collaborating-on-github.html"/>
-
+<link rel="prev" href="lab-01-hello-r.html"/>
+<link rel="next" href="lab-09-professor-attractiveness-and-course-evaluations-pt-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -308,17 +308,230 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="lab-02---global-plastic-waste" class="section level1">
+<h1><span class="header-section-number">Lab 2</span> Lab 02 - Global plastic waste</h1>
+<pre class="marginfigure"><code>**A note on expectations: ** For each exercise and on your own question you 
+answer include any relevant output (tables, summary statistics, plots) in your 
+answer. Doing this is easy! Just place any relevant R code in a code chunk, 
+and hit Knit HTML.</code></pre>
+<p>Plastic pollution is a major and growing problem, negatively affecting oceans and wildlife health. <a href="https://ourworldindata.org/plastic-pollution">Our World in Data</a> has a lot of great data at various levels including globally, per country, and over time. For this lab we focus on data from 2010.</p>
+<p>Additionally, National Geographic recently ran a data visualization communication contest on plastic waste as seen <a href="https://www.nationalgeographic.org/funding-opportunities/innovation-challenges/plastic/dataviz/">here</a>.</p>
+<p>Learning goals for this lab are:</p>
+<ul>
+<li>Visualize numerical and categorical data.</li>
+<li>Recreate visualizations.</li>
+<li>Get more practice using with Git and GitHub.</li>
+</ul>
+<div id="getting-started-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Getting started</h2>
+<pre class="marginfigure"><code>**IMPORTANT:** If there is no GitHub repo created for you for this assignment, it means I didn&#39;t have your GitHub username as of when I assigned the homework. Please let me know your GitHub username asap, and I can create your repo.</code></pre>
+<p>Go to the course GitHub organization and locate your Lab 02 repo, which should be named <code>lab-02-plastic-waste-YOUR_GITHUB_USERNAME</code>. Grab the URL of the repo, and clone it in RStudio. Refer to Lab 01 if you would like to see step-by-step instructions for cloning a repo into an RStudio project.</p>
+<p>First, open the R Markdown document <code>lab-02-plastic-waste.Rmd</code> and Knit it. Make sure it compiles without errors. The output will be in the file markdown <code>.md</code> file with the same name.</p>
+<div id="packages-1" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Packages</h3>
+<p>We’ll use the <strong>tidyverse</strong> package for this analysis. Run the following code in the Console to load this package.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="lab-02-global-plastic-waste.html#cb25-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="housekeeping-1" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Housekeeping</h3>
+<pre class="marginfigure"><code>Your email address is the address tied to your GitHub account and your name should be first and last name.</code></pre>
+<p>Before we can get started we need to take care of some required housekeeping. Specifically, we need to configure your git so that RStudio can communicate with GitHub. This requires two pieces of information: your email address and your name.</p>
+<p>To do so, run the following:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="lab-02-global-plastic-waste.html#cb27-1"></a>usethis<span class="op">::</span><span class="kw">use_git_config</span>(<span class="dt">user.name =</span> <span class="st">&quot;your name&quot;</span>, <span class="dt">user.email =</span> <span class="st">&quot;your email&quot;</span>)</span></code></pre></div>
+<p>For example, for me this looks like:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="lab-02-global-plastic-waste.html#cb28-1"></a>usethis<span class="op">::</span><span class="kw">use_git_config</span>(<span class="dt">user.name =</span> <span class="st">&quot;Mine Cetinkaya-Rundel&quot;</span>, <span class="dt">user.email =</span> <span class="st">&quot;cetinkaya.mine@gmail.com&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="the-data-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> The data</h2>
+<p>The dataset for this assignment can be found as a csv file in the <code>data</code> folder of your repository. You can read it in using the following.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="lab-02-global-plastic-waste.html#cb29-1"></a>plastic_waste &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/plastic-waste.csv&quot;</span>)</span></code></pre></div>
+<p>The variable descriptions are as follows:</p>
+<ul>
+<li><code>code</code>: 3 Letter country code</li>
+<li><code>entity</code>: Country name</li>
+<li><code>continent</code>: Continent name</li>
+<li><code>year</code>: Year</li>
+<li><code>gdp_per_cap</code>: GDP per capita constant 2011 international $, rate</li>
+<li><code>plastic_waste_per_cap</code>: Amount of plastic waste per capita in kg/day</li>
+<li><code>mismanaged_plastic_waste_per_cap</code>: Amount of mismanaged plastic waste per capita in kg/day</li>
+<li><code>mismanaged_plastic_waste</code>: Tonnes of mismanaged plastic waste</li>
+<li><code>coastal_pop</code>: Number of individuals living on/near coast</li>
+<li><code>total_pop</code>: Total population according to Gapminder</li>
+</ul>
+</div>
+<div id="exercises-1" class="section level2">
+<h2><span class="header-section-number">2.3</span> Exercises</h2>
+<p>Let’s start by taking a look at the distribution of plastic waste per capita in 2010.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="lab-02-global-plastic-waste.html#cb30-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb30-2"><a href="lab-02-global-plastic-waste.html#cb30-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 51 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="02-plastic-waste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" /></p>
+<p>One country stands out as an unusual observation at the top of the distribution. One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="lab-02-global-plastic-waste.html#cb32-1"></a>plastic_waste <span class="op">%&gt;%</span></span>
+<span id="cb32-2"><a href="lab-02-global-plastic-waste.html#cb32-2"></a><span class="st">  </span><span class="kw">filter</span>(plastic_waste_per_cap <span class="op">&gt;</span><span class="st"> </span><span class="fl">3.5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 10
+##   code  entity continent  year gdp_per_cap plastic_waste_p~ mismanaged_plas~
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 TTO   Trini~ North Am~  2010      31261.              3.6             0.19
+## # ... with 3 more variables: mismanaged_plastic_waste &lt;dbl&gt;, coastal_pop &lt;dbl&gt;,
+## #   total_pop &lt;dbl&gt;</code></pre>
+<p>Did you expect this result? You might consider doing some research on Trinidad and Tobago to see why plastic waste per capita is so high there, or whether this is a data error.</p>
+<ol style="list-style-type: decimal">
+<li>Plot, using histograms, the distribution of plastic waste per capita faceted by continent. What can you say about how the continents compare to each other in terms of their plastic waste per capita?</li>
+</ol>
+<pre class="marginfigure"><code>From this point onwards the plots / output of the code won&#39;t be printed in the lab, but you can run the code and view the results yourself.</code></pre>
+<p>Another way of visualizing numerical data is using density plots.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="lab-02-global-plastic-waste.html#cb35-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb35-2"><a href="lab-02-global-plastic-waste.html#cb35-2"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>And compare distributions across continents by coloring density curves by continent.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="lab-02-global-plastic-waste.html#cb36-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb36-2"><a href="lab-02-global-plastic-waste.html#cb36-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb36-3"><a href="lab-02-global-plastic-waste.html#cb36-3"></a>                     <span class="dt">color =</span> continent)) <span class="op">+</span></span>
+<span id="cb36-4"><a href="lab-02-global-plastic-waste.html#cb36-4"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>The resulting plot may be a little difficult to read, so let’s also fill the curves in with colors as well.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="lab-02-global-plastic-waste.html#cb37-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb37-2"><a href="lab-02-global-plastic-waste.html#cb37-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb37-3"><a href="lab-02-global-plastic-waste.html#cb37-3"></a>                     <span class="dt">color =</span> continent, </span>
+<span id="cb37-4"><a href="lab-02-global-plastic-waste.html#cb37-4"></a>                     <span class="dt">fill =</span> continent)) <span class="op">+</span></span>
+<span id="cb37-5"><a href="lab-02-global-plastic-waste.html#cb37-5"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>The overlapping colors make it difficult to tell what’s happening with the distributions in continents plotted first, and hence coverred by continents plotted over them. We can change the transparency level of the fill color to help with this. The <code>alpha</code> argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque. There is no way to tell what value will work best, so you just need to try a few.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="lab-02-global-plastic-waste.html#cb38-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb38-2"><a href="lab-02-global-plastic-waste.html#cb38-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb38-3"><a href="lab-02-global-plastic-waste.html#cb38-3"></a>                     <span class="dt">color =</span> continent, </span>
+<span id="cb38-4"><a href="lab-02-global-plastic-waste.html#cb38-4"></a>                     <span class="dt">fill =</span> continent)) <span class="op">+</span></span>
+<span id="cb38-5"><a href="lab-02-global-plastic-waste.html#cb38-5"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p>This still doesn’t look great…</p>
+<ol style="list-style-type: decimal">
+<li><p>Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.</p></li>
+<li><p>Describe why we defined the <code>color</code> and <code>fill</code> of the curves by mapping aesthetics of the plot but we defined the <code>alpha</code> level as a characteristic of the plotting geom.</p></li>
+</ol>
+<p>✅ ⬆️ <em>Now is a good time to commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<p>And yet another way to visualize this relationship is using side-by-side box plots.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="lab-02-global-plastic-waste.html#cb39-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb39-2"><a href="lab-02-global-plastic-waste.html#cb39-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> continent, </span>
+<span id="cb39-3"><a href="lab-02-global-plastic-waste.html#cb39-3"></a>                     <span class="dt">y =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb39-4"><a href="lab-02-global-plastic-waste.html#cb39-4"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Learn something new: violin plots! Read about them at <a href="http://ggplot2.tidyverse.org/reference/geom_violin.html" class="uri">http://ggplot2.tidyverse.org/reference/geom_violin.html</a>,
+and convert your side-by-side box plots from the previous task to violin plots.
+What do the violin plots reveal that box plots do not? What features are
+apparent in the box plots but not in the violin plots?</li>
+</ol>
+<pre class="marginfigure"><code>Remember that we use `geom_point()` to make scatterplots.</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Visualize the relationship between plastic waste per capita and mismanaged plastic waste per capita using a scatterplot. Describe the relationship.</p></li>
+<li><p>Color the points in the scatterplot by continent. Does there seem to be any clear distinctions between continents with respect to how plastic waste per capita and mismanaged plastic waste per capita are associated?</p></li>
+<li><p>Visualize the relationship between plastic waste per capita and total population as well as plastic waste per capita and coastal population. Do either of these pairs of variables appear to be more strongly linearly associated?</p></li>
+</ol>
+<p>✅ ⬆️ <em>Now is another good time to commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<pre class="marginfigure"><code>Hint: The x-axis is a calculated variable. One country with plastic waste per capita over 3 kg/day has been filtered out. And the colors are from the viridis color palette. Take a look at the functions starting with `scale_color_viridis_*`.</code></pre>
+<ol style="list-style-type: decimal">
+<li>Recreate the following plot, and interpret what you see in context of the data.</li>
+</ol>
+<p><img src="02-plastic-waste_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 
+<p>[sometext]offset=2900 # Pieces 2900-2909</p>
+<pre><code>
+We can construct these URLs in R by pasting together two pieces: (1) a common 
+(`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing 
+by 10, all the way up to 2900. Two new functions are helpful for accomplishing 
+this: `paste0()` for pasting two pieces of text and `seq()` for generating a 
+sequence of numbers.
+
+7. Fill in the blanks to construct the list of URLs. 
+
+### Mapping
+
+Finally, we&#39;re ready to iterate over the list of URLs we constructed. We will do 
+this by **map**ping the function we developed over the list of URLs. There are 
+a series of mapping functions in R (which we&#39;ll learn about in more detail 
+tomorrow), and they each take the following form:
+</code></pre>
+<p>map([x], [function to apply to each element of x])</p>
+<pre><code>
+In our case `x` is the list of URLs we constructed and the function to apply 
+to each element of `x` is the function we developed earlier, `scrape_page`.
+And as a result we want a data frame, so we use `map_dfr` function:
+
+
+```r
+map_dfr(urls, scrape_page)</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Fill in the blanks to scrape all pages, and to create a new data frame called
+<code>uoe_art</code>.</li>
+</ol>
+<div id="write-out-data" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Write out data</h3>
+<ol start="9" style="list-style-type: decimal">
+<li>Finally write out the data frame you constructed into the <code>data</code> folder so
+that you can use it in the analysis section.</li>
+</ol>
+</div>
+</div>
+<div id="analysis" class="section level2">
+<h2><span class="header-section-number">2.4</span> Analysis</h2>
+<div class="box">
+<p>Work in <code>lab-06-uoe-art.Rmd</code> for the rest of the lab.</p>
+</div>
+<p>Now that we have a tidy dataset that we can analyze, let’s do that!</p>
+<p>We’ll start with some data cleaning, to clean up the dates that appear at the
+end of some title text in parentheses. Some of these are years, others are
+more specific dates, some art pieces have no date information whatsoever, and
+others have some non-date information in parentheses. This should be interesting
+to clean up!</p>
+<p>First thing we’ll try is to separate the <code>title</code> column into two: one for the
+actual <code>title</code> and the other for the <code>date</code> if it exists. In human speak, we
+need to</p>
+<blockquote>
+<p>“separate the <code>title</code> column at the first occurence of <code>(</code> and put the contents on one side of the <code>(</code> into a column called <code>title</code> and the contents on the other side into a column called <code>date</code>”</p>
+</blockquote>
+<p>Luckily, there’s a function that does just this: <code>separate()</code>!</p>
+<p>And once we have completed separating the single <code>title</code> column into <code>title</code>
+and <code>date</code>, we need to do further cleanup in the <code>date</code> column to get rid of
+extraneous <code>)</code>s with <code>str_remove()</code>, capture year information, and save the data
+as a numeric variable.</p>
+<pre class="marginfigure"><code>**Hint:** Remember escaping special characters from yesterday&#39;s lecture? You&#39;ll 
+need to use that trick again.</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li><p>Fill in the blanks in to implement the data wrangling we described above.
+Note that this will result in some warnings when you run the code, and that’s OK!
+Read the warnings, and explain what they mean, and why we are ok with leaving
+them in given that our objective is to just capture <code>year</code> where it’s convenient
+to do so.</p></li>
+<li><p>Print out a summary of the dataframe using the <code>skim()</code> function. How many
+pieces have artist info missing? How many have year info missing?</p></li>
+<li><p>Make a histogram of years. Use a reasonable binwidth. Do you see anything
+out of the ordinary?</p></li>
+</ol>
+<pre class="marginfigure"><code>**Hint:** You&#39;ll want to use `mutate()` and `if_else()` or `case_when()` to 
+implement the correction.</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li><p>Find which piece has the out of the ordinary year and go to its page on the
+art collection website to find the correct year for it. Can you tell why our code
+didn’t capture the correct year information? Correct the error in the data frame
+and visualize the data again.</p></li>
+<li><p>Who is the most commonly featured artist in the collection? Do you know them?
+Any guess as to why the university has so many pieces from them?</p></li>
+</ol>
+<pre class="marginfigure"><code>**Hint:** You&#39;ll want to use a combination of `filter()` and `str_detect()`. 
+You will want to read the help for `str_detect()` at a minimum, and consider 
+how you might capture titles where the word appears as &quot;child&quot; and &quot;Child&quot;.</code></pre>
+<ol start="15" style="list-style-type: decimal">
+<li>Final question! How many art pieces have the word “child” in their title? See
+if you can figure it out, and ask for help if not.</li>
+</ol>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="lab-13-collaborating-on-github.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lab-01-hello-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab-09-professor-attractiveness-and-course-evaluations-pt-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -349,7 +562,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/40_references.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/02-plastic-waste.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -360,7 +573,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/40_references.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/02-plastic-waste.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

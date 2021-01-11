@@ -3,11 +3,11 @@ title: "Data Science for Psychologists"
 subtitle: "A Modernized Exploratory and Graphical Data Analysis with R"
 author: 
 - S. Mason Garrison
-date: "2021-01-06"
+date: "2021-01-11"
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 url: 'https\://github.com/R-Computing-Lab/DataScience4Psych'
-github-repo: R-Computing-Lab/DataScience4Psych
+github-repo: DataScience4Psych/DataScience4Psych
 twitter-handle: smasongarrison
 cover-image: assets/logo.png
 documentclass: book
@@ -17,21 +17,24 @@ link-citations: yes
 description: "PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R"
 favicon: assets/favicon.ico
 ---
-# (PART) Week 0 {-}
+
 # Welcome to PSY 703 {-}
 
 
-Welcome to class! This website is designed to accompany Mason Garrison's Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This website hosts the course notes and lecture materials. All the embedded lecture videos can be found on a [youtube playlist](https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6). You can find the current version of the course syllabus [here](https://github.com/smasongarrison/Syllabi/blob/master/syllabus_datascience.pdf), along with all of the [other syllabi for my classes]( https://github.com/smasongarrison/Syllabi).
+Welcome to class! This website is designed to accompany Mason Garrison's Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This website hosts the lab notes.  All the embedded lecture videos can be found on a [youtube playlist](https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6). You can find the current version of the course syllabus [here](https://github.com/smasongarrison/Syllabi/blob/master/syllabus_datascience.pdf), along with all of the [other syllabi for my classes]( https://github.com/smasongarrison/Syllabi).
 
-<!--html_preserve--><div class="vembedr" align="center">
+
+```{=html}
+<div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
-</div><!--/html_preserve-->
+</div>
+```
 
 
 
-# Week 0: Overview {-}
+# Overview {-}
 
 This module is designed to orient you to the class. Please watch the videos and work your way through the notes. Although the videos are embedded into the course, you can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY). 
 
@@ -39,11 +42,14 @@ This module is designed to orient you to the class. Please watch the videos and 
 # Course Introduction  {-}
 
 
-<!--html_preserve--><div class="vembedr" align="center">
+
+```{=html}
+<div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/HU39nOxcJYg?rel=0" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
-</div><!--/html_preserve-->
+</div>
+```
 
 Data Science for Psychologists (DS4P) introduces on the principles of data science, including:
 
@@ -55,7 +61,7 @@ Data Science for Psychologists (DS4P) introduces on the principles of data scien
 In this class, we link those principles to psychological methods and open science practices by emphasizing exploratory analyses and description, rather than confirmatory analyses and prediction. Through the semester we will work our way thru [Wickham and Grolemund's R for Data Science text](http://r4ds.had.co.nz/) and develop proficiency with [tidyverse](https://www.tidyverse.org/). This class emphasizes replication and reproducibility. DS4P is a practical skilled-based class and should be useful to students aiming for academia as well as those interested in industry. Applications of these methods can be applied to a full range of psychological areas, including perception (e.g, eye-tracking data), neuroscience (e.g., visualizing neural networks), and individual differences (e.g., valence analysis).
 
 
-## Big Ideas
+## Big Ideas {-}
 This class covers the following broad five areas:
 
 * Reproducibility;
@@ -65,58 +71,64 @@ This class covers the following broad five areas:
 * R Programming.
 
 
-# Materials
+# Materials {-}
 
-## Hardware
+## Hardware {-}
 
 This class is requires that you have a laptop that can run R.
 
-## Required Texts
+## Required Texts {-}
 
 The text is intended to supplement the videos, lecture notes, and in-class tutorials. You need to consume all four in order to be successful in this class.
 
 * [R for Data Science text](http://r4ds.had.co.nz/) [@Wickham2017R]
 
-## Software
+## Software {-}
 
-### R
+### R {-}
 
 R is a free software environment for statistical computing and graphics. It compiles and runs on a wide variety of UNIX platforms, Windows, and MacOS.
 
 
-### R Studio
+### R Studio {-}
 
 RStudio is a free _integrated development environment_ (IDE), a powerful user interface for R.
 
-### Git
+### Git {-}
 
 Git is a version control system. Its original purpose was to help groups of developers work collaboratively on big software projects. Git manages the evolution of a set of files – called a repository – in a structured way. Think of it like the "Track Changes" features from Microsoft Word.
 
-### Github
+### Github {-}
 
 Github is a free IDE and hosting service for Git. As a Wake Forest student, you should be able to access the [GitHub Student Developer Pack for free](https://education.github.com/benefits?type=student). It includes a free PRO upgrade for your github account
 
 
-## Course Modality
+## Course Modality {-}
 
 This class is a blended class. The online portions are asynchronous. I've created a video highlighting how to be a successful asynchronous learner. 
 
 
-<!--html_preserve--><div class="vembedr" align="center">
+
+```{=html}
+<div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/dc3D2tbl8G0?rel=0" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
-</div><!--/html_preserve-->
+</div>
+```
 
 Much of this information comes from Northeastern University's [Tips for Taking Online Classes](https://www.northeastern.edu/graduate/blog/tips-for-taking-online-classes/)
 
-## Knowledge is Power
+## Knowledge is Power {-}
 
-<!--html_preserve--><div class="vembedr" align="center">
+
+```{=html}
+<div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/ZbGMbdDLnyY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
-</div><!--/html_preserve-->
+</div>
+```
 
 This brief video is covers the icebreaker I do in all of my classes. I encourage you to watch it as in it I discuss stereotype threats and stats anxiety.
 
@@ -132,29 +144,9 @@ This class leans heavily on other peoples' materials and ideas. I have done my b
 
 * Mine Çetinkaya-Rundel's [Data Science in a Box](https://datasciencebox.org/).
 
-You can see specific changes by examining the [edit history on the git repo](https://github.com/R-Computing-Lab/DataScience4Psych/commits/master)
-
-### STAT 545 {-}
-
-Jenny Bryan's ([jennybryan.org](https://jennybryan.org)) [STAT 545](https://www.Stat545.com) course is from the University of British Columbia.
-
-> "The STAT 545 course became notable as an early example of a data science course taught in a statistics program. It is also notable for its focus on teaching using modern R packages, Git and GitHub, its extensive sharing of teaching materials openly online, and its strong emphasis on practical data cleaning, exploration, and visualization skills, rather than algorithms and theory." 
->  
-> --- [Wikipedia](https://en.wikipedia.org/wiki/Jenny_Bryan)
+You can see specific changes by examining the [edit history on the git repo](https://github.com/DataScience4Psych/DataScience4Psych/commits/master)
 
 
-### PSY 8751 {-}
-
-Joe Rodgers's EXPLORATORY and GRAPHICAL DATA ANALYSIS course was developed at the University of Oklahoma. I took his class while a graduate student at Vanderbilt University.
-
-### Stat 470/670 {-}
-
-[Julia Fukuyama](https://jfukuyama.github.io/)'s [EXPLORATORY DATA ANALYSIS](https://jfukuyama.github.io/teaching/stat670/) is an R based class. She's an Assistant Professor in the Department of Statistics at Indiana University.
-
-
-### Data Science in a Box {-}
-
-[Data Science in a Box](https://datasciencebox.org/) was written by Mine Çetinkaya-Rundel. It is more tailored to CS and stats, but it has some really nice elements.
 
 ## Colophon {-}
 
@@ -176,13 +168,16 @@ This version of the book was built with:
 #>  collate  English_United States.1252  
 #>  ctype    English_United States.1252  
 #>  tz       America/New_York            
-#>  date     2021-01-06
+#>  date     2021-01-11
 ```
 
 Along with these packages:
 
-<!--html_preserve--><div id="htmlwidget-88c56b71e37c3cd0a8a2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-88c56b71e37c3cd0a8a2">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["askpass","assertthat","backports","base64enc","BH","blob","bookdown","brew","brio","broom","callr","cellranger","checkmate","cli","clipr","colorspace","commonmark","conflicted","covr","cpp11","crayon","credentials","crosstalk","crul","curl","DBI","dbplyr","desc","devtools","dichromat","diffobj","digest","dplyr","DT","ellipsis","evaluate","fansi","farver","forcats","fs","gapminder","gender","genderdata","generics","geonames","gert","ggplot2","gh","gitcreds","glue","gridExtra","gt","gtable","haven","highr","hms","htmltools","htmlwidgets","httpcode","httr","ini","isoband","jsonlite","knitr","labeling","later","lattice","lazyeval","lifecycle","lubridate","magrittr","markdown","MASS","Matrix","memoise","mgcv","mime","modelr","munsell","nlme","openssl","pillar","pkgbuild","pkgconfig","pkgload","plyr","praise","prettyunits","processx","progress","promises","ps","purrr","R6","rappdirs","rcmdcheck","RColorBrewer","Rcpp","readr","readxl","rebird","rematch","rematch2","remotes","reprex","reshape2","rex","rjson","rlang","rmarkdown","roxygen2","rplos","rprojroot","rstudioapi","rversions","rvest","sass","scales","selectr","sessioninfo","solrium","stringi","stringr","sys","testthat","tibble","tidyr","tidyselect","tidyverse","tinytex","triebeard","urltools","usethis","utf8","vctrs","viridis","viridisLite","waldo","whisker","withr","xfun","xml2","xopen","yaml","zip"],[null,"0.2.1","1.2.0",null,null,null,"0.21",null,null,"0.7.3","3.5.1","1.1.0",null,"2.2.0",null,"2.0-0",null,null,null,null,"1.3.4",null,null,null,"4.3","1.1.0","2.0.0","1.2.0","2.3.2",null,null,"0.6.27","1.0.2","0.16","0.3.1","0.14","0.4.1",null,"0.5.0","1.5.0",null,null,null,"0.1.0",null,null,"3.3.3",null,null,"1.4.2",null,null,"0.3.0","2.3.1",null,"0.5.3","0.5.0","1.5.3",null,"1.4.2",null,null,"1.7.2","1.30",null,null,null,null,"0.2.0","1.7.9.2","2.0.1",null,null,null,"1.1.0",null,null,"0.1.8","0.5.0",null,null,"1.4.7","1.2.0","2.0.3","1.1.0",null,null,"1.1.1","3.4.4",null,null,"1.4.0","0.3.4","2.5.0",null,null,null,"1.0.5","1.4.0","1.3.1",null,null,null,"2.2.0","0.3.0",null,null,null,"0.4.9","2.6",null,null,"2.0.2","0.13",null,"0.3.6",null,"1.1.1",null,"1.1.1",null,"1.5.3","1.4.0",null,"3.0.0","3.0.4","1.1.2","1.1.0","1.3.0",null,null,null,"2.0.0",null,"0.3.6",null,null,null,null,"2.3.0","0.19","1.3.2",null,"2.2.1",null],["2019-01-13","2019-03-21","2020-11-02","2015-07-28","2020-01-08","2020-01-20","2020-10-13","2011-04-13","2020-08-31","2020-12-16","2020-10-13","2016-07-27","2020-02-06","2020-11-20","2020-10-08","2020-11-11","2018-12-01","2019-06-21","2020-09-16","2020-11-05","2017-09-16","2020-07-21","2020-03-13","2020-07-30","2019-12-02","2019-12-15","2020-11-03","2018-05-01","2020-09-18","2013-01-24","2020-10-05","2020-10-24","2020-08-18","2020-10-13","2020-05-15","2019-05-28","2020-01-08","2020-01-16","2020-03-01","2020-07-31","2017-10-31","2020-05-15","2020-11-19","2020-10-31","2019-02-19","2020-11-12","2020-12-30","2020-11-27","2020-12-04","2020-08-27","2017-09-09","2020-08-05","2019-03-25","2020-06-01","2019-03-20","2020-01-08","2020-06-16","2020-12-10","2020-04-10","2020-07-20","2018-05-20","2020-12-01","2020-12-09","2020-09-22","2020-10-20","2020-06-05","2020-04-02","2019-03-15","2020-03-06","2020-11-13","2020-11-17","2019-08-07","2020-09-09","2019-11-27","2017-04-21","2020-08-27","2020-02-04","2020-05-19","2018-06-12","2020-12-10","2020-09-18","2020-11-20","2020-12-15","2019-09-22","2020-05-29","2020-03-03","2015-08-11","2020-01-24","2020-09-03","2019-05-16","2020-06-09","2020-10-07","2020-04-17","2020-10-28","2016-03-28","2019-05-07","2014-12-07","2020-07-06","2020-10-05","2019-03-13","2019-10-24","2016-04-21","2020-05-01","2020-07-21","2019-05-16","2020-04-09","2020-04-21","2018-06-08","2020-11-26","2020-12-14","2020-06-27","2020-04-08","2020-11-15","2020-11-12","2020-05-25","2020-07-25","2020-03-18","2020-05-11","2019-11-20","2018-11-05","2019-11-02","2020-09-09","2019-02-10","2020-07-23","2020-10-31","2020-10-12","2020-08-27","2020-05-11","2019-11-21","2020-12-14","2016-08-04","2019-04-14","2020-12-10","2018-05-24","2020-12-17","2018-03-29","2018-02-01","2020-11-09","2019-08-28","2020-09-22","2020-10-30","2020-04-23","2018-09-17","2020-02-01","2020-08-27"],["CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","local","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>package<\/th>\n      <th>loadedversion<\/th>\n      <th>date<\/th>\n      <th>source<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":145,"autoWidth":true,"bInfo":false,"paging":false,"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,145]}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+
+```{=html}
+<div id="htmlwidget-e7d0dbd17863d2e954b4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e7d0dbd17863d2e954b4">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["askpass","assertthat","backports","base64enc","BH","blob","bookdown","brew","brio","broom","callr","cellranger","checkmate","cli","clipr","colorspace","commonmark","conflicted","covr","cpp11","crayon","credentials","crosstalk","crul","curl","DBI","dbplyr","desc","devtools","dichromat","diffobj","digest","dplyr","DT","ellipsis","evaluate","fansi","farver","forcats","fs","gapminder","gender","genderdata","generics","geonames","gert","ggplot2","gh","gitcreds","glue","gridExtra","gt","gtable","haven","highr","hms","htmltools","htmlwidgets","httpcode","httr","ini","isoband","jsonlite","knitr","labeling","later","lattice","lazyeval","lifecycle","lubridate","magrittr","markdown","MASS","Matrix","memoise","mgcv","mime","modelr","munsell","nlme","openssl","pillar","pkgbuild","pkgconfig","pkgload","plyr","praise","prettyunits","processx","progress","promises","ps","purrr","R6","rappdirs","rcmdcheck","RColorBrewer","Rcpp","readr","readxl","rebird","rematch","rematch2","remotes","reprex","reshape2","rex","rjson","rlang","rmarkdown","roxygen2","rplos","rprojroot","rstudioapi","rversions","rvest","sass","scales","selectr","sessioninfo","solrium","stringi","stringr","sys","testthat","tibble","tidyr","tidyselect","tidyverse","tinytex","triebeard","urltools","usethis","utf8","vctrs","viridis","viridisLite","waldo","whisker","withr","xfun","xml2","xopen","yaml","zip"],[null,"0.2.1","1.2.1",null,null,null,"0.21",null,null,"0.7.3","3.5.1","1.1.0",null,"2.2.0",null,"2.0-0",null,null,null,null,"1.3.4",null,null,null,"4.3","1.1.0","2.0.0","1.2.0","2.3.2",null,null,"0.6.27","1.0.2","0.17","0.3.1","0.14","0.4.1",null,"0.5.0","1.5.0",null,null,null,"0.1.0",null,null,"3.3.3",null,null,"1.4.2",null,null,"0.3.0","2.3.1",null,"0.5.3","0.5.0.9003","1.5.3",null,"1.4.2",null,null,"1.7.2","1.30",null,null,null,null,"0.2.0","1.7.9.2","2.0.1",null,null,null,"1.1.0",null,null,"0.1.8","0.5.0",null,null,"1.4.7","1.2.0","2.0.3","1.1.0",null,null,"1.1.1","3.4.5",null,null,"1.5.0","0.3.4","2.5.0",null,null,null,"1.0.5","1.4.0","1.3.1",null,null,null,"2.2.0","0.3.0",null,null,null,"0.4.10","2.6",null,null,"2.0.2","0.13",null,"0.3.6",null,"1.1.1",null,"1.1.1",null,"1.5.3","1.4.0",null,"3.0.1","3.0.4","1.1.2","1.1.0","1.3.0",null,null,null,"2.0.0",null,"0.3.6",null,null,null,null,"2.3.0","0.20","1.3.2",null,"2.2.1",null],["2019-01-13","2019-03-21","2020-12-09","2015-07-28","2020-01-08","2020-01-20","2020-10-13","2011-04-13","2020-08-31","2020-12-16","2020-10-13","2016-07-27","2020-02-06","2020-11-20","2020-10-08","2020-11-11","2018-12-01","2019-06-21","2020-09-16","2020-11-05","2017-09-16","2020-07-21","2020-03-13","2020-07-30","2019-12-02","2019-12-15","2020-11-03","2018-05-01","2020-09-18","2013-01-24","2021-01-07","2020-10-24","2020-08-18","2021-01-06","2020-05-15","2019-05-28","2020-01-08","2020-01-16","2020-03-01","2020-07-31","2017-10-31","2020-05-15","2020-11-17","2020-10-31","2019-02-19","2020-11-12","2020-12-30","2020-11-27","2020-12-04","2020-08-27","2017-09-09","2020-08-05","2019-03-25","2020-06-01","2019-03-20","2020-01-08","2021-01-11","2020-12-10","2020-04-10","2020-07-20","2018-05-20","2020-12-01","2020-12-09","2020-09-22","2020-10-20","2020-06-05","2020-04-02","2019-03-15","2020-03-06","2020-11-13","2020-11-17","2019-08-07","2020-09-09","2019-11-27","2017-04-21","2020-08-27","2020-02-04","2020-05-19","2018-06-12","2020-08-23","2020-09-18","2020-11-20","2020-12-15","2019-09-22","2020-05-29","2020-03-03","2015-08-11","2020-01-24","2020-11-30","2019-05-16","2020-06-09","2020-12-05","2020-04-17","2020-10-28","2016-03-28","2019-05-07","2014-12-07","2020-07-06","2020-10-05","2019-03-13","2019-10-24","2016-04-21","2020-05-01","2020-07-21","2019-05-16","2020-04-09","2020-04-21","2018-06-08","2020-12-30","2020-12-14","2020-06-27","2020-04-08","2020-11-15","2020-11-12","2020-05-25","2020-07-25","2020-03-18","2020-05-11","2019-11-20","2018-11-05","2019-11-02","2020-09-09","2019-02-10","2020-07-23","2020-12-17","2020-10-12","2020-08-27","2020-05-11","2019-11-21","2020-12-14","2016-08-04","2019-04-14","2020-12-10","2018-05-24","2020-12-17","2018-03-29","2018-02-01","2020-11-09","2019-08-28","2020-09-22","2021-01-06","2020-04-23","2018-09-17","2020-02-01","2020-08-27"],["CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","local","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","Github (rstudio/htmltools@d18bd8e)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.3)","CRAN (R 4.0.0)","CRAN (R 4.0.2)","CRAN (R 4.0.3)","CRAN (R 4.0.3)","CRAN (R 4.0.2)","CRAN (R 4.0.0)","CRAN (R 4.0.3)"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>package<\/th>\n      <th>loadedversion<\/th>\n      <th>date<\/th>\n      <th>source<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":145,"autoWidth":true,"bInfo":false,"paging":false,"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,145]}},"evals":[],"jsHooks":[]}</script>
+```
 
 ## License {-}
 
