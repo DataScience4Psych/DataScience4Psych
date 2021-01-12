@@ -30,15 +30,15 @@ The following screencast also walks you through these steps:
 
 - Click on the assignment link that you should have received in your email to create your GitHub repository (which we'll refer to as "repo" going forward) for the assignment. This repo contains a template you can build on to complete your assignment.
 
-![](img/clone-repo-link.png)<!-- -->
+<img src="img/clone-repo-link.png" width="265" />
 
 - On GitHub, click on the green **Clone or download** button, select **Use HTTPS** (this might already be selected by default, and if it is, you'll see the text **Clone with HTTPS** as in the image below). Click on the clipboard icon to copy the repo URL.
 
-![](img/new-project-from-gh.png)<!-- -->
+<img src="img/new-project-from-gh.png" width="224" />
 
 - Go to RStudio Cloud and into the course workspace. Create a **New Project from Git Repo**. You will need to click on the down arrow next to the **New Project** button to see this option.
 
-![](img/paste-gh-repo-url.png)<!-- -->
+<img src="img/paste-gh-repo-url.png" width="500" />
 
 - Copy and paste the URL of your assignment repo into the dialog box:
 
@@ -101,7 +101,7 @@ Before we introduce the data, let's warm up with some simple exercises. The foll
 
 Currently your project is called *Untitled Project*. Update the name of your project to be "Lab 01 - Hello R".
 
-![](img/untitled-project.png)<!-- -->
+<img src="img/untitled-project.png" width="493" />
 
 
 ```marginfigure
@@ -112,7 +112,7 @@ The top portion of your R Markdown file (between the three dashed lines) is call
 
 Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
 
-![](img/yaml-raw-to-rendered.png)<!-- -->
+<img src="img/yaml-raw-to-rendered.png" width="930" />
 
 ### Committing changes
 
@@ -120,7 +120,7 @@ Then go to the Git pane in your RStudio.
 
 If you have made changes to your Rmd file, you should see it listed here. Click on it to select it in this list and then click on **Diff**. This shows you the *diff*erence between the last committed state of the document and its current state that includes your changes. If you're happy with these changes, write "Update author name" in the **Commit message** box and hit **Commit**.
 
-![](img/update-author-name-commit.png)<!-- -->
+<img src="img/update-author-name-commit.png" width="889" />
 
 You don't have to commit after every change, this would get quite cumbersome. You should consider committing states that are *meaningful to you* for inspection, comparison, or restoration. In the first few assignments we will tell you exactly when to commit and in some cases, what commit message to use. As the semester progresses we will let you make these decisions.
 
@@ -273,17 +273,17 @@ datasaurus_dozen %>%
 
 You're done with the data analysis exercises, but we'd like you to do two more things:
 
-![](img/fig-resize-global.png)<!-- -->
+<img src="img/fig-resize-global.png" width="468" />
 
 - **Resize your figures:** 
 
 Click on the gear icon in on top of the R Markdown document, and select "Output Options..." in the dropdown menu. In the pop up dialogue box go to the Figures tab and change the height and width of the figures, and hit OK when done. Then, knit your document and see how you like the new sizes. Change and knit again and again until you're happy with the figure sizes. Note that these values get saved in the YAML.
 
-![](img/fig-resize-local.png)<!-- -->
+<img src="img/fig-resize-local.png" width="634" />
 
 You can also use different figure sizes for differen figures. To do so click on the gear icon within the chunk where you want to make a change. Changing the figure sizes added new options to these chunks: `fig.width` and `fig.height`. You can change them by defining different values directly in your R Markdown document as well.
 
-![](img/theme-highlight.png)<!-- -->
+<img src="img/theme-highlight.png" width="467" />
 
 - **Change the look of your report:** 
 

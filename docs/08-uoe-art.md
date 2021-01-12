@@ -93,7 +93,7 @@ Another pop up window will asl whether you want to get your extensions on all
 your computer. If you want this, you can turn on sync, but you don't need to 
 for the purpose of this lab.
 
-![](img/selectorgadget.png)<!-- -->
+<img src="img/selectorgadget.png" width="89" />
 
 You should now be able to access SelectorGadget by clicking on the icon next to 
 the search bar in the Chrome browser.
@@ -144,16 +144,16 @@ page %>%
 
 ```
 ## {xml_nodeset (10)}
-##  [1] <a href="./record/21196?highlight=*:*">Two Seated Female Nudes           ...
-##  [2] <a href="./record/21897?highlight=*:*">Felicity Who Went to Peru         ...
-##  [3] <a href="./record/21195?highlight=*:*">Seated Female Nude                ...
-##  [4] <a href="./record/21898?highlight=*:*">Untitled                          ...
-##  [5] <a href="./record/21899?highlight=*:*">Untitled                          ...
-##  [6] <a href="./record/21189?highlight=*:*">Self Portrait                     ...
-##  [7] <a href="./record/21190?highlight=*:*">Portrait of an Elderly Man        ...
-##  [8] <a href="./record/21193?highlight=*:*">Seated Male Nude                  ...
-##  [9] <a href="./record/21188?highlight=*:*">Seated Male Nude                  ...
-## [10] <a href="./record/21187?highlight=*:*">Portrait of a Woman               ...
+##  [1] <a href="./record/20596?highlight=*:*">Dying Adonis                      ...
+##  [2] <a href="./record/20594?highlight=*:*">Venus Marina                      ...
+##  [3] <a href="./record/20562?highlight=*:*">Portrait Bust (Antique)           ...
+##  [4] <a href="./record/20561?highlight=*:*">Lucius Junius Brutus              ...
+##  [5] <a href="./record/20558?highlight=*:*">Fragment of foliated frieze (medi ...
+##  [6] <a href="./record/99394?highlight=*:*">Untitled - Birds Eye View of City ...
+##  [7] <a href="./record/99395?highlight=*:*">Untitled - Nude Male in the Fores ...
+##  [8] <a href="./record/99404?highlight=*:*">(In "Head" 73)                    ...
+##  [9] <a href="./record/99403?highlight=*:*">Untitled - Three Horse Riders     ...
+## [10] <a href="./record/99402?highlight=*:*">Untitled - Sprite in Long Gown    ...
 ```
 
 Then we extract the text with `html_text()`:
@@ -167,16 +167,16 @@ page %>%
 ```
 
 ```
-##  [1] "Two Seated Female Nudes                                                            (1955)"   
-##  [2] "Felicity Who Went to Peru                                                            (1986)" 
-##  [3] "Seated Female Nude                                                            (1955)"        
-##  [4] "Untitled                                                            (1987)"                  
-##  [5] "Untitled                                                            (1983)"                  
-##  [6] "Self Portrait                                                            (1956)"             
-##  [7] "Portrait of an Elderly Man                                                            (1956)"
-##  [8] "Seated Male Nude                                                            (1955)"          
-##  [9] "Seated Male Nude                                                            (1955)"          
-## [10] "Portrait of a Woman                                                            (1956)"
+##  [1] "Dying Adonis                                                            (Pre 1837)"                  
+##  [2] "Venus Marina                            (2018)"                                                      
+##  [3] "Portrait Bust (Antique)                            (2018)"                                           
+##  [4] "Lucius Junius Brutus                            (2018)"                                              
+##  [5] "Fragment of foliated frieze (mediaeval)                            (2018)"                           
+##  [6] "Untitled - Birds Eye View of City                                                            (1965)" 
+##  [7] "Untitled - Nude Male in the Forest                                                            (1963)"
+##  [8] "(In \"Head\" 73)                                                            (1973)"                  
+##  [9] "Untitled - Three Horse Riders                                                            (1963)"     
+## [10] "Untitled - Sprite in Long Gown                                                            (1963)"
 ```
 
 And get rid of all the spurious whitespace in the text with `str_squish()`:
@@ -196,11 +196,16 @@ page %>%
 ```
 
 ```
-##  [1] "Two Seated Female Nudes (1955)"    "Felicity Who Went to Peru (1986)" 
-##  [3] "Seated Female Nude (1955)"         "Untitled (1987)"                  
-##  [5] "Untitled (1983)"                   "Self Portrait (1956)"             
-##  [7] "Portrait of an Elderly Man (1956)" "Seated Male Nude (1955)"          
-##  [9] "Seated Male Nude (1955)"           "Portrait of a Woman (1956)"
+##  [1] "Dying Adonis (Pre 1837)"                       
+##  [2] "Venus Marina (2018)"                           
+##  [3] "Portrait Bust (Antique) (2018)"                
+##  [4] "Lucius Junius Brutus (2018)"                   
+##  [5] "Fragment of foliated frieze (mediaeval) (2018)"
+##  [6] "Untitled - Birds Eye View of City (1965)"      
+##  [7] "Untitled - Nude Male in the Forest (1963)"     
+##  [8] "(In \"Head\" 73) (1973)"                       
+##  [9] "Untitled - Three Horse Riders (1963)"          
+## [10] "Untitled - Sprite in Long Gown (1963)"
 ```
 
 And finally save the resulting data as a vector of length 10:
@@ -243,11 +248,11 @@ page %>%
 ```
 
 ```
-##  [1] "./record/21196?highlight=*:*" "./record/21897?highlight=*:*"
-##  [3] "./record/21195?highlight=*:*" "./record/21898?highlight=*:*"
-##  [5] "./record/21899?highlight=*:*" "./record/21189?highlight=*:*"
-##  [7] "./record/21190?highlight=*:*" "./record/21193?highlight=*:*"
-##  [9] "./record/21188?highlight=*:*" "./record/21187?highlight=*:*"
+##  [1] "./record/20596?highlight=*:*" "./record/20594?highlight=*:*"
+##  [3] "./record/20562?highlight=*:*" "./record/20561?highlight=*:*"
+##  [5] "./record/20558?highlight=*:*" "./record/99394?highlight=*:*"
+##  [7] "./record/99395?highlight=*:*" "./record/99404?highlight=*:*"
+##  [9] "./record/99403?highlight=*:*" "./record/99402?highlight=*:*"
 ```
 
 These don't really look like urls as we know then though. They're relative 
