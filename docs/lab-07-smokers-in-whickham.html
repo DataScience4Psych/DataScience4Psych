@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Science for Psychologists</title>
+  <title>Lab 8 Lab 07 Smokers in Whickham | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Science for Psychologists" />
+  <meta property="og:title" content="Lab 8 Lab 07 Smokers in Whickham | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Science for Psychologists" />
+  <meta name="twitter:title" content="Lab 8 Lab 07 Smokers in Whickham | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="overview.html"/>
+<link rel="prev" href="lab-06-ugly-charts.html"/>
+<link rel="next" href="lab-08-university-of-edinburgh-art-collection.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -395,19 +395,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Data Science for Psychologists</h1>
-<h2 class="subtitle"><em>A Modernized Exploratory and Graphical Data Analysis with R</em></h2>
-<p class="author"><em>S. Mason Garrison</em></p>
-<p class="date"><em>2021-01-13</em></p>
+<div id="lab-07-smokers-in-whickham" class="section level1">
+<h1><span class="header-section-number">Lab 8</span> Lab 07 Smokers in Whickham</h1>
+<div id="simpsons-paradox" class="section level2">
+<h2><span class="header-section-number">8.1</span> Simpson’s paradox</h2>
 </div>
-<div id="welcome-to-psy-703" class="section level1 unnumbered">
-<h1>Welcome to PSY 703</h1>
-<p>Welcome to class! This website is designed to accompany Mason Garrison’s Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This website hosts the lab notes. All the embedded lecture videos can be found on a <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6">youtube playlist</a>. You can find the current version of the course syllabus <a href="https://github.com/smasongarrison/Syllabi/blob/master/syllabus_datascience.pdf">here</a>, along with all of the <a href="https://github.com/smasongarrison/Syllabi">other syllabi for my classes</a>.</p>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+<div id="getting-started-6" class="section level2">
+<h2><span class="header-section-number">8.2</span> Getting started</h2>
+<p><img src="img/whickham.png" /><!-- --></p>
+<p>A study of conducted in Whickham, England recorded participants’ age, smoking status at baseline, and then 20 years later recorded their health outcome.</p>
+<div id="packages-6" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Packages</h3>
+<p>In this lab we will work with the <code>tidyverse</code> and <code>mosaicData</code> packages.</p>
+<p>This is the first time we’re using the <code>mosaicData</code> package, you need to make
+sure to install it first by running <code>install.packages("mosaicData")</code> in the
+console.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="lab-07-smokers-in-whickham.html#cb83-1"></a><span class="kw">library</span>(tidyverse) </span>
+<span id="cb83-2"><a href="lab-07-smokers-in-whickham.html#cb83-2"></a><span class="kw">library</span>(mosaicData) </span></code></pre></div>
+<p>Note that these packages are also loaded in your R Markdown document.</p>
 </div>
+</div>
+<div id="the-data-5" class="section level2">
+<h2><span class="header-section-number">8.3</span> The data</h2>
+<p>The data is in the <code>mosaicData</code> package. You can load it with</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="lab-07-smokers-in-whickham.html#cb84-1"></a><span class="kw">data</span>(Whickham)</span></code></pre></div>
+<p>Take a peek at the codebook with</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="lab-07-smokers-in-whickham.html#cb85-1"></a>?Whickham</span></code></pre></div>
+</div>
+<div id="exercises-5" class="section level2">
+<h2><span class="header-section-number">8.4</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>What type of study do you think these data comne from: observational
+or experiment? Why?</p></li>
+<li><p>How many observations are in this dataset? What does each observation
+represent?</p></li>
+<li><p>How many variables are in this dataset? What type of variable is each?
+Display each variable using an appropriate visualization.</p></li>
+<li><p>What would you expect the relationship between smoking status and
+health outcome to be?</p></li>
+<li><p>Create a visualization depicting the relationship between smoking status
+and health outcome. Briefly describe the relationship, and evaluate whether
+this meets your expectations. Additionally, calculate the relevant
+conditional probabilities to help your narrative. Here is some code to
+get you started:</p></li>
+</ol>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="lab-07-smokers-in-whickham.html#cb86-1"></a>Whickham <span class="op">%&gt;%</span></span>
+<span id="cb86-2"><a href="lab-07-smokers-in-whickham.html#cb86-2"></a><span class="st">  </span><span class="kw">count</span>(smoker, outcome)</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Create a new variable called <code>age_cat</code> using the following scheme:</li>
+</ol>
+<ul>
+<li><code>age &lt;= 44 ~ "18-44"</code></li>
+<li><code>age &gt; 44 &amp; age &lt;= 64 ~ "45-64"</code></li>
+<li><code>age &gt; 64 ~ "65+"</code></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Re-create the visualization depicting the relationship between smoking
+status and health outcome, faceted by <code>age_cat</code>. What changed? What might
+explain this change? Extend the contingency table from earlier by
+breaking it down by age category and use it to help your narrative.</li>
+</ol>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="lab-07-smokers-in-whickham.html#cb87-1"></a>Whickham <span class="op">%&gt;%</span></span>
+<span id="cb87-2"><a href="lab-07-smokers-in-whickham.html#cb87-2"></a><span class="st">  </span><span class="kw">count</span>(smoker, age_cat, outcome)</span></code></pre></div>
+
 </div>
 </div>
             </section>
@@ -415,8 +465,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="overview.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lab-06-ugly-charts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab-08-university-of-edinburgh-art-collection.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -447,7 +497,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/index.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/07-simpsons-paradox.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -458,7 +508,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/index.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/07-simpsons-paradox.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

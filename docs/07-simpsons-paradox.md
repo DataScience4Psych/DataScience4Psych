@@ -5,7 +5,7 @@
 
 ## Getting started
 
-<img src="img/whickham.png" width="527" />
+![](img/whickham.png)<!-- -->
 
 A study of conducted in Whickham, England recorded participants' age, smoking status at baseline, and then 20 years later recorded their health outcome.
 

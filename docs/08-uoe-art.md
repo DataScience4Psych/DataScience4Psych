@@ -93,7 +93,7 @@ Another pop up window will asl whether you want to get your extensions on all
 your computer. If you want this, you can turn on sync, but you don't need to 
 for the purpose of this lab.
 
-<img src="img/selectorgadget.png" width="89" />
+![](img/selectorgadget.png)<!-- -->
 
 You should now be able to access SelectorGadget by clicking on the icon next to 
 the search bar in the Chrome browser.
@@ -144,16 +144,16 @@ page %>%
 
 ```
 ## {xml_nodeset (10)}
-##  [1] <a href="./record/20596?highlight=*:*">Dying Adonis                      ...
-##  [2] <a href="./record/20594?highlight=*:*">Venus Marina                      ...
-##  [3] <a href="./record/20562?highlight=*:*">Portrait Bust (Antique)           ...
-##  [4] <a href="./record/20561?highlight=*:*">Lucius Junius Brutus              ...
-##  [5] <a href="./record/20558?highlight=*:*">Fragment of foliated frieze (medi ...
-##  [6] <a href="./record/99394?highlight=*:*">Untitled - Birds Eye View of City ...
-##  [7] <a href="./record/99395?highlight=*:*">Untitled - Nude Male in the Fores ...
-##  [8] <a href="./record/99404?highlight=*:*">(In "Head" 73)                    ...
-##  [9] <a href="./record/99403?highlight=*:*">Untitled - Three Horse Riders     ...
-## [10] <a href="./record/99402?highlight=*:*">Untitled - Sprite in Long Gown    ...
+##  [1] <a href="./record/53608?highlight=*:*">Unknown                           ...
+##  [2] <a href="./record/53607?highlight=*:*">Game Birds                        ...
+##  [3] <a href="./record/20817?highlight=*:*">Reclining Male Nude               ...
+##  [4] <a href="./record/20819?highlight=*:*">Drawing of a Seated Woman         ...
+##  [5] <a href="./record/20820?highlight=*:*">Five Views of a Seated Woman      ...
+##  [6] <a href="./record/20821?highlight=*:*">Rural Landscape                   ...
+##  [7] <a href="./record/20813?highlight=*:*">Seated Nude Woman                 ...
+##  [8] <a href="./record/20787?highlight=*:*">Drawing of a Seated Woman         ...
+##  [9] <a href="./record/20802?highlight=*:*">Black and White Abstract          ...
+## [10] <a href="./record/20801?highlight=*:*">Drawing of a Seated Man           ...
 ```
 
 Then we extract the text with `html_text()`:
@@ -167,16 +167,16 @@ page %>%
 ```
 
 ```
-##  [1] "Dying Adonis                                                            (Pre 1837)"                  
-##  [2] "Venus Marina                            (2018)"                                                      
-##  [3] "Portrait Bust (Antique)                            (2018)"                                           
-##  [4] "Lucius Junius Brutus                            (2018)"                                              
-##  [5] "Fragment of foliated frieze (mediaeval)                            (2018)"                           
-##  [6] "Untitled - Birds Eye View of City                                                            (1965)" 
-##  [7] "Untitled - Nude Male in the Forest                                                            (1963)"
-##  [8] "(In \"Head\" 73)                                                            (1973)"                  
-##  [9] "Untitled - Three Horse Riders                                                            (1963)"     
-## [10] "Untitled - Sprite in Long Gown                                                            (1963)"
+##  [1] "Unknown                                                            (1969)"                       
+##  [2] "Game Birds                            (2018)"                                                    
+##  [3] "Reclining Male Nude                                                            (1952)"           
+##  [4] "Drawing of a Seated Woman                                                            (1956-1959)"
+##  [5] "Five Views of a Seated Woman                                                            (1956)"  
+##  [6] "Rural Landscape                                                            (1959)"               
+##  [7] "Seated Nude Woman                                                            (1957-1959)"        
+##  [8] "Drawing of a Seated Woman                                                            (1958)"     
+##  [9] "Black and White Abstract                                                            (1956)"      
+## [10] "Drawing of a Seated Man                                                            (1955-1956)"
 ```
 
 And get rid of all the spurious whitespace in the text with `str_squish()`:
@@ -196,16 +196,16 @@ page %>%
 ```
 
 ```
-##  [1] "Dying Adonis (Pre 1837)"                       
-##  [2] "Venus Marina (2018)"                           
-##  [3] "Portrait Bust (Antique) (2018)"                
-##  [4] "Lucius Junius Brutus (2018)"                   
-##  [5] "Fragment of foliated frieze (mediaeval) (2018)"
-##  [6] "Untitled - Birds Eye View of City (1965)"      
-##  [7] "Untitled - Nude Male in the Forest (1963)"     
-##  [8] "(In \"Head\" 73) (1973)"                       
-##  [9] "Untitled - Three Horse Riders (1963)"          
-## [10] "Untitled - Sprite in Long Gown (1963)"
+##  [1] "Unknown (1969)"                       
+##  [2] "Game Birds (2018)"                    
+##  [3] "Reclining Male Nude (1952)"           
+##  [4] "Drawing of a Seated Woman (1956-1959)"
+##  [5] "Five Views of a Seated Woman (1956)"  
+##  [6] "Rural Landscape (1959)"               
+##  [7] "Seated Nude Woman (1957-1959)"        
+##  [8] "Drawing of a Seated Woman (1958)"     
+##  [9] "Black and White Abstract (1956)"      
+## [10] "Drawing of a Seated Man (1955-1956)"
 ```
 
 And finally save the resulting data as a vector of length 10:
@@ -248,11 +248,11 @@ page %>%
 ```
 
 ```
-##  [1] "./record/20596?highlight=*:*" "./record/20594?highlight=*:*"
-##  [3] "./record/20562?highlight=*:*" "./record/20561?highlight=*:*"
-##  [5] "./record/20558?highlight=*:*" "./record/99394?highlight=*:*"
-##  [7] "./record/99395?highlight=*:*" "./record/99404?highlight=*:*"
-##  [9] "./record/99403?highlight=*:*" "./record/99402?highlight=*:*"
+##  [1] "./record/53608?highlight=*:*" "./record/53607?highlight=*:*"
+##  [3] "./record/20817?highlight=*:*" "./record/20819?highlight=*:*"
+##  [5] "./record/20820?highlight=*:*" "./record/20821?highlight=*:*"
+##  [7] "./record/20813?highlight=*:*" "./record/20787?highlight=*:*"
+##  [9] "./record/20802?highlight=*:*" "./record/20801?highlight=*:*"
 ```
 
 These don't really look like urls as we know then though. They're relative 

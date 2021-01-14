@@ -5,7 +5,7 @@
 
 
 
-<img src="img/mitch-hedgeberg-lqd.jpg" width="640" />
+![](img/mitch-hedgeberg-lqd.jpg)<!-- -->
 
 In this lab we revisit the Denny's and La Quinta Inn and Suites data we visualized in the previous lab.
 

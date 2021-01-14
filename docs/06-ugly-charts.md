@@ -153,7 +153,7 @@ library(tidyverse)
 The American Association of University Professors (AAUP) is a nonprofit membership association of faculty and other academic professionals.
 [This report](https://www.aaup.org/sites/default/files/files/AAUP_Report_InstrStaff-75-11_apr2013.pdf) compiled by the AAUP shows trends in instructional staff employees between 1975 and 2011, and contains an image very similar to the one given below.
 
-<img src="img/staff-employment.png" width="822" />
+![](img/staff-employment.png)<!-- -->
 
 Let's start by loading the data used to create this plot.
 
@@ -277,7 +277,7 @@ Note that countries whose total harvest was less than 100,000 tons are not inclu
 
 A researcher shared with you the following visualization they created based on these data 😳.
 
-<img src="img/fisheries.png" width="1121" />
+![](img/fisheries.png)<!-- -->
 
 3.  Can you help them make improve it? First, brainstorm how you would improve it. Then create the improved visualization and write up the changes/decisions you made as bullet points. It's ok if some of your improvements are aspirational, i.e. you don't know how to implement it, but you think it's a good idea. Ask a tutor for help, but also keep an eye on the time. Implement what you can and leave note identifying the aspirational improvements.
 

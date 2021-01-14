@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Science for Psychologists</title>
+  <title>Lab 3 Lab 03 - Nobel laureates | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Science for Psychologists" />
+  <meta property="og:title" content="Lab 3 Lab 03 - Nobel laureates | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Science for Psychologists" />
+  <meta name="twitter:title" content="Lab 3 Lab 03 - Nobel laureates | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="overview.html"/>
+<link rel="prev" href="lab-02-global-plastic-waste.html"/>
+<link rel="next" href="la-quinta-is-spanish-for-next-to-dennys-pt-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -395,19 +395,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Data Science for Psychologists</h1>
-<h2 class="subtitle"><em>A Modernized Exploratory and Graphical Data Analysis with R</em></h2>
-<p class="author"><em>S. Mason Garrison</em></p>
-<p class="date"><em>2021-01-13</em></p>
+<div id="lab-03---nobel-laureates" class="section level1">
+<h1><span class="header-section-number">Lab 3</span> Lab 03 - Nobel laureates</h1>
+<p>In January 2017, Buzzfeed published an article on why Nobel laureates show
+immigration is so important for American science. You can read the article
+<a href="https://www.buzzfeednews.com/article/peteraldhous/immigration-and-science">here</a>. In the article they show that while most living Nobel laureates in the
+sciences are based in the US, many of them were born in other countries.
+This is one reason why scientific leaders say that immigration is vital for progress. In this lab we will work with the data from this article to
+recreate some of their visualizations as well as explore new questions.</p>
+<p>The learning goals of this lab are:</p>
+<ul>
+<li>Manipulate and transform data to prepare it for visualization.</li>
+<li>Recreate visualizations.</li>
+<li>Summarise data.</li>
+<li>Get more practice working as a team.</li>
+</ul>
+<div id="workflow" class="section level2">
+<h2><span class="header-section-number">3.1</span> Workflow</h2>
+<p>This is the first week you’re working in teams. You have a team repository that each member of the team has access to. You can all push to this repository, but <strong>for this week only</strong> we will keep things simple and ask that the <strong>team lead for the week is the only one who pushes</strong> while others work on together with them.</p>
+<p>Starting next week we’ll show you how you can all collectively work in a repo, the (mini) chaos that might result in (called a merge conflict), and how to resolve it.</p>
 </div>
-<div id="welcome-to-psy-703" class="section level1 unnumbered">
-<h1>Welcome to PSY 703</h1>
-<p>Welcome to class! This website is designed to accompany Mason Garrison’s Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This website hosts the lab notes. All the embedded lecture videos can be found on a <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6">youtube playlist</a>. You can find the current version of the course syllabus <a href="https://github.com/smasongarrison/Syllabi/blob/master/syllabus_datascience.pdf">here</a>, along with all of the <a href="https://github.com/smasongarrison/Syllabi">other syllabi for my classes</a>.</p>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+<div id="getting-started-2" class="section level2">
+<h2><span class="header-section-number">3.2</span> Getting started</h2>
+<p>Go to the course GitHub organization and locate your Lab 03 repo, which should be named <code>lab-03-nobel-winners-YOUR_TEAMNAME</code>. Grab the URL of the repo, and clone it in RStudio. Refer to Lab 01 if you would like to see step-by-step instructions for cloning a repo into an RStudio project.</p>
+<p>First, open the R Markdown document <code>lab-03-nobel-winners.Rmd</code> and Knit it. Make sure it compiles without errors. The output will be in the file markdown <code>.md</code> file with the same name.</p>
+<div id="packages-2" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Packages</h3>
+<p>We’ll use the <strong>tidyverse</strong> package for this analysis. Run the following code in the Console to load this package.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="lab-03-nobel-laureates.html#cb42-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 </div>
+</div>
+<div id="the-data-2" class="section level2">
+<h2><span class="header-section-number">3.3</span> The data</h2>
+<p>The dataset for this assignment can be found as a csv file in the <code>data</code> folder of your repository. You can read it in using the following.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="lab-03-nobel-laureates.html#cb43-1"></a>nobel &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nobel.csv&quot;</span>)</span></code></pre></div>
+<p>The variable descriptions are as follows:</p>
+<ul>
+<li><code>id</code>: ID number</li>
+<li><code>firstname</code>: First name of laureate</li>
+<li><code>surname</code>: Surname</li>
+<li><code>year</code>: Year prize won</li>
+<li><code>category</code>: Category of prize</li>
+<li><code>affiliation</code>: Affiliation of laureate</li>
+<li><code>city</code>: City of laureate in prize year</li>
+<li><code>country</code>: Country of laureate in prize year</li>
+<li><code>born_date</code>: Birth date of laureate</li>
+<li><code>died_date</code>: Death date of laureate</li>
+<li><code>gender</code>: Gender of laureate</li>
+<li><code>born_city</code>: City where laureate was born</li>
+<li><code>born_country</code>: Country where laureate was born</li>
+<li><code>born_country_code</code>: Code of country where laureate was born</li>
+<li><code>died_city</code>: City where laureate died</li>
+<li><code>died_country</code>: Country where laureate died</li>
+<li><code>died_country_code</code>: Code of country where laureate died</li>
+<li><code>overall_motivation</code>: Overall motivation for recognition</li>
+<li><code>share</code>: Number of other winners award is shared with</li>
+<li><code>motivation</code>: Motivation for recognition</li>
+</ul>
+<p>In a few cases the name of the city/country changed after laureate was given (e.g. in 1975 Bosnia and Herzegovina was part of the Socialist Federative Republic of Yugoslavia). In these cases the variables below reflect a different name than their counterparts without the suffix <code>_original</code>.</p>
+<ul>
+<li><code>born_country_original</code>: Original country where laureate was born</li>
+<li><code>born_city_original</code>: Original city where laureate was born</li>
+<li><code>died_country_original</code>: Original country where laureate died</li>
+<li><code>died_city_original</code>: Original city where laureate died</li>
+<li><code>city_original</code>: Original city where laureate lived at the time of winning the award</li>
+<li><code>country_original</code>: Original country where laureate lived at the time of winning the award</li>
+</ul>
+</div>
+<div id="exercises-2" class="section level2">
+<h2><span class="header-section-number">3.4</span> Exercises</h2>
+<div id="get-to-know-your-data" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Get to know your data</h3>
+<ol style="list-style-type: decimal">
+<li>How many observations and how many variables are in the dataset? Use inline code to answer this question.</li>
+</ol>
+<p>There are some observations in this dataset that we will exclude from our analysis to match the Buzzfeed results.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a new data frame called <code>nobel_living</code> that filters for</li>
+</ol>
+<ul>
+<li>laureates for whom <code>country</code> is available</li>
+<li>laureates who are people as opposed to organizations (organizations are denoted with <code>"org"</code> as their <code>gender</code>)</li>
+<li>laureates who are still alive (their <code>died_date</code> is <code>NA</code>)</li>
+</ul>
+<p>Confirm that once you have filtered for these characteristics you are left with a data frame with 228 observations.</p>
+<p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+</div>
+<div id="most-living-nobel-laureates-were-based-in-the-us-when-they-won-their-prizes" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Most living Nobel laureates were based in the US when they won their prizes</h3>
+<p>… says the Buzzfeed article. Let’s see if that’s true.</p>
+<p>First, we’ll create a new variable to identify whether the laureate was in the US when they won their prize. We’ll use the <code>mutate()</code> function for this. The following pipeline mutates the <code>nobel_living</code> data frame by adding a new variable called <code>country_us</code>. We use an if statement to create this variable. The first argument in the <code>if_else()</code> function we’re using to write this if statement is the condition we’re testing for. If <code>country</code> is equal to <code>"USA"</code>, we set <code>country_us</code> to <code>"USA"</code>. If not, we set the <code>country_us</code> to <code>"Other"</code>.</p>
+<pre class="marginfigure"><code>Note that we can achieve the same result using the `fct_other()` function we&#39;ve seen before (i.e. with `country_us = fct_other(country, &quot;USA&quot;)`). We decided to use the `if_else()` here to show you one example of an if statement in R.</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="lab-03-nobel-laureates.html#cb45-1"></a>nobel_living &lt;-<span class="st"> </span>nobel_living <span class="op">%&gt;%</span></span>
+<span id="cb45-2"><a href="lab-03-nobel-laureates.html#cb45-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb45-3"><a href="lab-03-nobel-laureates.html#cb45-3"></a>    <span class="dt">country_us =</span> <span class="kw">if_else</span>(country <span class="op">==</span><span class="st"> &quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb45-4"><a href="lab-03-nobel-laureates.html#cb45-4"></a>  )</span></code></pre></div>
+<p>Next, we will limit our analysis to only the following categories: Physics, Medicine, Chemistry, and Economics.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="lab-03-nobel-laureates.html#cb46-1"></a>nobel_living_science &lt;-<span class="st"> </span>nobel_living <span class="op">%&gt;%</span></span>
+<span id="cb46-2"><a href="lab-03-nobel-laureates.html#cb46-2"></a><span class="st">  </span><span class="kw">filter</span>(category <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
+<p>For the next exercise work with the <code>nobel_living_science</code> data frame you created above. This means you’ll need to define this data frame in your R Markdown document, even though the next exercise doesn’t explicitly ask you to do so.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a faceted bar plot visualizing the relationship between the category of prize and whether the laureate was in the US when they won the nobel prize. Note: Your visualization should be faceted by category. For each facet you should have two bars, one for winners in the US and one for Other. Flip the coordinates so the bars are horizontal, not vertical. Interpret your visualization, and say a few words about whether the Buzzfeed headline is supported by the data.</li>
+</ol>
+<p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+</div>
+<div id="but-of-those-us-based-nobel-laureates-many-were-born-in-other-countries" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> But of those US-based Nobel laureates, many were born in other countries</h3>
+<pre class="marginfigure"><code>**Hint:** You should be able to ~~cheat~~ borrow from code you used earlier to create the `country_us` variable.</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Create a new variable called <code>born_country_us</code> that has the value <code>"USA"</code> if the laureate is born in the US, and <code>"Other"</code> otherwise.</p></li>
+<li><p>Add a second variable to your visualization from Exercise 3 based on whether the laureate was born in the US or not. Your final visualization should contain a facet for each category, within each facet a bar for whether they won the award in the US or not, and within each bar whether they were born in the US or not. Based on your visualization, do the data appear to support Buzzfeed’s claim? Explain your reasoning in 1-2 sentences.</p></li>
+</ol>
+<p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+</div>
+<div id="heres-where-those-immigrant-nobelists-were-born" class="section level3">
+<h3><span class="header-section-number">3.4.4</span> Here’s where those immigrant Nobelists were born</h3>
+<pre class="marginfigure"><code>Note that your bar plot won&#39;t exactly match the one from the Buzzfeed article. This is likely because the data has been updated since the article was published.</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>In a single pipeline, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the <code>count()</code>) function for their birth country, <code>born_country</code>, and arrange the resulting data frame in descending order of number of observations for each country.</li>
+</ol>
+<p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+</div>
+</div>
+<div id="wrapping-up" class="section level2">
+<h2><span class="header-section-number">3.5</span> Wrapping up</h2>
+<p>Go back through your write up to make sure you’re following coding style guidelines we discussed in class. Make any edits as needed.</p>
+<p>Also, make sure all of your R chunks are properly labeled, and your figures are reasonably sized.</p>
+<p>Once the team leader for the week pushes their final changes, others should also clone the team repo (or if you’ve already done so, <em>pull</em> on the Git pane) and knit the R Markdown document to confirm that they can reproduce the report.</p>
+</div>
+<div id="interested-in-how-buzzfeed-made-their-visualizations" class="section level2">
+<h2><span class="header-section-number">3.6</span> Interested in how Buzzfeed made their visualizations?</h2>
+<p>The plots in the Buzzfeed article are called waffle plots. You can find the code used for making these plots in Buzzfeed’s GitHub repo (yes, they have one!) <a href="https://buzzfeednews.github.io/2017-01-immigration-and-science/">here</a>. You’re not expected to recreate them as part of your assignment, but you’re welcomed to do so for fun!</p>
+
 </div>
 </div>
             </section>
@@ -415,8 +534,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="overview.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lab-02-global-plastic-waste.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="la-quinta-is-spanish-for-next-to-dennys-pt-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -447,7 +566,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/index.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/03-nobel-laureates.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -458,7 +577,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/index.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/03-nobel-laureates.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
