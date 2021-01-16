@@ -1,7 +1,7 @@
 
 # La Quinta is Spanish for 'next to Denny's', Pt. 1
 
-# Visualizing spatial data
+## Visualizing spatial data
 
 
 
