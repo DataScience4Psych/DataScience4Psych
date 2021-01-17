@@ -144,16 +144,16 @@ page %>%
 
 ```
 ## {xml_nodeset (10)}
-##  [1] <a href="./record/53608?highlight=*:*">Unknown                           ...
-##  [2] <a href="./record/53607?highlight=*:*">Game Birds                        ...
-##  [3] <a href="./record/20817?highlight=*:*">Reclining Male Nude               ...
-##  [4] <a href="./record/20819?highlight=*:*">Drawing of a Seated Woman         ...
-##  [5] <a href="./record/20820?highlight=*:*">Five Views of a Seated Woman      ...
-##  [6] <a href="./record/20821?highlight=*:*">Rural Landscape                   ...
-##  [7] <a href="./record/20813?highlight=*:*">Seated Nude Woman                 ...
-##  [8] <a href="./record/20787?highlight=*:*">Drawing of a Seated Woman         ...
-##  [9] <a href="./record/20802?highlight=*:*">Black and White Abstract          ...
-## [10] <a href="./record/20801?highlight=*:*">Drawing of a Seated Man           ...
+##  [1] <a href="./record/22579?highlight=*:*">Figure Composition with Nurse and ...
+##  [2] <a href="./record/21945?highlight=*:*">Three Men and a Snake             ...
+##  [3] <a href="./record/22557?highlight=*:*">Nun with Two Workmen in a Country ...
+##  [4] <a href="./record/22560?highlight=*:*">Blackbird on Toys                 ...
+##  [5] <a href="./record/22641?highlight=*:*">Tennis Courts                     ...
+##  [6] <a href="./record/99802?highlight=*:*">Untitled                          ...
+##  [7] <a href="./record/99904?highlight=*:*">Aerial                            ...
+##  [8] <a href="./record/53606?highlight=*:*">Unknown                           ...
+##  [9] <a href="./record/53574?highlight=*:*">Unknown                           ...
+## [10] <a href="./record/53569?highlight=*:*">Unknown                           ...
 ```
 
 Then we extract the text with `html_text()`:
@@ -167,16 +167,16 @@ page %>%
 ```
 
 ```
-##  [1] "Unknown                                                            (1969)"                       
-##  [2] "Game Birds                            (2018)"                                                    
-##  [3] "Reclining Male Nude                                                            (1952)"           
-##  [4] "Drawing of a Seated Woman                                                            (1956-1959)"
-##  [5] "Five Views of a Seated Woman                                                            (1956)"  
-##  [6] "Rural Landscape                                                            (1959)"               
-##  [7] "Seated Nude Woman                                                            (1957-1959)"        
-##  [8] "Drawing of a Seated Woman                                                            (1958)"     
-##  [9] "Black and White Abstract                                                            (1956)"      
-## [10] "Drawing of a Seated Man                                                            (1955-1956)"
+##  [1] "Figure Composition with Nurse and Child, and Woman with Budgies                                                            (Circa 1950)"
+##  [2] "Three Men and a Snake                                                            (Unknown)"                                             
+##  [3] "Nun with Two Workmen in a Country Landscape                            (2019)"                                                          
+##  [4] "Blackbird on Toys                            (2019)"                                                                                    
+##  [5] "Tennis Courts                                                            (1952)"                                                        
+##  [6] "Untitled                                                            (1983)"                                                             
+##  [7] "Aerial                                                            (2007)"                                                               
+##  [8] "Unknown                                                            (JUN 1987)"                                                          
+##  [9] "Unknown                                                            (1960)"                                                              
+## [10] "Unknown                            (2019)"
 ```
 
 And get rid of all the spurious whitespace in the text with `str_squish()`:
@@ -196,16 +196,16 @@ page %>%
 ```
 
 ```
-##  [1] "Unknown (1969)"                       
-##  [2] "Game Birds (2018)"                    
-##  [3] "Reclining Male Nude (1952)"           
-##  [4] "Drawing of a Seated Woman (1956-1959)"
-##  [5] "Five Views of a Seated Woman (1956)"  
-##  [6] "Rural Landscape (1959)"               
-##  [7] "Seated Nude Woman (1957-1959)"        
-##  [8] "Drawing of a Seated Woman (1958)"     
-##  [9] "Black and White Abstract (1956)"      
-## [10] "Drawing of a Seated Man (1955-1956)"
+##  [1] "Figure Composition with Nurse and Child, and Woman with Budgies (Circa 1950)"
+##  [2] "Three Men and a Snake (Unknown)"                                             
+##  [3] "Nun with Two Workmen in a Country Landscape (2019)"                          
+##  [4] "Blackbird on Toys (2019)"                                                    
+##  [5] "Tennis Courts (1952)"                                                        
+##  [6] "Untitled (1983)"                                                             
+##  [7] "Aerial (2007)"                                                               
+##  [8] "Unknown (JUN 1987)"                                                          
+##  [9] "Unknown (1960)"                                                              
+## [10] "Unknown (2019)"
 ```
 
 And finally save the resulting data as a vector of length 10:
@@ -248,11 +248,11 @@ page %>%
 ```
 
 ```
-##  [1] "./record/53608?highlight=*:*" "./record/53607?highlight=*:*"
-##  [3] "./record/20817?highlight=*:*" "./record/20819?highlight=*:*"
-##  [5] "./record/20820?highlight=*:*" "./record/20821?highlight=*:*"
-##  [7] "./record/20813?highlight=*:*" "./record/20787?highlight=*:*"
-##  [9] "./record/20802?highlight=*:*" "./record/20801?highlight=*:*"
+##  [1] "./record/22579?highlight=*:*" "./record/21945?highlight=*:*"
+##  [3] "./record/22557?highlight=*:*" "./record/22560?highlight=*:*"
+##  [5] "./record/22641?highlight=*:*" "./record/99802?highlight=*:*"
+##  [7] "./record/99904?highlight=*:*" "./record/53606?highlight=*:*"
+##  [9] "./record/53574?highlight=*:*" "./record/53569?highlight=*:*"
 ```
 
 These don't really look like urls as we know then though. They're relative 
