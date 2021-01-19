@@ -28,22 +28,22 @@ And the following is a bulleted to-do list:
 
 3. Hit preview to make sure the issue looks like the following:
 
-![](img/practice-issue-create.png)<!-- -->
+<img src="img/practice-issue-create.png" width="811" />
 
 4. Submit the issue.
 5. Then, assign the issue to one or few members of the team.
 
-![](img/practice-issue-assign.png)<!-- -->
+<img src="img/practice-issue-assign.png" width="1095" />
 
 ### Working on the issue
 
 As you work on the issue you can check the boxes.
 
-![](img/practice-issue-check.png)<!-- -->
+<img src="img/practice-issue-check.png" width="824" />
 
 Note that this will also show progress on the issue on the issue dashboard.
 
-![](img/practice-issue-progress.png)<!-- -->
+<img src="img/practice-issue-progress.png" width="1097" />
 
 6. Check some of the boxes on your practice issue and confirm that you can 
 see the progress result on the issue dashboard.
@@ -59,7 +59,7 @@ closed when you push the changes to your repo.
 7. Take a note of the issue number, which will show up next to the 
 issue title.
 
-![](img/practice-issue-number.png)<!-- -->
+<img src="img/practice-issue-number.png" width="608" />
 
 8. Go to your project on RStudio and make a change. This can be something 
 silly like adding a new line to the issue README. Then commit this change. 
@@ -71,13 +71,13 @@ to the README I would say something like the following:
 Add a new line to the README, closes #2
 ```
 
-![](img/practice-issue-commit.png)<!-- -->
+<img src="img/practice-issue-commit.png" width="991" />
 
 9. Push your changes and observe that the issue is now closed on GitHub. 
 Click on the referenced commit to confirm that it was your last commit that 
 closed the issue.
 
-![](img/practice-issue-commit.png)<!-- -->
+<img src="img/practice-issue-commit.png" width="991" />
 
 ## Project progress
 
@@ -113,7 +113,7 @@ you were going from `cayman` to `hacker`, your diff would look like the
 following. Once you commit and push this change, give it a couple minutes 
 for the website to rebuild, and confirm that the theme was changed.
 
-![](img/practice-issue-commit.png)<!-- -->
+<img src="img/practice-issue-commit.png" width="991" />
 
 
 ```marginfigure
@@ -126,7 +126,7 @@ updates once your presentation session starts.
 add a brief description, link to your project website, and topics to your 
 project repo.
 
-![](img/project-description.png)<!-- -->
+<img src="img/project-description.png" width="850" />
 
 13. **Citing your data:** Now is the time to fix up those citations! In your 
 project README there is a link to a resource for properly citing data. Develop 
@@ -157,6 +157,6 @@ Styling suggestions are generated daily at 13:30, so if you do more work today,
 there may be more suggestions tomorrow. Make sure to check these before you 
 finalize work on your repo.
 
-![](img/styler-1.png)<!-- -->![](img/styler-2.png)<!-- -->
+<img src="img/styler-1.png" width="835" /><img src="img/styler-2.png" width="1088" />
 
 17. **Strongly recommended:** Get a hold of a tutor and run your ideas by them.

@@ -93,7 +93,7 @@ Another pop up window will asl whether you want to get your extensions on all
 your computer. If you want this, you can turn on sync, but you don't need to 
 for the purpose of this lab.
 
-![](img/selectorgadget.png)<!-- -->
+<img src="img/selectorgadget.png" width="89" />
 
 You should now be able to access SelectorGadget by clicking on the icon next to 
 the search bar in the Chrome browser.
@@ -144,16 +144,16 @@ page %>%
 
 ```
 ## {xml_nodeset (10)}
-##  [1] <a href="./record/22579?highlight=*:*">Figure Composition with Nurse and ...
-##  [2] <a href="./record/21945?highlight=*:*">Three Men and a Snake             ...
-##  [3] <a href="./record/22557?highlight=*:*">Nun with Two Workmen in a Country ...
-##  [4] <a href="./record/22560?highlight=*:*">Blackbird on Toys                 ...
-##  [5] <a href="./record/22641?highlight=*:*">Tennis Courts                     ...
-##  [6] <a href="./record/99802?highlight=*:*">Untitled                          ...
-##  [7] <a href="./record/99904?highlight=*:*">Aerial                            ...
-##  [8] <a href="./record/53606?highlight=*:*">Unknown                           ...
-##  [9] <a href="./record/53574?highlight=*:*">Unknown                           ...
-## [10] <a href="./record/53569?highlight=*:*">Unknown                           ...
+##  [1] <a href="./record/21872?highlight=*:*">Untitled                          ...
+##  [2] <a href="./record/21870?highlight=*:*">Untitled                          ...
+##  [3] <a href="./record/53509?highlight=*:*">Unknown                           ...
+##  [4] <a href="./record/21864?highlight=*:*">The World from Space              ...
+##  [5] <a href="./record/21217?highlight=*:*">Drawing of Monaghan               ...
+##  [6] <a href="./record/21869?highlight=*:*">Untitled                          ...
+##  [7] <a href="./record/21219?highlight=*:*">Portrait of a Boy                 ...
+##  [8] <a href="./record/21221?highlight=*:*">Portrait of a Woman Standing      ...
+##  [9] <a href="./record/21220?highlight=*:*">Portrait of a Boy Seated          ...
+## [10] <a href="./record/21225?highlight=*:*">Standing Male Nude                ...
 ```
 
 Then we extract the text with `html_text()`:
@@ -167,16 +167,16 @@ page %>%
 ```
 
 ```
-##  [1] "Figure Composition with Nurse and Child, and Woman with Budgies                                                            (Circa 1950)"
-##  [2] "Three Men and a Snake                                                            (Unknown)"                                             
-##  [3] "Nun with Two Workmen in a Country Landscape                            (2019)"                                                          
-##  [4] "Blackbird on Toys                            (2019)"                                                                                    
-##  [5] "Tennis Courts                                                            (1952)"                                                        
-##  [6] "Untitled                                                            (1983)"                                                             
-##  [7] "Aerial                                                            (2007)"                                                               
-##  [8] "Unknown                                                            (JUN 1987)"                                                          
-##  [9] "Unknown                                                            (1960)"                                                              
-## [10] "Unknown                            (2019)"
+##  [1] "Untitled                                                            (1967)"                       
+##  [2] "Untitled                                                            (Unknown)"                    
+##  [3] "Unknown                            (2018)"                                                        
+##  [4] "The World from Space                                                            (1998)"           
+##  [5] "Drawing of Monaghan                                                            (1955)"            
+##  [6] "Untitled                                                            (Dec 1970)"                   
+##  [7] "Portrait of a Boy                                                            (1955)"              
+##  [8] "Portrait of a Woman Standing                                                            (1957)"   
+##  [9] "Portrait of a Boy Seated                                                            (17 Mar 1955)"
+## [10] "Standing Male Nude                                                            (Dec 1951)"
 ```
 
 And get rid of all the spurious whitespace in the text with `str_squish()`:
@@ -196,16 +196,16 @@ page %>%
 ```
 
 ```
-##  [1] "Figure Composition with Nurse and Child, and Woman with Budgies (Circa 1950)"
-##  [2] "Three Men and a Snake (Unknown)"                                             
-##  [3] "Nun with Two Workmen in a Country Landscape (2019)"                          
-##  [4] "Blackbird on Toys (2019)"                                                    
-##  [5] "Tennis Courts (1952)"                                                        
-##  [6] "Untitled (1983)"                                                             
-##  [7] "Aerial (2007)"                                                               
-##  [8] "Unknown (JUN 1987)"                                                          
-##  [9] "Unknown (1960)"                                                              
-## [10] "Unknown (2019)"
+##  [1] "Untitled (1967)"                       
+##  [2] "Untitled (Unknown)"                    
+##  [3] "Unknown (2018)"                        
+##  [4] "The World from Space (1998)"           
+##  [5] "Drawing of Monaghan (1955)"            
+##  [6] "Untitled (Dec 1970)"                   
+##  [7] "Portrait of a Boy (1955)"              
+##  [8] "Portrait of a Woman Standing (1957)"   
+##  [9] "Portrait of a Boy Seated (17 Mar 1955)"
+## [10] "Standing Male Nude (Dec 1951)"
 ```
 
 And finally save the resulting data as a vector of length 10:
@@ -248,11 +248,11 @@ page %>%
 ```
 
 ```
-##  [1] "./record/22579?highlight=*:*" "./record/21945?highlight=*:*"
-##  [3] "./record/22557?highlight=*:*" "./record/22560?highlight=*:*"
-##  [5] "./record/22641?highlight=*:*" "./record/99802?highlight=*:*"
-##  [7] "./record/99904?highlight=*:*" "./record/53606?highlight=*:*"
-##  [9] "./record/53574?highlight=*:*" "./record/53569?highlight=*:*"
+##  [1] "./record/21872?highlight=*:*" "./record/21870?highlight=*:*"
+##  [3] "./record/53509?highlight=*:*" "./record/21864?highlight=*:*"
+##  [5] "./record/21217?highlight=*:*" "./record/21869?highlight=*:*"
+##  [7] "./record/21219?highlight=*:*" "./record/21221?highlight=*:*"
+##  [9] "./record/21220?highlight=*:*" "./record/21225?highlight=*:*"
 ```
 
 These don't really look like urls as we know then though. They're relative 

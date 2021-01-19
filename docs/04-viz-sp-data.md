@@ -7,7 +7,7 @@
 
 
 
-![](img/mitch-hedgeberg-lqd.jpg)<!-- -->
+<img src="img/mitch-hedgeberg-lqd.jpg" width="640" />
 
 Have you ever taken a road trip in the US and thought to yourself "I wonder what La Quinta means". Well, the late comedian [Mitch Hedberg](https://en.wikipedia.org/wiki/Mitch_Hedberg) thinks it's Spanish for *next to Denny's*.
 

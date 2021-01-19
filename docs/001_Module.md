@@ -1,234 +1,161 @@
-# Write your own R functions, part 2 {#functions-part2}
+# (PART) Module 1 {-}
 
 
 
-<!--Original content: https://stat545.com/block011_write-your-own-function-02.html-->
 
-## Where were we? Where are we going?
+# Welcome to Data Science
 
-In [part 1](#functions-part1) we wrote our first R function to compute the difference between the max and min of a numeric vector. We checked the validity of the function's only argument and, informally, we verified that it worked pretty well.
+This module is designed to introduce you to data science. Please watch the videos and work your way through the notes. You can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
 
-In this part, we generalize this function, learn more technical details about R functions, and set default values for some arguments.
+## Module Roadmap 
 
-## Load the Gapminder data
+- What is Data Science?
+- Course structure and some other useful things
+- Meet our toolbox!
 
-As usual, load gapminder.
+
+## What is Data Science?
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/BpKXkkU-NiY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+I've embedded a few examples below, as well as an emblematic tweet.
+
+### Hans Rosling
+
+The below video is the shorter version. Hans Rosling's 200 Countries, 200 Years, 4 Minutes - The Joy of Stats
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/jbkSRLYSojo" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+
+You can find a longer talk-length version below.
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/hVimVzgtD6w" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+
+This tweet is enthusiastic about data science.
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">YASSSSSSSSSS MY LOVE STEVE IS BACK!!! <a href="https://twitter.com/hashtag/KornackiThirstcontinues?src=hash&amp;ref_src=twsrc%5Etfw">#KornackiThirstcontinues</a> <a href="https://t.co/ynK4D87Bhr">pic.twitter.com/ynK4D87Bhr</a></p>&mdash; Leslie Jones 🦋 (@Lesdoggg) <a href="https://twitter.com/Lesdoggg/status/1346584128368508930?ref_src=twsrc%5Etfw">January 5, 2021</a></blockquote>
+
+```
+
+
+## Course structure and some other useful things
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/3mz3HNyew-s" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+
+
+## Meet our toolbox!
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/SJaQtRLFb-Y" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+### Install R and RStudio {#install}
+
 
 
 ```r
-library(gapminder)
+library(vembedr)
+embed_url("https://www.youtube.com/watch?v=kVIZGCT5p9U") %>%
+  use_align("center")
 ```
 
-## Restore our max minus min function
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
 
-Let's keep our previous function around as a baseline.
+* Install [R, a free software environment for statistical computing and graphics][r-proj] from [CRAN][cran], the Comprehensive R Archive Network. I __highly recommend__ you install a precompiled binary distribution for your operating system -- use the links up at the top of the CRAN page linked above!
 
+* Install RStudio's IDE (stands for _integrated development environment_), a powerful user interface for R. Get the Open Source Edition of RStudio Desktop.
+
+  - You can run either the [Preview version][rstudio-preview] or the official releases available [here][rstudio-official].
+  - RStudio comes with a __text editor__, so there is no immediate need to install a separate stand-alone editor.
+  - RStudio can __interface with Git(Hub)__. However, you must do all the Git(Hub) set up [described elsewhere][happy-git] before you can take advantage of this.
+    
+If you have a pre-existing installation of R and/or RStudio, I __highly recommend__ that you reinstall both and get as current as possible. It can be considerably harder to run old software than new.
+
+* If you upgrade R, you will need to update any packages you have installed. The command below should get you started, though you may need to specify more arguments if, e.g., you have been using a non-default library for your packages.
+
+``` r
+update.packages(ask = FALSE, checkBuilt = TRUE)
+```
+
+__Note:__ this  code will only look for updates on CRAN. So if you use a package that lives *only* on GitHub or if you want a development version from GitHub, you will need to  update manually, e.g. via `devtools::install_github()`.
+
+
+
+#### Testing testing
+
+* Do whatever is appropriate for your OS to launch RStudio. You should get a window similar to the screenshot you see [here][rstudio-workbench], but yours will be more boring because you haven't written any code or made any figures yet!
+
+* Put your cursor in the pane labeled Console, which is where you interact with the live R process. Create a simple object with code like `x <- 3 * 4` (followed by enter or return). Then inspect the `x` object by typing `x` followed by enter or return. You should see the value 12 print to screen. If yes, you've succeeded in installing R and RStudio.
+
+### Add-on packages
+
+R is an extensible system and many people share useful code they have developed as a _package_ via CRAN and GitHub. To install a package from CRAN, for example the [dplyr][dplyr-cran] package for data manipulation, here is one way to do it in the R console (there are others).
 
 ```r
-mmm <- function(x) {
-  stopifnot(is.numeric(x))
-  max(x) - min(x)
-}
+install.packages("dplyr", dependencies = TRUE)
 ```
 
-## Generalize our function to other quantiles
+By including `dependencies = TRUE`, we are being explicit and extra-careful to install any additional packages the target package, dplyr in the example above, needs to have around.
 
-The max and the min are special cases of a __quantile__. Here are other special cases you may have heard of:
+You could use the above method to install the following packages, all of which we will use:
 
-* median = 0.5 quantile
-* 1st quartile = 0.25 quantile
-* 3rd quartile = 0.75 quantile
-  
-If you're familiar with [box plots][wiki-boxplot], the rectangle typically runs from the 1st quartile to the 3rd quartile, with a line at the median.
-
-If $q$ is the $p$-th quantile of a set of $n$ observations, what does that mean? Approximately $pn$ of the observations are less than $q$ and $(1 - p)n$ are greater than $q$. Yeah, you need to worry about rounding to an integer and less/greater than or equal to, but these details aren't critical here.
-
-Let's generalize our function to take the difference between any two quantiles. We can still consider the max and min, if we like, but we're not limited to that.
-
-## Get something that works, again
-
-The eventual inputs to our new function will be the data `x` and two probabilities.
-
-First, play around with the `quantile()` function. Convince yourself you know how to use it, for example, by cross-checking your results with other built-in functions.
+* tidyr, [package webpage][tidyr-web]
+* ggplot2, [package webpage][ggplot2-web]
 
 
-```r
-quantile(gapminder$lifeExp)
-#>   0%  25%  50%  75% 100% 
-#> 23.6 48.2 60.7 70.8 82.6
-quantile(gapminder$lifeExp, probs = 0.5)
-#>  50% 
-#> 60.7
-median(gapminder$lifeExp)
-#> [1] 60.7
-quantile(gapminder$lifeExp, probs = c(0.25, 0.75))
-#>  25%  75% 
-#> 48.2 70.8
-boxplot(gapminder$lifeExp, plot = FALSE)$stats
-#>      [,1]
-#> [1,] 23.6
-#> [2,] 48.2
-#> [3,] 60.7
-#> [4,] 70.8
-#> [5,] 82.6
-```
+### Further resources
 
-Now write a code snippet that takes the difference between two quantiles.
+The above will get your basic setup ready but here are some links if you are interested in reading a bit further.
 
-
-```r
-the_probs <- c(0.25, 0.75)
-the_quantiles <- quantile(gapminder$lifeExp, probs = the_probs)
-max(the_quantiles) - min(the_quantiles)
-#> [1] 22.6
-```
-
-## Turn the working interactive code into a function, again
-
-I'll use `qdiff` as the base of our function's name. I copy the overall structure from our previous "max minus min" work but replace the guts of the function with the more general code we just developed.
-
-
-```r
-qdiff1 <- function(x, probs) {
-  stopifnot(is.numeric(x))
-  the_quantiles <- quantile(x = x, probs = probs)
-  max(the_quantiles) - min(the_quantiles)
-}
-qdiff1(gapminder$lifeExp, probs = c(0.25, 0.75))
-#> [1] 22.6
-IQR(gapminder$lifeExp) # hey, we've reinvented IQR
-#> [1] 22.6
-qdiff1(gapminder$lifeExp, probs = c(0, 1))
-#> [1] 59
-mmm(gapminder$lifeExp)
-#> [1] 59
-```
-
-Again we do some informal tests against familiar results and external implementations.
-
-## Argument names: freedom and conventions
-
-I want you to understand the importance of argument names.
-
-I can name my arguments almost anything I like. Proof:
-
-
-```r
-qdiff2 <- function(zeus, hera) {
-  stopifnot(is.numeric(zeus))
-  the_quantiles <- quantile(x = zeus, probs = hera)
-  max(the_quantiles) - min(the_quantiles)
-}
-qdiff2(zeus = gapminder$lifeExp, hera = 0:1)
-#> [1] 59
-```
-
-While I can name my arguments after Greek gods, it's usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names.
-
-If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I've been doing all along and now you know why:
-
-
-```r
-qdiff1
-#> function(x, probs) {
-#>   stopifnot(is.numeric(x))
-#>   the_quantiles <- quantile(x = x, probs = probs)
-#>   max(the_quantiles) - min(the_quantiles)
-#> }
-#> <bytecode: 0x000000001aedf5e8>
-```
-
-We took this detour so you could see there is no *structural* relationship between my arguments (`x` and `probs`) and those of `quantile()` (also `x` and `probs`). The similarity or equivalence of the names __accomplishes nothing__ as far as R is concerned; it is solely for the benefit of humans reading, writing, and using the code. Which is very important!
-
-## What a function returns
-
-By this point, I expect someone will have asked about the last line in my function's body. Look above for a reminder of the function's definition.
-
-By default, a function returns the result of the last line of the body. I am just letting that happen with the line `max(the_quantiles) - min(the_quantiles)`. However, there is an explicit function for this: `return()`. I could just as easily make this the last line of my function's body:
-
-
-```r
-return(max(the_quantiles) - min(the_quantiles))
-```
-
-You absolutely must use `return()` if you want to return early based on some condition, i.e. before execution gets to the last line of the body. Otherwise, you can decide your own conventions about when you use `return()` and when you don't.
-
-## Default values: freedom to NOT specify the arguments
-
-What happens if we call our function but neglect to specify the probabilities?
-
-
-```r
-qdiff1(gapminder$lifeExp)
-#> Error in quantile(x = x, probs = probs): argument "probs" is missing, with no default
-```
-
-Oops! At the moment, this causes a fatal error. It can be nice to provide some reasonable default values for certain arguments. In our case, it would be crazy to specify a default value for the primary input `x`, but very kind to specify a default for `probs`.
-
-We started by focusing on the max and the min, so I think those make reasonable defaults. Here's how to specify that in a function definition.
-
-
-```r
-qdiff3 <- function(x, probs = c(0, 1)) {
-  stopifnot(is.numeric(x))
-  the_quantiles <- quantile(x, probs)
-  max(the_quantiles) - min(the_quantiles)
-}
-```
-
-Again we check how the function works, in old examples and new, specifying the `probs` argument and not.
-
-
-```r
-qdiff3(gapminder$lifeExp)
-#> [1] 59
-mmm(gapminder$lifeExp)
-#> [1] 59
-qdiff3(gapminder$lifeExp, c(0.1, 0.9))
-#> [1] 33.6
-```
-
-## Check the validity of arguments, again
-
-__Exercise:__ upgrade our argument validity checks in light of the new argument `probs`.
-
-
-```r
-## problems identified during class
-## we're not checking that probs is numeric
-## we're not checking that probs is length 2
-## we're not checking that probs are in [0,1]
-```
-
-## Wrap-up and what's next?
-
-Here's the function we've written so far:
-
-
-```r
-qdiff3
-#> function(x, probs = c(0, 1)) {
-#>   stopifnot(is.numeric(x))
-#>   the_quantiles <- quantile(x, probs)
-#>   max(the_quantiles) - min(the_quantiles)
-#> }
-#> <bytecode: 0x000000001bca7e68>
-```
-
-What we've accomplished:
-
-* We've generalized our first function to take a difference between arbitrary quantiles.
-* We've specified default values for the probabilities that set the quantiles.
-  
-Where to next? In [part 3](#functions-part3) we tackle `NA`s, the special `...` argument, and formal unit testing.
-
-## Resources
-
-Hadley Wickham's book [Advanced R][adv-r] [-@wickham2015a]:
-
-* Section on [function arguments][adv-r-fxn-args]
-* Section on [return values][adv-r-return-values]
-  
+* [How to Use RStudio][rstudio-support]
+* [RStudio's leads for learning R][rstudio-R-help]
+* [R FAQ][cran-faq]
+* [R Installation and Administration][cran-R-admin]
+* [More about add-on packages in the R Installation and Administration Manual][cran-add-ons]
+    
 
 
 
