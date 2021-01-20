@@ -3,11 +3,11 @@
 
 
 
-# Module 1: Welcome to Data Science
+# Welcome to Data Science
 
-This module is designed to introduce you to data science. Please watch the videos and work your way through the notes. You can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
+This module is designed to introduce you to data science. Please watch the videos and work your way through the notes. You can find the module playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
 
-## Module Roadmap 
+## Module 01 Roadmap 
 
 - What is Data Science?
 	- Activity 1: UN | 'rona
@@ -88,7 +88,27 @@ The video included in this tweet is enthusiastic about data science.
 </div>
 ```
 
+
+
 ### Bechdel Activity
+
+
+```r
+#rmarkdown::render('xaringan.Rmd', output_file = 'r/xaringan.html')
+# embed all Rmd and csv files
+knitr::include_url("./supporting-docs/Slides/u1_d01-welcome/u1_d01-welcome.html#1")
+```
+
+<iframe src="./supporting-docs/Slides/u1_d01-welcome/u1_d01-welcome.html#1" width="672" height="400px"></iframe>
+
+```r
+
+
+#htmltools::includeHTML("./admin/Slides/u1_d01-welcome/u1_d01-welcome.html")
+#xfun::embed_dir('admin/Slides/u1_d01-welcome', text = 'Slides')
+```
+
+
 
 ### Install R and RStudio {#install}
 

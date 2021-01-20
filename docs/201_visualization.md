@@ -1,9 +1,7 @@
-# (PART) Exploring data {-}
 
 
 
-
-# Module 2: Data and Visualization
+# Data and Visualization: Module 2
 
 This module is designed to <>. Please watch the videos and work your way through the notes. You can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
 
@@ -12,138 +10,6 @@ This module is designed to <>. Please watch the videos and work your way through
 
 
 
-## What is Data Science?
-
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/BpKXkkU-NiY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-I've embedded a few examples below.
-
-### Hans Rosling
-
-The below video is the shorter version. Hans Rosling's 200 Countries, 200 Years, 4 Minutes - The Joy of Stats
-
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/jbkSRLYSojo" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-
-You can find a longer talk-length version below.
-
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/hVimVzgtD6w" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-
-The video included in this tweet is enthusiastic about data science.
-
-
-```{=html}
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">YASSSSSSSSSS MY LOVE STEVE IS BACK!!! <a href="https://twitter.com/hashtag/KornackiThirstcontinues?src=hash&amp;ref_src=twsrc%5Etfw">#KornackiThirstcontinues</a> <a href="https://t.co/ynK4D87Bhr">pic.twitter.com/ynK4D87Bhr</a></p>&mdash; Leslie Jones 🦋 (@Lesdoggg) <a href="https://twitter.com/Lesdoggg/status/1346584128368508930?ref_src=twsrc%5Etfw">January 5, 2021</a></blockquote>
-
-```
-
-
-## Course structure and some other useful things
-
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/3mz3HNyew-s" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-
-
-## Meet our toolbox!
-
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/SJaQtRLFb-Y" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-### Bechdel Activity
-
-### Install R and RStudio {#install}
-
-
-
-```r
-library(vembedr)
-embed_url("https://www.youtube.com/watch?v=kVIZGCT5p9U") %>%
-  use_align("center")
-```
-
-```{=html}
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-```
-
-* Install [R, a free software environment for statistical computing and graphics][r-proj] from [CRAN][cran], the Comprehensive R Archive Network. I __highly recommend__ you install a precompiled binary distribution for your operating system -- use the links up at the top of the CRAN page linked above!
-
-* Install RStudio's IDE (stands for _integrated development environment_), a powerful user interface for R. Get the Open Source Edition of RStudio Desktop.
-
-  - You can run either the [Preview version][rstudio-preview] or the official releases available [here][rstudio-official].
-  - RStudio comes with a __text editor__, so there is no immediate need to install a separate stand-alone editor.
-  - RStudio can __interface with Git(Hub)__. However, you must do all the Git(Hub) set up [described elsewhere][happy-git] before you can take advantage of this.
-    
-If you have a pre-existing installation of R and/or RStudio, I __highly recommend__ that you reinstall both and get as current as possible. It can be considerably harder to run old software than new.
-
-* If you upgrade R, you will need to update any packages you have installed. The command below should get you started, though you may need to specify more arguments if, e.g., you have been using a non-default library for your packages.
-
-``` r
-update.packages(ask = FALSE, checkBuilt = TRUE)
-```
-
-__Note:__ this  code will only look for updates on CRAN. So if you use a package that lives *only* on GitHub or if you want a development version from GitHub, you will need to  update manually, e.g. via `devtools::install_github()`.
-
-
-
-#### Testing testing
-
-* Do whatever is appropriate for your OS to launch RStudio. You should get a window similar to the screenshot you see [here][rstudio-workbench], but yours will be more boring because you haven't written any code or made any figures yet!
-
-* Put your cursor in the pane labeled Console, which is where you interact with the live R process. Create a simple object with code like `x <- 3 * 4` (followed by enter or return). Then inspect the `x` object by typing `x` followed by enter or return. You should see the value 12 print to screen. If yes, you've succeeded in installing R and RStudio.
-
-### Add-on packages
-
-R is an extensible system and many people share useful code they have developed as a _package_ via CRAN and GitHub. To install a package from CRAN, for example the [dplyr][dplyr-cran] package for data manipulation, here is one way to do it in the R console (there are others).
-
-```r
-install.packages("dplyr", dependencies = TRUE)
-```
-
-By including `dependencies = TRUE`, we are being explicit and extra-careful to install any additional packages the target package, dplyr in the example above, needs to have around.
-
-You could use the above method to install the following packages, all of which we will use:
-
-* tidyr, [package webpage][tidyr-web]
-* ggplot2, [package webpage][ggplot2-web]
 
 
 ### Further resources
