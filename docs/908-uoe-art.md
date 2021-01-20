@@ -144,16 +144,16 @@ page %>%
 
 ```
 ## {xml_nodeset (10)}
-##  [1] <a href="./record/21872?highlight=*:*">Untitled                          ...
-##  [2] <a href="./record/21870?highlight=*:*">Untitled                          ...
-##  [3] <a href="./record/53509?highlight=*:*">Unknown                           ...
-##  [4] <a href="./record/21864?highlight=*:*">The World from Space              ...
-##  [5] <a href="./record/21217?highlight=*:*">Drawing of Monaghan               ...
-##  [6] <a href="./record/21869?highlight=*:*">Untitled                          ...
-##  [7] <a href="./record/21219?highlight=*:*">Portrait of a Boy                 ...
-##  [8] <a href="./record/21221?highlight=*:*">Portrait of a Woman Standing      ...
-##  [9] <a href="./record/21220?highlight=*:*">Portrait of a Boy Seated          ...
-## [10] <a href="./record/21225?highlight=*:*">Standing Male Nude                ...
+##  [1] <a href="./record/112340?highlight=*:*">untitled                         ...
+##  [2] <a href="./record/112355?highlight=*:*">In''Head                         ...
+##  [3] <a href="./record/112351?highlight=*:*">Anatomy Test Jeckon H            ...
+##  [4] <a href="./record/112354?highlight=*:*">Untitled                         ...
+##  [5] <a href="./record/112357?highlight=*:*">untitled                         ...
+##  [6] <a href="./record/112350?highlight=*:*">Untitled                         ...
+##  [7] <a href="./record/112352?highlight=*:*">Untitled                         ...
+##  [8] <a href="./record/112353?highlight=*:*">Untitled                         ...
+##  [9] <a href="./record/112345?highlight=*:*">Untitled                         ...
+## [10] <a href="./record/112344?highlight=*:*">Untitled                         ...
 ```
 
 Then we extract the text with `html_text()`:
@@ -167,16 +167,16 @@ page %>%
 ```
 
 ```
-##  [1] "Untitled                                                            (1967)"                       
-##  [2] "Untitled                                                            (Unknown)"                    
-##  [3] "Unknown                            (2018)"                                                        
-##  [4] "The World from Space                                                            (1998)"           
-##  [5] "Drawing of Monaghan                                                            (1955)"            
-##  [6] "Untitled                                                            (Dec 1970)"                   
-##  [7] "Portrait of a Boy                                                            (1955)"              
-##  [8] "Portrait of a Woman Standing                                                            (1957)"   
-##  [9] "Portrait of a Boy Seated                                                            (17 Mar 1955)"
-## [10] "Standing Male Nude                                                            (Dec 1951)"
+##  [1] "untitled                                                            (1984)"
+##  [2] "In''Head                                                            (1973)"
+##  [3] "Anatomy Test Jeckon H                            (2019)"                   
+##  [4] "Untitled                            (2019)"                                
+##  [5] "untitled                            (2019)"                                
+##  [6] "Untitled                            (2019)"                                
+##  [7] "Untitled                            (2019)"                                
+##  [8] "Untitled                            (2019)"                                
+##  [9] "Untitled                            (2019)"                                
+## [10] "Untitled                            (2019)"
 ```
 
 And get rid of all the spurious whitespace in the text with `str_squish()`:
@@ -196,16 +196,11 @@ page %>%
 ```
 
 ```
-##  [1] "Untitled (1967)"                       
-##  [2] "Untitled (Unknown)"                    
-##  [3] "Unknown (2018)"                        
-##  [4] "The World from Space (1998)"           
-##  [5] "Drawing of Monaghan (1955)"            
-##  [6] "Untitled (Dec 1970)"                   
-##  [7] "Portrait of a Boy (1955)"              
-##  [8] "Portrait of a Woman Standing (1957)"   
-##  [9] "Portrait of a Boy Seated (17 Mar 1955)"
-## [10] "Standing Male Nude (Dec 1951)"
+##  [1] "untitled (1984)"              "In''Head (1973)"             
+##  [3] "Anatomy Test Jeckon H (2019)" "Untitled (2019)"             
+##  [5] "untitled (2019)"              "Untitled (2019)"             
+##  [7] "Untitled (2019)"              "Untitled (2019)"             
+##  [9] "Untitled (2019)"              "Untitled (2019)"
 ```
 
 And finally save the resulting data as a vector of length 10:
@@ -248,11 +243,11 @@ page %>%
 ```
 
 ```
-##  [1] "./record/21872?highlight=*:*" "./record/21870?highlight=*:*"
-##  [3] "./record/53509?highlight=*:*" "./record/21864?highlight=*:*"
-##  [5] "./record/21217?highlight=*:*" "./record/21869?highlight=*:*"
-##  [7] "./record/21219?highlight=*:*" "./record/21221?highlight=*:*"
-##  [9] "./record/21220?highlight=*:*" "./record/21225?highlight=*:*"
+##  [1] "./record/112340?highlight=*:*" "./record/112355?highlight=*:*"
+##  [3] "./record/112351?highlight=*:*" "./record/112354?highlight=*:*"
+##  [5] "./record/112357?highlight=*:*" "./record/112350?highlight=*:*"
+##  [7] "./record/112352?highlight=*:*" "./record/112353?highlight=*:*"
+##  [9] "./record/112345?highlight=*:*" "./record/112344?highlight=*:*"
 ```
 
 These don't really look like urls as we know then though. They're relative 

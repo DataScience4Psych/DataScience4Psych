@@ -3,17 +3,13 @@
 
 
 
-# Module 1: Welcome to Data Science
+# Module 2: Data and Visualization
 
-This module is designed to introduce you to data science. Please watch the videos and work your way through the notes. You can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
+This module is designed to <>. Please watch the videos and work your way through the notes. You can find the video playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/Slides).
 
 ## Module Roadmap 
 
-- What is Data Science?
-	- Activity 1: UN | 'rona
-- Course structure and some other useful things
-- Meet our toolbox!
-	- Activity 2: Bechdel Test
+
 
 
 ## What is Data Science?
