@@ -26,6 +26,9 @@ This module is designed to introduce you to data science. Please watch the video
 </div>
 </div>
 ```
+<iframe src="https://datascience4psych.github.io/Slides/u1_d01-welcome/u1_d01-welcome.html" width="672" height="400px"></iframe>
+
+
 
 I've embedded a few examples below.
 
@@ -93,20 +96,6 @@ The video included in this tweet is enthusiastic about data science.
 ### Bechdel Activity
 
 
-```r
-#rmarkdown::render('xaringan.Rmd', output_file = 'r/xaringan.html')
-# embed all Rmd and csv files
-knitr::include_url("./supporting-docs/Slides/u1_d01-welcome/u1_d01-welcome.html#1")
-```
-
-<iframe src="./supporting-docs/Slides/u1_d01-welcome/u1_d01-welcome.html#1" width="672" height="400px"></iframe>
-
-```r
-
-
-#htmltools::includeHTML("./admin/Slides/u1_d01-welcome/u1_d01-welcome.html")
-#xfun::embed_dir('admin/Slides/u1_d01-welcome', text = 'Slides')
-```
 
 
 
