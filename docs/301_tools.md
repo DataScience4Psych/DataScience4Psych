@@ -1,7 +1,7 @@
 
 
 
-# Data and Visualization: Module 2
+# Tidy data and data wrangling: Module 3
 
 This module is designed to <>. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/slides).
 
@@ -9,16 +9,16 @@ This module is designed to <>. Please watch the videos and work your way through
 ## Module Materials
 
 * Slides
-  * [Data and visualization](https://datascience4psych.github.io/slides/u1_d03-data-viz-1/u1_d03-data-viz-1.html)
-  * [Building plots for various data types](https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html)
+  * [Tidy data and data wrangling](https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html)
+  * [Joining data from multiple sources](https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html)
 
-* Activities
+* Activities (UPDATE)
   * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
   
-* Lab
+* Lab (UPDATE)
 	* [Plastic waste]
 
-## Activity 03: Star Wars!
+## Activity 03: Star Wars! (UPDATE)
 
 <iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19"></iframe>
 

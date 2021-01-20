@@ -19,6 +19,9 @@ This module is designed to introduce you to data science. Please watch the video
   * [Covid Data](https://github.com/DataScience4Psych/ae-01b-covid)
   * [Bechdal Test](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown)
 
+* Lab
+	* [Hello R]
+
 ## What is Data Science?
 
 
