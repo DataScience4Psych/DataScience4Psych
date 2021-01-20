@@ -26,8 +26,8 @@ This module is designed to introduce you to data science. Please watch the video
 </div>
 </div>
 ```
-<iframe src="https://datascience4psych.github.io/Slides/u1_d01-welcome/u1_d01-welcome.html" width="672" height="400px"></iframe>
 
+You can follow along with the slides [here](https://datascience4psych.github.io/Slides/u1_d01-welcome/u1_d01-welcome.html)
 
 
 I've embedded a few examples below.
