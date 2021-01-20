@@ -100,7 +100,7 @@ ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
 ## Warning: Removed 51 rows containing non-finite values (stat_bin).
 ```
 
-<img src="02-plastic-waste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" />
+<img src="902-plastic-waste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" />
 
 One country stands out as an unusual observation at the top of the distribution. One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.
 
@@ -211,6 +211,6 @@ Hint: The x-axis is a calculated variable. One country with plastic waste per ca
 
 1. Recreate the following plot, and interpret what you see in context of the data.
 
-<img src="02-plastic-waste_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="902-plastic-waste_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 ✅ ⬆️ *Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*

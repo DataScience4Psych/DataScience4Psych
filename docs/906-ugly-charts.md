@@ -246,7 +246,7 @@ staff_long %>%
 ## the group aesthetic?
 ```
 
-<img src="06-ugly-charts_files/figure-html/unnamed-chunk-8-1.png" width="960" />
+<img src="906-ugly-charts_files/figure-html/unnamed-chunk-8-1.png" width="960" />
 
 But note that this results in a message as well as an unexpected plot.
 The message is saying that there is only one observation for each faculty type year combination.

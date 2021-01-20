@@ -25,7 +25,7 @@ This module is designed to introduce you to data science. Please watch the video
 </div>
 ```
 
-I've embedded a few examples below, as well as an emblematic tweet.
+I've embedded a few examples below.
 
 ### Hans Rosling
 
@@ -53,7 +53,7 @@ You can find a longer talk-length version below.
 ```
 
 
-This tweet is enthusiastic about data science.
+The video included in this tweet is enthusiastic about data science.
 
 
 ```{=html}

@@ -210,7 +210,7 @@ ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
 
-<img src="01-hello-r_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="901-hello-r_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 If this seems like a lot, it is. And you will learn about the philosophy of building data visualizations in layer in detail next week. For now, follow along with the code that is provided.
 
