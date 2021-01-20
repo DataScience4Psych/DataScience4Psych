@@ -18,11 +18,44 @@ This module is designed to <>. Please watch the videos and work your way through
 * Lab
 	* [Plastic waste]
 
+
+## Data and visualization!
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d03-data-viz-1/u1_d03-data-viz-1.html) if they do not appear below.
+
+<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d03-data-viz-1/u1_d03-data-viz-1.html"></iframe>
+
+
+## Building plots for various data types!
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html) if they do not appear below.
+
+<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html"></iframe>
+
+
 ## Activity 03: Star Wars!
 
 <iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19"></iframe>
 
-You can find the materials for the <name> activity [here](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown). The compiled version should look something like the following...
+You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-02-bechdel-rmarkdown/bechdel.html"></iframe>
+<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html"></iframe>
 
