@@ -1,8 +1,9 @@
+# (PART) Module 10 {-}
 
 
-# (PART) Modeling data {-}
 
-# Fitting and interpreting models: Module 10
+
+# Fitting and interpreting models
 
 This module is designed to <>. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/slides).
 
