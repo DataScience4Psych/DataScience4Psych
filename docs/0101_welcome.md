@@ -1,9 +1,9 @@
-# (PART) Exploring data {-}
+# (PART) Module 01 {-}
 
 
 
 
-# Welcome to Data Science: Module 01
+# Welcome to Data Science
 
 This module is designed to introduce you to data science. Please watch the videos and work your way through the notes. You can find the module playlist [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/slides).
 
@@ -65,8 +65,10 @@ You can find a longer talk-length version below.
 </div>
 ```
 
+### Social Media
 
-The video included in this tweet is enthusiastic about data science.
+Social media contains a ton of great (and terrible examples of data science in action. These examples range from entire subreddits, such as
+[/r/DataisBeautiful](https://www.reddit.com/r/dataisbeautiful/) ([be sure to check out the highest voted posts](https://www.reddit.com/r/dataisbeautiful/top/?sort=top&t=all)) to celebrity tweets about data scientists.
 
 
 ```{=html}

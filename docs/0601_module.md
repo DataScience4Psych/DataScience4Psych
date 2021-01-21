@@ -1,3 +1,4 @@
+# (PART) Module 06 {-}
 
 
 
@@ -18,9 +19,8 @@ This module is designed to <>. Please watch the videos and work your way through
   * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
 -->  
 * Lab
-<!-- 
-	* [302-nobel-laureates]
--->  
+	* [Lab](#lab06)
+
 
 ## Topic 1!
 

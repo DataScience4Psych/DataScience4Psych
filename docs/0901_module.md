@@ -1,8 +1,8 @@
-# (PART) Data and Ethics {-}
+# (PART) Module 09 {-}
 
 
 
-# Data and Ethics: Module 09
+# Data and Ethics
 
 This module is designed to <>. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here](https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup). Most of the slides used to make the videos in this module can be found in the [slides repo](https://github.com/DataScience4Psych/slides).
 
@@ -19,9 +19,7 @@ This module is designed to <>. Please watch the videos and work your way through
   * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
 -->  
 * Lab
-<!-- 
-	* [302-nobel-laureates]
--->  
+	* [Lab](#lab09)
 
 ## Topic 1!
 

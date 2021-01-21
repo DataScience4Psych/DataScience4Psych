@@ -1,5 +1,5 @@
 
-# Global plastic waste: Lab 02
+# Lab: Global plastic waste
 
 
 

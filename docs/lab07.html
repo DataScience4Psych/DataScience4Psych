@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Scientific studies and confounding: Module 06 | Data Science for Psychologists</title>
+  <title>14 Lab: Smokers in Whickham | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Scientific studies and confounding: Module 06 | Data Science for Psychologists" />
+  <meta property="og:title" content="14 Lab: Smokers in Whickham | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Scientific studies and confounding: Module 06 | Data Science for Psychologists" />
+  <meta name="twitter:title" content="14 Lab: Smokers in Whickham | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="lab5.html"/>
-<link rel="next" href="ugly-charts-lab-06.html"/>
+<link rel="prev" href="web-scraping-module-07.html"/>
+<link rel="next" href="functions-module-08.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -546,60 +546,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="scientific-studies-and-confounding-module-06" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Scientific studies and confounding: Module 06</h1>
-<p>This module is designed to &lt;&gt;. Please watch the videos and work your way through the notes. You can find the video playlist for this module <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup">here</a>. Most of the slides used to make the videos in this module can be found in the <a href="https://github.com/DataScience4Psych/slides">slides repo</a>.</p>
-<div id="module-materials-5" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Module Materials</h2>
+<div id="lab07" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Lab: Smokers in Whickham</h1>
+<div id="simpsons-paradox" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Simpson’s paradox</h2>
+</div>
+<div id="getting-started-6" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Getting started</h2>
+<p><img src="img/whickham.png" width="527" /></p>
+<p>A study of conducted in Whickham, England recorded participants’ age, smoking status at baseline, and then 20 years later recorded their health outcome.</p>
+<div id="packages-6" class="section level3" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Packages</h3>
+<p>In this lab we will work with the <code>tidyverse</code> and <code>mosaicData</code> packages.</p>
+<p>This is the first time we’re using the <code>mosaicData</code> package, you need to make
+sure to install it first by running <code>install.packages("mosaicData")</code> in the
+console.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="lab07.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb83-2"><a href="lab07.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData) </span></code></pre></div>
+<p>Note that these packages are also loaded in your R Markdown document.</p>
+</div>
+</div>
+<div id="the-data-5" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> The data</h2>
+<p>The data is in the <code>mosaicData</code> package. You can load it with</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="lab07.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Whickham)</span></code></pre></div>
+<p>Take a peek at the codebook with</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="lab07.html#cb85-1" aria-hidden="true" tabindex="-1"></a>?Whickham</span></code></pre></div>
+</div>
+<div id="exercises-5" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>What type of study do you think these data comne from: observational
+or experiment? Why?</p></li>
+<li><p>How many observations are in this dataset? What does each observation
+represent?</p></li>
+<li><p>How many variables are in this dataset? What type of variable is each?
+Display each variable using an appropriate visualization.</p></li>
+<li><p>What would you expect the relationship between smoking status and
+health outcome to be?</p></li>
+<li><p>Create a visualization depicting the relationship between smoking status
+and health outcome. Briefly describe the relationship, and evaluate whether
+this meets your expectations. Additionally, calculate the relevant
+conditional probabilities to help your narrative. Here is some code to
+get you started:</p></li>
+</ol>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="lab07.html#cb86-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="lab07.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, outcome)</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Create a new variable called <code>age_cat</code> using the following scheme:</li>
+</ol>
 <ul>
-<li>Slides
-<!-- 
-  * [Tidy data and data wrangling](https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html)
-  * [Joining data from multiple sources](https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html)
---><br />
-</li>
-<li>Activities
-<!-- 
-  * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
---><br />
-</li>
-<li>Lab
-<ul>
-<li><a href="#lab06">Lab</a></li>
-</ul></li>
+<li><code>age &lt;= 44 ~ "18-44"</code></li>
+<li><code>age &gt; 44 &amp; age &lt;= 64 ~ "45-64"</code></li>
+<li><code>age &gt; 64 ~ "65+"</code></li>
 </ul>
-</div>
-<div id="topic-1-2" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Topic 1!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html">here</a> if they do not appear below.</p>
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html">
-</iframe>
-</div>
-<div id="topic-2-2" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Topic 2!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html">here</a> if they do not appear below.</p>
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html">
-</iframe>
-<!-- 
-
-## Activity 03: Star Wars!
-
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19"></iframe>
-
-You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
-
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html"></iframe>
--->
+<ol start="7" style="list-style-type: decimal">
+<li>Re-create the visualization depicting the relationship between smoking
+status and health outcome, faceted by <code>age_cat</code>. What changed? What might
+explain this change? Extend the contingency table from earlier by
+breaking it down by age category and use it to help your narrative.</li>
+</ol>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="lab07.html#cb87-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="lab07.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, age_cat, outcome)</span></code></pre></div>
 
 </div>
 </div>
@@ -608,8 +616,8 @@ You can find the materials for the Star Wars activity [here](https://github.com/
           </div>
         </div>
       </div>
-<a href="lab5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ugly-charts-lab-06.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="web-scraping-module-07.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="functions-module-08.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -640,7 +648,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/0601_module.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/0702-simpsons-paradox.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -651,7 +659,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/0601_module.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/0702-simpsons-paradox.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

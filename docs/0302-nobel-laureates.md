@@ -1,4 +1,4 @@
-# Nobel laureates: Lab 03
+# Lab: Nobel laureates {#lab3}
 
 
 

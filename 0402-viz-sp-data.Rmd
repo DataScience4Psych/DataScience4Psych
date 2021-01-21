@@ -1,4 +1,4 @@
-# Visualizing spatial data: Lab 04
+# Lab: Visualizing spatial data {#lab04}
 
 ## La Quinta is Spanish for 'next to Denny's', Pt. 1
 

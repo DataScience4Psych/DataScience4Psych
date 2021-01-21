@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Scientific studies and confounding: Module 06 | Data Science for Psychologists</title>
+  <title>8 Lab: Visualizing spatial data | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Scientific studies and confounding: Module 06 | Data Science for Psychologists" />
+  <meta property="og:title" content="8 Lab: Visualizing spatial data | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Scientific studies and confounding: Module 06 | Data Science for Psychologists" />
+  <meta name="twitter:title" content="8 Lab: Visualizing spatial data | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis with R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="lab5.html"/>
-<link rel="next" href="ugly-charts-lab-06.html"/>
+<link rel="prev" href="data-types-and-data-transformations.html"/>
+<link rel="next" href="tips-for-effective-data-visualization.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -546,70 +546,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="scientific-studies-and-confounding-module-06" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Scientific studies and confounding: Module 06</h1>
-<p>This module is designed to &lt;&gt;. Please watch the videos and work your way through the notes. You can find the video playlist for this module <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup">here</a>. Most of the slides used to make the videos in this module can be found in the <a href="https://github.com/DataScience4Psych/slides">slides repo</a>.</p>
-<div id="module-materials-5" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Module Materials</h2>
+<div id="lab04" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Lab: Visualizing spatial data</h1>
+<div id="la-quinta-is-spanish-for-next-to-dennys-pt.-1" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> La Quinta is Spanish for ‘next to Denny’s,’ Pt. 1</h2>
+<p><img src="img/mitch-hedgeberg-lqd.jpg" width="640" /></p>
+<p>Have you ever taken a road trip in the US and thought to yourself “I wonder what La Quinta means.” Well, the late comedian <a href="https://en.wikipedia.org/wiki/Mitch_Hedberg">Mitch Hedberg</a> thinks it’s Spanish for <em>next to Denny’s</em>.</p>
+<p>If you’re not familiar with these two establishments, <a href="https://www.dennys.com/">Denny’s</a> is a casual diner chain that is open 24 hours and <a href="http://www.lq.com/">La Quinta Inn and Suites</a> is a hotel chain.</p>
+<p>These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.</p>
+<p>The inspiration for this lab comes from a blog post by John Reiser on his <em>new jersey geographer</em> blog. You can read that analysis <a href="http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/">here</a>. Reiser’s blog post focuses on scraping data from Denny’s and La Quinta Inn and Suites websites using Python. In this lab we focus on visualization and analysis of these data. However note that the data scraping was also done in R, and we we will discuss web scraping using R later in the course. But for now we focus on the data that has already been scraped and tidied for you.</p>
+</div>
+<div id="getting-started-3" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Getting started</h2>
+<div id="packages-3" class="section level3" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Packages</h3>
+<p>In this lab we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="lab04.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb49-2"><a href="lab04.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsbox) </span></code></pre></div>
+</div>
+</div>
+<div id="housekeeping-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Housekeeping</h2>
+<div id="project-name-1" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Project name</h3>
+<p>Currently your project is called <em>Untitled Project</em>. Update the name of your project to be “Lab 03 - Visualizing spatial data.”</p>
+</div>
+<div id="warm-up-1" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Warm up</h3>
+<p><strong>Pick one team member to complete the steps in this section while the others contribute to the discussion but do not actually touch the files on their computer.</strong></p>
+<p>Before we introduce the data, let’s warm up with some simple exercises.</p>
+</div>
+<div id="yaml-1" class="section level3" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> YAML</h3>
+<p>Open the R Markdown (Rmd) file in your project, change the author name to your <strong>team</strong> name, and knit the document.</p>
+</div>
+<div id="commiting-and-pushing-changes" class="section level3" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Commiting and pushing changes</h3>
 <ul>
-<li>Slides
-<!-- 
-  * [Tidy data and data wrangling](https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html)
-  * [Joining data from multiple sources](https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html)
---><br />
-</li>
-<li>Activities
-<!-- 
-  * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
---><br />
-</li>
-<li>Lab
-<ul>
-<li><a href="#lab06">Lab</a></li>
-</ul></li>
+<li>Go to the <strong>Git</strong> pane in your RStudio.</li>
+<li>View the <strong>Diff</strong> and confirm that you are happy with the changes.</li>
+<li>Add a commit message like “Update team name” in the <strong>Commit message</strong> box and hit <strong>Commit</strong>.</li>
+<li>Click on <strong>Push</strong>. This will prompt a dialogue box where you first need to enter your user name, and then your password.</li>
 </ul>
 </div>
-<div id="topic-1-2" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Topic 1!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+<div id="pulling-changes" class="section level3" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> Pulling changes</h3>
+<p>Now, the remaining team members who have not been concurrently making these changes on their projects should click on the <strong>Pull</strong> button in their Git pane and observe that the changes are now reflected on their projects as well.</p>
 </div>
 </div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html">here</a> if they do not appear below.</p>
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html">
-</iframe>
+<div id="the-data-3" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> The data</h2>
+<p>The datasets we’ll use are called <code>dennys</code> and <code>laquinta</code> from the <strong>dsbox</strong> package. Note that these data were scraped from <a href="https://locations.dennys.com/">here</a> and <a href="https://www.lq.com/en/findandbook/hotel-listings.html">here</a>, respectively.</p>
+<p>To help with our analysis we will also use a dataset on US states:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="lab04.html#cb50-1" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/states.csv&quot;</span>)</span></code></pre></div>
+<p>Each observation in this dataset represents a state, including DC. Along with the name of the state we have the two-letter abbreviation and we have the geographic area of the state (in square miles).</p>
 </div>
-<div id="topic-2-2" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Topic 2!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html">here</a> if they do not appear below.</p>
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html">
-</iframe>
-<!-- 
+<div id="exercises-3" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>What are the dimensions of the Denny’s dataset? (Hint: Use inline R code
+and functions like <code>nrow</code> and <code>ncol</code> to compose your answer.) What does
+each row in the dataset represent? What are the variables?</p></li>
+<li><p>What are the dimensions of the La Quinta’s dataset? What does each row
+in the dataset represent? What are the variables?</p></li>
+</ol>
+<p>We would like to limit our analysis to Denny’s and La Quinta locations in the United States.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Take a look at the websites that the data come from (linked above). Are there any La Quinta’s locations outside of the US? If so, which countries? What about Denny’s?</p></li>
+<li><p>Now take a look at the data. What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites). Don’t worry about whether you know how to implement this, just brainstorm some ideas. Write down at least one as your answer, but you’re welcomed to write down a few options too.</p></li>
+</ol>
+<p>We will determine whether or not the establishment has a location outside the US using the <code>state</code> variable in the <code>dn</code> and <code>lq</code> datasets. We know exactly which states are in the US, and we have this information in the <code>states</code> dataframe we loaded.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Find the Denny’s locations that are outside the US, if any. To do so, filter the Denny’s locations for observations where <code>state</code> is not in <code>states$abbreviation</code>. The code for this is given below. Note that the <code>%in%</code> operator matches the states listed in the <code>state</code> variable to those listed in <code>states$abbreviation</code>. The <code>!</code> operator means <strong>not</strong>. Are there any Denny’s locations outside the US?</li>
+</ol>
+<pre class="marginfigure"><code>&quot;Filter for `state`s that are not in `states$abbreviation`.&quot;</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="lab04.html#cb52-1" aria-hidden="true" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="lab04.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(state <span class="sc">%in%</span> states<span class="sc">$</span>abbreviation))</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Add a country variable to the Denny’s dataset and set all observations equal to <code>"United States"</code>. Remember, you can use the <code>mutate</code> function for adding a variable. Make sure to save the result of this as <code>dn</code> again so that the stored data frame contains the new variable going forward.</li>
+</ol>
+<pre class="marginfigure"><code>We don&#39;t need to tell R how many times to repeat the character string &quot;United States&quot; to fill in the data for all observations, R takes care of that automatically.</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="lab04.html#cb54-1" aria-hidden="true" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="lab04.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li><p>Find the La Quinta locations that are outside the US, and figure out which country they are in. This might require some googling. Take notes, you will need to use this information in the next exercise.</p></li>
+<li><p>Add a country variable to the La Quinta dataset. Use the <code>case_when</code> function to populate this variable. You’ll need to refer to your notes from Exercise 7 about which country the non-US locations are in. Here is some starter code to get you going:</p></li>
+</ol>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="lab04.html#cb55-1" aria-hidden="true" tabindex="-1"></a>lq <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="lab04.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">case_when</span>(</span>
+<span id="cb55-3"><a href="lab04.html#cb55-3" aria-hidden="true" tabindex="-1"></a>    state <span class="sc">%in%</span> state.abb     <span class="sc">~</span> <span class="st">&quot;United States&quot;</span>,</span>
+<span id="cb55-4"><a href="lab04.html#cb55-4" aria-hidden="true" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;ON&quot;</span>, <span class="st">&quot;BC&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Canada&quot;</span>,</span>
+<span id="cb55-5"><a href="lab04.html#cb55-5" aria-hidden="true" tabindex="-1"></a>    state <span class="sc">==</span> <span class="st">&quot;ANT&quot;</span>           <span class="sc">~</span> <span class="st">&quot;Colombia&quot;</span>,</span>
+<span id="cb55-6"><a href="lab04.html#cb55-6" aria-hidden="true" tabindex="-1"></a>    ...                      <span class="co"># fill in the rest</span></span>
+<span id="cb55-7"><a href="lab04.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><span class="newthought">Going forward</span> we will work with the data from the United States only. All Denny’s locations are in the United States, so we don’t need to worry about them. However we do need to filter the La Quinta dataset for locations in United States.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="lab04.html#cb56-1" aria-hidden="true" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="lab04.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
+<ol start="9" style="list-style-type: decimal">
+<li>Which states have the most and fewest Denny’s locations? What about La Quinta? Is this surprising? Why or why not?</li>
+</ol>
+<p>Next, let’s calculate which states have the most Denny’s locations <em>per thousand square miles</em>. This requires <em>join</em>ining information from the frequency tables you created in Exercise 8 with information from the <code>states</code> data frame.</p>
+<p>First, we count how many observations are in each state, which will give us a data frame with two variables: <code>state</code> and <code>n</code>. Then, we join this data frame with the <code>states</code> data frame. However note that the variables in the <code>states</code> data frame that has the two-letter abbreviations is called <code>abbreviation</code>. So when we’re joining the two data frames we specify that the <code>state</code> variable from the Denny’s data should be matched <code>by</code> the <code>abbreviation</code> variable from the <code>states</code> data:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="lab04.html#cb57-1" aria-hidden="true" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="lab04.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="lab04.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(states, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;state&quot;</span> <span class="ot">=</span> <span class="st">&quot;abbreviation&quot;</span>))</span></code></pre></div>
+<p>Before you move on the the next question, run the code above and take a look at the output. In the next exercise you will need to build on this pipe.</p>
+<ol start="10" style="list-style-type: decimal">
+<li>Which states have the most Denny’s locations per thousand square miles? What about La Quinta?</li>
+</ol>
+<p>Next, we put the two datasets together into a single data frame. However before we do so, we need to add an identifier variable. We’ll call this <code>establishment</code> and set the value to <code>"Denny's"</code> and <code>"La Quinta"</code> for the <code>dn</code> and <code>lq</code> data frames, respectively.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="lab04.html#cb58-1" aria-hidden="true" tabindex="-1"></a>dn <span class="ot">&lt;-</span> dn <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="lab04.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;Denny&#39;s&quot;</span>)</span>
+<span id="cb58-3"><a href="lab04.html#cb58-3" aria-hidden="true" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="lab04.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;La Quinta&quot;</span>)</span></code></pre></div>
+<p>Since the two data frames have the same columns, we can easily bind them with the <code>bind_rows</code> function:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="lab04.html#cb59-1" aria-hidden="true" tabindex="-1"></a>dn_lq <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dn, lq)</span></code></pre></div>
+<p>We can plot the locations of the two establishments using a scatter plot, and color the points by the establishment type. Note that the latitude is plotted on the x-axis and the longitude on the y-axis.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="lab04.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dn_lq, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> establishment)) <span class="sc">+</span></span>
+<span id="cb60-2"><a href="lab04.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>The following two questions ask you to create visualizations. These should follow best practices you learned in class, such as informative titles, axis labels, etc. See <a href="http://ggplot2.tidyverse.org/reference/labs.html" class="uri">http://ggplot2.tidyverse.org/reference/labs.html</a> for help with the syntax. You can also choose different themes to change the overall look of your plots, see <a href="http://ggplot2.tidyverse.org/reference/ggtheme.html" class="uri">http://ggplot2.tidyverse.org/reference/ggtheme.html</a> for help with these.</p>
+<ol start="11" style="list-style-type: decimal">
+<li><p>Filter the data for observations in North Carolina only, and recreate the plot. You should also adjust the transparency of the points, by setting the <code>alpha</code> level, so that it’s easier to see the overplotted ones. Visually, does Mitch Hedberg’s joke appear to hold here?</p></li>
+<li><p>Now filter the data for observations in Texas only, and recreate the plot, with an appropriate <code>alpha</code> level. Visually, does Mitch Hedberg’s joke appear to hold here?</p></li>
+</ol>
+<p>That’s it for now! In the next lab we will take a more quantitative approach to answering these questions.</p>
 
-## Activity 03: Star Wars!
-
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19"></iframe>
-
-You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
-
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html"></iframe>
--->
-
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="lab5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ugly-charts-lab-06.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-types-and-data-transformations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tips-for-effective-data-visualization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -640,7 +713,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/0601_module.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/0402-viz-sp-data.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -651,7 +724,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/0601_module.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/0402-viz-sp-data.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

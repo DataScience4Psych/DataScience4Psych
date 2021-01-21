@@ -1,4 +1,4 @@
-# Smokers in Whickham: Lab 07
+# Lab: Smokers in Whickham {#lab07}
 ## Simpson's paradox
 
 
