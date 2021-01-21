@@ -20,7 +20,7 @@ This module is designed to introduce you to data science. Please watch the video
   * [Bechdal Test](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown)
 
 * Lab
-	* [Hello R]
+	* [Hello R](#lab01)
 
 ## What is Data Science?
 

@@ -1,19 +1,16 @@
-# Hello R: Lab 01!
+# Hello R: Lab 01! {#lab01}
 
 These labs have been adapted from a series of Rstudio tutorials. This series includes video tutorials by [Mine Çetinkaya-Rundel](https://en.wikipedia.org/wiki/Mine_%C3%87etinkaya-Rundel). Mine is fantastic; her work is fantastic; and she's just a badass! With that in mind, I decided to include her video tutorials because I think it'll be useful to see other people working with R.
 
 
+> R is the name of the programming language itself and RStudio is a convenient interface.
 
-```marginfigure
-R is the name of the programming language itself and RStudio is a convenient interface.
-```
 
 The main goal of this lab is to introduce you to R and RStudio, which we will be using throughout the course both to learn the statistical concepts discussed in the course and to analyze real data and come to informed conclusions. 
 
 
-```marginfigure
-git is a version control system (like "Track Changes" features from Microsoft Word on steroids) and GitHub is the home for your Git-based projects on the internet (like DropBox but much, much better).
-```
+> git is a version control system (like "Track Changes" features from Microsoft Word on steroids) and GitHub is the home for your Git-based projects on the internet (like DropBox but much, much better).
+
 
 An additional goal is to introduce you to git and GitHub, which is the collaboration and version control system that we will be using throughout the course.
 
@@ -28,8 +25,14 @@ Each of your assignments will begin with the following steps. They're outlined i
 
 The following screencast also walks you through these steps:
 
-<div style="position:relative;height:0;padding-bottom:40%"><iframe width="600" height="320" src="https://www.youtube.com/embed/8Ta_SJq3MrU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/8Ta_SJq3MrU" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
 
 - Click on the assignment link that you should have received in your email to create your GitHub repository (which we'll refer to as "repo" going forward) for the assignment. This repo contains a template you can build on to complete your assignment.
 
@@ -98,7 +101,15 @@ usethis::use_git_config(user.name = "Mason Garrison", user.email = "garrissm@wfu
 
 Before we introduce the data, let's warm up with some simple exercises. The following video contains  is an overview of some of these warm-up exercises. 
 
-<div style="position:relative;height:0;padding-bottom:40%"><iframe width="600" height="320" src="https://www.youtube.com/embed/XE8h8jIyu04" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/XE8h8jIyu04" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+```
+
 
 ### Project name
 
@@ -139,10 +150,8 @@ For which of the above steps (changing project name, making updates to the docum
 
 ## The data
 
-
-```marginfigure
 If it's confusing that the data frame is called `datasaurus_dozen` when it contains 13 datasets, you're not alone! Have you heard of a [baker's dozen](https://en.wikipedia.org/wiki/Dozen#Baker's_dozen)?
-```
+
 
 The data frame we will be working with today is called `datasaurus_dozen` and it's in the `datasauRus` package. Actually, this single data frame contains 13 datasets, designed to show us  why data visualisation is important and how summary statistics alone can be misleading. The different datasets are marked by the `dataset` variable.
 
@@ -213,7 +222,7 @@ ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
 
-<img src="0102-hello-r_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="0102-hello-r_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 If this seems like a lot, it is. And you will learn about the philosophy of building data visualizations in layer in detail next week. For now, follow along with the code that is provided.
 
@@ -296,7 +305,7 @@ Once again click on the gear icon in on top of the R Markdown document, and sele
 
 
 ```marginfigure
-Not sure how to use emojis on your computer? Maybe a teammate can help? Or you can ask your TA as well!
+Not sure how to use emojis on your computer? Maybe a teammate can help?
 ```
 
 *Yay, you're done! Commit all remaining changes, use the commit message "Done with Lab 1! 💪", and push. Before you wrap up the assignment, make sure all documents are updated on your GitHub repo.*
