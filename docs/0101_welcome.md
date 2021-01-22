@@ -35,8 +35,8 @@ This module is designed to introduce you to data science. Please watch the video
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html) if they do not appear below.
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html"></iframe>
 
+<iframe src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html" width="672" height="400px"></iframe>
 
 I've embedded a few examples below.
 
@@ -90,27 +90,31 @@ Social media contains a ton of great (and terrible examples of data science in a
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#28) if they do not appear below.
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#28"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#28" width="672" height="400px"></iframe>
+
 
 ### Activity 01
 
 You can do either activity. The choice is yours.
 
 #### UN Votes
+<iframe src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#25" width="672" height="400px"></iframe>
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#25"></iframe>
 
 You can find the materials for the UN activity [here](https://github.com/DataScience4Psych/ae-01a-un-votes). The compiled version should look something like the following...
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-01a-un-votes/unvotes.html"></iframe>
+<iframe src="https://datascience4psych.github.io/ae-01a-un-votes/unvotes.html" width="672" height="400px"></iframe>
+
 
 #### Covid Data
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#26"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html#26" width="672" height="400px"></iframe>
+
 
 You can find the materials for the Covid version of this activity [here](https://github.com/DataScience4Psych/ae-01b-covid). The compiled version should look something like the following...
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-01b-covid/covid.html"></iframe>
+<iframe src="https://datascience4psych.github.io/ae-01b-covid/covid.html" width="672" height="400px"></iframe>
+
 
 
 ## Meet our toolbox!
@@ -126,17 +130,19 @@ You can find the materials for the Covid version of this activity [here](https:/
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit) if they do not appear below.
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html" width="672" height="400px"></iframe>
+
 
 ### Activity 02: Bechdel
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit#24"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit#24" width="672" height="400px"></iframe>
+
 
 You can find the materials for the Bechdel activity [here](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown). The compiled version should look something like the following...
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-02-bechdel-rmarkdown/bechdel.html"></iframe>
 
 
+<iframe src="https://datascience4psych.github.io/ae-02-bechdel-rmarkdown/bechdel.html" width="672" height="400px"></iframe>
 
 ### Install R and RStudio {#install}
 

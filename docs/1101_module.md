@@ -36,7 +36,7 @@ This module is designed to <>. Please watch the videos and work your way through
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html) if they do not appear below.
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html" width="672" height="400px"></iframe>
 
 
 ## Topic 2!
@@ -52,16 +52,16 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html) if they do not appear below.
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html" width="672" height="400px"></iframe>
 
 
 <!-- 
 
 ## Activity 03: Star Wars!
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19"></iframe>
+<iframe src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19" width="672" height="400px"></iframe>
 
 You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
 
-<iframe seamless width="100%" frameborde="0" src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html"></iframe>
+<iframe src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html" width="672" height="400px"></iframe>
 -->
