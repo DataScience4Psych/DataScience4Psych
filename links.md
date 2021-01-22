@@ -9,7 +9,15 @@
 
 
 <!--AE. Links-->
-[Bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+
+[ae-02-bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+[ae-01a-un-votes]: https://github.com/DataScience4Psych/ae-01a-un-votes
+[Covid-Data]: https://github.com/DataScience4Psych/ae-01b-covid
+[ae-01b-covid]: https://github.com/DataScience4Psych/ae-01b-covid
+
+<!--Slides-->
+[u1_d01-welcome]: https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html
+[u1_d02-meet-the-toolkit]: https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html
 
 <!--RStudio Links-->
 [rstudio-preview]: https://www.rstudio.com/products/rstudio/download/preview/
