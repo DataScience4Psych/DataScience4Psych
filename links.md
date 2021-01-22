@@ -260,7 +260,7 @@
 [elegant-graphics-springer]: https://www.springer.com/gp/book/9780387981413
 
 [testthat-article]: https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf
-[worry-about-color]: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=2ahUKEwi0xYqJ8JbjAhWNvp4KHViYDxsQFjABegQIABAC&url=https%3A%2F%2Fwww.researchgate.net%2Fprofile%2FAhmed_Elhattab2%2Fpost%2FPlease_suggest_some_good_3D_plot_tool_Software_for_surface_plot%2Fattachment%2F5c05ba35cfe4a7645506948e%2FAS%253A699894335557644%25401543879221725%2Fdownload%2FWhy%2BShould%2BEngineers%2Band%2BScientists%2BBe%2BWorried%2BAbout%2BColor_.pdf&usg=AOvVaw1qwjjGMd7h_z6TLUjzu7Nb
+[worry-about-color]: https://github.com/DataScience4Psych/DataScience4Psych/blob/master/admin/pdfs/Why%20Should%20Engineers%20and%20Scientists%20Be%20Worried%20About%20Color.pdf
 [escaping-rgbland-pdf]: https://eeecon.uibk.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf
 [escaping-rgbland-doi]: https://doi.org/10.1016/j.csda.2008.11.033
 
@@ -331,7 +331,7 @@
 [lubridate-ex2]: https://www.r-exercises.com/2016/08/29/dates-and-times-simple-and-easy-with-lubridate-exercises-part-2/
 [lubridate-ex3]: https://www.r-exercises.com/2016/10/04/dates-and-times-simple-and-easy-with-lubridate-exercises-part-3/
 [google-sql-join]: https://www.google.com/search?q=sql+join&tbm=isch
-[min-viable-product]: https://blog.fastmonkeys.com/?utm_content=bufferc2d6e&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
+[min-viable-product]: https://blog.fastmonkeys.com/
 [telescope-rule]: http://c2.com/cgi/wiki?TelescopeRule
 [unix-philosophy]: http://www.faqs.org/docs/artu/ch01s06.html
 [twitter-wrathematics]: https://twitter.com/wrathematics
@@ -342,7 +342,7 @@
 [worst-figure]: https://robjhyndman.com/hyndsight/worst-figure/
 [naomi-robbins]: http://www.nbr-graphs.com
 [hadley-github-index]: https://hadley.github.io
-[scipy-2015-matplotlib-colors]: https://www.youtube.com/watch?v=xAoljeRJ3lU&feature=youtu.be
+[scipy-2015-matplotlib-colors]: https://www.youtube.com/watch?v=xAoljeRJ3lU
 [winston-chang-github]: https://github.com/wch
 [favorite-rgb-color]: https://manyworldstheory.com/2013/01/15/my-favorite-rgb-color/
 [stowers-color-chart]: https://web.archive.org/web/20121022044903/http://research.stowers-institute.org/efg/R/Color/Chart/
