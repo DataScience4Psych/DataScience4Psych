@@ -7,12 +7,18 @@
 [software-carpentry]: https://software-carpentry.org
 [cran-r-extensions]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
 
+<!--DS4P Links-->
+[ds4p-web]: https://datascience4psych.github.io/DataScience4Psych
+[ds4p-git]: https://github.com/DataScience4Psych/DataScience4Psych
+[ds4p-pl-all]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[ds4p-pl-00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
+[ds4p-pl-01]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup
+[ds4p-slides]: https://github.com/DataScience4Psych/slides
 
 <!--AE. Links-->
 
 [ae-02-bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
 [ae-01a-un-votes]: https://github.com/DataScience4Psych/ae-01a-un-votes
-[Covid-Data]: https://github.com/DataScience4Psych/ae-01b-covid
 [ae-01b-covid]: https://github.com/DataScience4Psych/ae-01b-covid
 
 <!--Slides-->
