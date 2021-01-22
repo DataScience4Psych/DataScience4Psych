@@ -8,6 +8,9 @@
 [cran-r-extensions]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
 
 
+<!--AE. Links-->
+[Bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+
 <!--RStudio Links-->
 [rstudio-preview]: https://www.rstudio.com/products/rstudio/download/preview/
 [rstudio-official]: https://www.rstudio.com/products/rstudio/#Desktop
@@ -348,3 +351,4 @@
 [build-maintain-r-packages]: https://thepoliticalmethodologist.com/2014/08/14/building-and-maintaining-r-packages-with-devtools-and-roxygen2/
 [murdoch-package-vignette-slides]: https://web.archive.org/web/20160824010213/http://www.stats.uwo.ca/faculty/murdoch/ism2013/5Vignettes.pdf
 [how-r-searches]: http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/
+
