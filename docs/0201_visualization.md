@@ -62,3 +62,18 @@ You can find the materials for the Star Wars activity [here](https://github.com/
 
 <iframe src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html" width="672" height="400px"></iframe>
 
+## Visualization Examples
+
+### Census Reporter Data from North Carolina
+
+<iframe id="cr-embed-04000US37-demographics-age-distribution_by_category" class="census-reporter-embed" src="https://s3.amazonaws.com/embed.censusreporter.org/1.0/iframe.html?geoID=04000US37&chartDataID=demographics-age-distribution_by_category&dataYear=2019&releaseID=ACS_2019_1-year&chartType=pie&chartHeight=200&chartQualifier=&chartTitle=Population+by+age+category&initialSort=-value&statType=percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 300px; float: right;"></iframe>
+
+<iframe id="cr-embed-04000US37-social-language-children" class="census-reporter-embed" src="https://s3.amazonaws.com/embed.censusreporter.org/1.0/iframe.html?geoID=04000US37&chartDataID=social-language-children&dataYear=2019&releaseID=ACS_2019_1-year&chartType=pie&chartHeight=200&chartQualifier=&chartTitle=Language+at+home%2C+children+5-17&initialSort=-value&statType=percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 300px;float: left;"></iframe>
+
+<script src="https://s3.amazonaws.com/embed.censusreporter.org/1.0/js/embed.chart.make.js"></script>
+<iframe id="cr-embed-04000US37-social-educational_attainment_distribution" class="census-reporter-embed" src="https://s3.amazonaws.com/embed.censusreporter.org/1.0/iframe.html?geoID=04000US37&chartDataID=social-educational_attainment_distribution&dataYear=2019&releaseID=ACS_2019_1-year&chartType=histogram&chartHeight=200&chartQualifier=Universe%3A+Population+25+years+and+over&chartTitle=Population+by+minimum+level+of+education&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px; "></iframe>
+
+
+<script src="https://s3.amazonaws.com/embed.censusreporter.org/1.0/js/embed.chart.make.js"></script>
+
+
