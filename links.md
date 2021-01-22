@@ -1,11 +1,3 @@
-[cran]: https://cloud.r-project.org
-[cran-faq]: https://cran.r-project.org/faqs.html
-[cran-R-admin]: http://cran.r-project.org/doc/manuals/R-admin.html
-[cran-add-ons]: https://cran.r-project.org/doc/manuals/R-admin.html#Add_002don-packages
-[r-proj]: https://www.r-project.org
-[stat-545]: https://stat545.com
-[software-carpentry]: https://software-carpentry.org
-[cran-r-extensions]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
 
 <!--DS4P Links-->
 [ds4p-web]: https://datascience4psych.github.io/DataScience4Psych
@@ -15,14 +7,14 @@
 [ds4p-pl-all]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
 [ds4p-pl-00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
 [ds4p-pl-01]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup
-
+[ds4p-pl-02]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI
 
 <!--AE. Links-->
-
 [ae-02-bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
 [ae-01a-un-votes]: https://github.com/DataScience4Psych/ae-01a-un-votes
 [ae-01b-covid]: https://github.com/DataScience4Psych/ae-01b-covid
 [ae-03-starwars-dataviz]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
+
 <!--Slides-->
 [u1_d01-welcome]: https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html
 [u1_d02-meet-the-toolkit]: https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html
@@ -52,6 +44,16 @@
 [u3_d01-ethics]: https://datascience4psych.github.io/slides/u3_d01-ethics/u3_d01-ethics.html
 [u3_d04-bayes-inf]: https://datascience4psych.github.io/slides/u3_d04-bayes-inf/u3_d04-bayes-inf.html
 [u3_d05-text-analysis]: https://datascience4psych.github.io/slides/u3_d05-text-analysis/u3_d05-text-analysis.html
+
+<!--R Links-->
+[cran]: https://cloud.r-project.org
+[cran-faq]: https://cran.r-project.org/faqs.html
+[cran-R-admin]: http://cran.r-project.org/doc/manuals/R-admin.html
+[cran-add-ons]: https://cran.r-project.org/doc/manuals/R-admin.html#Add_002don-packages
+[r-proj]: https://www.r-project.org
+[stat-545]: https://stat545.com
+[software-carpentry]: https://software-carpentry.org
+[cran-r-extensions]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
 
 <!--RStudio Links-->
 [rstudio-preview]: https://www.rstudio.com/products/rstudio/download/preview/
