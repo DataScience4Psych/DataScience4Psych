@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>20 Fitting and interpreting models | Data Science for Psychologists</title>
+  <title>5 Learning goals | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="20 Fitting and interpreting models | Data Science for Psychologists" />
+  <meta property="og:title" content="5 Learning goals | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="20 Fitting and interpreting models | Data Science for Psychologists" />
+  <meta name="twitter:title" content="5 Learning goals | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Modernized Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="lab09.html"/>
-<link rel="next" href="lab10.html"/>
+<link rel="prev" href="lab02.html"/>
+<link rel="next" href="grammar-of-data-wrangling.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -504,70 +504,168 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="fitting-and-interpreting-models" class="section level1">
-<h1><span class="header-section-number">20</span> Fitting and interpreting models</h1>
-<p>This module is designed to &lt;&gt;. Please watch the videos and work your way through the notes. You can find the video playlist for this module <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI">here</a>. Most of the slides used to make the videos in this module can be found in the <a href="https://github.com/DataScience4Psych/slides">slides repo</a>.</p>
-<div id="module-materials-9" class="section level2">
-<h2><span class="header-section-number">20.1</span> Module Materials</h2>
+<div id="learning-goals" class="section level1">
+<h1><span class="header-section-number">5</span> Learning goals</h1>
 <ul>
-<li>Slides
-<!-- 
-  * [Tidy data and data wrangling](https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html)
-  * [Joining data from multiple sources](https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html)
---><br />
-</li>
-<li>Activities
-<!-- 
-  * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
---><br />
-</li>
-<li>Lab
-<!-- 
-    * [302-nobel-laureates]
---></li>
+<li>Visualizing numerical and categorical data and interpreting visualizations</li>
+<li>Recreating visualizations</li>
+<li>Getting more practice using with R, RStudio, Git, and GitHub</li>
+</ul>
+<div id="getting-started-1" class="section level2">
+<h2><span class="header-section-number">5.1</span> Getting started</h2>
+<p>Go to the course GitHub organization and locate your assignment repo, which should be named <code>lab-02-plastic-waste-YOUR_GITHUB_USERNAME</code>.
+If you’re in the right place, it should look like the following.</p>
+<p><img src="img/repo-begin.png" width="1329" /></p>
+<p>Grab the URL of the repo, and clone it in RStudio.
+Refer to <a href="https://ids-s1-20.github.io/homework/hw-00/hw-00-pet-names.html">HW 00</a> if you would like to see step-by-step instructions for cloning a repo into an RStudio project.</p>
+<p>First, open the R Markdown document <code>lab-02.Rmd</code> and Knit it.
+Make sure it compiles without errors.
+The output will be in the file markdown <code>.md</code> file with the same name.</p>
+<div id="packages-1" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Packages</h3>
+<p>We’ll use the <strong>tidyverse</strong> package for this analysis.
+Run the following code in the Console to load this package.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="learning-goals.html#cb15-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="data-1" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Data</h3>
+<p>The dataset for this assignment can be found as a csv file in the <code>data</code> folder of your repository.
+You can read it in using the following.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="learning-goals.html#cb16-1"></a>plastic_waste &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/plastic-waste.csv&quot;</span>)</span></code></pre></div>
+<p>The variable descriptions are as follows:</p>
+<ul>
+<li><code>code</code>: 3 Letter country code</li>
+<li><code>entity</code>: Country name</li>
+<li><code>continent</code>: Continent name</li>
+<li><code>year</code>: Year</li>
+<li><code>gdp_per_cap</code>: GDP per capita constant 2011 international $, rate</li>
+<li><code>plastic_waste_per_cap</code>: Amount of plastic waste per capita in kg/day</li>
+<li><code>mismanaged_plastic_waste_per_cap</code>: Amount of mismanaged plastic waste per capita in kg/day</li>
+<li><code>mismanaged_plastic_waste</code>: Tonnes of mismanaged plastic waste</li>
+<li><code>coastal_pop</code>: Number of individuals living on/near coast</li>
+<li><code>total_pop</code>: Total population according to Gapminder</li>
 </ul>
 </div>
-<div id="topic-1-6" class="section level2">
-<h2><span class="header-section-number">20.2</span> Topic 1!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
+<div id="warm-up-1" class="section level2">
+<h2><span class="header-section-number">5.2</span> Warm up</h2>
+<ul>
+<li>Recall that RStudio is divided into four panes. Without looking, can you name them all and briefly describe their purpose?</li>
+<li>Verify that the dataset has loaded into the Environment. How many observations are in the dataset? Clicking on the dataset in the Environment will allow you to inspect it more carefully. Alternatively, you can type <code>View(plastic_waste)</code> into the Console to do this.</li>
+</ul>
+<blockquote>
+<p><strong>Hint:</strong> If you’re not sure, run the command <code>?NA</code> which will lead you to the documentation.</p>
+</blockquote>
+<ul>
+<li>Have a quick look at the data and notice that there are cells taking the value <code>NA</code> – what does this mean?</li>
+</ul>
 </div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html">here</a> if they do not appear below.</p>
-<iframe src="https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html" width="672" height="400px">
-</iframe>
+<div id="exercises-1" class="section level2">
+<h2><span class="header-section-number">5.3</span> Exercises</h2>
+<p>Let’s start by taking a look at the distribution of plastic waste per capita in 2010.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="learning-goals.html#cb17-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb17-2"><a href="learning-goals.html#cb17-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 51 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="0202-plastic-waste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" /></p>
+<p>One country stands out as an unusual observation at the top of the distribution.
+One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="learning-goals.html#cb19-1"></a>plastic_waste <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="learning-goals.html#cb19-2"></a><span class="st">  </span><span class="kw">filter</span>(plastic_waste_per_cap <span class="op">&gt;</span><span class="st"> </span><span class="fl">3.5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 10
+##   code  entity continent  year gdp_per_cap plastic_waste_p~ mismanaged_plas~
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 TTO   Trini~ North Am~  2010      31261.              3.6             0.19
+## # ... with 3 more variables: mismanaged_plastic_waste &lt;dbl&gt;, coastal_pop &lt;dbl&gt;,
+## #   total_pop &lt;dbl&gt;</code></pre>
+<p>Did you expect this result?
+You might consider doing some research on Trinidad and Tobago to see why plastic waste per capita is so high there, or whether this is a data error.</p>
+<ol style="list-style-type: decimal">
+<li>Plot, using histograms, the distribution of plastic waste per capita faceted by continent. What can you say about how the continents compare to each other in terms of their plastic waste per capita?</li>
+</ol>
+<blockquote>
+<p><strong>NOTE:</strong> From this point onwards the plots and the output of the code are not displayed in the lab instructions, but you can and should the code and view the results yourself.</p>
+</blockquote>
+<p>Another way of visualizing numerical data is using density plots.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="learning-goals.html#cb21-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb21-2"><a href="learning-goals.html#cb21-2"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>And compare distributions across continents by coloring density curves by continent.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="learning-goals.html#cb22-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb22-2"><a href="learning-goals.html#cb22-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb22-3"><a href="learning-goals.html#cb22-3"></a>                     <span class="dt">color =</span> continent)) <span class="op">+</span></span>
+<span id="cb22-4"><a href="learning-goals.html#cb22-4"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>The resulting plot may be a little difficult to read, so let’s also fill the curves in with colors as well.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="learning-goals.html#cb23-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb23-2"><a href="learning-goals.html#cb23-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb23-3"><a href="learning-goals.html#cb23-3"></a>                     <span class="dt">color =</span> continent, </span>
+<span id="cb23-4"><a href="learning-goals.html#cb23-4"></a>                     <span class="dt">fill =</span> continent)) <span class="op">+</span></span>
+<span id="cb23-5"><a href="learning-goals.html#cb23-5"></a><span class="st">  </span><span class="kw">geom_density</span>()</span></code></pre></div>
+<p>The overlapping colors make it difficult to tell what’s happening with the distributions in continents plotted first, and hence covered by continents plotted over them.
+We can change the transparency level of the fill color to help with this.
+The <code>alpha</code> argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque.
+There is no way to tell what value will work best, so you just need to try a few.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="learning-goals.html#cb24-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb24-2"><a href="learning-goals.html#cb24-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> plastic_waste_per_cap, </span>
+<span id="cb24-3"><a href="learning-goals.html#cb24-3"></a>                     <span class="dt">color =</span> continent, </span>
+<span id="cb24-4"><a href="learning-goals.html#cb24-4"></a>                     <span class="dt">fill =</span> continent)) <span class="op">+</span></span>
+<span id="cb24-5"><a href="learning-goals.html#cb24-5"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p>This still doesn’t look great…</p>
+<ol style="list-style-type: decimal">
+<li><p>Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.</p></li>
+<li><p>Describe why we defined the <code>color</code> and <code>fill</code> of the curves by mapping aesthetics of the plot but we defined the <code>alpha</code> level as a characteristic of the plotting geom.</p></li>
+</ol>
+<p>🧶 ✅ ⬆️ <em>Now is a good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<p>And yet another way to visualize this relationship is using side-by-side box plots.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="learning-goals.html#cb25-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> plastic_waste, </span>
+<span id="cb25-2"><a href="learning-goals.html#cb25-2"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> continent, </span>
+<span id="cb25-3"><a href="learning-goals.html#cb25-3"></a>                     <span class="dt">y =</span> plastic_waste_per_cap)) <span class="op">+</span></span>
+<span id="cb25-4"><a href="learning-goals.html#cb25-4"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Convert your side-by-side box plots from the previous task to <a href="http://ggplot2.tidyverse.org/reference/geom_violin.html">violin plots</a>. What do the violin plots reveal that box plots do not? What features are apparent in the box plots but not in the violin plots?</li>
+</ol>
+<blockquote>
+<p><strong>Remember:</strong> We use <code>geom_point()</code> to make scatterplots.</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><p>Visualize the relationship between plastic waste per capita and mismanaged plastic waste per capita using a scatterplot.
+Describe the relationship.</p></li>
+<li><p>color the points in the scatterplot by continent.
+Does there seem to be any clear distinctions between continents with respect to how plastic waste per capita and mismanaged plastic waste per capita are associated?</p></li>
+<li><p>Visualize the relationship between plastic waste per capita and total population as well as plastic waste per capita and coastal population.
+You will need to make two separate plots.
+Do either of these pairs of variables appear to be more strongly linearly associated?</p></li>
+</ol>
+<p>🧶 ✅ ⬆️ <em>Now is another good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 </div>
-<div id="topic-2-6" class="section level2">
-<h2><span class="header-section-number">20.3</span> Topic 2!</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html">here</a> if they do not appear below.</p>
-<iframe src="https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html" width="672" height="400px">
-</iframe>
-<!-- 
+<div id="wrapping-up" class="section level2">
+<h2><span class="header-section-number">5.4</span> Wrapping up</h2>
+<p>We don’t expect you to complete all of the exercises within the hour reserved for the live workshop.
+Ideally, you should have got to this point.
+If you still have some time left, move on to the remaining exercises below.
+If not, you should find a time to meet with your team and complete them after the workshop.
+If you haven’t had time to finish the exercises above, please ask for help before you leave!</p>
+<blockquote>
+<p><strong>Hint:</strong> The x-axis is a calculated variable. One country with plastic waste per capita over 3 kg/day has been filtered out. And the data are not only represented with points on the plot but also a smooth curve. The term “smooth” should help you <a href="https://ggplot2.tidyverse.org/reference/index.html#section-geoms">pick which geom to use</a>.</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li>Recreate the following plot, and interpret what you see in context of the data.</li>
+</ol>
+<p><img src="0202-plastic-waste_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
+<p>Once you’re done, check to make sure your latest changes are on GitHub and that you have a green indicator for the automated check for your R Markdown document knitting.</p>
+<p><img src="img/repo-end.png" width="1329" /></p>
 
-## Activity 03: Star Wars!
-
-<iframe src="https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html#19" width="672" height="400px"></iframe>
-
-You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
-
-<iframe src="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html" width="672" height="400px"></iframe>
--->
-
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="lab09.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lab10.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lab02.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="grammar-of-data-wrangling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -598,7 +696,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/1001_module.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/master/0202-plastic-waste.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -609,7 +707,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/1001_module.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/master/0202-plastic-waste.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
