@@ -19,6 +19,9 @@ favicon: assets/favicon.ico
 
 ---
 
+```{r links, child="links.md"}
+```
+
 # Welcome to PSY 703 {-}
 ```{r include = FALSE}
 source("common.R")
@@ -27,16 +30,64 @@ library(tidyverse)
 library(devtools)
 library(DT)
 library(vembedr)
+library(readr)
+library(knitr)
 ```
 
 Welcome to class! This website is designed to accompany Mason Garrison's Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This website hosts the course notes.  All the embedded lecture videos can be found on a [youtube playlist][ds4p-pl-all]. You can find the current version of the course syllabus [here](https://github.com/smasongarrison/Syllabi/blob/master/syllabus_datascience.pdf), along with all of the [other syllabi for my classes]( https://github.com/smasongarrison/Syllabi).
 
 ```{r,echo=FALSE}
-library(vembedr)
 embed_url("https://www.youtube.com/watch?v=nYYJmmcgzr8") %>%
   use_align("center")
 ```
 
 
-```{r links, child="links.md"}
+## Mason Note on Timing {-}
+
+This new course is very active development. I am teaching it for the first time this semester (Spring 2021). I will have each module completed by the start of the week. In our first class, we'll decide what day of the week that will be. It is likely that I will get ahead of this deadline. You can see the current status of the course below.
+
+### Status of course {-}
+
+This table provides the current status of the course. It lists proportions of specific components by module. 
+
+```{r message = FALSE, warning = FALSE, echo = FALSE}
+
+ds4p_status <- read_csv("data/ds4p_status.csv"
+#    , col_types = cols(Module = col_factor(levels = c("0", 
+#        "01", "02", "03", "04", "05", "06", "07", 
+#        "08", "09", "10", "11", "12", "13", 
+#        "14", "15")))
+)
+ds4p_status$Total=rowMeans(ds4p_status[,2:6],na.rm = TRUE)
+
+
+ds4p_status %>% 
+  DT::datatable(rownames = FALSE,
+                class = 'cell-border stripe',
+                #filter = list(position = 'top'),
+                options = list(pageLength = nrow(ds4p_status$Module), 
+                           autoWidth = TRUE,
+                           bInfo = FALSE,
+                           paging = FALSE))
+
 ```
+
+
+## Course Wishlist {-}
+
+Although there will be hiccups and snafus along the way, one major advantage of this process is that you(!) can have a major input on what we cover. Some of these inputs have already been incorporated (such as github, Rshiny). So take advantage! Add your requests to the [markdown list below](#wish-not-yet-granted)! As I incorporate those requests, I'll move them into the [Wish Granted Section](#wish-granted).
+
+
+#### Wish Granted {-}
+* Github
+* Rshiny
+
+
+#### Wish Not Yet Granted {-}
+
+* Data Science and the Law
+* Computational neuroscience
+
+
+
+
