@@ -15,6 +15,11 @@
 [ae-01b-covid]: https://github.com/DataScience4Psych/ae-01b-covid
 [ae-03-starwars-dataviz]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
 
+
+<!-- Lab Links-->
+
+[lab-01-hello]: https://github.com/DataScience4Psych/lab-01-hello-r
+
 <!--Slides-->
 [u1_d01-welcome]: https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html
 [u1_d02-meet-the-toolkit]: https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html
