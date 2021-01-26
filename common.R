@@ -2,6 +2,15 @@
 ## deleted bits that seem irrelevant
 ## commented out bits that look like they may become relevant
 
+
+
+## Standard Libraries
+if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd) #... embedding tweets
+library(vembedr)  #... embedding youtube videos
+library(knitr)
+
+## Options
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE
@@ -55,6 +64,8 @@ knitr::knit_hooks$set(chunk_envvar = function(before, options, envir) {
 check_quietly <- purrr::quietly(devtools::check)
 install_quietly <- purrr::quietly(devtools::install)
 
+
+# functions
 shhh_check <- function(..., quiet = TRUE) {
   out <- check_quietly(..., quiet = quiet)
   out$result
@@ -68,7 +79,10 @@ pretty_install <- function(...) {
 }
 
 
-## Standard Libraries
-library(vembedr)  #... embeding youtube videos
-library(knitr)
-
+sample_no_surprises <- function(x) {
+  if (length(x) <= 1) {
+    return(x)
+  } else {
+    return(sample(x,1))
+  }
+}
