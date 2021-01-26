@@ -67,3 +67,8 @@ pretty_install <- function(...) {
   c(output, out$messages)
 }
 
+
+## Standard Libraries
+library(vembedr)  #... embeding youtube videos
+library(knitr)
+
