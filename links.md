@@ -21,7 +21,7 @@
 [lab-01-hello]: https://github.com/DataScience4Psych/lab-01-hello-r
 
 <!--Slides-->
-[u1_d01-welcome]: https://datascience4psych.github.io/slides/u1_d01-welcome/u1_d01-welcome.html
+[d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
 [u1_d02-meet-the-toolkit]: https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html
 [u1_d03-data-viz-1]: https://datascience4psych.github.io/slides/u1_d03-data-viz-1/u1_d03-data-viz-1.html
 [u1_d04-data-viz-2]: https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html
