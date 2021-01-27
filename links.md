@@ -22,7 +22,7 @@
 
 <!--Slides-->
 [d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
-[u1_d02-meet-the-toolkit]: https://datascience4psych.github.io/slides/u1_d02-meet-the-toolkit/u1_d02-meet-the-toolkit.html
+[d02-toolkit]: https://datascience4psych.github.io/slides/d02-toolkit/d02-toolkit.html
 [u1_d03-data-viz-1]: https://datascience4psych.github.io/slides/u1_d03-data-viz-1/u1_d03-data-viz-1.html
 [u1_d04-data-viz-2]: https://datascience4psych.github.io/slides/u1_d04-data-viz-2/u1_d04-data-viz-2.html
 [u1_d05-data-wrangle]: https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html
