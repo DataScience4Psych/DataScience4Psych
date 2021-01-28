@@ -21,7 +21,7 @@ domain=c(rep("DataScience4Psych",length(df_web)),rep("slides",length(df_slides))
 df <- data.frame(
   stringsAsFactors = FALSE,
               title = str_replace(
-                      str_remove_all(df_docs, "(u\\d_d\\d+|\\.html|[_-])"),"/.*",""),
+                      str_remove_all(df_docs, "(u\\d_d\\d+|\\.html|[-])"),"/.*",""),
               link = make_full(df_docs,myrepo=domain)
 )
 
