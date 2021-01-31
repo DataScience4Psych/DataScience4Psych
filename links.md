@@ -29,6 +29,10 @@
 [d02_toolkit]: https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html
 [d03_dataviz]: https://datascience4psych.github.io/slides/d03_dataviz/d03_dataviz.html
 [d04_ggplot2]: https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html
+[d05_viznum]: https://datascience4psych.github.io/slides/d05_viznum/d05_viznum.html
+[d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
+
+
 [u1_d05-data-wrangle]: https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html
 [u1_d06-data-join]: https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html
 [u1_d07-tidy-data]: https://datascience4psych.github.io/slides/u1_d07-tidy-data/u1_d07-tidy-data.html
