@@ -8,19 +8,23 @@ library(DT)
 library(vembedr)
 library(knitr)
 ```
+```{r links, child="links.md"}
+```
 
-# Front Matter {-}
 
-## Attribution {-}
+<div id="outerdiv"> 
+<iframe src="https://ourwayforward.wfu.edu/covid-19-dashboard/" id="wake-alert" scrolling="no"></iframe> 
+</div>
+# Attribution {-}
 This class leans heavily on other peoples' materials and ideas. I have done my best to document the origin of the materials and ideas. In particular, I have noted those people whose work has been a major contribution as well as those who have additional contributions. You can see specific changes by examining the [edit history on the git repo](https://github.com/DataScience4Psych/DataScience4Psych/commits/main)
 
-### Major Attributions  {-}
+## Major Attributions  {-}
 
 * Jenny Bryan's ([jennybryan.org](https://jennybryan.org)) [STAT 545][stat-545] and [Happy Git with R](https://happygitwithr.com/);
 * Joe Rodgers's PSY 8751 Exploratory and Graphical Data Analysis Course
 * Mine Çetinkaya-Rundel's [Data Science in a Box](https://datasciencebox.org/).
 
-### Additional Attributions  {-}
+## Additional Attributions  {-}
 
 * Academic.io's [AWESOME DATA SCIENCE](https://github.com/academic/awesome-datascience)
 * [Julia Fukuyama](https://jfukuyama.github.io/)'s [EXPLORATORY DATA ANALYSIS](https://jfukuyama.github.io/teaching/stat670/)
@@ -28,7 +32,7 @@ This class leans heavily on other peoples' materials and ideas. I have done my b
 * [Grant McDermott](https://github.com/grantmcdermott)'s course materials on [environmental economics and data science](https://github.com/uo-ec607)
 
 
-## License {-#license}
+# License {-#license}
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
@@ -81,7 +85,41 @@ knitr::write_bib(c(
 ), 'packages.bib')
 ```
 
-## Colophon {-}
+
+# Sitemap {-}
+
+```{r message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
+library(gt)
+library(tidyverse)
+
+
+make_full = function(myurl,gituser="datascience4psych",myrepo="DataScience4Psych") {
+  paste0('https://',gituser,'.github.io/',myrepo,'/',myurl)
+}
+make_hyperlink = function(myurl,mytext=myurl) {
+  paste0('<a href="',myurl,'">',mytext,'</a>')
+}
+
+df_docs=list.files(path="docs/", '[.]html$', recursive=TRUE)
+
+df <- data.frame(
+  stringsAsFactors = FALSE,
+              title = str_replace_all(str_remove(df_docs, "\\.html"),"[_-]"," "),
+              link = make_full(df_docs)
+)
+
+
+df %>%
+    mutate(
+        link = glue::glue("[website]({link})"),
+        link = map(link, gt::md)) %>%
+    gt()
+
+```
+
+
+
+# Colophon {-}
 
 This book was written in [bookdown](http://bookdown.org/) inside [RStudio](http://www.rstudio.com/ide/). The [website][ds4p-web] is hosted with [github](https://www.github.com), The complete source is available from [GitHub][ds4p-git].
 
@@ -113,35 +151,6 @@ session$packages %>%
                            paging = FALSE))
 ```
 
-## Sitemap {-}
-```{r message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
-library(gt)
-library(tidyverse)
 
 
-make_full = function(myurl,gituser="datascience4psych",myrepo="DataScience4Psych") {
-  paste0('https://',gituser,'.github.io/',myrepo,'/',myurl)
-}
-make_hyperlink = function(myurl,mytext=myurl) {
-  paste0('<a href="',myurl,'">',mytext,'</a>')
-}
 
-df_docs=list.files(path="docs/", '[.]html$', recursive=TRUE)
-
-df <- data.frame(
-  stringsAsFactors = FALSE,
-              title = str_replace_all(str_remove(df_docs, "\\.html"),"[_-]"," "),
-              link = make_full(df_docs)
-)
-
-
-df %>%
-    mutate(
-        link = glue::glue("[website]({link})"),
-        link = map(link, gt::md)) %>%
-    gt()
-
-```
-
-```{r links, child="links.md"}
-```
