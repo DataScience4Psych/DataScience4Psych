@@ -20,7 +20,7 @@ Please [open a new issue](https://help.github.com/articles/creating-an-issue/). 
 
 # Credits
 
-[See the attribution page for specifics]( https://datascience4psych.github.io/DataScience4Psych/attribution.html)
+[See the attribution page for specifics]( https://datascience4psych.github.io/DataScience4Psych/front-matter.html#attribution)
 
 
 # License
