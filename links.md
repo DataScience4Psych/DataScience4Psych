@@ -31,32 +31,10 @@
 [d04_ggplot2]: https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html
 [d05_viznum]: https://datascience4psych.github.io/slides/d05_viznum/d05_viznum.html
 [d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
+[d07_tidy]: https://datascience4psych.github.io/slides/d07_tidy/d07_tidy.html
+[d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
+[d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
 
-
-[u1_d05-data-wrangle]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
-[u1_d06-data-join]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
-[u1_d07-tidy-data]: https://datascience4psych.github.io/slides/u1_d07-tidy-data/u1_d07-tidy-data.html
-[u1_d08-data-types]: https://datascience4psych.github.io/slides/u1_d08-data-types/u1_d08-data-types.html
-[u1_d09-import-data]: https://datascience4psych.github.io/slides/u1_d09-import-data/u1_d09-import-data.html
-[u1_d10-effective-dataviz]: https://datascience4psych.github.io/slides/u1_d10-effective-dataviz/u1_d10-effective-dataviz.html
-[u1_d11-studies-confounding]: https://datascience4psych.github.io/slides/u1_d11-studies-confounding/u1_d11-studies-confounding.html
-[u1_d12-effective-communication]: https://datascience4psych.github.io/slides/u1_d12-effective-communication/u1_d12-effective-communication.html
-[u1_d13-webscraping]: https://datascience4psych.github.io/slides/u1_d13-webscraping/u1_d13-webscraping.html
-[u1_d14-functions-iteration]: https://datascience4psych.github.io/slides/u1_d14-functions-iteration/u1_d14-functions-iteration.html
-[u2_d01-language-of-models]: https://datascience4psych.github.io/slides/u2_d01-language-of-models/u2_d01-language-of-models.html
-[u2_d02-linear-model-single-predictor]: https://datascience4psych.github.io/slides/u2_d02-linear-model-single-predictor/u2_d02-linear-model-single-predictor.html
-[u2_d03-modeling-non-linear-relationships]: https://datascience4psych.github.io/slides/u2_d03-modeling-non-linear-relationships/u2_d03-modeling-non-linear-relationships.html
-[u2_d04-linear-model-multiple-predictors]: https://datascience4psych.github.io/slides/u2_d04-linear-model-multiple-predictors/u2_d04-linear-model-multiple-predictors.html
-[u2_d05-model-selection]: https://datascience4psych.github.io/slides/u2_d05-model-selection/u2_d05-model-selection.html
-[u2_d06-model-validation]: https://datascience4psych.github.io/slides/u2_d06-model-validation/u2_d06-model-validation.html
-[u2_d07-logistic-regression]: https://datascience4psych.github.io/slides/u2_d07-logistic-regression/u2_d07-logistic-regression.html
-[u2_d08-quantifying-uncertainty]: https://datascience4psych.github.io/slides/u2_d08-quantifying-uncertainty/u2_d08-quantifying-uncertainty.html
-[u2_d09-hypothesis-testing]: https://datascience4psych.github.io/slides/u2_d09-hypothesis-testing/u2_d09-hypothesis-testing.html
-[u2_d10-inference-overview]: https://datascience4psych.github.io/slides/u2_d10-inference-overview/u2_d10-inference-overview.html
-[u2_d11-sim-inf-review]: https://datascience4psych.github.io/slides/u2_d11-sim-inf-review/u2_d11-sim-inf-review.html
-[u3_d01-ethics]: https://datascience4psych.github.io/slides/u3_d01-ethics/u3_d01-ethics.html
-[u3_d04-bayes-inf]: https://datascience4psych.github.io/slides/u3_d04-bayes-inf/u3_d04-bayes-inf.html
-[u3_d05-text-analysis]: https://datascience4psych.github.io/slides/u3_d05-text-analysis/u3_d05-text-analysis.html
 
 <!--R Links-->
 [cran]: https://cloud.r-project.org
