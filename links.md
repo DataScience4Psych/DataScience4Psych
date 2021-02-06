@@ -33,8 +33,8 @@
 [d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
 
 
-[u1_d05-data-wrangle]: https://datascience4psych.github.io/slides/u1_d05-data-wrangle/u1_d05-data-wrangle.html
-[u1_d06-data-join]: https://datascience4psych.github.io/slides/u1_d06-data-join/u1_d06-data-join.html
+[u1_d05-data-wrangle]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
+[u1_d06-data-join]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
 [u1_d07-tidy-data]: https://datascience4psych.github.io/slides/u1_d07-tidy-data/u1_d07-tidy-data.html
 [u1_d08-data-types]: https://datascience4psych.github.io/slides/u1_d08-data-types/u1_d08-data-types.html
 [u1_d09-import-data]: https://datascience4psych.github.io/slides/u1_d09-import-data/u1_d09-import-data.html
