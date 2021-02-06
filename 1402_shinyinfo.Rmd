@@ -1,53 +1,26 @@
 # All the Shiny things {#shiny-overview}
+
 ```{r include = FALSE}
 source("common.R")
 ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
 ds4p_urls <- read.csv("./data/ds4p_urls.csv")
 ```
 
-
-
 ```{r links, child="links.md"}
 ```
 
-<!--Original content: https://stat545.com/shiny00_index.html-->
+<!--Original content: https://stat545.com/shiny00_index.html
 
 * Chapter \@ref(shiny-slides) - Slides to accompany Chapter \@ref(shiny-tutorial).
 * Chapter \@ref(shiny-tutorial) - Shiny tutorial with hands-on activity to build [this app](https://daattali.com/shiny/bcl/) using the BC Liquor Store dataset.
+-->
 
-## Awesome add-on packages to Shiny {-}
-
-Many people have written packages that enhance Shiny in some way or add extra functionality. Here is a list of several popular packages that people often use together with Shiny:
-
-* [shinythemes][shinythemes-web] - Easily alter the appearance of your app ([CRAN][shinythemes-cran]).
-* [shinyjs][shinyjs-web] - Enhance user experience in Shiny apps using JavaScript functions without knowing JavaScript ([CRAN][shinyjs-cran]; [GitHub][shinyjs-github]).
-* [leaflet][leaflet-web] - Add interactive maps to your apps ([CRAN][leaflet-cran]; [GitHub][leaflet-github]).
-* [ggvis][ggvis-web] - Similar to ggplot2, but the plots are focused on being web-based and are more interactive ([CRAN][ggvis-cran]).
-* [shinydashboard][shinydashboard-web] - Gives you tools to create visual “dashboards” ([CRAN][shinydashboard-cran]; [GitHub][shinydashboard-github]).
-
-
-## Resources
-
-Shiny is a very popular package and has lots of resources on the web. Here's a compiled list of a few resources I recommend, which are all fairly easy to read and understand.
-
-- [Shiny official website][shiny-official-web]
-- [Shiny official tutorial][shiny-official-tutorial]
-- [Shiny cheatsheet][shiny-cheatsheet]
-- [Lots of short useful articles about different topics in Shiny - **highly recommended**][shiny-articles]
-- [Shiny in R Markdown](http://rmarkdown.rstudio.com/authoring_shiny.html)
-- Get help from the [Shiny Google group][shiny-google-groups] or [StackOverflow][shiny-stack-overflow]
-- [Publish your apps for free with shinyapps.io][shinyapps-web]
-- [Host your app on your own Shiny server][shiny-server-setup]
-- [Learn about how reactivity works][shiny-reactivity]
-- [Learn about useful debugging techniques][shiny-debugging]
-
-
-# Building Slides {#shiny-slides}
+## Building Slides {#shiny-slides}
 
 See ["Building Shiny Apps" slides](https://docs.google.com/presentation/d/1dXhqqsD7dPOOdcC5Y7RW--dEU7UfU52qlb0YD3kKeLw/edit#slide=id.p) by Dean Attali.
 
 
-# Building Shiny apps {#shiny-tutorial}
+## Building Shiny apps {#shiny-tutorial}
 
 ```{r include = FALSE}
 source("common.R")
@@ -64,7 +37,7 @@ This tutorial is a hands-on activity complement to a set of [presentation slides
 
 This tutorial should take approximately an hour to complete. If you want even more practice, another great tutorial is the [official Shiny tutorial][shiny-official-tutorial]. RStudio also provides a [handy cheatsheet][shiny-cheatsheet] to remember all the little details after you already learned the basics.
 
-## Before we begin {#shiny-tutorial-1}
+### Before we begin {#shiny-tutorial-1}
 
 You'll need to have the shiny package, so install it.
 
@@ -83,7 +56,7 @@ If the example app is running, press *Escape* to close the app, and you are read
 **Exercise:** Visit <https://www.showmeshiny.com/>, which is a gallery of user-submitted Shiny apps, and click through some of the showcased apps. Get a feel for the wide range of things you can do with Shiny.
 
 
-## Shiny app basics {#shiny-tutorial-2}
+### Shiny app basics {#shiny-tutorial-2}
 
 Every Shiny app is composed of a two parts: a web page that shows the app to the user, and a computer that powers the app. The computer that runs the app can either be your own laptop (such as when you're running an app from RStudio) or a server somewhere else. You, as the Shiny app developer, need to write these two parts (you're not going to write a computer, but rather the code that powers the app). In Shiny terminology, they are called *UI* (user interface) and *server*.
 
@@ -91,7 +64,7 @@ UI is just a web document that the user gets to see, it's HTML that you write us
 
 If you look at the app we will be building (<http://daattali.com/shiny/bcl/>), the page that you see is built with the UI code. You'll notice there are some controls that you, as the user, can manipulate. If you adjust the price or choose a country, you'll notice that the plot and the table get updated. The UI is responsible for creating these controls and telling Shiny *where* to place the controls and where to place the plot and table, while the server is responsible for creating the actual plot or the data in the table.
 
-## Create an empty Shiny app {#shiny-tutorial-3}
+### Create an empty Shiny app {#shiny-tutorial-3}
 
 All Shiny apps follow the same template:
 
@@ -125,13 +98,13 @@ You may have noticed that when you click the *Run App* button, all it's doing is
 
 **Exercise:** Try running the empty app using the `runApp()` function instead of using the *Run App* button.
 
-### Alternate way to create a Shiny app: separate UI and server files
+#### Alternate way to create a Shiny app: separate UI and server files
 
 Another way to define a Shiny app is by separating the UI and server code into two files: `ui.R` and `server.R`. This is the preferable way to write Shiny apps when the app is complex and involves more code, but in this tutorial we'll stick to the simple single file.  If you want to break up your app into these two files, you simply put all code that is assigned to the `ui` variable in `ui.R` and all the code assigned to the `server` function in `server.R`. When RStudio sees these two files in the same folder, it will know you're writing a Shiny app. 
 
 **Exercise:** Try making a new Shiny app by creating the two files `ui.R` and `server.R`. Remember that they have to be in the same folder. Also remember to put them in a *new, isolated* folder (not where your `app.R` already exists).
 
-### Let RStudio fill out a Shiny app template for you
+#### Let RStudio fill out a Shiny app template for you
 
 You can also create a new Shiny app using RStudio's menu by selecting *File > New File > Shiny Web App...*. If you do this, RStudio will let you choose if you want a single-file app (`app.R`) or a two-file app (`ui.R`+`server.R`). RStudio will initialize a simple functional Shiny app with some code in it. I personally don't use this feature because I find it easier to simply type the few lines of a Shiny app and save the files.
 
@@ -139,7 +112,7 @@ You can also create a new Shiny app using RStudio's menu by selecting *File > Ne
 
 
 
-## Load the dataset {#shiny-tutorial-4}
+### Load the dataset {#shiny-tutorial-4}
 
 <!--TODO:
 Link to the original dataset no longer works. The closest thing I could find is [this](https://catalogue.data.gov.bc.ca/dataset/bc-liquor-store-product-price-list-historical-prices) but it was just modified in 2019. The csv at deanattali.com is still live so will just refer to that for now. 
@@ -189,7 +162,7 @@ The entire UI will be built by passing comma-separated arguments into the `fluid
 
 **Exercise:** Add several more strings to `fluidPage()` and run the app. Nothing too exciting is happening yet, but you should just see all the text appear in one contiguous block.
 
-### Add formatted text and other HTML elements
+#### Add formatted text and other HTML elements
 
 If we want our text to be formatted nicer, Shiny has many functions that are wrappers around HTML tags that format text. We can use the...
 
@@ -223,7 +196,7 @@ Run the app with this code as the UI. Notice the formatting of the text and unde
 
 **Exercise:** Experiment with different HTML-wrapper functions inside `fluidPage()`. Run the `fluidPage(...)` function in the R Console and see the HTML that it creates.
 
-### Add a title
+#### Add a title
 
 We could add a title to the app with `h1()`, but Shiny also has a special function `titlePanel()`. Using `titlePanel()` not only adds a visible big title-like text to the top of the page, but it also sets the "official" title of the web page. This means that when you look at the name of the tab in the browser, you'll see this title.
 
@@ -238,7 +211,7 @@ fluidPage(
 
 **Exercise:** Look at the documentation for the `titlePanel()` function and notice it has another argument. Use that argument and see if you can see what it does.
 
-### Add a layout
+#### Add a layout
 
 You may have noticed that so far, by just adding text and HTML tags, everything is unstructured and the elements simply stack up one below the other in one column. We'll use `sidebarLayout()` to add a simple structure. It provides a simple two-column layout with a smaller sidebar and a larger main panel. We'll build our app such that all the inputs that the user can manipulate will be in the sidebar, and the results will be shown in the main panel on the right.
 
@@ -282,7 +255,7 @@ knitr::include_graphics("img/shiny-layout.png")
 
 **Exercise:** Add some UI into each of the two panels (sidebar panel and main panel) and see how your app now has two columns.
 
-### All UI functions are simply HTML wrappers
+#### All UI functions are simply HTML wrappers
 
 It's important to remember: the entire UI is just HTML, and Shiny simply gives you easy tools to write it without having to know HTML. To convince yourself of this reality, look at the output when printing the contents of the `ui` variable.
 
@@ -305,7 +278,7 @@ print(ui)
 
 This should make you appreciate Shiny for not making you write horrendous HTML by hand.
 
-## Add inputs to the UI {#shiny-tutorial-6}
+### Add inputs to the UI {#shiny-tutorial-6}
 
 Inputs are what gives users a way to interact with a Shiny app. Shiny provides many input functions to support many kinds of interactions that the user could have with an app. For example, `textInput()` is used to let the user enter text, `numericInput()` lets the user select a number, `dateInput()` is for selecting a date, and `selectInput()` is for creating a select box (a.k.a. a dropdown menu).
 
@@ -317,7 +290,7 @@ All input functions have the same first two arguments: `inputId` and `label`. Th
 
 **Exercise:** Read the documentation of `numericInput` (via `?numericInput`) and try adding a numeric input to the UI. Experiment with the different arguments. Run the app and see how you can interact with this input. Then try different inputs types.
 
-### Input for price
+#### Input for price
 
 The first input we want to have is for specifying a price range (minimum and maximum price). The most sensible types of input for this are either `numericInput()` or `sliderInput()` since they are both used for selecting numbers. If we use `numericInput()`, we'd have to use two inputs, one for the minimum value and one for the maximum. Looking at the documentation for `sliderInput()`, you'll see that by supplying a vector of length two as the `value` argument, it can be used to specify a range rather than a single number. This sounds like what we want in this case, so we'll use `sliderInput()`. 
 
@@ -335,7 +308,7 @@ Place the code for the slider input inside `sidebarPanel()` (replace the text we
 
 **Exercise:** Run the code of the `sliderInput()` in the R Console and see what it returns. Change some of the parameters of `sliderInput()`, and see how that changes the result.  It's important to truly understand that all these functions in the UI are simply a convenient way to write HTML, as is apparent whenever you run these functions on their own.
 
-### Input for product type
+#### Input for product type
 
 Usually when going to the liquor store you know whether you're looking for beer or wine, and you don't want to waste your time in the wrong section.  The same is true in our app, we should be able to choose what type of product we want.
 
@@ -352,7 +325,7 @@ Add this input code inside `sidebarPanel()`, after the previous input (separate 
 
 > If you look at that input function and think "what if there were 100 types, listing them by hand would not be fun, there's got to be a better way!", then you're right.  This is where [`uiOutput()`](#shiny-tutorial-11) comes in handy, but we'll talk about that later.
 
-### Input for country
+#### Input for country
 
 Sometimes I like to feel fancy and only look for wines imported from France. We should add one last input, to select a `Country`. The most appropriate input type in this case is probably the select box. Look at the documentation for `selectInput()` and create an input function. For now let's only have `"CANADA"`, `"FRANCE"`, `"ITALY"` as options, and later we'll see how to include all countries. 
 
@@ -393,13 +366,13 @@ shinyApp(ui = ui, server = server)
 knitr::include_graphics("img/shiny-addinputs.png")
 ```
 
-## Add placeholders for outputs {#shiny-tutorial-7}
+### Add placeholders for outputs {#shiny-tutorial-7}
 
 After creating all the inputs, we should add elements to the UI to display the outputs. Outputs can be any object that R creates and that we want to display in our app - such as a plot, a table, or text. We're still only building the UI, so at this point we can only add *placeholders* for the outputs that will determine where an output will be and what its ID is, but it won't actually show anything. Each output needs to be constructed in the server code later.
 
 Shiny provides several output functions, one for each type of output. Similarly to the input functions, all the output functions have a `outputId` argument that is used to identify each output, and this argument must be unique for each output.
 
-### Output for a plot of the results
+#### Output for a plot of the results
 
 At the top of the main panel we'll have a plot showing some visualization of the results. Since we want a plot, the function we use is `plotOutput()`.
 
@@ -460,13 +433,13 @@ server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
-## Implement server logic to create outputs {#shiny-tutorial-9}
+### Implement server logic to create outputs {#shiny-tutorial-9}
 
 So far we only wrote code inside that was assigned to the `ui` variable (or code that was written in `ui.R`). That's usually the easier part of a Shiny app. Now we have to write the `server` function, which will be responsible for listening to changes to the inputs and creating outputs to show in the app.
 
 If you look at the server function, you'll notice that it is always defined with two arguments: `input` and `output`. You *must* define these two arguments! Both `input` and `output` are list-like objects. As the names suggest, `input` is a list you will read values *from* and `output` is a list you will write values *to*. `input` will contain the values of all the different inputs at any given time, and `output` is where you will save output objects (such as tables and plots) to display in your app.
 
-### Building an output
+#### Building an output
 
 Recall that we created two output placeholders: *coolplot* (a plot) and *results* (a table). We need to write code in R that will tell Shiny what kind of plot or table to display. There are three rules to build an output in Shiny:
 
@@ -491,7 +464,7 @@ If you add the code above inside the server function, you should see a plot with
 
 **Exercise:** The code inside `renderPlot()` doesn't have to be only one line, it can be as long as you'd like as long as it returns a plot. Try making a more complex plot using ggplot2. The plot doesn't have to use our dataset, it could be anything, just to make sure you can use `renderPlot()`.
 
-### Making an output react to an input
+#### Making an output react to an input
 
 Now we'll take the plot one step further. Instead of always plotting the same plot (100 random numbers), let's use the minimum price selected as the number of points to show. It doesn't make too much sense, but it's just to learn how to make an output depend on an input.
 
@@ -605,7 +578,7 @@ knitr::include_graphics("img/shiny-addplot.png")
 
 **Exercise:** The current plot doesn't look very nice, you could enhance the plot and make it much more pleasant to look at.
 
-### Building the table output
+#### Building the table output
 
 Building the next output should be much easier now that we've done it once.  The other output we have was called `results` (as defined in the UI) and should be a table of all the products that match the filters.  Since it's a table output, we should use the `renderTable()` function. We'll do the exact same filtering on the data, and then simply return the data as a data.frame. Shiny will know that it needs to display it as a table because it's defined as a `tableOutput`.
 
@@ -631,7 +604,7 @@ Add this code to your server. Don't overwrite the previous definition of `output
 
 
 
-## Reactivity 101 {#shiny-tutorial-10}
+### Reactivity 101 {#shiny-tutorial-10}
 
 Shiny uses a concept called **reactive** programming. This is what enables your outputs to *react* to changes in inputs.  Reactivity in Shiny is complex, but as an extreme oversimplification, it means that when the value of a variable `x` changes, then anything that relies on `x` gets re-evaluated.  Notice how this is very different from what you are used to in R.  Consider the following code:
 
@@ -657,7 +630,7 @@ output$someoutput <- renderPlot({
 
 The above render function accesses two different inputs: `input$mycolour` and `input$mynumber`. This means that this code block depends on *both* of these variables, so whenever either one of the two inputs is updated, the code gets re-executed with the new input values and `output$someoutput` is updated. 
 
-### Creating and accessing reactive variables
+#### Creating and accessing reactive variables
 
 One very important thing to remember about reactive variables (such as the `input` list) is that **they can only be used inside reactive contexts**. Any `render*` function is a reactive context, so you can always use `input$x` or any other reactive variable inside render functions. There are two other common reactive contexts that we'll get to in a minute: `reactive({})` and `observe({})`. To show you what this means, let's try accessing the price input value in the server function, without explicitly being inside a reactive context. Simply add `print(input$priceInput)` inside the `server` function, and you will get an error when running the app:
 
@@ -685,7 +658,7 @@ Before continuing to the next section, you can remove all the `observe({})` and 
 
 **Exercise:** Read this section again and really understand what a reactive variable means, what the three main reactive contexts are, how you can define reactive variables, and how a reactivity chain of events works.
 
-### Using reactive variables to reduce code duplication
+#### Using reactive variables to reduce code duplication
 
 You may have noticed that we have the exact same code filtering the dataset in two places, once in each render function. We can solve that problem by defining a reactive variable that will hold the filtered dataset, and use that variable in the render functions.
 
@@ -731,13 +704,13 @@ server <- function(input, output) {
 As a reminder, Shiny creates a dependency tree with all the reactive expressions to know what value depends on what other value. For example, when the price input changes, Shiny looks at what values depend on price, and sees that `filtered` is a reactive expression that depends on the price input, so it re-evaluates `filtered`. Then, because `filtered` is changed, Shiny now looks to see what expressions depend on `filtered`, and it finds that the two render functions use `filtered`. So Shiny re-executes the two render functions as well.
 
 
-## Using `uiOutput()` to create UI elements dynamically {#shiny-tutorial-11}
+### Using `uiOutput()` to create UI elements dynamically {#shiny-tutorial-11}
 
 One of the output functions you can add in the UI is `uiOutput()`. According to the naming convention (e.g. `plotOutput()` is an output to render a plot), this is an output used to render more UI. This may sound a bit confusing, but it's actually very useful. It's usually used to create inputs (or any other UI) from the server, or in other words - you can create inputs dynamically.
 
 Any input that you normally create in the UI is created when the app starts, and it cannot be changed. But what if one of your inputs depends on another input? In that case, you want to be able to create an input dynamically, in the server, and you would use `uiOutput()`.  `uiOutput()` can be used to create *any* UI element, but it's most often used to create input UI elements. The same rules regarding building outputs apply, which means the output (which is a UI element in this case) is created with the function `renderUI()`.
 
-### Basic example of `uiOutput()`
+#### Basic example of `uiOutput()`
 
 As a very basic example, consider this app:
 
@@ -785,7 +758,7 @@ output$countryOutput <- renderUI({
 
 Now if you run the app, you should be able to see all the countries that BC Liquor stores import from.
 
-### Errors showing up and quickly disappearing
+#### Errors showing up and quickly disappearing
 
 You might notice that when you first run the app, each of the two outputs are throwing an error message, but the error message goes away after a second. The problem is that when the app initializes, `filtered` is trying to access the country input, but the country input hasn't been created yet. After Shiny finishes loading fully and the country input is generated, `filtered` tries accessing it again, this time it's successful, and the error goes away.
 
@@ -825,7 +798,7 @@ The `renderTable()` function doesn't need this fix applied because Shiny doesn't
 **Exercise:** Change the product type radio buttons to get generated in the server with the values from the dataset, instead of being created in the UI with the values entered manually. If you're feeling confident, try adding an input for "subtype" that will get re-generated every time a new type is chosen, and will be populated with all the subtype options available for the currently selected type (for example, if `"WINE"` is selected, then the subtypes are white wine, red wine, etc.).
 
 
-## Final Shiny app code {#shiny-tutorial-12}
+### Final Shiny app code {#shiny-tutorial-12}
 
 In case you got lost somewhere, here is the final code. The app is now functional, but there are plenty of features you can add to make it better.
 
@@ -891,11 +864,11 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-## Share your app with the world {#shiny-tutorial-13}
+### Share your app with the world {#shiny-tutorial-13}
 
 Remember how every single app is a web page powered by an R session on a computer? So far, you've been running Shiny locally, which means your computer was used to power the app. It also means that the app was not accessible to anyone on the internet. If you want to share your app with the world, you need to host it somewhere.
 
-### Host on shinyapps.io
+#### Host on shinyapps.io
 
 RStudio provides a service called [shinyapps.io][shinyapps-web] which lets you host your apps for free. It is integrated seamlessly into RStudio so that you can publish your apps with the click of a button, and it has a free version.  The free version allows a certain number of apps per user and a certain number of activity on each app, but it should be good enough for most of you. It also lets you see some basic stats about usage of your app.
 
@@ -908,18 +881,18 @@ knitr::include_graphics("img/shiny-publish.png")
 
 After a successful deployment to shinyapps.io, you will be redirected to your app in the browser. You can use that URL to show off to your family what a cool app you wrote.
 
-### Host on a Shiny Server
+#### Host on a Shiny Server
 
 The other option for hosting your app is on your own private [Shiny Server][shiny-server]. Shiny Server is also a product by RStudio that lets you host apps on your own server. This means that instead of RStudio hosting the app for you, you have it on your own private server. This means you have a lot more freedom and flexibility, but it also means you need to have a server and be comfortable administering a server. I currently host all my apps on [my own Shiny Server](https://daattali.com/shiny/) just because I like having the extra control, but when I first learned about Shiny I used shinyapps.io for several months.
 
 If you're feeling adventurous and want to host your own server, you can follow [my tutorial for hosting a Shiny Server][shiny-server-setup].
 
 
-## More Shiny features to check out {#shiny-tutorial-14}
+### More Shiny features to check out {#shiny-tutorial-14}
 
 Shiny is extremely powerful and has lots of features that we haven't covered. Here's a sneak peek of just a few other common Shiny features that are not too advanced. 
 
-### Shiny in R Markdown
+#### Shiny in R Markdown
 
 You can include Shiny inputs and outputs in an R Markdown document! This means that your R Markdown document can be interactive. Learn more [here][shiny-bookdown]. Here's a simple example of how to include interactive Shiny elements in an R Markdown:
 
@@ -927,7 +900,7 @@ You can include Shiny inputs and outputs in an R Markdown document! This means t
 `r xfun::file_string('supporting-docs/shiny.Rmd')`
 ````
   
-### Use `conditionalPanel()` to conditionally show UI elements
+#### Use `conditionalPanel()` to conditionally show UI elements
 
 You can use `conditionalPanel()` to either show or hide a UI element based on a simple condition, such as the value of another input. Learn more via `?conditionalPanel`.
 
@@ -945,7 +918,7 @@ server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
-### Use `navbarPage()` or `tabsetPanel()` to have multiple tabs in the UI
+#### Use `navbarPage()` or `tabsetPanel()` to have multiple tabs in the UI
 
 If your apps requires more than a single "view", you can have separate tabs. Learn more via `?navbarPage` or `?tabsetPanel`.
 
@@ -962,15 +935,15 @@ server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
-### Use DT for beautiful, interactive tables
+#### Use DT for beautiful, interactive tables
 
 Whenever you use `tableOutput()` + `renderTable()`, the table that Shiny creates is a static and boring-looking table. If you download the DT package, you can replace the default table with a much sleeker table by just using `DT::dataTableOutput()` + `DT::renderDataTable()`. It's worth trying. Learn more on [DT's website](https://rstudio.github.io/DT/).
 
-### Use `isolate()` function to remove a dependency on a reactive variable
+#### Use `isolate()` function to remove a dependency on a reactive variable
 
 When you have multiple reactive variables inside a reactive context, the whole code block will get re-executed whenever *any* of the reactive variables change because all the variables become dependencies of the code. If you want to suppress this behavior and cause a reactive variable to not be a dependency, you can wrap the code that uses that variable inside the `isolate()` function.  Any reactive variables that are inside `isolate()` will not result in the code re-executing when their value is changed. Read more about this behavior via `?isolate`.
 
-### Use `update*Input()` functions to update input values programmatically
+#### Use `update*Input()` functions to update input values programmatically
 
 Any input function has an equivalent `update*Input` function that can be used to update any of its parameters.
 
@@ -998,7 +971,7 @@ You can think of the `server` function as a sandbox for each user. Any code outs
 
 You can learn more about the scoping rules in Shiny [here](https://shiny.rstudio.com/articles/scoping.html).
 
-### Use `global.R` to define objects available to both `ui.R` and `server.R`
+#### Use `global.R` to define objects available to both `ui.R` and `server.R`
 
 If there are objects that you want to have available to both `ui.R` and `server.R`, you can place them in `global.R`. You can learn more about `global.R` and other scoping rules [here](https://shiny.rstudio.com/articles/scoping.html). 
 
@@ -1006,7 +979,7 @@ If there are objects that you want to have available to both `ui.R` and `server.
 
 You can add an image to your Shiny app by placing an image under the `www/` folder and using the UI function `img(src = "image.png")`. Shiny will know to automatically look in the `www/` folder for the image.
 
-### Add JavaScript/CSS
+#### Add JavaScript/CSS
 
 If you know JavaScript or CSS you are more than welcome to use some in your app.
 
@@ -1077,4 +1050,32 @@ The app we developed is functional, but there are plenty of improvements that ca
     
 1. Provide a way for the user to show results from *all* countries (instead of forcing a filter by only one specific country).
     - **Hint:** There are two ways to approach this. You can either add a value of "All" to the dropdown list of country options, you can include a checkbox for "Filter by country" and only show the dropdown.
+
+
+
+# Shiny Resources
+
+Shiny is a very popular package and has lots of resources on the web. Here's a compiled list of a few resources I recommend, which are all fairly easy to read and understand.
+
+- [Shiny official website][shiny-official-web]
+- [Shiny official tutorial][shiny-official-tutorial]
+- [Shiny cheatsheet][shiny-cheatsheet]
+- [Lots of short useful articles about different topics in Shiny - **highly recommended**][shiny-articles]
+- [Shiny in R Markdown](http://rmarkdown.rstudio.com/authoring_shiny.html)
+- Get help from the [Shiny Google group][shiny-google-groups] or [StackOverflow][shiny-stack-overflow]
+- [Publish your apps for free with shinyapps.io][shinyapps-web]
+- [Host your app on your own Shiny server][shiny-server-setup]
+- [Learn about how reactivity works][shiny-reactivity]
+- [Learn about useful debugging techniques][shiny-debugging]
+
+## Awesome add-on packages to Shiny
+
+Many people have written packages that enhance Shiny in some way or add extra functionality. Here is a list of several popular packages that people often use together with Shiny:
+
+* [shinythemes][shinythemes-web] - Easily alter the appearance of your app ([CRAN][shinythemes-cran]).
+* [shinyjs][shinyjs-web] - Enhance user experience in Shiny apps using JavaScript functions without knowing JavaScript ([CRAN][shinyjs-cran]; [GitHub][shinyjs-github]).
+* [leaflet][leaflet-web] - Add interactive maps to your apps ([CRAN][leaflet-cran]; [GitHub][leaflet-github]).
+* [ggvis][ggvis-web] - Similar to ggplot2, but the plots are focused on being web-based and are more interactive ([CRAN][ggvis-cran]).
+* [shinydashboard][shinydashboard-web] - Gives you tools to create visual “dashboards” ([CRAN][shinydashboard-cran]; [GitHub][shinydashboard-github]).
+
 
