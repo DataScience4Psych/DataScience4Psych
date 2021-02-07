@@ -1,9 +1,9 @@
 # Contributing to DataScience4Psych
 
-Howdy :wave:! The guidelines below outline how to propose a change to shinysurveys. They are based on (i.e. the same as) the `tidyverse` contribution guidelines. If you have any additional questions, please [open an issue](https://github.com//DataScience4Psych/DataScience4Psych/issues).
+Howdy :wave:! The guidelines below outline how to propose a change to DataScience4Psych. They are based on [shinysurveys](https://github.com/jdtrat/shinysurveys), which in turn, are based on the `tidyverse` contribution guidelines. If you have any additional questions, please [open an issue](https://github.com//DataScience4Psych/DataScience4Psych/issues).
 ## Fixing typos
 
-You can fix typos, spelling mistakes, or grammatical errors in the documentation directly using the GitHub web interface, as long as the changes are made in the *source* file. This generally means you'll need to edit [roxygen2 comments](https://roxygen2.r-lib.org/articles/roxygen2.html) in an `.R`, not a `.Rd` file. You can find the `.R` file that generates the `.Rd` by reading the comment in the first line.
+You can fix typos, spelling mistakes, or grammatical errors in the documentation directly using the GitHub web interface, as long as the changes are made in the *source* file. This generally means you'll need to edit .Rmd files.
 
 ## Bigger changes
 
