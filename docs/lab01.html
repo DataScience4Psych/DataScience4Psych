@@ -354,6 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17" data-path="grammar-of-data-wrangling.html"><a href="grammar-of-data-wrangling.html"><i class="fa fa-check"></i><b>17</b> Grammar of data wrangling</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="grammar-of-data-wrangling.html"><a href="grammar-of-data-wrangling.html#piping"><i class="fa fa-check"></i><b>17.1</b> Piping</a></li>
+<li class="chapter" data-level="17.2" data-path="grammar-of-data-wrangling.html"><a href="grammar-of-data-wrangling.html#cheatsheets"><i class="fa fa-check"></i><b>17.2</b> Cheatsheets</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="hands-on-data-wrangling.html"><a href="hands-on-data-wrangling.html"><i class="fa fa-check"></i><b>18</b> Hands on Data Wrangling</a>
 <ul>
@@ -875,7 +876,7 @@ Actually, this single data frame contains 13 datasets, designed to show us why d
 The different datasets are marked by the <code>dataset</code> variable.</p>
 <p>To find out more about the dataset, type the following in your Console: <code>?datasaurus_dozen</code>.
 A question mark before the name of an object will always bring up its help file.
-This command must be ran in the Console.</p>
+This command must be run in the Console.</p>
 </div>
 </div>
 <div id="exercises" class="section level2" number="6.3">
@@ -935,28 +936,25 @@ In this case, we want these to be points, hence <code>geom_point</code>.</p>
 <span id="cb38-2"><a href="lab01.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="0104_hello_r_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>If this seems like a lot, it is.
-And you will learn about the philosophy of building data visualizations in layer in detail next week.
+And you will learn about the philosophy of layering data visualizations in detail next week.
 For now, follow along with the code that is provided.</p>
 <p>For the second part of these exercises, we need to calculate a summary statistic: the correlation coefficient.</p>
 <blockquote>
 <p>Recall: Correlation coefficient, often referred to as <span class="math inline">\(r\)</span> in statistics, measures the linear association between two variables.</p>
 </blockquote>
 <p>You will see that some of the pairs of variables we plot do not have a linear relationship between them.
-This is exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate <span class="math inline">\(r\)</span> only if relevant.
+This nonlinear relationships are exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate <span class="math inline">\(r\)</span> only if relevant.
 In this case, calculating a correlation coefficient really doesn’t make sense since the relationship between <code>x</code> and <code>y</code> is definitely not linear – it’s dinosaurial!</p>
 <p>But, for illustrative purposes, let’s calculate the correlation coefficient between <code>x</code> and <code>y</code>.</p>
 <blockquote>
 <p>Tip: Start with <code>dino_data</code> and calculate a summary statistic that we will call <code>r</code> as the <code>cor</code>relation between <code>x</code> and <code>y</code>.</p>
 </blockquote>
-<pre><code>
-
-```r
-dino_data %&gt;%
-  summarize(r = cor(x, y))
-#&gt; # A tibble: 1 x 1
-#&gt;         r
-#&gt;     &lt;dbl&gt;
-#&gt; 1 -0.0645</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="lab01.html#cb39-1" aria-hidden="true" tabindex="-1"></a>dino_data <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="lab01.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y))</span>
+<span id="cb39-3"><a href="lab01.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 1</span></span>
+<span id="cb39-4"><a href="lab01.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         r</span></span>
+<span id="cb39-5"><a href="lab01.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
+<span id="cb39-6"><a href="lab01.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 -0.0645</span></span></code></pre></div>
 <p>🧶 ✅ ⬆️ <em>Knit, commit, and push your changes to GitHub with the commit message “Added answer for Ex 2.” Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Plot <code>y</code> vs. <code>x</code> for the <code>star</code> dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between <code>x</code> and <code>y</code> for this dataset. How does this value compare to the <code>r</code> of <code>dino</code>?</li>
@@ -986,14 +984,14 @@ dino_data %&gt;%
 <ul>
 <li><strong>Resize your figures:</strong></li>
 </ul>
-<p>Click on the gear icon in on top of the R Markdown document, and select “Output Options…” in the dropdown menu.
-In the pop up dialog box go to the Figures tab and change the height and width of the figures, and hit OK when done.
+<p>Click on the gear icon near the top of the R Markdown document, and select “Output Options…” in the dropdown menu.
+In the pop up dialog box, go to the Figures tab and change the height and width of the figures, and hit OK when done.
 Then, knit your document and see how you like the new sizes.
 Change and knit again and again until you’re happy with the figure sizes.
 Note that these values get saved in the YAML.</p>
 <p><img src="img/fig-resize-local.png" width="634" /></p>
 <p>You can also use different figure sizes for different figures.
-To do so click on the gear icon within the chunk where you want to make a change.
+To do so, click on the gear icon within the chunk where you want to make a change.
 Changing the figure sizes added new options to these chunks: <code>fig.width</code> and <code>fig.height</code>.
 You can change them by defining different values directly in your R Markdown document as well.</p>
 <p><img src="img/theme-highlight.png" width="467" /></p>
