@@ -17,13 +17,13 @@ knitr::opts_chunk$set(eval = FALSE)
 include_graphics("img/mitch-hedgeberg-lqd.jpg")
 ```
 
-Have you ever taken a road trip in the US and thought to yourself "I wonder what La Quinta means". Well, the late comedian [Mitch Hedberg](https://en.wikipedia.org/wiki/Mitch_Hedberg) thinks it's Spanish for *next to Denny's*.
+Have you ever taken a road trip in the US and thought to yourself "I wonder what La Quinta means". Well, the late comedian [Mitch Hedberg](https://en.wikipedia.org/wiki/Mitch_Hedberg) has joked that it's Spanish for *next to Denny's*.
 
 If you're not familiar with these two establishments, [Denny's](https://www.dennys.com/) is a casual diner chain that is open 24 hours and [La Quinta Inn and Suites](http://www.lq.com/) is a hotel chain.
 
-These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.
+These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab, we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.
 
-The inspiration for this lab comes from a blog post by John Reiser on his *new jersey geographer* blog. You can read that analysis [here](http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/). Reiser's blog post focuses on scraping data from Denny's and La Quinta Inn and Suites websites using Python. In this lab we focus on visualization and analysis of these data. However note that the data scraping was also done in R, and we we will discuss web scraping using R later in the course. But for now we focus on the data that has already been scraped and tidied for you.
+The inspiration for this lab comes from a blog post by John Reiser on his *New Jersey geographer* blog. You can read that analysis [here](http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/). Reiser's blog post focuses on scraping data from Denny's and La Quinta Inn and Suites websites using Python. In this lab, we focus on visualization and analysis of those data. However, it's worth noting that the data scraping was also done in R. Later in the course,we will discuss web scraping using R . But for now, we're focusing on the data that has already been scraped and tidied up for you.
 
 ## Getting started
 
@@ -44,24 +44,19 @@ Currently your project is called *Untitled Project*. Update the name of your pro
 
 ### Warm up
 
-**Pick one team member to complete the steps in this section while the others contribute to the discussion but do not actually touch the files on their computer.**
-
 Before we introduce the data, let's warm up with some simple exercises.
 
 ### YAML
 
-Open the R Markdown (Rmd) file in your project, change the author name to your **team** name, and knit the document.
+Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
 
 ### Commiting and pushing changes
 
 - Go to the **Git** pane in your RStudio. 
 - View the **Diff** and confirm that you are happy with the changes.
 - Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
-- Click on **Push**. This will prompt a dialogue box where you first need to enter your user name, and then your password.
+- Click on **Push**. This action will prompt a dialogue box where you first need to enter your user name, and then your password.
 
-### Pulling changes
-
-Now, the remaining team members who have not been concurrently making these changes on their projects should click on the **Pull** button in their Git pane and observe that the changes are now reflected on their projects as well.
 
 ## The data
 
@@ -94,9 +89,9 @@ We will determine whether or not the establishment has a location outside the US
 
 5. Find the Denny's locations that are outside the US, if any. To do so, filter the Denny's locations for observations where `state` is not in `states$abbreviation`. The code for this is given below. Note that the `%in%` operator matches the states listed in the `state` variable to those listed in `states$abbreviation`. The `!` operator means **not**. Are there any Denny's locations outside the US?
 
-```{marginfigure}
-"Filter for `state`s that are not in `states$abbreviation`."
-```
+
+> "Filter for `state`s that are not in `states$abbreviation`."
+
 
 ```{r}
 dn %>%
@@ -105,9 +100,9 @@ dn %>%
 
 6. Add a country variable to the Denny's dataset and set all observations equal to `"United States"`. Remember, you can use the `mutate` function for adding a variable. Make sure to save the result of this as `dn` again so that the stored data frame contains the new variable going forward.
 
-```{marginfigure}
-We don't need to tell R how many times to repeat the character string "United States" to fill in the data for all observations, R takes care of that automatically.
-```
+
+> Comment: We don't need to tell R how many times to repeat the character string "United States" to fill in the data for all observations, R takes care of that automatically.
+
 
 ```{r}
 dn %>%
@@ -136,7 +131,7 @@ lq <- lq %>%
 
 9. Which states have the most and fewest Denny's locations? What about La Quinta? Is this surprising? Why or why not?
 
-Next, let's calculate which states have the most Denny's locations *per thousand square miles*. This requires *join*ining information from the frequency tables you created in Exercise 8 with information from the `states` data frame.
+Next, let's calculate which states have the most Denny's locations *per thousand square miles*. This requires *join*ining information from the frequency tables you created in the previous set with information from the `states` data frame.
 
 First, we count how many observations are in each state, which will give us a data frame with two variables: `state` and `n`. Then, we join this data frame with the `states` data frame. However note that the variables in the `states` data frame that has the two-letter abbreviations is called `abbreviation`. So when we're joining the two data frames we specify that the `state` variable from the Denny's data should be matched `by` the `abbreviation` variable from the `states` data:
 
