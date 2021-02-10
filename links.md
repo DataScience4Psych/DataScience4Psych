@@ -35,9 +35,13 @@
 [d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
 [d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
 [d10_dfs]: https://datascience4psych.github.io/slides/d10_dfs/d10_dfs.html
-[d11_types]:  https://datascience4psych.github.io/slides/d11_types/d11_types.html
-[d12_import]:  https://datascience4psych.github.io/slides/d12_import/d12_import.html
-
+[d11_types]: https://datascience4psych.github.io/slides/d11_types/d11_types.html
+[d12_import]: https://datascience4psych.github.io/slides/d12_import/d12_import.html
+[d13_goodviz]: https://datascience4psych.github.io/slides/d13_goodviz/d13_goodviz.html
+[d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
+[d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
+[d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
+[d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
 
 <!--R Links-->
 [cran]: https://cloud.r-project.org
