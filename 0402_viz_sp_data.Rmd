@@ -23,7 +23,7 @@ If you're not familiar with these two establishments, [Denny's](https://www.denn
 
 These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab, we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.
 
-The inspiration for this lab comes from a blog post by John Reiser on his *New Jersey geographer* blog. You can read that analysis [here](http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/). Reiser's blog post focuses on scraping data from Denny's and La Quinta Inn and Suites websites using Python. In this lab, we focus on visualization and analysis of those data. However, it's worth noting that the data scraping was also done in R. Later in the course,we will discuss web scraping using R . But for now, we're focusing on the data that has already been scraped and tidied up for you.
+This lab was inspired by John Reiser's post in his *New Jersey geographer* blog. You can read that analysis [here](http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/). Reiser's blog post focuses on scraping data from Denny's and La Quinta Inn and Suites websites using Python. In this lab, we focus on visualization and analysis of those data. However, it's worth noting that the data scraping was also done in R. Later in the course,we will discuss web scraping using R . But for now, we're focusing on the data that has already been scraped and tidied up for you.
 
 ## Getting started
 
@@ -60,7 +60,14 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ## The data
 
-The datasets we'll use are called `dennys` and `laquinta` from the **dsbox** package. Note that these data were scraped from [here](https://locations.dennys.com/) and [here](https://www.lq.com/en/findandbook/hotel-listings.html), respectively.
+The datasets we'll use are called `dennys` and `laquinta` from the **dsbox** package. This package is not on CRAN yet; instead it is hosted on github. You will have to download and [install it yourself](https://github.com/rstudio-education/dsbox#installation). This piece of code should help get you started.
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("rstudio-education/dsbox")
+
+```
+Note that these data were scraped from [here](https://locations.dennys.com/) and [here](https://www.lq.com/en/findandbook/hotel-listings.html), respectively.
 
 To help with our analysis we will also use a dataset on US states:
 
@@ -141,7 +148,7 @@ dn %>%
   inner_join(states, by = c("state" = "abbreviation"))
 ```
 
-Before you move on the the next question, run the code above and take a look at the output. In the next exercise you will need to build on this pipe.
+Before you move on the the next question, run the code above and take a look at the output. In the next exercise, you will need to build on this pipe.
 
 10. Which states have the most Denny's locations per thousand square miles? What about La Quinta?
 
@@ -154,7 +161,7 @@ lq <- lq %>%
   mutate(establishment = "La Quinta")
 ```
 
-Since the two data frames have the same columns, we can easily bind them with the `bind_rows` function:
+Because the two data frames have the same columns, we can easily bind them with the `bind_rows` function:
 
 ```{r}
 dn_lq <- bind_rows(dn, lq)
@@ -167,10 +174,10 @@ ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment))
   geom_point()
 ```
 
-The following two questions ask you to create visualizations. These should follow best practices you learned in class, such as informative titles, axis labels, etc. See http://ggplot2.tidyverse.org/reference/labs.html for help with the syntax. You can also choose different themes to change the overall look of your plots, see http://ggplot2.tidyverse.org/reference/ggtheme.html for help with these.
+The following two questions ask you to create visualizations. These vizualizations should follow best practices you learned in class, such as informative titles, axis labels, etc. See http://ggplot2.tidyverse.org/reference/labs.html for help with the syntax. You can also choose different themes to change the overall look of your plots, see http://ggplot2.tidyverse.org/reference/ggtheme.html for help with these.
 
 11. Filter the data for observations in North Carolina only, and recreate the plot. You should also adjust the transparency of the points, by setting the `alpha` level, so that it's easier to see the overplotted ones. Visually, does Mitch Hedberg's joke appear to hold here?
 
 12. Now filter the data for observations in Texas only, and recreate the plot, with an appropriate `alpha` level. Visually, does Mitch Hedberg's joke appear to hold here?
 
-That's it for now! In the next lab we will take a more quantitative approach to answering these questions.
+That's it for now! In the next lab, we will take a more quantitative approach to answering these questions.
