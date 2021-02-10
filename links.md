@@ -35,6 +35,9 @@
 [d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
 [d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
 [d10_dfs]: https://datascience4psych.github.io/slides/d10_dfs/d10_dfs.html
+[d11_types]:  https://datascience4psych.github.io/slides/d11_types/d11_types.html
+[d12_import]:  https://datascience4psych.github.io/slides/d12_import/d12_import.html
+
 
 <!--R Links-->
 [cran]: https://cloud.r-project.org
