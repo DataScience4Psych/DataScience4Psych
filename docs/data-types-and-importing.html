@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>35 Lab: Smokers in Whickham | Data Science for Psychologists</title>
+  <title>25 Data types and Importing | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="35 Lab: Smokers in Whickham | Data Science for Psychologists" />
+  <meta property="og:title" content="25 Data types and Importing | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="35 Lab: Smokers in Whickham | Data Science for Psychologists" />
+  <meta name="twitter:title" content="25 Data types and Importing | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="web-scraping.html"/>
-<link rel="next" href="functions.html"/>
+<link rel="prev" href="thoughts-from-hadley-wickham-on-tidyverse.html"/>
+<link rel="next" href="data-types-and-recoding.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -874,81 +874,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lab07" class="section level1" number="35">
-<h1><span class="header-section-number">35</span> Lab: Smokers in Whickham</h1>
-<div id="simpsons-paradox" class="section level2" number="35.1">
-<h2><span class="header-section-number">35.1</span> Simpson’s paradox</h2>
-</div>
-<div id="getting-started-6" class="section level2" number="35.2">
-<h2><span class="header-section-number">35.2</span> Getting started</h2>
-<p><img src="img/whickham.png" width="527" /></p>
-<p>A study of conducted in Whickham, England recorded participants’ age, smoking status at baseline, and then 20 years later recorded their health outcome.</p>
-<div id="packages-5" class="section level3" number="35.2.1">
-<h3><span class="header-section-number">35.2.1</span> Packages</h3>
-<p>In this lab we will work with the <code>tidyverse</code> and <code>mosaicData</code> packages.</p>
-<p>Because this is first time we’re using the <code>mosaicData</code> package, you need to make
-sure to install it first by running <code>install.packages("mosaicData")</code> in the
-console.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="lab07.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb171-2"><a href="lab07.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData) </span></code></pre></div>
-<p>Note that these packages are also loaded in your R Markdown document.</p>
-</div>
-</div>
-<div id="the-data-2" class="section level2" number="35.3">
-<h2><span class="header-section-number">35.3</span> The data</h2>
-<p>The data is in the <code>mosaicData</code> package. You can load it with</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="lab07.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Whickham)</span></code></pre></div>
-<p>Take a peek at the codebook with</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="lab07.html#cb173-1" aria-hidden="true" tabindex="-1"></a>?Whickham</span></code></pre></div>
-</div>
-<div id="exercises-5" class="section level2" number="35.4">
-<h2><span class="header-section-number">35.4</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li><p>What type of study do you think these data comne from: observational
-or experiment? Why?</p></li>
-<li><p>How many observations are in this dataset? What does each observation
-represent?</p></li>
-<li><p>How many variables are in this dataset? What type of variable is each?
-Display each variable using an appropriate visualization.</p></li>
-<li><p>What would you expect the relationship between smoking status and
-health outcome to be?</p></li>
-<li><p>Create a visualization depicting the relationship between smoking status
-and health outcome. Briefly describe the relationship, and evaluate whether
-this meets your expectations. Additionally, calculate the relevant
-conditional probabilities to help your narrative. Here is some code to
-get you started:</p></li>
-</ol>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="lab07.html#cb174-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb174-2"><a href="lab07.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, outcome)</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
-<li>Create a new variable called <code>age_cat</code> using the following scheme:</li>
-</ol>
+<div id="data-types-and-importing" class="section level1" number="25">
+<h1><span class="header-section-number">25</span> Data types and Importing</h1>
+<p>This module is designed to dive into data types and data importing. Please watch the videos and work your way through the notes. You can find the video playlist for this module <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYYWFcel6_vp8__RUKLxhX4y">here</a>. Most of the slides used to make the videos in this module can be found in the <a href="https://github.com/DataScience4Psych/slides">slides repo</a>.</p>
+<div id="module-materials-3" class="section level2" number="25.1">
+<h2><span class="header-section-number">25.1</span> Module Materials</h2>
 <ul>
-<li><code>age &lt;= 44 ~ "18-44"</code></li>
-<li><code>age &gt; 44 &amp; age &lt;= 64 ~ "45-64"</code></li>
-<li><code>age &gt; 64 ~ "65+"</code></li>
+<li>Slides
+<ul>
+<li><a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">Data types and recoding</a></li>
+<li><a href="https://datascience4psych.github.io/slides/d12_import/d12_import.html">Importing data</a></li>
+</ul></li>
+<li>Suggested Readings
+<ul>
+<li><a href="https://r4ds.had.co.nz/wrangle-intro.html">Wrangle</a></li>
+<li><a href="https://r4ds.had.co.nz/transform.html">Data Transformation</a></li>
+<li><a href="https://r4ds.had.co.nz/data-import.html">Data Importing</a></li>
+</ul></li>
+<li>Activities
+<!-- 
+  * [Star Wars!](https://github.com/DataScience4Psych/ae-03-starwars-dataviz)
+--><br />
+</li>
+<li>Lab
+<ul>
+<li><a href="lab04.html#lab04">Visualizing spatial data</a></li>
+</ul></li>
 </ul>
-<ol start="7" style="list-style-type: decimal">
-<li>Re-create the visualization depicting the relationship between smoking
-status and health outcome, faceted by <code>age_cat</code>. What changed? What might
-explain this change? Extend the contingency table from earlier by
-breaking it down by age category and use it to help your narrative.</li>
-</ol>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="lab07.html#cb175-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb175-2"><a href="lab07.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, age_cat, outcome)</span></code></pre></div>
-
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="web-scraping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="thoughts-from-hadley-wickham-on-tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-types-and-recoding.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -979,7 +940,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0702_simpsons_paradox.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0401_module.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -990,7 +951,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0702_simpsons_paradox.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0401_module.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

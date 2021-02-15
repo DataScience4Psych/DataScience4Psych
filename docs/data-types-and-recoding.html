@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>35 Lab: Smokers in Whickham | Data Science for Psychologists</title>
+  <title>26 Data types and recoding | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="35 Lab: Smokers in Whickham | Data Science for Psychologists" />
+  <meta property="og:title" content="26 Data types and recoding | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="35 Lab: Smokers in Whickham | Data Science for Psychologists" />
+  <meta name="twitter:title" content="26 Data types and recoding | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="web-scraping.html"/>
-<link rel="next" href="functions.html"/>
+<link rel="prev" href="data-types-and-importing.html"/>
+<link rel="next" href="importing-data.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -874,81 +874,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lab07" class="section level1" number="35">
-<h1><span class="header-section-number">35</span> Lab: Smokers in Whickham</h1>
-<div id="simpsons-paradox" class="section level2" number="35.1">
-<h2><span class="header-section-number">35.1</span> Simpson’s paradox</h2>
-</div>
-<div id="getting-started-6" class="section level2" number="35.2">
-<h2><span class="header-section-number">35.2</span> Getting started</h2>
-<p><img src="img/whickham.png" width="527" /></p>
-<p>A study of conducted in Whickham, England recorded participants’ age, smoking status at baseline, and then 20 years later recorded their health outcome.</p>
-<div id="packages-5" class="section level3" number="35.2.1">
-<h3><span class="header-section-number">35.2.1</span> Packages</h3>
-<p>In this lab we will work with the <code>tidyverse</code> and <code>mosaicData</code> packages.</p>
-<p>Because this is first time we’re using the <code>mosaicData</code> package, you need to make
-sure to install it first by running <code>install.packages("mosaicData")</code> in the
-console.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="lab07.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb171-2"><a href="lab07.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData) </span></code></pre></div>
-<p>Note that these packages are also loaded in your R Markdown document.</p>
+<div id="data-types-and-recoding" class="section level1" number="26">
+<h1><span class="header-section-number">26</span> Data types and recoding</h1>
+<div id="why-should-you-care-about-data-types" class="section level2" number="26.1">
+<h2><span class="header-section-number">26.1</span> Why should you care about data types?</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/sOrRIxJ7oCo" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<div id="the-data-2" class="section level2" number="35.3">
-<h2><span class="header-section-number">35.3</span> The data</h2>
-<p>The data is in the <code>mosaicData</code> package. You can load it with</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="lab07.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Whickham)</span></code></pre></div>
-<p>Take a peek at the codebook with</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="lab07.html#cb173-1" aria-hidden="true" tabindex="-1"></a>?Whickham</span></code></pre></div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html" width="672" height="400px">
+</iframe>
 </div>
-<div id="exercises-5" class="section level2" number="35.4">
-<h2><span class="header-section-number">35.4</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li><p>What type of study do you think these data comne from: observational
-or experiment? Why?</p></li>
-<li><p>How many observations are in this dataset? What does each observation
-represent?</p></li>
-<li><p>How many variables are in this dataset? What type of variable is each?
-Display each variable using an appropriate visualization.</p></li>
-<li><p>What would you expect the relationship between smoking status and
-health outcome to be?</p></li>
-<li><p>Create a visualization depicting the relationship between smoking status
-and health outcome. Briefly describe the relationship, and evaluate whether
-this meets your expectations. Additionally, calculate the relevant
-conditional probabilities to help your narrative. Here is some code to
-get you started:</p></li>
-</ol>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="lab07.html#cb174-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb174-2"><a href="lab07.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, outcome)</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
-<li>Create a new variable called <code>age_cat</code> using the following scheme:</li>
-</ol>
-<ul>
-<li><code>age &lt;= 44 ~ "18-44"</code></li>
-<li><code>age &gt; 44 &amp; age &lt;= 64 ~ "45-64"</code></li>
-<li><code>age &gt; 64 ~ "65+"</code></li>
-</ul>
-<ol start="7" style="list-style-type: decimal">
-<li>Re-create the visualization depicting the relationship between smoking
-status and health outcome, faceted by <code>age_cat</code>. What changed? What might
-explain this change? Extend the contingency table from earlier by
-breaking it down by age category and use it to help your narrative.</li>
-</ol>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="lab07.html#cb175-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb175-2"><a href="lab07.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, age_cat, outcome)</span></code></pre></div>
+<div id="data-types" class="section level2" number="26.2">
+<h2><span class="header-section-number">26.2</span> Data types!</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/baRz3S-3Kag" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#14" width="672" height="400px">
+</iframe>
+<div id="another-hotels-activity" class="section level3" number="26.2.1">
+<h3><span class="header-section-number">26.2.1</span> Another Hotels Activity</h3>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#24" width="672" height="400px">
+</iframe>
+<p>You can find the materials for the Hotels activity <a href="https://github.com/DataScience4Psych/ae-05-hotels-datatypes">here</a>. The compiled version should look something like the following…</p>
+<iframe src="https://datascience4psych.github.io/ae-05-hotels-datatypes/type-coercion.html.html" width="672" height="400px">
+</iframe>
+</div>
+</div>
+<div id="special-values" class="section level2" number="26.3">
+<h2><span class="header-section-number">26.3</span> Special Values</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/Kbj4bulZX2Y" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#26" width="672" height="400px">
+</iframe>
+</div>
+<div id="data-classes" class="section level2" number="26.4">
+<h2><span class="header-section-number">26.4</span> Data classes</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/TVFEFH3UqnA" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#35" width="672" height="400px">
+</iframe>
+</div>
+<div id="working-with-factors" class="section level2" number="26.5">
+<h2><span class="header-section-number">26.5</span> Working with factors</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/j-qoCXmkZhY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#45" width="672" height="400px">
+</iframe>
+<div id="an-another-hotels-activity" class="section level3" number="26.5.1">
+<h3><span class="header-section-number">26.5.1</span> (An) Another Hotels Activity</h3>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#50" width="672" height="400px">
+</iframe>
+<p>You can find the materials for the Hotels activity <a href="https://github.com/DataScience4Psych/ae-05-hotels-datatypes">here</a>. The compiled version should look something like the following…</p>
+<iframe src="https://datascience4psych.github.io/ae-05-hotels-datatypes/hotels-forcats.html.html" width="672" height="400px">
+</iframe>
+</div>
+</div>
+<div id="working-with-dates" class="section level2" number="26.6">
+<h2><span class="header-section-number">26.6</span> Working with Dates</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/0cMMyk2NVOY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
+<iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#52" width="672" height="400px">
+</iframe>
 
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="web-scraping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-types-and-importing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="importing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -979,7 +997,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0702_simpsons_paradox.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0401_module.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -990,7 +1008,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0702_simpsons_paradox.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0401_module.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
