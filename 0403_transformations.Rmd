@@ -1,0 +1,280 @@
+
+# ODD: Transformations data!
+
+```{r include = FALSE}
+source("common.R")
+ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
+ds4p_urls <- read.csv("./data/ds4p_urls.csv")
+```
+
+```{r links, child="links.md"}
+```
+
+This optional deep dive covers data transformations, and Tukey's ladder of powers. 
+
+
+## Transforming Data: Tukey's Ladder of Powers
+
+<!-- http://blackwell.math.yorku.ca/math4939/lectures/transforming_data_tukeys_ladder_of_powers.R -->
+
+This material is based on @fox2016applied ch. 4, pp. 28 -- 80.
+
+We will use the following data set(s) from @fox2016applied.
+
+```{r}
+# Download these files manually.
+# Make sure to the directory to the file in which this file was saved
+# using RStudio menus: Session > Set Working Directory > To Source File Directory
+#fox_data <- "http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/"
+#download.file(paste0(fox_data,'UnitedNations.txt'),'UnitedNations.txt')
+
+
+
+library(car)
+library(spida2)
+library(latticeExtra)
+
+# read data
+un <- read.table('UnitedNations.txt', header = TRUE)
+head(un)
+un$country <- rownames(un)
+
+```
+
+Finding transformations to make regressions behave
+
+```{r}
+gd() 
+xyplot(infantMortality ~ GDPperCapita, un)
+xyplot(log(infantMortality) ~ log(GDPperCapita), un)
+
+```
+
+
+John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions  and the shape of relationships between variables. The basic idea stems from the fact that functions of the form
+
+$$y' = y^p, \quad y > 0$$
+have a graph that is concave up if $p >1$, and concave down if $0<p<1$.
+
+
+For $p < 0$,
+
+$$y' = - y^p, \quad y > 0$$
+
+the graph is also concave down.
+
+This leaves out $p=0$ but we will see shortly that $y' = \ln y$ is the sensible transformation that corresponds to $p = 0$.
+
+Now, we standardize the family of power transformations so that they have the value 0 when $y = 1$ and so their derivative is equal to 1 when $y=1$.
+
+For $p \ne 0$, this yields $$y' = \frac{y^p - 1}{p}$$
+
+Note that, by l’Hôpital’s rule: 
+
+$$\lim_{p \to 0} \frac{y^p - 1}{p}= \lim_{p \to 0}\, e^{\, p \ln y} \ln  y = \ln  y$$
+
+We define a function that produces this transformation. The easy way to define it is:
+
+```{r}
+pow <- function(y, p) {
+  if(p == 0) log(y) else (y^p - 1)/p 
+}
+
+# test:
+x <- seq(-1,3,.5)
+x # note that these transformations are really intended for y > 0
+pow(x, 2) 
+pow(x, 0)  %>% name(x)
+pow(x, -1) %>% name(x) %>% cbind
+plot(exp) # easy plotting of a function
+plot(function(x) pow(x, p=2)) # anonymous function or 'lambda'
+plot(function(x) pow(x, p=.5), xlim=c(0,3)) 
+```
+
+but this has the disadvantage that it works correctly only for a single value of $p$, since the statement `if(p == 0)` only tests the first element of `p`.
+
+## Vectorizing a function
+
+Most operators in R are __vectorized__ so they work element-wise when their arguments are vectors. When the arguments have incompatible lengths, the shorter argument is __recycled__ to have the same length as the longer one. That is why the following produces sensible results:
+
+```{r}
+z <- c(3,5,9)
+z + c(1,1,1)
+z + 1  # 1 is recycled so the result is equivalent to the previous line
+z + c(1,2,3)
+z + c(1,2) # recycles but gives a warning
+z + z
+z^2
+z^z
+```
+
+We can use `ifelse` which works on a vector instead of a single value.
+```{r}
+pow <- function(y, p) {
+  p <- rep(p, length.out = length(y))
+  y <- rep(y, length.out = length(p))
+  ifelse(p==0, log(y), (y^p - 1)/p) 
+}
+# test:
+pow(-1:4, c(2,0,-1,1,3))
+pow(-1:4, 2)
+```
+
+With a bit more work, we can avoid unnecessary evaluations:
+
+```{r}
+pow <- function(y, p) {
+  p <- rep(p, length.out = length(y))
+  y <- rep(y, length.out = length(p))
+  y[p==0] <- log(y[p==0])
+  y[p!=0] <- (y[p!=0]^p[p!=0] -1) / p[p!=0]
+  y
+}
+
+# Test:
+
+pow(1:10,0) == log(1:10)
+pow(1:10,-1)
+pow(1:10,.5)
+pow(1:10,-1:8)
+
+```
+
+
+Let's plot this transformation for a range of values of $p$. The value of `expand.grid` is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.
+
+```{r}
+expand.grid(a = c("A","B"), x = 1:3) 
+
+
+dd <- expand.grid(y = seq(.01,3,.01), p = c(-2,-1,-.5,0,.5,1,2,3))
+dim(dd)
+head(dd)
+some(dd) # 10 rows at random
+
+
+dd$yval <- with(dd, pow(y,p))
+xyplot(yval ~ y| factor(p), dd, type = 'l')
+xyplot(yval ~ y| factor(p), dd, type = 'l', ylim =c(-2,max(dd$yval)))
+xyplot(yval ~ y , dd, groups = p, type = 'l', ylim =c(-2,max(dd$yval)))
+xyplot(yval ~ y , dd, 
+       groups = p, 
+       type = 'l',
+       xlim = c(0,3),
+       ylim =c(-2,max(dd$yval)))
+gd(8, lwd = 2) # number of colours needed
+xyplot(yval ~ y , dd, 
+       groups = p, 
+       type = 'l',
+       xlim = c(0,3),
+       ylim =c(-2,max(dd$yval)))
+xyplot(yval ~ y , dd, 
+       groups = p, 
+       type = 'l',
+       auto.key = list(space = 'right',lines = T, points = F),
+       xlim = c(0,3),
+       ylim =c(-2,max(dd$yval)))
+
+```
+
+It's much better to have the legend in the same order as the lines in the graph. We can turn `p` into a factor and reverse its order.
+
+```{r}
+dd$po <- factor(dd$p)
+dd$po <- reorder(dd$po, -dd$p)
+xyplot(yval ~ y , dd, 
+       groups = po, 
+       type = 'l',
+       auto.key = list(space = 'right',lines = T, points = F, title='power'),
+       xlim = c(0,3),
+       ylim =c(-2,max(dd$yval)))
+
+```
+
+From quantile plots:
+
+Uniform quantiles...
+
+```{r}
+library(spida2)
+xqplot(un)
+#' 
+```
+
+Normal quantiles
+```{r}
+xqplot(un, ptype = 'normal')
+```
+
+We see that none of the numeric variables have normal distributions.  
+
+- 'age' is somewhat platykurtic compared with a normal
+- 'compositeHourlyWages' has both a categorical (0) and  a continuous component
+- 'education' is also platykurtic
+- 'working' is dichotomous
+- 'familyIncome' is skewed to the right
+
+Note that the fact that $x$ or $y$ variables are not normal does not mean that the conditional distribution of $y$ given $x$ is not normal.  
+
+
+Let's explore wages of working women as a function of education.
+
+```{r}
+library(latticeExtra)
+un %>% 
+  xyplot(infantMortality ~ GDPperCapita, .) +
+  layer(panel.loess(..., lwd = 2))
+
+
+# Scatterplot showing curvature in relationship
+
+trellis.focus()
+panel.identify(labels=rownames(un))
+trellis.unfocus()
+
+un %>% 
+  xyplot(log(infantMortality) ~ GDPperCapita | region, .) +
+  layer(panel.loess(..., lwd = 2))
+
+un %>% subset(country %in% c('United.States','Canada'))
+
+```
+
+between wage and education, and heteroskedasticity in wage as a function of education.
+
+```{r}
+slid %>% 
+  xyplot(sqrt(wage) ~ education, .) + 
+  layer(panel.loess(...))
+library(p3d)
+Init3d()
+Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)
+Id3d()
+Id3d('United.States')
+Id3d('Canada')
+rownames(un)
+names(un)
+```
+
+
+## Box Cox Transformation
+
+```{r, echo=FALSE}
+# not mine, but still good
+video_url="https://www.youtube.com/watch?v=vGOpEpjz2Ks"
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+This video was made by [math et al](https://www.youtube.com/channel/UCYNVcihAKkRW-bhzIrguvVw). I like their channel and found this video to be a good one.
+
+
+
+
+### Additional Resources
+
+* Salvatore S. Mangiafico's Summary and Analysis of Extension Program Evaluation in R, [rcompanion.org/handbook/](http://rcompanion.org/handbook/). [Pdf version]( http://rcompanion.org/documents/RHandbookProgramEvaluation.pdf)
+
+* http://www.unige.ch/ses/sococ/cl//stat/eda/ladder.html
+* https://www.statisticshowto.com/tukey-ladder-of-powers/
+* http://blackwell.math.yorku.ca/math4939/lectures/transforming_data_tukeys_ladder_of_powers.html
