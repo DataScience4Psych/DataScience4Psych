@@ -70,15 +70,15 @@ While barplots are useful for showing percentages, they are incorrectly used to 
 Much more informative is to summarizing with a boxplot. If the number of points is small enough, we might as well add them to the plot. When the number of points is too large for us to see them, just showing a boxplot is preferable.
 
 ```{r, fig.align="center",fig.width=4,fig.height=4}
-library("downloader")
-tmpfile <- tempfile()
-download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig1.RData",tmpfile)
-load(tmpfile)
+#library("downloader")
+#tmpfile <- tempfile()
+#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig1.RData")
+load("data/badgraphfig1.RData")
 
 library(rafalib)
 mypar(1,1)
 dat <- list(Treatment=x,Control=y)
-boxplot(dat,xlab="Group",ylab="Response",xlab="Group",ylab="Response",cex=0)
+boxplot(dat,xlab="Group",ylab="Response",cex=0)
 stripchart(dat,vertical=TRUE,method="jitter",pch=16,add=TRUE,col=1)
 ```
 
@@ -93,8 +93,11 @@ This problem is magnified when our data has outliers or very large tails. Note t
 A quick look at the data demonstrates that this difference is mostly driven by just two points. A version showing the data in the log-scale is much more informative.
 
 ```{r, fig.align="center",fig.width=7,fig.height=4}
-download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig3.RData",tmpfile) ##overwrite
-load(tmpfile)
+#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig3.RData",tmpfile) ##overwrite
+#load(tmpfile)
+
+load("data/badgraphfig3.RData")
+
 library(rafalib)
 mypar(1,2)
 dat <- list(Treatment=x,Control=y)
@@ -110,8 +113,8 @@ stripchart(dat,vertical=TRUE,method="jitter",pch=16,add=TRUE,col=1)
 The purpose of many statistical analyses is to determine relationships between two variables. Sample correlations are typically reported and sometimes plots are displayed to show this. However, showing just the regression line is one way to display your data baldy as it hides the scatter. Surprisingly plots such as the following are commonly seen:
 
 ```{r}
-download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig4.RData",tmpfile)
-load(tmpfile)
+#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig4.RData",tmpfile)
+load("data/badgraphfig4.RData")
 plot(x,y,lwd=2,type="n")
 fit <- lm(y~x)
 abline(fit$coef,lwd=2)
@@ -135,8 +138,13 @@ When new technologies or laboratory techniques are introduced, we are often show
 In the plot on the left we see the original data which shows very high correlation. But the data follows a distribution with very fat tails. Note that 95% of the data is below the green line. The plot on the right is in the log scale. 
 
 ```{r,message=FALSE}
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+# BiocManager::install("Biobase")
+# BiocManager::install("SpikeInSubset")
 library(Biobase)
 library(SpikeInSubset)
+
 ```
 ```{r, fig.width=7.5 , fig.height=4, fig.align='center'}
 data(mas95)
@@ -172,6 +180,7 @@ plot((r+g)/2,(r-g),lwd=2,cex=0.2,pch=16,
      main=paste0("SD=",signif(sqrt(mean((r-g)^2)),3)))
 abline(h=0,col=2,lwd=2)
 ```
+
 These are referred to as Bland-Altman plots or MA plots in the genomics literature and will say more later. In this plot we see that the typical difference in the log (base 2) scale between two replicated measures is about 1. This means that when measurements should be the same we will, on average, observe 2 fold difference. We can now compare this variability to the differences we want to detect and decide if this technology is precise enough for our purposes.
 
 
@@ -184,6 +193,7 @@ A common task in data analysis is the comparison of two groups. When the dataset
 </center>
 
 There are various better ways of showing these data to illustrate there is an increase after treatment. One is to simply make a scatterplot and which shows that most points are above the identity line. Another alternative is plot the differences against the before values.
+
 ```{r,fig.align='center',fig.width=7,fig.height=4}
 set.seed(12201970)
 before <- runif(6, 5, 8)
@@ -228,8 +238,8 @@ The follow figure shows three curves. Pseudo 3D is used but it is not clear way.
 This plot can be made better by simply using color to distinguish the three lines:
 
 ```{r,fig.align='center',fig.width=5}
-download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig8dat.csv",tmpfile)
-x <- read.table(tmpfile, sep=",", header=TRUE)
+#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig8dat.csv",tmpfile)
+x <- read.table("data//fig8dat.csv", sep=",", header=TRUE)
 plot(x[,1],x[,2],xlab="log Dose",ylab="Proportion survived",ylim=c(0,1),
      type="l",lwd=2,col=1)
 lines(x[,1],x[,3],lwd=2,col=2)
