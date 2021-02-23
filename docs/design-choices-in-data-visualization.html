@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Lab: Hello R! | Data Science for Psychologists</title>
+  <title>33 Design choices in data visualization | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Lab: Hello R! | Data Science for Psychologists" />
+  <meta property="og:title" content="33 Design choices in data visualization | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Lab: Hello R! | Data Science for Psychologists" />
+  <meta name="twitter:title" content="33 Design choices in data visualization | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="shorthappygit.html"/>
-<link rel="next" href="data-and-visualization.html"/>
+<link rel="prev" href="good-visualization.html"/>
+<link rel="next" href="plots-behaving-badly.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -921,271 +921,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lab01" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Lab: Hello R!</h1>
-<p>The labs for this course have been adapted from a series of Rstudio tutorials. These tutorials were initially created by <a href="https://en.wikipedia.org/wiki/Mine_%C3%87etinkaya-Rundel">Mine Çetinkaya-Rundel</a>. Mine is fantastic; her work is fantastic; and she’s just a badass! I have adapted these tutorials for two reasons. 1) I think it useful to see other people working with R; and 2) Pragmatically, using Mine’s lab materials means that I can spend more time on other aspects of the course – like the website, course notes, videos, feedback, learning how to embed tweets…</p>
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">That&#39;s so wonderful to hear, thank you!</p>&mdash; Mine Çetinkaya-Rundel (@minebocek) <a href="https://twitter.com/minebocek/status/1352727542537605120?ref_src=twsrc%5Etfw">January 22, 2021</a></blockquote>
-
-<p>Seriously, you’d never know it but every hour of finished video takes between 4 and 6 hours to make. (2 hours of writing, 1.5 hours of filming, and 2.5 hours for video editing).</p>
-<div id="lab-goals" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Lab Goals</h2>
-<blockquote>
-<p>Recall: R is the name of the programming language itself and RStudio is a convenient interface.</p>
-</blockquote>
-<p>The main goal of this lab is to introduce you to R and RStudio, which we will be using throughout the course both to learn the statistical concepts discussed in the course and to analyze real data and come to informed conclusions.</p>
-<blockquote>
-<p>Recall: git is a version control system (like “Track Changes” features from Microsoft Word on steroids) and GitHub is the home for your Git-based projects on the Internet (like DropBox but much, much better).</p>
-</blockquote>
-<p>An additional goal is to introduce you to Git and GitHub, which is the collaboration and version control system that we will be using throughout the course.</p>
-<p>As the labs progress, you are encouraged to explore beyond what the labs dictate; a willingness to experiment will make you a much better programmer.
-Before we get to that stage, however, you need to build some basic fluency in R.
-Today we begin with the fundamental building blocks of R and RStudio: the interface, reading in data, and basic commands.</p>
-<p>To make versioning simpler, this lab is a solo lab. I want to make sure everyone gets a significant amount of time at the steering wheel, working directly with R. In the future modules,you’ll learn about collaborating on GitHub and produce a single lab report for your team.</p>
-</div>
-<div id="getting-started" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Getting started</h2>
-<p>Each of your assignments will begin with the following steps. They’re outlined in detail here. Going forward, each lab will start with a “Getting started” section but details will be a bit more sparse than this. You can always refer back to this lab for a detailed list of the steps involved for getting started with an assignment.</p>
-<ul>
-<li>You can find the assignment link for this lab right <a href="https://github.com/DataScience4Psych/lab-01-hello-r">here</a>. That GitHub repository (which we’ll refer to as “repo” going forward) is a template for the assignment. You can build on it to complete your assignment.</li>
-</ul>
-<p><img src="img/clone-repo-link.png" width="265" />
-<!-- to do: make clear how to do this on you own account --></p>
-<ul>
-<li>On GitHub, click on the green <strong>Clone or download</strong> button, select <strong>Use HTTPS</strong> (this might already be selected by default, and if it is, you’ll see the text <strong>Clone with HTTPS</strong> as in the image below). Click on the clipboard icon to copy the repo URL.</li>
-</ul>
-<p><img src="img/new-project-from-gh.png" width="224" /></p>
-<ul>
-<li>Go to RStudio. Create a <strong>New Project from Git Repo</strong>. You will need to click on the down arrow next to the <strong>New Project</strong> button to see this option.</li>
-</ul>
-<p><img src="img/paste-gh-repo-url.png" width="500" /></p>
-<ul>
-<li><p>Copy and paste the URL of your assignment repo into the dialog box:</p></li>
-<li><p>Hit OK, and you’re good to go!</p></li>
-</ul>
-<div id="warm-up" class="section level3" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> Warm up</h3>
-<p>Before we introduce the data, let’s warm up with some simple exercises.</p>
-<blockquote>
-<p>FYI: The top portion of your R Markdown file (between the three dashed lines) is called YAML. It stands for “YAML Ain’t Markup Language.” It is a human friendly data serialization standard for all programming languages. All you need to know is that this area is called the YAML (we will refer to it as such) and that it contains meta information about your document.</p>
-</blockquote>
-<div id="yaml" class="section level4" number="6.2.1.1">
-<h4><span class="header-section-number">6.2.1.1</span> YAML</h4>
-<p>Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.</p>
-<p><img src="img/yaml-raw-to-rendered.png" width="930" /></p>
-</div>
-<div id="committing-changes" class="section level4" number="6.2.1.2">
-<h4><span class="header-section-number">6.2.1.2</span> Committing changes</h4>
-<p>Then go to the Git pane in your RStudio.</p>
-<p>If you have made changes to your Rmd file, you should see it listed here.
-Click on it to select it in this list and then click on <strong>Diff</strong>.
-This shows you the <em>diff</em>erence between the last committed state of the document and its current state that includes your changes.
-If you’re happy with these changes, write “Update author name” in the <strong>Commit message</strong> box and hit <strong>Commit</strong>.</p>
-<p><img src="img/update-author-name-commit.png" width="889" /></p>
-<p>You don’t have to commit after every change, doing so would get quite cumbersome.
-You should consider committing states that are <em>meaningful to you</em> for inspection, comparison, or restoration.
-In the first few assignments, I’ll suggest exactly when to commit and in some cases, what commit message to use.
-As the semester progresses, you make these decisions.</p>
-</div>
-<div id="pushing-changes" class="section level4" number="6.2.1.3">
-<h4><span class="header-section-number">6.2.1.3</span> Pushing changes</h4>
-<p>Now that you have made an update and committed this change, it’s time to push these changes to the web!
-Or more specifically, to your repo on GitHub.
-Why?
-So that others can see your changes.
-And by others, we mean the course teaching team (your repos in this course are private to you and us, only).</p>
-<p>In order to push your changes to GitHub, click on <strong>Push</strong>.
-This will prompt a dialog box where you first need to enter your user name, and then your password.
-This might feel cumbersome.
-Soon – you <em>will</em> learn how to save your password so you don’t have to enter it every time.
-But for this one assignment you’ll have to manually enter each time you push in order to gain some experience with it.</p>
-<iframe src="https://giphy.com/embed/SXqw0Vpql4sHX9pCl4" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
-</iframe>
+<div id="design-choices-in-data-visualization" class="section level1" number="33">
+<h1><span class="header-section-number">33</span> Design choices in data visualization</h1>
+<p>I have currated this collection of external video sources on design choices in data visualization.</p>
+<div id="how-to-spot-a-misleading-graph" class="section level2" number="33.1">
+<h2><span class="header-section-number">33.1</span> How to spot a misleading graph</h2>
+<p>When they’re used well, graphs can help us intuitively grasp complex data. But as visual software has enabled more usage of graphs throughout all media, it has also made them easier to use in a careless or dishonest way — and as it turns out, there are plenty of ways graphs can mislead and outright manipulate. Lea Gaslowitz shares some things to look out for.</p>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/E91bGT9BjYk" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<div id="packages" class="section level3" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> Packages</h3>
-<p>In this lab, we will work with two packages: <strong>datasauRus</strong> and <strong>tidyverse</strong>. <strong>datasauRus</strong> contains the dataset we’ll be using; <strong>tidyverse</strong> is a collection of packages for doing data analysis in a “tidy” way.</p>
-<p>Install these packages by running the following commands in the console.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="lab01.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb34-2"><a href="lab01.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;datasauRus&quot;</span>)</span></code></pre></div>
-<p>Now that the necessary packages are installed, you should be able to Knit your document and see the results.</p>
-<p>If you’d like to run your code in the Console as well you’ll also need to load the packages there. To do so, run the following in the console.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="lab01.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb35-2"><a href="lab01.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus)</span></code></pre></div>
-<p>Note that the packages are also loaded with the same commands in your R Markdown document.</p>
 </div>
-<div id="data" class="section level3" number="6.2.3">
-<h3><span class="header-section-number">6.2.3</span> Data</h3>
-<blockquote>
-<p>Fun fact: If it’s confusing that the data frame is called <code>datasaurus_dozen</code> when it contains 13 datasets, you’re not alone! Have you heard of a <a href="https://en.wikipedia.org/wiki/Dozen#Baker&#39;s_dozen">baker’s dozen</a>?</p>
-</blockquote>
-<p>The data frame we will be working with today is called <code>datasaurus_dozen</code> and it’s in the <code>datasauRus</code> package.
-Actually, this single data frame contains 13 datasets, designed to show us why data visualization is important and how summary statistics alone can be misleading.
-The different datasets are marked by the <code>dataset</code> variable.</p>
-<p>To find out more about the dataset, type the following in your Console: <code>?datasaurus_dozen</code>.
-A question mark before the name of an object will always bring up its help file.
-This command must be run in the Console.</p>
+<div id="data-visualization-and-misrepresentation" class="section level2" number="33.2">
+<h2><span class="header-section-number">33.2</span> Data Visualization and Misrepresentation</h2>
+<p>This animatation was produced by some of my colleagues at Brown.</p>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/x-rDVXVwW9s" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<div id="exercises" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li>Based on the help file, how many rows and how many columns does the <code>datasaurus_dozen</code> file have? What are the variables included in the data frame? Add your responses to your lab report.</li>
-</ol>
-<p>Let’s take a look at what these datasets are.
-To do so we can make a <em>frequency table</em> of the dataset variable:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="lab01.html#cb36-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="lab01.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dataset) <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="lab01.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="dv">13</span>)</span>
-<span id="cb36-4"><a href="lab01.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble:</span></span>
-<span id="cb36-5"><a href="lab01.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   13 x 2</span></span>
-<span id="cb36-6"><a href="lab01.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    dataset   </span></span>
-<span id="cb36-7"><a href="lab01.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  * &lt;chr&gt;     </span></span>
-<span id="cb36-8"><a href="lab01.html#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 away      </span></span>
-<span id="cb36-9"><a href="lab01.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 bullseye  </span></span>
-<span id="cb36-10"><a href="lab01.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 circle    </span></span>
-<span id="cb36-11"><a href="lab01.html#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 dino      </span></span>
-<span id="cb36-12"><a href="lab01.html#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 dots      </span></span>
-<span id="cb36-13"><a href="lab01.html#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 h_lines   </span></span>
-<span id="cb36-14"><a href="lab01.html#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 high_lines</span></span>
-<span id="cb36-15"><a href="lab01.html#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 slant_down</span></span>
-<span id="cb36-16"><a href="lab01.html#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 slant_up  </span></span>
-<span id="cb36-17"><a href="lab01.html#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 star      </span></span>
-<span id="cb36-18"><a href="lab01.html#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 v_lines   </span></span>
-<span id="cb36-19"><a href="lab01.html#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 wide_lines</span></span>
-<span id="cb36-20"><a href="lab01.html#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 x_shape   </span></span>
-<span id="cb36-21"><a href="lab01.html#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 1</span></span>
-<span id="cb36-22"><a href="lab01.html#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   more</span></span>
-<span id="cb36-23"><a href="lab01.html#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   variable:</span></span>
-<span id="cb36-24"><a href="lab01.html#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   n &lt;int&gt;</span></span></code></pre></div>
-<blockquote>
-<p>Fun fact: Matejka, Justin, and George Fitzmaurice. “Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing.” Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems. ACM, 2017.</p>
-</blockquote>
-<p>The original Datasaurus (<code>dino</code>) was created by Alberto Cairo in <a href="http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html">this great blog post</a>.
-The other Dozen were generated using simulated annealing and the process is described in the paper <em>Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics</em> through Simulated Annealing by Justin Matejka and George Fitzmaurice.
-In the paper, the authors simulate a variety of datasets that have the same summary statistics as the Datasaurus but have very different distributions.</p>
-<p>🧶 ✅ ⬆️ <em>Knit, commit, and push your changes to GitHub with the commit message “Added answer for Ex 1.” Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Plot <code>y</code> vs. <code>x</code> for the <code>dino</code> dataset. Then, calculate the correlation coefficient between <code>x</code> and <code>y</code> for this dataset.</li>
-</ol>
-<p>Below is the code you will need to complete this exercise.
-Basically, the answer is already given, but you need to include relevant bits in your Rmd document and successfully knit it and view the results.</p>
-<p>Start with the <code>datasaurus_dozen</code> and pipe it into the <code>filter</code> function to filter for observations where <code>dataset == "dino"</code>.
-Store the resulting filtered data frame as a new data frame called <code>dino_data</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="lab01.html#cb37-1" aria-hidden="true" tabindex="-1"></a>dino_data <span class="ot">&lt;-</span> datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="lab01.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="st">&quot;dino&quot;</span>)</span></code></pre></div>
-<p>Because a lot going on here – let’s slow down and unpack it a bit.</p>
-<p>First, the pipe operator: <code>%&gt;%</code>, takes what comes before it and sends it as the first argument to what comes after it.
-So here, we’re saying <code>filter</code> the <code>datasaurus_dozen</code> data frame for observations where <code>dataset == "dino"</code>.</p>
-<p>Second, the assignment operator: <code>&lt;-</code>, assigns the name <code>dino_data</code> to the filtered data frame.</p>
-<p>Next, we need to visualize these data.
-We will use the <code>ggplot</code> function for this.
-Its first argument is the data you’re visualizing.
-Next we define the <code>aes</code>thetic mappings.
-In other words, the columns of the data that get mapped to certain aesthetic features of the plot, e.g. the <code>x</code> axis will represent the variable called <code>x</code> and the <code>y</code> axis will represent the variable called <code>y</code>.
-Then, we add another layer to this plot where we define which <code>geom</code>etric shapes we want to use to represent each observation in the data.
-In this case, we want these to be points, hence <code>geom_point</code>.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="lab01.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dino_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb38-2"><a href="lab01.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="0104_hello_r_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>If this seems like a lot, it is.
-And you will learn about the philosophy of layering data visualizations in detail next week.
-For now, follow along with the code that is provided.</p>
-<p>For the second part of these exercises, we need to calculate a summary statistic: the correlation coefficient.</p>
-<blockquote>
-<p>Recall: Correlation coefficient, often referred to as <span class="math inline">\(r\)</span> in statistics, measures the linear association between two variables.</p>
-</blockquote>
-<p>You will see that some of the pairs of variables we plot do not have a linear relationship between them.
-This nonlinear relationships are exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate <span class="math inline">\(r\)</span> only if relevant.
-In this case, calculating a correlation coefficient really doesn’t make sense since the relationship between <code>x</code> and <code>y</code> is definitely not linear – it’s dinosaurial!</p>
-<p>But, for illustrative purposes, let’s calculate the correlation coefficient between <code>x</code> and <code>y</code>.</p>
-<blockquote>
-<p>Tip: Start with <code>dino_data</code> and calculate a summary statistic that we will call <code>r</code> as the <code>cor</code>relation between <code>x</code> and <code>y</code>.</p>
-</blockquote>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="lab01.html#cb39-1" aria-hidden="true" tabindex="-1"></a>dino_data <span class="sc">%&gt;%</span></span>
-<span id="cb39-2"><a href="lab01.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y))</span>
-<span id="cb39-3"><a href="lab01.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 1</span></span>
-<span id="cb39-4"><a href="lab01.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         r</span></span>
-<span id="cb39-5"><a href="lab01.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
-<span id="cb39-6"><a href="lab01.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 -0.0645</span></span></code></pre></div>
-<p>🧶 ✅ ⬆️ <em>Knit, commit, and push your changes to GitHub with the commit message “Added answer for Ex 2.” Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<ol start="3" style="list-style-type: decimal">
-<li>Plot <code>y</code> vs. <code>x</code> for the <code>star</code> dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between <code>x</code> and <code>y</code> for this dataset. How does this value compare to the <code>r</code> of <code>dino</code>?</li>
-</ol>
-<p>🧶 ✅ ⬆️ <em>This is another good place to pause, knit, commit changes with the commit message “Added answer for Ex 3,” and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<ol start="4" style="list-style-type: decimal">
-<li>Plot <code>y</code> vs. <code>x</code> for the <code>circle</code> dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between <code>x</code> and <code>y</code> for this dataset. How does this value compare to the <code>r</code> of <code>dino</code>?</li>
-</ol>
-<p>🧶 ✅ ⬆️ <em>You should pause again, commit changes with the commit message “Added answer for Ex 4,” and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<blockquote>
-<p>Hint: Facet by the dataset variable, placing the plots in a 3 column grid, and don’t add a legend.</p>
-</blockquote>
-<ol start="5" style="list-style-type: decimal">
-<li>Finally, let’s plot all datasets at once. In order to do this we will make use of faceting.</li>
-</ol>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="lab01.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> dataset))<span class="sc">+</span></span>
-<span id="cb40-2"><a href="lab01.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb40-3"><a href="lab01.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb40-4"><a href="lab01.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p>And we can use the <code>group_by</code> function to generate all the summary correlation coefficients.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="lab01.html#cb41-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="lab01.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href="lab01.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y)) <span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href="lab01.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="dv">13</span>)</span></code></pre></div>
-<p>You’re done with the data analysis exercises, but we’d like you to do two more things:</p>
-<p><img src="img/fig-resize-global.png" width="468" /></p>
-<ul>
-<li><strong>Resize your figures:</strong></li>
-</ul>
-<p>Click on the gear icon near the top of the R Markdown document, and select “Output Options…” in the dropdown menu.
-In the pop up dialog box, go to the Figures tab and change the height and width of the figures, and hit OK when done.
-Then, knit your document and see how you like the new sizes.
-Change and knit again and again until you’re happy with the figure sizes.
-Note that these values get saved in the YAML.</p>
-<p><img src="img/fig-resize-local.png" width="634" /></p>
-<p>You can also use different figure sizes for different figures.
-To do so, click on the gear icon within the chunk where you want to make a change.
-Changing the figure sizes added new options to these chunks: <code>fig.width</code> and <code>fig.height</code>.
-You can change them by defining different values directly in your R Markdown document as well.</p>
-<p><img src="img/theme-highlight.png" width="467" /></p>
-<ul>
-<li><strong>Change the look of your report:</strong></li>
-</ul>
-<p>Once again, click on the gear icon in on top of the R Markdown document, and select “Output Options…” in the dropdown menu.
-In the General tab of the pop up dialog box, try out different Syntax highlighting and theme options.
-Hit OK and knit your document to see how it looks.
-Play around with these until you’re happy with the look.</p>
-<p><br></p>
-<blockquote>
-<p>Pro Tip: Not sure how to use emojis on your computer? Maybe a teammate can help?</p>
-</blockquote>
-<p>🧶 ✅ ⬆️ <em>Yay, you’re done! Commit all remaining changes, use the commit message "Done with Lab 1!</em> 💪<em>", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards. Before you wrap up the assignment, make sure all documents are updated on your GitHub repo.</em></p>
-
+</div>
+<div id="vox-on-how-coronavirus-charts-can-mislead-us" class="section level2" number="33.3">
+<h2><span class="header-section-number">33.3</span> Vox on How coronavirus charts can mislead us</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/O-3Mlj3MQ_Q" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</div>
+<div id="vox-on-shut-up-about-the-y-axis.-it-shouldnt-always-start-at-zero." class="section level2" number="33.4">
+<h2><span class="header-section-number">33.4</span> Vox on Shut up about the y-axis. It shouldn’t always start at zero.</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/14VYnFhBKcY" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 
-
-
-<!--AE. Links-->
-<!-- Lab Links-->
-<!--Slides-->
-<!--R Links-->
-<!--RStudio Links-->
-<!--HappyGitWithR Links-->
-<!--Package Links-->
-<!--Shiny links-->
-<!--Publications-->
-<!--R Documentation-->
-<!--Wikipedia Links-->
-<!--Misc. Links-->
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="shorthappygit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-and-visualization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="good-visualization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plots-behaving-badly.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1216,7 +997,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0104_hello_r.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0501_goodviz.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1227,7 +1008,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0104_hello_r.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0501_goodviz.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
