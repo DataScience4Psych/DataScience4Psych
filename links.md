@@ -39,6 +39,7 @@
 [d11_types]: https://datascience4psych.github.io/slides/d11_types/d11_types.html
 [d12_import]: https://datascience4psych.github.io/slides/d12_import/d12_import.html
 [d13_goodviz]: https://datascience4psych.github.io/slides/d13_goodviz/d13_goodviz.html
+[d13b_moreggplot]: https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html
 [d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
 [d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
 [d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
