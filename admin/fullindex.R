@@ -25,5 +25,9 @@ df <- data.frame(
               link = make_full(df_docs,myrepo=domain)
 )
 
+df$title[df$link=="https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html"]<-"d13b_moreggplot"
+
 write_csv(df,"data/ds4p_urls.csv")
+
+
 
