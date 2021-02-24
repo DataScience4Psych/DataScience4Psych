@@ -45,7 +45,7 @@ include_url(var_url, height = "400px")
 
 
 
-# ODD: Single table dplyr functions {#dplyr-single}
+## ODD: Single table dplyr functions {#dplyr-single}
 
 This optional deep dive covers more detail on dplyr.
 
@@ -64,7 +64,7 @@ We also discussed dplyr's role inside the tidyverse and tibbles:
 
 This time, we're going to dive a bit deeper into dplyr.
 
-## Load dplyr and gapminder
+### Load dplyr and gapminder
 
 I choose to load the tidyverse, which will load dplyr, among other packages we use incidentally below. 
 
@@ -78,7 +78,7 @@ library(gapminder)
 ```
 
 
-## Create a copy of `gapminder`
+### Create a copy of `gapminder`
 
 We're going to make changes to the `gapminder` tibble. To eliminate any fear that you're damaging the data that comes with the package, we create an explicit copy of `gapminder` for our experiments.
 
@@ -100,7 +100,7 @@ my_gap %>% filter(country == "Canada")
 my_precious <- my_gap %>% filter(country == "Canada")
 ```
 
-## Use `mutate()` to add new variables
+### Use `mutate()` to add new variables
 
 Imagine we wanted to recover each country's GDP. After all, the Gapminder data has a variable for population and GDP per capita. Let's multiply them together.
 
@@ -159,7 +159,7 @@ The relative GDP per capita numbers are, in general, well below 1. We see that m
 
 Remember: Trust No One. Including (especially?) yourself. Always try to find a way to check that you've done what meant to. Prepare to be horrified.
 
-## Use `arrange()` to row-order data in a principled way
+### Use `arrange()` to row-order data in a principled way
 
 `arrange()` reorders the rows in a data frame. Imagine you wanted this data ordered by year then country, as opposed to by country then year.
 
@@ -186,7 +186,7 @@ my_gap %>%
 
 I advise that your analyses NEVER rely on rows or variables being in a specific order. But it's still true that human beings write the code and the interactive development process can be much nicer if you reorder the rows of your data as you go along. Also, once you are preparing tables for human eyeballs, it is imperative that you step up and take control of row order.
 
-## Use `rename()` to rename variables
+### Use `rename()` to rename variables
 
 When I first cleaned this Gapminder excerpt, I was a [`camelCase`][wiki-camel-case] person, but now I'm all about [`snake_case`][wiki-snake-case]. So I am vexed by the variable names I chose when I cleaned this data years ago. Let's rename some variables!
 
@@ -199,7 +199,7 @@ my_gap %>%
 
 I did NOT assign the post-rename object back to `my_gap` because that would make the chunks in this tutorial harder to copy/paste and run out of order. In real life, I would probably assign this back to `my_gap`, in a data preparation script, and proceed with the new variable names.
 
-## `select()` can rename and reposition variables
+### `select()` can rename and reposition variables
 
 You've seen simple use of `select()`. There are two tricks you might enjoy:
 
@@ -215,7 +215,7 @@ my_gap %>%
 
 `everything()` is one of several helpers for variable selection. Read its help to see the rest.
 
-## `group_by()` is a mighty weapon
+### `group_by()` is a mighty weapon
 
 I have found ~~friends and family~~ collaborators love to ask seemingly innocuous questions like, "which country experienced the sharpest 5-year drop in life expectancy?". In fact, that is a totally natural question to ask. But if you are using a language that doesn't know about data, it's an incredibly annoying question to answer.
 
@@ -230,7 +230,7 @@ dplyr offers powerful tools to solve this class of problem:
   
 Combined with the verbs you already know, these new tools allow you to solve an extremely diverse set of problems with relative ease.
 
-### Counting things up
+#### Counting things up
 
 Let's start with simple counting.  How many observations do we have per continent?
 
@@ -273,7 +273,7 @@ my_gap %>%
             n_countries = n_distinct(country))
 ```
 
-### General summarization
+#### General summarization
 
 The functions you'll apply within `summarize()` include classical statistical summaries, like  `mean()`, `median()`, `var()`, `sd()`, `mad()`, `IQR()`, `min()`, and `max()`. Remember they are functions that take $n$ inputs and distill them down into 1 output.
 
@@ -306,11 +306,11 @@ my_gap %>%
 
 Of course it would be much more interesting to see *which* country contributed these extreme observations. Is the minimum (maximum) always coming from the same country? We tackle that with window functions shortly.
 
-## Grouped mutate
+### Grouped mutate
 
 Sometimes you don't want to collapse the $n$ rows for each group into one row. You want to keep your groups, but compute within them.
 
-### Computing with group-wise summaries
+#### Computing with group-wise summaries
 
 Let's make a new variable that is the years of life expectancy gained (lost) relative to 1952, for each individual country. We group by country and use `mutate()` to make a new variable. The `first()` function extracts the first value from a vector. Notice that `first()` is operating on the vector of life expectancies *within each country group*.
 
@@ -324,7 +324,7 @@ my_gap %>%
 
 Within country, we take the difference between life expectancy in year $i$ and life expectancy in 1952. Therefore we always see zeroes for 1952 and, for most countries, a sequence of positive and increasing numbers.
 
-### Window functions {#window-functions}
+#### Window functions {#window-functions}
 
 Window functions take $n$ inputs and give back $n$ outputs. Furthermore, the output depends on all the values. So `rank()` is a window function but `log()` is not. Here we use window functions based on ranks and offsets.
 
@@ -385,7 +385,7 @@ my_gap %>%
   top_n(1, wt = desc(lifeExp)) ## gets the max
 ```
 
-## Grand Finale
+### Grand Finale
 
 So let's answer that "simple" question: which country experienced the sharpest 5-year drop in life expectancy? Recall that this excerpt of the Gapminder data only has data every five years, e.g. for 1952, 1957, etc. So this really means looking at life expectancy changes between adjacent timepoints.
 
@@ -411,7 +411,7 @@ Break the code into pieces, starting at the top, and inspect the intermediate re
 
 In later tutorials, we'll explore more of dplyr, such as operations based on two datasets.
 
-## Resources
+### Resources
 
 dplyr official stuff:
 
