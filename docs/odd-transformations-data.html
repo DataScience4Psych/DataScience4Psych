@@ -982,50 +982,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- http://blackwell.math.yorku.ca/math4939/lectures/transforming_data_tukeys_ladder_of_powers.R -->
 <p>This material is based on <span class="citation">(<a href="#ref-fox2016applied" role="doc-biblioref"><strong>fox2016applied?</strong></a>)</span> ch. 4, pp. 28 - 80.</p>
 <p>We will use the following data set(s) from <span class="citation">(<a href="#ref-fox2016applied" role="doc-biblioref"><strong>fox2016applied?</strong></a>)</span>.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="odd-transformations-data.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download these files manually.</span></span>
-<span id="cb139-2"><a href="odd-transformations-data.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure to the directory to the file in which this file was saved</span></span>
-<span id="cb139-3"><a href="odd-transformations-data.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using RStudio menus: Session &gt; Set Working Directory &gt; To Source File Directory</span></span>
-<span id="cb139-4"><a href="odd-transformations-data.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co">#fox_data &lt;- &quot;http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/&quot;</span></span>
-<span id="cb139-5"><a href="odd-transformations-data.html#cb139-5" aria-hidden="true" tabindex="-1"></a><span class="co">#download.file(paste0(fox_data,&#39;UnitedNations.txt&#39;),&#39;UnitedNations.txt&#39;)</span></span>
-<span id="cb139-6"><a href="odd-transformations-data.html#cb139-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb139-7"><a href="odd-transformations-data.html#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&#39;gmonette/spida2&#39;)</span></span>
-<span id="cb139-8"><a href="odd-transformations-data.html#cb139-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb139-9"><a href="odd-transformations-data.html#cb139-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb139-10"><a href="odd-transformations-data.html#cb139-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: carData</span></span>
-<span id="cb139-11"><a href="odd-transformations-data.html#cb139-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
-<span id="cb139-12"><a href="odd-transformations-data.html#cb139-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb139-13"><a href="odd-transformations-data.html#cb139-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: lattice</span></span>
-<span id="cb139-14"><a href="odd-transformations-data.html#cb139-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb139-15"><a href="odd-transformations-data.html#cb139-15" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb139-16"><a href="odd-transformations-data.html#cb139-16" aria-hidden="true" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;UnitedNations.txt&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb139-17"><a href="odd-transformations-data.html#cb139-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(un)</span>
-<span id="cb139-18"><a href="odd-transformations-data.html#cb139-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
-<span id="cb139-19"><a href="odd-transformations-data.html#cb139-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan      Asia 6.90            NA            NA              NA     45.0</span></span>
-<span id="cb139-20"><a href="odd-transformations-data.html#cb139-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania        Europe 2.60            NA            NA              NA     68.0</span></span>
-<span id="cb139-21"><a href="odd-transformations-data.html#cb139-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria        Africa 3.81            52          11.1             9.9     67.5</span></span>
-<span id="cb139-22"><a href="odd-transformations-data.html#cb139-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa   Asia   NA            NA            NA              NA     68.0</span></span>
-<span id="cb139-23"><a href="odd-transformations-data.html#cb139-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra        Europe   NA            NA            NA              NA       NA</span></span>
-<span id="cb139-24"><a href="odd-transformations-data.html#cb139-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola         Africa 6.69            NA            NA              NA     44.9</span></span>
-<span id="cb139-25"><a href="odd-transformations-data.html#cb139-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
-<span id="cb139-26"><a href="odd-transformations-data.html#cb139-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan          46.0             154         2848                 87.5</span></span>
-<span id="cb139-27"><a href="odd-transformations-data.html#cb139-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania              74.0              32          863                   NA</span></span>
-<span id="cb139-28"><a href="odd-transformations-data.html#cb139-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria              70.3              44         1531                 76.4</span></span>
-<span id="cb139-29"><a href="odd-transformations-data.html#cb139-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa       73.0              11           NA                 58.8</span></span>
-<span id="cb139-30"><a href="odd-transformations-data.html#cb139-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                NA              NA           NA                   NA</span></span>
-<span id="cb139-31"><a href="odd-transformations-data.html#cb139-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola               48.1             124          355                   NA</span></span>
-<span id="cb139-32"><a href="odd-transformations-data.html#cb139-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                economicActivityFemale illiteracyMale illiteracyFemale</span></span>
-<span id="cb139-33"><a href="odd-transformations-data.html#cb139-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan                       7.2         52.800            85.00</span></span>
-<span id="cb139-34"><a href="odd-transformations-data.html#cb139-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania                            NA             NA               NA</span></span>
-<span id="cb139-35"><a href="odd-transformations-data.html#cb139-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria                           7.8         26.100            51.00</span></span>
-<span id="cb139-36"><a href="odd-transformations-data.html#cb139-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa                   42.4          0.264             0.36</span></span>
-<span id="cb139-37"><a href="odd-transformations-data.html#cb139-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                            NA             NA               NA</span></span>
-<span id="cb139-38"><a href="odd-transformations-data.html#cb139-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola                             NA             NA               NA</span></span>
-<span id="cb139-39"><a href="odd-transformations-data.html#cb139-39" aria-hidden="true" tabindex="-1"></a>un<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">rownames</span>(un)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="odd-transformations-data.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download these files manually.</span></span>
+<span id="cb138-2"><a href="odd-transformations-data.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure to the directory to the file in which this file was saved</span></span>
+<span id="cb138-3"><a href="odd-transformations-data.html#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using RStudio menus: Session &gt; Set Working Directory &gt; To Source File Directory</span></span>
+<span id="cb138-4"><a href="odd-transformations-data.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="co">#fox_data &lt;- &quot;http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/&quot;</span></span>
+<span id="cb138-5"><a href="odd-transformations-data.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co">#download.file(paste0(fox_data,&#39;UnitedNations.txt&#39;),&#39;UnitedNations.txt&#39;)</span></span>
+<span id="cb138-6"><a href="odd-transformations-data.html#cb138-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-7"><a href="odd-transformations-data.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&#39;gmonette/spida2&#39;)</span></span>
+<span id="cb138-8"><a href="odd-transformations-data.html#cb138-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-9"><a href="odd-transformations-data.html#cb138-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb138-10"><a href="odd-transformations-data.html#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: carData</span></span>
+<span id="cb138-11"><a href="odd-transformations-data.html#cb138-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
+<span id="cb138-12"><a href="odd-transformations-data.html#cb138-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
+<span id="cb138-13"><a href="odd-transformations-data.html#cb138-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: lattice</span></span>
+<span id="cb138-14"><a href="odd-transformations-data.html#cb138-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-15"><a href="odd-transformations-data.html#cb138-15" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb138-16"><a href="odd-transformations-data.html#cb138-16" aria-hidden="true" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;UnitedNations.txt&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb138-17"><a href="odd-transformations-data.html#cb138-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(un)</span>
+<span id="cb138-18"><a href="odd-transformations-data.html#cb138-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
+<span id="cb138-19"><a href="odd-transformations-data.html#cb138-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan      Asia 6.90            NA            NA              NA     45.0</span></span>
+<span id="cb138-20"><a href="odd-transformations-data.html#cb138-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania        Europe 2.60            NA            NA              NA     68.0</span></span>
+<span id="cb138-21"><a href="odd-transformations-data.html#cb138-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria        Africa 3.81            52          11.1             9.9     67.5</span></span>
+<span id="cb138-22"><a href="odd-transformations-data.html#cb138-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa   Asia   NA            NA            NA              NA     68.0</span></span>
+<span id="cb138-23"><a href="odd-transformations-data.html#cb138-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra        Europe   NA            NA            NA              NA       NA</span></span>
+<span id="cb138-24"><a href="odd-transformations-data.html#cb138-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola         Africa 6.69            NA            NA              NA     44.9</span></span>
+<span id="cb138-25"><a href="odd-transformations-data.html#cb138-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
+<span id="cb138-26"><a href="odd-transformations-data.html#cb138-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan          46.0             154         2848                 87.5</span></span>
+<span id="cb138-27"><a href="odd-transformations-data.html#cb138-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania              74.0              32          863                   NA</span></span>
+<span id="cb138-28"><a href="odd-transformations-data.html#cb138-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria              70.3              44         1531                 76.4</span></span>
+<span id="cb138-29"><a href="odd-transformations-data.html#cb138-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa       73.0              11           NA                 58.8</span></span>
+<span id="cb138-30"><a href="odd-transformations-data.html#cb138-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                NA              NA           NA                   NA</span></span>
+<span id="cb138-31"><a href="odd-transformations-data.html#cb138-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola               48.1             124          355                   NA</span></span>
+<span id="cb138-32"><a href="odd-transformations-data.html#cb138-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                economicActivityFemale illiteracyMale illiteracyFemale</span></span>
+<span id="cb138-33"><a href="odd-transformations-data.html#cb138-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan                       7.2         52.800            85.00</span></span>
+<span id="cb138-34"><a href="odd-transformations-data.html#cb138-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania                            NA             NA               NA</span></span>
+<span id="cb138-35"><a href="odd-transformations-data.html#cb138-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria                           7.8         26.100            51.00</span></span>
+<span id="cb138-36"><a href="odd-transformations-data.html#cb138-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa                   42.4          0.264             0.36</span></span>
+<span id="cb138-37"><a href="odd-transformations-data.html#cb138-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                            NA             NA               NA</span></span>
+<span id="cb138-38"><a href="odd-transformations-data.html#cb138-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola                             NA             NA               NA</span></span>
+<span id="cb138-39"><a href="odd-transformations-data.html#cb138-39" aria-hidden="true" tabindex="-1"></a>un<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">rownames</span>(un)</span></code></pre></div>
 <p>Finding transformations to make regressions behave</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="odd-transformations-data.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gd</span>() </span>
-<span id="cb140-2"><a href="odd-transformations-data.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, un)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="odd-transformations-data.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gd</span>() </span>
+<span id="cb139-2"><a href="odd-transformations-data.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, un)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="odd-transformations-data.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> <span class="fu">log</span>(GDPperCapita), un)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="odd-transformations-data.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> <span class="fu">log</span>(GDPperCapita), un)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 <p>John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions and the shape of relationships between variables. The basic idea stems from the fact that functions of the form</p>
 <p><span class="math display">\[y&#39; = y^p, \quad y &gt; 0\]</span>
@@ -1039,172 +1039,172 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
 <p>Note that, by l’Hôpital’s rule:</p>
 <p><span class="math display">\[\lim_{p \to 0} \frac{y^p - 1}{p}= \lim_{p \to 0}\, e^{\, p \ln y} \ln  y = \ln  y\]</span></p>
 <p>We define a function that produces this transformation. The easy way to define it is:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="odd-transformations-data.html#cb142-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
-<span id="cb142-2"><a href="odd-transformations-data.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(p <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">log</span>(y) <span class="cf">else</span> (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>p </span>
-<span id="cb142-3"><a href="odd-transformations-data.html#cb142-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb142-4"><a href="odd-transformations-data.html#cb142-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb142-5"><a href="odd-transformations-data.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="co"># test:</span></span>
-<span id="cb142-6"><a href="odd-transformations-data.html#cb142-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">3</span>,.<span class="dv">5</span>)</span>
-<span id="cb142-7"><a href="odd-transformations-data.html#cb142-7" aria-hidden="true" tabindex="-1"></a>x <span class="co"># note that these transformations are really intended for y &gt; 0</span></span>
-<span id="cb142-8"><a href="odd-transformations-data.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1.0 -0.5  0.0  0.5  1.0  1.5  2.0  2.5  3.0</span></span>
-<span id="cb142-9"><a href="odd-transformations-data.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">2</span>) </span>
-<span id="cb142-10"><a href="odd-transformations-data.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.000 -0.375 -0.500 -0.375  0.000  0.625  1.500  2.625  4.000</span></span>
-<span id="cb142-11"><a href="odd-transformations-data.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">0</span>)  <span class="sc">%&gt;%</span> <span class="fu">name</span>(x)</span>
-<span id="cb142-12"><a href="odd-transformations-data.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
-<span id="cb142-13"><a href="odd-transformations-data.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     -1   -0.5      0    0.5      1    1.5      2    2.5      3 </span></span>
-<span id="cb142-14"><a href="odd-transformations-data.html#cb142-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    NaN    NaN   -Inf -0.693  0.000  0.405  0.693  0.916  1.099</span></span>
-<span id="cb142-15"><a href="odd-transformations-data.html#cb142-15" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">name</span>(x) <span class="sc">%&gt;%</span> cbind</span>
-<span id="cb142-16"><a href="odd-transformations-data.html#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           .</span></span>
-<span id="cb142-17"><a href="odd-transformations-data.html#cb142-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -1    2.000</span></span>
-<span id="cb142-18"><a href="odd-transformations-data.html#cb142-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -0.5  3.000</span></span>
-<span id="cb142-19"><a href="odd-transformations-data.html#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0      -Inf</span></span>
-<span id="cb142-20"><a href="odd-transformations-data.html#cb142-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5  -1.000</span></span>
-<span id="cb142-21"><a href="odd-transformations-data.html#cb142-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     0.000</span></span>
-<span id="cb142-22"><a href="odd-transformations-data.html#cb142-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1.5   0.333</span></span>
-<span id="cb142-23"><a href="odd-transformations-data.html#cb142-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     0.500</span></span>
-<span id="cb142-24"><a href="odd-transformations-data.html#cb142-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2.5   0.600</span></span>
-<span id="cb142-25"><a href="odd-transformations-data.html#cb142-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     0.667</span></span>
-<span id="cb142-26"><a href="odd-transformations-data.html#cb142-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp) <span class="co"># easy plotting of a function</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="odd-transformations-data.html#cb141-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
+<span id="cb141-2"><a href="odd-transformations-data.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(p <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">log</span>(y) <span class="cf">else</span> (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>p </span>
+<span id="cb141-3"><a href="odd-transformations-data.html#cb141-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb141-4"><a href="odd-transformations-data.html#cb141-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-5"><a href="odd-transformations-data.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co"># test:</span></span>
+<span id="cb141-6"><a href="odd-transformations-data.html#cb141-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">3</span>,.<span class="dv">5</span>)</span>
+<span id="cb141-7"><a href="odd-transformations-data.html#cb141-7" aria-hidden="true" tabindex="-1"></a>x <span class="co"># note that these transformations are really intended for y &gt; 0</span></span>
+<span id="cb141-8"><a href="odd-transformations-data.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1.0 -0.5  0.0  0.5  1.0  1.5  2.0  2.5  3.0</span></span>
+<span id="cb141-9"><a href="odd-transformations-data.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">2</span>) </span>
+<span id="cb141-10"><a href="odd-transformations-data.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.000 -0.375 -0.500 -0.375  0.000  0.625  1.500  2.625  4.000</span></span>
+<span id="cb141-11"><a href="odd-transformations-data.html#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">0</span>)  <span class="sc">%&gt;%</span> <span class="fu">name</span>(x)</span>
+<span id="cb141-12"><a href="odd-transformations-data.html#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
+<span id="cb141-13"><a href="odd-transformations-data.html#cb141-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     -1   -0.5      0    0.5      1    1.5      2    2.5      3 </span></span>
+<span id="cb141-14"><a href="odd-transformations-data.html#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    NaN    NaN   -Inf -0.693  0.000  0.405  0.693  0.916  1.099</span></span>
+<span id="cb141-15"><a href="odd-transformations-data.html#cb141-15" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">name</span>(x) <span class="sc">%&gt;%</span> cbind</span>
+<span id="cb141-16"><a href="odd-transformations-data.html#cb141-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           .</span></span>
+<span id="cb141-17"><a href="odd-transformations-data.html#cb141-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -1    2.000</span></span>
+<span id="cb141-18"><a href="odd-transformations-data.html#cb141-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -0.5  3.000</span></span>
+<span id="cb141-19"><a href="odd-transformations-data.html#cb141-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0      -Inf</span></span>
+<span id="cb141-20"><a href="odd-transformations-data.html#cb141-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5  -1.000</span></span>
+<span id="cb141-21"><a href="odd-transformations-data.html#cb141-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     0.000</span></span>
+<span id="cb141-22"><a href="odd-transformations-data.html#cb141-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1.5   0.333</span></span>
+<span id="cb141-23"><a href="odd-transformations-data.html#cb141-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     0.500</span></span>
+<span id="cb141-24"><a href="odd-transformations-data.html#cb141-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2.5   0.600</span></span>
+<span id="cb141-25"><a href="odd-transformations-data.html#cb141-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     0.667</span></span>
+<span id="cb141-26"><a href="odd-transformations-data.html#cb141-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp) <span class="co"># easy plotting of a function</span></span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odd-transformations-data.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p=</span><span class="dv">2</span>)) <span class="co"># anonymous function or &#39;lambda&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="odd-transformations-data.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p=</span><span class="dv">2</span>)) <span class="co"># anonymous function or &#39;lambda&#39;</span></span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="odd-transformations-data.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p=</span>.<span class="dv">5</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odd-transformations-data.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p=</span>.<span class="dv">5</span>), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>)) </span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <p>but this has the disadvantage that it works correctly only for a single value of <span class="math inline">\(p\)</span>, since the statement <code>if(p == 0)</code> only tests the first element of <code>p</code>.</p>
 </div>
 <div id="vectorizing-a-function" class="section level2" number="27.2">
 <h2><span class="header-section-number">27.2</span> Vectorizing a function</h2>
 <p>Most operators in R are <strong>vectorized</strong> so they work element-wise when their arguments are vectors. When the arguments have incompatible lengths, the shorter argument is <strong>recycled</strong> to have the same length as the longer one. That is why the following produces sensible results:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="odd-transformations-data.html#cb145-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">9</span>)</span>
-<span id="cb145-2"><a href="odd-transformations-data.html#cb145-2" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb145-3"><a href="odd-transformations-data.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
-<span id="cb145-4"><a href="odd-transformations-data.html#cb145-4" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="dv">1</span>  <span class="co"># 1 is recycled so the result is equivalent to the previous line</span></span>
-<span id="cb145-5"><a href="odd-transformations-data.html#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
-<span id="cb145-6"><a href="odd-transformations-data.html#cb145-6" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb145-7"><a href="odd-transformations-data.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 12</span></span>
-<span id="cb145-8"><a href="odd-transformations-data.html#cb145-8" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) <span class="co"># recycles but gives a warning</span></span>
-<span id="cb145-9"><a href="odd-transformations-data.html#cb145-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in z + c(1, 2): longer object length is not a multiple of shorter object</span></span>
-<span id="cb145-10"><a href="odd-transformations-data.html#cb145-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; length</span></span>
-<span id="cb145-11"><a href="odd-transformations-data.html#cb145-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 10</span></span>
-<span id="cb145-12"><a href="odd-transformations-data.html#cb145-12" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> z</span>
-<span id="cb145-13"><a href="odd-transformations-data.html#cb145-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  6 10 18</span></span>
-<span id="cb145-14"><a href="odd-transformations-data.html#cb145-14" aria-hidden="true" tabindex="-1"></a>z<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb145-15"><a href="odd-transformations-data.html#cb145-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  9 25 81</span></span>
-<span id="cb145-16"><a href="odd-transformations-data.html#cb145-16" aria-hidden="true" tabindex="-1"></a>z<span class="sc">^</span>z</span>
-<span id="cb145-17"><a href="odd-transformations-data.html#cb145-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.70e+01 3.12e+03 3.87e+08</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="odd-transformations-data.html#cb144-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">9</span>)</span>
+<span id="cb144-2"><a href="odd-transformations-data.html#cb144-2" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb144-3"><a href="odd-transformations-data.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
+<span id="cb144-4"><a href="odd-transformations-data.html#cb144-4" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="dv">1</span>  <span class="co"># 1 is recycled so the result is equivalent to the previous line</span></span>
+<span id="cb144-5"><a href="odd-transformations-data.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
+<span id="cb144-6"><a href="odd-transformations-data.html#cb144-6" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb144-7"><a href="odd-transformations-data.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 12</span></span>
+<span id="cb144-8"><a href="odd-transformations-data.html#cb144-8" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) <span class="co"># recycles but gives a warning</span></span>
+<span id="cb144-9"><a href="odd-transformations-data.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in z + c(1, 2): longer object length is not a multiple of shorter object</span></span>
+<span id="cb144-10"><a href="odd-transformations-data.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; length</span></span>
+<span id="cb144-11"><a href="odd-transformations-data.html#cb144-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 10</span></span>
+<span id="cb144-12"><a href="odd-transformations-data.html#cb144-12" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> z</span>
+<span id="cb144-13"><a href="odd-transformations-data.html#cb144-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  6 10 18</span></span>
+<span id="cb144-14"><a href="odd-transformations-data.html#cb144-14" aria-hidden="true" tabindex="-1"></a>z<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb144-15"><a href="odd-transformations-data.html#cb144-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  9 25 81</span></span>
+<span id="cb144-16"><a href="odd-transformations-data.html#cb144-16" aria-hidden="true" tabindex="-1"></a>z<span class="sc">^</span>z</span>
+<span id="cb144-17"><a href="odd-transformations-data.html#cb144-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.70e+01 3.12e+03 3.87e+08</span></span></code></pre></div>
 <p>We can use <code>ifelse</code> which works on a vector instead of a single value.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="odd-transformations-data.html#cb145-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
+<span id="cb145-2"><a href="odd-transformations-data.html#cb145-2" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
+<span id="cb145-3"><a href="odd-transformations-data.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
+<span id="cb145-4"><a href="odd-transformations-data.html#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(p<span class="sc">==</span><span class="dv">0</span>, <span class="fu">log</span>(y), (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>p) </span>
+<span id="cb145-5"><a href="odd-transformations-data.html#cb145-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb145-6"><a href="odd-transformations-data.html#cb145-6" aria-hidden="true" tabindex="-1"></a><span class="co"># test:</span></span>
+<span id="cb145-7"><a href="odd-transformations-data.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb145-8"><a href="odd-transformations-data.html#cb145-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
+<span id="cb145-9"><a href="odd-transformations-data.html#cb145-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.00 -Inf 0.00 1.00 8.67 7.50</span></span>
+<span id="cb145-10"><a href="odd-transformations-data.html#cb145-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb145-11"><a href="odd-transformations-data.html#cb145-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.0 -0.5  0.0  1.5  4.0  7.5</span></span></code></pre></div>
+<p>With a bit more work, we can avoid unnecessary evaluations:</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="odd-transformations-data.html#cb146-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
 <span id="cb146-2"><a href="odd-transformations-data.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
 <span id="cb146-3"><a href="odd-transformations-data.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
-<span id="cb146-4"><a href="odd-transformations-data.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(p<span class="sc">==</span><span class="dv">0</span>, <span class="fu">log</span>(y), (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>p) </span>
-<span id="cb146-5"><a href="odd-transformations-data.html#cb146-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb146-6"><a href="odd-transformations-data.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="co"># test:</span></span>
-<span id="cb146-7"><a href="odd-transformations-data.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb146-8"><a href="odd-transformations-data.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
-<span id="cb146-9"><a href="odd-transformations-data.html#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.00 -Inf 0.00 1.00 8.67 7.50</span></span>
-<span id="cb146-10"><a href="odd-transformations-data.html#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb146-11"><a href="odd-transformations-data.html#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.0 -0.5  0.0  1.5  4.0  7.5</span></span></code></pre></div>
-<p>With a bit more work, we can avoid unnecessary evaluations:</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odd-transformations-data.html#cb147-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
-<span id="cb147-2"><a href="odd-transformations-data.html#cb147-2" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
-<span id="cb147-3"><a href="odd-transformations-data.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
-<span id="cb147-4"><a href="odd-transformations-data.html#cb147-4" aria-hidden="true" tabindex="-1"></a>  y[p<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="fu">log</span>(y[p<span class="sc">==</span><span class="dv">0</span>])</span>
-<span id="cb147-5"><a href="odd-transformations-data.html#cb147-5" aria-hidden="true" tabindex="-1"></a>  y[p<span class="sc">!=</span><span class="dv">0</span>] <span class="ot">&lt;-</span> (y[p<span class="sc">!=</span><span class="dv">0</span>]<span class="sc">^</span>p[p<span class="sc">!=</span><span class="dv">0</span>] <span class="sc">-</span><span class="dv">1</span>) <span class="sc">/</span> p[p<span class="sc">!=</span><span class="dv">0</span>]</span>
-<span id="cb147-6"><a href="odd-transformations-data.html#cb147-6" aria-hidden="true" tabindex="-1"></a>  y</span>
-<span id="cb147-7"><a href="odd-transformations-data.html#cb147-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb147-8"><a href="odd-transformations-data.html#cb147-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-9"><a href="odd-transformations-data.html#cb147-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Test:</span></span>
-<span id="cb147-10"><a href="odd-transformations-data.html#cb147-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-11"><a href="odd-transformations-data.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">0</span>) <span class="sc">==</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb147-12"><a href="odd-transformations-data.html#cb147-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
-<span id="cb147-13"><a href="odd-transformations-data.html#cb147-13" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb147-14"><a href="odd-transformations-data.html#cb147-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.500 0.667 0.750 0.800 0.833 0.857 0.875 0.889 0.900</span></span>
-<span id="cb147-15"><a href="odd-transformations-data.html#cb147-15" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,.<span class="dv">5</span>)</span>
-<span id="cb147-16"><a href="odd-transformations-data.html#cb147-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.828 1.464 2.000 2.472 2.899 3.292 3.657 4.000 4.325</span></span>
-<span id="cb147-17"><a href="odd-transformations-data.html#cb147-17" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span>
-<span id="cb147-18"><a href="odd-transformations-data.html#cb147-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00e+00 6.93e-01 2.00e+00 7.50e+00 4.13e+01 3.24e+02 3.36e+03 4.37e+04</span></span>
-<span id="cb147-19"><a href="odd-transformations-data.html#cb147-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 6.83e+05 1.25e+07</span></span></code></pre></div>
+<span id="cb146-4"><a href="odd-transformations-data.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  y[p<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="fu">log</span>(y[p<span class="sc">==</span><span class="dv">0</span>])</span>
+<span id="cb146-5"><a href="odd-transformations-data.html#cb146-5" aria-hidden="true" tabindex="-1"></a>  y[p<span class="sc">!=</span><span class="dv">0</span>] <span class="ot">&lt;-</span> (y[p<span class="sc">!=</span><span class="dv">0</span>]<span class="sc">^</span>p[p<span class="sc">!=</span><span class="dv">0</span>] <span class="sc">-</span><span class="dv">1</span>) <span class="sc">/</span> p[p<span class="sc">!=</span><span class="dv">0</span>]</span>
+<span id="cb146-6"><a href="odd-transformations-data.html#cb146-6" aria-hidden="true" tabindex="-1"></a>  y</span>
+<span id="cb146-7"><a href="odd-transformations-data.html#cb146-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb146-8"><a href="odd-transformations-data.html#cb146-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-9"><a href="odd-transformations-data.html#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Test:</span></span>
+<span id="cb146-10"><a href="odd-transformations-data.html#cb146-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-11"><a href="odd-transformations-data.html#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">0</span>) <span class="sc">==</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb146-12"><a href="odd-transformations-data.html#cb146-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span id="cb146-13"><a href="odd-transformations-data.html#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb146-14"><a href="odd-transformations-data.html#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.500 0.667 0.750 0.800 0.833 0.857 0.875 0.889 0.900</span></span>
+<span id="cb146-15"><a href="odd-transformations-data.html#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,.<span class="dv">5</span>)</span>
+<span id="cb146-16"><a href="odd-transformations-data.html#cb146-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.828 1.464 2.000 2.472 2.899 3.292 3.657 4.000 4.325</span></span>
+<span id="cb146-17"><a href="odd-transformations-data.html#cb146-17" aria-hidden="true" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span>
+<span id="cb146-18"><a href="odd-transformations-data.html#cb146-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00e+00 6.93e-01 2.00e+00 7.50e+00 4.13e+01 3.24e+02 3.36e+03 4.37e+04</span></span>
+<span id="cb146-19"><a href="odd-transformations-data.html#cb146-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 6.83e+05 1.25e+07</span></span></code></pre></div>
 <p>Let’s plot this transformation for a range of values of <span class="math inline">\(p\)</span>. The value of <code>expand.grid</code> is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="odd-transformations-data.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">expand.grid</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) </span>
-<span id="cb148-2"><a href="odd-transformations-data.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a x</span></span>
-<span id="cb148-3"><a href="odd-transformations-data.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A 1</span></span>
-<span id="cb148-4"><a href="odd-transformations-data.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B 1</span></span>
-<span id="cb148-5"><a href="odd-transformations-data.html#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 A 2</span></span>
-<span id="cb148-6"><a href="odd-transformations-data.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 B 2</span></span>
-<span id="cb148-7"><a href="odd-transformations-data.html#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 A 3</span></span>
-<span id="cb148-8"><a href="odd-transformations-data.html#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 B 3</span></span>
-<span id="cb148-9"><a href="odd-transformations-data.html#cb148-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-10"><a href="odd-transformations-data.html#cb148-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-11"><a href="odd-transformations-data.html#cb148-11" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>,<span class="dv">3</span>,.<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">5</span>,<span class="dv">0</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb148-12"><a href="odd-transformations-data.html#cb148-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
-<span id="cb148-13"><a href="odd-transformations-data.html#cb148-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
-<span id="cb148-14"><a href="odd-transformations-data.html#cb148-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
-<span id="cb148-15"><a href="odd-transformations-data.html#cb148-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
-<span id="cb148-16"><a href="odd-transformations-data.html#cb148-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
-<span id="cb148-17"><a href="odd-transformations-data.html#cb148-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
-<span id="cb148-18"><a href="odd-transformations-data.html#cb148-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
-<span id="cb148-19"><a href="odd-transformations-data.html#cb148-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
-<span id="cb148-20"><a href="odd-transformations-data.html#cb148-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
-<span id="cb148-21"><a href="odd-transformations-data.html#cb148-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
-<span id="cb148-22"><a href="odd-transformations-data.html#cb148-22" aria-hidden="true" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
-<span id="cb148-23"><a href="odd-transformations-data.html#cb148-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
-<span id="cb148-24"><a href="odd-transformations-data.html#cb148-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 128  1.28 -2.0</span></span>
-<span id="cb148-25"><a href="odd-transformations-data.html#cb148-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 446  1.46 -1.0</span></span>
-<span id="cb148-26"><a href="odd-transformations-data.html#cb148-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 552  2.52 -1.0</span></span>
-<span id="cb148-27"><a href="odd-transformations-data.html#cb148-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 905  0.05  0.0</span></span>
-<span id="cb148-28"><a href="odd-transformations-data.html#cb148-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1127 2.27  0.0</span></span>
-<span id="cb148-29"><a href="odd-transformations-data.html#cb148-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1172 2.72  0.0</span></span>
-<span id="cb148-30"><a href="odd-transformations-data.html#cb148-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1339 1.39  0.5</span></span>
-<span id="cb148-31"><a href="odd-transformations-data.html#cb148-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1673 1.73  1.0</span></span>
-<span id="cb148-32"><a href="odd-transformations-data.html#cb148-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1742 2.42  1.0</span></span>
-<span id="cb148-33"><a href="odd-transformations-data.html#cb148-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2240 1.40  3.0</span></span>
-<span id="cb148-34"><a href="odd-transformations-data.html#cb148-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-35"><a href="odd-transformations-data.html#cb148-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-36"><a href="odd-transformations-data.html#cb148-36" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y,p))</span>
-<span id="cb148-37"><a href="odd-transformations-data.html#cb148-37" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odd-transformations-data.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">expand.grid</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) </span>
+<span id="cb147-2"><a href="odd-transformations-data.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a x</span></span>
+<span id="cb147-3"><a href="odd-transformations-data.html#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A 1</span></span>
+<span id="cb147-4"><a href="odd-transformations-data.html#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B 1</span></span>
+<span id="cb147-5"><a href="odd-transformations-data.html#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 A 2</span></span>
+<span id="cb147-6"><a href="odd-transformations-data.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 B 2</span></span>
+<span id="cb147-7"><a href="odd-transformations-data.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 A 3</span></span>
+<span id="cb147-8"><a href="odd-transformations-data.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 B 3</span></span>
+<span id="cb147-9"><a href="odd-transformations-data.html#cb147-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-10"><a href="odd-transformations-data.html#cb147-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-11"><a href="odd-transformations-data.html#cb147-11" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>,<span class="dv">3</span>,.<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">5</span>,<span class="dv">0</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb147-12"><a href="odd-transformations-data.html#cb147-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
+<span id="cb147-13"><a href="odd-transformations-data.html#cb147-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
+<span id="cb147-14"><a href="odd-transformations-data.html#cb147-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
+<span id="cb147-15"><a href="odd-transformations-data.html#cb147-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
+<span id="cb147-16"><a href="odd-transformations-data.html#cb147-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
+<span id="cb147-17"><a href="odd-transformations-data.html#cb147-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
+<span id="cb147-18"><a href="odd-transformations-data.html#cb147-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
+<span id="cb147-19"><a href="odd-transformations-data.html#cb147-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
+<span id="cb147-20"><a href="odd-transformations-data.html#cb147-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
+<span id="cb147-21"><a href="odd-transformations-data.html#cb147-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
+<span id="cb147-22"><a href="odd-transformations-data.html#cb147-22" aria-hidden="true" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
+<span id="cb147-23"><a href="odd-transformations-data.html#cb147-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
+<span id="cb147-24"><a href="odd-transformations-data.html#cb147-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 510  2.10 -1.0</span></span>
+<span id="cb147-25"><a href="odd-transformations-data.html#cb147-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 819  2.19 -0.5</span></span>
+<span id="cb147-26"><a href="odd-transformations-data.html#cb147-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1006 1.06  0.0</span></span>
+<span id="cb147-27"><a href="odd-transformations-data.html#cb147-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1174 2.74  0.0</span></span>
+<span id="cb147-28"><a href="odd-transformations-data.html#cb147-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1177 2.77  0.0</span></span>
+<span id="cb147-29"><a href="odd-transformations-data.html#cb147-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1347 1.47  0.5</span></span>
+<span id="cb147-30"><a href="odd-transformations-data.html#cb147-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1518 0.18  1.0</span></span>
+<span id="cb147-31"><a href="odd-transformations-data.html#cb147-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1639 1.39  1.0</span></span>
+<span id="cb147-32"><a href="odd-transformations-data.html#cb147-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1780 2.80  1.0</span></span>
+<span id="cb147-33"><a href="odd-transformations-data.html#cb147-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2080 2.80  2.0</span></span>
+<span id="cb147-34"><a href="odd-transformations-data.html#cb147-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-35"><a href="odd-transformations-data.html#cb147-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-36"><a href="odd-transformations-data.html#cb147-36" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y,p))</span>
+<span id="cb147-37"><a href="odd-transformations-data.html#cb147-37" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="odd-transformations-data.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="odd-transformations-data.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="odd-transformations-data.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, <span class="at">groups =</span> p, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="odd-transformations-data.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, <span class="at">groups =</span> p, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="odd-transformations-data.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
-<span id="cb151-2"><a href="odd-transformations-data.html#cb151-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
-<span id="cb151-3"><a href="odd-transformations-data.html#cb151-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
-<span id="cb151-4"><a href="odd-transformations-data.html#cb151-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
-<span id="cb151-5"><a href="odd-transformations-data.html#cb151-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="odd-transformations-data.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
+<span id="cb150-2"><a href="odd-transformations-data.html#cb150-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
+<span id="cb150-3"><a href="odd-transformations-data.html#cb150-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
+<span id="cb150-4"><a href="odd-transformations-data.html#cb150-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
+<span id="cb150-5"><a href="odd-transformations-data.html#cb150-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="odd-transformations-data.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gd</span>(<span class="dv">8</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># number of colours needed</span></span>
-<span id="cb152-2"><a href="odd-transformations-data.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
-<span id="cb152-3"><a href="odd-transformations-data.html#cb152-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
-<span id="cb152-4"><a href="odd-transformations-data.html#cb152-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="odd-transformations-data.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gd</span>(<span class="dv">8</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># number of colours needed</span></span>
+<span id="cb151-2"><a href="odd-transformations-data.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
+<span id="cb151-3"><a href="odd-transformations-data.html#cb151-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
+<span id="cb151-4"><a href="odd-transformations-data.html#cb151-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
+<span id="cb151-5"><a href="odd-transformations-data.html#cb151-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
+<span id="cb151-6"><a href="odd-transformations-data.html#cb151-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="odd-transformations-data.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
+<span id="cb152-2"><a href="odd-transformations-data.html#cb152-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
+<span id="cb152-3"><a href="odd-transformations-data.html#cb152-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
+<span id="cb152-4"><a href="odd-transformations-data.html#cb152-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&#39;right&#39;</span>,<span class="at">lines =</span> T, <span class="at">points =</span> F),</span>
 <span id="cb152-5"><a href="odd-transformations-data.html#cb152-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
 <span id="cb152-6"><a href="odd-transformations-data.html#cb152-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
-<p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-transformations-data.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
-<span id="cb153-2"><a href="odd-transformations-data.html#cb153-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> p, </span>
-<span id="cb153-3"><a href="odd-transformations-data.html#cb153-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
-<span id="cb153-4"><a href="odd-transformations-data.html#cb153-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&#39;right&#39;</span>,<span class="at">lines =</span> T, <span class="at">points =</span> F),</span>
-<span id="cb153-5"><a href="odd-transformations-data.html#cb153-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
-<span id="cb153-6"><a href="odd-transformations-data.html#cb153-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-6.png" width="672" /></p>
 <p>It’s much better to have the legend in the same order as the lines in the graph. We can turn <code>p</code> into a factor and reverse its order.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="odd-transformations-data.html#cb154-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">factor</span>(dd<span class="sc">$</span>p)</span>
-<span id="cb154-2"><a href="odd-transformations-data.html#cb154-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">reorder</span>(dd<span class="sc">$</span>po, <span class="sc">-</span>dd<span class="sc">$</span>p)</span>
-<span id="cb154-3"><a href="odd-transformations-data.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
-<span id="cb154-4"><a href="odd-transformations-data.html#cb154-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> po, </span>
-<span id="cb154-5"><a href="odd-transformations-data.html#cb154-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
-<span id="cb154-6"><a href="odd-transformations-data.html#cb154-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&#39;right&#39;</span>,<span class="at">lines =</span> T, <span class="at">points =</span> F, <span class="at">title=</span><span class="st">&#39;power&#39;</span>),</span>
-<span id="cb154-7"><a href="odd-transformations-data.html#cb154-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
-<span id="cb154-8"><a href="odd-transformations-data.html#cb154-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-transformations-data.html#cb153-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">factor</span>(dd<span class="sc">$</span>p)</span>
+<span id="cb153-2"><a href="odd-transformations-data.html#cb153-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">reorder</span>(dd<span class="sc">$</span>po, <span class="sc">-</span>dd<span class="sc">$</span>p)</span>
+<span id="cb153-3"><a href="odd-transformations-data.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y , dd, </span>
+<span id="cb153-4"><a href="odd-transformations-data.html#cb153-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> po, </span>
+<span id="cb153-5"><a href="odd-transformations-data.html#cb153-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">type =</span> <span class="st">&#39;l&#39;</span>,</span>
+<span id="cb153-6"><a href="odd-transformations-data.html#cb153-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&#39;right&#39;</span>,<span class="at">lines =</span> T, <span class="at">points =</span> F, <span class="at">title=</span><span class="st">&#39;power&#39;</span>),</span>
+<span id="cb153-7"><a href="odd-transformations-data.html#cb153-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),</span>
+<span id="cb153-8"><a href="odd-transformations-data.html#cb153-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>From quantile plots:</p>
 <p>Uniform quantiles…</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="odd-transformations-data.html#cb155-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-2"><a href="odd-transformations-data.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
-<span id="cb155-3"><a href="odd-transformations-data.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="odd-transformations-data.html#cb154-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-2"><a href="odd-transformations-data.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
+<span id="cb154-3"><a href="odd-transformations-data.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="0403_transformations_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <p>Normal quantiles</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-transformations-data.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un, <span class="at">ptype =</span> <span class="st">&#39;normal&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="odd-transformations-data.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un, <span class="at">ptype =</span> <span class="st">&#39;normal&#39;</span>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="0403_transformations_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 <p>We see that none of the numeric variables have normal distributions.</p>
 <ul>
@@ -1216,76 +1216,76 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
 </ul>
 <p>Note that the fact that <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> variables are not normal does not mean that the conditional distribution of <span class="math inline">\(y\)</span> given <span class="math inline">\(x\)</span> is not normal.</p>
 <p>Let’s explore wages of working women as a function of education.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="odd-transformations-data.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb157-2"><a href="odd-transformations-data.html#cb157-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
-<span id="cb157-3"><a href="odd-transformations-data.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, .) <span class="sc">+</span></span>
-<span id="cb157-4"><a href="odd-transformations-data.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span>
-<span id="cb157-5"><a href="odd-transformations-data.html#cb157-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-6"><a href="odd-transformations-data.html#cb157-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-7"><a href="odd-transformations-data.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot showing curvature in relationship</span></span>
-<span id="cb157-8"><a href="odd-transformations-data.html#cb157-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-9"><a href="odd-transformations-data.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="fu">trellis.focus</span>()</span>
-<span id="cb157-10"><a href="odd-transformations-data.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="fu">panel.identify</span>(<span class="at">labels=</span><span class="fu">rownames</span>(un))</span>
-<span id="cb157-11"><a href="odd-transformations-data.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; integer(0)</span></span>
-<span id="cb157-12"><a href="odd-transformations-data.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="fu">trellis.unfocus</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-transformations-data.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
+<span id="cb156-2"><a href="odd-transformations-data.html#cb156-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
+<span id="cb156-3"><a href="odd-transformations-data.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, .) <span class="sc">+</span></span>
+<span id="cb156-4"><a href="odd-transformations-data.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span>
+<span id="cb156-5"><a href="odd-transformations-data.html#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="odd-transformations-data.html#cb156-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-7"><a href="odd-transformations-data.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot showing curvature in relationship</span></span>
+<span id="cb156-8"><a href="odd-transformations-data.html#cb156-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-9"><a href="odd-transformations-data.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="fu">trellis.focus</span>()</span>
+<span id="cb156-10"><a href="odd-transformations-data.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="fu">panel.identify</span>(<span class="at">labels=</span><span class="fu">rownames</span>(un))</span>
+<span id="cb156-11"><a href="odd-transformations-data.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; integer(0)</span></span>
+<span id="cb156-12"><a href="odd-transformations-data.html#cb156-12" aria-hidden="true" tabindex="-1"></a><span class="fu">trellis.unfocus</span>()</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-transformations-data.html#cb158-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-2"><a href="odd-transformations-data.html#cb158-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
-<span id="cb158-3"><a href="odd-transformations-data.html#cb158-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
-<span id="cb158-4"><a href="odd-transformations-data.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="odd-transformations-data.html#cb157-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-2"><a href="odd-transformations-data.html#cb157-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
+<span id="cb157-3"><a href="odd-transformations-data.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
+<span id="cb157-4"><a href="odd-transformations-data.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="odd-transformations-data.html#cb159-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb159-2"><a href="odd-transformations-data.html#cb159-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;United.States&#39;</span>,<span class="st">&#39;Canada&#39;</span>))</span>
-<span id="cb159-3"><a href="odd-transformations-data.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
-<span id="cb159-4"><a href="odd-transformations-data.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
-<span id="cb159-5"><a href="odd-transformations-data.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
-<span id="cb159-6"><a href="odd-transformations-data.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
-<span id="cb159-7"><a href="odd-transformations-data.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
-<span id="cb159-8"><a href="odd-transformations-data.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
-<span id="cb159-9"><a href="odd-transformations-data.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
-<span id="cb159-10"><a href="odd-transformations-data.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
-<span id="cb159-11"><a href="odd-transformations-data.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
-<span id="cb159-12"><a href="odd-transformations-data.html#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
-<span id="cb159-13"><a href="odd-transformations-data.html#cb159-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
-<span id="cb159-14"><a href="odd-transformations-data.html#cb159-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-transformations-data.html#cb158-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-2"><a href="odd-transformations-data.html#cb158-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;United.States&#39;</span>,<span class="st">&#39;Canada&#39;</span>))</span>
+<span id="cb158-3"><a href="odd-transformations-data.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
+<span id="cb158-4"><a href="odd-transformations-data.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
+<span id="cb158-5"><a href="odd-transformations-data.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
+<span id="cb158-6"><a href="odd-transformations-data.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
+<span id="cb158-7"><a href="odd-transformations-data.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
+<span id="cb158-8"><a href="odd-transformations-data.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
+<span id="cb158-9"><a href="odd-transformations-data.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
+<span id="cb158-10"><a href="odd-transformations-data.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
+<span id="cb158-11"><a href="odd-transformations-data.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
+<span id="cb158-12"><a href="odd-transformations-data.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
+<span id="cb158-13"><a href="odd-transformations-data.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
+<span id="cb158-14"><a href="odd-transformations-data.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
 <p>between wage and education, and heteroskedasticity in wage as a function of education.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="odd-transformations-data.html#cb160-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb160-2"><a href="odd-transformations-data.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;p3d&quot;, repos=&quot;http://R-Forge.R-project.org&quot;)</span></span>
-<span id="cb160-3"><a href="odd-transformations-data.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb160-4"><a href="odd-transformations-data.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
-<span id="cb160-5"><a href="odd-transformations-data.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: rgl</span></span>
-<span id="cb160-6"><a href="odd-transformations-data.html#cb160-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: mgcv</span></span>
-<span id="cb160-7"><a href="odd-transformations-data.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: nlme</span></span>
-<span id="cb160-8"><a href="odd-transformations-data.html#cb160-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-9"><a href="odd-transformations-data.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;nlme&#39;</span></span>
-<span id="cb160-10"><a href="odd-transformations-data.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:spida2&#39;:</span></span>
-<span id="cb160-11"><a href="odd-transformations-data.html#cb160-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-12"><a href="odd-transformations-data.html#cb160-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     getData</span></span>
-<span id="cb160-13"><a href="odd-transformations-data.html#cb160-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; This is mgcv 1.8-33. For overview type &#39;help(&quot;mgcv-package&quot;)&#39;.</span></span>
-<span id="cb160-14"><a href="odd-transformations-data.html#cb160-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-15"><a href="odd-transformations-data.html#cb160-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;p3d&#39;</span></span>
-<span id="cb160-16"><a href="odd-transformations-data.html#cb160-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:spida2&#39;:</span></span>
-<span id="cb160-17"><a href="odd-transformations-data.html#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-18"><a href="odd-transformations-data.html#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     cell, center, ConjComp, dell, disp, ell, ell.conj, ellbox, ellplus,</span></span>
-<span id="cb160-19"><a href="odd-transformations-data.html#cb160-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ellpt, ellptc, elltan, elltanc, uv</span></span>
-<span id="cb160-20"><a href="odd-transformations-data.html#cb160-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:car&#39;:</span></span>
-<span id="cb160-21"><a href="odd-transformations-data.html#cb160-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-22"><a href="odd-transformations-data.html#cb160-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Identify3d</span></span>
-<span id="cb160-23"><a href="odd-transformations-data.html#cb160-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:knitr&#39;:</span></span>
-<span id="cb160-24"><a href="odd-transformations-data.html#cb160-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb160-25"><a href="odd-transformations-data.html#cb160-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     spin</span></span>
-<span id="cb160-26"><a href="odd-transformations-data.html#cb160-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb160-27"><a href="odd-transformations-data.html#cb160-27" aria-hidden="true" tabindex="-1"></a><span class="co">#slid %&gt;% </span></span>
-<span id="cb160-28"><a href="odd-transformations-data.html#cb160-28" aria-hidden="true" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) + </span></span>
-<span id="cb160-29"><a href="odd-transformations-data.html#cb160-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
-<span id="cb160-30"><a href="odd-transformations-data.html#cb160-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb160-31"><a href="odd-transformations-data.html#cb160-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Init3d()</span></span>
-<span id="cb160-32"><a href="odd-transformations-data.html#cb160-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
-<span id="cb160-33"><a href="odd-transformations-data.html#cb160-33" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d()</span></span>
-<span id="cb160-34"><a href="odd-transformations-data.html#cb160-34" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;United.States&#39;)</span></span>
-<span id="cb160-35"><a href="odd-transformations-data.html#cb160-35" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;Canada&#39;)</span></span>
-<span id="cb160-36"><a href="odd-transformations-data.html#cb160-36" aria-hidden="true" tabindex="-1"></a><span class="co">#rownames(un)</span></span>
-<span id="cb160-37"><a href="odd-transformations-data.html#cb160-37" aria-hidden="true" tabindex="-1"></a><span class="co">#names(un)</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="odd-transformations-data.html#cb159-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-2"><a href="odd-transformations-data.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;p3d&quot;, repos=&quot;http://R-Forge.R-project.org&quot;)</span></span>
+<span id="cb159-3"><a href="odd-transformations-data.html#cb159-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-4"><a href="odd-transformations-data.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
+<span id="cb159-5"><a href="odd-transformations-data.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: rgl</span></span>
+<span id="cb159-6"><a href="odd-transformations-data.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: mgcv</span></span>
+<span id="cb159-7"><a href="odd-transformations-data.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: nlme</span></span>
+<span id="cb159-8"><a href="odd-transformations-data.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-9"><a href="odd-transformations-data.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;nlme&#39;</span></span>
+<span id="cb159-10"><a href="odd-transformations-data.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:spida2&#39;:</span></span>
+<span id="cb159-11"><a href="odd-transformations-data.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-12"><a href="odd-transformations-data.html#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     getData</span></span>
+<span id="cb159-13"><a href="odd-transformations-data.html#cb159-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; This is mgcv 1.8-33. For overview type &#39;help(&quot;mgcv-package&quot;)&#39;.</span></span>
+<span id="cb159-14"><a href="odd-transformations-data.html#cb159-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-15"><a href="odd-transformations-data.html#cb159-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;p3d&#39;</span></span>
+<span id="cb159-16"><a href="odd-transformations-data.html#cb159-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:spida2&#39;:</span></span>
+<span id="cb159-17"><a href="odd-transformations-data.html#cb159-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-18"><a href="odd-transformations-data.html#cb159-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     cell, center, ConjComp, dell, disp, ell, ell.conj, ellbox, ellplus,</span></span>
+<span id="cb159-19"><a href="odd-transformations-data.html#cb159-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ellpt, ellptc, elltan, elltanc, uv</span></span>
+<span id="cb159-20"><a href="odd-transformations-data.html#cb159-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:car&#39;:</span></span>
+<span id="cb159-21"><a href="odd-transformations-data.html#cb159-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-22"><a href="odd-transformations-data.html#cb159-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Identify3d</span></span>
+<span id="cb159-23"><a href="odd-transformations-data.html#cb159-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:knitr&#39;:</span></span>
+<span id="cb159-24"><a href="odd-transformations-data.html#cb159-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb159-25"><a href="odd-transformations-data.html#cb159-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     spin</span></span>
+<span id="cb159-26"><a href="odd-transformations-data.html#cb159-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-27"><a href="odd-transformations-data.html#cb159-27" aria-hidden="true" tabindex="-1"></a><span class="co">#slid %&gt;% </span></span>
+<span id="cb159-28"><a href="odd-transformations-data.html#cb159-28" aria-hidden="true" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) + </span></span>
+<span id="cb159-29"><a href="odd-transformations-data.html#cb159-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
+<span id="cb159-30"><a href="odd-transformations-data.html#cb159-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-31"><a href="odd-transformations-data.html#cb159-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Init3d()</span></span>
+<span id="cb159-32"><a href="odd-transformations-data.html#cb159-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
+<span id="cb159-33"><a href="odd-transformations-data.html#cb159-33" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d()</span></span>
+<span id="cb159-34"><a href="odd-transformations-data.html#cb159-34" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;United.States&#39;)</span></span>
+<span id="cb159-35"><a href="odd-transformations-data.html#cb159-35" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;Canada&#39;)</span></span>
+<span id="cb159-36"><a href="odd-transformations-data.html#cb159-36" aria-hidden="true" tabindex="-1"></a><span class="co">#rownames(un)</span></span>
+<span id="cb159-37"><a href="odd-transformations-data.html#cb159-37" aria-hidden="true" tabindex="-1"></a><span class="co">#names(un)</span></span></code></pre></div>
 </div>
 <div id="box-cox-transformation" class="section level2" number="27.3">
 <h2><span class="header-section-number">27.3</span> Box Cox Transformation</h2>
