@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Base R | Data Science for Psychologists</title>
+  <title>43 Lab 09 - Conveying the right message through visualisation | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Base R | Data Science for Psychologists" />
+  <meta property="og:title" content="43 Lab 09 - Conveying the right message through visualisation | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Base R | Data Science for Psychologists" />
+  <meta name="twitter:title" content="43 Lab 09 - Conveying the right message through visualisation | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="reading-error-codes.html"/>
-<link rel="next" href="odd-legacy-data-types.html"/>
+<link rel="prev" href="functions-1.html"/>
+<link rel="next" href="data-and-ethics.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -937,20 +937,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="base-r" class="section level1 unnumbered">
-<h1>Base R</h1>
-<p>This is not a module. Although it is designed to introduce you to base R. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here][ds4p-pl-17]. The slides used to make the videos in this module can be found in the <a href="https://github.com/DataScience4Psych/slides">slides repo</a>.</p>
-<div id="module-materials-16" class="section level2" number="60.1">
-<h2><span class="header-section-number">60.1</span> Module Materials</h2>
+<div id="lab-09---conveying-the-right-message-through-visualisation" class="section level1" number="43">
+<h1><span class="header-section-number">43</span> Lab 09 - Conveying the right message through visualisation</h1>
+<p>In this lab our goal is to reconstruct and improve a data visualisation on COVID and mask wearing.</p>
+<div id="learning-goals-2" class="section level2" number="43.1">
+<h2><span class="header-section-number">43.1</span> Learning goals</h2>
 <ul>
-<li><p>Slides</p></li>
-<li><p>Suggested Readings</p></li>
-<li><p>Activities</p></li>
-<li><p>Lab</p></li>
+<li>Critiquing visualisations that misrepresent data</li>
+<li>Improving data visualisations to better convey the right message</li>
 </ul>
-<div id="estimated-video-length-6" class="section level3" number="60.1.1">
-<h3><span class="header-section-number">60.1.1</span> Estimated Video Length</h3>
-<!-- https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI & https://ytplaylist-len.herokuapp.com/ -->
+</div>
+<div id="getting-started-8" class="section level2" number="43.2">
+<h2><span class="header-section-number">43.2</span> Getting started</h2>
+<p>Go to the course GitHub organization and locate your homework repo, clone it in RStudio and open the R Markdown document.
+Knit the document to make sure it compiles without errors.</p>
+<div id="warm-up-5" class="section level3" number="43.2.1">
+<h3><span class="header-section-number">43.2.1</span> Warm up</h3>
+<p>Let’s warm up with some simple exercises.
+Update the YAML of your R Markdown file with your information, knit, commit, and push your changes.
+Make sure to commit with a meaningful commit message.
+Then, go to your repo on GitHub and confirm that your changes are visible in your Rmd <strong>and</strong> md files.
+If anything is missing, commit and push again.</p>
+</div>
+<div id="packages-7" class="section level3" number="43.2.2">
+<h3><span class="header-section-number">43.2.2</span> Packages</h3>
+<p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualisation.
+This package is already installed for you.
+You can load it by running the following in your Console:</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="data-3" class="section level3" number="43.2.3">
+<h3><span class="header-section-number">43.2.3</span> Data</h3>
+<p>In this lab you’ll construct the dataset!</p>
+</div>
+</div>
+<div id="exercises-6" class="section level2" number="43.3">
+<h2><span class="header-section-number">43.3</span> Exercises</h2>
+<p>The following visualisation was shared <a href="https://twitter.com/JonBoeckenstedt/status/1291602888376999936">on Twitter</a> as “extraordinary misleading.”</p>
+<p><img src="img/masks-v-nomasks.png" width="805" /></p>
+<p>Before you join the workshop, think about what is misleading about this visualisation and how you might go about fixing it.
+Take some notes and bring your notes to the workshop to share with your teammates.</p>
+<ol style="list-style-type: decimal">
+<li>Create a data frame that can be used to re-construct this visualisation. You may need to guess some of the numbers, that’s ok. You should first think about how many rows and columns you’ll need and what you want to call your variables. Then, you can use the <code>tribble()</code> function for this. For example, if you wanted to construct the following data frame</li>
+</ol>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb259-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   date     count
+##   &lt;chr&gt;    &lt;dbl&gt;
+## 1 1/1/2020    15
+## 2 2/1/2020    20
+## 3 3/1/2020    22</code></pre>
+<p>you can write</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb261-2"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
+<span id="cb261-3"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
+<span id="cb261-4"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
+<span id="cb261-5"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
+<span id="cb261-6"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb261-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre class="marginfigure"><code>Since the exercises for this week are short it&#39;s possible not every team member will get to commit and push **during** the workshop. However each team member should review what was created, fix typos, make edits for better presentation, etc. either during or after the workshop, and before the deadline.</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Make a visualization that more accurately (and honestly) tells the story.</p></li>
+<li><p>What message is more clear in your visualization than it was in the original visualization?</p></li>
+<li><p>What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
+It’ll be difficult to set aside what you already know about mask wearing, but you should try to focus only on what this visualization tells.
+Feel free to also comment on whether that lines up with what you know about mask wearing.</p></li>
+</ol>
+<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 
 <!--DS4P Links-->
 <!--AE. Links-->
@@ -965,16 +1017,127 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!--R Documentation-->
 <!--Wikipedia Links-->
 <!--Misc. Links-->
+<!--
+In this assignment you will work on data scraping.
+Having worked through the interactive tutorial titled [Money in politics](https://minecr.shinyapps.io/dsbox-05-moneyinpolitics/) will be a good preparation for this homework assignment as you'll be working with the same website.
+-->
+<details>
+  <summary>Tired of typing your password?</summary>
+
+<p>Chances are your browser has already saved your password, but if not, you can ask Git to save (cache) your password for a period of time, where you indicate the period of time in seconds. For example, if you want it to cache your password for 1 hour, that would be 3,600 seconds. To do so, run the following <b>in the console</b>, <code>usethis::use_git_config(credential.helper = "cache --timeout=3600")</code>. If you want to cache it for a longer amount of time, you can adjust the number in the code.</p>
+  
+</details>
+</div>
+<div id="packages-8" class="section level2" number="43.4">
+<h2><span class="header-section-number">43.4</span> Packages</h2>
+<p>In this assignment we will use the following packages:</p>
+<ul>
+<li><strong>tidyverse</strong>: a collection of packages for doing data analysis in a “tidy” way</li>
+<li><strong>robotstxt</strong>: provides functions to download and parse <code>robots.txt</code> files, making it easy to check if bots (spiders, crawler, scrapers, …) are allowed to access specific resources on a domain</li>
+<li><strong>rvest</strong>: helps you scrape information from web pages</li>
+<li><strong>scales</strong>: provides the internal scaling infrastructure used by ggplot2 and gives you tools to override the default breaks, labels, transformations and palettes</li>
+</ul>
+</div>
+<div id="data-collection-via-web-scraping" class="section level2" number="43.5">
+<h2><span class="header-section-number">43.5</span> Data collection via web scraping</h2>
+<p><img src="img/opensecrets.png" width="100%" /></p>
+<p>The data come from <a href="https://www.opensecrets.org">OpenSecrets.org</a>, a <em>“website tracking the influence of money on U.S. politics, and how that money affects policy and citizens’ lives”</em>.
+This website is hosted by The Center for Responsive Politics, which is a nonpartisan, independent nonprofit that <em>“tracks money in U.S. politics and its effect on elections and public policy.”</em><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>Before getting started, let’s check that a bot has permissions to access pages on this domain.</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(robotstxt)</span>
+<span id="cb263-2"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb263-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://www.opensecrets.org&quot;</span>)</span>
+<span id="cb263-3"><a href="lab-09-conveying-the-right-message-through-visualisation.html#cb263-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>Our goal is to scrape data for contributions in all election years Open Secrets has data for.
+Since that means repeating a task many times, let’s first write a function that works on the first page.
+Confirm it works on a few others.
+Then iterate it over pages for all years.</p>
+<div class="box">
+<p>Complete the following set of steps in the <code>scrape-pac.R</code> file in the <code>scripts</code> folder of your repository.
+This file already contains some starter code to help you out.</p>
+</div>
+<ul>
+<li><p>Write a function called <code>scrape_pac()</code> that scrapes information from the Open Secrets webpage for foreign-contected PAC contributions in a given year.
+This function should</p>
+<ul>
+<li>have one input: the URL of the webpage and should return a data frame.</li>
+<li>rename variables scraped, using <code>snake_case</code> naming.</li>
+<li>clean up the <code>Country of Origin/Parent Company</code> variable with <code>str_squish()</code>.</li>
+<li>add a new column to the data frame for <code>year</code>. We will want this information when we ultimately have data from all years, so this is a good time to keep track of it. Our function doesn’t take a year argument, but the year is embedded in the URL, so we can extract it out of there, and add it as a new column. Use the <code>str_sub()</code> function to extract the last 4 characters from the URL. You will probably want to look at the help for this function to figure out how to specify “last 4 characters.”</li>
+</ul></li>
+<li><p>Define the URLs for 2020, 2018, and 1998 contributions.
+Then, test your function using these URLs as inputs.
+Does the function seem to do what you expected it to do?</p></li>
+<li><p>Construct a vector called <code>urls</code> that contains the URLs for each webpage that contains information on foreign-connected PAC contributions for a given year.</p></li>
+<li><p>Map the <code>scrape_pac()</code> function over <code>urls</code> in a way that will result in a data frame called <code>pac_all</code>.</p></li>
+<li><p>Write the data frame to a csv file called <code>pac-all.csv</code> in the <code>data</code> folder.</p></li>
+</ul>
+<p><em>✅⬆️ If you haven’t yet done so, now is definitely a good time to commit and push your changes to GitHub with an appropriate commit message (e.g. “Data scraping complete”). Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+<ol style="list-style-type: decimal">
+<li>In your R Markdown file, load <code>pac-all.csv</code> and report its number of observations and variables using inline code.</li>
+</ol>
+</div>
+<div id="data-cleaning" class="section level2" number="43.6">
+<h2><span class="header-section-number">43.6</span> Data cleaning</h2>
+<p>In this section we clean the <code>pac_all</code> data frame to prepare it for analysis and visualization.
+We have two goals in data cleaning:</p>
+<ul>
+<li><p>Separate the <code>country_parent</code> into two such that country and parent company appear in different columns for country-level analysis.</p></li>
+<li><p>Convert contribution amounts in <code>total</code>, <code>dems</code>, and <code>repubs</code> from character strings to numeric values.</p></li>
+</ul>
+<p>The following exercises walk you through how to make these fixes to the data.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Use the <code>separate()</code> function to separate <code>country_parent</code> into <code>country</code> and <code>parent</code> columns.
+Note that country and parent company names are separated by <code>\</code> (which will need to be specified in your function) and also note that there are some entries where the <code>\</code> sign appears twice and in these cases we want to only split the value at the first occurrence of <code>\</code>.
+This can be accomplished by setting the <code>extra</code> argument in to <code>"merge"</code> so that the cell is split into only 2 segments, e.g. we want <code>"Denmark/Novo Nordisk A/S"</code> to be split into <code>"Denmark"</code> and <code>"Novo Nordisk A/S"</code>.
+(See help for <code>separate()</code> for more on this.) End your code chunk by printing out the top 10 rows of your data frame (if you just type the data frame name it should automatically do this for you).</p></li>
+<li><p>Remove the character strings including <code>$</code> and <code>,</code> signs in the <code>total</code>, <code>dems</code>,and <code>repubs</code> columns and convert these columns to numeric.
+End your code chunk by printing out the top 10 rows of your data frame (if you just type the data frame name it should automatically do this for you).
+A couple hints to help you out:</p>
+<ul>
+<li><p>The <code>$</code> character is a special character so it will need to be escaped.</p></li>
+<li><p>Some contribution amounts are in the millions (e.g. Anheuser-Busch contributed a total of $1,510,897 in 2008).
+In this case we need to remove all occurrences of <code>,</code>, which we can do by using <code>str_remove_all()</code> instead of <code>str_remove()</code>.</p></li>
+</ul></li>
+</ol>
+<p>🧶 ✅ ⬆️ <em>Now is a good time to knit your document, and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+</div>
+<div id="data-visualization-and-interpretation" class="section level2" number="43.7">
+<h2><span class="header-section-number">43.7</span> Data visualization and interpretation</h2>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Create a line plot of total contributions from all foreign-connected PACs in the Canada and Mexico over the years.
+Once you have made the plot, write a brief interpretation of what the graph reveals.
+Few hints to help you out:</p>
+<ul>
+<li>Filter for only <code>Canada</code> and <code>Mexico</code>.</li>
+<li>Calculate sum of total contributions from PACs for each year for each country by using a sequence of <code>group_by()</code> then <code>summarise()</code>.</li>
+<li>Make a plot of total contributions (y-axis) by year (x-axis) where two lines identified by different colours represent each of Canada and Mexico.</li>
+</ul></li>
+</ol>
+<!-- -->
+<ol start="5" style="list-style-type: decimal">
+<li>Recreate the following visualisation. Once you have made the plot, write a brief interpretation of what the graph reveals. Note that these are only UK contributions. You will need to make use of functions from the <strong>scales</strong> package for axis labels as well as from <strong>ggplot2</strong>. Remember, if you can’t figure out certain bits, you can always ask on Piazza!</li>
+</ol>
+<p><img src="img/plot-to-recreate.png" width="100%" /></p>
+<p>🧶 ✅ ⬆️ <em>Knit your document, and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
+
 </div>
 </div>
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Source: <a href="https://www.opensecrets.org/about/">Open Secrets - About</a>.<a href="lab-09-conveying-the-right-message-through-visualisation.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reading-error-codes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="odd-legacy-data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="functions-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-and-ethics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1005,7 +1168,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1701_baseR.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0802_betterviz.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1016,7 +1179,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1701_baseR.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0802_betterviz.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
