@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-03-05" />
+<meta name="date" content="2021-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -62,6 +62,10 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <html>
 
@@ -1023,9 +1027,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="git-already-installed" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Git already installed?</h3>
 <p>Go to the shell (<a href="https://happygitwithr.com/shell.html">More info on shell from Jenny Bryan</a>). Enter <code>which git</code> to request the path to your Git executable:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="shorthappygit.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> git</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="shorthappygit.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> git</span></code></pre></div>
 <p>and <code>git --version</code> to see its version:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="shorthappygit.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="shorthappygit.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div>
 <p>If you are successful, that’s great! You have Git already. No need to install! Move on.</p>
 <p>If, instead, you see something more like <code>git: command not found</code>, keep reading.</p>
 <p>macOS users might get an immediate offer to install command line developer tools. Yes, you should accept! Click “Install” and read more below.</p>
@@ -1047,11 +1051,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Although I (Mason) have limited knowledge about the inner workings of mac, I do know of quantitative psychologists who use macs with R, including Bill Revelle – author of the psych package and Full Professor at Northwestern.</p>
 <p><strong>Option 1</strong> (<em>highly recommended</em>): Install the Xcode command line tools (<strong>not all of Xcode</strong>), which includes Git.</p>
 <p>Go to the shell and enter one of these commands to elicit an offer to install developer command line tools:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="shorthappygit.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
-<span id="cb30-2"><a href="shorthappygit.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="shorthappygit.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
+<span id="cb29-2"><a href="shorthappygit.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config</span></code></pre></div>
 <p>Accept the offer! Click on “Install.”</p>
 <p>Here’s another way to request this installation, more directly:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="shorthappygit.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcode-select</span> <span class="at">--install</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="shorthappygit.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcode-select</span> <span class="at">--install</span></span></code></pre></div>
 <p>We just happen to find this Git-based trigger apropos.</p>
 <p>Note also that, after upgrading macOS, you might need to re-do the above and/or re-agree to the Xcode license agreement. We have seen this cause the RStudio Git pane to disappear on a system where it was previously working. Use commands like those above to tickle Xcode into prompting you for what it needs, then restart RStudio.</p>
 <p><strong>Option 2</strong> (<em>recommended</em>): Install Git from here: <a href="http://git-scm.com/downloads" class="uri">http://git-scm.com/downloads</a>.</p>
@@ -1068,15 +1072,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hello-git" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Introduce yourself to Git</h2>
 <p>In the shell (<a href="https://happygitwithr.com/shell.html">More info on shell from Jenny Bryan</a>):</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="shorthappygit.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">&#39;Jane Doe&#39;</span></span>
-<span id="cb32-2"><a href="shorthappygit.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">&#39;jane@example.com&#39;</span></span>
-<span id="cb32-3"><a href="shorthappygit.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="shorthappygit.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">&#39;Jane Doe&#39;</span></span>
+<span id="cb31-2"><a href="shorthappygit.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">&#39;jane@example.com&#39;</span></span>
+<span id="cb31-3"><a href="shorthappygit.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code></pre></div>
 <p>substituting your name and <strong>the email associated with your GitHub account</strong>.</p>
 <p>The <a href="https://usethis.r-lib.org">usethis package</a> offers an alternative approach. You can set your Git user name and email from within R:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="shorthappygit.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install if needed (do this exactly once):</span></span>
-<span id="cb33-2"><a href="shorthappygit.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages(&quot;usethis&quot;)</span></span>
-<span id="cb33-3"><a href="shorthappygit.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
-<span id="cb33-4"><a href="shorthappygit.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_config</span>(<span class="at">user.name =</span> <span class="st">&quot;Jane Doe&quot;</span>, <span class="at">user.email =</span> <span class="st">&quot;jane@example.org&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="shorthappygit.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install if needed (do this exactly once):</span></span>
+<span id="cb32-2"><a href="shorthappygit.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## install.packages(&quot;usethis&quot;)</span></span>
+<span id="cb32-3"><a href="shorthappygit.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb32-4"><a href="shorthappygit.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_config</span>(<span class="at">user.name =</span> <span class="st">&quot;Jane Doe&quot;</span>, <span class="at">user.email =</span> <span class="st">&quot;jane@example.org&quot;</span>)</span></code></pre></div>
 <div id="more-about-git-config" class="section level3" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> More about <code>git config</code></h3>
 <p>An easy way to get into a shell from RStudio is <em>Tools &gt; Terminal</em> or <em>Tools &gt; Shell</em>. (<a href="https://happygitwithr.com/shell.html">More info on shell from Jenny Bryan</a>).</p>
@@ -1088,7 +1092,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="git-editor" class="section level3" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Configure the Git editor</h3>
 <p>Another Git option that many people eventually configure is the editor. At some point, you will fail to give Git what it wants in terms of a commit message and it will kick you into an editor. This can be distressing, if it’s not your editor of choice and you don’t even know how to save and quit. You can enforce your will with something along these lines:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="shorthappygit.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor <span class="st">&quot;emacs&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="shorthappygit.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor <span class="st">&quot;emacs&quot;</span></span></code></pre></div>
 <p>Substitute your preferred editor for <code>"emacs"</code> here. Software Carpentry’s Git lesson has a comprehensive listing of the exact <code>git config</code> command needed for <a href="http://swcarpentry.github.io/git-novice/02-setup/">many combinations of OS and editor</a>.</p>
 </div>
 </div>
