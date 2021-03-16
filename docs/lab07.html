@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-03-10" />
+<meta name="date" content="2021-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -62,6 +62,10 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <html>
 
@@ -1000,7 +1004,7 @@ of Art collection</a>.</p>
 <li>Writing data</li>
 </ul>
 <p>Before getting started, let’s check that a bot has permissions to access pages on this domain.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="lab07.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://collections.ed.ac.uk/art)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="lab07.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://collections.ed.ac.uk/art)&quot;</span>)</span></code></pre></div>
 <pre><code>## 
  collections.ed.ac.uk</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -1010,9 +1014,9 @@ of Art collection</a>.</p>
 <p>Remember: Your email address is the address tied to your GitHub account.</p>
 <p>Run the following (but update it for your name and email!) in the Console to
 configure Git:</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="lab07.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
-<span id="cb297-2"><a href="lab07.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_config</span>(<span class="at">user.name =</span> <span class="st">&quot;Your Name&quot;</span>, </span>
-<span id="cb297-3"><a href="lab07.html#cb297-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">user.email =</span> <span class="st">&quot;your.email@address.com&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="lab07.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb296-2"><a href="lab07.html#cb296-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_config</span>(<span class="at">user.name =</span> <span class="st">&quot;Your Name&quot;</span>, </span>
+<span id="cb296-3"><a href="lab07.html#cb296-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">user.email =</span> <span class="st">&quot;your.email@address.com&quot;</span>)</span></code></pre></div>
 </div>
 <div id="r-scripts-vs.-r-markdown-documents" class="section level2" number="45.2">
 <h2><span class="header-section-number">45.2</span> R scripts vs. R Markdown documents</h2>
@@ -1062,11 +1066,11 @@ the search bar in the Chrome browser.</p>
 <p>First, we define a new object called <code>first_url</code>, which is the link above. Then,
 we read the page at this url with the <code>read_html()</code> function from the <strong>rvest</strong>
 package. The code for this is already provided in <code>01-scrape-page-one.R</code>.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="lab07.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set url</span></span>
-<span id="cb300-2"><a href="lab07.html#cb300-2" aria-hidden="true" tabindex="-1"></a>first_url <span class="ot">&lt;-</span> <span class="st">&quot;https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0&quot;</span></span>
-<span id="cb300-3"><a href="lab07.html#cb300-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-4"><a href="lab07.html#cb300-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read html page</span></span>
-<span id="cb300-5"><a href="lab07.html#cb300-5" aria-hidden="true" tabindex="-1"></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(first_url)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="lab07.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set url</span></span>
+<span id="cb299-2"><a href="lab07.html#cb299-2" aria-hidden="true" tabindex="-1"></a>first_url <span class="ot">&lt;-</span> <span class="st">&quot;https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0&quot;</span></span>
+<span id="cb299-3"><a href="lab07.html#cb299-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb299-4"><a href="lab07.html#cb299-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read html page</span></span>
+<span id="cb299-5"><a href="lab07.html#cb299-5" aria-hidden="true" tabindex="-1"></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(first_url)</span></code></pre></div>
 <p>For the ten pieces on this page we will extract <code>title</code>, <code>artist</code>, and <code>link</code>
 information, and put these three variables in a data frame.</p>
 </div>
@@ -1075,51 +1079,58 @@ information, and put these three variables in a data frame.</p>
 <p>Let’s start with titles. We make use of the SelectorGadget to identify the
 tags for the relevant nodes:</p>
 <p><img src="img/iteminfo-h3a.gif" /><!-- --></p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="lab07.html#cb301-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb301-2"><a href="lab07.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb301-3"><a href="lab07.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="lab07.html#cb300-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
+<span id="cb300-2"><a href="lab07.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb300-3"><a href="lab07.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>)</span></code></pre></div>
 <pre><code>## {xml_nodeset (10)}
-##  [1] &lt;a href=&quot;./record/112341?highlight=*:*&quot;&gt;Untitled                         ...
-##  [2] &lt;a href=&quot;./record/112342?highlight=*:*&quot;&gt;Untitled                         ...
-##  [3] &lt;a href=&quot;./record/112345?highlight=*:*&quot;&gt;Untitled                         ...
-##  [4] &lt;a href=&quot;./record/112344?highlight=*:*&quot;&gt;Untitled                         ...
-##  [5] &lt;a href=&quot;./record/112354?highlight=*:*&quot;&gt;Untitled                         ...
-##  [6] &lt;a href=&quot;./record/112357?highlight=*:*&quot;&gt;untitled                         ...
-##  [7] &lt;a href=&quot;./record/112356?highlight=*:*&quot;&gt;Untitled                         ...
-##  [8] &lt;a href=&quot;./record/112348?highlight=*:*&quot;&gt;Untitled                         ...
-##  [9] &lt;a href=&quot;./record/112349?highlight=*:*&quot;&gt;Untitled                         ...
-## [10] &lt;a href=&quot;./record/112343?highlight=*:*&quot;&gt;Untitled                         ...</code></pre>
+##  [1] &lt;a href=&quot;./record/21949?highlight=*:*&quot;&gt;Untitled                          ...
+##  [2] &lt;a href=&quot;./record/21135?highlight=*:*&quot;&gt;Portrait of a Woman               ...
+##  [3] &lt;a href=&quot;./record/21136?highlight=*:*&quot;&gt;Seated Female Nude                ...
+##  [4] &lt;a href=&quot;./record/21953?highlight=*:*&quot;&gt;Untitled                          ...
+##  [5] &lt;a href=&quot;./record/21954?highlight=*:*&quot;&gt;1st State                         ...
+##  [6] &lt;a href=&quot;./record/21955?highlight=*:*&quot;&gt;ça et là au bord de la mer        ...
+##  [7] &lt;a href=&quot;./record/21961?highlight=*:*&quot;&gt;Untitled                          ...
+##  [8] &lt;a href=&quot;./record/21968?highlight=*:*&quot;&gt;Mountains, Arran                  ...
+##  [9] &lt;a href=&quot;./record/21155?highlight=*:*&quot;&gt;Seated Female Nude                ...
+## [10] &lt;a href=&quot;./record/21156?highlight=*:*&quot;&gt;Seated Male Nude                  ...</code></pre>
 <p>Then we extract the text with <code>html_text()</code>:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="lab07.html#cb303-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb303-2"><a href="lab07.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb303-3"><a href="lab07.html#cb303-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb303-4"><a href="lab07.html#cb303-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
-<pre><code>##  [1] &quot;Untitled                                    &quot;                                              
-##  [2] &quot;Untitled                                    &quot;                                              
-##  [3] &quot;Untitled                                    &quot;                                              
-##  [4] &quot;Untitled                                    &quot;                                              
-##  [5] &quot;Untitled                                    &quot;                                              
-##  [6] &quot;untitled                                    &quot;                                              
-##  [7] &quot;Untitled                                    &quot;                                              
-##  [8] &quot;Untitled                                    &quot;                                              
-##  [9] &quot;Untitled                                    &quot;                                              
-## [10] &quot;Untitled                                                                            (1961)&quot;</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="lab07.html#cb302-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
+<span id="cb302-2"><a href="lab07.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb302-3"><a href="lab07.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb302-4"><a href="lab07.html#cb302-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;Untitled                                                                            (Unknown)&quot;                   
+##  [2] &quot;Portrait of a Woman                                                                            (1939)&quot;           
+##  [3] &quot;Seated Female Nude                                                                            (1939)&quot;            
+##  [4] &quot;Untitled                                                                            (Unknown)&quot;                   
+##  [5] &quot;1st State                                                                            (Unknown)&quot;                  
+##  [6] &quot;ça et là au bord de la mer                                                                            (Jul 1993)&quot;
+##  [7] &quot;Untitled                                                                            (1994)&quot;                      
+##  [8] &quot;Mountains, Arran                                                                            (Unknown)&quot;           
+##  [9] &quot;Seated Female Nude                                                                            (1959)&quot;            
+## [10] &quot;Seated Male Nude                                                                            (1959)&quot;</code></pre>
 <p>And get rid of all the spurious whitespace in the text with <code>str_squish()</code>:</p>
 <pre class="marginfigure"><code>Take a look at the help docs for `str_squish()` (with `?str_squish`) to </code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="lab07.html#cb306-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb306-2"><a href="lab07.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb306-3"><a href="lab07.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb306-4"><a href="lab07.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb306-5"><a href="lab07.html#cb306-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
-<pre><code>##  [1] &quot;Untitled&quot;        &quot;Untitled&quot;        &quot;Untitled&quot;        &quot;Untitled&quot;       
-##  [5] &quot;Untitled&quot;        &quot;untitled&quot;        &quot;Untitled&quot;        &quot;Untitled&quot;       
-##  [9] &quot;Untitled&quot;        &quot;Untitled (1961)&quot;</code></pre>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="lab07.html#cb305-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
+<span id="cb305-2"><a href="lab07.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb305-3"><a href="lab07.html#cb305-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb305-4"><a href="lab07.html#cb305-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb305-5"><a href="lab07.html#cb305-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;Untitled (Unknown)&quot;                   
+##  [2] &quot;Portrait of a Woman (1939)&quot;           
+##  [3] &quot;Seated Female Nude (1939)&quot;            
+##  [4] &quot;Untitled (Unknown)&quot;                   
+##  [5] &quot;1st State (Unknown)&quot;                  
+##  [6] &quot;ça et là au bord de la mer (Jul 1993)&quot;
+##  [7] &quot;Untitled (1994)&quot;                      
+##  [8] &quot;Mountains, Arran (Unknown)&quot;           
+##  [9] &quot;Seated Female Nude (1959)&quot;            
+## [10] &quot;Seated Male Nude (1959)&quot;</code></pre>
 <p>And finally save the resulting data as a vector of length 10:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="lab07.html#cb308-1" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span></span>
-<span id="cb308-2"><a href="lab07.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb308-3"><a href="lab07.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb308-4"><a href="lab07.html#cb308-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb308-5"><a href="lab07.html#cb308-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="lab07.html#cb307-1" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span></span>
+<span id="cb307-2"><a href="lab07.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb307-3"><a href="lab07.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb307-4"><a href="lab07.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb307-5"><a href="lab07.html#cb307-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
 </div>
 <div id="links" class="section level3" number="45.3.3">
 <h3><span class="header-section-number">45.3.3</span> Links</h3>
@@ -1133,15 +1144,15 @@ extracts attributes.</p>
 <p>Here the text is <code>Seach on Google</code> and the <code>href</code> attribute contains the url
 of the website you’d go to if you click on the hyperlinked text: <code>https://www.google.com</code>.</p>
 <p>The moral of the story is: the link is stored in the <code>href</code> attribute.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="lab07.html#cb310-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb310-2"><a href="lab07.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span>   <span class="co"># same nodes</span></span>
-<span id="cb310-3"><a href="lab07.html#cb310-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span>         <span class="co"># as before</span></span>
-<span id="cb310-4"><a href="lab07.html#cb310-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)             <span class="co"># but get href attribute instead of text</span></span></code></pre></div>
-<pre><code>##  [1] &quot;./record/112341?highlight=*:*&quot; &quot;./record/112342?highlight=*:*&quot;
-##  [3] &quot;./record/112345?highlight=*:*&quot; &quot;./record/112344?highlight=*:*&quot;
-##  [5] &quot;./record/112354?highlight=*:*&quot; &quot;./record/112357?highlight=*:*&quot;
-##  [7] &quot;./record/112356?highlight=*:*&quot; &quot;./record/112348?highlight=*:*&quot;
-##  [9] &quot;./record/112349?highlight=*:*&quot; &quot;./record/112343?highlight=*:*&quot;</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="lab07.html#cb309-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
+<span id="cb309-2"><a href="lab07.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span>   <span class="co"># same nodes</span></span>
+<span id="cb309-3"><a href="lab07.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span>         <span class="co"># as before</span></span>
+<span id="cb309-4"><a href="lab07.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)             <span class="co"># but get href attribute instead of text</span></span></code></pre></div>
+<pre><code>##  [1] &quot;./record/21949?highlight=*:*&quot; &quot;./record/21135?highlight=*:*&quot;
+##  [3] &quot;./record/21136?highlight=*:*&quot; &quot;./record/21953?highlight=*:*&quot;
+##  [5] &quot;./record/21954?highlight=*:*&quot; &quot;./record/21955?highlight=*:*&quot;
+##  [7] &quot;./record/21961?highlight=*:*&quot; &quot;./record/21968?highlight=*:*&quot;
+##  [9] &quot;./record/21155?highlight=*:*&quot; &quot;./record/21156?highlight=*:*&quot;</code></pre>
 <p>These don’t really look like urls as we know then though. They’re relative
 links.</p>
 <blockquote>
@@ -1186,36 +1197,36 @@ to scrape the new set of art pieces, and save the resulting data frame as
 <p>You’ve been using R functions, now it’s time to write your own!</p>
 <p>Let’s start simple. Here is a function that takes in an argument <code>x</code>, and adds 2
 to it.</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="lab07.html#cb312-1" aria-hidden="true" tabindex="-1"></a>add_two <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb312-2"><a href="lab07.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb312-3"><a href="lab07.html#cb312-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="lab07.html#cb311-1" aria-hidden="true" tabindex="-1"></a>add_two <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb311-2"><a href="lab07.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb311-3"><a href="lab07.html#cb311-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Let’s test it:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="lab07.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="lab07.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="lab07.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="lab07.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <p>The skeleton for defining functions in R is as follows:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="lab07.html#cb317-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(input){</span>
-<span id="cb317-2"><a href="lab07.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something with the input(s)</span></span>
-<span id="cb317-3"><a href="lab07.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return something</span></span>
-<span id="cb317-4"><a href="lab07.html#cb317-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="lab07.html#cb316-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(input){</span>
+<span id="cb316-2"><a href="lab07.html#cb316-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something with the input(s)</span></span>
+<span id="cb316-3"><a href="lab07.html#cb316-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return something</span></span>
+<span id="cb316-4"><a href="lab07.html#cb316-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Then, a function for scraping a page should look something like:</p>
 <blockquote>
 <p><strong>Tip:</strong> Function names should be short but evocative verbs.</p>
 </blockquote>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="lab07.html#cb318-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(url){</span>
-<span id="cb318-2"><a href="lab07.html#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read page at url</span></span>
-<span id="cb318-3"><a href="lab07.html#cb318-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract title, link, artist info for n pieces on page</span></span>
-<span id="cb318-4"><a href="lab07.html#cb318-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return a n x 3 tibble</span></span>
-<span id="cb318-5"><a href="lab07.html#cb318-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="lab07.html#cb317-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(url){</span>
+<span id="cb317-2"><a href="lab07.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read page at url</span></span>
+<span id="cb317-3"><a href="lab07.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract title, link, artist info for n pieces on page</span></span>
+<span id="cb317-4"><a href="lab07.html#cb317-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return a n x 3 tibble</span></span>
+<span id="cb317-5"><a href="lab07.html#cb317-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Fill in the blanks using code you already developed in the previous exercises.
 Name the function <code>scrape_page</code>.</p></li>
 <li><p>Test out your new function by running the following in the console. Does the
 output look right?</p></li>
 </ol>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="lab07.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(first_url)</span>
-<span id="cb319-2"><a href="lab07.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(second_url)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="lab07.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(first_url)</span>
+<span id="cb318-2"><a href="lab07.html#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(second_url)</span></code></pre></div>
 </div>
 <div id="iteration" class="section level2" number="45.5">
 <h2><span class="header-section-number">45.5</span> Iteration</h2>
@@ -1261,7 +1272,7 @@ tomorrow), and they each take the following form:</p>
 <p>In our case <code>x</code> is the list of URLs we constructed and the function to apply
 to each element of <code>x</code> is the function we developed earlier, <code>scrape_page</code>.
 And as a result we want a data frame, so we use <code>map_dfr</code> function:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="lab07.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(urls, scrape_page)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="lab07.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(urls, scrape_page)</span></code></pre></div>
 <ol start="8" style="list-style-type: decimal">
 <li>Fill in the blanks to scrape all pages, and to create a new data frame called
 <code>uoe_art</code>.</li>

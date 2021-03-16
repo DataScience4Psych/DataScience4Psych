@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-03-10" />
+<meta name="date" content="2021-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -62,6 +62,10 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <html>
 
@@ -1011,7 +1015,7 @@ If anything is missing, commit and push again.</p>
 <p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualization.
 This package is already installed for you.
 You can load it by running the following in your Console:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="data-3" class="section level3" number="47.2.3">
 <h3><span class="header-section-number">47.2.3</span> Data</h3>
@@ -1027,7 +1031,7 @@ Take some notes and bring your notes to the workshop to share with your teammate
 <ol style="list-style-type: decimal">
 <li>Create a data frame that can be used to re-construct this visualisation. You may need to guess some of the numbers, that’s ok. You should first think about how many rows and columns you’ll need and what you want to call your variables. Then, you can use the <code>tribble()</code> function for this. For example, if you wanted to construct the following data frame</li>
 </ol>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb324-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb323-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   date     count
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -1035,12 +1039,12 @@ Take some notes and bring your notes to the workshop to share with your teammate
 ## 2 2/1/2020    20
 ## 3 3/1/2020    22</code></pre>
 <p>you can write</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb326-2"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
-<span id="cb326-3"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
-<span id="cb326-4"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
-<span id="cb326-5"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
-<span id="cb326-6"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb326-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb325-2"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
+<span id="cb325-3"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
+<span id="cb325-4"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
+<span id="cb325-5"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
+<span id="cb325-6"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb325-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre class="marginfigure"><code>Since the exercises for this week are short it&#39;s possible not every team member will get to commit and push **during** the workshop. However each team member should review what was created, fix typos, make edits for better presentation, etc. either during or after the workshop, and before the deadline.</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Make a visualization that more accurately (and honestly) tells the story.</p></li>
@@ -1091,9 +1095,9 @@ Having worked through the interactive tutorial titled [Money in politics](https:
 <p>The data come from <a href="https://www.opensecrets.org">OpenSecrets.org</a>, a <em>“website tracking the influence of money on U.S. politics, and how that money affects policy and citizens’ lives”</em>.
 This website is hosted by The Center for Responsive Politics, which is a nonpartisan, independent nonprofit that <em>“tracks money in U.S. politics and its effect on elections and public policy.”</em><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>Before getting started, let’s check that a bot has permissions to access pages on this domain.</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(robotstxt)</span>
-<span id="cb328-2"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://www.opensecrets.org&quot;</span>)</span>
-<span id="cb328-3"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(robotstxt)</span>
+<span id="cb327-2"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://www.opensecrets.org&quot;</span>)</span>
+<span id="cb327-3"><a href="lab-09-conveying-the-right-message-through-visualization.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Our goal is to scrape data for contributions in all election years Open Secrets has data for.
 Since that means repeating a task many times, let’s first write a function that works on the first page.
 Confirm it works on a few others.
