@@ -89,10 +89,7 @@ sample_no_surprises <- function(x) {
 
 
 slide_url=function(df_url,title,slide=NULL){
-  var_url=paste0(
-    df_url$link[df_url$title==title],
-    slide)
-  return(var_url
-    )
+  var_url=paste0(df_url$link[df_url$title==title],slide)
+  return(var_url)
 }
 
