@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>45 Lab: University of Edinburgh Art Collection | Data Science for Psychologists</title>
+  <title>49 Write your own R functions | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="45 Lab: University of Edinburgh Art Collection | Data Science for Psychologists" />
+  <meta property="og:title" content="49 Write your own R functions | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="45 Lab: University of Edinburgh Art Collection | Data Science for Psychologists" />
+  <meta name="twitter:title" content="49 Write your own R functions | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="diy-web-data.html"/>
-<link rel="next" href="module-08-overview.html"/>
+<link rel="prev" href="automation.html"/>
+<link rel="next" href="lab08.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -1042,361 +1042,496 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lab07" class="section level1" number="45">
-<h1><span class="header-section-number">45</span> Lab: University of Edinburgh Art Collection</h1>
-<p>The University of Edinburgh Art Collection <em>“supports the world-leading research and teaching that happens within the University. Comprised of an astonishing range of objects and ideas spanning two millennia and a multitude of artistic forms, the collection reflects not only the long and rich trajectory of the University, but also major national and international shifts in art history.”</em><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<div id="functions-part1" class="section level1" number="49">
+<h1><span class="header-section-number">49</span> Write your own R functions</h1>
+<p>These notes are adapted from Jenny Bryan’s stat545.</p>
+<!--DS4P Links-->
+<!--AE. Links-->
+<!-- Lab Links-->
+<!--Slides-->
+<!--R Links-->
+<!--RStudio Links-->
+<!--HappyGitWithR Links-->
+<!--Package Links-->
+<!--Shiny links-->
+<!--Publications-->
+<!--R Documentation-->
+<!--Wikipedia Links-->
+<!--Misc. Links-->
+<!--Original content: https://stat545.com/block011_write-your-own-function-01.html-->
+<div id="what-and-why" class="section level2" number="49.1">
+<h2><span class="header-section-number">49.1</span> What and why?</h2>
+<p>My goal here is to reveal the <strong>process</strong> a long-time useR employs for writing functions. I also want to illustrate why the process is the way it is. Merely looking at the finished product, e.g. source code for R packages, can be extremely deceiving. Reality is generally much uglier … but more interesting!</p>
+<p>Why are we covering this now, smack in the middle of data aggregation? Powerful machines like dplyr, purrr, and the built-in “apply” family of functions, are ready and waiting to apply your purpose-built functions to various bits of your data. If you can express your analytical wishes in a function, these tools will give you great power.</p>
+</div>
+<div id="load-the-gapminder-data" class="section level2" number="49.2">
+<h2><span class="header-section-number">49.2</span> Load the Gapminder data</h2>
+<p>As usual, load gapminder.</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="functions-part1.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb323-2"><a href="functions-part1.html#cb323-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gapminder)</span>
+<span id="cb323-3"><a href="functions-part1.html#cb323-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tibble [1,704 x 6] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb323-4"><a href="functions-part1.html#cb323-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb323-5"><a href="functions-part1.html#cb323-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...</span></span>
+<span id="cb323-6"><a href="functions-part1.html#cb323-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ year     : int [1:1704] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...</span></span>
+<span id="cb323-7"><a href="functions-part1.html#cb323-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...</span></span>
+<span id="cb323-8"><a href="functions-part1.html#cb323-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ pop      : int [1:1704] 8425333 9240934 10267083 11537966 13079460 14880372..</span></span>
+<span id="cb323-9"><a href="functions-part1.html#cb323-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</span></span></code></pre></div>
+</div>
+<div id="max---min" class="section level2" number="49.3">
+<h2><span class="header-section-number">49.3</span> Max - min</h2>
+<p>Say you’ve got a numeric vector, and you want to compute the difference between its max and min. <code>lifeExp</code> or <code>pop</code> or <code>gdpPercap</code> are great examples of a typical input. You can imagine wanting to get this statistic after we slice up the Gapminder data by year, country, continent, or combinations thereof.</p>
+</div>
+<div id="get-something-that-works" class="section level2" number="49.4">
+<h2><span class="header-section-number">49.4</span> Get something that works</h2>
+<p>First, develop some working code for interactive use, using a representative input. I’ll use Gapminder’s life expectancy variable.</p>
+<p>R functions that will be useful: <code>min()</code>, <code>max()</code>, <code>range()</code>. (<strong>Read their documentation:</strong> <a href="https://rdrr.io/r/base/Extremes.html">here</a> and <a href="https://rdrr.io/r/base/range.html">here</a>)</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="functions-part1.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="do">## get to know the functions mentioned above</span></span>
+<span id="cb324-2"><a href="functions-part1.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb324-3"><a href="functions-part1.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 23.6</span></span>
+<span id="cb324-4"><a href="functions-part1.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb324-5"><a href="functions-part1.html#cb324-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 82.6</span></span>
+<span id="cb324-6"><a href="functions-part1.html#cb324-6" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb324-7"><a href="functions-part1.html#cb324-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 23.6 82.6</span></span>
+<span id="cb324-8"><a href="functions-part1.html#cb324-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-9"><a href="functions-part1.html#cb324-9" aria-hidden="true" tabindex="-1"></a><span class="do">## some natural solutions</span></span>
+<span id="cb324-10"><a href="functions-part1.html#cb324-10" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(gapminder<span class="sc">$</span>lifeExp) <span class="sc">-</span> <span class="fu">min</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb324-11"><a href="functions-part1.html#cb324-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb324-12"><a href="functions-part1.html#cb324-12" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(gapminder, <span class="fu">max</span>(lifeExp) <span class="sc">-</span> <span class="fu">min</span>(lifeExp))</span>
+<span id="cb324-13"><a href="functions-part1.html#cb324-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb324-14"><a href="functions-part1.html#cb324-14" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(gapminder<span class="sc">$</span>lifeExp)[<span class="dv">2</span>] <span class="sc">-</span> <span class="fu">range</span>(gapminder<span class="sc">$</span>lifeExp)[<span class="dv">1</span>]</span>
+<span id="cb324-15"><a href="functions-part1.html#cb324-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb324-16"><a href="functions-part1.html#cb324-16" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(gapminder, <span class="fu">range</span>(lifeExp)[<span class="dv">2</span>] <span class="sc">-</span> <span class="fu">range</span>(lifeExp)[<span class="dv">1</span>])</span>
+<span id="cb324-17"><a href="functions-part1.html#cb324-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb324-18"><a href="functions-part1.html#cb324-18" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">range</span>(gapminder<span class="sc">$</span>lifeExp))</span>
+<span id="cb324-19"><a href="functions-part1.html#cb324-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>Internalize this “answer” because our informal testing relies on you noticing departures from this.</p>
+<div id="skateboard-perfectly-formed-rear-view-mirror" class="section level3" number="49.4.1">
+<h3><span class="header-section-number">49.4.1</span> Skateboard &gt;&gt; perfectly formed rear-view mirror</h3>
+<p>This image <a href="https://blog.fastmonkeys.com/">widely attributed to the Spotify development team</a> conveys an important point.</p>
+<div class="figure"><span id="fig:spotify-howtobuildmvp"></span>
+<img src="img/spotify-howtobuildmvp.jpg" alt="From [Your ultimate guide to Minimum Viable Product (+great examples)](https://blog.fastmonkeys.com/2014/06/18/minimum-viable-product-your-ultimate-guide-to-mvp-great-examples/)" width="60%" />
+<p class="caption">
+Figure 49.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viable-product-your-ultimate-guide-to-mvp-great-examples/">Your ultimate guide to Minimum Viable Product (+great examples)</a>
+</p>
+</div>
+<p>Build that skateboard before you build the car or some fancy car part. A limited-but-functioning thing is very useful. It also keeps the spirits high.</p>
+<p>This is related to the valuable <a href="http://c2.com/cgi/wiki?TelescopeRule">Telescope Rule</a>:</p>
 <blockquote>
-<p>Note: See the sidebar <a href="https://collections.ed.ac.uk/art">here</a> and note that there are 2909 pieces in the art collection we’re collecting data on.</p>
+<p>It is faster to make a four-inch mirror then a six-inch mirror than to make a six-inch mirror.</p>
 </blockquote>
-<p>In this lab, we’ll scrape data on all art pieces in the <a href="https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22">Edinburgh College
-of Art collection</a>.</p>
-<p>The learning goals of this lab are:</p>
+</div>
+</div>
+<div id="turn-the-working-interactive-code-into-a-function" class="section level2" number="49.5">
+<h2><span class="header-section-number">49.5</span> Turn the working interactive code into a function</h2>
+<p>Add NO new functionality! Just write your very first R function.</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="functions-part1.html#cb325-1" aria-hidden="true" tabindex="-1"></a>max_minus_min <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)</span>
+<span id="cb325-2"><a href="functions-part1.html#cb325-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb325-3"><a href="functions-part1.html#cb325-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>Check that you’re getting the same answer as you did with your interactive code. Test it eyeball-o-metrically at this point.</p>
+</div>
+<div id="test-your-function" class="section level2" number="49.6">
+<h2><span class="header-section-number">49.6</span> Test your function</h2>
+<div id="test-on-new-inputs" class="section level3" number="49.6.1">
+<h3><span class="header-section-number">49.6.1</span> Test on new inputs</h3>
+<p>Pick some new artificial inputs where you know (at least approximately) what your function should return.</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="functions-part1.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb326-2"><a href="functions-part1.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 9</span></span>
+<span id="cb326-3"><a href="functions-part1.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(<span class="fu">runif</span>(<span class="dv">1000</span>))</span>
+<span id="cb326-4"><a href="functions-part1.html#cb326-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>I know that 10 minus 1 is 9. I know that random uniform [0, 1] variates will be between 0 and 1. Therefore max - min should be less than 1. If I take LOTS of them, max - min should be pretty close to 1.</p>
+<p>It is intentional that I tested on integer input as well as floating point. Likewise, I like to use valid-but-random data for this sort of check.</p>
+</div>
+<div id="test-on-real-data-but-different-real-data" class="section level3" number="49.6.2">
+<h3><span class="header-section-number">49.6.2</span> Test on real data but <em>different</em> real data</h3>
+<p>Back to the real world now. Two other quantitative variables are lying around: <code>gdpPercap</code> and <code>pop</code>. Let’s have a go.</p>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="functions-part1.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder<span class="sc">$</span>gdpPercap)</span>
+<span id="cb327-2"><a href="functions-part1.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 113282</span></span>
+<span id="cb327-3"><a href="functions-part1.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder<span class="sc">$</span>pop)</span>
+<span id="cb327-4"><a href="functions-part1.html#cb327-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1318623085</span></span></code></pre></div>
+<p>Either check these results “by hand” or apply the “does that even make sense?” test.</p>
+</div>
+<div id="test-on-weird-stuff" class="section level3" number="49.6.3">
+<h3><span class="header-section-number">49.6.3</span> Test on weird stuff</h3>
+<p>Now we try to break our function. Don’t get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it’s not expecting.</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="functions-part1.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder) <span class="do">## hey sometimes things &quot;just work&quot; on data.frames!</span></span>
+<span id="cb328-2"><a href="functions-part1.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in FUN(X[[i]], ...): only defined on a data frame with all numeric variables</span></span>
+<span id="cb328-3"><a href="functions-part1.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder<span class="sc">$</span>country) <span class="do">## factors are kind of like integer vectors, no?</span></span>
+<span id="cb328-4"><a href="functions-part1.html#cb328-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, : &#39;max&#39; not meaningful for factors</span></span>
+<span id="cb328-5"><a href="functions-part1.html#cb328-5" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(<span class="st">&quot;eggplants are purple&quot;</span>) <span class="do">## i have no excuse for this one</span></span>
+<span id="cb328-6"><a href="functions-part1.html#cb328-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in max(x) - min(x): non-numeric argument to binary operator</span></span></code></pre></div>
+<p>How happy are you with those error messages? You must imagine that some entire <strong>script</strong> has failed and that you were hoping to just <code>source()</code> it without re-reading it. If a colleague or future you encountered these errors, do you run screaming from the room? How hard is it to pinpoint the usage problem?</p>
+</div>
+<div id="i-will-scare-you-now" class="section level3" number="49.6.4">
+<h3><span class="header-section-number">49.6.4</span> I will scare you now</h3>
+<p>Here are some great examples where the function <strong>should break but it does not.</strong></p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="functions-part1.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder[<span class="fu">c</span>(<span class="st">&#39;lifeExp&#39;</span>, <span class="st">&#39;gdpPercap&#39;</span>, <span class="st">&#39;pop&#39;</span>)])</span>
+<span id="cb329-2"><a href="functions-part1.html#cb329-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.32e+09</span></span>
+<span id="cb329-3"><a href="functions-part1.html#cb329-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb329-4"><a href="functions-part1.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>In both cases, R’s eagerness to make sense of our requests is unfortunately successful. In the first case, a data.frame containing just the quantitative variables is eventually coerced into numeric vector. We can compute max minus min, even though it makes absolutely no sense at all. In the second case, a logical vector is converted to zeroes and ones, which might merit an error or at least a warning.</p>
+</div>
+</div>
+<div id="check-the-validity-of-arguments" class="section level2" number="49.7">
+<h2><span class="header-section-number">49.7</span> Check the validity of arguments</h2>
+<p>For functions that will be used again – which is not all of them! – it is good to check the validity of arguments. This implements a rule from <a href="http://www.faqs.org/docs/artu/ch01s06.html">the Unix philosophy</a>:</p>
+<blockquote>
+<p>Rule of Repair: When you must fail, fail noisily and as soon as possible.</p>
+</blockquote>
+<div id="stop-if-not" class="section level3" number="49.7.1">
+<h3><span class="header-section-number">49.7.1</span> stop if not</h3>
+<p><code>stopifnot()</code> is the entry level solution. I use it here to make sure the input <code>x</code> is a numeric vector.</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="functions-part1.html#cb330-1" aria-hidden="true" tabindex="-1"></a>mmm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb330-2"><a href="functions-part1.html#cb330-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb330-3"><a href="functions-part1.html#cb330-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)</span>
+<span id="cb330-4"><a href="functions-part1.html#cb330-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb330-5"><a href="functions-part1.html#cb330-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(gapminder)</span>
+<span id="cb330-6"><a href="functions-part1.html#cb330-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm(gapminder): is.numeric(x) is not TRUE</span></span>
+<span id="cb330-7"><a href="functions-part1.html#cb330-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(gapminder<span class="sc">$</span>country)</span>
+<span id="cb330-8"><a href="functions-part1.html#cb330-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm(gapminder$country): is.numeric(x) is not TRUE</span></span>
+<span id="cb330-9"><a href="functions-part1.html#cb330-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(<span class="st">&quot;eggplants are purple&quot;</span>)</span>
+<span id="cb330-10"><a href="functions-part1.html#cb330-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm(&quot;eggplants are purple&quot;): is.numeric(x) is not TRUE</span></span>
+<span id="cb330-11"><a href="functions-part1.html#cb330-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(gapminder[<span class="fu">c</span>(<span class="st">&#39;lifeExp&#39;</span>, <span class="st">&#39;gdpPercap&#39;</span>, <span class="st">&#39;pop&#39;</span>)])</span>
+<span id="cb330-12"><a href="functions-part1.html#cb330-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm(gapminder[c(&quot;lifeExp&quot;, &quot;gdpPercap&quot;, &quot;pop&quot;)]): is.numeric(x) is not TRUE</span></span>
+<span id="cb330-13"><a href="functions-part1.html#cb330-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb330-14"><a href="functions-part1.html#cb330-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm(c(TRUE, TRUE, FALSE, TRUE, TRUE)): is.numeric(x) is not TRUE</span></span></code></pre></div>
+<p>And we see that it catches all of the self-inflicted damage we would like to avoid.</p>
+</div>
+<div id="if-then-stop" class="section level3" number="49.7.2">
+<h3><span class="header-section-number">49.7.2</span> if then stop</h3>
+<p><code>stopifnot()</code> doesn’t provide a very good error message. The next approach is very widely used. Put your validity check inside an <code>if()</code> statement and call <code>stop()</code> yourself, with a custom error message, in the body.</p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="functions-part1.html#cb331-1" aria-hidden="true" tabindex="-1"></a>mmm2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb331-2"><a href="functions-part1.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb331-3"><a href="functions-part1.html#cb331-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&#39;I am so sorry, but this function only works for numeric input!</span><span class="sc">\n</span><span class="st">&#39;</span>,</span>
+<span id="cb331-4"><a href="functions-part1.html#cb331-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&#39;You have provided an object of class: &#39;</span>, <span class="fu">class</span>(x)[<span class="dv">1</span>])</span>
+<span id="cb331-5"><a href="functions-part1.html#cb331-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb331-6"><a href="functions-part1.html#cb331-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)</span>
+<span id="cb331-7"><a href="functions-part1.html#cb331-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb331-8"><a href="functions-part1.html#cb331-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm2</span>(gapminder)</span>
+<span id="cb331-9"><a href="functions-part1.html#cb331-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in mmm2(gapminder): I am so sorry, but this function only works for numeric input!</span></span>
+<span id="cb331-10"><a href="functions-part1.html#cb331-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; You have provided an object of class: tbl_df</span></span></code></pre></div>
+<p>In addition to a gratuitous apology, the error raised also contains two more pieces of helpful info:</p>
 <ul>
-<li>Web scraping from a single page</li>
-<li>Writing functions</li>
-<li>Iteration</li>
-<li>Writing data</li>
+<li><em>Which</em> function threw the error.</li>
+<li>Hints on how to fix things: expected class of input vs actual class.</li>
 </ul>
-<p>Before getting started, let’s check that a bot has permissions to access pages on this domain.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="lab07.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paths_allowed</span>(<span class="st">&quot;https://collections.ed.ac.uk/art)&quot;</span>)</span></code></pre></div>
-<pre><code>## 
- collections.ed.ac.uk</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<div id="getting-started-7" class="section level2" number="45.1">
-<h2><span class="header-section-number">45.1</span> Getting started</h2>
-<p>Go to the course GitHub organization and locate your lab repo, which should be named <code>lab-07-uoe-art</code>. Grab the URL of the repo, and fork your own copy.</p>
-<p>Remember: Your email address is the address tied to your GitHub account.</p>
-<p>Run the following (but update it for your name and email!) in the Console to
-configure Git:</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="lab07.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
-<span id="cb297-2"><a href="lab07.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git_config</span>(<span class="at">user.name =</span> <span class="st">&quot;Your Name&quot;</span>, </span>
-<span id="cb297-3"><a href="lab07.html#cb297-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">user.email =</span> <span class="st">&quot;your.email@address.com&quot;</span>)</span></code></pre></div>
+<p>If it is easy to do so, I highly recommend this template: “you gave me THIS, but I need THAT.”</p>
+<p>The tidyverse style guide has a very useful <a href="https://style.tidyverse.org/error-messages.html">chapter on how to construct error messages</a>.</p>
 </div>
-<div id="r-scripts-vs.-r-markdown-documents" class="section level2" number="45.2">
-<h2><span class="header-section-number">45.2</span> R scripts vs. R Markdown documents</h2>
-<p>Today we will be using both R scripts and R Markdown documents:</p>
+<div id="sidebar-non-programming-uses-for-assertions" class="section level3" number="49.7.3">
+<h3><span class="header-section-number">49.7.3</span> Sidebar: non-programming uses for assertions</h3>
+<p>Another good use of this pattern is to leave checks behind in data analytical scripts. Consider our repetitive use of Gapminder in this course. Every time we load it, we inspect it, hoping to see the usual stuff. If we were loading from file (vs. a stable data package), we might want to formalize our expectations about the number of rows and columns, the names and flavors of the variables, etc. This would alert us if the data suddenly changed, which can be a useful wake-up call in scripts that you re-run <em>ad nauseam</em> on auto-pilot or non-interactively.</p>
+</div>
+</div>
+<div id="wrap-up-and-whats-next" class="section level2" number="49.8">
+<h2><span class="header-section-number">49.8</span> Wrap-up and what’s next?</h2>
+<p>Here’s the function we’ve written so far:</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="functions-part1.html#cb332-1" aria-hidden="true" tabindex="-1"></a>mmm2</span>
+<span id="cb332-2"><a href="functions-part1.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x) {</span></span>
+<span id="cb332-3"><a href="functions-part1.html#cb332-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   if(!is.numeric(x)) {</span></span>
+<span id="cb332-4"><a href="functions-part1.html#cb332-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     stop(&#39;I am so sorry, but this function only works for numeric input!\n&#39;,</span></span>
+<span id="cb332-5"><a href="functions-part1.html#cb332-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          &#39;You have provided an object of class: &#39;, class(x)[1])</span></span>
+<span id="cb332-6"><a href="functions-part1.html#cb332-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   }</span></span>
+<span id="cb332-7"><a href="functions-part1.html#cb332-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   max(x) - min(x)</span></span>
+<span id="cb332-8"><a href="functions-part1.html#cb332-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<p>What we’ve accomplished:</p>
 <ul>
-<li><code>.R</code>: R scripts are plain text files containing <strong>only</strong> code and brief comments,
-<ul>
-<li>We’ll use R scripts in the web scraping stage and ultimately save the scraped
-data as a csv.</li>
-</ul></li>
-<li><code>.Rmd</code>: R Markdown documents are plain text files containing.
-<ul>
-<li>We’ll use an R Markdown document in the web analysis stage, where we start
-off by reading in the csv file we wrote out in the scraping stage.</li>
-</ul></li>
+<li>We’ve written our first function.</li>
+<li>We are checking the validity of its input, argument <code>x</code>.</li>
+<li>We’ve done a good amount of informal testing.</li>
 </ul>
-<p>Here is the organization of your repo, and the corresponding section in the
-lab that each file will be used for:</p>
-<pre><code>|-data
-|  |- README.md
-|-lab-07-uoe-art.Rmd              # analysis
-|-lab-07-uoe-art.Rproj            # project management
-|-README.md
-|-scripts                         # webscraping
-|  |- 01-scrape-page-one.R        # scraping a single page
-|  |- 02-scrape-page-function.R   # functions
-|  |- 03-scrape-page-many.R       # iteration</code></pre>
+<p>Where to next? In <a href="#functions-part2">part 2</a> we generalize this function to take differences in other quantiles and learn how to set default values for arguments.</p>
+<!--Original content: https://stat545.com/block011_write-your-own-function-02.html-->
 </div>
-<div id="selectorgadget" class="section level2" number="45.3">
-<h2><span class="header-section-number">45.3</span> SelectorGadget</h2>
-<p>For this lab, I recommend using Google Chrome as your web browser. In case you haven’t installed the SelectorGadget extension… go to the <a href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en">SelectorGadget extension page</a> on the Chrome Web Store and click on “Add to Chrome” (big blue
-button). A pop up window will ask <em>Add “SelectorGadget?”</em>, click “Add extension.”
-Another pop up window will ask whether you want to get your extensions on all
-your computer. If you want this, you can turn on sync, but you don’t need to
-for the purpose of this lab.</p>
-<p><img src="img/selectorgadget.png" width="89" /></p>
-<p>You should now be able to access SelectorGadget by clicking on the icon next to
-the search bar in the Chrome browser.</p>
-<div id="scraping-a-single-page" class="section level3" number="45.3.1">
-<h3><span class="header-section-number">45.3.1</span> Scraping a single page</h3>
-<pre class="marginfigure"><code>**Tip:** To run the code you can highlight or put your cursor next to the lines of code you want to run and hit Command+Enter.</code></pre>
-<div class="box">
-<p>Work in <code>scripts/01-scrape-page-one.R</code>.</p>
+<div id="where-were-we-where-are-we-going" class="section level2" number="49.9">
+<h2><span class="header-section-number">49.9</span> Where were we? Where are we going?</h2>
+<p>In <a href="functions-part1.html#functions-part1">part 1</a> we wrote our first R function to compute the difference between the max and min of a numeric vector. We checked the validity of the function’s only argument and, informally, we verified that it worked pretty well.</p>
+<p>In this part, we generalize this function, learn more technical details about R functions, and set default values for some arguments.</p>
 </div>
-<p>We will start off by scraping data on the first 10 pieces in the collection from
-<a href="https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0">here</a>.</p>
-<p>First, we define a new object called <code>first_url</code>, which is the link above. Then,
-we read the page at this url with the <code>read_html()</code> function from the <strong>rvest</strong>
-package. The code for this is already provided in <code>01-scrape-page-one.R</code>.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="lab07.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set url</span></span>
-<span id="cb300-2"><a href="lab07.html#cb300-2" aria-hidden="true" tabindex="-1"></a>first_url <span class="ot">&lt;-</span> <span class="st">&quot;https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0&quot;</span></span>
-<span id="cb300-3"><a href="lab07.html#cb300-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-4"><a href="lab07.html#cb300-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read html page</span></span>
-<span id="cb300-5"><a href="lab07.html#cb300-5" aria-hidden="true" tabindex="-1"></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(first_url)</span></code></pre></div>
-<p>For the ten pieces on this page we will extract <code>title</code>, <code>artist</code>, and <code>link</code>
-information, and put these three variables in a data frame.</p>
+<div id="load-the-gapminder-data-1" class="section level2" number="49.10">
+<h2><span class="header-section-number">49.10</span> Load the Gapminder data</h2>
+<p>As usual, load gapminder.</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="functions-part1.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 </div>
-<div id="titles" class="section level3" number="45.3.2">
-<h3><span class="header-section-number">45.3.2</span> Titles</h3>
-<p>Let’s start with titles. We make use of the SelectorGadget to identify the
-tags for the relevant nodes:</p>
-<p><img src="img/iteminfo-h3a.gif" /><!-- --></p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="lab07.html#cb301-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb301-2"><a href="lab07.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb301-3"><a href="lab07.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>)</span></code></pre></div>
-<pre><code>## {xml_nodeset (10)}
-##  [1] &lt;a href=&quot;./record/99836?highlight=*:*&quot;&gt;Untitled                          ...
-##  [2] &lt;a href=&quot;./record/99832?highlight=*:*&quot;&gt;Untitled                          ...
-##  [3] &lt;a href=&quot;./record/99823?highlight=*:*&quot;&gt;Untitled                          ...
-##  [4] &lt;a href=&quot;./record/99814?highlight=*:*&quot;&gt;Untitled                          ...
-##  [5] &lt;a href=&quot;./record/20846?highlight=*:*&quot;&gt;Portrait of Head of a Woman       ...
-##  [6] &lt;a href=&quot;./record/99865?highlight=*:*&quot;&gt;etc                               ...
-##  [7] &lt;a href=&quot;./record/99866?highlight=*:*&quot;&gt;Untitled                          ...
-##  [8] &lt;a href=&quot;./record/99863?highlight=*:*&quot;&gt;Untitled                          ...
-##  [9] &lt;a href=&quot;./record/20877?highlight=*:*&quot;&gt;Standing Male Nude                ...
-## [10] &lt;a href=&quot;./record/20922?highlight=*:*&quot;&gt;Reclining Female Nude             ...</code></pre>
-<p>Then we extract the text with <code>html_text()</code>:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="lab07.html#cb303-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb303-2"><a href="lab07.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb303-3"><a href="lab07.html#cb303-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb303-4"><a href="lab07.html#cb303-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
-<pre><code>##  [1] &quot;Untitled                                                                            (1962)&quot;                   
-##  [2] &quot;Untitled                                                                            (1969)&quot;                   
-##  [3] &quot;Untitled                                                                            (1980)&quot;                   
-##  [4] &quot;Untitled                                                                            (1966)&quot;                   
-##  [5] &quot;Portrait of Head of a Woman                                                                            (1952)&quot;
-##  [6] &quot;etc                                                                            (2006)&quot;                        
-##  [7] &quot;Untitled                                                                            (2006)&quot;                   
-##  [8] &quot;Untitled                                                                            (2006)&quot;                   
-##  [9] &quot;Standing Male Nude                                                                            (1959)&quot;         
-## [10] &quot;Reclining Female Nude                                                                            (1959)&quot;</code></pre>
-<p>And get rid of all the spurious whitespace in the text with <code>str_squish()</code>:</p>
-<pre class="marginfigure"><code>Take a look at the help docs for `str_squish()` (with `?str_squish`) to </code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="lab07.html#cb306-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb306-2"><a href="lab07.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb306-3"><a href="lab07.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb306-4"><a href="lab07.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb306-5"><a href="lab07.html#cb306-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
-<pre><code>##  [1] &quot;Untitled (1962)&quot;                    &quot;Untitled (1969)&quot;                   
-##  [3] &quot;Untitled (1980)&quot;                    &quot;Untitled (1966)&quot;                   
-##  [5] &quot;Portrait of Head of a Woman (1952)&quot; &quot;etc (2006)&quot;                        
-##  [7] &quot;Untitled (2006)&quot;                    &quot;Untitled (2006)&quot;                   
-##  [9] &quot;Standing Male Nude (1959)&quot;          &quot;Reclining Female Nude (1959)&quot;</code></pre>
-<p>And finally save the resulting data as a vector of length 10:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="lab07.html#cb308-1" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span></span>
-<span id="cb308-2"><a href="lab07.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb308-3"><a href="lab07.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb308-4"><a href="lab07.html#cb308-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb308-5"><a href="lab07.html#cb308-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span></code></pre></div>
+<div id="restore-our-max-minus-min-function" class="section level2" number="49.11">
+<h2><span class="header-section-number">49.11</span> Restore our max minus min function</h2>
+<p>Let’s keep our previous function around as a baseline.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="functions-part1.html#cb334-1" aria-hidden="true" tabindex="-1"></a>mmm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb334-2"><a href="functions-part1.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb334-3"><a href="functions-part1.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)</span>
+<span id="cb334-4"><a href="functions-part1.html#cb334-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="links" class="section level3" number="45.3.3">
-<h3><span class="header-section-number">45.3.3</span> Links</h3>
-<p>The same nodes that contain the text for the titles also contains information
-on the links to individual art piece pages for each title. We can extract this
-information using a new function from the rvest package, <code>html_attr()</code>, which
-extracts attributes.</p>
-<p>A mini HTML lesson! The following is how we define hyperlinked text in HTML:</p>
-<pre><code>&lt;a href=&quot;https://www.google.com&quot;&gt;Seach on Google&lt;/a&gt;</code></pre>
-<p>And this is how the text would look like on a webpage: <a href="https://www.google.com">Seach on Google</a>.</p>
-<p>Here the text is <code>Seach on Google</code> and the <code>href</code> attribute contains the url
-of the website you’d go to if you click on the hyperlinked text: <code>https://www.google.com</code>.</p>
-<p>The moral of the story is: the link is stored in the <code>href</code> attribute.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="lab07.html#cb310-1" aria-hidden="true" tabindex="-1"></a>page <span class="sc">%&gt;%</span></span>
-<span id="cb310-2"><a href="lab07.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.iteminfo&quot;</span>) <span class="sc">%&gt;%</span>   <span class="co"># same nodes</span></span>
-<span id="cb310-3"><a href="lab07.html#cb310-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h3 a&quot;</span>) <span class="sc">%&gt;%</span>         <span class="co"># as before</span></span>
-<span id="cb310-4"><a href="lab07.html#cb310-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)             <span class="co"># but get href attribute instead of text</span></span></code></pre></div>
-<pre><code>##  [1] &quot;./record/99836?highlight=*:*&quot; &quot;./record/99832?highlight=*:*&quot;
-##  [3] &quot;./record/99823?highlight=*:*&quot; &quot;./record/99814?highlight=*:*&quot;
-##  [5] &quot;./record/20846?highlight=*:*&quot; &quot;./record/99865?highlight=*:*&quot;
-##  [7] &quot;./record/99866?highlight=*:*&quot; &quot;./record/99863?highlight=*:*&quot;
-##  [9] &quot;./record/20877?highlight=*:*&quot; &quot;./record/20922?highlight=*:*&quot;</code></pre>
-<p>These don’t really look like urls as we know then though. They’re relative
-links.</p>
-<blockquote>
-<p>Note: See the help for <code>str_replace()</code> to find out how it works. Remember that the first argument is passed in from the pipeline, so you just need to define the <code>pattern</code> and <code>replacement</code> arguments.</p>
-</blockquote>
-<ol style="list-style-type: decimal">
-<li>Click on one of art piece titles in your browser and take note of the url
-of the webpage it takes you to. How does that url compare to what we scraped
-above? How is it different? Using <code>str_replace()</code>, fix the URLs.</li>
-</ol>
+<div id="generalize-our-function-to-other-quantiles" class="section level2" number="49.12">
+<h2><span class="header-section-number">49.12</span> Generalize our function to other quantiles</h2>
+<p>The max and the min are special cases of a <strong>quantile</strong>. Here are other special cases you may have heard of:</p>
+<ul>
+<li>median = 0.5 quantile</li>
+<li>1st quartile = 0.25 quantile</li>
+<li>3rd quartile = 0.75 quantile</li>
+</ul>
+<p>If you’re familiar with <a href="https://en.wikipedia.org/wiki/Box_plot">box plots</a>, the rectangle typically runs from the 1st quartile to the 3rd quartile, with a line at the median.</p>
+<p>If <span class="math inline">\(q\)</span> is the <span class="math inline">\(p\)</span>-th quantile of a set of <span class="math inline">\(n\)</span> observations, what does that mean? Approximately <span class="math inline">\(pn\)</span> of the observations are less than <span class="math inline">\(q\)</span> and <span class="math inline">\((1 - p)n\)</span> are greater than <span class="math inline">\(q\)</span>. Yeah, you need to worry about rounding to an integer and less/greater than or equal to, but these details aren’t critical here.</p>
+<p>Let’s generalize our function to take the difference between any two quantiles. We can still consider the max and min, if we like, but we’re not limited to that.</p>
 </div>
-<div id="artists" class="section level3" number="45.3.4">
-<h3><span class="header-section-number">45.3.4</span> Artists</h3>
-<ol start="2" style="list-style-type: decimal">
-<li>Fill in the blanks to scrape artist names.</li>
-</ol>
+<div id="get-something-that-works-again" class="section level2" number="49.13">
+<h2><span class="header-section-number">49.13</span> Get something that works, again</h2>
+<p>The eventual inputs to our new function will be the data <code>x</code> and two probabilities.</p>
+<p>First, play around with the <code>quantile()</code> function. Convince yourself you know how to use it, for example, by cross-checking your results with other built-in functions.</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="functions-part1.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb335-2"><a href="functions-part1.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb335-3"><a href="functions-part1.html#cb335-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
+<span id="cb335-4"><a href="functions-part1.html#cb335-4" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">probs =</span> <span class="fl">0.5</span>)</span>
+<span id="cb335-5"><a href="functions-part1.html#cb335-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  50% </span></span>
+<span id="cb335-6"><a href="functions-part1.html#cb335-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60.7</span></span>
+<span id="cb335-7"><a href="functions-part1.html#cb335-7" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb335-8"><a href="functions-part1.html#cb335-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 60.7</span></span>
+<span id="cb335-9"><a href="functions-part1.html#cb335-9" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb335-10"><a href="functions-part1.html#cb335-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  25%  75% </span></span>
+<span id="cb335-11"><a href="functions-part1.html#cb335-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48.2 70.8</span></span>
+<span id="cb335-12"><a href="functions-part1.html#cb335-12" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">plot =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>stats</span>
+<span id="cb335-13"><a href="functions-part1.html#cb335-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1]</span></span>
+<span id="cb335-14"><a href="functions-part1.html#cb335-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 23.6</span></span>
+<span id="cb335-15"><a href="functions-part1.html#cb335-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 48.2</span></span>
+<span id="cb335-16"><a href="functions-part1.html#cb335-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 60.7</span></span>
+<span id="cb335-17"><a href="functions-part1.html#cb335-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 70.8</span></span>
+<span id="cb335-18"><a href="functions-part1.html#cb335-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,] 82.6</span></span></code></pre></div>
+<p>Now write a code snippet that takes the difference between two quantiles.</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="functions-part1.html#cb336-1" aria-hidden="true" tabindex="-1"></a>the_probs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)</span>
+<span id="cb336-2"><a href="functions-part1.html#cb336-2" aria-hidden="true" tabindex="-1"></a>the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">probs =</span> the_probs)</span>
+<span id="cb336-3"><a href="functions-part1.html#cb336-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb336-4"><a href="functions-part1.html#cb336-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 22.6</span></span></code></pre></div>
 </div>
-<div id="put-it-altogether" class="section level3" number="45.3.5">
-<h3><span class="header-section-number">45.3.5</span> Put it altogether</h3>
-<ol start="3" style="list-style-type: decimal">
-<li>Fill in the blanks to organize everything in a tibble.</li>
-</ol>
+<div id="turn-the-working-interactive-code-into-a-function-again" class="section level2" number="49.14">
+<h2><span class="header-section-number">49.14</span> Turn the working interactive code into a function, again</h2>
+<p>I’ll use <code>qdiff</code> as the base of our function’s name. I copy the overall structure from our previous “max minus min” work but replace the guts of the function with the more general code we just developed.</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="functions-part1.html#cb337-1" aria-hidden="true" tabindex="-1"></a>qdiff1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, probs) {</span>
+<span id="cb337-2"><a href="functions-part1.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb337-3"><a href="functions-part1.html#cb337-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> x, <span class="at">probs =</span> probs)</span>
+<span id="cb337-4"><a href="functions-part1.html#cb337-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb337-5"><a href="functions-part1.html#cb337-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-6"><a href="functions-part1.html#cb337-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff1</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb337-7"><a href="functions-part1.html#cb337-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 22.6</span></span>
+<span id="cb337-8"><a href="functions-part1.html#cb337-8" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(gapminder<span class="sc">$</span>lifeExp) <span class="co"># hey, we&#39;ve reinvented IQR</span></span>
+<span id="cb337-9"><a href="functions-part1.html#cb337-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 22.6</span></span>
+<span id="cb337-10"><a href="functions-part1.html#cb337-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff1</span>(gapminder<span class="sc">$</span>lifeExp, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb337-11"><a href="functions-part1.html#cb337-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb337-12"><a href="functions-part1.html#cb337-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb337-13"><a href="functions-part1.html#cb337-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>Again we do some informal tests against familiar results and external implementations.</p>
 </div>
-<div id="scrape-the-next-page" class="section level3" number="45.3.6">
-<h3><span class="header-section-number">45.3.6</span> Scrape the next page</h3>
-<ol start="4" style="list-style-type: decimal">
-<li>Click on the next page, and grab its url. Fill in the blank in
-to define a new object: <code>second_url</code>. Copy-paste code from top of the R script
-to scrape the new set of art pieces, and save the resulting data frame as
-<code>second_ten</code>.</li>
-</ol>
+<div id="argument-names-freedom-and-conventions" class="section level2" number="49.15">
+<h2><span class="header-section-number">49.15</span> Argument names: freedom and conventions</h2>
+<p>I want you to understand the importance of argument names.</p>
+<p>I can name my arguments almost anything I like. Proof:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="functions-part1.html#cb338-1" aria-hidden="true" tabindex="-1"></a>qdiff2 <span class="ot">&lt;-</span> <span class="cf">function</span>(zeus, hera) {</span>
+<span id="cb338-2"><a href="functions-part1.html#cb338-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(zeus))</span>
+<span id="cb338-3"><a href="functions-part1.html#cb338-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> zeus, <span class="at">probs =</span> hera)</span>
+<span id="cb338-4"><a href="functions-part1.html#cb338-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb338-5"><a href="functions-part1.html#cb338-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb338-6"><a href="functions-part1.html#cb338-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff2</span>(<span class="at">zeus =</span> gapminder<span class="sc">$</span>lifeExp, <span class="at">hera =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>)</span>
+<span id="cb338-7"><a href="functions-part1.html#cb338-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>While I can name my arguments after Greek gods, it’s usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names.</p>
+<p>If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I’ve been doing all along and now you know why:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="functions-part1.html#cb339-1" aria-hidden="true" tabindex="-1"></a>qdiff1</span>
+<span id="cb339-2"><a href="functions-part1.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x, probs) {</span></span>
+<span id="cb339-3"><a href="functions-part1.html#cb339-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
+<span id="cb339-4"><a href="functions-part1.html#cb339-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x = x, probs = probs)</span></span>
+<span id="cb339-5"><a href="functions-part1.html#cb339-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
+<span id="cb339-6"><a href="functions-part1.html#cb339-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb339-7"><a href="functions-part1.html#cb339-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000000177ed900&gt;</span></span></code></pre></div>
+<p>We took this detour so you could see there is no <em>structural</em> relationship between my arguments (<code>x</code> and <code>probs</code>) and those of <code>quantile()</code> (also <code>x</code> and <code>probs</code>). The similarity or equivalence of the names <strong>accomplishes nothing</strong> as far as R is concerned; it is solely for the benefit of humans reading, writing, and using the code. Which is very important!</p>
 </div>
+<div id="what-a-function-returns" class="section level2" number="49.16">
+<h2><span class="header-section-number">49.16</span> What a function returns</h2>
+<p>By this point, I expect someone will have asked about the last line in my function’s body. Look above for a reminder of the function’s definition.</p>
+<p>By default, a function returns the result of the last line of the body. I am just letting that happen with the line <code>max(the_quantiles) - min(the_quantiles)</code>. However, there is an explicit function for this: <code>return()</code>. I could just as easily make this the last line of my function’s body:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="functions-part1.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(<span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles))</span></code></pre></div>
+<p>You absolutely must use <code>return()</code> if you want to return early based on some condition, i.e. before execution gets to the last line of the body. Otherwise, you can decide your own conventions about when you use <code>return()</code> and when you don’t.</p>
 </div>
-<div id="functions" class="section level2" number="45.4">
-<h2><span class="header-section-number">45.4</span> Functions</h2>
-<blockquote>
-<p><strong>Mason Comment:</strong> I know that I haven’t taught you explicitly how to write functions yet. But, you have learned enough from me (and wise Prof. Google) to teach yourself how to do it. Don’t worry – I’ll be covering how to write functions explicitly in the next module. (Try it on your own first, and then take a sneek peak ahead if you want some reassurance that you’re doing it “right.” I believe in you!</p>
-</blockquote>
-<div class="box">
-<p>Work in <code>scripts/02-scrape-page-function.R</code>.</p>
+<div id="default-values-freedom-to-not-specify-the-arguments" class="section level2" number="49.17">
+<h2><span class="header-section-number">49.17</span> Default values: freedom to NOT specify the arguments</h2>
+<p>What happens if we call our function but neglect to specify the probabilities?</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="functions-part1.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff1</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb341-2"><a href="functions-part1.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in quantile(x = x, probs = probs): argument &quot;probs&quot; is missing, with no default</span></span></code></pre></div>
+<p>Oops! At the moment, this causes a fatal error. It can be nice to provide some reasonable default values for certain arguments. In our case, it would be crazy to specify a default value for the primary input <code>x</code>, but very kind to specify a default for <code>probs</code>.</p>
+<p>We started by focusing on the max and the min, so I think those make reasonable defaults. Here’s how to specify that in a function definition.</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="functions-part1.html#cb342-1" aria-hidden="true" tabindex="-1"></a>qdiff3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb342-2"><a href="functions-part1.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb342-3"><a href="functions-part1.html#cb342-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, probs)</span>
+<span id="cb342-4"><a href="functions-part1.html#cb342-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb342-5"><a href="functions-part1.html#cb342-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Again we check how the function works, in old examples and new, specifying the <code>probs</code> argument and not.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="functions-part1.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff3</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb343-2"><a href="functions-part1.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb343-3"><a href="functions-part1.html#cb343-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mmm</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb343-4"><a href="functions-part1.html#cb343-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb343-5"><a href="functions-part1.html#cb343-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff3</span>(gapminder<span class="sc">$</span>lifeExp, <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span>
+<span id="cb343-6"><a href="functions-part1.html#cb343-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 33.6</span></span></code></pre></div>
 </div>
-<p>You’ve been using R functions, now it’s time to write your own!</p>
-<p>Let’s start simple. Here is a function that takes in an argument <code>x</code>, and adds 2
-to it.</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="lab07.html#cb312-1" aria-hidden="true" tabindex="-1"></a>add_two <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb312-2"><a href="lab07.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb312-3"><a href="lab07.html#cb312-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Let’s test it:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="lab07.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="lab07.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">10</span>)</span></code></pre></div>
-<pre><code>## [1] 12</code></pre>
-<p>The skeleton for defining functions in R is as follows:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="lab07.html#cb317-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(input){</span>
-<span id="cb317-2"><a href="lab07.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something with the input(s)</span></span>
-<span id="cb317-3"><a href="lab07.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return something</span></span>
-<span id="cb317-4"><a href="lab07.html#cb317-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Then, a function for scraping a page should look something like:</p>
-<blockquote>
-<p><strong>Tip:</strong> Function names should be short but evocative verbs.</p>
-</blockquote>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="lab07.html#cb318-1" aria-hidden="true" tabindex="-1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(url){</span>
-<span id="cb318-2"><a href="lab07.html#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read page at url</span></span>
-<span id="cb318-3"><a href="lab07.html#cb318-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract title, link, artist info for n pieces on page</span></span>
-<span id="cb318-4"><a href="lab07.html#cb318-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return a n x 3 tibble</span></span>
-<span id="cb318-5"><a href="lab07.html#cb318-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<ol start="5" style="list-style-type: decimal">
-<li><p>Fill in the blanks using code you already developed in the previous exercises.
-Name the function <code>scrape_page</code>.</p></li>
-<li><p>Test out your new function by running the following in the console. Does the
-output look right?</p></li>
-</ol>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="lab07.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(first_url)</span>
-<span id="cb319-2"><a href="lab07.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_page</span>(second_url)</span></code></pre></div>
+<div id="check-the-validity-of-arguments-again" class="section level2" number="49.18">
+<h2><span class="header-section-number">49.18</span> Check the validity of arguments, again</h2>
+<p><strong>Exercise:</strong> upgrade our argument validity checks in light of the new argument <code>probs</code>.</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="functions-part1.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="do">## problems identified during class</span></span>
+<span id="cb344-2"><a href="functions-part1.html#cb344-2" aria-hidden="true" tabindex="-1"></a><span class="do">## we&#39;re not checking that probs is numeric</span></span>
+<span id="cb344-3"><a href="functions-part1.html#cb344-3" aria-hidden="true" tabindex="-1"></a><span class="do">## we&#39;re not checking that probs is length 2</span></span>
+<span id="cb344-4"><a href="functions-part1.html#cb344-4" aria-hidden="true" tabindex="-1"></a><span class="do">## we&#39;re not checking that probs are in [0,1]</span></span></code></pre></div>
 </div>
-<div id="iteration" class="section level2" number="45.5">
-<h2><span class="header-section-number">45.5</span> Iteration</h2>
-<div class="box">
-<p>Work in <code>scripts/03-scrape-page-many.R</code>.</p>
+<div id="wrap-up-and-whats-next-1" class="section level2" number="49.19">
+<h2><span class="header-section-number">49.19</span> Wrap-up and what’s next?</h2>
+<p>Here’s the function we’ve written so far:</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="functions-part1.html#cb345-1" aria-hidden="true" tabindex="-1"></a>qdiff3</span>
+<span id="cb345-2"><a href="functions-part1.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x, probs = c(0, 1)) {</span></span>
+<span id="cb345-3"><a href="functions-part1.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   stopifnot(is.numeric(x))</span></span>
+<span id="cb345-4"><a href="functions-part1.html#cb345-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x, probs)</span></span>
+<span id="cb345-5"><a href="functions-part1.html#cb345-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
+<span id="cb345-6"><a href="functions-part1.html#cb345-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
+<span id="cb345-7"><a href="functions-part1.html#cb345-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x000000001924c498&gt;</span></span></code></pre></div>
+<p>What we’ve accomplished:</p>
+<ul>
+<li>We’ve generalized our first function to take a difference between arbitrary quantiles.</li>
+<li>We’ve specified default values for the probabilities that set the quantiles.</li>
+</ul>
+<p>Where to next? Next, we tackle <code>NA</code>s, the special <code>...</code> argument, and formal unit testing.</p>
 </div>
-<p>We went from manually scraping individual pages to writing a function to do
-the same. Next, we will work on making our workflow a little more efficient
-by using R to iterate over all pages that contain information on the art collection.</p>
-<blockquote>
-<p><strong>Reminder:</strong> The collection has 2909 pieces in total.</p>
-</blockquote>
-<p>That means we give develop a list of URLs (of pages that each have 10 art pieces),
-and write some code that applies the <code>scrape_page()</code> function to each page, and
-combines the resulting data frames from each page into a single data frame with
-2909 rows and 3 columns.</p>
-<div id="list-of-urls" class="section level3" number="45.5.1">
-<h3><span class="header-section-number">45.5.1</span> List of URLs</h3>
-<p>Click through the first few of the pages in the art collection and observe their
-URLs to confirm the following pattern:</p>
-<pre><code>[sometext]offset=0     # Pieces 1-10
-[sometext]offset=10    # Pieces 11-20
-[sometext]offset=20    # Pieces 21-30
-[sometext]offset=30    # Pieces 31-40
-...
-[sometext]offset=2900  # Pieces 2900-2909</code></pre>
-<p>We can construct these URLs in R by pasting together two pieces: (1) a common
-(<code>root</code>) text for the beginning of the URL, and (2) numbers starting at 0, increasing
-by 10, all the way up to 2900. Two new functions are helpful for accomplishing
-this: <code>paste0()</code> for pasting two pieces of text and <code>seq()</code> for generating a
-sequence of numbers.</p>
-<ol start="7" style="list-style-type: decimal">
-<li>Fill in the blanks to construct the list of URLs.</li>
-</ol>
+<div id="where-were-we-where-are-we-going-1" class="section level2" number="49.20">
+<h2><span class="header-section-number">49.20</span> Where were we? Where are we going?</h2>
+<p>Previously, we generalized our first R function so it could take the difference between any two quantiles of a numeric vector. We also set default values for the underlying probabilities, so that, by default, we compute the max minus the min.</p>
+<p>In this part, we tackle <code>NA</code>s, the special argument <code>...</code> and formal testing.</p>
 </div>
-<div id="mapping" class="section level3" number="45.5.2">
-<h3><span class="header-section-number">45.5.2</span> Mapping</h3>
-<p>Finally, we’re ready to iterate over the list of URLs we constructed. We will do
-this by <strong>map</strong>ping the function we developed over the list of URLs. There are
-a series of mapping functions in R (which we’ll learn about in more detail
-tomorrow), and they each take the following form:</p>
-<pre><code>map([x], [function to apply to each element of x])</code></pre>
-<p>In our case <code>x</code> is the list of URLs we constructed and the function to apply
-to each element of <code>x</code> is the function we developed earlier, <code>scrape_page</code>.
-And as a result we want a data frame, so we use <code>map_dfr</code> function:</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="lab07.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(urls, scrape_page)</span></code></pre></div>
-<ol start="8" style="list-style-type: decimal">
-<li>Fill in the blanks to scrape all pages, and to create a new data frame called
-<code>uoe_art</code>.</li>
-</ol>
+<div id="load-the-gapminder-data-2" class="section level2" number="49.21">
+<h2><span class="header-section-number">49.21</span> Load the Gapminder data</h2>
+<p>As usual, load gapminder.</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="functions-part1.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 </div>
-<div id="write-out-data" class="section level3" number="45.5.3">
-<h3><span class="header-section-number">45.5.3</span> Write out data</h3>
-<ol start="9" style="list-style-type: decimal">
-<li>Finally write out the data frame you constructed into the <code>data</code> folder so
-that you can use it in the analysis section.</li>
-</ol>
+<div id="restore-our-max-minus-min-function-1" class="section level2" number="49.22">
+<h2><span class="header-section-number">49.22</span> Restore our max minus min function</h2>
+<p>Let’s keep our previous function around as a baseline.</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="functions-part1.html#cb347-1" aria-hidden="true" tabindex="-1"></a>qdiff3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb347-2"><a href="functions-part1.html#cb347-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb347-3"><a href="functions-part1.html#cb347-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, probs)</span>
+<span id="cb347-4"><a href="functions-part1.html#cb347-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb347-5"><a href="functions-part1.html#cb347-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
+<div id="be-proactive-about-nas" class="section level2" number="49.23">
+<h2><span class="header-section-number">49.23</span> Be proactive about <code>NA</code>s</h2>
+<p>I am being gentle by letting you practice with the Gapminder data. In real life, missing data will make your life a living hell. If you are lucky, it will be properly indicated by the special value <code>NA</code>, but don’t hold your breath. Many built-in R functions have an <code>na.rm =</code> argument through which you can specify how you want to handle <code>NA</code>s. Typically the default value is <code>na.rm = FALSE</code> and typical default behavior is to either let <code>NA</code>s propagate or to raise an error. Let’s see how <code>quantile()</code> handles <code>NA</code>s:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="functions-part1.html#cb348-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> gapminder<span class="sc">$</span>lifeExp</span>
+<span id="cb348-2"><a href="functions-part1.html#cb348-2" aria-hidden="true" tabindex="-1"></a>z[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb348-3"><a href="functions-part1.html#cb348-3" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb348-4"><a href="functions-part1.html#cb348-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb348-5"><a href="functions-part1.html#cb348-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23.6 48.2 60.7 70.8 82.6</span></span>
+<span id="cb348-6"><a href="functions-part1.html#cb348-6" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(z)</span>
+<span id="cb348-7"><a href="functions-part1.html#cb348-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in quantile.default(z): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span>
+<span id="cb348-8"><a href="functions-part1.html#cb348-8" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb348-9"><a href="functions-part1.html#cb348-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0%  25%  50%  75% 100% </span></span>
+<span id="cb348-10"><a href="functions-part1.html#cb348-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23.6 48.2 60.8 70.8 82.6</span></span></code></pre></div>
+<p>So <code>quantile()</code> simply will not operate in the presence of <code>NA</code>s unless <code>na.rm = TRUE</code>. How shall we modify our function?</p>
+<p>If we wanted to hardwire <code>na.rm = TRUE</code>, we could. Focus on our call to <code>quantile()</code> inside our function definition.</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="functions-part1.html#cb349-1" aria-hidden="true" tabindex="-1"></a>qdiff4 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb349-2"><a href="functions-part1.html#cb349-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb349-3"><a href="functions-part1.html#cb349-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, probs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb349-4"><a href="functions-part1.html#cb349-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb349-5"><a href="functions-part1.html#cb349-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb349-6"><a href="functions-part1.html#cb349-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff4</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb349-7"><a href="functions-part1.html#cb349-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb349-8"><a href="functions-part1.html#cb349-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff4</span>(z)</span>
+<span id="cb349-9"><a href="functions-part1.html#cb349-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
+<p>This works but it is dangerous to invert the default behavior of a well-known built-in function and to provide the user with no way to override this.</p>
+<p>We could add an <code>na.rm =</code> argument to our own function. We might even enforce our preferred default – but at least we’re giving the user a way to control the behavior around <code>NA</code>s.</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="functions-part1.html#cb350-1" aria-hidden="true" tabindex="-1"></a>qdiff5 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb350-2"><a href="functions-part1.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x))</span>
+<span id="cb350-3"><a href="functions-part1.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, probs, <span class="at">na.rm =</span> na.rm)</span>
+<span id="cb350-4"><a href="functions-part1.html#cb350-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb350-5"><a href="functions-part1.html#cb350-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb350-6"><a href="functions-part1.html#cb350-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff5</span>(gapminder<span class="sc">$</span>lifeExp)</span>
+<span id="cb350-7"><a href="functions-part1.html#cb350-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb350-8"><a href="functions-part1.html#cb350-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff5</span>(z)</span>
+<span id="cb350-9"><a href="functions-part1.html#cb350-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span>
+<span id="cb350-10"><a href="functions-part1.html#cb350-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff5</span>(z, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb350-11"><a href="functions-part1.html#cb350-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in quantile.default(x, probs, na.rm = na.rm): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</span></span></code></pre></div>
 </div>
-<div id="analysis" class="section level2" number="45.6">
-<h2><span class="header-section-number">45.6</span> Analysis</h2>
-<div class="box">
-<p>Work in <code>lab-07-uoe-art.Rmd</code> for the rest of the lab.</p>
+<div id="the-useful-but-mysterious-...-argument" class="section level2" number="49.24">
+<h2><span class="header-section-number">49.24</span> The useful but mysterious <code>...</code> argument</h2>
+<p>You probably could have lived a long and happy life without knowing there are at least 9 different algorithms for computing quantiles. <a href="https://rdrr.io/r/stats/quantile.html">Go read about the <code>type</code> argument</a> of <code>quantile()</code>. TLDR: If a quantile is not unambiguously equal to an observed data point, you must somehow average two data points. You can weight this average different ways, depending on the rest of the data, and <code>type =</code> controls this.</p>
+<p>Let’s say we want to give the user of our function the ability to specify how the quantiles are computed, but we want to accomplish with as little fuss as possible. In fact, we don’t even want to clutter our function’s interface with this! This calls for the very special <code>...</code> argument. In English, this set of three dots is frequently called an “ellipsis.”</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="functions-part1.html#cb351-1" aria-hidden="true" tabindex="-1"></a>qdiff6 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...) {</span>
+<span id="cb351-2"><a href="functions-part1.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> x, <span class="at">probs =</span> probs, <span class="at">na.rm =</span> na.rm, ...)</span>
+<span id="cb351-3"><a href="functions-part1.html#cb351-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb351-4"><a href="functions-part1.html#cb351-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The practical significance of the <code>type =</code> argument is virtually nonexistent, so we can’t demo with the Gapminder data. Thanks to <a href="https://twitter.com/wrathematics">@wrathematics</a>, here’s a small example where we can (barely) detect a difference due to <code>type</code>.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="functions-part1.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb352-2"><a href="functions-part1.html#cb352-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb352-3"><a href="functions-part1.html#cb352-3" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(z, <span class="at">type =</span> <span class="dv">1</span>)</span>
+<span id="cb352-4"><a href="functions-part1.html#cb352-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
+<span id="cb352-5"><a href="functions-part1.html#cb352-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.346 -0.890 -0.564  0.429  1.084</span></span>
+<span id="cb352-6"><a href="functions-part1.html#cb352-6" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(z, <span class="at">type =</span> <span class="dv">4</span>)</span>
+<span id="cb352-7"><a href="functions-part1.html#cb352-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0%    25%    50%    75%   100% </span></span>
+<span id="cb352-8"><a href="functions-part1.html#cb352-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.346 -1.049 -0.564  0.353  1.084</span></span>
+<span id="cb352-9"><a href="functions-part1.html#cb352-9" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">quantile</span>(z, <span class="at">type =</span> <span class="dv">1</span>), <span class="fu">quantile</span>(z, <span class="at">type =</span> <span class="dv">4</span>))</span>
+<span id="cb352-10"><a href="functions-part1.html#cb352-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Mean relative difference: 0.178&quot;</span></span></code></pre></div>
+<p>Now we can call our function, requesting that quantiles be computed in different ways.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="functions-part1.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff6</span>(z, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="at">type =</span> <span class="dv">1</span>)</span>
+<span id="cb353-2"><a href="functions-part1.html#cb353-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.32</span></span>
+<span id="cb353-3"><a href="functions-part1.html#cb353-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff6</span>(z, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="at">type =</span> <span class="dv">4</span>)</span>
+<span id="cb353-4"><a href="functions-part1.html#cb353-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.4</span></span></code></pre></div>
+<p>While the difference may be subtle, <strong>it’s there</strong>. Marvel at the fact that we have passed <code>type = 1</code> through to <code>quantile()</code> <em>even though it was not a formal argument of our own function</em>.</p>
+<p>The special argument <code>...</code> is very useful when you want the ability to pass arbitrary arguments down to another function, but without constantly expanding the formal arguments to your function. This leaves you with a less cluttered function definition and gives you future flexibility to specify these arguments only when you need to.</p>
+<p>You will also encounter the <code>...</code> argument in many built-in functions – read up on <a href="https://rdrr.io/r/base/c.html"><code>c()</code></a> or <a href="https://rdrr.io/r/base/list.html"><code>list()</code></a> – and now you have a better sense of what it means. It is not a breezy “and so on and so forth.”</p>
+<p>There are also downsides to <code>...</code>, so use it with intention. In a package, you will have to work harder to create truly informative documentation for your user. Also, the quiet, absorbent properties of <code>...</code> mean it can sometimes silently swallow other named arguments, when the user has a typo in the name. Depending on whether or how this fails, it can be a little tricky to find out what went wrong.</p>
+<p>The <a href="https://ellipsis.r-lib.org">ellipsis package</a> provides tools that help package developers use <code>...</code> more safely. The in-progress tidyverse principles guide provides further guidance on the design of functions that take <code>...</code> in <a href="https://principles.tidyverse.org/dots-position.html">Data, dots, details</a>.</p>
 </div>
-<p>Now that we have a tidy dataset that we can analyze, let’s do that!</p>
-<p>We’ll start with some data cleaning, to clean up the dates that appear at the
-end of some title text in parentheses. Some of these are years, others are
-more specific dates, some art pieces have no date information whatsoever, and
-others have some non-date information in parentheses. This should be interesting
-to clean up!</p>
-<p>First thing we’ll try is to separate the <code>title</code> column into two: one for the
-actual <code>title</code> and the other for the <code>date</code> if it exists. In human speak, we
-need to</p>
-<blockquote>
-<p>“separate the <code>title</code> column at the first occurence of <code>(</code> and put the contents on one side of the <code>(</code> into a column called <code>title</code> and the contents on the other side into a column called <code>date</code>”</p>
-</blockquote>
-<p>Luckily, there’s a function that does just this: <code>separate()</code>!</p>
-<p>And once we have completed separating the single <code>title</code> column into <code>title</code>
-and <code>date</code>, we need to do further cleanup in the <code>date</code> column to get rid of
-extraneous <code>)</code>s with <code>str_remove()</code>, capture year information, and save the data
-as a numeric variable.</p>
-<blockquote>
-<p><strong>Hint:</strong> Remember escaping special characters from lecture? You’ll
-need to use that trick again.</p>
-</blockquote>
-<ol start="10" style="list-style-type: decimal">
-<li><p>Fill in the blanks in to implement the data wrangling we described above.
-Note that this will result in some warnings when you run the code, and that’s OK!
-Read the warnings, and explain what they mean, and why we are ok with leaving
-them in given that our objective is to just capture <code>year</code> where it’s convenient
-to do so.</p></li>
-<li><p>Print out a summary of the dataframe using the <code>skim()</code> function. How many
-pieces have artist info missing? How many have year info missing?</p></li>
-<li><p>Make a histogram of years. Use a reasonable binwidth. Do you see anything
-out of the ordinary?</p></li>
-</ol>
-<blockquote>
-<p><strong>Hint:</strong> You’ll want to use <code>mutate()</code> and <code>if_else()</code> or <code>case_when()</code> to
-implement the correction.</p>
-</blockquote>
-<ol start="13" style="list-style-type: decimal">
-<li><p>Find which piece has the out of the ordinary year and go to its page on the
-art collection website to find the correct year for it. Can you tell why our code
-didn’t capture the correct year information? Correct the error in the data frame
-and visualize the data again.</p></li>
-<li><p>Who is the most commonly featured artist in the collection? Do you know them?
-Any guess as to why the university has so many pieces from them?</p></li>
-</ol>
-<blockquote>
-<p><strong>Hint:</strong> You’ll want to use a combination of <code>filter()</code> and <code>str_detect()</code>. You will want to read the help for <code>str_detect()</code> at a minimum, and consider how you might capture titles where the word appears as “child” and “Child.”</p>
-</blockquote>
-<ol start="15" style="list-style-type: decimal">
-<li>Final question! How many art pieces have the word “child” in their title? See
-if you can figure it out, and ask for help if not.</li>
-</ol>
+<div id="use-testthat-for-formal-unit-tests" class="section level2" number="49.25">
+<h2><span class="header-section-number">49.25</span> Use testthat for formal unit tests</h2>
+<p>Until now, we’ve relied on informal tests of our evolving function. If you are going to use a function a lot, especially if it is part of a package, it is wise to use formal unit tests.</p>
+<p>The <a href="https://testthat.r-lib.org">testthat</a> package (<a href="https://CRAN.R-project.org/package=testthat">CRAN</a>; <a href="https://github.com/r-lib/testthat">GitHub</a>) provides excellent facilities for this, with a distinct emphasis on automated unit testing of entire packages. However, we can take it out for a test drive even with our one measly function.</p>
+<p>We will construct a test with <code>test_that()</code> and, within it, we put one or more <em>expectations</em> that check actual against expected results. You simply harden your informal, interactive tests into formal unit tests. Here are some examples of tests and indicative expectations.</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="functions-part1.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(testthat)</span>
+<span id="cb354-2"><a href="functions-part1.html#cb354-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb354-3"><a href="functions-part1.html#cb354-3" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&#39;invalid args are detected&#39;</span>, {</span>
+<span id="cb354-4"><a href="functions-part1.html#cb354-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">qdiff6</span>(<span class="st">&quot;eggplants are purple&quot;</span>))</span>
+<span id="cb354-5"><a href="functions-part1.html#cb354-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">qdiff6</span>(iris))</span>
+<span id="cb354-6"><a href="functions-part1.html#cb354-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb354-7"><a href="functions-part1.html#cb354-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb354-8"><a href="functions-part1.html#cb354-8" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
+<span id="cb354-9"><a href="functions-part1.html#cb354-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">qdiff6</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="cn">NA</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb354-10"><a href="functions-part1.html#cb354-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">qdiff6</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="cn">NA</span>)), <span class="dv">4</span>)</span>
+<span id="cb354-11"><a href="functions-part1.html#cb354-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>No news is good news! Let’s see what test failure would look like. Let’s revert to a version of our function that does no <code>NA</code> handling, then test for proper <code>NA</code> handling. We can watch it fail.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="functions-part1.html#cb355-1" aria-hidden="true" tabindex="-1"></a>qdiff_no_NA <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) {</span>
+<span id="cb355-2"><a href="functions-part1.html#cb355-2" aria-hidden="true" tabindex="-1"></a>  the_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> x, <span class="at">probs =</span> probs)</span>
+<span id="cb355-3"><a href="functions-part1.html#cb355-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(the_quantiles) <span class="sc">-</span> <span class="fu">min</span>(the_quantiles)</span>
+<span id="cb355-4"><a href="functions-part1.html#cb355-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb355-5"><a href="functions-part1.html#cb355-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-6"><a href="functions-part1.html#cb355-6" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&#39;NA handling works&#39;</span>, {</span>
+<span id="cb355-7"><a href="functions-part1.html#cb355-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_that</span>(<span class="fu">qdiff_no_NA</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="cn">NA</span>)), <span class="fu">equals</span>(<span class="dv">4</span>))</span>
+<span id="cb355-8"><a href="functions-part1.html#cb355-8" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>Similar to the advice to use assertions in data analytical scripts, I recommend you use unit tests to monitor the behavior of functions you (or others) will use often. If your tests cover the function’s important behavior, then you can edit the internals freely. You’ll rest easy in the knowledge that, if you broke anything important, the tests will fail and alert you to the problem. A function that is important enough for unit tests probably also belongs in a package, where there are obvious mechanisms for running the tests as part of overall package checks.</p>
+</div>
+<div id="resources-2" class="section level2" number="49.26">
+<h2><span class="header-section-number">49.26</span> Resources</h2>
+<p>Packages for runtime assertions (the last 3 seem to be under more active development than <code>assertthat</code>):</p>
+<ul>
+<li><p>assertthat on <a href="https://CRAN.R-project.org/package=assertthat">CRAN</a> and <a href="https://github.com/hadley/assertthat">GitHub</a> - <em>the Hadleyverse option</em></p></li>
+<li><p>ensurer on <a href="https://CRAN.R-project.org/package=ensurer">CRAN</a> and <a href="https://github.com/smbache/ensurer">GitHub</a> - <em>general purpose, pipe-friendly</em></p></li>
+<li><p>assertr on <a href="https://CRAN.R-project.org/package=assertr">CRAN</a> and <a href="https://github.com/ropensci/assertr">GitHub</a> - <em>explicitly data pipeline oriented</em></p></li>
+<li><p>assertive on <a href="https://CRAN.R-project.org/package=assertive">CRAN</a> and <a href="https://bitbucket.org/richierocks/assertive/src/master/">Bitbucket</a> - <em>rich set of built-in functions</em></p></li>
+<li><p>Hadley Wickham’s book <a href="http://adv-r.had.co.nz">Advanced R</a> <span class="citation">(<a href="references.html#ref-wickham2015a" role="doc-biblioref">2015</a>)</span>:</p>
+<ul>
+<li>Section on <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#defensive-programming">defensive programming</a></li>
+<li>Section on <a href="http://adv-r.had.co.nz/Functions.html#function-arguments">function arguments</a></li>
+<li>Section on <a href="http://adv-r.had.co.nz/Functions.html#return-values">return values</a></li>
+</ul></li>
+<li><p>Unit testing with testthat</p>
+<ul>
+<li>On <a href="https://CRAN.R-project.org/package=testthat">CRAN</a>, development on <a href="https://github.com/r-lib/testthat">GitHub</a>, main <a href="https://testthat.r-lib.org">webpage</a></li>
+</ul></li>
+<li><p>Wickham and Bryan’s <a href="https://r-pkgs.org/index.html">R Packages</a> book <span class="citation">(<a href="references.html#ref-wickham-unpub" role="doc-biblioref">in progress</a>)</span></p>
+<ul>
+<li><a href="https://r-pkgs.org/tests.html">Testing chapter</a></li>
+</ul></li>
+<li><p>Wickham’s <a href="https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">testthat: Get Started with Testing</a> article in The R Journal <span class="citation">(<a href="references.html#ref-wickham2011b" role="doc-biblioref">2011a</a>)</span>. Maybe this is completely superseded by the newer chapter above? Be aware that parts could be out of date, but I recall it was a helpful read.</p></li>
+</ul>
 
-</div>
-</div>
-
-
-
+<!--DS4P Links-->
 <!--AE. Links-->
 <!-- Lab Links-->
 <!--Slides-->
@@ -1410,19 +1545,14 @@ if you can figure it out, and ask for help if not.</li>
 <!--Wikipedia Links-->
 <!--Misc. Links-->
 </div>
-<div class="footnotes">
-<hr />
-<ol start="2">
-<li id="fn2"><p>Source: <a href="https://collections.ed.ac.uk/art/about" class="uri">https://collections.ed.ac.uk/art/about</a><a href="lab07.html#fnref2" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="diy-web-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="module-08-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="automation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab08.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1453,7 +1583,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0706_uoe_art.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0802_functions-part1.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1464,7 +1594,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0706_uoe_art.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0802_functions-part1.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
