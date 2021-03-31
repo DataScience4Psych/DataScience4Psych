@@ -11,13 +11,14 @@ ds4p_urls <- read.csv("./data/ds4p_urls.csv")
 
 # Welcome to fitting and interpreting models
 
-This module is designed to introduce you to the ideas behind fitting and interpreting models. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here][ds4p-pl-02]. Most of the slides used to make the videos in this module can be found in the [slides repo][ds4p-slides].
+This module is designed to introduce you to the ideas behind fitting and interpreting models. Please watch the videos and work your way through the notes. You can find the video playlist for this module [here][ds4p-pl-10]. Most of the slides used to make the videos in this module can be found in the [slides repo][ds4p-slides].
 
 
 ## Module Materials
 
 * Slides
   * [Language of Models](https://datascience4psych.github.io/slides/d20_language/d20_language.html)
+  * [Fitting and interpreting models](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html)
 
 * Suggested Readings
   * All subchapters of this module
@@ -26,8 +27,7 @@ This module is designed to introduce you to the ideas behind fitting and interpr
          * [Model Basics](https://r4ds.had.co.nz/model-basics.html)
          * [Model Building](https://r4ds.had.co.nz/model-building.html)
 
-* Lab
-	* [lab-10]
+* No Lab This week!
 
 # Language of Models!
 
@@ -68,3 +68,205 @@ include_url(var_url, height = "400px")
 ```
 
 
+# Fitting and interpreting models
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html) if they do not appear below.
+
+```{r, echo=FALSE}
+var_url="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1"
+include_url(var_url, height = "400px")
+```
+
+## Models with numerical explanatory variables
+
+```{r, echo=FALSE}
+video_url=sample_no_surprises(ds4p_funyoutube$funyoutube)
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+```{r, echo=FALSE}
+var_url="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#2"
+include_url(var_url, height = "400px")
+```
+
+
+## A More Technical Worked Example
+
+
+### Singer example
+
+Load our standard libraries:
+
+```{r}
+library(lattice)
+library(ggplot2)
+library(tidyverse)
+```
+
+
++ If you've taken a regression course, you might recognize this model as a special case of a linear model. 
+
++ If you haven't, well, it doesn't really matter much except... we can use the `lm()` function to fit the model.
+
+The advantage is that `lm()` easily splits the data into **fitted values** and **residuals**:
+
+Observed value = Fitted value + residual
+
+Let's get the fitted values and residuals for each voice part:
+
+```{r}
+singer_lm = lm(height ~ 0 + voice.part, data=singer)
+```
+
+We can extract the fitted values using `fitted.values(singer.lm)` and the residuals with `residuals(singer.lm)` or `singer.lm$residuals`.
+
+For convenience, we create a data frame with two columns: the voice parts and the residuals.
+
+
+```{r}
+singer_res = data.frame(voice_part = singer$voice.part, residual = residuals(singer_lm))
+```
+
+We can also do this with `group_by` and `mutate`:
+```{r}
+fits = singer %>%
+    group_by(voice.part) %>%
+    mutate(fit = mean(height),
+           residual = height - mean(height))
+```
+
+
+### Does the linear model fit?
+
+To assess whether the linear model is a good fit to the data, we need to know whether the errors look like they come from normal distributions with the same variance.
+
+The residuals are our estimates of the errors, and so we need to check both normality and homoscedasticity.
+
+
+### Homoscedasticity
+
+There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:
+
+```{r}
+ggplot(singer_res, aes(x = voice_part, y = residual)) + geom_boxplot()
+```
+
+
+We can also look at the ecdfs of the residuals for each voice part.
+```{r}
+ggplot(singer_res, aes(x = residual, color = voice_part)) + stat_ecdf()
+```
+
+
+
+From these plots, it seems like the residuals in each group have approximately the same variance.
+
+
+### Normality
+
+We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:
+
+```{r, fig.width = 6}
+ggplot(singer_res, aes(sample = residual)) +
+  stat_qq() + facet_wrap(~ voice_part, ncol=4) 
+```
+
+Not only do the lines look reasonably straight, the scales look similar for all eight voice parts.
+This suggests a model where all of the errors are normal with the *same* standard deviation.
+This is convenient because it is the form of a standard linear model:
+
+Singer height = Average height for their voice part + Normal($0, \sigma^2$) error.
+
+
+
+### Normality of pooled residuals
+
+If the linear model holds, then all the residuals come from the same normal distribution.
+
+We've already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.
+
+
+```{r}
+ggplot(singer_res, aes(sample = residual)) +
+  stat_qq()
+```
+
+
+
+It's easier to check normality if we plot the line that the points should fall on: if we think the points come from a $N(\mu, \sigma^2)$ distribution, they should lie on a line with intercept $\mu$ and slope $\sigma$ (the standard deviation).
+
+In the linear model, we assume that the mean of the error terms is zero.
+We don't know what their variance should be, but we can estimate it using the variance of the residuals.
+
+Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:
+
+```{r}
+ggplot(singer_res, aes(sample = residual)) +
+    stat_qq() +
+    geom_abline(aes(intercept = 0, slope = sd(singer_res$residual)))
+```
+
+
+### The actually correct way
+
+Pedantic note: We should use an $n-8$ denominator instead of $n-1$ in the SD calculation for degrees of freedom reasons. We can get this directly from the linear model:
+
+```{r}
+sd(singer_res$residual)
+round(summary(singer_lm)$sigma, 3)
+```
+
+However, the difference between this and the SD above is negligible.
+
+Add the line:
+
+```{r}
+ggplot(singer_res, aes(sample = residual)) +
+  stat_qq() + geom_abline(intercept = mean(singer_res$residual), slope=summary(singer_lm)$sigma)
+```
+
+The straight line isn't absolutely perfect, but it's doing a pretty good job.
+
+
+### Our final model
+
+Since the errors seem to be pretty normal, our final model is:
+
+Singer height = Average height for their voice part + Normal($0, 2.5^2$) error.
+
+Note: While normality (or lack thereof) can be important for probabilistic prediction or (sometimes) for inferential data analysis, it's relatively unimportant for EDA.
+If your residuals are about normal that's nice, but as long as they're not horribly skewed they're probably not a problem.
+
+
+
+### What have we learned?
+
+About singers:
+
+- We've seen that average height increases as the voice part range decreases.
+
+- Within each voice part, the residuals look like they come from a normal distribution with the same variance for each voice part.
+This suggests that there's nothing further we need to do to explain singer heights: we have an average for each voice part, and there is no suggestion of systematic differences beyond that due to voice part.
+
+
+About data analysis:
+
+- We can use some of our univariate visualization tools, particularly boxplots and ecdfs, to look for evidence of heteroscedasticity.
+
+- We can use normal QQ plots on both pooled and un-pooled residuals to look for evidence of non-normality.
+
+- If we wanted to do formal tests or parameter estimation for singer heights, we would feel pretty secure using results based on normal theory.
+
+## Models with categorical explanatory variables 
+
+```{r, echo=FALSE}
+video_url=sample_no_surprises(ds4p_funyoutube$funyoutube)
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+```{r, echo=FALSE}
+var_url="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#2"
+include_url(var_url, height = "400px")
+```
