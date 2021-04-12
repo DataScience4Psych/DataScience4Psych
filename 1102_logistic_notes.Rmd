@@ -10,8 +10,6 @@ ds4p_urls <- read.csv("./data/ds4p_urls.csv")
 ```
 
 
-```{r child = "../setup.Rmd"}
-```
 
 ```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -80,7 +78,7 @@ email %>%
     y = NULL,
     title = 'Spam vs. "re:" in subject'
     ) +
-  scale_fill_manual(values = c("##DEB4A0", "##CA235F"))
+  scale_fill_manual(values = c("#DEB4A0", "#CA235F"))
 ```
 
 
@@ -165,7 +163,7 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 
 #### Logit function, visualized
 
-```{r echo=FALSE}
+```{r}
 d <- tibble(p = seq(0.001, 0.999, length.out = 1000)) %>%
   mutate(logit_p = log(p/(1-p)))
 
@@ -195,7 +193,7 @@ $$g^{-1}(x) = \frac{\exp(x)}{1+\exp(x)} = \frac{1}{1+\exp(-x)}$$
 
 #### The logistic regression model
 
-- Based on the three GLM criteria we have
+- Based on the three GLM criteria, we have
   - $y_i \sim \text{Bern}(p_i)$
   - $\eta_i = \beta_0+\beta_1 x_{1,i} + \cdots + \beta_n x_{n,i}$
   - $\text{logit}(p_i) = \eta_i$
@@ -296,9 +294,8 @@ ggplot(spam_aug, aes(x = num_char)) +
 
 
 
-.question[
-Would you prefer an email with 2000 characters to be labeled as spam or not? How about 40,000 characters?
-]
+> Question: Would you prefer an email with 2000 characters to be labeled as spam or not? How about 40,000 characters?
+
 
 ```{r ref.label="spam-predict-viz", echo=FALSE, fig.asp=0.5}
 ```
@@ -339,4 +336,4 @@ Would you prefer an email with 2000 characters to be labeled as spam or not? How
 
 
 
->Question: If you were designing a spam filter, would you want sensitivity and specificity to be high or low? What are the trade-offs associated with each decision? 
+> Question: If you were designing a spam filter, would you want sensitivity and specificity to be high or low? What are the trade-offs associated with each decision? 
