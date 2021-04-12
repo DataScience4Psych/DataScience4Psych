@@ -1,0 +1,171 @@
+# ODD: Notes on Cross validation
+
+A too technical and optional deep dive set of notes on cross-
+
+```{r include = FALSE}
+source("common.R")
+ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
+ds4p_urls <- read.csv("./data/ds4p_urls.csv")
+```
+
+```{r links, child="links.md"}
+```
+
+
+
+```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(openintro)
+library(ggridges)
+set.seed(1234)
+```
+
+
+
+We have:
+
+- Data $X_1, \ldots, X_n$.
+
+- A tuning parameter $\theta$. Each value of $\theta$ corresponds to a different set of models.
+
+- A function $L$ that takes a fitted model and a data point and returns a measure of model quality.
+
+We would like to choose one model from the set of candidate models indexed by $\theta$.
+
+## Example: Regression
+
+- Data: Pairs of predictors and response variables, $(y_i, X_i)$, $i = 1,\ldots, n$, $y_i \in \mathbb R$, $X_i \in \mathbb R^p$
+
+- Models: $y_i = X \beta + \epsilon$, $\beta_j = 0, j \in S_\theta$, where $S_\theta \subseteq \{1,\ldots, p\}$.
+
+- Model quality: Squared-error loss. If $\hat \beta_\theta$ are our estimates of the regression coefficients in model $\theta$, model quality is measured by
+$$
+L(\hat \beta_\theta, (y_i, X_i)) = (y_i - X_i^T \hat \beta_\theta)^2
+$$
+
+We want to choose a subset of the predictors that do the best job of explaining the response.
+
+
+
+Naive solution: Find the model that has the lowest value for the squared-error loss.
+
+Why doesn't this work?
+
+## Example: Mixture models
+
+- Data: $x_1,\ldots, x_n$, $x_i \in \mathbb R$
+
+- Models: Gaussian mixture models with $\theta$ mixture components.
+
+- Model quality: Negative log likelihood of the data. If $\hat p_\theta$ is the density of the fitted model with $\theta$ components, model quality is measured by $L(\hat p_\theta, x_i) = -\log \hat p_\theta(x_i)$.
+
+We want to choose the number of mixture components that best explains the data.
+
+
+Naive solution: Choose the number of mixture components that minimizes the negative log likelihood of the data.
+
+
+## Better Solution: Cross validation
+
+Idea: Instead of measuring model quality on the same data we used to fit the model, we estimate model quality on new data.
+
+If we knew the true distribution of the data, we could simulate new data and use a Monte Carlo estimate based on the simulations.
+
+We can't actually get new data, and so we hold some back when we fit the model and then pretend that the held back data is new data.
+
+
+
+Procedure:
+
+- Divide the data into $K$ folds
+
+- Let $X^{(k)}$ denote the data in fold $k$, and let $X^{(-k)}$ denote the data in all the folds except for $k$.
+
+- For each fold and each value of the tuning parameter $\theta$, fit the model on $X^{(-k)}$ to get $\hat f_\theta^{(k)}$
+
+- Compute
+$$
+\text{CV}(\theta) = \frac{1}{n} \sum_{k=1}^K \sum_{x \in X^{(k)}} L(\hat f_\theta^{(k)}, x)
+$$
+
+- Choose $\hat \theta = \text{argmin}_{\theta} \text{CV}(\theta)$
+
+## Example
+
+```{r}
+n = 100
+p = 20
+X = matrix(rnorm(n * p), nrow = n)
+y = rnorm(n)
+get_rss_submodels = function(n_predictors, y, X) {
+    if(n_predictors == 0) {
+        lm_submodel = lm(y ~ 0)
+    } else {
+        lm_submodel = lm(y ~ 0 + X[,1:n_predictors, drop = FALSE])
+    }
+    return(sum(residuals(lm_submodel)^2))
+}
+p_vec = 0:p
+rss = sapply(p_vec, get_rss_submodels, y, X)
+plot(rss ~ p_vec)
+
+```
+
+
+
+```{r}
+get_cv_error = function(n_predictors, y, X, folds) {
+    cv_vec = numeric(length(unique(folds)))
+    for(f in unique(folds)) {
+        cv_vec[f] = rss_on_held_out(
+                  n_predictors,
+                  y_train = y[folds != f],
+                  X_train = X[folds != f,],
+                  y_test = y[folds == f],
+                  X_test = X[folds == f,])
+    }
+    return(mean(cv_vec))
+}
+
+rss_on_held_out = function(n_predictors, y_train, X_train, y_test, X_test) {
+    if(n_predictors == 0) {
+        lm_submodel = lm(y_train ~ 0)
+        preds_on_test = rep(0, length(y_test))
+    } else {
+        lm_submodel = lm(y_train ~ 0 + X_train[,1:n_predictors, drop = FALSE])
+        preds_on_test = X_test[,1:n_predictors, drop= FALSE] %*% coef(lm_submodel)
+    }
+
+    return(sum((y_test - preds_on_test)^2))
+}
+K = 5
+## normally you would do this at random
+folds = rep(1:K, each = n / K)
+p_vec = 0:p
+cv_errors = sapply(p_vec, get_cv_error, y, X, folds)
+plot(cv_errors ~ p_vec)
+```
+
+## Choice of $K$
+
+Considerations:
+
+- Larger $K$ means more computation (although sometimes there is a shortcut for leave-one-out cross validation)
+
+- Larger $K$ means less bias in the estimate of model accuracy
+
+- Larger $K$ also means more variance in the estimate, so we don't necessarily want $K = n$
+
+- Usually choose $K = 5$ or $K = 10$
+
+- If your problem is structured (e.g. time series, spatial), you should choose the folds to respect the structure.
+
+
+## Summing up
+
+- We can use simulations to estimate arbitrary functions of our random variables.
+
+- If we know the underlying distribution, we can simply simulate from it (Monte Carlo integration).
+
+- If we don't know the underlying distribution, we can "simulate" from the data by resampling from the data (cross validation). Resampling methods will do well to the extent that the observed data reflect the true data-generating distribution.
