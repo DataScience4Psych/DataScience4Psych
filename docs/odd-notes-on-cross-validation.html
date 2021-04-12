@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>18 Lab: Global plastic waste | Data Science for Psychologists</title>
+  <title>71 ODD: Notes on Cross validation | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="18 Lab: Global plastic waste | Data Science for Psychologists" />
+  <meta property="og:title" content="71 ODD: Notes on Cross validation | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="18 Lab: Global plastic waste | Data Science for Psychologists" />
+  <meta name="twitter:title" content="71 ODD: Notes on Cross validation | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="basic-data-care.html"/>
-<link rel="next" href="welcome-to-the-tidyverse.html"/>
+<link rel="prev" href="welcome-to-cross-validation.html"/>
+<link rel="next" href="welcome-to-quantifying-uncertainty.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -1147,153 +1147,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="lab02" class="section level1" number="18">
-<h1><span class="header-section-number">18</span> Lab: Global plastic waste</h1>
-<p>Plastic pollution is a major and growing problem, negatively affecting oceans and wildlife health.
-<a href="https://ourworldindata.org/plastic-pollution">Our World in Data</a> has a lot of great data at various levels including globally, per country, and over time.
-For this lab we focus on data from 2010.</p>
-<p>Additionally, National Geographic ran a data visualization communication contest on plastic waste as seen <a href="https://www.nationalgeographic.org/funding-opportunities/innovation-challenges/plastic/dataviz/">here</a>.</p>
-<div id="learning-goals" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Learning goals</h2>
-<ul>
-<li>Visualizing numerical and categorical data and interpreting visualizations</li>
-<li>Recreating visualizations</li>
-<li>Getting more practice using with R, RStudio, Git, and GitHub</li>
-</ul>
-</div>
-<div id="getting-started-1" class="section level2" number="18.2">
-<h2><span class="header-section-number">18.2</span> Getting started</h2>
-<p>Go to the course GitHub organization and locate the assignment repo template, which should be named <code>lab-02-plastic-waste</code>.
-If you’re in the right place, it should look like the following.</p>
-<p><img src="img/repo-begin.png" width="1329" /></p>
-<p>Fork or use the template to make your own repo, and then clone it in RStudio.</p>
-<p>First, open the R Markdown document <code>lab-02.Rmd</code> and Knit it.
-Make sure it compiles without errors.
-The output will be in the file markdown <code>.md</code> file with the same name.</p>
-<div id="packages-1" class="section level3" number="18.2.1">
-<h3><span class="header-section-number">18.2.1</span> Packages</h3>
-<p>We’ll use the <strong>tidyverse</strong> package for this analysis.
-Run the following code in the Console to load this package.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="lab02.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-</div>
-<div id="data-1" class="section level3" number="18.2.2">
-<h3><span class="header-section-number">18.2.2</span> Data</h3>
-<p>The dataset for this assignment can be found as a csv file in the <code>data</code> folder of your repository.
-You can read it in using the following.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="lab02.html#cb62-1" aria-hidden="true" tabindex="-1"></a>plastic_waste <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/plastic-waste.csv&quot;</span>)</span></code></pre></div>
-<p>The variable descriptions are as follows:</p>
-<ul>
-<li><code>code</code>: 3 Letter country code</li>
-<li><code>entity</code>: Country name</li>
-<li><code>continent</code>: Continent name</li>
-<li><code>year</code>: Year</li>
-<li><code>gdp_per_cap</code>: GDP per capita constant 2011 international $, rate</li>
-<li><code>plastic_waste_per_cap</code>: Amount of plastic waste per capita in kg/day</li>
-<li><code>mismanaged_plastic_waste_per_cap</code>: Amount of mismanaged plastic waste per capita in kg/day</li>
-<li><code>mismanaged_plastic_waste</code>: Tonnes of mismanaged plastic waste</li>
-<li><code>coastal_pop</code>: Number of individuals living on/near coast</li>
-<li><code>total_pop</code>: Total population according to Gapminder</li>
-</ul>
-</div>
-</div>
-<div id="warm-up-1" class="section level2" number="18.3">
-<h2><span class="header-section-number">18.3</span> Warm up</h2>
-<ul>
-<li>Recall that RStudio is divided into four panes. Without looking, can you name them all and briefly describe their purpose?</li>
-<li>Verify that the dataset has loaded into the Environment. How many observations are in the dataset? Clicking on the dataset in the Environment will allow you to inspect it more carefully. Alternatively, you can type <code>View(plastic_waste)</code> into the Console to do this.</li>
-</ul>
-<blockquote>
-<p><strong>Hint:</strong> If you’re not sure, run the command <code>?NA</code> which will lead you to the documentation.</p>
-</blockquote>
-<ul>
-<li>Have a quick look at the data and notice that there are cells taking the value <code>NA</code> – what does this mean?</li>
-</ul>
-</div>
-<div id="exercises-1" class="section level2" number="18.4">
-<h2><span class="header-section-number">18.4</span> Exercises</h2>
-<p>Let’s start by taking a look at the distribution of plastic waste per capita in 2010.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="lab02.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)) <span class="sc">+</span></span>
-<span id="cb63-2"><a href="lab02.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 51 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="0203_plastic_waste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" /></p>
-<p>One country stands out as an unusual observation at the top of the distribution.
-One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="lab02.html#cb65-1" aria-hidden="true" tabindex="-1"></a>plastic_waste <span class="sc">%&gt;%</span></span>
-<span id="cb65-2"><a href="lab02.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(plastic_waste_per_cap <span class="sc">&gt;</span> <span class="fl">3.5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 10
-##   code  entity   continent   year gdp_per_cap plastic_waste_p~ mismanaged_plast~
-##   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;
-## 1 TTO   Trinida~ North Ame~  2010      31261.              3.6              0.19
-## # ... with 3 more variables: mismanaged_plastic_waste &lt;dbl&gt;, coastal_pop &lt;dbl&gt;,
-## #   total_pop &lt;dbl&gt;</code></pre>
-<p>Did you expect this result?
-You might consider doing some research on Trinidad and Tobago to see why plastic waste per capita is so high there, or whether this is a data error.</p>
-<p>1.1. Plot, using histograms, the distribution of plastic waste per capita faceted by continent. What can you say about how the continents compare to each other in terms of their plastic waste per capita?</p>
-<blockquote>
-<p><strong>NOTE:</strong> From this point onwards, the plots and the output of the code are not displayed in the lab instructions, but you can and should the code and view the results yourself.</p>
-</blockquote>
-<p>Another way of visualizing numerical data is using density plots.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="lab02.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)) <span class="sc">+</span></span>
-<span id="cb67-2"><a href="lab02.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>And compare distributions across continents by coloring density curves by continent.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="lab02.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, </span>
-<span id="cb68-2"><a href="lab02.html#cb68-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap, </span>
-<span id="cb68-3"><a href="lab02.html#cb68-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb68-4"><a href="lab02.html#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>The resulting plot may be a little difficult to read, so let’s also fill the curves in with colors as well.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="lab02.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, </span>
-<span id="cb69-2"><a href="lab02.html#cb69-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap, </span>
-<span id="cb69-3"><a href="lab02.html#cb69-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> continent, </span>
-<span id="cb69-4"><a href="lab02.html#cb69-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
-<span id="cb69-5"><a href="lab02.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>The overlapping colors make it difficult to tell what’s happening with the distributions. The first plotted in continents get covered by continents plotted over them.</p>
-<p>We can change the transparency level of the fill color to help with this problem.</p>
-<p>The <code>alpha</code> argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque.
-There is no way to tell what value will work best, so you just need to try a few.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="lab02.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, </span>
-<span id="cb70-2"><a href="lab02.html#cb70-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap, </span>
-<span id="cb70-3"><a href="lab02.html#cb70-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> continent, </span>
-<span id="cb70-4"><a href="lab02.html#cb70-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
-<span id="cb70-5"><a href="lab02.html#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
-<p>This plot still doesn’t look great…</p>
-<p>2.1. Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.</p>
-<p>2.2. Describe why we defined the <code>color</code> and <code>fill</code> of the curves by mapping aesthetics of the plot but we defined the <code>alpha</code> level as a characteristic of the plotting geom.</p>
-<p>🧶 ✅ ⬆️ <em>Now is a good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-<p>And yet another way to visualize this relationship is using side-by-side box plots.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="lab02.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, </span>
-<span id="cb71-2"><a href="lab02.html#cb71-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> continent, </span>
-<span id="cb71-3"><a href="lab02.html#cb71-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> plastic_waste_per_cap)) <span class="sc">+</span></span>
-<span id="cb71-4"><a href="lab02.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p>3.1. Convert your side-by-side box plots from the previous task to <a href="http://ggplot2.tidyverse.org/reference/geom_violin.html">violin plots</a>. What do the violin plots reveal that box plots do not? What features are apparent in the box plots but not in the violin plots?</p>
-<blockquote>
-<p><strong>Remember:</strong> We use <code>geom_point()</code> to make scatterplots.</p>
-</blockquote>
-<p>4.1. Visualize the relationship between plastic waste per capita and mismanaged plastic waste per capita using a scatterplot.
-Describe the relationship.</p>
-<p>4.2. color the points in the scatterplot by continent.
-Does there seem to be any clear distinctions between continents with respect to how plastic waste per capita and mismanaged plastic waste per capita are associated?</p>
-<p>4.3. Visualize the relationship between plastic waste per capita and total population as well as plastic waste per capita and coastal population.
-You will need to make two separate plots.
-Do either of these pairs of variables appear to be more strongly linearly associated?</p>
-<p>🧶 ✅ ⬆️ <em>Now is another good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
-</div>
-<div id="wrapping-up" class="section level2" number="18.5">
-<h2><span class="header-section-number">18.5</span> Wrapping up</h2>
-<p>If you still have some time left, move on to the remaining exercises below.</p>
-<blockquote>
-<p><strong>Hint:</strong> The x-axis is a calculated variable. One country with plastic waste per capita over 3 kg/day has been filtered out. And the data are not only represented with points on the plot but also a smooth curve. The term “smooth” should help you <a href="https://ggplot2.tidyverse.org/reference/index.html#section-geoms">pick which geom to use</a>.</p>
-</blockquote>
-<p>5.1. Recreate the following plot, and interpret what you see in context of the data.</p>
-<p><img src="0203_plastic_waste_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
-<p>Once you’re done, check to make sure your latest changes are on GitHub. (If previous versions of this lab, there was an automated check to see if for your R Markdown document knitted properly. It required using github actions, which made this lab a bit too complicated.)</p>
-<p><img src="img/repo-end.png" width="1329" /></p>
-
-</div>
-</div>
-
-
-
+<div id="odd-notes-on-cross-validation" class="section level1" number="71">
+<h1><span class="header-section-number">71</span> ODD: Notes on Cross validation</h1>
+<p>A too technical and optional deep dive set of notes on cross-validation.</p>
+<!--DS4P Links-->
 <!--AE. Links-->
 <!-- Lab Links-->
 <!--Slides-->
@@ -1306,14 +1163,135 @@ Do either of these pairs of variables appear to be more strongly linearly associ
 <!--R Documentation-->
 <!--Wikipedia Links-->
 <!--Misc. Links-->
+<p>We have:</p>
+<ul>
+<li><p>Data <span class="math inline">\(X_1, \ldots, X_n\)</span>.</p></li>
+<li><p>A tuning parameter <span class="math inline">\(\theta\)</span>. Each value of <span class="math inline">\(\theta\)</span> corresponds to a different set of models.</p></li>
+<li><p>A function <span class="math inline">\(L\)</span> that takes a fitted model and a data point and returns a measure of model quality.</p></li>
+</ul>
+<p>We would like to choose one model from the set of candidate models indexed by <span class="math inline">\(\theta\)</span>.</p>
+<div id="example-regression" class="section level2" number="71.1">
+<h2><span class="header-section-number">71.1</span> Example: Regression</h2>
+<ul>
+<li><p>Data: Pairs of predictors and response variables, <span class="math inline">\((y_i, X_i)\)</span>, <span class="math inline">\(i = 1,\ldots, n\)</span>, <span class="math inline">\(y_i \in \mathbb R\)</span>, <span class="math inline">\(X_i \in \mathbb R^p\)</span></p></li>
+<li><p>Models: <span class="math inline">\(y_i = X \beta + \epsilon\)</span>, <span class="math inline">\(\beta_j = 0, j \in S_\theta\)</span>, where <span class="math inline">\(S_\theta \subseteq \{1,\ldots, p\}\)</span>.</p></li>
+<li><p>Model quality: Squared-error loss. If <span class="math inline">\(\hat \beta_\theta\)</span> are our estimates of the regression coefficients in model <span class="math inline">\(\theta\)</span>, model quality is measured by
+<span class="math display">\[
+L(\hat \beta_\theta, (y_i, X_i)) = (y_i - X_i^T \hat \beta_\theta)^2
+\]</span></p></li>
+</ul>
+<p>We want to choose a subset of the predictors that do the best job of explaining the response.</p>
+<p>Naive solution: Find the model that has the lowest value for the squared-error loss.</p>
+<p>Why doesn’t this work?</p>
 </div>
+<div id="example-mixture-models" class="section level2" number="71.2">
+<h2><span class="header-section-number">71.2</span> Example: Mixture models</h2>
+<ul>
+<li><p>Data: <span class="math inline">\(x_1,\ldots, x_n\)</span>, <span class="math inline">\(x_i \in \mathbb R\)</span></p></li>
+<li><p>Models: Gaussian mixture models with <span class="math inline">\(\theta\)</span> mixture components.</p></li>
+<li><p>Model quality: Negative log likelihood of the data. If <span class="math inline">\(\hat p_\theta\)</span> is the density of the fitted model with <span class="math inline">\(\theta\)</span> components, model quality is measured by <span class="math inline">\(L(\hat p_\theta, x_i) = -\log \hat p_\theta(x_i)\)</span>.</p></li>
+</ul>
+<p>We want to choose the number of mixture components that best explains the data.</p>
+<p>Naive solution: Choose the number of mixture components that minimizes the negative log likelihood of the data.</p>
+</div>
+<div id="better-solution-cross-validation" class="section level2" number="71.3">
+<h2><span class="header-section-number">71.3</span> Better Solution: Cross validation</h2>
+<p>Idea: Instead of measuring model quality on the same data we used to fit the model, we estimate model quality on new data.</p>
+<p>If we knew the true distribution of the data, we could simulate new data and use a Monte Carlo estimate based on the simulations.</p>
+<p>We can’t actually get new data, and so we hold some back when we fit the model and then pretend that the held back data is new data.</p>
+<p>Procedure:</p>
+<ul>
+<li><p>Divide the data into <span class="math inline">\(K\)</span> folds</p></li>
+<li><p>Let <span class="math inline">\(X^{(k)}\)</span> denote the data in fold <span class="math inline">\(k\)</span>, and let <span class="math inline">\(X^{(-k)}\)</span> denote the data in all the folds except for <span class="math inline">\(k\)</span>.</p></li>
+<li><p>For each fold and each value of the tuning parameter <span class="math inline">\(\theta\)</span>, fit the model on <span class="math inline">\(X^{(-k)}\)</span> to get <span class="math inline">\(\hat f_\theta^{(k)}\)</span></p></li>
+<li><p>Compute
+<span class="math display">\[
+\text{CV}(\theta) = \frac{1}{n} \sum_{k=1}^K \sum_{x \in X^{(k)}} L(\hat f_\theta^{(k)}, x)
+\]</span></p></li>
+<li><p>Choose <span class="math inline">\(\hat \theta = \text{argmin}_{\theta} \text{CV}(\theta)\)</span></p></li>
+</ul>
+</div>
+<div id="example" class="section level2" number="71.4">
+<h2><span class="header-section-number">71.4</span> Example</h2>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="odd-notes-on-cross-validation.html#cb421-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb421-2"><a href="odd-notes-on-cross-validation.html#cb421-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">20</span></span>
+<span id="cb421-3"><a href="odd-notes-on-cross-validation.html#cb421-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), <span class="at">nrow =</span> n)</span>
+<span id="cb421-4"><a href="odd-notes-on-cross-validation.html#cb421-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb421-5"><a href="odd-notes-on-cross-validation.html#cb421-5" aria-hidden="true" tabindex="-1"></a>get_rss_submodels <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y, X) {</span>
+<span id="cb421-6"><a href="odd-notes-on-cross-validation.html#cb421-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb421-7"><a href="odd-notes-on-cross-validation.html#cb421-7" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span>)</span>
+<span id="cb421-8"><a href="odd-notes-on-cross-validation.html#cb421-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb421-9"><a href="odd-notes-on-cross-validation.html#cb421-9" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X[,<span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb421-10"><a href="odd-notes-on-cross-validation.html#cb421-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb421-11"><a href="odd-notes-on-cross-validation.html#cb421-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(lm_submodel)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb421-12"><a href="odd-notes-on-cross-validation.html#cb421-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb421-13"><a href="odd-notes-on-cross-validation.html#cb421-13" aria-hidden="true" tabindex="-1"></a>p_vec <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>p</span>
+<span id="cb421-14"><a href="odd-notes-on-cross-validation.html#cb421-14" aria-hidden="true" tabindex="-1"></a>rss <span class="ot">=</span> <span class="fu">sapply</span>(p_vec, get_rss_submodels, y, X)</span>
+<span id="cb421-15"><a href="odd-notes-on-cross-validation.html#cb421-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rss <span class="sc">~</span> p_vec)</span></code></pre></div>
+<p><img src="1202_cvnotes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="odd-notes-on-cross-validation.html#cb422-1" aria-hidden="true" tabindex="-1"></a>get_cv_error <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y, X, folds) {</span>
+<span id="cb422-2"><a href="odd-notes-on-cross-validation.html#cb422-2" aria-hidden="true" tabindex="-1"></a>    cv_vec <span class="ot">=</span> <span class="fu">numeric</span>(<span class="fu">length</span>(<span class="fu">unique</span>(folds)))</span>
+<span id="cb422-3"><a href="odd-notes-on-cross-validation.html#cb422-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(f <span class="cf">in</span> <span class="fu">unique</span>(folds)) {</span>
+<span id="cb422-4"><a href="odd-notes-on-cross-validation.html#cb422-4" aria-hidden="true" tabindex="-1"></a>        cv_vec[f] <span class="ot">=</span> <span class="fu">rss_on_held_out</span>(</span>
+<span id="cb422-5"><a href="odd-notes-on-cross-validation.html#cb422-5" aria-hidden="true" tabindex="-1"></a>                  n_predictors,</span>
+<span id="cb422-6"><a href="odd-notes-on-cross-validation.html#cb422-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y_train =</span> y[folds <span class="sc">!=</span> f],</span>
+<span id="cb422-7"><a href="odd-notes-on-cross-validation.html#cb422-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">X_train =</span> X[folds <span class="sc">!=</span> f,],</span>
+<span id="cb422-8"><a href="odd-notes-on-cross-validation.html#cb422-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y_test =</span> y[folds <span class="sc">==</span> f],</span>
+<span id="cb422-9"><a href="odd-notes-on-cross-validation.html#cb422-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">X_test =</span> X[folds <span class="sc">==</span> f,])</span>
+<span id="cb422-10"><a href="odd-notes-on-cross-validation.html#cb422-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb422-11"><a href="odd-notes-on-cross-validation.html#cb422-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">mean</span>(cv_vec))</span>
+<span id="cb422-12"><a href="odd-notes-on-cross-validation.html#cb422-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb422-13"><a href="odd-notes-on-cross-validation.html#cb422-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb422-14"><a href="odd-notes-on-cross-validation.html#cb422-14" aria-hidden="true" tabindex="-1"></a>rss_on_held_out <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y_train, X_train, y_test, X_test) {</span>
+<span id="cb422-15"><a href="odd-notes-on-cross-validation.html#cb422-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb422-16"><a href="odd-notes-on-cross-validation.html#cb422-16" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span>)</span>
+<span id="cb422-17"><a href="odd-notes-on-cross-validation.html#cb422-17" aria-hidden="true" tabindex="-1"></a>        preds_on_test <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y_test))</span>
+<span id="cb422-18"><a href="odd-notes-on-cross-validation.html#cb422-18" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb422-19"><a href="odd-notes-on-cross-validation.html#cb422-19" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X_train[,<span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb422-20"><a href="odd-notes-on-cross-validation.html#cb422-20" aria-hidden="true" tabindex="-1"></a>        preds_on_test <span class="ot">=</span> X_test[,<span class="dv">1</span><span class="sc">:</span>n_predictors, drop<span class="ot">=</span> <span class="cn">FALSE</span>] <span class="sc">%*%</span> <span class="fu">coef</span>(lm_submodel)</span>
+<span id="cb422-21"><a href="odd-notes-on-cross-validation.html#cb422-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb422-22"><a href="odd-notes-on-cross-validation.html#cb422-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb422-23"><a href="odd-notes-on-cross-validation.html#cb422-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">sum</span>((y_test <span class="sc">-</span> preds_on_test)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb422-24"><a href="odd-notes-on-cross-validation.html#cb422-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb422-25"><a href="odd-notes-on-cross-validation.html#cb422-25" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb422-26"><a href="odd-notes-on-cross-validation.html#cb422-26" aria-hidden="true" tabindex="-1"></a><span class="do">## normally you would do this at random</span></span>
+<span id="cb422-27"><a href="odd-notes-on-cross-validation.html#cb422-27" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">each =</span> n <span class="sc">/</span> K)</span>
+<span id="cb422-28"><a href="odd-notes-on-cross-validation.html#cb422-28" aria-hidden="true" tabindex="-1"></a>p_vec <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>p</span>
+<span id="cb422-29"><a href="odd-notes-on-cross-validation.html#cb422-29" aria-hidden="true" tabindex="-1"></a>cv_errors <span class="ot">=</span> <span class="fu">sapply</span>(p_vec, get_cv_error, y, X, folds)</span>
+<span id="cb422-30"><a href="odd-notes-on-cross-validation.html#cb422-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_errors <span class="sc">~</span> p_vec)</span></code></pre></div>
+<p><img src="1202_cvnotes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="choice-of-k" class="section level2" number="71.5">
+<h2><span class="header-section-number">71.5</span> Choice of <span class="math inline">\(K\)</span></h2>
+<p>Considerations:</p>
+<ul>
+<li><p>Larger <span class="math inline">\(K\)</span> means more computation (although sometimes there is a shortcut for leave-one-out cross validation)</p></li>
+<li><p>Larger <span class="math inline">\(K\)</span> means less bias in the estimate of model accuracy</p></li>
+<li><p>Larger <span class="math inline">\(K\)</span> also means more variance in the estimate, so we don’t necessarily want <span class="math inline">\(K = n\)</span></p></li>
+<li><p>Usually choose <span class="math inline">\(K = 5\)</span> or <span class="math inline">\(K = 10\)</span></p></li>
+<li><p>If your problem is structured (e.g. time series, spatial), you should choose the folds to respect the structure.</p></li>
+</ul>
+</div>
+<div id="summing-up" class="section level2" number="71.6">
+<h2><span class="header-section-number">71.6</span> Summing up</h2>
+<ul>
+<li><p>We can use simulations to estimate arbitrary functions of our random variables.</p></li>
+<li><p>If we know the underlying distribution, we can simply simulate from it (Monte Carlo integration).</p></li>
+<li><p>If we don’t know the underlying distribution, we can “simulate” from the data by resampling from the data (cross validation). Resampling methods will do well to the extent that the observed data reflect the true data-generating distribution.</p></li>
+</ul>
+
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="basic-data-care.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="welcome-to-the-tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="welcome-to-cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="welcome-to-quantifying-uncertainty.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1344,7 +1322,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0203_plastic_waste.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1202_cvnotes.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1355,7 +1333,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0203_plastic_waste.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1202_cvnotes.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
