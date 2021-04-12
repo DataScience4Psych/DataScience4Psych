@@ -33,7 +33,9 @@ set.seed(1234)
 
 ```{r}
 library(openintro)
+data(email)
 glimpse(email)
+
 ```
 
 
@@ -42,9 +44,14 @@ glimpse(email)
 
 
 ```{r echo=FALSE, out.width="100%"}
-email %>%
-  ggplot(aes(x = num_char, y = spam, fill = spam, color = spam)) +
-  geom_density_ridges2(alpha = 0.5) +
+email$spam_num=as.factor(email$spam)
+email$spam=as.factor(email$spam)
+ggplot(email,
+       aes(x = num_char, 
+           y = spam, 
+           fill = spam, 
+           color = spam))+
+  geom_density_ridges() +
   labs(
     x = "Number of characters (in thousands)", 
     y = "Spam",
