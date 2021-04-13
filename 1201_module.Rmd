@@ -25,7 +25,9 @@ This module is designed to introduce you to cross-validation. Please watch the v
 * Lab
 
 
-## Topic 1!
+# Overfitting!
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html) if they do not appear below.
 
 ```{r, echo=FALSE}
 # Filler Video
@@ -34,44 +36,348 @@ embed_url(video_url) %>%
   use_align("center")
 ```
 
-You can follow along with the slides [here](https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html) if they do not appear below.
+
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html"
+var_url="https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html"
 include_url(var_url, height = "400px")
 ```
 
 
-## Topic 2!
 
-```{r, echo=FALSE}
-# Filler Video
-video_url=sample_no_surprises(ds4p_funyoutube$funyoutube)
-embed_url(video_url) %>%
-  use_align("center")
+# Notes on Feature Engineering
+
+```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(openintro)
+library(lubridate)
+library(knitr)
+set.seed(1234)
+options(
+  warnPartialMatchArgs = FALSE,
+  warnPartialMatchAttr = FALSE, 
+  warnPartialMatchDollar = FALSE,
+  width = 100
+)
+
+data(email)
+email$spam_num=email$spam
+email$spam=as.factor(email$spam)
+
+plot_colors=c("#E48957", "#CA235F")
+
 ```
 
-You can follow along with the slides [here](https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html) if they do not appear below.
 
-```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html"
-include_url(var_url, height = "400px")
+
+## Feature engineering
+
+- We prefer simple models when possible, but **parsimony** does not mean sacrificing accuracy (or predictive performance) in the interest of simplicity
+
+
+- Variables that go into the model and how they are represented are just as critical to success of the model
+
+
+- **Feature engineering** allows us to get creative with our predictors in an effort to make them more useful for our model (to increase its predictive performance) 
+
+
+
+### Same training and testing sets as before
+
+```{r}
+# Fix random numbers by setting the seed 
+# Enables analysis to be reproducible when random numbers are used 
+set.seed(1066)
+
+# Put 80% of the data into the training set 
+email_split <- initial_split(email, prop = 0.80)
+
+# Create data frames for the two sets:
+train_data <- training(email_split)
+test_data  <- testing(email_split)
 ```
 
 
-<!-- 
 
-## Activity 03: Star Wars!
+### A simple approach: `mutate()`
 
-```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html#19"
-include_url(var_url, height = "400px")
+```{r}
+train_data %>%
+  mutate(
+    date = date(time),
+    dow  = wday(time),
+    month = month(time)
+    ) %>%
+  select(time, date, dow, month) %>%
+  sample_n(size = 5) # shuffle to show a variety
 ```
 
-You can find the materials for the Star Wars activity [here](https://github.com/DataScience4Psych/ae-03-starwars-dataviz). The compiled version should look something like the following...
 
-```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/ae-03-starwars-dataviz/starwars.html"
-include_url(var_url, height = "400px")
+
+## Modeling workflow, revisited
+
+- Create a **recipe** for feature engineering steps to be applied to the training data
+
+- Fit the model to the training data after these steps have been applied
+
+
+- Using the model estimates from the training data, predict outcomes for the test data
+
+
+- Evaluate the performance of the model on the test data
+
+
+
+## Building recipes
+
+
+
+### Initiate a recipe
+
+```{r initiate-recipe, results="hide"}
+email_rec <- recipe(
+  spam ~ .,          # formula
+  data = train_data  # data to use for cataloguing names and types of variables
+  )
+
+summary(email_rec)
 ```
--->
+
+
+```{r echo=FALSE}
+summary(email_rec) %>% print(n = 21)
+```
+
+
+
+
+### Remove certain variables
+
+```{r}
+email_rec <- email_rec %>%
+  step_rm(from, sent_email)
+```
+
+
+```{r echo=FALSE}
+email_rec
+```
+
+
+
+### Feature engineer date
+
+```{r}
+email_rec <- email_rec %>%
+  step_date(time, features = c("dow", "month")) %>%
+  step_rm(time)
+```
+
+
+```{r echo=FALSE}
+email_rec
+```
+
+
+### Discretize numeric variables
+
+```{r}
+email_rec <- email_rec %>%
+  step_cut(cc, attach, dollar, breaks = c(0, 1)) %>%
+  step_cut(inherit, password, breaks = c(0, 1, 5, 10, 20))
+```
+
+
+```{r echo=FALSE}
+email_rec
+```
+
+
+
+
+### Create dummy variables
+
+```{r}
+email_rec <- email_rec %>%
+  step_dummy(all_nominal(), -all_outcomes())
+```
+
+
+```{r echo=FALSE}
+email_rec
+```
+
+
+
+
+### Remove zero variance variables
+
+Variables that contain only a single value
+
+```{r}
+email_rec <- email_rec %>%
+  step_zv(all_predictors())
+```
+
+
+```{r echo=FALSE}
+email_rec
+```
+
+
+### All in one place
+
+```{r}
+email_rec <- recipe(spam ~ ., data = email) %>%
+  step_rm(from, sent_email) %>%
+  step_date(time, features = c("dow", "month")) %>%               
+  step_rm(time) %>%
+  step_cut(cc, attach, dollar, breaks = c(0, 1)) %>%
+  step_cut(inherit, password, breaks = c(0, 1, 5, 10, 20)) %>%
+  step_dummy(all_nominal(), -all_outcomes()) %>%
+  step_zv(all_predictors())
+```
+
+
+
+
+
+## Building workflows
+
+---
+
+### Define model
+
+```{r}
+email_mod <- logistic_reg() %>% 
+  set_engine("glm")
+
+email_mod
+```
+
+### Define workflow
+
+**Workflows** bring together models and recipes so that they can be easily applied to both the training and test data.
+
+```{r}
+email_wflow <- workflow() %>% 
+  add_model(email_mod) %>% 
+  add_recipe(email_rec)
+```
+
+
+```{r echo=FALSE}
+email_wflow
+```
+
+
+### Fit model to training data
+
+```{r}
+email_fit <- email_wflow %>% 
+  fit(data = train_data)
+```
+
+
+```{r}
+tidy(email_fit) %>% print(n = 31)
+```
+
+
+### Make predictions for test data
+
+```{r}
+email_pred <- predict(email_fit, test_data, type = "prob") %>% 
+  bind_cols(test_data) 
+
+email_pred
+```
+
+
+
+### Evaluate the performance
+
+
+```{r roc}
+email_pred %>%
+  roc_curve(
+    truth = spam,
+    .pred_1,
+    event_level = "second"
+  ) %>%
+  autoplot()
+```
+
+
+
+```{r}
+email_pred %>%
+  roc_auc(
+    truth = spam,
+    .pred_1,
+    event_level = "second"
+  )
+```
+
+
+
+## Making decisions
+
+
+### Cutoff probability: 0.5
+
+Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.5**.
+
+
+```{r confusion-50}
+cutoff_prob <- 0.5
+email_pred %>%
+  mutate(
+    spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
+    spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
+    ) %>%
+  count(spam_pred, spam) %>%
+  pivot_wider(names_from = spam, values_from = n) %>%
+  kable(col.names = c("", "Email is not spam", "Email is spam"))
+```
+
+
+
+
+### Cutoff probability: 0.25
+
+
+
+Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.25**.
+
+
+```{r confusion-25}
+cutoff_prob <- 0.25
+email_pred %>%
+  mutate(
+    spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
+    spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
+    ) %>%
+  count(spam_pred, spam) %>%
+  pivot_wider(names_from = spam, values_from = n) %>%
+  kable(col.names = c("", "Email is not spam", "Email is spam"))
+```
+
+
+
+### Cutoff probability: 0.75
+
+Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.75**.
+
+```{r confusion-75}
+cutoff_prob <- 0.75
+email_pred %>%
+  mutate(
+    spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
+    spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
+    ) %>%
+  count(spam_pred, spam) %>%
+  pivot_wider(names_from = spam, values_from = n) %>%
+  kable(col.names = c("", "Email is not spam", "Email is spam"))
+```

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Optional Deep Dive: R basics and workflows | Data Science for Psychologists</title>
+  <title>72 Notes on Feature Engineering | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Optional Deep Dive: R basics and workflows | Data Science for Psychologists" />
+  <meta property="og:title" content="72 Notes on Feature Engineering | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Optional Deep Dive: R basics and workflows | Data Science for Psychologists" />
+  <meta name="twitter:title" content="72 Notes on Feature Engineering | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="thoughtful-workflow.html"/>
-<link rel="next" href="shorthappygit.html"/>
+<link rel="prev" href="overfitting.html"/>
+<link rel="next" href="odd-notes-on-cross-validation.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -1183,200 +1183,454 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r_basics" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Optional Deep Dive: R basics and workflows</h1>
-<!--DS4P Links-->
-<!--AE. Links-->
-<!-- Lab Links-->
-<!--Slides-->
-<!--R Links-->
-<!--RStudio Links-->
-<!--HappyGitWithR Links-->
-<!--Package Links-->
-<!--Shiny links-->
-<!--Publications-->
-<!--R Documentation-->
-<!--Wikipedia Links-->
-<!--Misc. Links-->
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Who is R? Why is R troubling PhD students?<a href="https://twitter.com/AcademicChatter?ref_src=twsrc%5Etfw">@AcademicChatter</a> <a href="https://twitter.com/hashtag/AcademicTwitter?src=hash&amp;ref_src=twsrc%5Etfw">#AcademicTwitter</a></p>&mdash; Dr. Marie Curie (@CurieDr) <a href="https://twitter.com/CurieDr/status/1355911682585931777?ref_src=twsrc%5Etfw">January 31, 2021</a></blockquote>
+<div id="notes-on-feature-engineering" class="section level1" number="72">
+<h1><span class="header-section-number">72</span> Notes on Feature Engineering</h1>
+<div id="feature-engineering" class="section level2" number="72.1">
+<h2><span class="header-section-number">72.1</span> Feature engineering</h2>
+<ul>
+<li><p>We prefer simple models when possible, but <strong>parsimony</strong> does not mean sacrificing accuracy (or predictive performance) in the interest of simplicity</p></li>
+<li><p>Variables that go into the model and how they are represented are just as critical to success of the model</p></li>
+<li><p><strong>Feature engineering</strong> allows us to get creative with our predictors in an effort to make them more useful for our model (to increase its predictive performance)</p></li>
+</ul>
+<div id="same-training-and-testing-sets-as-before" class="section level3" number="72.1.1">
+<h3><span class="header-section-number">72.1.1</span> Same training and testing sets as before</h3>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="notes-on-feature-engineering.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix random numbers by setting the seed </span></span>
+<span id="cb421-2"><a href="notes-on-feature-engineering.html#cb421-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Enables analysis to be reproducible when random numbers are used </span></span>
+<span id="cb421-3"><a href="notes-on-feature-engineering.html#cb421-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1066</span>)</span>
+<span id="cb421-4"><a href="notes-on-feature-engineering.html#cb421-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb421-5"><a href="notes-on-feature-engineering.html#cb421-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Put 80% of the data into the training set </span></span>
+<span id="cb421-6"><a href="notes-on-feature-engineering.html#cb421-6" aria-hidden="true" tabindex="-1"></a>email_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(email, <span class="at">prop =</span> <span class="fl">0.80</span>)</span>
+<span id="cb421-7"><a href="notes-on-feature-engineering.html#cb421-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb421-8"><a href="notes-on-feature-engineering.html#cb421-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frames for the two sets:</span></span>
+<span id="cb421-9"><a href="notes-on-feature-engineering.html#cb421-9" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(email_split)</span>
+<span id="cb421-10"><a href="notes-on-feature-engineering.html#cb421-10" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> <span class="fu">testing</span>(email_split)</span></code></pre></div>
+</div>
+<div id="a-simple-approach-mutate" class="section level3" number="72.1.2">
+<h3><span class="header-section-number">72.1.2</span> A simple approach: <code>mutate()</code></h3>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="notes-on-feature-engineering.html#cb422-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span></span>
+<span id="cb422-2"><a href="notes-on-feature-engineering.html#cb422-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb422-3"><a href="notes-on-feature-engineering.html#cb422-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">date</span>(time),</span>
+<span id="cb422-4"><a href="notes-on-feature-engineering.html#cb422-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dow  =</span> <span class="fu">wday</span>(time),</span>
+<span id="cb422-5"><a href="notes-on-feature-engineering.html#cb422-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(time)</span>
+<span id="cb422-6"><a href="notes-on-feature-engineering.html#cb422-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb422-7"><a href="notes-on-feature-engineering.html#cb422-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time, date, dow, month) <span class="sc">%&gt;%</span></span>
+<span id="cb422-8"><a href="notes-on-feature-engineering.html#cb422-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="co"># shuffle to show a variety</span></span>
+<span id="cb422-9"><a href="notes-on-feature-engineering.html#cb422-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 4</span></span>
+<span id="cb422-10"><a href="notes-on-feature-engineering.html#cb422-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   time                date         dow month</span></span>
+<span id="cb422-11"><a href="notes-on-feature-engineering.html#cb422-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb422-12"><a href="notes-on-feature-engineering.html#cb422-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2012-01-27 09:07:50 2012-01-27     6     1</span></span>
+<span id="cb422-13"><a href="notes-on-feature-engineering.html#cb422-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2012-03-22 04:25:38 2012-03-22     5     3</span></span>
+<span id="cb422-14"><a href="notes-on-feature-engineering.html#cb422-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2012-03-16 22:06:15 2012-03-16     6     3</span></span>
+<span id="cb422-15"><a href="notes-on-feature-engineering.html#cb422-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2012-03-05 15:26:57 2012-03-05     2     3</span></span>
+<span id="cb422-16"><a href="notes-on-feature-engineering.html#cb422-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 2012-02-13 12:31:43 2012-02-13     2     2</span></span></code></pre></div>
+</div>
+</div>
+<div id="modeling-workflow-revisited" class="section level2" number="72.2">
+<h2><span class="header-section-number">72.2</span> Modeling workflow, revisited</h2>
+<ul>
+<li><p>Create a <strong>recipe</strong> for feature engineering steps to be applied to the training data</p></li>
+<li><p>Fit the model to the training data after these steps have been applied</p></li>
+<li><p>Using the model estimates from the training data, predict outcomes for the test data</p></li>
+<li><p>Evaluate the performance of the model on the test data</p></li>
+</ul>
+</div>
+<div id="building-recipes" class="section level2" number="72.3">
+<h2><span class="header-section-number">72.3</span> Building recipes</h2>
+<div id="initiate-a-recipe" class="section level3" number="72.3.1">
+<h3><span class="header-section-number">72.3.1</span> Initiate a recipe</h3>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="notes-on-feature-engineering.html#cb423-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb423-2"><a href="notes-on-feature-engineering.html#cb423-2" aria-hidden="true" tabindex="-1"></a>  spam <span class="sc">~</span> .,          <span class="co"># formula</span></span>
+<span id="cb423-3"><a href="notes-on-feature-engineering.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data  <span class="co"># data to use for cataloguing names and types of variables</span></span>
+<span id="cb423-4"><a href="notes-on-feature-engineering.html#cb423-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb423-5"><a href="notes-on-feature-engineering.html#cb423-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-6"><a href="notes-on-feature-engineering.html#cb423-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(email_rec)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 22 x 4
+#&gt;    variable     type    role      source  
+#&gt;    &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
+#&gt;  1 to_multiple  numeric predictor original
+#&gt;  2 from         numeric predictor original
+#&gt;  3 cc           numeric predictor original
+#&gt;  4 sent_email   numeric predictor original
+#&gt;  5 time         date    predictor original
+#&gt;  6 image        numeric predictor original
+#&gt;  7 attach       numeric predictor original
+#&gt;  8 dollar       numeric predictor original
+#&gt;  9 winner       nominal predictor original
+#&gt; 10 inherit      numeric predictor original
+#&gt; 11 viagra       numeric predictor original
+#&gt; 12 password     numeric predictor original
+#&gt; 13 num_char     numeric predictor original
+#&gt; 14 line_breaks  numeric predictor original
+#&gt; 15 format       numeric predictor original
+#&gt; 16 re_subj      numeric predictor original
+#&gt; 17 exclaim_subj numeric predictor original
+#&gt; 18 urgent_subj  numeric predictor original
+#&gt; 19 exclaim_mess numeric predictor original
+#&gt; 20 number       nominal predictor original
+#&gt; 21 spam_num     numeric predictor original
+#&gt; # ... with 1 more row</code></pre>
+</div>
+<div id="remove-certain-variables" class="section level3" number="72.3.2">
+<h3><span class="header-section-number">72.3.2</span> Remove certain variables</h3>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="notes-on-feature-engineering.html#cb425-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb425-2"><a href="notes-on-feature-engineering.html#cb425-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email)</span></code></pre></div>
+<pre><code>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor         21
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Delete terms from, sent_email</code></pre>
+</div>
+<div id="feature-engineer-date" class="section level3" number="72.3.3">
+<h3><span class="header-section-number">72.3.3</span> Feature engineer date</h3>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="notes-on-feature-engineering.html#cb427-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb427-2"><a href="notes-on-feature-engineering.html#cb427-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-3"><a href="notes-on-feature-engineering.html#cb427-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time)</span></code></pre></div>
+<pre><code>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor         21
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Delete terms from, sent_email
+#&gt; Date features from time
+#&gt; Delete terms time</code></pre>
+</div>
+<div id="discretize-numeric-variables" class="section level3" number="72.3.4">
+<h3><span class="header-section-number">72.3.4</span> Discretize numeric variables</h3>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="notes-on-feature-engineering.html#cb429-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb429-2"><a href="notes-on-feature-engineering.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb429-3"><a href="notes-on-feature-engineering.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>))</span></code></pre></div>
+<pre><code>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor         21
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Delete terms from, sent_email
+#&gt; Date features from time
+#&gt; Delete terms time
+#&gt; Cut numeric for cc, attach, dollar
+#&gt; Cut numeric for inherit, password</code></pre>
+</div>
+<div id="create-dummy-variables" class="section level3" number="72.3.5">
+<h3><span class="header-section-number">72.3.5</span> Create dummy variables</h3>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="notes-on-feature-engineering.html#cb431-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb431-2"><a href="notes-on-feature-engineering.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
+<pre><code>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor         21
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Delete terms from, sent_email
+#&gt; Date features from time
+#&gt; Delete terms time
+#&gt; Cut numeric for cc, attach, dollar
+#&gt; Cut numeric for inherit, password
+#&gt; Dummy variables from all_nominal(), -all_outcomes()</code></pre>
+</div>
+<div id="remove-zero-variance-variables" class="section level3" number="72.3.6">
+<h3><span class="header-section-number">72.3.6</span> Remove zero variance variables</h3>
+<p>Variables that contain only a single value</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="notes-on-feature-engineering.html#cb433-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb433-2"><a href="notes-on-feature-engineering.html#cb433-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
+<pre><code>#&gt; Data Recipe
+#&gt; 
+#&gt; Inputs:
+#&gt; 
+#&gt;       role #variables
+#&gt;    outcome          1
+#&gt;  predictor         21
+#&gt; 
+#&gt; Operations:
+#&gt; 
+#&gt; Delete terms from, sent_email
+#&gt; Date features from time
+#&gt; Delete terms time
+#&gt; Cut numeric for cc, attach, dollar
+#&gt; Cut numeric for inherit, password
+#&gt; Dummy variables from all_nominal(), -all_outcomes()
+#&gt; Zero variance filter on all_predictors()</code></pre>
+</div>
+<div id="all-in-one-place" class="section level3" number="72.3.7">
+<h3><span class="header-section-number">72.3.7</span> All in one place</h3>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="notes-on-feature-engineering.html#cb435-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(spam <span class="sc">~</span> ., <span class="at">data =</span> email) <span class="sc">%&gt;%</span></span>
+<span id="cb435-2"><a href="notes-on-feature-engineering.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email) <span class="sc">%&gt;%</span></span>
+<span id="cb435-3"><a href="notes-on-feature-engineering.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span>               </span>
+<span id="cb435-4"><a href="notes-on-feature-engineering.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time) <span class="sc">%&gt;%</span></span>
+<span id="cb435-5"><a href="notes-on-feature-engineering.html#cb435-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb435-6"><a href="notes-on-feature-engineering.html#cb435-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb435-7"><a href="notes-on-feature-engineering.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb435-8"><a href="notes-on-feature-engineering.html#cb435-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="building-workflows" class="section level2" number="72.4">
+<h2><span class="header-section-number">72.4</span> Building workflows</h2>
+<hr />
+<div id="define-model" class="section level3" number="72.4.1">
+<h3><span class="header-section-number">72.4.1</span> Define model</h3>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="notes-on-feature-engineering.html#cb436-1" aria-hidden="true" tabindex="-1"></a>email_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb436-2"><a href="notes-on-feature-engineering.html#cb436-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
+<span id="cb436-3"><a href="notes-on-feature-engineering.html#cb436-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-4"><a href="notes-on-feature-engineering.html#cb436-4" aria-hidden="true" tabindex="-1"></a>email_mod</span>
+<span id="cb436-5"><a href="notes-on-feature-engineering.html#cb436-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
+<span id="cb436-6"><a href="notes-on-feature-engineering.html#cb436-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb436-7"><a href="notes-on-feature-engineering.html#cb436-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
+</div>
+<div id="define-workflow" class="section level3" number="72.4.2">
+<h3><span class="header-section-number">72.4.2</span> Define workflow</h3>
+<p><strong>Workflows</strong> bring together models and recipes so that they can be easily applied to both the training and test data.</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="notes-on-feature-engineering.html#cb437-1" aria-hidden="true" tabindex="-1"></a>email_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb437-2"><a href="notes-on-feature-engineering.html#cb437-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(email_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-3"><a href="notes-on-feature-engineering.html#cb437-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(email_rec)</span></code></pre></div>
+<pre><code>#&gt; == Workflow ========================================================================================
+#&gt; Preprocessor: Recipe
+#&gt; Model: logistic_reg()
+#&gt; 
+#&gt; -- Preprocessor ------------------------------------------------------------------------------------
+#&gt; 7 Recipe Steps
+#&gt; 
+#&gt; * step_rm()
+#&gt; * step_date()
+#&gt; * step_rm()
+#&gt; * step_cut()
+#&gt; * step_cut()
+#&gt; * step_dummy()
+#&gt; * step_zv()
+#&gt; 
+#&gt; -- Model -------------------------------------------------------------------------------------------
+#&gt; Logistic Regression Model Specification (classification)
+#&gt; 
+#&gt; Computational engine: glm</code></pre>
+</div>
+<div id="fit-model-to-training-data" class="section level3" number="72.4.3">
+<h3><span class="header-section-number">72.4.3</span> Fit model to training data</h3>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="notes-on-feature-engineering.html#cb439-1" aria-hidden="true" tabindex="-1"></a>email_fit <span class="ot">&lt;-</span> email_wflow <span class="sc">%&gt;%</span> </span>
+<span id="cb439-2"><a href="notes-on-feature-engineering.html#cb439-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb439-3"><a href="notes-on-feature-engineering.html#cb439-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: glm.fit: algorithm did not converge</span></span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="notes-on-feature-engineering.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(email_fit) <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">31</span>)</span>
+<span id="cb440-2"><a href="notes-on-feature-engineering.html#cb440-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 32 x 5</span></span>
+<span id="cb440-3"><a href="notes-on-feature-engineering.html#cb440-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    term               estimate std.error statistic p.value</span></span>
+<span id="cb440-4"><a href="notes-on-feature-engineering.html#cb440-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb440-5"><a href="notes-on-feature-engineering.html#cb440-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 (Intercept)       -2.66e+ 1   28828.  -9.22e- 4   0.999</span></span>
+<span id="cb440-6"><a href="notes-on-feature-engineering.html#cb440-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 to_multiple       -4.52e-13   19623.  -2.30e-17   1    </span></span>
+<span id="cb440-7"><a href="notes-on-feature-engineering.html#cb440-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 image              5.58e-14   14913.   3.74e-18   1    </span></span>
+<span id="cb440-8"><a href="notes-on-feature-engineering.html#cb440-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 viagra             5.57e- 7   44780.   1.24e-11   1.00 </span></span>
+<span id="cb440-9"><a href="notes-on-feature-engineering.html#cb440-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 num_char           1.08e-14    1601.   6.74e-18   1    </span></span>
+<span id="cb440-10"><a href="notes-on-feature-engineering.html#cb440-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 line_breaks       -3.92e-16      73.3 -5.35e-18   1    </span></span>
+<span id="cb440-11"><a href="notes-on-feature-engineering.html#cb440-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 format            -8.65e-13   16046.  -5.39e-17   1    </span></span>
+<span id="cb440-12"><a href="notes-on-feature-engineering.html#cb440-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 re_subj           -5.58e-14   15906.  -3.51e-18   1    </span></span>
+<span id="cb440-13"><a href="notes-on-feature-engineering.html#cb440-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 exclaim_subj       1.30e-13   24757.   5.26e-18   1    </span></span>
+<span id="cb440-14"><a href="notes-on-feature-engineering.html#cb440-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 urgent_subj       -1.49e-10  135650.  -1.10e-15   1.00 </span></span>
+<span id="cb440-15"><a href="notes-on-feature-engineering.html#cb440-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 exclaim_mess      -2.95e-15     139.  -2.12e-17   1    </span></span>
+<span id="cb440-16"><a href="notes-on-feature-engineering.html#cb440-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 spam_num           5.31e+ 1   24104.   2.20e- 3   0.998</span></span>
+<span id="cb440-17"><a href="notes-on-feature-engineering.html#cb440-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 cc_X.1.68.        -4.84e-13   31329.  -1.55e-17   1    </span></span>
+<span id="cb440-18"><a href="notes-on-feature-engineering.html#cb440-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 attach_X.1.20.    -8.29e-13   43470.  -1.91e-17   1    </span></span>
+<span id="cb440-19"><a href="notes-on-feature-engineering.html#cb440-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 dollar_X.1.64.    -8.95e-13   19099.  -4.68e-17   1    </span></span>
+<span id="cb440-20"><a href="notes-on-feature-engineering.html#cb440-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 winner_yes         1.18e-12   53142.   2.21e-17   1    </span></span>
+<span id="cb440-21"><a href="notes-on-feature-engineering.html#cb440-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 inherit_X.1.5.    -1.73e-13  208707.  -8.28e-19   1    </span></span>
+<span id="cb440-22"><a href="notes-on-feature-engineering.html#cb440-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 inherit_X.5.10.   -3.63e-11  253331.  -1.43e-16   1    </span></span>
+<span id="cb440-23"><a href="notes-on-feature-engineering.html#cb440-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 password_X.1.5.   -6.59e-13   46809.  -1.41e-17   1    </span></span>
+<span id="cb440-24"><a href="notes-on-feature-engineering.html#cb440-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 password_X.5.10.  -4.88e-13  146273.  -3.34e-18   1    </span></span>
+<span id="cb440-25"><a href="notes-on-feature-engineering.html#cb440-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 password_X.10.20. -4.88e-13  206293.  -2.37e-18   1    </span></span>
+<span id="cb440-26"><a href="notes-on-feature-engineering.html#cb440-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 password_X.20.28. -1.08e-12  206529.  -5.24e-18   1    </span></span>
+<span id="cb440-27"><a href="notes-on-feature-engineering.html#cb440-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23 number_small       7.14e-13   20449.   3.49e-17   1    </span></span>
+<span id="cb440-28"><a href="notes-on-feature-engineering.html#cb440-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24 number_big         1.73e-12   26609.   6.51e-17   1    </span></span>
+<span id="cb440-29"><a href="notes-on-feature-engineering.html#cb440-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25 time_dow_Mon      -1.52e-12   27741.  -5.49e-17   1    </span></span>
+<span id="cb440-30"><a href="notes-on-feature-engineering.html#cb440-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26 time_dow_Tue      -1.00e-12   26606.  -3.77e-17   1    </span></span>
+<span id="cb440-31"><a href="notes-on-feature-engineering.html#cb440-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27 time_dow_Wed      -9.24e-13   26117.  -3.54e-17   1    </span></span>
+<span id="cb440-32"><a href="notes-on-feature-engineering.html#cb440-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28 time_dow_Thu      -3.09e-13   26848.  -1.15e-17   1    </span></span>
+<span id="cb440-33"><a href="notes-on-feature-engineering.html#cb440-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29 time_dow_Fri      -8.81e-13   26892.  -3.28e-17   1    </span></span>
+<span id="cb440-34"><a href="notes-on-feature-engineering.html#cb440-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30 time_dow_Sat      -7.36e-13   30767.  -2.39e-17   1    </span></span>
+<span id="cb440-35"><a href="notes-on-feature-engineering.html#cb440-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31 time_month_Feb    -3.32e-14   15759.  -2.11e-18   1    </span></span>
+<span id="cb440-36"><a href="notes-on-feature-engineering.html#cb440-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 1 more row</span></span></code></pre></div>
+</div>
+<div id="make-predictions-for-test-data" class="section level3" number="72.4.4">
+<h3><span class="header-section-number">72.4.4</span> Make predictions for test data</h3>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="notes-on-feature-engineering.html#cb441-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(email_fit, test_data, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb441-2"><a href="notes-on-feature-engineering.html#cb441-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data) </span>
+<span id="cb441-3"><a href="notes-on-feature-engineering.html#cb441-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There are new levels in a factor: NA</span></span>
+<span id="cb441-4"><a href="notes-on-feature-engineering.html#cb441-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-5"><a href="notes-on-feature-engineering.html#cb441-5" aria-hidden="true" tabindex="-1"></a>email_pred</span>
+<span id="cb441-6"><a href="notes-on-feature-engineering.html#cb441-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 784 x 24</span></span>
+<span id="cb441-7"><a href="notes-on-feature-engineering.html#cb441-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    .pred_0  .pred_1 spam  to_multiple  from    cc sent_email time                image attach dollar</span></span>
+<span id="cb441-8"><a href="notes-on-feature-engineering.html#cb441-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb441-9"><a href="notes-on-feature-engineering.html#cb441-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1    1.00 2.90e-12 0               1     1     0          1 2012-01-01 12:55:06     0      0      0</span></span>
+<span id="cb441-10"><a href="notes-on-feature-engineering.html#cb441-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2    1.00 2.90e-12 0               0     1     0          0 2012-01-01 16:08:59     0      0      0</span></span>
+<span id="cb441-11"><a href="notes-on-feature-engineering.html#cb441-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3    1.00 2.90e-12 0               0     1     0          1 2012-01-01 13:23:44     0      0      0</span></span>
+<span id="cb441-12"><a href="notes-on-feature-engineering.html#cb441-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4    1.00 2.90e-12 0               0     1     1          1 2012-01-01 14:38:32     0      0      0</span></span>
+<span id="cb441-13"><a href="notes-on-feature-engineering.html#cb441-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5    1.00 2.90e-12 0               0     1     0          1 2012-01-01 20:40:40     0      0      0</span></span>
+<span id="cb441-14"><a href="notes-on-feature-engineering.html#cb441-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6    1.00 2.90e-12 0               0     1     0          1 2012-01-01 21:07:20     0      0      0</span></span>
+<span id="cb441-15"><a href="notes-on-feature-engineering.html#cb441-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7    1.00 2.90e-12 0               0     1     0          0 2012-01-01 21:08:14     0      0      0</span></span>
+<span id="cb441-16"><a href="notes-on-feature-engineering.html#cb441-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8    1.00 2.90e-12 0               0     1     0          0 2012-01-01 21:51:24     0      0      0</span></span>
+<span id="cb441-17"><a href="notes-on-feature-engineering.html#cb441-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9    1.00 2.90e-12 0               0     1     1          0 2012-01-01 22:16:39     0      0      0</span></span>
+<span id="cb441-18"><a href="notes-on-feature-engineering.html#cb441-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    1.00 2.90e-12 0               1     1     3          0 2012-01-02 08:41:11     0      0      0</span></span>
+<span id="cb441-19"><a href="notes-on-feature-engineering.html#cb441-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 774 more rows, and 13 more variables: winner &lt;fct&gt;, inherit &lt;dbl&gt;, viagra &lt;dbl&gt;,</span></span>
+<span id="cb441-20"><a href="notes-on-feature-engineering.html#cb441-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   password &lt;dbl&gt;, num_char &lt;dbl&gt;, line_breaks &lt;int&gt;, format &lt;dbl&gt;, re_subj &lt;dbl&gt;,</span></span>
+<span id="cb441-21"><a href="notes-on-feature-engineering.html#cb441-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   exclaim_subj &lt;dbl&gt;, urgent_subj &lt;dbl&gt;, exclaim_mess &lt;dbl&gt;, number &lt;fct&gt;, spam_num &lt;dbl&gt;</span></span></code></pre></div>
+</div>
+<div id="evaluate-the-performance" class="section level3" number="72.4.5">
+<h3><span class="header-section-number">72.4.5</span> Evaluate the performance</h3>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="notes-on-feature-engineering.html#cb442-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb442-2"><a href="notes-on-feature-engineering.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(</span>
+<span id="cb442-3"><a href="notes-on-feature-engineering.html#cb442-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
+<span id="cb442-4"><a href="notes-on-feature-engineering.html#cb442-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
+<span id="cb442-5"><a href="notes-on-feature-engineering.html#cb442-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
+<span id="cb442-6"><a href="notes-on-feature-engineering.html#cb442-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb442-7"><a href="notes-on-feature-engineering.html#cb442-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div>
+<p><img src="1201_module_files/figure-html/roc-1.png" width="672" /></p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="notes-on-feature-engineering.html#cb443-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb443-2"><a href="notes-on-feature-engineering.html#cb443-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(</span>
+<span id="cb443-3"><a href="notes-on-feature-engineering.html#cb443-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
+<span id="cb443-4"><a href="notes-on-feature-engineering.html#cb443-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
+<span id="cb443-5"><a href="notes-on-feature-engineering.html#cb443-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
+<span id="cb443-6"><a href="notes-on-feature-engineering.html#cb443-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb443-7"><a href="notes-on-feature-engineering.html#cb443-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span id="cb443-8"><a href="notes-on-feature-engineering.html#cb443-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .metric .estimator .estimate</span></span>
+<span id="cb443-9"><a href="notes-on-feature-engineering.html#cb443-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span id="cb443-10"><a href="notes-on-feature-engineering.html#cb443-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 roc_auc binary             1</span></span></code></pre></div>
+</div>
+</div>
+<div id="making-decisions" class="section level2" number="72.5">
+<h2><span class="header-section-number">72.5</span> Making decisions</h2>
+<div id="cutoff-probability-0.5" class="section level3" number="72.5.1">
+<h3><span class="header-section-number">72.5.1</span> Cutoff probability: 0.5</h3>
+<p>.panelset[
+.panel[.panel-name[Output]</p>
+<p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.5</strong>.</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="notes-on-feature-engineering.html#cb444-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb444-2"><a href="notes-on-feature-engineering.html#cb444-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb444-3"><a href="notes-on-feature-engineering.html#cb444-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb444-4"><a href="notes-on-feature-engineering.html#cb444-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb444-5"><a href="notes-on-feature-engineering.html#cb444-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb444-6"><a href="notes-on-feature-engineering.html#cb444-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb444-7"><a href="notes-on-feature-engineering.html#cb444-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb444-8"><a href="notes-on-feature-engineering.html#cb444-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb444-9"><a href="notes-on-feature-engineering.html#cb444-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Email is not spam</th>
+<th align="right">Email is spam</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Email labelled not spam</td>
+<td align="right">705</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Email labelled spam</td>
+<td align="right">NA</td>
+<td align="right">78</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cutoff-probability-0.25" class="section level2" number="72.6">
+<h2><span class="header-section-number">72.6</span> Cutoff probability: 0.25</h2>
+<p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.25</strong>.</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="notes-on-feature-engineering.html#cb445-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb445-2"><a href="notes-on-feature-engineering.html#cb445-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb445-3"><a href="notes-on-feature-engineering.html#cb445-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb445-4"><a href="notes-on-feature-engineering.html#cb445-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb445-5"><a href="notes-on-feature-engineering.html#cb445-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb445-6"><a href="notes-on-feature-engineering.html#cb445-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb445-7"><a href="notes-on-feature-engineering.html#cb445-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb445-8"><a href="notes-on-feature-engineering.html#cb445-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb445-9"><a href="notes-on-feature-engineering.html#cb445-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Email is not spam</th>
+<th align="right">Email is spam</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Email labelled not spam</td>
+<td align="right">705</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Email labelled spam</td>
+<td align="right">NA</td>
+<td align="right">78</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div id="cutoff-probability-0.75" class="section level3" number="72.6.1">
+<h3><span class="header-section-number">72.6.1</span> Cutoff probability: 0.75</h3>
+<p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.75</strong>.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="notes-on-feature-engineering.html#cb446-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
+<span id="cb446-2"><a href="notes-on-feature-engineering.html#cb446-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb446-3"><a href="notes-on-feature-engineering.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb446-4"><a href="notes-on-feature-engineering.html#cb446-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb446-5"><a href="notes-on-feature-engineering.html#cb446-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb446-6"><a href="notes-on-feature-engineering.html#cb446-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb446-7"><a href="notes-on-feature-engineering.html#cb446-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb446-8"><a href="notes-on-feature-engineering.html#cb446-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb446-9"><a href="notes-on-feature-engineering.html#cb446-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Email is not spam</th>
+<th align="right">Email is spam</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Email labelled not spam</td>
+<td align="right">705</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Email labelled spam</td>
+<td align="right">NA</td>
+<td align="right">78</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
 
-<!--Original content: https://stat545.com/block002_hello-r-workspace-wd-project.html-->
-<p>This chapter is a recommended, but optional deep dive (ODD) that might be useful to you.</p>
-<div id="basics-of-working-with-r-at-the-command-line-and-rstudio-goodies" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Basics of working with R at the command line and RStudio goodies</h2>
-<p>Launch RStudio/R.</p>
-<p>Notice the default panes:</p>
-<ul>
-<li>Console (entire left)</li>
-<li>Environment/History (tabbed in upper right)</li>
-<li>Files/Plots/Packages/Help (tabbed in lower right)</li>
-</ul>
-<p>FYI: you can change the default location of the panes, among many other things: <a href="https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio">Customizing RStudio</a>.</p>
-<p>Go into the Console, where we interact with the live R process.</p>
-<p>Make an assignment and then inspect the object you just created:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="r-basics.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">4</span></span>
-<span id="cb5-2"><a href="r-basics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb5-3"><a href="r-basics.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 12</span></span></code></pre></div>
-<p>All R statements where you create objects – “assignments” – have this form:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="r-basics.html#cb6-1" aria-hidden="true" tabindex="-1"></a>objectName <span class="ot">&lt;-</span> value</span></code></pre></div>
-<p>and in my head I hear, e.g., “x gets 12.”</p>
-<p>You will make lots of assignments and the operator <code>&lt;-</code> is a pain to type. Don’t be lazy and use <code>=</code>, although it would work, because it will just sow confusion later. Instead, utilize RStudio’s keyboard shortcut: Alt + - (the minus sign).</p>
-<p>Notice that RStudio auto-magically surrounds <code>&lt;-</code> with spaces, which demonstrates a useful code formatting practice. Code is miserable to read on a good day. Give your eyes a break and use spaces.</p>
-<p>RStudio offers many handy <a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts">keyboard shortcuts</a>. Also, Alt+Shift+K brings up a keyboard shortcut reference card.</p>
-<p>Object names cannot start with a digit and cannot contain certain other characters such as a comma or a space. You will be wise to adopt a <a href="https://en.wikipedia.org/wiki/Snake_case">convention for demarcating words</a> in names.</p>
-<pre><code>i_use_snake_case
-other.people.use.periods
-evenOthersUseCamelCase</code></pre>
-<p>Make another assignment:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r-basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a>this_is_a_really_long_name <span class="ot">&lt;-</span> <span class="fl">2.5</span></span></code></pre></div>
-<p>To inspect this, try out RStudio’s completion facility: type the first few characters, press TAB, add characters until you disambiguate, then press return.</p>
-<p>Make another assignment:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="r-basics.html#cb9-1" aria-hidden="true" tabindex="-1"></a>mason_rocks <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">^</span> <span class="dv">3</span></span></code></pre></div>
-<p>Let’s try to inspect:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics.html#cb10-1" aria-hidden="true" tabindex="-1"></a>masonrocks</span>
-<span id="cb10-2"><a href="r-basics.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;masonrocks&#39; not found</span></span>
-<span id="cb10-3"><a href="r-basics.html#cb10-3" aria-hidden="true" tabindex="-1"></a>masn_rocks</span>
-<span id="cb10-4"><a href="r-basics.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, envir, enclos): object &#39;masn_rocks&#39; not found</span></span></code></pre></div>
-<p>Implicit contract with the computer / scripting language: Computer will do tedious computation for you. In return, you will be completely precise in your instructions. Typos matter. Case matters. Get better at typing.</p>
-<p>R has a mind-blowing collection of built-in functions that are accessed like so:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionName</span>(<span class="at">arg1 =</span> val1, <span class="at">arg2 =</span> val2, and so on)</span></code></pre></div>
-<p>Let’s try using <code>seq()</code> which makes regular sequences of numbers and, while we’re at it, demo more helpful features of RStudio.</p>
-<p>Type <code>se</code> and hit TAB. A pop up shows you possible completions. Specify <code>seq()</code> by typing more to disambiguate or using the up/down arrows to select. Notice the floating tool-tip-type help that pops up, reminding you of a function’s arguments. If you want even more help, press F1 as directed to get the full documentation in the help tab of the lower right pane. Now open the parentheses and notice the automatic addition of the closing parenthesis and the placement of cursor in the middle. Type the arguments <code>1, 10</code> and hit return. RStudio also exits the parenthetical expression for you. IDEs are great.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="r-basics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb12-2"><a href="r-basics.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
-<p>The above also demonstrates something about how R resolves function arguments. You can always specify in <code>name = value</code> form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence <code>from = 1</code> that goes <code>to = 10</code>. Since we didn’t specify step size, the default value of <code>by</code> in the function definition is used, which ends up being 1 in this case. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use <code>name = value</code>.</p>
-<p>Make this assignment and notice similar help with quotation marks.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="r-basics.html#cb13-1" aria-hidden="true" tabindex="-1"></a>yo <span class="ot">&lt;-</span> <span class="st">&quot;hello world&quot;</span></span></code></pre></div>
-<p>If you just make an assignment, you don’t get to see the value, so then you’re tempted to immediately inspect.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="r-basics.html#cb14-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb14-2"><a href="r-basics.html#cb14-2" aria-hidden="true" tabindex="-1"></a>y</span>
-<span id="cb14-3"><a href="r-basics.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
-<p>This common action can be shortened by surrounding the assignment with parentheses, which causes assignment and “print to screen” to happen.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="r-basics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>(y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>))</span>
-<span id="cb15-2"><a href="r-basics.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
-<p>Not all functions have (or require) arguments:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="r-basics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span>
-<span id="cb16-2"><a href="r-basics.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Tue Apr 13 14:38:53 2021&quot;</span></span></code></pre></div>
-<p>Now look at your workspace – in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="r-basics.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">objects</span>()</span>
-<span id="cb17-2"><a href="r-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;check_quietly&quot;              &quot;ds4p_urls&quot;                 </span></span>
-<span id="cb17-3"><a href="r-basics.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;install_quietly&quot;            &quot;mason_rocks&quot;               </span></span>
-<span id="cb17-4"><a href="r-basics.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;pretty_install&quot;             &quot;sample_no_surprises&quot;       </span></span>
-<span id="cb17-5"><a href="r-basics.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;shhh_check&quot;                 &quot;slide_url&quot;                 </span></span>
-<span id="cb17-6"><a href="r-basics.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;this_is_a_really_long_name&quot; &quot;x&quot;                         </span></span>
-<span id="cb17-7"><a href="r-basics.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] &quot;y&quot;                          &quot;yo&quot;</span></span>
-<span id="cb17-8"><a href="r-basics.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span>
-<span id="cb17-9"><a href="r-basics.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;check_quietly&quot;              &quot;ds4p_urls&quot;                 </span></span>
-<span id="cb17-10"><a href="r-basics.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;install_quietly&quot;            &quot;mason_rocks&quot;               </span></span>
-<span id="cb17-11"><a href="r-basics.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;pretty_install&quot;             &quot;sample_no_surprises&quot;       </span></span>
-<span id="cb17-12"><a href="r-basics.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;shhh_check&quot;                 &quot;slide_url&quot;                 </span></span>
-<span id="cb17-13"><a href="r-basics.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;this_is_a_really_long_name&quot; &quot;x&quot;                         </span></span>
-<span id="cb17-14"><a href="r-basics.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] &quot;y&quot;                          &quot;yo&quot;</span></span></code></pre></div>
-<p>If you want to remove the object named <code>y</code>, you can do this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="r-basics.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(y)</span></code></pre></div>
-<p>To remove everything:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="r-basics.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
-<p>or click the broom in RStudio’s Environment pane.</p>
 </div>
-<div id="workspace-and-working-directory" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Workspace and working directory</h2>
-<p>One day you will need to quit R, go do something else and return to your analysis later.</p>
-<p>One day you will have multiple analyses going that use R and you want to keep them separate.</p>
-<p>One day you will need to bring data from the outside world into R and send numerical results and figures from R back out into the world.</p>
-<p>To handle these real life situations, you need to make two decisions:</p>
-<ul>
-<li>What about your analysis is “real,” i.e. will you save it as your lasting record of what happened?</li>
-<li>Where does your analysis “live?”</li>
-</ul>
-<div id="workspace-.rdata" class="section level3" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Workspace, <code>.RData</code></h3>
-<p>As a beginning R user, it’s OK to consider your workspace “real.” <em>Very soon</em>, I urge you to evolve to the next level, where you consider your saved R scripts as “real.” (In either case, of course the input data is very much real and requires preservation!) With the input data and the R code you used, you can reproduce
-<em>everything</em>. You can make your analysis fancier. You can get to the bottom of puzzling results and discover and fix bugs in your code. You can reuse the code to conduct similar analyses in new projects. You can remake a figure with different aspect ratio or save is as TIFF instead of PDF. You are ready to take questions. You are ready for the future.</p>
-<p>If you regard your workspace as “real” (saving and reloading all the time), if you need to redo analysis … you’re going to either redo a lot of typing (making mistakes all the way) or will have to mine your R history for the commands you used. Rather than <a href="https://support.rstudio.com/hc/en-us/articles/200526217-Command-History">becoming an expert on managing the R history</a>, a better use of your time and energy is to keep your “good” R code in a script for future reuse.</p>
-<p>Because it can be useful sometimes, note the commands you’ve recently run appear in the History pane.</p>
-<p>But you don’t have to choose right now and the two strategies are not incompatible. Let’s demo the save / reload the workspace approach.</p>
-<p>Upon quitting R, you have to decide if you want to save your workspace, for potential restoration the next time you launch R. Depending on your set up, R or your IDE, e.g. RStudio, will probably prompt you to make this decision.</p>
-<p>Quit R/RStudio, either from the menu, using a keyboard shortcut, or by typing <code>q()</code> in the Console. You’ll get a prompt like this:</p>
-<blockquote>
-<p>Save workspace image to ~/.Rdata?</p>
-</blockquote>
-<p><em>Note where the workspace image is to be saved</em> and then click “Save.”</p>
-<p>Using your favorite method, visit the directory where image was saved and verify there is a file named <code>.RData</code>. You will also see a file <code>.Rhistory</code>, holding the commands submitted in your recent session.</p>
-<p>Restart RStudio. In the Console you will see a line like this:</p>
-<pre><code>[Workspace loaded from ~/.RData]</code></pre>
-<p>indicating that your workspace has been restored. Look in the Workspace pane and you’ll see the same objects as before. In the History tab of the same pane, you should also see your command history. You’re back in business. This way of starting and stopping analytical work will not serve you well for long but it’s a start.</p>
-</div>
-<div id="working-directory" class="section level3" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Working directory</h3>
-<p>Any process running on your computer has a notion of its “working directory.” In R, this is where R will look, by default, for files you ask it to load. It also where, by default, any files you write to disk will go. Chances are your current working directory is the directory we inspected above, i.e. the one where RStudio wanted to save the workspace.</p>
-<p>You can explicitly check your working directory with:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="r-basics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
-<p>It is also displayed at the top of the RStudio console.</p>
-<p>As a beginning R user, it’s OK let your home directory or any other weird directory on your computer be R’s working directory. <em>Very soon</em>, I urge you to evolve to the next level, where you organize your projects into directories and, when working on project A, set R’s working directory to the associated directory.</p>
-<p><strong>Although I do not recommend it</strong>, in case you’re curious, you can set R’s working directory at the command line like so:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="r-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/myCoolProject&quot;</span>)</span></code></pre></div>
-<p><strong>Although I do not recommend it</strong>, you can also use RStudio’s Files pane to navigate to a directory and then set it as working directory from the menu: <em>Session &gt; Set Working Directory &gt; To Files Pane Location</em>. (You’ll see even more options there). Or within the Files pane, choose “More” and “Set As Working Directory.”</p>
-<p>But there’s a better way. A way that also puts you on the path to managing your R work like an expert.</p>
-</div>
-</div>
-<div id="rprojs" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> RStudio projects</h2>
-<p>Keeping all the files associated with a project organized together – input data, R scripts, results, figures – is such a wise and common practice that RStudio has built-in support for this via its <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects"><em>projects</em></a>.</p>
-<p>Let’s make one to use for the rest of this class. Do this: <em>File &gt; New Project…</em>. The directory name you choose here will be the project name. Call it whatever you want (or follow me for convenience).</p>
-<p>I created a directory and, therefore RStudio project, called <code>swc</code> in my <code>tmp</code> directory, FYI.</p>
-<!--JB: https://github.com/yihui/knitr/issues/277 -->
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="r-basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/tmp/swc&quot;</span>)</span></code></pre></div>
-<p>Now check that the “home” directory for your project is the working directory of our current R process:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="r-basics.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
-<p><em>I can’t print my output here because this document itself does not reside in the RStudio Project we just created.</em></p>
-<p>Let’s enter a few commands in the Console, as if we are just beginning a project:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-basics.html#cb25-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb25-2"><a href="r-basics.html#cb25-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
-<span id="cb25-3"><a href="r-basics.html#cb25-3" aria-hidden="true" tabindex="-1"></a>sig_sq <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb25-4"><a href="r-basics.html#cb25-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">40</span>)</span>
-<span id="cb25-5"><a href="r-basics.html#cb25-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> a <span class="sc">+</span> b <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(sig_sq))</span>
-<span id="cb25-6"><a href="r-basics.html#cb25-6" aria-hidden="true" tabindex="-1"></a>(avg_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(x))</span>
-<span id="cb25-7"><a href="r-basics.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.494</span></span>
-<span id="cb25-8"><a href="r-basics.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(avg_x, <span class="st">&quot;avg_x.txt&quot;</span>)</span>
-<span id="cb25-9"><a href="r-basics.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb25-10"><a href="r-basics.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(a, b, <span class="at">col =</span> <span class="st">&quot;purple&quot;</span>)</span></code></pre></div>
-<p><img src="0102_rbasics_files/figure-html/toy-line-1.png" width="672" /></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="r-basics.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.print</span>(pdf, <span class="st">&quot;toy_line_plot.pdf&quot;</span>)</span>
-<span id="cb26-2"><a href="r-basics.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; png </span></span>
-<span id="cb26-3"><a href="r-basics.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2</span></span></code></pre></div>
-<p>Let’s say this is a good start of an analysis and your ready to start preserving the logic and code. Visit the History tab of the upper right pane. Select these commands. Click “To Source.” Now you have a new pane containing a nascent R script. Click on the floppy disk to save. Give it a name ending in <code>.R</code> or <code>.r</code>, I used <code>toy-line.r</code> and note that, by default, it will go in the directory associated with your project.</p>
-<p>Quit RStudio. Inspect the folder associated with your project if you wish. Maybe view the PDF in an external viewer.</p>
-<p>Restart RStudio. Notice that things, by default, restore to where we were earlier, e.g. objects in the workspace, the command history, which files are open for editing, where we are in the file system browser, the working directory for the R process, etc. These are all Good Things.</p>
-<p>Change some things about your code. Top priority would be to set a sample size <code>n</code> at the top, e.g. <code>n &lt;- 40</code>, and then replace all the hard-wired 40s with <code>n</code>. Change some other minor-but-detectable stuff, e.g. alter the sample size <code>n</code>, the slope of the line <code>b</code>,the color of the line … whatever. Practice the different ways to re-run the code:</p>
-<ul>
-<li><p>Walk through line by line by keyboard shortcut (Command+Enter) or mouse (click “Run” in the upper right corner of editor pane).</p></li>
-<li><p>Source the entire document – equivalent to entering <code>source('toy-line.r')</code> in the Console – by keyboard shortcut (Shift+Command+S) or mouse (click “Source” in the upper right corner of editor pane or select from the mini-menu accessible from the associated down triangle).</p></li>
-<li><p>Source with echo from the Source mini-menu.</p></li>
-</ul>
-<p>Visit your figure in an external viewer to verify that the PDF is changing as you expect.</p>
-<p>In your favorite OS-specific way, search your files for <code>toy_line_plot.pdf</code> and presumably you will find the PDF itself (no surprise) but <em>also the script that created it (<code>toy-line.r</code>)</em>. This latter phenomenon is a huge win. One day you will want to remake a figure or just simply understand where it came from. If you rigorously save figures to file <strong>with R code and not ever ever ever the mouse or the clipboard</strong>, you will sing my praises one day. Trust me.</p>
-</div>
-<div id="stuff" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Stuff</h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/gRdfX7ut8gw" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
-</div>
-</div>
-<p>It is traditional to save R scripts with a <code>.R</code> or <code>.r</code> suffix. Follow this convention unless you have some extraordinary reason not to.</p>
-<p>Comments start with one or more <code>#</code> symbols. Use them. RStudio helps you (de)comment selected lines with Ctrl+Shift+C (Windows and Linux) or Command+Shift+C (Mac).</p>
-<p>Clean out the workspace, i.e. pretend like you’ve just revisited this project after a long absence. The broom icon or <code>rm(list = ls())</code>. Good idea to do this, restart R (available from the Session menu), re-run your analysis to truly check that the code you’re saving is complete and correct (or at least rule out obvious problems!).</p>
-<p>This workflow will serve you well in the future:</p>
-<ul>
-<li>Create an RStudio project for an analytical project</li>
-<li>Keep inputs there (we’ll soon talk about importing)</li>
-<li>Keep scripts there; edit them, run them in bits or as a whole from there</li>
-<li>Keep outputs there (like the PDF written above)</li>
-</ul>
-<p>Avoid using the mouse for pieces of your analytical workflow, such as loading a dataset or saving a figure. Terribly important for reproducibility and for making it possible to retrospectively determine how a numerical table or PDF was actually produced (searching on local disk on filename, among <code>.R</code> files, will lead to the relevant script).</p>
-<p>Many long-time users never save the workspace, never save <code>.RData</code> files (I’m one of them), never save or consult the history. Once/if you get to that point, there are options available in RStudio to disable the loading of <code>.RData</code> and permanently suppress the prompt on exit to save the workspace (go to <em>Tools &gt; Options &gt; General</em>).</p>
-<p>For the record, when loading data into R and/or writing outputs to file, you can always specify the absolute path and thereby insulate yourself from the current working directory. This method is rarely necessary when using RStudio projects.</p>
-
 </div>
 </div>
             </section>
@@ -1384,8 +1638,8 @@ evenOthersUseCamelCase</code></pre>
           </div>
         </div>
       </div>
-<a href="thoughtful-workflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="shorthappygit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="overfitting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="odd-notes-on-cross-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1416,7 +1670,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0102_rbasics.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1201_module.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1427,7 +1681,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0102_rbasics.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1201_module.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
