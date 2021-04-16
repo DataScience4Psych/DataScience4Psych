@@ -4,6 +4,7 @@
 ```{r include=FALSE}
 library(tufte)
 library(knitr)
+library(tweetrmd) #... embedding tweets
 options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE,     # for regression output
@@ -20,9 +21,13 @@ For this assignment, you will analyze the data from this study in order to learn
 
 The data were gathered from end of semester student evaluations for a large sample of professors from the University of Texas at Austin. In addition, six students rated the professors’ physical appearance. (This is a slightly modified version of the original data set that was released as part of the replication data for Data Analysis Using Regression and Multilevel/Hierarchical Models (Gelman and Hill, 2007).) The result is a data frame where each row contains a different course and columns represent variables about the courses and professors.
 
+```{r, echo=FALSE}
+include_tweet("https://twitter.com/CaseyFrid/status/1382737134776385536")
+```
+
 ### Packages
 
-In this lab we will work with the **tidyverse**, **openintro**, and **broom** packages.
+In this lab, we will work with the **tidyverse**, **openintro**, and **broom** packages.
 
 ```{r eval = FALSE}
 library(tidyverse) 
@@ -41,7 +46,6 @@ Configure your Git user name and email. If you cannot remember the instructions,
 Update the name of your project to match the lab's title.
 
 ## Warm up
-
 
 Before we introduce the data, let's warm up with some simple exercises.
 
@@ -65,10 +69,7 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 ### Part 1: Exploratory Data Analysis
 
-1.  Visualize the distribution of `score`. Is the distribution skewed? What does 
-    that tell you about how students rate courses? Is this what you expected to 
-    see? Why, or why not? Include any summary statistics and visualizations
-    you use in your response.
+1.  Visualize the distribution of `score`. Is the distribution skewed? What does that tell you about how students rate courses? Is this what you expected to see? Why, or why not? Include any summary statistics and visualizations you use in your response.
 
 2.  Visualize and describe the relationship between `score` and the new variable you created, `bty_avg`.
     
@@ -76,9 +77,7 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 > **Hint:** See the help page for the function at http://ggplot2.tidyverse.org/reference/index.html.
 
     
-3.  Replot the scatterplot from Exercise 3, but this time use  
-    `geom_jitter()`? What does "jitter" mean? 
-    What was misleading about the initial scatterplot?
+3.  Replot the scatterplot from Exercise 3, but this time use `geom_jitter()`? What does "jitter" mean? What was misleading about the initial scatterplot?
 
 ### Part 2: Linear regression with a numerical predictor
 
@@ -92,8 +91,7 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
     
 6.  Interpret the slope of the linear model in context of the data.
 
-7.  Interpret the intercept of the linear model in context of the data. Comment on whether 
-    or not the intercept makes sense in this context.
+7.  Interpret the intercept of the linear model in context of the data. Comment on whether or not the intercept makes sense in this context.
     
 8.  Determine the $R^2$ of the model and interpret it in context of the data.
 
@@ -117,5 +115,4 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 14. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as 
     `"no"` and labels `"tenure track"` and `"tenured"` faculty as `"yes"`.
   
-15. Fit a new linear model called `m_tenure_eligible` to predict average professor evaluation `score` based on `tenure_eligible`ness of the professor. This is the new (regrouped) variable 
-    you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+15. Fit a new linear model called `m_tenure_eligible` to predict average professor evaluation `score` based on `tenure_eligible`ness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
