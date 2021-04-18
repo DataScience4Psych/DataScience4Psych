@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-04-16" />
+<meta name="date" content="2021-04-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -980,7 +980,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="72.5.3" data-path="notes-on-feature-engineering.html"><a href="notes-on-feature-engineering.html#cutoff-probability-0.75"><i class="fa fa-check"></i><b>72.5.3</b> Cutoff probability: 0.75</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="73" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>73</b> Cross-Validation</a></li>
+<li class="chapter" data-level="73" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>73</b> Cross-Validation</a>
+<ul>
+<li class="chapter" data-level="73.1" data-path="cross-validation.html"><a href="cross-validation.html#v-fold"><i class="fa fa-check"></i><b>73.1</b> V-Fold</a></li>
+</ul></li>
 <li class="chapter" data-level="74" data-path="odd-notes-on-cross-validation.html"><a href="odd-notes-on-cross-validation.html"><i class="fa fa-check"></i><b>74</b> ODD: Notes on Cross validation</a>
 <ul>
 <li class="chapter" data-level="74.1" data-path="odd-notes-on-cross-validation.html"><a href="odd-notes-on-cross-validation.html#example-regression"><i class="fa fa-check"></i><b>74.1</b> Example: Regression</a></li>
@@ -1013,7 +1016,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="78.4.1" data-path="lab11.html"><a href="lab11.html#yaml-5"><i class="fa fa-check"></i><b>78.4.1</b> YAML</a></li>
 <li class="chapter" data-level="78.4.2" data-path="lab11.html"><a href="lab11.html#commiting-and-pushing-changes-3"><i class="fa fa-check"></i><b>78.4.2</b> Commiting and pushing changes</a></li>
-<li class="chapter" data-level="78.4.3" data-path="lab11.html"><a href="lab11.html#pulling-changes"><i class="fa fa-check"></i><b>78.4.3</b> Pulling changes</a></li>
 </ul></li>
 <li class="chapter" data-level="78.5" data-path="lab11.html"><a href="lab11.html#set-a-seed"><i class="fa fa-check"></i><b>78.5</b> Set a seed!</a></li>
 <li class="chapter" data-level="78.6" data-path="lab11.html"><a href="lab11.html#the-data-5"><i class="fa fa-check"></i><b>78.6</b> The data</a></li>
@@ -1230,10 +1232,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Click on <strong>Push</strong>. This will prompt a dialogue box where you first need to enter your user name, and then your password.</li>
 </ul>
 </div>
-<div id="pulling-changes" class="section level3" number="78.4.3">
-<h3><span class="header-section-number">78.4.3</span> Pulling changes</h3>
-<p>Now, the remaining team members who have not been concurrently making these changes on their projects should click on the <strong>Pull</strong> button in their Git pane and observe that the changes are now reflected on their projects as well.</p>
-</div>
 </div>
 <div id="set-a-seed" class="section level2" number="78.5">
 <h2><span class="header-section-number">78.5</span> Set a seed!</h2>
@@ -1345,26 +1343,18 @@ numerical. The meaning of each variable is as follows.</p>
 </div>
 <div id="baby-weight-vs.-smoking" class="section level3" number="78.7.2">
 <h3><span class="header-section-number">78.7.2</span> Baby weight vs. smoking</h3>
-<p>Consider the possible relationship between a mother’s smoking habit and the
-weight of her baby. Plotting the data is a useful first step because it helps
-us quickly visualize trends, identify strong associations, and develop research
-questions.</p>
+<p>Consider the possible relationship between a mother’s smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.</p>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Make side-by-side boxplots displaying the relationship between <code>habit</code> and
-<code>weight</code>. What does the plot highlight about the relationship between these
-two variables?</p></li>
+<li><p>Make side-by-side boxplots displaying the relationship between <code>habit</code> and <code>weight</code>. What does the plot highlight about the relationship between these two variables?</p></li>
 <li><p>Before moving forward, save a version of the dataset omitting observations where there are NAs for <code>habit</code>. You can call this version <code>ncbirths_habitgiven</code>.</p></li>
 </ol>
 <p>The box plots show how the medians of the two distributions compare, but we can also compare the means of the distributions using the following to first group the data by the <code>habit</code> variable, and then calculate the mean<code>weight</code> in these groups using.</p>
 <div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="lab11.html#cb451-1" aria-hidden="true" tabindex="-1"></a>ncbirths_habitgiven <span class="sc">%&gt;%</span></span>
 <span id="cb451-2"><a href="lab11.html#cb451-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
 <span id="cb451-3"><a href="lab11.html#cb451-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
-<p>There is an observed difference, but is this difference statistically
-significant? In order to answer this question, we will conduct a hypothesis test
-.</p>
+<p>There is an observed difference, but is this difference statistically significant? In order to answer this question, we will conduct a hypothesis test.</p>
 <ol start="7" style="list-style-type: decimal">
-<li><p>Write the hypotheses for testing if the average weights of babies born to
-smoking and non-smoking mothers are different.</p></li>
+<li><p>Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.</p></li>
 <li><p>Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.</p></li>
 <li><p>Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.</p></li>
 <li><p>Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.</p></li>
@@ -1374,8 +1364,7 @@ smoking and non-smoking mothers are different.</p></li>
 <h3><span class="header-section-number">78.7.3</span> Baby weight vs. mother’s age</h3>
 <p>In this portion of the analysis, we focus on two variables. The first one is <code>maturemom</code>.</p>
 <ol start="11" style="list-style-type: decimal">
-<li>First, a non-inference task: Determine the age cutoff for younger and mature
-mothers. Use a method of your choice, and explain how your method works.</li>
+<li>First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.</li>
 </ol>
 <p>The other variable of interest is <code>lowbirthweight</code>.</p>
 <ol start="12" style="list-style-type: decimal">
