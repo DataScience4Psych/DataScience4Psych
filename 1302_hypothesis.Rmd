@@ -136,7 +136,11 @@ Since $H_0: p = 0.10$, we need to simulate a null distribution where the probabi
 > When sampling from the null distribution, what is the expected proportion of success (complications)?
 
 
-### Simulation #1
+### Simulation
+
+
+
+Here are some simulations....
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, out.width="50%"}
 # set seed
@@ -168,8 +172,6 @@ ggplot(sim_dist, aes(x = p_hat_sim)) +
 
 
 
-### Simulation #2
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, out.width="50%"}
 sim2 <- sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
 
@@ -185,8 +187,6 @@ ggplot(sim_dist, aes(x = p_hat_sim)) +
 ```
 
 
-
-### Simulation #3
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -359,13 +359,10 @@ null_dist %>%
 > Do you think yawning is contagious?
 
 
-.pull-left[
 ![](img/yawn1.png)
-]
-.pull-right[
-![](img/yawn2.png)
-]
 
+
+![](img/yawn2.png)
 
 
 
@@ -432,7 +429,7 @@ yawn %>%
 
 - Instead of actually conducting the experiment many times, we will **simulate** our results.
 
----
+
 
 ### Two competing claims
 
@@ -498,7 +495,6 @@ null_dist <- yawn %>%
 
 ### Simulation by computation
 
-#### Method 1
 - Start with the data frame
 - **Specify the variables**
     - **Since the response variable is categorical, specify the level which should be considered as "success"**
@@ -509,10 +505,6 @@ yawn %>%
           success = "yawn") }}
 ```
 
-#### Method 2
-- Start with the data frame
-- Specify the variables
-    - Since the response variable is categorical, specify the level which should be considered as "success"
 - **State the null hypothesis (yawning and whether or not you see someone yawn are independent)**
 
 ```{r eval=FALSE}
@@ -522,13 +514,6 @@ yawn %>%
 {{ hypothesize(null = "independence") }}
 ```
 
-
-#### Method 3
-
-- Start with the data frame
-- Specify the variables
-    - Since the response variable is categorical, specify the level which should be considered as "success"
-- State the null hypothesis (yawning and whether or not you see someone yawn are independent)
 - **Generate simulated differences via permutation**
 
 ```{r eval=FALSE}
@@ -539,17 +524,7 @@ yawn %>%
 {{ generate(100, type = "permute") }}
 ```
 
-
-
-#### Method 4
-
-
-- Start with the data frame
-- Specify the variables
-    - Since the response variable is categorical, specify the level which should be considered as "success"
-- State the null hypothesis (yawning and whether or not you see someone yawn are independent)
-- Generate simulated differences via permutation
-- **Calculate the sample statistic of interest (difference in propotions)**
+- **Calculate the sample statistic of interest (difference in proportions)**
     - **Since the explanatory variable is categorical, specify the order in which the subtraction should occur for the calculation of the sample statistic, $(\hat{p}_{treatment} - \hat{p}_{control})$.**
     
 ```{r eval=FALSE}
@@ -592,11 +567,10 @@ yawn %>%
 
 ## Visualizing the null distribution
 
-.question[
-What would you expect the center of the null distribution to be?
-]
 
---
+> What would you expect the center of the null distribution to be?
+
+
 
 ```{r out.width="70%"}
 ggplot(data = null_dist, mapping = aes(x = stat)) +
@@ -604,15 +578,13 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
   labs(title = "Null distribution")
 ```
 
----
+
 
 ## Calculating the p-value, visually
 
-.question[
-What is the p-value, i.e. in what % of the 
-simulations was the simulated difference in sample proportion at least as extreme 
-as the observed difference in sample proportions?
-]
+
+> What is the p-value, i.e. in what % of the simulations was the simulated difference in sample proportion at least as extreme as the observed difference in sample proportions?
+
 
 ```{r echo=FALSE, out.width="80%"}
 ggplot(data = null_dist, mapping = aes(x = stat)) +
@@ -620,7 +592,7 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
   labs(title = "Null distribution")
 ```
 
----
+
 
 ## Calculating the p-value, directly
 
@@ -630,18 +602,12 @@ null_dist %>%
   summarize(p_value = n()/nrow(null_dist))
 ```
 
----
 
 ## Conclusion
 
-.question[
-What is the conclusion of the hypothesis test?
-]
 
-<br>
+> What is the conclusion of the hypothesis test?
 
---
 
-.question[
-Do you "buy" this conclusion?
-]
+> Do you "buy" this conclusion?
+
