@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>63 Fitting and interpreting models | Data Science for Psychologists</title>
+  <title>82 Practical Advice from the Data Professor | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="63 Fitting and interpreting models | Data Science for Psychologists" />
+  <meta property="og:title" content="82 Practical Advice from the Data Professor | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="63 Fitting and interpreting models | Data Science for Psychologists" />
+  <meta name="twitter:title" content="82 Practical Advice from the Data Professor | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psychassets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="language-of-models.html"/>
-<link rel="next" href="classic-things-in-r.html"/>
+<link rel="prev" href="rshiny-overview.html"/>
+<link rel="next" href="shiny-overview.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -1237,144 +1237,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="fitting-and-interpreting-models" class="section level1" number="63">
-<h1><span class="header-section-number">63</span> Fitting and interpreting models</h1>
-<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html">here</a> if they do not appear below.</p>
-<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1" width="672" height="400px">
-</iframe>
-<div id="models-with-numerical-explanatory-variables" class="section level2" number="63.1">
-<h2><span class="header-section-number">63.1</span> Models with numerical explanatory variables</h2>
+<div id="practical-advice-from-the-data-professor" class="section level1" number="82">
+<h1><span class="header-section-number">82</span> Practical Advice from the Data Professor</h1>
+<p>I’ve outsourced the practical videos because frankly, I’m a novice when it comes to rshiny. I know enough to be dangerous, but not enough to wield that power for teaching. However, my good twitter friend the Data Professor has that power. You should check out his <a href="https://www.youtube.com/channel/UCV8e2g4IWQqK71bbzGDEI4Q">youtube channel</a></p>
+<div id="web-apps-in-r-building-your-first-web-application-in-r" class="section level2" number="82.1">
+<h2><span class="header-section-number">82.1</span> Web Apps in R: Building your First Web Application in R</h2>
 <div class="vembedr" align="center">
 <div>
-<iframe src="https://www.youtube.com/embed/BVtVIO08KKE" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+<iframe src="https://www.youtube.com/embed/tfN10IUX9Lo" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#2" width="672" height="400px">
-</iframe>
 </div>
-<div id="a-more-technical-worked-example" class="section level2" number="63.2">
-<h2><span class="header-section-number">63.2</span> A More Technical Worked Example</h2>
-<p>Let’s load our standard libraries:</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="fitting-and-interpreting-models.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
-<span id="cb370-2"><a href="fitting-and-interpreting-models.html#cb370-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb370-3"><a href="fitting-and-interpreting-models.html#cb370-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb370-4"><a href="fitting-and-interpreting-models.html#cb370-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</span></span>
-<span id="cb370-5"><a href="fitting-and-interpreting-models.html#cb370-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; v tibble  3.1.0     v dplyr   1.0.5</span></span>
-<span id="cb370-6"><a href="fitting-and-interpreting-models.html#cb370-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; v tidyr   1.1.3     v stringr 1.4.0</span></span>
-<span id="cb370-7"><a href="fitting-and-interpreting-models.html#cb370-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; v readr   1.4.0     v forcats 0.5.1</span></span>
-<span id="cb370-8"><a href="fitting-and-interpreting-models.html#cb370-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; v purrr   0.3.4</span></span>
-<span id="cb370-9"><a href="fitting-and-interpreting-models.html#cb370-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -- Conflicts ------------------------------------------ tidyverse_conflicts() --</span></span>
-<span id="cb370-10"><a href="fitting-and-interpreting-models.html#cb370-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
-<span id="cb370-11"><a href="fitting-and-interpreting-models.html#cb370-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span></code></pre></div>
-<ul>
-<li><p>If you’ve taken a regression course, you might recognize this model as a special case of a linear model.</p></li>
-<li><p>If you haven’t, well, it doesn’t really matter much except… we can use the <code>lm()</code> function to fit the model.</p></li>
-</ul>
-<p>The advantage is that <code>lm()</code> easily splits the data into <strong>fitted values</strong> and <strong>residuals</strong>:</p>
-<p>Observed value = Fitted value + residual</p>
-<p>Let’s get the fitted values and residuals for each voice part:</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="fitting-and-interpreting-models.html#cb371-1" aria-hidden="true" tabindex="-1"></a>singer_lm <span class="ot">=</span> <span class="fu">lm</span>(height <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> voice.part, <span class="at">data=</span>singer)</span></code></pre></div>
-<p>We can extract the fitted values using <code>fitted.values(singer.lm)</code> and the residuals with <code>residuals(singer.lm)</code> or <code>singer.lm$residuals</code>.</p>
-<p>For convenience, we create a data frame with two columns: the voice parts and the residuals.</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="fitting-and-interpreting-models.html#cb372-1" aria-hidden="true" tabindex="-1"></a>singer_res <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">voice_part =</span> singer<span class="sc">$</span>voice.part, <span class="at">residual =</span> <span class="fu">residuals</span>(singer_lm))</span></code></pre></div>
-<p>We can also do this with <code>group_by</code> and <code>mutate</code>:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="fitting-and-interpreting-models.html#cb373-1" aria-hidden="true" tabindex="-1"></a>fits <span class="ot">=</span> singer <span class="sc">%&gt;%</span></span>
-<span id="cb373-2"><a href="fitting-and-interpreting-models.html#cb373-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(voice.part) <span class="sc">%&gt;%</span></span>
-<span id="cb373-3"><a href="fitting-and-interpreting-models.html#cb373-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">mean</span>(height),</span>
-<span id="cb373-4"><a href="fitting-and-interpreting-models.html#cb373-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">residual =</span> height <span class="sc">-</span> <span class="fu">mean</span>(height))</span></code></pre></div>
-<div id="does-the-linear-model-fit" class="section level3" number="63.2.1">
-<h3><span class="header-section-number">63.2.1</span> Does the linear model fit?</h3>
-<p>To assess whether the linear model is a good fit to the data, we need to know whether the errors look like they come from normal distributions with the same variance.</p>
-<p>The residuals are our estimates of the errors, and so we need to check both normality and homoscedasticity.</p>
-</div>
-<div id="homoscedasticity" class="section level3" number="63.2.2">
-<h3><span class="header-section-number">63.2.2</span> Homoscedasticity</h3>
-<p>There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="fitting-and-interpreting-models.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">x =</span> voice_part, <span class="at">y =</span> residual)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>We can also look at the ecdfs of the residuals for each voice part.</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="fitting-and-interpreting-models.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">x =</span> residual, <span class="at">color =</span> voice_part)) <span class="sc">+</span> <span class="fu">stat_ecdf</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>From these plots, it seems like the residuals in each group have approximately the same variance.</p>
-</div>
-<div id="normality" class="section level3" number="63.2.3">
-<h3><span class="header-section-number">63.2.3</span> Normality</h3>
-<p>We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="fitting-and-interpreting-models.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb376-2"><a href="fitting-and-interpreting-models.html#cb376-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> voice_part, <span class="at">ncol=</span><span class="dv">4</span>) </span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-16-1.png" width="576" /></p>
-<p>Not only do the lines look reasonably straight, the scales look similar for all eight voice parts.
-This suggests a model where all of the errors are normal with the <em>same</em> standard deviation.
-This is convenient because it is the form of a standard linear model:</p>
-<p>Singer height = Average height for their voice part + Normal(<span class="math inline">\(0, \sigma^2\)</span>) error.</p>
-</div>
-<div id="normality-of-pooled-residuals" class="section level3" number="63.2.4">
-<h3><span class="header-section-number">63.2.4</span> Normality of pooled residuals</h3>
-<p>If the linear model holds, then all the residuals come from the same normal distribution.</p>
-<p>We’ve already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="fitting-and-interpreting-models.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb377-2"><a href="fitting-and-interpreting-models.html#cb377-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>It’s easier to check normality if we plot the line that the points should fall on: if we think the points come from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution, they should lie on a line with intercept <span class="math inline">\(\mu\)</span> and slope <span class="math inline">\(\sigma\)</span> (the standard deviation).</p>
-<p>In the linear model, we assume that the mean of the error terms is zero.
-We don’t know what their variance should be, but we can estimate it using the variance of the residuals.</p>
-<p>Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:</p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="fitting-and-interpreting-models.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb378-2"><a href="fitting-and-interpreting-models.html#cb378-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb378-3"><a href="fitting-and-interpreting-models.html#cb378-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fu">sd</span>(singer_res<span class="sc">$</span>residual)))</span>
-<span id="cb378-4"><a href="fitting-and-interpreting-models.html#cb378-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Use of `singer_res$residual` is discouraged. Use `residual` instead.</span></span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-</div>
-<div id="the-actually-correct-way" class="section level3" number="63.2.5">
-<h3><span class="header-section-number">63.2.5</span> The actually correct way</h3>
-<p>Pedantic note: We should use an <span class="math inline">\(n-8\)</span> denominator instead of <span class="math inline">\(n-1\)</span> in the SD calculation for degrees of freedom reasons. The <span class="math inline">\(n-8\)</span> part is necessary because there are 7 different variables associated with the model we fitted with singer_lm. We can get the SD directly from the linear model:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="fitting-and-interpreting-models.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(singer_res<span class="sc">$</span>residual)</span>
-<span id="cb379-2"><a href="fitting-and-interpreting-models.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.47</span></span>
-<span id="cb379-3"><a href="fitting-and-interpreting-models.html#cb379-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(singer_lm)<span class="sc">$</span>sigma, <span class="dv">3</span>)</span>
-<span id="cb379-4"><a href="fitting-and-interpreting-models.html#cb379-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.5</span></span></code></pre></div>
-<p>However, the difference between this and the SD above is negligible.</p>
-<p>Add the line:</p>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="fitting-and-interpreting-models.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb380-2"><a href="fitting-and-interpreting-models.html#cb380-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(singer_res<span class="sc">$</span>residual), <span class="at">slope=</span><span class="fu">summary</span>(singer_lm)<span class="sc">$</span>sigma)</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>The straight line isn’t absolutely perfect, but it’s doing a pretty good job.</p>
-</div>
-<div id="our-final-model" class="section level3" number="63.2.6">
-<h3><span class="header-section-number">63.2.6</span> Our final model</h3>
-<p>Since the errors seem to be pretty normal, our final model is:</p>
-<p>Singer height = Average height for their voice part + Normal(<span class="math inline">\(0, 2.5^2\)</span>) error.</p>
-<p>Note: Although normality (or lack thereof) can be important for probabilistic prediction or (sometimes) for inferential data analysis, it’s relatively unimportant for EDA. If your residuals are about normal that’s nice, but as long as they’re not horribly skewed they’re probably not a problem.</p>
-</div>
-<div id="what-have-we-learned" class="section level3" number="63.2.7">
-<h3><span class="header-section-number">63.2.7</span> What have we learned?</h3>
-<p>About singers:</p>
-<ul>
-<li><p>We’ve seen that average height increases as the voice part range decreases.</p></li>
-<li><p>Within each voice part, the residuals look like they come from a normal distribution with the same variance for each voice part.
-This suggests that there’s nothing further we need to do to explain singer heights: we have an average for each voice part, and there is no suggestion of systematic differences beyond that due to voice part.</p></li>
-</ul>
-<p>About data analysis:</p>
-<ul>
-<li><p>We can use some of our univariate visualization tools, particularly boxplots and ecdfs, to look for evidence of heteroscedasticity.</p></li>
-<li><p>We can use normal QQ plots on both pooled and un-pooled residuals to look for evidence of non-normality.</p></li>
-<li><p>If we wanted to do formal tests or parameter estimation for singer heights, we would feel pretty secure using results based on normal theory.</p></li>
-</ul>
-</div>
-</div>
-<div id="models-with-categorical-explanatory-variables" class="section level2" number="63.3">
-<h2><span class="header-section-number">63.3</span> Models with categorical explanatory variables</h2>
+<div id="web-apps-in-r-build-interactive-histogram-web-application-in-r" class="section level2" number="82.2">
+<h2><span class="header-section-number">82.2</span> Web Apps in R: Build Interactive Histogram Web Application in R</h2>
 <div class="vembedr" align="center">
 <div>
-<iframe src="https://www.youtube.com/embed/7056Lt3yUY4" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+<iframe src="https://www.youtube.com/embed/lC1Dk6gUbe0" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#29" width="672" height="400px">
-</iframe>
 </div>
-<div id="my-thoughts-on-tidy-modelings-tidymodelthoughts" class="section level2" number="63.4">
-<h2><span class="header-section-number">63.4</span> My Thoughts on Tidy Modelings {tidymodelthoughts}</h2>
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">That&#39;s a good distinction -- I think tidyverse is good for data cleaning and onboarding undergrads (my lab is very undergrad heavy); but that tidymodels can die in a fire because they don&#39;t report f-tests!!!!</p>&mdash; 🌈S. Mason Garrison, PhD🌈 (@SMasonGarrison) <a href="https://twitter.com/SMasonGarrison/status/1387230798332506114?ref_src=twsrc%5Etfw">April 28, 2021</a></blockquote>
-
+<div id="web-apps-in-r-building-data-driven-web-application-in-r" class="section level2" number="82.3">
+<h2><span class="header-section-number">82.3</span> Web Apps in R: Building Data-Driven Web Application in R</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/CYXvVuklWRM" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</div>
+<div id="web-apps-in-r-building-the-machine-learning-web-application-in-r" class="section level2" number="82.4">
+<h2><span class="header-section-number">82.4</span> Web Apps in R: Building the Machine Learning Web Application in R</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/ceg7MMQNln8" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+</div>
+<div id="web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring" class="section level2" number="82.5">
+<h2><span class="header-section-number">82.5</span> Web Apps in R: Build BMI Calculator web application in R for health monitoring</h2>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/9EQ6cwBQpvo" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -1383,8 +1287,8 @@ This suggests that there’s nothing further we need to do to explain singer hei
           </div>
         </div>
       </div>
-<a href="language-of-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="classic-things-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rshiny-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="shiny-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1415,7 +1319,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1001_fitting.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1401_rshiny.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1426,7 +1330,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1001_fitting.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1401_rshiny.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }
