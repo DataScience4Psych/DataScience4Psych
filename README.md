@@ -25,4 +25,4 @@ Please [open a new issue](https://help.github.com/articles/creating-an-issue/). 
 
 # License
 
-This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. More details can be found [here](https://datascience4psych.github.io/DataScience4Psych/front-matter.html#license).
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. More details can be found [here](https://datascience4psych.github.io/DataScience4Psych/license.html).
