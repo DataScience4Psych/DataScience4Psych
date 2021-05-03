@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-05-02" />
+<meta name="date" content="2021-05-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -660,7 +660,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="46.2" data-path="scraping-the-web.html"><a href="scraping-the-web.html#top-250-movies-on-imdb"><i class="fa fa-check"></i><b>46.2</b> Top 250 movies on IMDB!</a></li>
 <li class="chapter" data-level="46.3" data-path="scraping-the-web.html"><a href="scraping-the-web.html#activity-08-imdb"><i class="fa fa-check"></i><b>46.3</b> Activity 08: IMDB!</a></li>
 </ul></li>
-<li class="chapter" data-level="47" data-path="data-usually-finds-me.html"><a href="data-usually-finds-me.html"><i class="fa fa-check"></i><b>47</b> Data usually finds me</a></li>
+<li class="chapter" data-level="47" data-path="data-usually-finds-me.html"><a href="data-usually-finds-me.html"><i class="fa fa-check"></i><b>47</b> Data usually finds me</a>
+<ul>
+<li class="chapter" data-level="47.1" data-path="data-usually-finds-me.html"><a href="data-usually-finds-me.html#i-dont-go-looking-for-data-data-usually-finds-me"><i class="fa fa-check"></i><b>47.1</b> I don’t go looking for Data … Data usually finds me</a></li>
+</ul></li>
 <li class="chapter" data-level="48" data-path="api-wrappers.html"><a href="api-wrappers.html"><i class="fa fa-check"></i><b>48</b> Use API-wrapping packages</a>
 <ul>
 <li class="chapter" data-level="48.1" data-path="api-wrappers.html"><a href="api-wrappers.html#introduction"><i class="fa fa-check"></i><b>48.1</b> Introduction</a></li>
@@ -1240,8 +1243,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fitting-and-interpreting-models" class="section level1" number="63">
 <h1><span class="header-section-number">63</span> Fitting and interpreting models</h1>
 <p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html">here</a> if they do not appear below.</p>
-<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1" width="672" height="400px">
-</iframe>
 <div id="models-with-numerical-explanatory-variables" class="section level2" number="63.1">
 <h2><span class="header-section-number">63.1</span> Models with numerical explanatory variables</h2>
 <div class="vembedr" align="center">
@@ -1249,7 +1250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <iframe src="https://www.youtube.com/embed/BVtVIO08KKE" width="533" height="300" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
-<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#2" width="672" height="400px">
+<iframe src="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1" width="672" height="400px">
 </iframe>
 </div>
 <div id="a-more-technical-worked-example" class="section level2" number="63.2">
@@ -1291,10 +1292,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">63.2.2</span> Homoscedasticity</h3>
 <p>There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:</p>
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="fitting-and-interpreting-models.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">x =</span> voice_part, <span class="at">y =</span> residual)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>We can also look at the ecdfs of the residuals for each voice part.</p>
 <div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="fitting-and-interpreting-models.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">x =</span> residual, <span class="at">color =</span> voice_part)) <span class="sc">+</span> <span class="fu">stat_ecdf</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>From these plots, it seems like the residuals in each group have approximately the same variance.</p>
 </div>
 <div id="normality" class="section level3" number="63.2.3">
@@ -1302,7 +1303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:</p>
 <div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="fitting-and-interpreting-models.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb376-2"><a href="fitting-and-interpreting-models.html#cb376-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> voice_part, <span class="at">ncol=</span><span class="dv">4</span>) </span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-16-1.png" width="576" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-14-1.png" width="576" /></p>
 <p>Not only do the lines look reasonably straight, the scales look similar for all eight voice parts.
 This suggests a model where all of the errors are normal with the <em>same</em> standard deviation.
 This is convenient because it is the form of a standard linear model:</p>
@@ -1314,7 +1315,7 @@ This is convenient because it is the form of a standard linear model:</p>
 <p>We’ve already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="fitting-and-interpreting-models.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb377-2"><a href="fitting-and-interpreting-models.html#cb377-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>It’s easier to check normality if we plot the line that the points should fall on: if we think the points come from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution, they should lie on a line with intercept <span class="math inline">\(\mu\)</span> and slope <span class="math inline">\(\sigma\)</span> (the standard deviation).</p>
 <p>In the linear model, we assume that the mean of the error terms is zero.
 We don’t know what their variance should be, but we can estimate it using the variance of the residuals.</p>
@@ -1323,7 +1324,7 @@ We don’t know what their variance should be, but we can estimate it using the 
 <span id="cb378-2"><a href="fitting-and-interpreting-models.html#cb378-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb378-3"><a href="fitting-and-interpreting-models.html#cb378-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fu">sd</span>(singer_res<span class="sc">$</span>residual)))</span>
 <span id="cb378-4"><a href="fitting-and-interpreting-models.html#cb378-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Use of `singer_res$residual` is discouraged. Use `residual` instead.</span></span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="the-actually-correct-way" class="section level3" number="63.2.5">
 <h3><span class="header-section-number">63.2.5</span> The actually correct way</h3>
@@ -1336,7 +1337,7 @@ We don’t know what their variance should be, but we can estimate it using the 
 <p>Add the line:</p>
 <div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="fitting-and-interpreting-models.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(singer_res, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb380-2"><a href="fitting-and-interpreting-models.html#cb380-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(singer_res<span class="sc">$</span>residual), <span class="at">slope=</span><span class="fu">summary</span>(singer_lm)<span class="sc">$</span>sigma)</span></code></pre></div>
-<p><img src="1001_fitting_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="1001_fitting_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>The straight line isn’t absolutely perfect, but it’s doing a pretty good job.</p>
 </div>
 <div id="our-final-model" class="section level3" number="63.2.6">
