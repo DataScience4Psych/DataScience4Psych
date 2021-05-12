@@ -8,10 +8,19 @@ library(rvest)
 library(tidyverse)
 ```
 
+```{r current-collections, include = FALSE}
+num_pieces <- read_html(first_url) %>%
+  html_nodes(".no-results") %>%
+  html_nodes("strong") %>%
+  html_text() %>%
+  extract2(4)
+```
+
+
 The University of Edinburgh Art Collection _"supports the world-leading research and teaching that happens within the University. Comprised of an astonishing range of objects and ideas spanning two millennia and a multitude of artistic forms, the collection reflects not only the long and rich trajectory of the University, but also major national and international shifts in art history."_^[Source: https://collections.ed.ac.uk/art/about].
 
 
-> Note: See the sidebar [here](https://collections.ed.ac.uk/art) and note that there are 2909 pieces in the art collection we're collecting data on.
+> Note: See the sidebar [here](https://collections.ed.ac.uk/art) and note that there are `r num_piececs` pieces in the art collection we're collecting data on.
 
 
 In this lab, we'll scrape data on all art pieces in the [Edinburgh College 
@@ -191,7 +200,7 @@ page %>%
   html_attr("href")             # but get href attribute instead of text
 ```
 
-These don't really look like urls as we know then though. They're relative 
+These don't really look like urls as we know them though. They're relative 
 links.
 
 
@@ -288,13 +297,13 @@ the same. Next, we will work on making our workflow a little more efficient
 by using R to iterate over all pages that contain information on the art collection. 
 
 
-> **Reminder:** The collection has 2909 pieces in total.
+> **Reminder:** The collection has `r num_piececs` pieces in total.
 
 
 That means we give develop a list of URLs (of pages that each have 10 art pieces), 
 and write some code that applies the `scrape_page()` function to each page, and 
 combines the resulting data frames from each page into a single data frame with 
-2909 rows and 3 columns.
+`r num_piececs` rows and 3 columns.
 
 ### List of URLs
 
