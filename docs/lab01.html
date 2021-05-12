@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-05-11" />
+<meta name="date" content="2021-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -374,7 +374,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="16.1" data-path="visualization-examples.html"><a href="visualization-examples.html#census-reporter-data-from-north-carolina"><i class="fa fa-check"></i><b>16.1</b> Census Reporter Data from North Carolina</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="basic-data-care.html"><a href="basic-data-care.html"><i class="fa fa-check"></i><b>17</b> ODD: Basic care and feeding of data in R</a>
+<li class="chapter" data-level="17" data-path="basic-data-care.html"><a href="basic-data-care.html"><i class="fa fa-check"></i><b>17</b> Basic care and feeding of data in R</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="basic-data-care.html"><a href="basic-data-care.html#buckle-your-seatbelt"><i class="fa fa-check"></i><b>17.1</b> Buckle your seatbelt</a></li>
 <li class="chapter" data-level="17.2" data-path="basic-data-care.html"><a href="basic-data-care.html#data-frames-are-awesome"><i class="fa fa-check"></i><b>17.2</b> Data frames are awesome</a></li>
@@ -1257,9 +1257,7 @@ div.csl-indent {
 <p>Recall: git is a version control system (like “Track Changes” features from Microsoft Word on steroids) and GitHub is the home for your Git-based projects on the Internet (like DropBox but much, much better).</p>
 </blockquote>
 <p>An additional goal is to introduce you to Git and GitHub, which is the collaboration and version control system that we will be using throughout the course.</p>
-<p>As the labs progress, you are encouraged to explore beyond what the labs dictate; a willingness to experiment will make you a much better programmer.
-Before we get to that stage, however, you need to build some basic fluency in R.
-Today we begin with the fundamental building blocks of R and RStudio: the interface, reading in data, and basic commands.</p>
+<p>As the labs progress, you are encouraged to explore beyond what the labs dictate; a willingness to experiment will make you a much better programmer. Before we get to that stage, however, you need to build some basic fluency in R. Today we begin with the fundamental building blocks of R and RStudio: the interface, reading in data, and basic commands.</p>
 <p>To make versioning simpler, this lab is a solo lab. I want to make sure everyone gets a significant amount of time at the steering wheel, working directly with R. In the future modules,you’ll learn about collaborating on GitHub and produce a single lab report for your team.</p>
 </div>
 <div id="getting-started" class="section level2" number="9.2">
@@ -1352,8 +1350,7 @@ This command must be run in the Console.</p>
 <ol style="list-style-type: decimal">
 <li>Based on the help file, how many rows and how many columns does the <code>datasaurus_dozen</code> file have? What are the variables included in the data frame? Add your responses to your lab report.</li>
 </ol>
-<p>Let’s take a look at what these datasets are.
-To do so we can make a <em>frequency table</em> of the dataset variable:</p>
+<p>Let’s take a look at what these datasets are. To do so we can make a <em>frequency table</em> of the dataset variable:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="lab01.html#cb36-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
 <span id="cb36-2"><a href="lab01.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dataset) <span class="sc">%&gt;%</span></span>
 <span id="cb36-3"><a href="lab01.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="dv">13</span>)</span>
@@ -1390,8 +1387,7 @@ In the paper, the authors simulate a variety of datasets that have the same summ
 </ol>
 <p>Below is the code you will need to complete this exercise.
 Basically, the answer is already given, but you need to include relevant bits in your Rmd document and successfully knit it and view the results.</p>
-<p>Start with the <code>datasaurus_dozen</code> and pipe it into the <code>filter</code> function to filter for observations where <code>dataset == "dino"</code>.
-Store the resulting filtered data frame as a new data frame called <code>dino_data</code>.</p>
+<p>Start with the <code>datasaurus_dozen</code> and pipe it into the <code>filter</code> function to filter for observations where <code>dataset == "dino"</code>. Store the resulting filtered data frame as a new data frame called <code>dino_data</code>.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="lab01.html#cb37-1" aria-hidden="true" tabindex="-1"></a>dino_data <span class="ot">&lt;-</span> datasaurus_dozen <span class="sc">%&gt;%</span></span>
 <span id="cb37-2"><a href="lab01.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="st">&quot;dino&quot;</span>)</span></code></pre></div>
 <p>Because a lot going on here – let’s slow down and unpack it a bit.</p>
@@ -1399,15 +1395,14 @@ Store the resulting filtered data frame as a new data frame called <code>dino_da
 So here, we’re saying <code>filter</code> the <code>datasaurus_dozen</code> data frame for observations where <code>dataset == "dino"</code>.</p>
 <p>Second, the assignment operator: <code>&lt;-</code>, assigns the name <code>dino_data</code> to the filtered data frame.</p>
 <p>Next, we need to visualize these data.
-We will use the <code>ggplot</code> function for this.
-Its first argument is the data you’re visualizing.
+We will use the <code>ggplot</code> function for this. Its first argument is the data you’re visualizing.
 Next we define the <code>aes</code>thetic mappings.
 In other words, the columns of the data that get mapped to certain aesthetic features of the plot, e.g. the <code>x</code> axis will represent the variable called <code>x</code> and the <code>y</code> axis will represent the variable called <code>y</code>.
 Then, we add another layer to this plot where we define which <code>geom</code>etric shapes we want to use to represent each observation in the data.
 In this case, we want these to be points, hence <code>geom_point</code>.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="lab01.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dino_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb38-2"><a href="lab01.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="0104_hello_r_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="0104_hellor_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>If this seems like a lot, it is.
 And you will learn about the philosophy of layering data visualizations in detail next week.
 For now, follow along with the code that is provided.</p>
@@ -1537,7 +1532,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0104_hello_r.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0104_hellor.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1548,7 +1543,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0104_hello_r.Rmd", "DS4P.epub"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0104_hellor.Rmd", "DS4P.epub"],
 "toc": {
 "collapse": "section"
 }

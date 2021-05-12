@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-05-11" />
+<meta name="date" content="2021-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -374,7 +374,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="16.1" data-path="visualization-examples.html"><a href="visualization-examples.html#census-reporter-data-from-north-carolina"><i class="fa fa-check"></i><b>16.1</b> Census Reporter Data from North Carolina</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="basic-data-care.html"><a href="basic-data-care.html"><i class="fa fa-check"></i><b>17</b> ODD: Basic care and feeding of data in R</a>
+<li class="chapter" data-level="17" data-path="basic-data-care.html"><a href="basic-data-care.html"><i class="fa fa-check"></i><b>17</b> Basic care and feeding of data in R</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="basic-data-care.html"><a href="basic-data-care.html#buckle-your-seatbelt"><i class="fa fa-check"></i><b>17.1</b> Buckle your seatbelt</a></li>
 <li class="chapter" data-level="17.2" data-path="basic-data-care.html"><a href="basic-data-care.html#data-frames-are-awesome"><i class="fa fa-check"></i><b>17.2</b> Data frames are awesome</a></li>
@@ -1271,7 +1271,7 @@ If anything is missing, commit and push again.</p>
 <p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualization.
 This package is already installed for you.
 You can load it by running the following in your Console:</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="lab08.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="lab08.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="data-3" class="section level3" number="56.3.3">
 <h3><span class="header-section-number">56.3.3</span> Data</h3>
@@ -1288,20 +1288,20 @@ You can load it by running the following in your Console:</p>
 <ol style="list-style-type: decimal">
 <li>Create a data frame that can be used to re-construct this visualization. You may need to guess some of the numbers, that’s ok. You should first think about how many rows and columns you’ll need and what you want to call your variables. Then, you can use the <code>tribble()</code> function for this. For example, if you wanted to construct the following data frame</li>
 </ol>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="lab08.html#cb366-1" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb366-2"><a href="lab08.html#cb366-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 2</span></span>
-<span id="cb366-3"><a href="lab08.html#cb366-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   date     count</span></span>
-<span id="cb366-4"><a href="lab08.html#cb366-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt;</span></span>
-<span id="cb366-5"><a href="lab08.html#cb366-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1/1/2020    15</span></span>
-<span id="cb366-6"><a href="lab08.html#cb366-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2/1/2020    20</span></span>
-<span id="cb366-7"><a href="lab08.html#cb366-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 3/1/2020    22</span></span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="lab08.html#cb365-1" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb365-2"><a href="lab08.html#cb365-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 2</span></span>
+<span id="cb365-3"><a href="lab08.html#cb365-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   date     count</span></span>
+<span id="cb365-4"><a href="lab08.html#cb365-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt;</span></span>
+<span id="cb365-5"><a href="lab08.html#cb365-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1/1/2020    15</span></span>
+<span id="cb365-6"><a href="lab08.html#cb365-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2/1/2020    20</span></span>
+<span id="cb365-7"><a href="lab08.html#cb365-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 3/1/2020    22</span></span></code></pre></div>
 <p>you can write</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="lab08.html#cb367-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb367-2"><a href="lab08.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
-<span id="cb367-3"><a href="lab08.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
-<span id="cb367-4"><a href="lab08.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
-<span id="cb367-5"><a href="lab08.html#cb367-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
-<span id="cb367-6"><a href="lab08.html#cb367-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="lab08.html#cb366-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb366-2"><a href="lab08.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
+<span id="cb366-3"><a href="lab08.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
+<span id="cb366-4"><a href="lab08.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
+<span id="cb366-5"><a href="lab08.html#cb366-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
+<span id="cb366-6"><a href="lab08.html#cb366-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Make a visualization that more accurately (and honestly) tells the story.</p></li>
 <li><p>What message is more clear in your visualization than it was in the original visualization?</p></li>
