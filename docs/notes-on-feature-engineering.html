@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-06-17" />
+<meta name="date" content="2021-08-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="overfitting.html"/>
 <link rel="next" href="cross-validation.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -1256,35 +1256,35 @@ div.csl-indent {
 </ul>
 <div id="same-training-and-testing-sets-as-before" class="section level3" number="70.1.1">
 <h3><span class="header-section-number">70.1.1</span> Same training and testing sets as before</h3>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="notes-on-feature-engineering.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix random numbers by setting the seed </span></span>
-<span id="cb387-2"><a href="notes-on-feature-engineering.html#cb387-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Enables analysis to be reproducible when random numbers are used </span></span>
-<span id="cb387-3"><a href="notes-on-feature-engineering.html#cb387-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1066</span>)</span>
-<span id="cb387-4"><a href="notes-on-feature-engineering.html#cb387-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb387-5"><a href="notes-on-feature-engineering.html#cb387-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Put 80% of the data into the training set </span></span>
-<span id="cb387-6"><a href="notes-on-feature-engineering.html#cb387-6" aria-hidden="true" tabindex="-1"></a>email_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(email, <span class="at">prop =</span> <span class="fl">0.80</span>)</span>
-<span id="cb387-7"><a href="notes-on-feature-engineering.html#cb387-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb387-8"><a href="notes-on-feature-engineering.html#cb387-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frames for the two sets:</span></span>
-<span id="cb387-9"><a href="notes-on-feature-engineering.html#cb387-9" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(email_split)</span>
-<span id="cb387-10"><a href="notes-on-feature-engineering.html#cb387-10" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> <span class="fu">testing</span>(email_split)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="notes-on-feature-engineering.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix random numbers by setting the seed </span></span>
+<span id="cb390-2"><a href="notes-on-feature-engineering.html#cb390-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Enables analysis to be reproducible when random numbers are used </span></span>
+<span id="cb390-3"><a href="notes-on-feature-engineering.html#cb390-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1066</span>)</span>
+<span id="cb390-4"><a href="notes-on-feature-engineering.html#cb390-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb390-5"><a href="notes-on-feature-engineering.html#cb390-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Put 80% of the data into the training set </span></span>
+<span id="cb390-6"><a href="notes-on-feature-engineering.html#cb390-6" aria-hidden="true" tabindex="-1"></a>email_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(email, <span class="at">prop =</span> <span class="fl">0.80</span>)</span>
+<span id="cb390-7"><a href="notes-on-feature-engineering.html#cb390-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb390-8"><a href="notes-on-feature-engineering.html#cb390-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frames for the two sets:</span></span>
+<span id="cb390-9"><a href="notes-on-feature-engineering.html#cb390-9" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(email_split)</span>
+<span id="cb390-10"><a href="notes-on-feature-engineering.html#cb390-10" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> <span class="fu">testing</span>(email_split)</span></code></pre></div>
 </div>
 <div id="a-simple-approach-mutate" class="section level3" number="70.1.2">
 <h3><span class="header-section-number">70.1.2</span> A simple approach: <code>mutate()</code></h3>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="notes-on-feature-engineering.html#cb388-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span></span>
-<span id="cb388-2"><a href="notes-on-feature-engineering.html#cb388-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb388-3"><a href="notes-on-feature-engineering.html#cb388-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">date</span>(time),</span>
-<span id="cb388-4"><a href="notes-on-feature-engineering.html#cb388-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dow  =</span> <span class="fu">wday</span>(time),</span>
-<span id="cb388-5"><a href="notes-on-feature-engineering.html#cb388-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(time)</span>
-<span id="cb388-6"><a href="notes-on-feature-engineering.html#cb388-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb388-7"><a href="notes-on-feature-engineering.html#cb388-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time, date, dow, month) <span class="sc">%&gt;%</span></span>
-<span id="cb388-8"><a href="notes-on-feature-engineering.html#cb388-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="co"># shuffle to show a variety</span></span>
-<span id="cb388-9"><a href="notes-on-feature-engineering.html#cb388-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 4</span></span>
-<span id="cb388-10"><a href="notes-on-feature-engineering.html#cb388-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   time                date         dow month</span></span>
-<span id="cb388-11"><a href="notes-on-feature-engineering.html#cb388-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb388-12"><a href="notes-on-feature-engineering.html#cb388-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2012-01-27 09:07:50 2012-01-27     6     1</span></span>
-<span id="cb388-13"><a href="notes-on-feature-engineering.html#cb388-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2012-03-22 04:25:38 2012-03-22     5     3</span></span>
-<span id="cb388-14"><a href="notes-on-feature-engineering.html#cb388-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2012-03-16 22:06:15 2012-03-16     6     3</span></span>
-<span id="cb388-15"><a href="notes-on-feature-engineering.html#cb388-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2012-03-05 15:26:57 2012-03-05     2     3</span></span>
-<span id="cb388-16"><a href="notes-on-feature-engineering.html#cb388-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 2012-02-13 12:31:43 2012-02-13     2     2</span></span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="notes-on-feature-engineering.html#cb391-1" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span></span>
+<span id="cb391-2"><a href="notes-on-feature-engineering.html#cb391-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb391-3"><a href="notes-on-feature-engineering.html#cb391-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">date</span>(time),</span>
+<span id="cb391-4"><a href="notes-on-feature-engineering.html#cb391-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dow  =</span> <span class="fu">wday</span>(time),</span>
+<span id="cb391-5"><a href="notes-on-feature-engineering.html#cb391-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(time)</span>
+<span id="cb391-6"><a href="notes-on-feature-engineering.html#cb391-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb391-7"><a href="notes-on-feature-engineering.html#cb391-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time, date, dow, month) <span class="sc">%&gt;%</span></span>
+<span id="cb391-8"><a href="notes-on-feature-engineering.html#cb391-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="co"># shuffle to show a variety</span></span>
+<span id="cb391-9"><a href="notes-on-feature-engineering.html#cb391-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 x 4</span></span>
+<span id="cb391-10"><a href="notes-on-feature-engineering.html#cb391-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   time                date         dow month</span></span>
+<span id="cb391-11"><a href="notes-on-feature-engineering.html#cb391-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb391-12"><a href="notes-on-feature-engineering.html#cb391-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2012-02-07 14:17:38 2012-02-07     3     2</span></span>
+<span id="cb391-13"><a href="notes-on-feature-engineering.html#cb391-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2012-02-28 19:24:15 2012-02-28     3     2</span></span>
+<span id="cb391-14"><a href="notes-on-feature-engineering.html#cb391-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2012-03-12 08:07:31 2012-03-12     2     3</span></span>
+<span id="cb391-15"><a href="notes-on-feature-engineering.html#cb391-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2012-01-26 13:58:18 2012-01-26     5     1</span></span>
+<span id="cb391-16"><a href="notes-on-feature-engineering.html#cb391-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 2012-02-21 08:50:29 2012-02-21     3     2</span></span></code></pre></div>
 </div>
 </div>
 <div id="modeling-workflow-revisited" class="section level2" number="70.2">
@@ -1300,12 +1300,12 @@ div.csl-indent {
 <h2><span class="header-section-number">70.3</span> Building recipes</h2>
 <div id="initiate-a-recipe" class="section level3" number="70.3.1">
 <h3><span class="header-section-number">70.3.1</span> Initiate a recipe</h3>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="notes-on-feature-engineering.html#cb389-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
-<span id="cb389-2"><a href="notes-on-feature-engineering.html#cb389-2" aria-hidden="true" tabindex="-1"></a>  spam <span class="sc">~</span> .,          <span class="co"># formula</span></span>
-<span id="cb389-3"><a href="notes-on-feature-engineering.html#cb389-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data  <span class="co"># data to use for cataloguing names and types of variables</span></span>
-<span id="cb389-4"><a href="notes-on-feature-engineering.html#cb389-4" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb389-5"><a href="notes-on-feature-engineering.html#cb389-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb389-6"><a href="notes-on-feature-engineering.html#cb389-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(email_rec)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="notes-on-feature-engineering.html#cb392-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb392-2"><a href="notes-on-feature-engineering.html#cb392-2" aria-hidden="true" tabindex="-1"></a>  spam <span class="sc">~</span> .,          <span class="co"># formula</span></span>
+<span id="cb392-3"><a href="notes-on-feature-engineering.html#cb392-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train_data  <span class="co"># data to use for cataloguing names and types of variables</span></span>
+<span id="cb392-4"><a href="notes-on-feature-engineering.html#cb392-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb392-5"><a href="notes-on-feature-engineering.html#cb392-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb392-6"><a href="notes-on-feature-engineering.html#cb392-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(email_rec)</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 21 x 4
 #&gt;    variable     type    role      source  
 #&gt;    &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   
@@ -1333,8 +1333,8 @@ div.csl-indent {
 </div>
 <div id="remove-certain-variables" class="section level3" number="70.3.2">
 <h3><span class="header-section-number">70.3.2</span> Remove certain variables</h3>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="notes-on-feature-engineering.html#cb391-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
-<span id="cb391-2"><a href="notes-on-feature-engineering.html#cb391-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="notes-on-feature-engineering.html#cb394-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb394-2"><a href="notes-on-feature-engineering.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email)</span></code></pre></div>
 <pre><code>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -1349,9 +1349,9 @@ div.csl-indent {
 </div>
 <div id="feature-engineer-date" class="section level3" number="70.3.3">
 <h3><span class="header-section-number">70.3.3</span> Feature engineer date</h3>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="notes-on-feature-engineering.html#cb393-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
-<span id="cb393-2"><a href="notes-on-feature-engineering.html#cb393-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb393-3"><a href="notes-on-feature-engineering.html#cb393-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="notes-on-feature-engineering.html#cb396-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb396-2"><a href="notes-on-feature-engineering.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb396-3"><a href="notes-on-feature-engineering.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time)</span></code></pre></div>
 <pre><code>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -1369,9 +1369,9 @@ div.csl-indent {
 <div id="discretize-numeric-variables" class="section level3" number="70.3.4">
 <h3><span class="header-section-number">70.3.4</span> Discretize numeric variables</h3>
 <p>Procedue with major caution! And please be sure to read <a href="http://www.quantpsy.org/pubs/maccallum_zhang_preacher_rucker_2002.pdf">MacCallum, R. C., Zhang, S., Preacher, K. J., &amp; Rucker, D. D. (2002). On the practice of dichotomization of quantitative variables. Psychological Methods, 7, 19-40.</a> and play around with the demo data from Kris’s website: <a href="http://www.quantpsy.org/mzpr.htm" class="uri">http://www.quantpsy.org/mzpr.htm</a></p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="notes-on-feature-engineering.html#cb395-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
-<span id="cb395-2"><a href="notes-on-feature-engineering.html#cb395-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb395-3"><a href="notes-on-feature-engineering.html#cb395-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="notes-on-feature-engineering.html#cb398-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb398-2"><a href="notes-on-feature-engineering.html#cb398-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb398-3"><a href="notes-on-feature-engineering.html#cb398-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>))</span></code></pre></div>
 <pre><code>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -1390,8 +1390,8 @@ div.csl-indent {
 </div>
 <div id="create-dummy-variables" class="section level3" number="70.3.5">
 <h3><span class="header-section-number">70.3.5</span> Create dummy variables</h3>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="notes-on-feature-engineering.html#cb397-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
-<span id="cb397-2"><a href="notes-on-feature-engineering.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="notes-on-feature-engineering.html#cb400-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb400-2"><a href="notes-on-feature-engineering.html#cb400-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
 <pre><code>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -1412,8 +1412,8 @@ div.csl-indent {
 <div id="remove-zero-variance-variables" class="section level3" number="70.3.6">
 <h3><span class="header-section-number">70.3.6</span> Remove zero variance variables</h3>
 <p>Variables that contain only a single value</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="notes-on-feature-engineering.html#cb399-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
-<span id="cb399-2"><a href="notes-on-feature-engineering.html#cb399-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="notes-on-feature-engineering.html#cb402-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> email_rec <span class="sc">%&gt;%</span></span>
+<span id="cb402-2"><a href="notes-on-feature-engineering.html#cb402-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
 <pre><code>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
@@ -1434,14 +1434,14 @@ div.csl-indent {
 </div>
 <div id="all-in-one-place" class="section level3" number="70.3.7">
 <h3><span class="header-section-number">70.3.7</span> All in one place</h3>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="notes-on-feature-engineering.html#cb401-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(spam <span class="sc">~</span> ., <span class="at">data =</span> email) <span class="sc">%&gt;%</span></span>
-<span id="cb401-2"><a href="notes-on-feature-engineering.html#cb401-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email) <span class="sc">%&gt;%</span></span>
-<span id="cb401-3"><a href="notes-on-feature-engineering.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span>               </span>
-<span id="cb401-4"><a href="notes-on-feature-engineering.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time) <span class="sc">%&gt;%</span></span>
-<span id="cb401-5"><a href="notes-on-feature-engineering.html#cb401-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb401-6"><a href="notes-on-feature-engineering.html#cb401-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb401-7"><a href="notes-on-feature-engineering.html#cb401-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb401-8"><a href="notes-on-feature-engineering.html#cb401-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="notes-on-feature-engineering.html#cb404-1" aria-hidden="true" tabindex="-1"></a>email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(spam <span class="sc">~</span> ., <span class="at">data =</span> email) <span class="sc">%&gt;%</span></span>
+<span id="cb404-2"><a href="notes-on-feature-engineering.html#cb404-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(from, sent_email) <span class="sc">%&gt;%</span></span>
+<span id="cb404-3"><a href="notes-on-feature-engineering.html#cb404-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_date</span>(time, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;dow&quot;</span>, <span class="st">&quot;month&quot;</span>)) <span class="sc">%&gt;%</span>               </span>
+<span id="cb404-4"><a href="notes-on-feature-engineering.html#cb404-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_rm</span>(time) <span class="sc">%&gt;%</span></span>
+<span id="cb404-5"><a href="notes-on-feature-engineering.html#cb404-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(cc, attach, dollar, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb404-6"><a href="notes-on-feature-engineering.html#cb404-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_cut</span>(inherit, password, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb404-7"><a href="notes-on-feature-engineering.html#cb404-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb404-8"><a href="notes-on-feature-engineering.html#cb404-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>())</span></code></pre></div>
 </div>
 </div>
 <div id="building-workflows" class="section level2" number="70.4">
@@ -1449,20 +1449,20 @@ div.csl-indent {
 <hr />
 <div id="define-model" class="section level3" number="70.4.1">
 <h3><span class="header-section-number">70.4.1</span> Define model</h3>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="notes-on-feature-engineering.html#cb402-1" aria-hidden="true" tabindex="-1"></a>email_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb402-2"><a href="notes-on-feature-engineering.html#cb402-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
-<span id="cb402-3"><a href="notes-on-feature-engineering.html#cb402-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb402-4"><a href="notes-on-feature-engineering.html#cb402-4" aria-hidden="true" tabindex="-1"></a>email_mod</span>
-<span id="cb402-5"><a href="notes-on-feature-engineering.html#cb402-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
-<span id="cb402-6"><a href="notes-on-feature-engineering.html#cb402-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb402-7"><a href="notes-on-feature-engineering.html#cb402-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="notes-on-feature-engineering.html#cb405-1" aria-hidden="true" tabindex="-1"></a>email_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb405-2"><a href="notes-on-feature-engineering.html#cb405-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>)</span>
+<span id="cb405-3"><a href="notes-on-feature-engineering.html#cb405-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb405-4"><a href="notes-on-feature-engineering.html#cb405-4" aria-hidden="true" tabindex="-1"></a>email_mod</span>
+<span id="cb405-5"><a href="notes-on-feature-engineering.html#cb405-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Logistic Regression Model Specification (classification)</span></span>
+<span id="cb405-6"><a href="notes-on-feature-engineering.html#cb405-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb405-7"><a href="notes-on-feature-engineering.html#cb405-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computational engine: glm</span></span></code></pre></div>
 </div>
 <div id="define-workflow" class="section level3" number="70.4.2">
 <h3><span class="header-section-number">70.4.2</span> Define workflow</h3>
 <p><strong>Workflows</strong> bring together models and recipes so that they can be easily applied to both the training and test data.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="notes-on-feature-engineering.html#cb403-1" aria-hidden="true" tabindex="-1"></a>email_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb403-2"><a href="notes-on-feature-engineering.html#cb403-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(email_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb403-3"><a href="notes-on-feature-engineering.html#cb403-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(email_rec)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="notes-on-feature-engineering.html#cb406-1" aria-hidden="true" tabindex="-1"></a>email_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb406-2"><a href="notes-on-feature-engineering.html#cb406-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(email_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb406-3"><a href="notes-on-feature-engineering.html#cb406-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(email_rec)</span></code></pre></div>
 <pre><code>#&gt; == Workflow ========================================================================================
 #&gt; Preprocessor: Recipe
 #&gt; Model: logistic_reg()
@@ -1485,88 +1485,88 @@ div.csl-indent {
 </div>
 <div id="fit-model-to-training-data" class="section level3" number="70.4.3">
 <h3><span class="header-section-number">70.4.3</span> Fit model to training data</h3>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="notes-on-feature-engineering.html#cb405-1" aria-hidden="true" tabindex="-1"></a>email_fit <span class="ot">&lt;-</span> email_wflow <span class="sc">%&gt;%</span> </span>
-<span id="cb405-2"><a href="notes-on-feature-engineering.html#cb405-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span></code></pre></div>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="notes-on-feature-engineering.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(email_fit) <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">31</span>)</span>
-<span id="cb406-2"><a href="notes-on-feature-engineering.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 31 x 5</span></span>
-<span id="cb406-3"><a href="notes-on-feature-engineering.html#cb406-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    term               estimate std.error statistic  p.value</span></span>
-<span id="cb406-4"><a href="notes-on-feature-engineering.html#cb406-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb406-5"><a href="notes-on-feature-engineering.html#cb406-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 (Intercept)        -1.23      0.272     -4.51   6.56e- 6</span></span>
-<span id="cb406-6"><a href="notes-on-feature-engineering.html#cb406-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 image              -1.17      0.638     -1.83   6.72e- 2</span></span>
-<span id="cb406-7"><a href="notes-on-feature-engineering.html#cb406-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 viagra              2.30    182.         0.0127 9.90e- 1</span></span>
-<span id="cb406-8"><a href="notes-on-feature-engineering.html#cb406-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 num_char            0.0691    0.0227     3.04   2.34e- 3</span></span>
-<span id="cb406-9"><a href="notes-on-feature-engineering.html#cb406-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 line_breaks        -0.00581   0.00135   -4.31   1.66e- 5</span></span>
-<span id="cb406-10"><a href="notes-on-feature-engineering.html#cb406-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 exclaim_subj       -0.203     0.295     -0.689  4.91e- 1</span></span>
-<span id="cb406-11"><a href="notes-on-feature-engineering.html#cb406-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 exclaim_mess        0.00791   0.00177    4.47   8.00e- 6</span></span>
-<span id="cb406-12"><a href="notes-on-feature-engineering.html#cb406-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 to_multiple_X1     -2.83      0.396     -7.14   9.32e-13</span></span>
-<span id="cb406-13"><a href="notes-on-feature-engineering.html#cb406-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 cc_X.1.68.          0.250     0.441      0.568  5.70e- 1</span></span>
-<span id="cb406-14"><a href="notes-on-feature-engineering.html#cb406-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 attach_X.1.20.      2.03      0.406      5.00   5.86e- 7</span></span>
-<span id="cb406-15"><a href="notes-on-feature-engineering.html#cb406-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 dollar_X.1.64.     -0.0614    0.231     -0.265  7.91e- 1</span></span>
-<span id="cb406-16"><a href="notes-on-feature-engineering.html#cb406-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 winner_yes          1.88      0.423      4.44   8.99e- 6</span></span>
-<span id="cb406-17"><a href="notes-on-feature-engineering.html#cb406-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 inherit_X.1.5.     -9.18    763.        -0.0120 9.90e- 1</span></span>
-<span id="cb406-18"><a href="notes-on-feature-engineering.html#cb406-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 inherit_X.5.10.     3.06      1.46       2.09   3.66e- 2</span></span>
-<span id="cb406-19"><a href="notes-on-feature-engineering.html#cb406-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 password_X.1.5.    -1.61      0.743     -2.17   2.98e- 2</span></span>
-<span id="cb406-20"><a href="notes-on-feature-engineering.html#cb406-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 password_X.5.10.  -12.7     499.        -0.0254 9.80e- 1</span></span>
-<span id="cb406-21"><a href="notes-on-feature-engineering.html#cb406-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 password_X.10.20. -13.9     803.        -0.0173 9.86e- 1</span></span>
-<span id="cb406-22"><a href="notes-on-feature-engineering.html#cb406-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 password_X.20.28. -13.9     803.        -0.0173 9.86e- 1</span></span>
-<span id="cb406-23"><a href="notes-on-feature-engineering.html#cb406-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 format_X1          -0.779     0.160     -4.88   1.06e- 6</span></span>
-<span id="cb406-24"><a href="notes-on-feature-engineering.html#cb406-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 re_subj_X1         -2.82      0.408     -6.92   4.58e-12</span></span>
-<span id="cb406-25"><a href="notes-on-feature-engineering.html#cb406-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 urgent_subj_X1      3.73      1.02       3.65   2.66e- 4</span></span>
-<span id="cb406-26"><a href="notes-on-feature-engineering.html#cb406-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 number_small       -1.02      0.170     -5.98   2.30e- 9</span></span>
-<span id="cb406-27"><a href="notes-on-feature-engineering.html#cb406-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23 number_big         -0.00783   0.240     -0.0326 9.74e- 1</span></span>
-<span id="cb406-28"><a href="notes-on-feature-engineering.html#cb406-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24 time_dow_Mon        0.212     0.316      0.670  5.03e- 1</span></span>
-<span id="cb406-29"><a href="notes-on-feature-engineering.html#cb406-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25 time_dow_Tue        0.595     0.290      2.06   3.98e- 2</span></span>
-<span id="cb406-30"><a href="notes-on-feature-engineering.html#cb406-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26 time_dow_Wed        0.0847    0.297      0.286  7.75e- 1</span></span>
-<span id="cb406-31"><a href="notes-on-feature-engineering.html#cb406-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27 time_dow_Thu        0.415     0.295      1.41   1.59e- 1</span></span>
-<span id="cb406-32"><a href="notes-on-feature-engineering.html#cb406-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28 time_dow_Fri        0.393     0.293      1.34   1.81e- 1</span></span>
-<span id="cb406-33"><a href="notes-on-feature-engineering.html#cb406-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29 time_dow_Sat        0.496     0.319      1.55   1.20e- 1</span></span>
-<span id="cb406-34"><a href="notes-on-feature-engineering.html#cb406-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30 time_month_Feb      0.767     0.184      4.16   3.14e- 5</span></span>
-<span id="cb406-35"><a href="notes-on-feature-engineering.html#cb406-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31 time_month_Mar      0.554     0.184      3.00   2.68e- 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="notes-on-feature-engineering.html#cb408-1" aria-hidden="true" tabindex="-1"></a>email_fit <span class="ot">&lt;-</span> email_wflow <span class="sc">%&gt;%</span> </span>
+<span id="cb408-2"><a href="notes-on-feature-engineering.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb408-3"><a href="notes-on-feature-engineering.html#cb408-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="notes-on-feature-engineering.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(email_fit) <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">31</span>)</span>
+<span id="cb409-2"><a href="notes-on-feature-engineering.html#cb409-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 31 x 5</span></span>
+<span id="cb409-3"><a href="notes-on-feature-engineering.html#cb409-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    term                estimate std.error statistic  p.value</span></span>
+<span id="cb409-4"><a href="notes-on-feature-engineering.html#cb409-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb409-5"><a href="notes-on-feature-engineering.html#cb409-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 (Intercept)        -1.11       0.264    -4.19    2.75e- 5</span></span>
+<span id="cb409-6"><a href="notes-on-feature-engineering.html#cb409-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 image              -1.72       0.956    -1.80    7.23e- 2</span></span>
+<span id="cb409-7"><a href="notes-on-feature-engineering.html#cb409-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 viagra              2.30     182.        0.0126  9.90e- 1</span></span>
+<span id="cb409-8"><a href="notes-on-feature-engineering.html#cb409-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 num_char            0.0469     0.0271    1.73    8.41e- 2</span></span>
+<span id="cb409-9"><a href="notes-on-feature-engineering.html#cb409-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 line_breaks        -0.00563    0.00151  -3.74    1.87e- 4</span></span>
+<span id="cb409-10"><a href="notes-on-feature-engineering.html#cb409-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 exclaim_subj       -0.0721     0.271    -0.266   7.90e- 1</span></span>
+<span id="cb409-11"><a href="notes-on-feature-engineering.html#cb409-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 exclaim_mess        0.0101     0.00214   4.72    2.36e- 6</span></span>
+<span id="cb409-12"><a href="notes-on-feature-engineering.html#cb409-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 to_multiple_X1     -2.83       0.377    -7.49    6.71e-14</span></span>
+<span id="cb409-13"><a href="notes-on-feature-engineering.html#cb409-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 cc_X.1.68.         -0.178      0.468    -0.382   7.03e- 1</span></span>
+<span id="cb409-14"><a href="notes-on-feature-engineering.html#cb409-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 attach_X.1.21.      2.39       0.381     6.27    3.61e-10</span></span>
+<span id="cb409-15"><a href="notes-on-feature-engineering.html#cb409-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 dollar_X.1.64.      0.0544     0.222     0.246   8.06e- 1</span></span>
+<span id="cb409-16"><a href="notes-on-feature-engineering.html#cb409-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 winner_yes          2.20       0.415     5.31    1.11e- 7</span></span>
+<span id="cb409-17"><a href="notes-on-feature-engineering.html#cb409-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 inherit_X.1.5.     -9.14     756.       -0.0121  9.90e- 1</span></span>
+<span id="cb409-18"><a href="notes-on-feature-engineering.html#cb409-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 inherit_X.5.10.     1.95       1.27      1.54    1.23e- 1</span></span>
+<span id="cb409-19"><a href="notes-on-feature-engineering.html#cb409-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 password_X.1.5.    -1.71       0.759    -2.25    2.43e- 2</span></span>
+<span id="cb409-20"><a href="notes-on-feature-engineering.html#cb409-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 password_X.5.10.  -12.4      420.       -0.0296  9.76e- 1</span></span>
+<span id="cb409-21"><a href="notes-on-feature-engineering.html#cb409-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 password_X.10.20. -13.8      812.       -0.0170  9.86e- 1</span></span>
+<span id="cb409-22"><a href="notes-on-feature-engineering.html#cb409-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 password_X.20.28. -13.8      814.       -0.0170  9.86e- 1</span></span>
+<span id="cb409-23"><a href="notes-on-feature-engineering.html#cb409-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 format_X1          -0.802      0.161    -4.99    6.17e- 7</span></span>
+<span id="cb409-24"><a href="notes-on-feature-engineering.html#cb409-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 re_subj_X1         -2.78       0.400    -6.97    3.25e-12</span></span>
+<span id="cb409-25"><a href="notes-on-feature-engineering.html#cb409-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 urgent_subj_X1      2.57       1.13      2.27    2.31e- 2</span></span>
+<span id="cb409-26"><a href="notes-on-feature-engineering.html#cb409-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 number_small       -0.659      0.170    -3.87    1.10e- 4</span></span>
+<span id="cb409-27"><a href="notes-on-feature-engineering.html#cb409-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23 number_big          0.199      0.246     0.807   4.20e- 1</span></span>
+<span id="cb409-28"><a href="notes-on-feature-engineering.html#cb409-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24 time_dow_Mon       -0.0207     0.300    -0.0690  9.45e- 1</span></span>
+<span id="cb409-29"><a href="notes-on-feature-engineering.html#cb409-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25 time_dow_Tue        0.306      0.273     1.12    2.63e- 1</span></span>
+<span id="cb409-30"><a href="notes-on-feature-engineering.html#cb409-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26 time_dow_Wed       -0.204      0.279    -0.731   4.65e- 1</span></span>
+<span id="cb409-31"><a href="notes-on-feature-engineering.html#cb409-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27 time_dow_Thu       -0.237      0.297    -0.799   4.24e- 1</span></span>
+<span id="cb409-32"><a href="notes-on-feature-engineering.html#cb409-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28 time_dow_Fri        0.000702   0.284     0.00247 9.98e- 1</span></span>
+<span id="cb409-33"><a href="notes-on-feature-engineering.html#cb409-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29 time_dow_Sat        0.261      0.307     0.851   3.95e- 1</span></span>
+<span id="cb409-34"><a href="notes-on-feature-engineering.html#cb409-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30 time_month_Feb      0.912      0.183     4.97    6.68e- 7</span></span>
+<span id="cb409-35"><a href="notes-on-feature-engineering.html#cb409-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31 time_month_Mar      0.638      0.187     3.41    6.52e- 4</span></span></code></pre></div>
 </div>
 <div id="make-predictions-for-test-data" class="section level3" number="70.4.4">
 <h3><span class="header-section-number">70.4.4</span> Make predictions for test data</h3>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="notes-on-feature-engineering.html#cb407-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(email_fit, test_data, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb407-2"><a href="notes-on-feature-engineering.html#cb407-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data) </span>
-<span id="cb407-3"><a href="notes-on-feature-engineering.html#cb407-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There are new levels in a factor: NA</span></span>
-<span id="cb407-4"><a href="notes-on-feature-engineering.html#cb407-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb407-5"><a href="notes-on-feature-engineering.html#cb407-5" aria-hidden="true" tabindex="-1"></a>email_pred</span>
-<span id="cb407-6"><a href="notes-on-feature-engineering.html#cb407-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 784 x 23</span></span>
-<span id="cb407-7"><a href="notes-on-feature-engineering.html#cb407-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    .pred_0  .pred_1 spam  to_multiple from     cc sent_email time                image attach dollar</span></span>
-<span id="cb407-8"><a href="notes-on-feature-engineering.html#cb407-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;int&gt; &lt;fct&gt;      &lt;dttm&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span id="cb407-9"><a href="notes-on-feature-engineering.html#cb407-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1   0.996 0.00361  0     1           1         0 1          2012-01-01 12:55:06     0      0      0</span></span>
-<span id="cb407-10"><a href="notes-on-feature-engineering.html#cb407-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2   0.919 0.0813   0     0           1         0 0          2012-01-01 16:08:59     0      0      0</span></span>
-<span id="cb407-11"><a href="notes-on-feature-engineering.html#cb407-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3   0.957 0.0435   0     0           1         0 1          2012-01-01 13:23:44     0      0      0</span></span>
-<span id="cb407-12"><a href="notes-on-feature-engineering.html#cb407-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4   0.999 0.00114  0     0           1         1 1          2012-01-01 14:38:32     0      0      0</span></span>
-<span id="cb407-13"><a href="notes-on-feature-engineering.html#cb407-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5   0.994 0.00550  0     0           1         0 1          2012-01-01 20:40:40     0      0      0</span></span>
-<span id="cb407-14"><a href="notes-on-feature-engineering.html#cb407-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6   0.994 0.00602  0     0           1         0 1          2012-01-01 21:07:20     0      0      0</span></span>
-<span id="cb407-15"><a href="notes-on-feature-engineering.html#cb407-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7   0.888 0.112    0     0           1         0 0          2012-01-01 21:08:14     0      0      0</span></span>
-<span id="cb407-16"><a href="notes-on-feature-engineering.html#cb407-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8   0.994 0.00570  0     0           1         0 0          2012-01-01 21:51:24     0      0      0</span></span>
-<span id="cb407-17"><a href="notes-on-feature-engineering.html#cb407-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9   0.995 0.00521  0     0           1         1 0          2012-01-01 22:16:39     0      0      0</span></span>
-<span id="cb407-18"><a href="notes-on-feature-engineering.html#cb407-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   1.00  0.000249 0     1           1         3 0          2012-01-02 08:41:11     0      0      0</span></span>
-<span id="cb407-19"><a href="notes-on-feature-engineering.html#cb407-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 774 more rows, and 12 more variables: winner &lt;fct&gt;, inherit &lt;dbl&gt;, viagra &lt;dbl&gt;,</span></span>
-<span id="cb407-20"><a href="notes-on-feature-engineering.html#cb407-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   password &lt;dbl&gt;, num_char &lt;dbl&gt;, line_breaks &lt;int&gt;, format &lt;fct&gt;, re_subj &lt;fct&gt;,</span></span>
-<span id="cb407-21"><a href="notes-on-feature-engineering.html#cb407-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   exclaim_subj &lt;dbl&gt;, urgent_subj &lt;fct&gt;, exclaim_mess &lt;dbl&gt;, number &lt;fct&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="notes-on-feature-engineering.html#cb410-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(email_fit, test_data, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb410-2"><a href="notes-on-feature-engineering.html#cb410-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data) </span>
+<span id="cb410-3"><a href="notes-on-feature-engineering.html#cb410-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb410-4"><a href="notes-on-feature-engineering.html#cb410-4" aria-hidden="true" tabindex="-1"></a>email_pred</span>
+<span id="cb410-5"><a href="notes-on-feature-engineering.html#cb410-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 785 x 23</span></span>
+<span id="cb410-6"><a href="notes-on-feature-engineering.html#cb410-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    .pred_0  .pred_1 spam  to_multiple from     cc sent_email time                image attach dollar</span></span>
+<span id="cb410-7"><a href="notes-on-feature-engineering.html#cb410-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;int&gt; &lt;fct&gt;      &lt;dttm&gt;              &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb410-8"><a href="notes-on-feature-engineering.html#cb410-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1   0.948 0.0522   0     0           1         0 0          2012-01-01 04:09:49     0      0      0</span></span>
+<span id="cb410-9"><a href="notes-on-feature-engineering.html#cb410-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2   0.909 0.0914   0     0           1         0 0          2012-01-01 22:00:18     0      0      0</span></span>
+<span id="cb410-10"><a href="notes-on-feature-engineering.html#cb410-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3   0.971 0.0292   0     0           1         0 0          2012-01-02 00:42:16     0      0      5</span></span>
+<span id="cb410-11"><a href="notes-on-feature-engineering.html#cb410-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4   0.887 0.113    0     0           1         0 0          2012-01-01 20:58:14     0      0      0</span></span>
+<span id="cb410-12"><a href="notes-on-feature-engineering.html#cb410-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5   0.992 0.00755  0     0           1         0 0          2012-01-02 02:07:22     0      0     21</span></span>
+<span id="cb410-13"><a href="notes-on-feature-engineering.html#cb410-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6   1.00  0.000432 0     1           1         2 0          2012-01-02 13:09:45     0      0      0</span></span>
+<span id="cb410-14"><a href="notes-on-feature-engineering.html#cb410-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7   0.999 0.000691 0     0           1         1 0          2012-01-02 10:12:51     0      0      0</span></span>
+<span id="cb410-15"><a href="notes-on-feature-engineering.html#cb410-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8   1.00  0.000280 0     1           1         2 0          2012-01-02 16:24:21     0      0      0</span></span>
+<span id="cb410-16"><a href="notes-on-feature-engineering.html#cb410-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9   0.971 0.0292   0     0           1         0 0          2012-01-03 04:34:50     0      0     11</span></span>
+<span id="cb410-17"><a href="notes-on-feature-engineering.html#cb410-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   0.978 0.0224   0     0           1         0 0          2012-01-03 08:33:28     0      0     18</span></span>
+<span id="cb410-18"><a href="notes-on-feature-engineering.html#cb410-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 775 more rows, and 12 more variables: winner &lt;fct&gt;, inherit &lt;dbl&gt;, viagra &lt;dbl&gt;,</span></span>
+<span id="cb410-19"><a href="notes-on-feature-engineering.html#cb410-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   password &lt;dbl&gt;, num_char &lt;dbl&gt;, line_breaks &lt;int&gt;, format &lt;fct&gt;, re_subj &lt;fct&gt;,</span></span>
+<span id="cb410-20"><a href="notes-on-feature-engineering.html#cb410-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   exclaim_subj &lt;dbl&gt;, urgent_subj &lt;fct&gt;, exclaim_mess &lt;dbl&gt;, number &lt;fct&gt;</span></span></code></pre></div>
 </div>
 <div id="evaluate-the-performance" class="section level3" number="70.4.5">
 <h3><span class="header-section-number">70.4.5</span> Evaluate the performance</h3>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="notes-on-feature-engineering.html#cb408-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
-<span id="cb408-2"><a href="notes-on-feature-engineering.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(</span>
-<span id="cb408-3"><a href="notes-on-feature-engineering.html#cb408-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
-<span id="cb408-4"><a href="notes-on-feature-engineering.html#cb408-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
-<span id="cb408-5"><a href="notes-on-feature-engineering.html#cb408-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
-<span id="cb408-6"><a href="notes-on-feature-engineering.html#cb408-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb408-7"><a href="notes-on-feature-engineering.html#cb408-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="notes-on-feature-engineering.html#cb411-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb411-2"><a href="notes-on-feature-engineering.html#cb411-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(</span>
+<span id="cb411-3"><a href="notes-on-feature-engineering.html#cb411-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
+<span id="cb411-4"><a href="notes-on-feature-engineering.html#cb411-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
+<span id="cb411-5"><a href="notes-on-feature-engineering.html#cb411-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
+<span id="cb411-6"><a href="notes-on-feature-engineering.html#cb411-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb411-7"><a href="notes-on-feature-engineering.html#cb411-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div>
 <p><img src="1101_cv_files/figure-html/roc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="notes-on-feature-engineering.html#cb409-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
-<span id="cb409-2"><a href="notes-on-feature-engineering.html#cb409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(</span>
-<span id="cb409-3"><a href="notes-on-feature-engineering.html#cb409-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
-<span id="cb409-4"><a href="notes-on-feature-engineering.html#cb409-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
-<span id="cb409-5"><a href="notes-on-feature-engineering.html#cb409-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
-<span id="cb409-6"><a href="notes-on-feature-engineering.html#cb409-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb409-7"><a href="notes-on-feature-engineering.html#cb409-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 3</span></span>
-<span id="cb409-8"><a href="notes-on-feature-engineering.html#cb409-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .metric .estimator .estimate</span></span>
-<span id="cb409-9"><a href="notes-on-feature-engineering.html#cb409-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
-<span id="cb409-10"><a href="notes-on-feature-engineering.html#cb409-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 roc_auc binary         0.865</span></span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="notes-on-feature-engineering.html#cb412-1" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb412-2"><a href="notes-on-feature-engineering.html#cb412-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(</span>
+<span id="cb412-3"><a href="notes-on-feature-engineering.html#cb412-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> spam,</span>
+<span id="cb412-4"><a href="notes-on-feature-engineering.html#cb412-4" aria-hidden="true" tabindex="-1"></a>    .pred_1,</span>
+<span id="cb412-5"><a href="notes-on-feature-engineering.html#cb412-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span></span>
+<span id="cb412-6"><a href="notes-on-feature-engineering.html#cb412-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb412-7"><a href="notes-on-feature-engineering.html#cb412-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span id="cb412-8"><a href="notes-on-feature-engineering.html#cb412-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .metric .estimator .estimate</span></span>
+<span id="cb412-9"><a href="notes-on-feature-engineering.html#cb412-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span id="cb412-10"><a href="notes-on-feature-engineering.html#cb412-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 roc_auc binary         0.864</span></span></code></pre></div>
 </div>
 </div>
 <div id="making-decisions" class="section level2" number="70.5">
@@ -1574,15 +1574,15 @@ div.csl-indent {
 <div id="cutoff-probability-0.5" class="section level3" number="70.5.1">
 <h3><span class="header-section-number">70.5.1</span> Cutoff probability: 0.5</h3>
 <p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.5</strong>.</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="notes-on-feature-engineering.html#cb410-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb410-2"><a href="notes-on-feature-engineering.html#cb410-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
-<span id="cb410-3"><a href="notes-on-feature-engineering.html#cb410-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb410-4"><a href="notes-on-feature-engineering.html#cb410-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
-<span id="cb410-5"><a href="notes-on-feature-engineering.html#cb410-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
-<span id="cb410-6"><a href="notes-on-feature-engineering.html#cb410-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb410-7"><a href="notes-on-feature-engineering.html#cb410-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
-<span id="cb410-8"><a href="notes-on-feature-engineering.html#cb410-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
-<span id="cb410-9"><a href="notes-on-feature-engineering.html#cb410-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="notes-on-feature-engineering.html#cb413-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb413-2"><a href="notes-on-feature-engineering.html#cb413-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb413-3"><a href="notes-on-feature-engineering.html#cb413-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb413-4"><a href="notes-on-feature-engineering.html#cb413-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb413-5"><a href="notes-on-feature-engineering.html#cb413-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb413-6"><a href="notes-on-feature-engineering.html#cb413-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb413-7"><a href="notes-on-feature-engineering.html#cb413-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb413-8"><a href="notes-on-feature-engineering.html#cb413-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb413-9"><a href="notes-on-feature-engineering.html#cb413-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1594,18 +1594,13 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="left">Email labelled not spam</td>
-<td align="right">699</td>
+<td align="right">700</td>
 <td align="right">68</td>
 </tr>
 <tr class="even">
 <td align="left">Email labelled spam</td>
-<td align="right">6</td>
+<td align="right">7</td>
 <td align="right">10</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">1</td>
-<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1613,15 +1608,15 @@ div.csl-indent {
 <div id="cutoff-probability-0.25" class="section level3" number="70.5.2">
 <h3><span class="header-section-number">70.5.2</span> Cutoff probability: 0.25</h3>
 <p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.25</strong>.</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="notes-on-feature-engineering.html#cb411-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb411-2"><a href="notes-on-feature-engineering.html#cb411-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
-<span id="cb411-3"><a href="notes-on-feature-engineering.html#cb411-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb411-4"><a href="notes-on-feature-engineering.html#cb411-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
-<span id="cb411-5"><a href="notes-on-feature-engineering.html#cb411-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
-<span id="cb411-6"><a href="notes-on-feature-engineering.html#cb411-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb411-7"><a href="notes-on-feature-engineering.html#cb411-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
-<span id="cb411-8"><a href="notes-on-feature-engineering.html#cb411-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
-<span id="cb411-9"><a href="notes-on-feature-engineering.html#cb411-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="notes-on-feature-engineering.html#cb414-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb414-2"><a href="notes-on-feature-engineering.html#cb414-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb414-3"><a href="notes-on-feature-engineering.html#cb414-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb414-4"><a href="notes-on-feature-engineering.html#cb414-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb414-5"><a href="notes-on-feature-engineering.html#cb414-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb414-6"><a href="notes-on-feature-engineering.html#cb414-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb414-7"><a href="notes-on-feature-engineering.html#cb414-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb414-8"><a href="notes-on-feature-engineering.html#cb414-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb414-9"><a href="notes-on-feature-engineering.html#cb414-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1633,18 +1628,13 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="left">Email labelled not spam</td>
-<td align="right">667</td>
-<td align="right">49</td>
+<td align="right">673</td>
+<td align="right">42</td>
 </tr>
 <tr class="even">
 <td align="left">Email labelled spam</td>
-<td align="right">38</td>
-<td align="right">29</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">1</td>
-<td align="right">NA</td>
+<td align="right">34</td>
+<td align="right">36</td>
 </tr>
 </tbody>
 </table>
@@ -1652,15 +1642,15 @@ div.csl-indent {
 <div id="cutoff-probability-0.75" class="section level3" number="70.5.3">
 <h3><span class="header-section-number">70.5.3</span> Cutoff probability: 0.75</h3>
 <p>Suppose we decide to label an email as spam if the model predicts the probability of spam to be <strong>more than 0.75</strong>.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="notes-on-feature-engineering.html#cb412-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
-<span id="cb412-2"><a href="notes-on-feature-engineering.html#cb412-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
-<span id="cb412-3"><a href="notes-on-feature-engineering.html#cb412-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb412-4"><a href="notes-on-feature-engineering.html#cb412-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
-<span id="cb412-5"><a href="notes-on-feature-engineering.html#cb412-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
-<span id="cb412-6"><a href="notes-on-feature-engineering.html#cb412-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb412-7"><a href="notes-on-feature-engineering.html#cb412-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
-<span id="cb412-8"><a href="notes-on-feature-engineering.html#cb412-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
-<span id="cb412-9"><a href="notes-on-feature-engineering.html#cb412-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="notes-on-feature-engineering.html#cb415-1" aria-hidden="true" tabindex="-1"></a>cutoff_prob <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
+<span id="cb415-2"><a href="notes-on-feature-engineering.html#cb415-2" aria-hidden="true" tabindex="-1"></a>email_pred <span class="sc">%&gt;%</span></span>
+<span id="cb415-3"><a href="notes-on-feature-engineering.html#cb415-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb415-4"><a href="notes-on-feature-engineering.html#cb415-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam      =</span> <span class="fu">if_else</span>(spam <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;Email is spam&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>),</span>
+<span id="cb415-5"><a href="notes-on-feature-engineering.html#cb415-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spam_pred =</span> <span class="fu">if_else</span>(.pred_1 <span class="sc">&gt;</span> cutoff_prob, <span class="st">&quot;Email labelled spam&quot;</span>, <span class="st">&quot;Email labelled not spam&quot;</span>)</span>
+<span id="cb415-6"><a href="notes-on-feature-engineering.html#cb415-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb415-7"><a href="notes-on-feature-engineering.html#cb415-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(spam_pred, spam) <span class="sc">%&gt;%</span></span>
+<span id="cb415-8"><a href="notes-on-feature-engineering.html#cb415-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> spam, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb415-9"><a href="notes-on-feature-engineering.html#cb415-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Email is not spam&quot;</span>, <span class="st">&quot;Email is spam&quot;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1672,18 +1662,13 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="left">Email labelled not spam</td>
-<td align="right">704</td>
-<td align="right">72</td>
+<td align="right">703</td>
+<td align="right">73</td>
 </tr>
 <tr class="even">
 <td align="left">Email labelled spam</td>
-<td align="right">1</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">1</td>
-<td align="right">NA</td>
+<td align="right">4</td>
+<td align="right">5</td>
 </tr>
 </tbody>
 </table>

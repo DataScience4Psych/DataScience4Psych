@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-06-17" />
+<meta name="date" content="2021-08-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="modeling-with-multiple-predictors.html"/>
 <link rel="next" href="lab10.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -1298,7 +1298,9 @@ div.csl-indent {
 <blockquote>
 <p>Question: Would you expect longer or shorter emails to be spam?</p>
 </blockquote>
-<pre><code>#&gt; Picking joint bandwidth of 1.18</code></pre>
+<pre><code>#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+#&gt; &quot;none&quot;)` instead.
+#&gt; Picking joint bandwidth of 1.18</code></pre>
 <p><img src="1002_logistic_notes_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
 <pre><code>#&gt; # A tibble: 2 x 2
 #&gt;   spam  mean_num_char
@@ -1317,6 +1319,8 @@ div.csl-indent {
 <li><p>For simplicity, we’ll focus on the number of characters (<code>num_char</code>) as predictor, but the model we describe can be expanded to take multiple predictors as well.</p></li>
 </ul>
 <p>This isn’t something we can reasonably fit a linear model to – we need something different!</p>
+<pre><code>#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+#&gt; &quot;none&quot;)` instead.</code></pre>
 <p><img src="1002_logistic_notes_files/figure-html/unnamed-chunk-6-1.png" width="70%" /></p>
 </div>
 <div id="framing-the-problem" class="section level4" number="66.1.0.3">
@@ -1362,14 +1366,14 @@ div.csl-indent {
 </div>
 <div id="logit-function-visualized" class="section level4" number="66.1.0.7">
 <h4><span class="header-section-number">66.1.0.7</span> Logit function, visualized</h4>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="notes-on-logistic-regression.html#cb383-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb383-2"><a href="notes-on-logistic-regression.html#cb383-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logit_p =</span> <span class="fu">log</span>(p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p)))</span>
-<span id="cb383-3"><a href="notes-on-logistic-regression.html#cb383-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb383-4"><a href="notes-on-logistic-regression.html#cb383-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> logit_p)) <span class="sc">+</span> </span>
-<span id="cb383-5"><a href="notes-on-logistic-regression.html#cb383-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb383-6"><a href="notes-on-logistic-regression.html#cb383-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb383-7"><a href="notes-on-logistic-regression.html#cb383-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;logit(p)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb383-8"><a href="notes-on-logistic-regression.html#cb383-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;logit(p) vs. p&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="notes-on-logistic-regression.html#cb384-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb384-2"><a href="notes-on-logistic-regression.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logit_p =</span> <span class="fu">log</span>(p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p)))</span>
+<span id="cb384-3"><a href="notes-on-logistic-regression.html#cb384-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb384-4"><a href="notes-on-logistic-regression.html#cb384-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> logit_p)) <span class="sc">+</span> </span>
+<span id="cb384-5"><a href="notes-on-logistic-regression.html#cb384-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb384-6"><a href="notes-on-logistic-regression.html#cb384-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb384-7"><a href="notes-on-logistic-regression.html#cb384-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;logit(p)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb384-8"><a href="notes-on-logistic-regression.html#cb384-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;logit(p) vs. p&quot;</span>)</span></code></pre></div>
 <p><img src="1002_logistic_notes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="properties-of-the-logit" class="section level4" number="66.1.0.8">
@@ -1403,25 +1407,25 @@ div.csl-indent {
 <li>use <code>"glm"</code> instead of <code>"lm"</code> as the engine</li>
 <li>define <code>family = "binomial"</code> for the link function to be used in the model</li>
 </ul>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="notes-on-logistic-regression.html#cb384-1" aria-hidden="true" tabindex="-1"></a>spam_fit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb384-2"><a href="notes-on-logistic-regression.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb384-3"><a href="notes-on-logistic-regression.html#cb384-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(spam <span class="sc">~</span> num_char, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb384-4"><a href="notes-on-logistic-regression.html#cb384-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb384-5"><a href="notes-on-logistic-regression.html#cb384-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
-<span id="cb384-6"><a href="notes-on-logistic-regression.html#cb384-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb384-7"><a href="notes-on-logistic-regression.html#cb384-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
-<span id="cb384-8"><a href="notes-on-logistic-regression.html#cb384-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb384-9"><a href="notes-on-logistic-regression.html#cb384-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
-<span id="cb384-10"><a href="notes-on-logistic-regression.html#cb384-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="notes-on-logistic-regression.html#cb385-1" aria-hidden="true" tabindex="-1"></a>spam_fit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb385-2"><a href="notes-on-logistic-regression.html#cb385-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb385-3"><a href="notes-on-logistic-regression.html#cb385-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(spam <span class="sc">~</span> num_char, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb385-4"><a href="notes-on-logistic-regression.html#cb385-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb385-5"><a href="notes-on-logistic-regression.html#cb385-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
+<span id="cb385-6"><a href="notes-on-logistic-regression.html#cb385-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span id="cb385-7"><a href="notes-on-logistic-regression.html#cb385-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
+<span id="cb385-8"><a href="notes-on-logistic-regression.html#cb385-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb385-9"><a href="notes-on-logistic-regression.html#cb385-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
+<span id="cb385-10"><a href="notes-on-logistic-regression.html#cb385-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
 </div>
 <div id="spam-model" class="section level4" number="66.1.0.11">
 <h4><span class="header-section-number">66.1.0.11</span> Spam model</h4>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="notes-on-logistic-regression.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
-<span id="cb385-2"><a href="notes-on-logistic-regression.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb385-3"><a href="notes-on-logistic-regression.html#cb385-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
-<span id="cb385-4"><a href="notes-on-logistic-regression.html#cb385-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb385-5"><a href="notes-on-logistic-regression.html#cb385-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
-<span id="cb385-6"><a href="notes-on-logistic-regression.html#cb385-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="notes-on-logistic-regression.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
+<span id="cb386-2"><a href="notes-on-logistic-regression.html#cb386-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
+<span id="cb386-3"><a href="notes-on-logistic-regression.html#cb386-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
+<span id="cb386-4"><a href="notes-on-logistic-regression.html#cb386-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb386-5"><a href="notes-on-logistic-regression.html#cb386-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
+<span id="cb386-6"><a href="notes-on-logistic-regression.html#cb386-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
 <p>Model:
 <span class="math display">\[\log\left(\frac{p}{1-p}\right) = -1.80-0.0621\times \text{num_char}\]</span></p>
 </div>
@@ -1434,6 +1438,8 @@ div.csl-indent {
 <blockquote>
 <p>Question: What is the probability that an email with 15000 characters is spam? What about an email with 40000 characters?</p>
 </blockquote>
+<pre><code>#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+#&gt; &quot;none&quot;)` instead.</code></pre>
 <p><img src="1002_logistic_notes_files/figure-html/spam-predict-viz-1.png" width="100%" /></p>
 <ul>
 <li>2K chars: P(spam) = 0.13</li>
@@ -1443,6 +1449,8 @@ div.csl-indent {
 <blockquote>
 <p>Question: Would you prefer an email with 2000 characters to be labeled as spam or not? How about 40,000 characters?</p>
 </blockquote>
+<pre><code>#&gt; Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+#&gt; &quot;none&quot;)` instead.</code></pre>
 <p><img src="1002_logistic_notes_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 </div>
