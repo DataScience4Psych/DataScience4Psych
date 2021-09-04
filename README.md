@@ -23,6 +23,14 @@ Please [open a new issue](https://help.github.com/articles/creating-an-issue/). 
 [See the attribution page for specifics]( https://datascience4psych.github.io/DataScience4Psych/front-matter.html#attribution)
 
 
+## How to cite these notes
+
+Garrison, S. Mason. (2021). Data Science for Psychologists. Retrieved year-month-day from [URL].
+
+# In-progress
+
+These course notes are a living document. Some sections have been written while others are still under construction. If the parts you are interested in aren't finished yet, please check back at a later time. Feedback and suggestions are welcome.
+
 # License
 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. More details can be found [here](https://datascience4psych.github.io/DataScience4Psych/license.html).
