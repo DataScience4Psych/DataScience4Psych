@@ -9,6 +9,9 @@ if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
 library(tweetrmd) #... embedding tweets
 library(vembedr)  #... embedding youtube videos
 library(knitr)
+if (!require("gapminder")) install.packages("gapminder")
+
+
 
 ## Options
 knitr::opts_chunk$set(
