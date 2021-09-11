@@ -28,14 +28,17 @@ We will use the following data set(s) from @fox2016applied.
 #fox_data <- "http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/"
 #download.file(paste0(fox_data,'UnitedNations.txt'),'UnitedNations.txt')
 
-# devtools::install_github('gmonette/spida2')
+# 
+if (!require("spida2"))  devtools::install_github('gmonette/spida2')
+if (!require("p3d"))  install.packages("p3d", repos="http://R-Forge.R-project.org")
 
+library(p3d)
 library(car)
 library(spida2)
 library(latticeExtra)
 
 # read data
-un <- read.table('UnitedNations.txt', header = TRUE)
+un <- read.table('data/UnitedNations.txt', header = TRUE)
 head(un)
 un$country <- rownames(un)
 
@@ -109,6 +112,7 @@ z^z
 ```
 
 We can use `ifelse` which works on a vector instead of a single value.
+
 ```{r}
 pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
@@ -197,7 +201,7 @@ Uniform quantiles...
 
 ```{r}
 
-library(spida2)
+
 xqplot(un)
 
 ```
@@ -245,9 +249,8 @@ between wage and education, and heteroskedasticity in wage as a function of educ
 
 ```{r}
 
-# install.packages("p3d", repos="http://R-Forge.R-project.org")
 
-library(p3d)
+#library(p3d)
 
 #slid %>% 
 #  xyplot(sqrt(wage) ~ education, .) + 
