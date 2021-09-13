@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>76 Notes on Hypothesis Testing | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="76 Notes on Hypothesis Testing | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-09-11" />
+<meta name="date" content="2021-09-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="lab11.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,14 @@
 
 
 
-
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.4/css/vembedr.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.18/datatables.js"></script>
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -776,6 +776,7 @@ div.csl-indent {
 <li class="chapter" data-level="53" data-path="automation.html"><a href="automation.html"><i class="fa fa-check"></i><b>53</b> Automation</a>
 <ul>
 <li class="chapter" data-level="53.1" data-path="automation.html"><a href="automation.html#code-along-pt-3"><i class="fa fa-check"></i><b>53.1</b> Code Along pt 3</a></li>
+<li class="chapter" data-level="53.2" data-path="automation.html"><a href="automation.html#math-to-coding"><i class="fa fa-check"></i><b>53.2</b> Math to Coding</a></li>
 </ul></li>
 <li class="chapter" data-level="54" data-path="functions-part1.html"><a href="functions-part1.html"><i class="fa fa-check"></i><b>54</b> Write your own R functions</a>
 <ul>
@@ -1457,14 +1458,13 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 <span id="cb428-2"><a href="notes-on-hypothesis-testing.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
 <span id="cb428-3"><a href="notes-on-hypothesis-testing.html#cb428-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="1302_hypothesis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="notes-on-hypothesis-testing.html#cb429-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb429-2"><a href="notes-on-hypothesis-testing.html#cb429-2" aria-hidden="true" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb429-3"><a href="notes-on-hypothesis-testing.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb429-4"><a href="notes-on-hypothesis-testing.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
-<span id="cb429-5"><a href="notes-on-hypothesis-testing.html#cb429-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 1</span></span>
-<span id="cb429-6"><a href="notes-on-hypothesis-testing.html#cb429-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
-<span id="cb429-7"><a href="notes-on-hypothesis-testing.html#cb429-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
-<span id="cb429-8"><a href="notes-on-hypothesis-testing.html#cb429-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   0.124</span></span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="notes-on-hypothesis-testing.html#cb429-1" aria-hidden="true" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb429-2"><a href="notes-on-hypothesis-testing.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb429-3"><a href="notes-on-hypothesis-testing.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
+<span id="cb429-4"><a href="notes-on-hypothesis-testing.html#cb429-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 1</span></span>
+<span id="cb429-5"><a href="notes-on-hypothesis-testing.html#cb429-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
+<span id="cb429-6"><a href="notes-on-hypothesis-testing.html#cb429-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
+<span id="cb429-7"><a href="notes-on-hypothesis-testing.html#cb429-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   0.124</span></span></code></pre></div>
 </div>
 </div>
 <div id="one-vs.-two-sided-hypothesis-tests" class="section level2" number="76.2">
@@ -1724,7 +1724,6 @@ on the board.</p></li>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1765,7 +1764,7 @@ gitbook.start({
 },
 "download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1302_hypothesis.Rmd", "DS4P.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

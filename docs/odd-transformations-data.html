@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>31 ODD: Transformations data! | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="31 ODD: Transformations data! | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-09-11" />
+<meta name="date" content="2021-09-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="lab04.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,14 @@
 
 
 
-
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.4/css/vembedr.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.18/datatables.js"></script>
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -776,6 +776,7 @@ div.csl-indent {
 <li class="chapter" data-level="53" data-path="automation.html"><a href="automation.html"><i class="fa fa-check"></i><b>53</b> Automation</a>
 <ul>
 <li class="chapter" data-level="53.1" data-path="automation.html"><a href="automation.html#code-along-pt-3"><i class="fa fa-check"></i><b>53.1</b> Code Along pt 3</a></li>
+<li class="chapter" data-level="53.2" data-path="automation.html"><a href="automation.html#math-to-coding"><i class="fa fa-check"></i><b>53.2</b> Math to Coding</a></li>
 </ul></li>
 <li class="chapter" data-level="54" data-path="functions-part1.html"><a href="functions-part1.html"><i class="fa fa-check"></i><b>54</b> Write your own R functions</a>
 <ul>
@@ -1303,38 +1304,36 @@ div.csl-indent {
 <span id="cb137-32"><a href="odd-transformations-data.html#cb137-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:knitr&#39;:</span></span>
 <span id="cb137-33"><a href="odd-transformations-data.html#cb137-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb137-34"><a href="odd-transformations-data.html#cb137-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     spin</span></span>
-<span id="cb137-35"><a href="odd-transformations-data.html#cb137-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-36"><a href="odd-transformations-data.html#cb137-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
-<span id="cb137-37"><a href="odd-transformations-data.html#cb137-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb137-38"><a href="odd-transformations-data.html#cb137-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
-<span id="cb137-39"><a href="odd-transformations-data.html#cb137-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb137-40"><a href="odd-transformations-data.html#cb137-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: lattice</span></span>
-<span id="cb137-41"><a href="odd-transformations-data.html#cb137-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-42"><a href="odd-transformations-data.html#cb137-42" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb137-43"><a href="odd-transformations-data.html#cb137-43" aria-hidden="true" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;data/UnitedNations.txt&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb137-44"><a href="odd-transformations-data.html#cb137-44" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(un)</span>
-<span id="cb137-45"><a href="odd-transformations-data.html#cb137-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
-<span id="cb137-46"><a href="odd-transformations-data.html#cb137-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan      Asia 6.90            NA            NA              NA     45.0</span></span>
-<span id="cb137-47"><a href="odd-transformations-data.html#cb137-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania        Europe 2.60            NA            NA              NA     68.0</span></span>
-<span id="cb137-48"><a href="odd-transformations-data.html#cb137-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria        Africa 3.81            52          11.1             9.9     67.5</span></span>
-<span id="cb137-49"><a href="odd-transformations-data.html#cb137-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa   Asia   NA            NA            NA              NA     68.0</span></span>
-<span id="cb137-50"><a href="odd-transformations-data.html#cb137-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra        Europe   NA            NA            NA              NA       NA</span></span>
-<span id="cb137-51"><a href="odd-transformations-data.html#cb137-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola         Africa 6.69            NA            NA              NA     44.9</span></span>
-<span id="cb137-52"><a href="odd-transformations-data.html#cb137-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
-<span id="cb137-53"><a href="odd-transformations-data.html#cb137-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan          46.0             154         2848                 87.5</span></span>
-<span id="cb137-54"><a href="odd-transformations-data.html#cb137-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania              74.0              32          863                   NA</span></span>
-<span id="cb137-55"><a href="odd-transformations-data.html#cb137-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria              70.3              44         1531                 76.4</span></span>
-<span id="cb137-56"><a href="odd-transformations-data.html#cb137-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa       73.0              11           NA                 58.8</span></span>
-<span id="cb137-57"><a href="odd-transformations-data.html#cb137-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                NA              NA           NA                   NA</span></span>
-<span id="cb137-58"><a href="odd-transformations-data.html#cb137-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola               48.1             124          355                   NA</span></span>
-<span id="cb137-59"><a href="odd-transformations-data.html#cb137-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                economicActivityFemale illiteracyMale illiteracyFemale</span></span>
-<span id="cb137-60"><a href="odd-transformations-data.html#cb137-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan                       7.2         52.800            85.00</span></span>
-<span id="cb137-61"><a href="odd-transformations-data.html#cb137-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania                            NA             NA               NA</span></span>
-<span id="cb137-62"><a href="odd-transformations-data.html#cb137-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria                           7.8         26.100            51.00</span></span>
-<span id="cb137-63"><a href="odd-transformations-data.html#cb137-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa                   42.4          0.264             0.36</span></span>
-<span id="cb137-64"><a href="odd-transformations-data.html#cb137-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                            NA             NA               NA</span></span>
-<span id="cb137-65"><a href="odd-transformations-data.html#cb137-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola                             NA             NA               NA</span></span>
-<span id="cb137-66"><a href="odd-transformations-data.html#cb137-66" aria-hidden="true" tabindex="-1"></a>un<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">rownames</span>(un)</span></code></pre></div>
+<span id="cb137-35"><a href="odd-transformations-data.html#cb137-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
+<span id="cb137-36"><a href="odd-transformations-data.html#cb137-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb137-37"><a href="odd-transformations-data.html#cb137-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spida2)</span>
+<span id="cb137-38"><a href="odd-transformations-data.html#cb137-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
+<span id="cb137-39"><a href="odd-transformations-data.html#cb137-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: lattice</span></span>
+<span id="cb137-40"><a href="odd-transformations-data.html#cb137-40" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb137-41"><a href="odd-transformations-data.html#cb137-41" aria-hidden="true" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;data/UnitedNations.txt&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb137-42"><a href="odd-transformations-data.html#cb137-42" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(un)</span>
+<span id="cb137-43"><a href="odd-transformations-data.html#cb137-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
+<span id="cb137-44"><a href="odd-transformations-data.html#cb137-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan      Asia 6.90            NA            NA              NA     45.0</span></span>
+<span id="cb137-45"><a href="odd-transformations-data.html#cb137-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania        Europe 2.60            NA            NA              NA     68.0</span></span>
+<span id="cb137-46"><a href="odd-transformations-data.html#cb137-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria        Africa 3.81            52          11.1             9.9     67.5</span></span>
+<span id="cb137-47"><a href="odd-transformations-data.html#cb137-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa   Asia   NA            NA            NA              NA     68.0</span></span>
+<span id="cb137-48"><a href="odd-transformations-data.html#cb137-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra        Europe   NA            NA            NA              NA       NA</span></span>
+<span id="cb137-49"><a href="odd-transformations-data.html#cb137-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola         Africa 6.69            NA            NA              NA     44.9</span></span>
+<span id="cb137-50"><a href="odd-transformations-data.html#cb137-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
+<span id="cb137-51"><a href="odd-transformations-data.html#cb137-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan          46.0             154         2848                 87.5</span></span>
+<span id="cb137-52"><a href="odd-transformations-data.html#cb137-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania              74.0              32          863                   NA</span></span>
+<span id="cb137-53"><a href="odd-transformations-data.html#cb137-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria              70.3              44         1531                 76.4</span></span>
+<span id="cb137-54"><a href="odd-transformations-data.html#cb137-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa       73.0              11           NA                 58.8</span></span>
+<span id="cb137-55"><a href="odd-transformations-data.html#cb137-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                NA              NA           NA                   NA</span></span>
+<span id="cb137-56"><a href="odd-transformations-data.html#cb137-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola               48.1             124          355                   NA</span></span>
+<span id="cb137-57"><a href="odd-transformations-data.html#cb137-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                economicActivityFemale illiteracyMale illiteracyFemale</span></span>
+<span id="cb137-58"><a href="odd-transformations-data.html#cb137-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Afghanistan                       7.2         52.800            85.00</span></span>
+<span id="cb137-59"><a href="odd-transformations-data.html#cb137-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Albania                            NA             NA               NA</span></span>
+<span id="cb137-60"><a href="odd-transformations-data.html#cb137-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algeria                           7.8         26.100            51.00</span></span>
+<span id="cb137-61"><a href="odd-transformations-data.html#cb137-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; American.Samoa                   42.4          0.264             0.36</span></span>
+<span id="cb137-62"><a href="odd-transformations-data.html#cb137-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Andorra                            NA             NA               NA</span></span>
+<span id="cb137-63"><a href="odd-transformations-data.html#cb137-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Angola                             NA             NA               NA</span></span>
+<span id="cb137-64"><a href="odd-transformations-data.html#cb137-64" aria-hidden="true" tabindex="-1"></a>un<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">rownames</span>(un)</span></code></pre></div>
 <p>Finding transformations to make regressions behave</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="odd-transformations-data.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gd</span>() </span>
 <span id="cb138-2"><a href="odd-transformations-data.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, un)</span></code></pre></div>
@@ -1447,35 +1446,31 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
 <span id="cb146-6"><a href="odd-transformations-data.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 B 2</span></span>
 <span id="cb146-7"><a href="odd-transformations-data.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 A 3</span></span>
 <span id="cb146-8"><a href="odd-transformations-data.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 B 3</span></span>
-<span id="cb146-9"><a href="odd-transformations-data.html#cb146-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-10"><a href="odd-transformations-data.html#cb146-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-11"><a href="odd-transformations-data.html#cb146-11" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>,<span class="dv">3</span>,.<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">5</span>,<span class="dv">0</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb146-12"><a href="odd-transformations-data.html#cb146-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
-<span id="cb146-13"><a href="odd-transformations-data.html#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
-<span id="cb146-14"><a href="odd-transformations-data.html#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
-<span id="cb146-15"><a href="odd-transformations-data.html#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
-<span id="cb146-16"><a href="odd-transformations-data.html#cb146-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
-<span id="cb146-17"><a href="odd-transformations-data.html#cb146-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
-<span id="cb146-18"><a href="odd-transformations-data.html#cb146-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
-<span id="cb146-19"><a href="odd-transformations-data.html#cb146-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
-<span id="cb146-20"><a href="odd-transformations-data.html#cb146-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
-<span id="cb146-21"><a href="odd-transformations-data.html#cb146-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
-<span id="cb146-22"><a href="odd-transformations-data.html#cb146-22" aria-hidden="true" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
-<span id="cb146-23"><a href="odd-transformations-data.html#cb146-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
-<span id="cb146-24"><a href="odd-transformations-data.html#cb146-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 215  2.15 -2.0</span></span>
-<span id="cb146-25"><a href="odd-transformations-data.html#cb146-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 939  0.39  0.0</span></span>
-<span id="cb146-26"><a href="odd-transformations-data.html#cb146-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1084 1.84  0.0</span></span>
-<span id="cb146-27"><a href="odd-transformations-data.html#cb146-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1463 2.63  0.5</span></span>
-<span id="cb146-28"><a href="odd-transformations-data.html#cb146-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1793 2.93  1.0</span></span>
-<span id="cb146-29"><a href="odd-transformations-data.html#cb146-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1834 0.34  2.0</span></span>
-<span id="cb146-30"><a href="odd-transformations-data.html#cb146-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1894 0.94  2.0</span></span>
-<span id="cb146-31"><a href="odd-transformations-data.html#cb146-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2137 0.37  3.0</span></span>
-<span id="cb146-32"><a href="odd-transformations-data.html#cb146-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2210 1.10  3.0</span></span>
-<span id="cb146-33"><a href="odd-transformations-data.html#cb146-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2361 2.61  3.0</span></span>
-<span id="cb146-34"><a href="odd-transformations-data.html#cb146-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-35"><a href="odd-transformations-data.html#cb146-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-36"><a href="odd-transformations-data.html#cb146-36" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y,p))</span>
-<span id="cb146-37"><a href="odd-transformations-data.html#cb146-37" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
+<span id="cb146-9"><a href="odd-transformations-data.html#cb146-9" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>,<span class="dv">3</span>,.<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">5</span>,<span class="dv">0</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb146-10"><a href="odd-transformations-data.html#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
+<span id="cb146-11"><a href="odd-transformations-data.html#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
+<span id="cb146-12"><a href="odd-transformations-data.html#cb146-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
+<span id="cb146-13"><a href="odd-transformations-data.html#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
+<span id="cb146-14"><a href="odd-transformations-data.html#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
+<span id="cb146-15"><a href="odd-transformations-data.html#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
+<span id="cb146-16"><a href="odd-transformations-data.html#cb146-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
+<span id="cb146-17"><a href="odd-transformations-data.html#cb146-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
+<span id="cb146-18"><a href="odd-transformations-data.html#cb146-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
+<span id="cb146-19"><a href="odd-transformations-data.html#cb146-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
+<span id="cb146-20"><a href="odd-transformations-data.html#cb146-20" aria-hidden="true" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
+<span id="cb146-21"><a href="odd-transformations-data.html#cb146-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
+<span id="cb146-22"><a href="odd-transformations-data.html#cb146-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 67   0.67 -2.0</span></span>
+<span id="cb146-23"><a href="odd-transformations-data.html#cb146-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 598  2.98 -1.0</span></span>
+<span id="cb146-24"><a href="odd-transformations-data.html#cb146-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 839  2.39 -0.5</span></span>
+<span id="cb146-25"><a href="odd-transformations-data.html#cb146-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1086 1.86  0.0</span></span>
+<span id="cb146-26"><a href="odd-transformations-data.html#cb146-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1654 1.54  1.0</span></span>
+<span id="cb146-27"><a href="odd-transformations-data.html#cb146-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1686 1.86  1.0</span></span>
+<span id="cb146-28"><a href="odd-transformations-data.html#cb146-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1959 1.59  2.0</span></span>
+<span id="cb146-29"><a href="odd-transformations-data.html#cb146-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1965 1.65  2.0</span></span>
+<span id="cb146-30"><a href="odd-transformations-data.html#cb146-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2239 1.39  3.0</span></span>
+<span id="cb146-31"><a href="odd-transformations-data.html#cb146-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2289 1.89  3.0</span></span>
+<span id="cb146-32"><a href="odd-transformations-data.html#cb146-32" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y,p))</span>
+<span id="cb146-33"><a href="odd-transformations-data.html#cb146-33" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odd-transformations-data.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y<span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
@@ -1513,9 +1508,7 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>From quantile plots:</p>
 <p>Uniform quantiles…</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-transformations-data.html#cb153-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-2"><a href="odd-transformations-data.html#cb153-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-3"><a href="odd-transformations-data.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-transformations-data.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="0403_transformations_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <p>Normal quantiles</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="odd-transformations-data.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xqplot</span>(un, <span class="at">ptype =</span> <span class="st">&#39;normal&#39;</span>)</span></code></pre></div>
@@ -1543,41 +1536,37 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
 <span id="cb155-11"><a href="odd-transformations-data.html#cb155-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; integer(0)</span></span>
 <span id="cb155-12"><a href="odd-transformations-data.html#cb155-12" aria-hidden="true" tabindex="-1"></a><span class="fu">trellis.unfocus</span>()</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-transformations-data.html#cb156-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-2"><a href="odd-transformations-data.html#cb156-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
-<span id="cb156-3"><a href="odd-transformations-data.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
-<span id="cb156-4"><a href="odd-transformations-data.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-transformations-data.html#cb156-1" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> </span>
+<span id="cb156-2"><a href="odd-transformations-data.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
+<span id="cb156-3"><a href="odd-transformations-data.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="odd-transformations-data.html#cb157-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-2"><a href="odd-transformations-data.html#cb157-2" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;United.States&#39;</span>,<span class="st">&#39;Canada&#39;</span>))</span>
-<span id="cb157-3"><a href="odd-transformations-data.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
-<span id="cb157-4"><a href="odd-transformations-data.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
-<span id="cb157-5"><a href="odd-transformations-data.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
-<span id="cb157-6"><a href="odd-transformations-data.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
-<span id="cb157-7"><a href="odd-transformations-data.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
-<span id="cb157-8"><a href="odd-transformations-data.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
-<span id="cb157-9"><a href="odd-transformations-data.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
-<span id="cb157-10"><a href="odd-transformations-data.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
-<span id="cb157-11"><a href="odd-transformations-data.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
-<span id="cb157-12"><a href="odd-transformations-data.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
-<span id="cb157-13"><a href="odd-transformations-data.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
-<span id="cb157-14"><a href="odd-transformations-data.html#cb157-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="odd-transformations-data.html#cb157-1" aria-hidden="true" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;United.States&#39;</span>,<span class="st">&#39;Canada&#39;</span>))</span>
+<span id="cb157-2"><a href="odd-transformations-data.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
+<span id="cb157-3"><a href="odd-transformations-data.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
+<span id="cb157-4"><a href="odd-transformations-data.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
+<span id="cb157-5"><a href="odd-transformations-data.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
+<span id="cb157-6"><a href="odd-transformations-data.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
+<span id="cb157-7"><a href="odd-transformations-data.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
+<span id="cb157-8"><a href="odd-transformations-data.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
+<span id="cb157-9"><a href="odd-transformations-data.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
+<span id="cb157-10"><a href="odd-transformations-data.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
+<span id="cb157-11"><a href="odd-transformations-data.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
+<span id="cb157-12"><a href="odd-transformations-data.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
+<span id="cb157-13"><a href="odd-transformations-data.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
 <p>between wage and education, and heteroskedasticity in wage as a function of education.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-transformations-data.html#cb158-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-transformations-data.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(p3d)</span></span>
 <span id="cb158-2"><a href="odd-transformations-data.html#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-3"><a href="odd-transformations-data.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="co">#library(p3d)</span></span>
-<span id="cb158-4"><a href="odd-transformations-data.html#cb158-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-5"><a href="odd-transformations-data.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="co">#slid %&gt;% </span></span>
-<span id="cb158-6"><a href="odd-transformations-data.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) + </span></span>
-<span id="cb158-7"><a href="odd-transformations-data.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
-<span id="cb158-8"><a href="odd-transformations-data.html#cb158-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-9"><a href="odd-transformations-data.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Init3d()</span></span>
-<span id="cb158-10"><a href="odd-transformations-data.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
-<span id="cb158-11"><a href="odd-transformations-data.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d()</span></span>
-<span id="cb158-12"><a href="odd-transformations-data.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;United.States&#39;)</span></span>
-<span id="cb158-13"><a href="odd-transformations-data.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;Canada&#39;)</span></span>
-<span id="cb158-14"><a href="odd-transformations-data.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="co">#rownames(un)</span></span>
-<span id="cb158-15"><a href="odd-transformations-data.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="co">#names(un)</span></span></code></pre></div>
+<span id="cb158-3"><a href="odd-transformations-data.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="co">#slid %&gt;% </span></span>
+<span id="cb158-4"><a href="odd-transformations-data.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) + </span></span>
+<span id="cb158-5"><a href="odd-transformations-data.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
+<span id="cb158-6"><a href="odd-transformations-data.html#cb158-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-7"><a href="odd-transformations-data.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Init3d()</span></span>
+<span id="cb158-8"><a href="odd-transformations-data.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
+<span id="cb158-9"><a href="odd-transformations-data.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d()</span></span>
+<span id="cb158-10"><a href="odd-transformations-data.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;United.States&#39;)</span></span>
+<span id="cb158-11"><a href="odd-transformations-data.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Id3d(&#39;Canada&#39;)</span></span>
+<span id="cb158-12"><a href="odd-transformations-data.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="co">#rownames(un)</span></span>
+<span id="cb158-13"><a href="odd-transformations-data.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="co">#names(un)</span></span></code></pre></div>
 </div>
 <div id="box-cox-transformation" class="section level2" number="31.3">
 <h2><span class="header-section-number">31.3</span> Box Cox Transformation</h2>
@@ -1610,7 +1599,6 @@ have a graph that is concave up if <span class="math inline">\(p &gt;1\)</span>,
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1651,7 +1639,7 @@ gitbook.start({
 },
 "download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0403_transformations.Rmd", "DS4P.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
