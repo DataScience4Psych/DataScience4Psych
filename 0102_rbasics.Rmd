@@ -1,4 +1,4 @@
-# Optional Deep Dive: R basics and workflows {#r_basics}
+# R basics and workflows {#r_basics}
 
 ```{r include = FALSE}
 source("common.R")
@@ -11,13 +11,14 @@ ds4p_urls <- read.csv("./data/ds4p_urls.csv")
 
 
 ```{r, echo=FALSE}
-include_tweet("https://twitter.com/CurieDr/status/1355911682585931777")
+"https://twitter.com/CurieDr/status/1355911682585931777" %>%
+include_tweet()
 ```
 
 
-<!--Original content: https://stat545.com/block002_hello-r-workspace-wd-project.html-->
+There is an implicit contract with computer and scripting languages. The computer will do tedious tasks for you. In return, you must be explicit in your instructions. The computer does not have the ability to extrapolate. So we have to work within the range of what it does understand. And that is where this entire course comes into play. We are learning how to communicate in a way that it does understand. So let's begin!
 
-This chapter is a recommended, but optional deep dive (ODD) that might be useful to you.
+
 
 ## Basics of working with R at the command line and RStudio goodies
 
@@ -46,11 +47,13 @@ objectName <- value
 ```
 and in my head I hear, e.g., "x gets 12".
 
-You will make lots of assignments and the operator `<-` is a pain to type. Don't be lazy and use `=`, although it would work, because it will just sow confusion later. Instead, utilize RStudio's keyboard shortcut: Alt + - (the minus sign).
+You will make lots of assignments. Even thought, the operator `<-` is a hassle to type, resist the urge to  use `=`. Technically, it would work. But it will be really confusing later. Instead, try RStudio's keyboard shortcut: Alt + - (the minus sign).
 
 Notice that RStudio auto-magically surrounds `<-` with spaces, which demonstrates a useful code formatting practice. Code is miserable to read on a good day. Give your eyes a break and use spaces.
 
 RStudio offers many handy [keyboard shortcuts][rstudio-key-shortcuts]. Also, Alt+Shift+K brings up a keyboard shortcut reference card.
+
+### Object names
 
 Object names cannot start with a digit and cannot contain certain other characters such as a comma or a space. You will be wise to adopt a [convention for demarcating words][wiki-snake-case] in names.
 
@@ -65,7 +68,7 @@ Make another assignment:
 this_is_a_really_long_name <- 2.5
 ```
 
-To inspect this, try out RStudio's completion facility: type the first few characters, press TAB, add characters until you disambiguate, then press return.
+To inspect this assignment, try out RStudio's completion facility: type the first few characters, press TAB, add characters until you disambiguate, then press return.
 
 Make another assignment:
 ```{r}
@@ -78,7 +81,14 @@ masonrocks
 masn_rocks
 ```
 
-Implicit contract with the computer / scripting language: Computer will do tedious computation for you. In return, you will be completely precise in your instructions. Typos matter. Case matters. Get better at typing.
+Here's where that implicit contract comes in. The computer (and R) will do amazing things, if we can ask it to do those things in a way it understands. 
+Typos matter. Case matters. Precision matters. We have to work within it's narrow range of ability. The computer isn't accommodating, unfortunately. 
+
+However, if you struggle with precise typing, it might be worth your time to teach your computer to be accommodating. And as a result, you might discover that you have a real knack for programming... and that knack will lead you toward quantitative psychology... and teaching data science for psychologists... 
+
+In other words, [I have some typing macros](https://github.com/smasongarrison/AutoHotKey_Scripts) and tricks that may help you. If there's interest, I can carve out some time in-class to discuss them.
+
+### Functions
 
 R has a mind-blowing collection of built-in functions that are accessed like so:
 
@@ -94,10 +104,11 @@ Type `se` and hit TAB. A pop up shows you possible completions. Specify `seq()` 
 seq(1, 10)
 ```
 
-The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Since we didn't specify step size, the default value of `by` in the function definition is used, which ends up being 1 in this case. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use `name = value`.
+The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Because we didn't specify step size, the default value of `by` in the function definition is used. In this case, the default is 1. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use `name = value`.
 
 
 Make this assignment and notice similar help with quotation marks.
+
 ```{r}
 yo <- "hello world"
 ```
@@ -119,6 +130,7 @@ Not all functions have (or require) arguments:
 ```{r}
 date()
 ```
+
 
 Now look at your workspace -- in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:
 
@@ -215,7 +227,7 @@ Let's make one to use for the rest of this class. Do this: *File > New Project..
 
 I created a directory and, therefore RStudio project, called `swc` in my `tmp` directory, FYI.
 
-<!--JB: https://github.com/yihui/knitr/issues/277 -->
+
 
 ```r
 setwd("~/tmp/swc")
@@ -261,12 +273,12 @@ Visit your figure in an external viewer to verify that the PDF is changing as yo
 
 In your favorite OS-specific way, search your files for `toy_line_plot.pdf` and presumably you will find the PDF itself (no surprise) but _also the script that created it (`toy-line.r`)_. This latter phenomenon is a huge win. One day you will want to remake a figure or just simply understand where it came from. If you rigorously save figures to file __with R code and not ever ever ever the mouse or the clipboard__, you will sing my praises one day. Trust me.
 
-## Stuff
+## Tradition
 
 ```{r, echo=FALSE}
 # tradition
-video_url="https://www.youtube.com/watch?v=gRdfX7ut8gw"
-embed_url(video_url) %>%
+"https://www.youtube.com/watch?v=gRdfX7ut8gw" %>%
+embed_url() %>%
   use_align("center")
 ```
 
