@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-12-23" />
+<meta name="date" content="2021-12-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1296,7 +1296,7 @@ div.csl-indent {
 <p>Have no idea what I’m talking about? Not sure if you care? If you use these base R functions: <code>subset()</code>, <code>apply()</code>, <code>[sl]apply()</code>, <code>tapply()</code>, <code>aggregate()</code>, <code>split()</code>, <code>do.call()</code>, <code>with()</code>, <code>within()</code>, then you should keep reading. Also, if you use <code>for()</code> loops a lot, you might enjoy learning other ways to iterate over rows or groups of rows or variables in a data frame.</p>
 <div id="load-dplyr-and-gapminder" class="section level3" number="22.0.1">
 <h3><span class="header-section-number">22.0.1</span> Load dplyr and gapminder</h3>
-<p>I choose to load the tidyverse, which will load dplyr, among other packages we use incidentally below.</p>
+<p>I choose to load the tidyverse, which will load dplyr, among other packages we’ll use incidentally below.</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="dplyr-intro.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb72-2"><a href="dplyr-intro.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</span></span>
 <span id="cb72-3"><a href="dplyr-intro.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; v ggplot2 3.3.5     v purrr   0.3.4</span></span>
@@ -1331,8 +1331,8 @@ div.csl-indent {
 <p>Note how <code>gapminder</code>’s <code>class()</code> includes <code>tbl_df</code>; the “tibble” terminology is a nod to this.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="dplyr-intro.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gapminder)</span>
 <span id="cb75-2"><a href="dplyr-intro.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></span></code></pre></div>
-<p>There will be some functions, like <code>print()</code>, that know about tibbles and do something special. There will others that do not, like <code>summary()</code>. In which case the regular data frame treatment will happen, because every tibble is also a regular data frame.</p>
-<p>To turn any data frame into a tibble use <code>as_tibble()</code>:</p>
+<p>Some functions, like <code>print()</code>, know about tibbles and do something special. However, other functions do not, like <code>summary()</code>. In those cases, the tibble will be treated the same as a regular data because every tibble is also a regular data frame.</p>
+<p>To turn any data frame into a tibble, use <code>as_tibble()</code>:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="dplyr-intro.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris)</span>
 <span id="cb76-2"><a href="dplyr-intro.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 150 x 5</span></span>
 <span id="cb76-3"><a href="dplyr-intro.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
@@ -1416,7 +1416,7 @@ div.csl-indent {
 <span id="cb79-2"><a href="dplyr-intro.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Rwanda&quot;</span>) <span class="do">## almost same as filter; quite nice actually</span></span></code></pre></div>
 <p>Under no circumstances should you subset your data the way I did at first:</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="dplyr-intro.html#cb80-1" aria-hidden="true" tabindex="-1"></a>excerpt <span class="ot">&lt;-</span> gapminder[<span class="dv">241</span><span class="sc">:</span><span class="dv">252</span>, ]</span></code></pre></div>
-<p>Why is this a terrible idea?</p>
+<p>Why is this approach a terrible idea?</p>
 <ul>
 <li>It is not self-documenting. What is so special about rows 241 through 252?</li>
 <li>It is fragile. This line of code will produce different results if someone changes the row order of <code>gapminder</code>, e.g. sorts the data earlier in the script.</li>

@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-12-23" />
+<meta name="date" content="2021-12-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1317,12 +1317,14 @@ div.csl-indent {
 <h3><span class="header-section-number">55.1.3</span> Create an OMDb API Key</h3>
 <p>This tells us that we need an API key to access the OMDb API. We will store our key for the OMDb API in our <code>.Renviron</code> file using the helper function <code>edit_r_environ()</code> from the <a href="https://usethis.r-lib.org">usethis</a> package. Follow these steps:</p>
 <ol style="list-style-type: decimal">
-<li><p>Visit this URL and request your free API key: <a href="https://www.omdbapi.com/apikey.aspx" class="uri">https://www.omdbapi.com/apikey.aspx</a></p></li>
-<li><p>Check your email and follow the instructions to activate your key.</p></li>
-<li><p>Install/load the usethis package and run <code>edit_r_environ()</code> in the R Console:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="diy-web-data.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;usethis&quot;)</span></span>
-<span id="cb303-2"><a href="diy-web-data.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
-<span id="cb303-3"><a href="diy-web-data.html#cb303-3" aria-hidden="true" tabindex="-1"></a><span class="fu">edit_r_environ</span>()</span></code></pre></div></li>
+<li>Visit this URL and request your free API key: <a href="https://www.omdbapi.com/apikey.aspx" class="uri">https://www.omdbapi.com/apikey.aspx</a></li>
+<li>Check your email and follow the instructions to activate your key.</li>
+<li>Install/load the usethis package and run <code>edit_r_environ()</code> in the R Console:</li>
+</ol>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="diy-web-data.html#cb303-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># install.packages(&quot;usethis&quot;)</span></span>
+<span id="cb303-2"><a href="diy-web-data.html#cb303-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(usethis)</span>
+<span id="cb303-3"><a href="diy-web-data.html#cb303-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">edit_r_environ</span>()</span></code></pre></div>
+<ol style="list-style-type: decimal">
 <li><p>Add <code>OMDB_API_KEY=&lt;your-secret-key&gt;</code> on a new line, press enter to add a blank line at the end (important!), save the file, and close it.</p>
 <ul>
 <li>Note that we use <code>&lt;your-secret-key&gt;</code> as a placeholder here and throughout these instructions. Your actual API key will look something like: <code>p319s0aa</code> (no quotes or other characters like <code>&lt;</code> or <code>&gt;</code> should go on the right of the <code>=</code> sign).</li>
@@ -1330,10 +1332,10 @@ div.csl-indent {
 <li><p>Restart R.</p></li>
 <li><p>You can now access your OMDb API key from the R console and save it as an object:</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="diy-web-data.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">&quot;OMDB_API_KEY&quot;</span>)</span></code></pre></div></li>
-<li><p>We can use this to easily add our API key to the request URL. Let’s make this API key an object we can refer to as <code>movie_key</code>:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="diy-web-data.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save it as an object</span></span>
-<span id="cb305-2"><a href="diy-web-data.html#cb305-2" aria-hidden="true" tabindex="-1"></a>movie_key <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;OMDB_API_KEY&quot;</span>)</span></code></pre></div></li>
+<li><p>We can use this to easily add our API key to the request URL. Let’s make this API key an object we can refer to as <code>movie_key</code>:</p></li>
 </ol>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="diy-web-data.html#cb305-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># save it as an object</span></span>
+<span id="cb305-2"><a href="diy-web-data.html#cb305-2" aria-hidden="true" tabindex="-1"></a>    movie_key <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;OMDB_API_KEY&quot;</span>)</span></code></pre></div>
 <div id="alternative-strategy-for-keeping-keys-.rprofile" class="section level4" number="55.1.3.1">
 <h4><span class="header-section-number">55.1.3.1</span> Alternative strategy for keeping keys: <code>.Rprofile</code></h4>
 <p><strong>Remember to protect your key! It is important for your privacy. You know, like a key.</strong></p>
@@ -1517,7 +1519,7 @@ div.csl-indent {
 <span id="cb330-4"><a href="diy-web-data.html#cb330-4" aria-hidden="true" tabindex="-1"></a><span class="fu">content</span>(the_martian)</span></code></pre></div>
 <p>With httr, we are able to pass in the named arguments to the API call as a named list. We are also able to use spaces in movie names; httr encodes these in the URL before making the GET request.</p>
 <p>It is very good to <a href="https://www.flickr.com/photos/girliemac/sets/72157628409467125">learn your HTTP status codes</a>.</p>
-<p>The documentation for httr includes a vignette of <a href="https://httr.r-lib.org/articles/api-packages.html">“Best practices for writing an API package”</a>, which is useful for when you want to bring your favourite web resource into the world of R.</p>
+<p>The documentation for httr includes a vignette of <a href="https://httr.r-lib.org/articles/api-packages.html">“Best practices for writing an API package”</a>, which is useful for when you want to bring your favorite web resource into the world of R.</p>
 </div>
 <div id="scraping" class="section level2" number="55.4">
 <h2><span class="header-section-number">55.4</span> Scraping</h2>

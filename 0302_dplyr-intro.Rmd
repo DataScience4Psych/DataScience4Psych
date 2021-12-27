@@ -2,11 +2,11 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
-ds4p_urls <- read.csv("./data/ds4p_urls.csv")
+ds4p_funyoutube <- read.csv("admin/csvs/ds4p_funyoutube.csv", sep="")
+ds4p_urls <- read.csv("./admin/csvs/ds4p_urls.csv")
 library(tweetrmd) #... embedding tweets
 ```
-```{r links, child="supporting-docs/links.md"}
+```{r links, child="admin/mds/links.md"}
 ```
 
 <!--Original content: https://stat545.com/block009_dplyr-intro.html-->
@@ -22,7 +22,7 @@ Have no idea what I'm talking about? Not sure if you care? If you use these base
 
 ### Load dplyr and gapminder
 
-I choose to load the tidyverse, which will load dplyr, among other packages we use incidentally below. 
+I choose to load the tidyverse, which will load dplyr, among other packages we'll use incidentally below. 
 
 ```{r start_dplyr}
 library(tidyverse)
@@ -50,9 +50,9 @@ Note how `gapminder`'s `class()` includes `tbl_df`; the "tibble" terminology is 
 class(gapminder)
 ```
 
-There will be some functions, like `print()`, that know about tibbles and do something special. There will others that do not, like `summary()`. In which case the regular data frame treatment will happen, because every tibble is also a regular data frame.
+Some functions, like `print()`, know about tibbles and do something special. However, other functions do not, like `summary()`. In those cases, the tibble will be treated the same as a regular data because every tibble is also a regular data frame.
 
-To turn any data frame into a tibble use `as_tibble()`:
+To turn any data frame into a tibble, use `as_tibble()`:
 
 ```{r}
 as_tibble(iris)
@@ -100,7 +100,7 @@ Under no circumstances should you subset your data the way I did at first:
 excerpt <- gapminder[241:252, ]
 ```
 
-Why is this a terrible idea?
+Why is this approach a terrible idea?
 
 * It is not self-documenting. What is so special about rows 241 through 252?
 * It is fragile. This line of code will produce different results if someone changes the row order of `gapminder`, e.g. sorts the data earlier in the script.
