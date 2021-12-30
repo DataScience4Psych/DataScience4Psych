@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>70 ODD: Notes on Cross validation | Data Science for Psychologists</title>
+  <title>Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="70 ODD: Notes on Cross validation | Data Science for Psychologists" />
+  <meta property="og:title" content="Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="70 ODD: Notes on Cross validation | Data Science for Psychologists" />
+  <meta name="twitter:title" content="Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="cross-validation.html"/>
-<link rel="next" href="welcome-to-quantifying-uncertainty.html"/>
+
+<link rel="next" href="attribution.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -1287,143 +1287,50 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="odd-notes-on-cross-validation" class="section level1" number="70">
-<h1><span class="header-section-number">70</span> ODD: Notes on Cross validation</h1>
-<p>A too technical and optional deep dive set of notes on cross-validation.</p>
-<p>We have:</p>
-<ul>
-<li><p>Data <span class="math inline">\(X_1, \ldots, X_n\)</span>.</p></li>
-<li><p>A tuning parameter <span class="math inline">\(\theta\)</span>. Each value of <span class="math inline">\(\theta\)</span> corresponds to a different set of models.</p></li>
-<li><p>A function <span class="math inline">\(L\)</span> that takes a fitted model and a data point and returns a measure of model quality.</p></li>
-</ul>
-<p>We would like to choose one model from the set of candidate models indexed by <span class="math inline">\(\theta\)</span>.</p>
-<div id="example-regression" class="section level2" number="70.1">
-<h2><span class="header-section-number">70.1</span> Example: Regression</h2>
-<ul>
-<li><p>Data: Pairs of predictors and response variables, <span class="math inline">\((y_i, X_i)\)</span>, <span class="math inline">\(i = 1,\ldots, n\)</span>, <span class="math inline">\(y_i \in \mathbb R\)</span>, <span class="math inline">\(X_i \in \mathbb R^p\)</span></p></li>
-<li><p>Models: <span class="math inline">\(y_i = X \beta + \epsilon\)</span>, <span class="math inline">\(\beta_j = 0, j \in S_\theta\)</span>, where <span class="math inline">\(S_\theta \subseteq \{1,\ldots, p\}\)</span>.</p></li>
-<li><p>Model quality: Squared-error loss. If <span class="math inline">\(\hat \beta_\theta\)</span> are our estimates of the regression coefficients in model <span class="math inline">\(\theta\)</span>, model quality is measured by
-<span class="math display">\[
-L(\hat \beta_\theta, (y_i, X_i)) = (y_i - X_i^T \hat \beta_\theta)^2
-\]</span></p></li>
-</ul>
-<p>We want to choose a subset of the predictors that do the best job of explaining the response.</p>
-<p>Naive solution: Find the model that has the lowest value for the squared-error loss.</p>
-<p>Why doesn’t this work?</p>
+<div id="header">
+<h1 class="title">Data Science for Psychologists</h1>
+<h2 class="subtitle"><em>A Refreshed Exploratory &amp; Graphical Data Analysis in R</em></h2>
+<p class="author"><em>S. Mason Garrison</em></p>
+<p class="date"><em>2021-12-30</em></p>
 </div>
-<div id="example-mixture-models" class="section level2" number="70.2">
-<h2><span class="header-section-number">70.2</span> Example: Mixture models</h2>
-<ul>
-<li><p>Data: <span class="math inline">\(x_1,\ldots, x_n\)</span>, <span class="math inline">\(x_i \in \mathbb R\)</span></p></li>
-<li><p>Models: Gaussian mixture models with <span class="math inline">\(\theta\)</span> mixture components.</p></li>
-<li><p>Model quality: Negative log likelihood of the data. If <span class="math inline">\(\hat p_\theta\)</span> is the density of the fitted model with <span class="math inline">\(\theta\)</span> components, model quality is measured by <span class="math inline">\(L(\hat p_\theta, x_i) = -\log \hat p_\theta(x_i)\)</span>.</p></li>
-</ul>
-<p>We want to choose the number of mixture components that best explains the data.</p>
-<p>Naive solution: Choose the number of mixture components that minimizes the negative log likelihood of the data.</p>
-</div>
-<div id="better-solution-cross-validation" class="section level2" number="70.3">
-<h2><span class="header-section-number">70.3</span> Better Solution: Cross validation</h2>
-<p>Idea: Instead of measuring model quality on the same data we used to fit the model, we estimate model quality on new data.</p>
-<p>If we knew the true distribution of the data, we could simulate new data and use a Monte Carlo estimate based on the simulations.</p>
-<p>We can’t actually get new data, and so we hold some back when we fit the model and then pretend that the held back data is new data.</p>
-<p>Procedure:</p>
-<ul>
-<li><p>Divide the data into <span class="math inline">\(K\)</span> folds</p></li>
-<li><p>Let <span class="math inline">\(X^{(k)}\)</span> denote the data in fold <span class="math inline">\(k\)</span>, and let <span class="math inline">\(X^{(-k)}\)</span> denote the data in all the folds except for <span class="math inline">\(k\)</span>.</p></li>
-<li><p>For each fold and each value of the tuning parameter <span class="math inline">\(\theta\)</span>, fit the model on <span class="math inline">\(X^{(-k)}\)</span> to get <span class="math inline">\(\hat f_\theta^{(k)}\)</span></p></li>
-<li><p>Compute
-<span class="math display">\[
-\text{CV}(\theta) = \frac{1}{n} \sum_{k=1}^K \sum_{x \in X^{(k)}} L(\hat f_\theta^{(k)}, x)
-\]</span></p></li>
-<li><p>Choose <span class="math inline">\(\hat \theta = \text{argmin}_{\theta} \text{CV}(\theta)\)</span></p></li>
-</ul>
-</div>
-<div id="example" class="section level2" number="70.4">
-<h2><span class="header-section-number">70.4</span> Example</h2>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="odd-notes-on-cross-validation.html#cb415-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
-<span id="cb415-2"><a href="odd-notes-on-cross-validation.html#cb415-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">20</span></span>
-<span id="cb415-3"><a href="odd-notes-on-cross-validation.html#cb415-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), <span class="at">nrow =</span> n)</span>
-<span id="cb415-4"><a href="odd-notes-on-cross-validation.html#cb415-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb415-5"><a href="odd-notes-on-cross-validation.html#cb415-5" aria-hidden="true" tabindex="-1"></a>get_rss_submodels <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y, X) {</span>
-<span id="cb415-6"><a href="odd-notes-on-cross-validation.html#cb415-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb415-7"><a href="odd-notes-on-cross-validation.html#cb415-7" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span>)</span>
-<span id="cb415-8"><a href="odd-notes-on-cross-validation.html#cb415-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb415-9"><a href="odd-notes-on-cross-validation.html#cb415-9" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X[,<span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
-<span id="cb415-10"><a href="odd-notes-on-cross-validation.html#cb415-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb415-11"><a href="odd-notes-on-cross-validation.html#cb415-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(lm_submodel)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb415-12"><a href="odd-notes-on-cross-validation.html#cb415-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb415-13"><a href="odd-notes-on-cross-validation.html#cb415-13" aria-hidden="true" tabindex="-1"></a>p_vec <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>p</span>
-<span id="cb415-14"><a href="odd-notes-on-cross-validation.html#cb415-14" aria-hidden="true" tabindex="-1"></a>rss <span class="ot">=</span> <span class="fu">sapply</span>(p_vec, get_rss_submodels, y, X)</span>
-<span id="cb415-15"><a href="odd-notes-on-cross-validation.html#cb415-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rss <span class="sc">~</span> p_vec)</span></code></pre></div>
-<p><img src="1102_cvnotes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="odd-notes-on-cross-validation.html#cb416-1" aria-hidden="true" tabindex="-1"></a>get_cv_error <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y, X, folds) {</span>
-<span id="cb416-2"><a href="odd-notes-on-cross-validation.html#cb416-2" aria-hidden="true" tabindex="-1"></a>    cv_vec <span class="ot">=</span> <span class="fu">numeric</span>(<span class="fu">length</span>(<span class="fu">unique</span>(folds)))</span>
-<span id="cb416-3"><a href="odd-notes-on-cross-validation.html#cb416-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(f <span class="cf">in</span> <span class="fu">unique</span>(folds)) {</span>
-<span id="cb416-4"><a href="odd-notes-on-cross-validation.html#cb416-4" aria-hidden="true" tabindex="-1"></a>        cv_vec[f] <span class="ot">=</span> <span class="fu">rss_on_held_out</span>(</span>
-<span id="cb416-5"><a href="odd-notes-on-cross-validation.html#cb416-5" aria-hidden="true" tabindex="-1"></a>                  n_predictors,</span>
-<span id="cb416-6"><a href="odd-notes-on-cross-validation.html#cb416-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y_train =</span> y[folds <span class="sc">!=</span> f],</span>
-<span id="cb416-7"><a href="odd-notes-on-cross-validation.html#cb416-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">X_train =</span> X[folds <span class="sc">!=</span> f,],</span>
-<span id="cb416-8"><a href="odd-notes-on-cross-validation.html#cb416-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y_test =</span> y[folds <span class="sc">==</span> f],</span>
-<span id="cb416-9"><a href="odd-notes-on-cross-validation.html#cb416-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">X_test =</span> X[folds <span class="sc">==</span> f,])</span>
-<span id="cb416-10"><a href="odd-notes-on-cross-validation.html#cb416-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb416-11"><a href="odd-notes-on-cross-validation.html#cb416-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">mean</span>(cv_vec))</span>
-<span id="cb416-12"><a href="odd-notes-on-cross-validation.html#cb416-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb416-13"><a href="odd-notes-on-cross-validation.html#cb416-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb416-14"><a href="odd-notes-on-cross-validation.html#cb416-14" aria-hidden="true" tabindex="-1"></a>rss_on_held_out <span class="ot">=</span> <span class="cf">function</span>(n_predictors, y_train, X_train, y_test, X_test) {</span>
-<span id="cb416-15"><a href="odd-notes-on-cross-validation.html#cb416-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb416-16"><a href="odd-notes-on-cross-validation.html#cb416-16" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span>)</span>
-<span id="cb416-17"><a href="odd-notes-on-cross-validation.html#cb416-17" aria-hidden="true" tabindex="-1"></a>        preds_on_test <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y_test))</span>
-<span id="cb416-18"><a href="odd-notes-on-cross-validation.html#cb416-18" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb416-19"><a href="odd-notes-on-cross-validation.html#cb416-19" aria-hidden="true" tabindex="-1"></a>        lm_submodel <span class="ot">=</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X_train[,<span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
-<span id="cb416-20"><a href="odd-notes-on-cross-validation.html#cb416-20" aria-hidden="true" tabindex="-1"></a>        preds_on_test <span class="ot">=</span> X_test[,<span class="dv">1</span><span class="sc">:</span>n_predictors, drop<span class="ot">=</span> <span class="cn">FALSE</span>] <span class="sc">%*%</span> <span class="fu">coef</span>(lm_submodel)</span>
-<span id="cb416-21"><a href="odd-notes-on-cross-validation.html#cb416-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb416-22"><a href="odd-notes-on-cross-validation.html#cb416-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb416-23"><a href="odd-notes-on-cross-validation.html#cb416-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">sum</span>((y_test <span class="sc">-</span> preds_on_test)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb416-24"><a href="odd-notes-on-cross-validation.html#cb416-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb416-25"><a href="odd-notes-on-cross-validation.html#cb416-25" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb416-26"><a href="odd-notes-on-cross-validation.html#cb416-26" aria-hidden="true" tabindex="-1"></a><span class="do">## normally you would do this at random</span></span>
-<span id="cb416-27"><a href="odd-notes-on-cross-validation.html#cb416-27" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">each =</span> n <span class="sc">/</span> K)</span>
-<span id="cb416-28"><a href="odd-notes-on-cross-validation.html#cb416-28" aria-hidden="true" tabindex="-1"></a>p_vec <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>p</span>
-<span id="cb416-29"><a href="odd-notes-on-cross-validation.html#cb416-29" aria-hidden="true" tabindex="-1"></a>cv_errors <span class="ot">=</span> <span class="fu">sapply</span>(p_vec, get_cv_error, y, X, folds)</span>
-<span id="cb416-30"><a href="odd-notes-on-cross-validation.html#cb416-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_errors <span class="sc">~</span> p_vec)</span></code></pre></div>
-<p><img src="1102_cvnotes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-</div>
-<div id="choice-of-k" class="section level2" number="70.5">
-<h2><span class="header-section-number">70.5</span> Choice of <span class="math inline">\(K\)</span></h2>
-<p>Considerations:</p>
-<ul>
-<li><p>Larger <span class="math inline">\(K\)</span> means more computation (although sometimes there is a shortcut for leave-one-out cross validation)</p></li>
-<li><p>Larger <span class="math inline">\(K\)</span> means less bias in the estimate of model accuracy</p></li>
-<li><p>Larger <span class="math inline">\(K\)</span> also means more variance in the estimate, so we don’t necessarily want <span class="math inline">\(K = n\)</span></p></li>
-<li><p>Usually choose <span class="math inline">\(K = 5\)</span> or <span class="math inline">\(K = 10\)</span></p></li>
-<li><p>If your problem is structured (e.g. time series, spatial), you should choose the folds to respect the structure.</p></li>
-</ul>
-</div>
-<div id="summing-up" class="section level2" number="70.6">
-<h2><span class="header-section-number">70.6</span> Summing up</h2>
-<ul>
-<li><p>We can use simulations to estimate arbitrary functions of our random variables.</p></li>
-<li><p>If we know the underlying distribution, we can simply simulate from it (Monte Carlo integration).</p></li>
-<li><p>If we don’t know the underlying distribution, we can “simulate” from the data by resampling from the data (cross validation; ish). Resampling methods will do well to the extent that the observed data reflect the true data-generating distribution.</p></li>
-</ul>
-<!--DS4P Links-->
-<!--AE. Links-->
-<!-- Lab Links-->
-<!--Slides-->
-<!--externals-->
-
+<div id="welcome-to-psy-703" class="section level1 unnumbered">
+<h1>Welcome to PSY 703</h1>
+<p>Welcome to class! This website is designed to accompany Mason Garrison’s Data Science for Psychologists (DS4P). DS4P is a graduate-level quantitative methods course at Wake Forest University. This class assumes zero knowledge of programming, computer science, linear algebra, probability, or really anything fancy. I encourage anyone who is quant-curious to work their way through these course notes. The course notes include lectures, worked examples, readings, activities, and labs. You can find the current version of the course syllabus <a href="https://smasongarrison.github.io/syllabi/data-science.html">here</a>, along with all of the <a href="https://smasongarrison.github.io/syllabi">other syllabi for my classes</a>. All the embedded lecture videos can be found on a <a href="https://www.youtube.com/playlist?list=PLKrrdtYgOUYZomNqf-1dtCDW94ySdLv-9">youtube playlist</a>.</p>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/nYYJmmcgzr8" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
 </div>
 </div>
-
-
-
+<div id="mason-notes" class="section level2 unnumbered">
+<h2>Mason Notes</h2>
+<p>This website is constantly changing. This new course is in active development, and approximately 100% done. I have made this process explicitly transparent because I want you to see how you can use R to produce some pretty neat things. Indeed, I’ve included the source code for this website in the class <a href="https://github.com/DataScience4Psych">repo</a>. I encourage you to contribute to the <a href="https://github.com/DataScience4Psych/DataScience4Psych">course code</a>. If you catch typos, errors, please issue a pull request with the fixes. If you find cool / useful resources, please add them. By the end of the semester, I would love for everyone to have contributed to the course materials.</p>
+<div id="how-to-use-these-notes" class="section level3 unnumbered">
+<h3>How to use these notes</h3>
+<p>This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate, and use the hamburger icon (horizontal bars) at the top of the document to open or close the table of contents. At the top of the document, you’ll see additional icons which you can click to search the document, change the size, font or color scheme of the page. The document will be updated (unpredictably) throughout the semester.</p>
+<p>Every module corresponds to a weeks worth of material. Most modules are dedicated to improving a specific skill or at the very least dedicated to a specific theme. Within each module, there are embedded videos, slides, activities, labs, and tutorials. The skills developed in each module build upon skills you’ve developed in previous modules. Eventually, this class will have more modules available than weeks in a semester, so that you – the reader can choose your own adventure (err… module) you’d like to start with.</p>
+<p>Although these notes share some of the features of a textbook, they are neither comprehensive nor completely original. The main purpose is to give you all a set of common materials on which to draw during the course. In class, we will sometimes do things outside the notes. The idea here is that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them.</p>
+</div>
+<div id="status-of-course" class="section level3 unnumbered">
+<h3>Status of course</h3>
+<p>In terms of timing, I will have each module completed by the start of the week. Given that the class meets on Tuesday and Thursday, the start of the “week” will be Monday at 12 p.m. EST. It is possible that I will get ahead of this deadline. You can see the current status of the course below. Although you are welcome to work ahead, be aware that I will be making changes to modules that haven’t officially started yet. In addition, I may add optional materials to previous modules that might be helpful.</p>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/fwJHNw9jU_U" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<p>This table provides the current status of the course. It lists proportions of specific components by module. Overall it is 100% complete.</p>
+<div id="htmlwidget-70acdf51834f38c67e81" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-70acdf51834f38c67e81">{"x":{"filter":"none","vertical":false,"data":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,null],[null,1,1,1,1,1,1,1,1,1,null,1,null,1,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,null,null],[null,1,1,1,1,1,null,1,1,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>Module<\/th>\n      <th>Slides<\/th>\n      <th>Lab<\/th>\n      <th>Videos<\/th>\n      <th>Application<\/th>\n      <th>Lecture Notes<\/th>\n      <th>Status<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[0,1,2,3,4,5,6]}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="welcome-to-quantifying-uncertainty.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+<a href="attribution.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1454,7 +1361,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1102_cvnotes.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0000_front.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1465,7 +1372,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1102_cvnotes.Rmd"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0000_front.Rmd"],
 "search": {
 "engine": "fuse",
 "options": null
