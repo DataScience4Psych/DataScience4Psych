@@ -21,8 +21,8 @@ You can follow along with the slides [here][d12_import] if they do not appear be
 
 
 ```{r, echo=FALSE}
-var_url=slide_url(ds4p_urls,"d12_import")
-include_url(var_url, height = "400px")
+slide_url(ds4p_urls,"d12_import") %>%
+include_url(height = "400px")
 ```
 
 
@@ -40,8 +40,8 @@ You can find the materials for the Nobels and sales activities [here](https://gi
 
 ```{r, echo=FALSE}
 # 08
-video_url="https://www.youtube.com/watch?v=g7G8ZTnDSv8"
-embed_url(video_url) %>%
+"https://www.youtube.com/watch?v=g7G8ZTnDSv8"  %>%
+embed_url() %>%
   use_align("center")
 ```
 
@@ -86,7 +86,7 @@ include_url(var_url, height = "400px")
 
 This deep dive has been adapted from Jenny Bryan's Stat545. 
 
-<!--Original content: https://stat545.com/block026_file-out-in.html-->
+
 
 ## File I/O overview
 
@@ -195,6 +195,12 @@ This output is pretty decent looking, though there is no visible alignment or se
 
 * It's not really fair to complain about the lack of visible alignment. Remember we are ["writing data for computers"](https://twitter.com/vsbuffalo/statuses/358699162679787521). If you really want to browse around the file, use `View()` in RStudio or open it in Microsoft Excel (!) but don't succumb to the temptation to start doing artisanal data manipulations there ... get back to R and construct commands that you can re-run the next 15 times you import/clean/aggregate/export the same dataset. Trust me, it will happen.
 
+```{r, echo=FALSE}
+
+"https://twitter.com/vsbuffalo/statuses/358699162679787521" %>% 
+include_tweet()
+```
+
 ## Invertibility
 
 It turns out these self-imposed rules are often in conflict with one another:
@@ -206,9 +212,9 @@ It turns out these self-imposed rules are often in conflict with one another:
 
 __Example:__ after performing the country-level summarization, we reorder the levels of the country factor, based on life expectancy. This reordering operation is conceptually important and must be embodied in R commands stored in a script. However, as soon as we write `gap_life_exp` to a plain text file, that meta-information about the countries is lost. Upon re-import with `read_delim()` and friends, we are back to alphabetically ordered factor levels. Any measure we take to avoid this loss immediately breaks another one of our rules.
 
-So what do I do? I must admit I save (and re-load) R-specific binary files. Right after I save the plain text file. [Belt and suspenders][belt-and-suspenders].
+So what do I do? I must admit I save (and re-load) R-specific binary files. Right after I save the plain text file. [Belt and suspenders](https://www.wisegeek.com/what-does-it-mean-to-wear-belt-and-suspenders.htm).
 
-I have toyed with the idea of writing import helper functions for a specific project, that would re-order factor levels in principled ways. They could be defined in one file and called from many. This would also have a very natural implementation within [a workflow where each analytical project is an R package](https://www.carlboettiger.info/2012/05/06/research-workflow.html). But so far it has seemed too much like [yak shaving](https://seths.blog/2005/03/dont_shave_that/). I'm intrigued by a recent discussion of putting such information in YAML frontmatter (see Martin Fenner blog post [Using YAML frontmatter with CSV](https://blog.datacite.org/using-yaml-frontmatter-with-csv/)).
+I have toyed with the idea of writing import helper functions for a specific project, that would re-order factor levels in principled ways. They could be defined in one file and called from many. This would also have a very natural implementation within [a workflow where each analytical project is an R package](https://www.carlboettiger.info/2012/05/06/research-workflow.html). But so far it has seemed too much like [yak shaving](https://seths.blog/2005/03/dont_shave_that/). I'm intrigued by a recent discussion of putting such information in YAML frontmatter (see Martin Fenner's blog post [Using YAML frontmatter with CSV](https://blog.datacite.org/using-yaml-frontmatter-with-csv/)).
 
 ## Reordering the levels of the country factor
 
@@ -299,7 +305,7 @@ Note how the original, post-reordering country factor levels are restored using 
 
 But why on earth would you ever do this?
 
-The main application of this is [the creation of highly portable, self-contained minimal examples][reproducible-examples]. For example, if you want to pose a question on a forum or directly to an expert, it might be required or just plain courteous to NOT attach any data files. You will need a monolithic, plain text blob that defines any necessary objects and has the necessary code. `dput()` can be helpful for producing the piece of code that defines the object. If you `dput()` without specifying a file, you can copy the return value from Console and paste into a script. Or you can write to file and copy from there or add R commands below.
+The main application of this is [the creation of highly portable, self-contained minimal examples](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example). For example, if you want to pose a question on a forum or directly to an expert, it might be required or just plain courteous to NOT attach any data files. You will need a monolithic, plain text blob that defines any necessary objects and has the necessary code. `dput()` can be helpful for producing the piece of code that defines the object. If you `dput()` without specifying a file, you can copy the return value from Console and paste into a script. Or you can write to file and copy from there or add R commands below.
 
 ## Other types of objects to use `dput()` or `saveRDS()` on
 

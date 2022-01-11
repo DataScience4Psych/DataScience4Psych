@@ -244,13 +244,9 @@
 [useR-2014-dropbox]: https://www.dropbox.com/sh/i8qnluwmuieicxc/AAAgt9tIKoIm7WZKIyK25lh6a
 
 [html-preview]: http://htmlpreview.github.io
-
-
-[belt-and-suspenders]: https://www.wisegeek.com/what-does-it-mean-to-wear-belt-and-suspenders.htm
 [research-workflow]: https://www.carlboettiger.info/2012/05/06/research-workflow.html
 
 
-[reproducible-examples]: https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example
 [blog-strings-as-factors]: https://notstatschat.tumblr.com/post/124987394001/stringsasfactors-sigh
 [bio-strings-as-factors]: https://simplystatistics.org/2015/07/24/stringsasfactors-an-unauthorized-biography
 [stackexchange-outage]: https://stackstatus.net/post/147710624694/outage-postmortem-july-20-2016

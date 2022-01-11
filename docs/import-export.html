@@ -24,7 +24,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2021-12-30" />
+<meta name="date" content="2022-01-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1238,8 +1238,8 @@ div.csl-indent {
 <li class="chapter" data-level="92.8" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#is-coding-a-math-skill-or-a-language-skill-neither-both"><i class="fa fa-check"></i><b>92.8</b> Is Coding a Math Skill or a Language Skill? Neither? Both?</a></li>
 <li class="chapter" data-level="92.9" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#quantum-computers-explained"><i class="fa fa-check"></i><b>92.9</b> Quantum Computers Explained!</a></li>
 <li class="chapter" data-level="92.10" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#the-rise-of-the-machines-why-automation-is-different-this-time"><i class="fa fa-check"></i><b>92.10</b> The Rise of the Machines – Why Automation is Different this Time</a></li>
-<li class="chapter" data-level="92.11" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#who-would-be-king-of-america-if-george-washington-had-been-made-a-monarch"><i class="fa fa-check"></i><b>92.11</b> Who Would Be King of America if George Washington had been made a monarch?</a></li>
-<li class="chapter" data-level="92.12" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#emergence-how-stupid-things-become-smart-together"><i class="fa fa-check"></i><b>92.12</b> Emergence – How Stupid Things Become Smart Together</a></li>
+<li class="chapter" data-level="92.11" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#emergence-how-stupid-things-become-smart-together"><i class="fa fa-check"></i><b>92.11</b> Emergence – How Stupid Things Become Smart Together</a></li>
+<li class="chapter" data-level="92.12" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#how-not-to-ask-for-help"><i class="fa fa-check"></i><b>92.12</b> How not to ask for help</a></li>
 <li class="chapter" data-level="92.13" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#the-birthday-paradox"><i class="fa fa-check"></i><b>92.13</b> The Birthday Paradox</a></li>
 <li class="chapter" data-level="92.14" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#why-cant-you-divide-by-zero"><i class="fa fa-check"></i><b>92.14</b> Why can’t you divide by zero?</a></li>
 <li class="chapter" data-level="92.15" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#yea-hes-chewing-up-my-stats-homework-but-that-face-though"><i class="fa fa-check"></i><b>92.15</b> Yea he’s chewing up my stats homework but that face though…</a></li>
@@ -1290,7 +1290,6 @@ div.csl-indent {
 <div id="import-export" class="section level1" number="29">
 <h1><span class="header-section-number">29</span> Writing and reading files</h1>
 <p>This deep dive has been adapted from Jenny Bryan’s Stat545.</p>
-<!--Original content: https://stat545.com/block026_file-out-in.html-->
 <div id="file-io-overview" class="section level2" number="29.1">
 <h2><span class="header-section-number">29.1</span> File I/O overview</h2>
 <p>For the most part, we’ve been working with (p)reprocessed data, like the Gapminder data from the gapminder data package or data from any of the labs. In other words, we haven’t been explicitly writing any data or derived results to file. In real life (and in this class), you’ll have to bring rectangular data into and out of R. Sometimes you’ll need to do same for non-rectangular objects.</p>
@@ -1426,6 +1425,8 @@ Argentina,Americas,75.32</code></pre>
 <ul>
 <li>It’s not really fair to complain about the lack of visible alignment. Remember we are <a href="https://twitter.com/vsbuffalo/statuses/358699162679787521">“writing data for computers”</a>. If you really want to browse around the file, use <code>View()</code> in RStudio or open it in Microsoft Excel (!) but don’t succumb to the temptation to start doing artisanal data manipulations there … get back to R and construct commands that you can re-run the next 15 times you import/clean/aggregate/export the same dataset. Trust me, it will happen.</li>
 </ul>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">If I had one thing to tell biologists learning bioinformatics, it would be &quot;write code for humans, write data for computers&quot;.</p>&mdash; Vince Buffalo (@vsbuffalo) <a href="https://twitter.com/vsbuffalo/status/358699162679787521?ref_src=twsrc%5Etfw">July 20, 2013</a></blockquote>
+
 </div>
 <div id="invertibility" class="section level2" number="29.7">
 <h2><span class="header-section-number">29.7</span> Invertibility</h2>
@@ -1437,8 +1438,8 @@ Argentina,Americas,75.32</code></pre>
 <li>Avoid duplication of code and data</li>
 </ul>
 <p><strong>Example:</strong> after performing the country-level summarization, we reorder the levels of the country factor, based on life expectancy. This reordering operation is conceptually important and must be embodied in R commands stored in a script. However, as soon as we write <code>gap_life_exp</code> to a plain text file, that meta-information about the countries is lost. Upon re-import with <code>read_delim()</code> and friends, we are back to alphabetically ordered factor levels. Any measure we take to avoid this loss immediately breaks another one of our rules.</p>
-<p>So what do I do? I must admit I save (and re-load) R-specific binary files. Right after I save the plain text file. [Belt and suspenders][belt-and-suspenders].</p>
-<p>I have toyed with the idea of writing import helper functions for a specific project, that would re-order factor levels in principled ways. They could be defined in one file and called from many. This would also have a very natural implementation within <a href="https://www.carlboettiger.info/2012/05/06/research-workflow.html">a workflow where each analytical project is an R package</a>. But so far it has seemed too much like <a href="https://seths.blog/2005/03/dont_shave_that/">yak shaving</a>. I’m intrigued by a recent discussion of putting such information in YAML frontmatter (see Martin Fenner blog post <a href="https://blog.datacite.org/using-yaml-frontmatter-with-csv/">Using YAML frontmatter with CSV</a>).</p>
+<p>So what do I do? I must admit I save (and re-load) R-specific binary files. Right after I save the plain text file. <a href="https://www.wisegeek.com/what-does-it-mean-to-wear-belt-and-suspenders.htm">Belt and suspenders</a>.</p>
+<p>I have toyed with the idea of writing import helper functions for a specific project, that would re-order factor levels in principled ways. They could be defined in one file and called from many. This would also have a very natural implementation within <a href="https://www.carlboettiger.info/2012/05/06/research-workflow.html">a workflow where each analytical project is an R package</a>. But so far it has seemed too much like <a href="https://seths.blog/2005/03/dont_shave_that/">yak shaving</a>. I’m intrigued by a recent discussion of putting such information in YAML frontmatter (see Martin Fenner’s blog post <a href="https://blog.datacite.org/using-yaml-frontmatter-with-csv/">Using YAML frontmatter with CSV</a>).</p>
 </div>
 <div id="reordering-the-levels-of-the-country-factor" class="section level2" number="29.8">
 <h2><span class="header-section-number">29.8</span> Reordering the levels of the country factor</h2>
@@ -1564,7 +1565,7 @@ Argentina,Americas,75.32</code></pre>
 <span id="cb135-13"><a href="import-export.html#cb135-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Mozambique   Australia   Mozambique   Mozambique</span></span></code></pre></div>
 <p>Note how the original, post-reordering country factor levels are restored using the <code>dput()</code> / <code>dget()</code> strategy.</p>
 <p>But why on earth would you ever do this?</p>
-<p>The main application of this is [the creation of highly portable, self-contained minimal examples][reproducible-examples]. For example, if you want to pose a question on a forum or directly to an expert, it might be required or just plain courteous to NOT attach any data files. You will need a monolithic, plain text blob that defines any necessary objects and has the necessary code. <code>dput()</code> can be helpful for producing the piece of code that defines the object. If you <code>dput()</code> without specifying a file, you can copy the return value from Console and paste into a script. Or you can write to file and copy from there or add R commands below.</p>
+<p>The main application of this is <a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">the creation of highly portable, self-contained minimal examples</a>. For example, if you want to pose a question on a forum or directly to an expert, it might be required or just plain courteous to NOT attach any data files. You will need a monolithic, plain text blob that defines any necessary objects and has the necessary code. <code>dput()</code> can be helpful for producing the piece of code that defines the object. If you <code>dput()</code> without specifying a file, you can copy the return value from Console and paste into a script. Or you can write to file and copy from there or add R commands below.</p>
 </div>
 <div id="other-types-of-objects-to-use-dput-or-saverds-on" class="section level2" number="29.12">
 <h2><span class="header-section-number">29.12</span> Other types of objects to use <code>dput()</code> or <code>saveRDS()</code> on</h2>
@@ -1602,7 +1603,7 @@ Argentina,Americas,75.32</code></pre>
 <li><a href="https://books.google.com/books?id=grfuq1twFe4C&amp;lpg=PP1&amp;dq=data%2520manipulation%2520spector&amp;pg=PP1#v=onepage&amp;q&amp;f=false">GoogleBooks search</a></li>
 </ul>
 <!--DS4P Links-->
-<!--AE. Links-->
+<!--AE Links-->
 <!-- Lab Links-->
 <!--Slides-->
 <!--externals-->
