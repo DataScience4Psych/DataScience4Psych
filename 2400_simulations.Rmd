@@ -1,7 +1,7 @@
 # (PART) Module 24 {-}
 
 
-# Getting started with simulating data in R
+# Welcome to Simulating Data
 
 
 ```{r include = FALSE}
@@ -16,9 +16,40 @@ library(knitr)
 ```
 
 
+
+This module is designed to introduce you to the key ideas behind simulating data. In essence, we are making our own data instead of using someone else's. Eventually, there will be video lectures. Once those videos exist, please watch the videos and work your way through the notes. **The videos will eventually start on the next page.**  You will eventually be able to find the video playlist for this module [here][pl_xx]. The slides used to make the videos in this module will be able to be found in the [slides repo][course_slides].
+
+
+## Module Materials
+
+* Slides from Lectures
+* Suggested Readings
+  * All subchapters of this module, including
+      * ...
+  * R4DS     
+      * [TBD](https://r4ds.had.co.nz/), including
+        * [TBD]
+        * [TBD]
+* Activities
+  * [TBD]
+* Lab
+  * [TBD](#labTBD)
+
+## Estimated Video Length
+
+<!--https://ytplaylist-len.herokuapp.com/ -->
+
+
+No of videos : TBD
+
+Average length of video : TBD
+
+Total length of playlist : TBD
+
+
+# Getting started with simulating data in R
+
 > I adapted [this tutorial](https://github.com/aosmith16/simulation-helper-functions) from [Ariel Muldoon](https://github.com/aosmith16) 
-
-
 
 
 There are many reasons we might want to simulate data in R, and I find being able to simulate data to be incredibly useful in my day-to-day work.  But how does someone get started simulating data?  
@@ -32,7 +63,7 @@ Here's what we'll do today:
 3. Create data with both quantitative and categorical variables, making use of functions from the first two steps above.
 4. Learn to use `replicate()` to repeat the data simulation process many times.
 
-# Generating random numbers
+## Generating random numbers
 
 One way to generate numeric data is to pull random numbers from some distribution.  This can be done via the functions for generating random deviates.  These functions always start with `r` (for "random").
 
@@ -66,7 +97,9 @@ First, the code got me 5 numbers, which is what I wanted.  However, the code its
 Here's clearer code to do the same thing, where I write out the mean and standard deviation arguments explicitly even though I'm using the default values.  It is certainly not necessary to always be this careful, but I don't think I've run into a time when it was bad to have clear code.
 
 ```{r}
-rnorm(n = 5, mean = 0, sd = 1)
+rnorm(n = 5, 
+      mean = 0, 
+      sd = 1)
 ```
 
 ### Setting the random seed for reproducible random numbers
@@ -81,14 +114,18 @@ If we set the seed prior to running `rnorm()`, we can reproduce the values we ge
 
 ```{r}
 set.seed(16)
-rnorm(n = 5, mean = 0, sd = 1)
+rnorm(n = 5, 
+      mean = 0, 
+      sd = 1)
 ```
 
 If we set the seed back to the same number and run the code again, we get the same values.
 
 ```{r}
 set.seed(16)
-rnorm(n = 5, mean = 0, sd = 1)
+rnorm(n = 5, 
+      mean = 0, 
+      sd = 1)
 ```
 
 ### Change parameters in `rnorm()`
@@ -104,7 +141,9 @@ rnorm(n = 5, mean = 0, sd = 2)
 I've seen others change the mean and standard deviation to create a variable that is within some specific range, as well.  For example, if the mean is large and the standard deviation small in relation to the mean we can generate strictly positive numbers.  (I usually use `runif()` for this, which we'll see below.)
 
 ```{r}
-rnorm(n = 5, mean = 50, sd = 20)
+rnorm(n = 5, 
+      mean = 50, 
+      sd = 20)
 ```
 
 ### Using vectors of values for the parameter arguments
@@ -116,13 +155,17 @@ I'll keep the standard deviation at 1 but will draw data from three distribution
 Note the repeating pattern: the function iteratively draws one value from each distribution until the total number requested is reached.  This can lead to imbalance in the sample size per distribution.
 
 ```{r}
-rnorm(n = 10, mean = c(0, 5, 20), sd = 1)
+rnorm(n = 10, 
+      mean = c(0, 5, 20), 
+      sd = 1)
 ```
 
 A vector can also be passed to `sd`.  Here both the means and standard deviations vary among the three distributions used to generate values.
 
 ```{r}
-rnorm(n = 10, mean = c(0, 5, 20), sd = c(1, 5, 20) )
+rnorm(n = 10, 
+      mean = c(0, 5, 20), 
+      sd = c(1, 5, 20) )
 ```
 
 Things are different for the `n` argument.  If a vector is passed to `n`, the *length* of that vector is taken to be the number required (see `Arguments` section of documentation for details).
@@ -130,7 +173,9 @@ Things are different for the `n` argument.  If a vector is passed to `n`, the *l
 Here's an example. Since the vector for `n` is length 3, we only get 3 values.
 
 ```{r}
-rnorm(n = c(2, 10, 10), mean = c(0, 5, 20), sd = c(1, 5, 20) )
+rnorm(n = c(2, 10, 10), 
+      mean = c(0, 5, 20), 
+      sd = c(1, 5, 20) )
 ```
 
 ## Example of using the simulated numbers from `rnorm()`
