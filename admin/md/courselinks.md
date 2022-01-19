@@ -4,7 +4,7 @@
 [course_git]: https://github.com/DataScience4Psych/DataScience4Psych
 [course_repo]: https://github.com/DataScience4Psych
 [course_slides]: https://github.com/DataScience4Psych/slides
-[course_syllabus]: https://smasongarrison.github.io/syllabi/data-science.html
+[course_syllabus]: https://smasongarrison.github.io/syllabi/ <!--https://smasongarrison.github.io/syllabi/data-science.html -->
 [syllabi]: https://smasongarrison.github.io/syllabi
 
 [pl_00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
