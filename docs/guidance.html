@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>48 Function-writing practicum | Data Science for Psychologists</title>
+  <title>Guidance | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="48 Function-writing practicum | Data Science for Psychologists" />
+  <meta property="og:title" content="Guidance | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/DataScience4Psych/DataScience4Psych" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="48 Function-writing practicum | Data Science for Psychologists" />
+  <meta name="twitter:title" content="Guidance | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="functions-part1.html"/>
-<link rel="next" href="lab08.html"/>
+<link rel="prev" href="dont-miss-module-00.html"/>
+<link rel="next" href="welcome-to-data-science.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -1293,159 +1293,120 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="functions-practicum" class="section level1" number="48">
-<h1><span class="header-section-number">48</span> Function-writing practicum</h1>
-<!--Original content: https://stat545.com/block012_function-regress-lifeexp-on-year.html-->
-<div id="overview" class="section level2" number="48.1">
-<h2><span class="header-section-number">48.1</span> Overview</h2>
-<p>We recently learned how to write our own R functions (<a href="functions-part1.html#functions-part1">part 1</a>, <a href="#functions-part2">part 2</a>, <a href="#functions-part3">part 3</a>).</p>
-<p>Now we use that knowledge to write another useful function, within the context of the Gapminder data:</p>
+<div id="guidance" class="section level1 unnumbered">
+<h1>Guidance</h1>
+<p>This document provides some basic instructions and information. It is not the syllabus for students taking this course. Please see the <a href="https://smasongarrison.github.io/syllabi/data-science.html">data science syllabus</a> on my <a href="https://smasongarrison.github.io/syllabi/">syllabus website</a>. And yes, the bookdown theme looks familiar…</p>
+<!-- To Do: find a way to embed a pdf in rmarkdown -->
+<div id="materials" class="section level2" number="0.6">
+<h2><span class="header-section-number">0.6</span> Materials</h2>
+<div id="hardware" class="section level3" number="0.6.1">
+<h3><span class="header-section-number">0.6.1</span> Hardware</h3>
+<p>This class requires that you have a laptop that can run R.</p>
+</div>
+<div id="required-texts" class="section level3" number="0.6.2">
+<h3><span class="header-section-number">0.6.2</span> Required Texts</h3>
+<p>The text is intended to supplement the videos, lecture notes, tutorials, activities, and labs. You probably need to consume all of them in order to be successful in this class.</p>
 <ul>
-<li>Input: a data.frame that contains (at least) a life expectancy variable <code>lifeExp</code> and a variable for year <code>year</code></li>
-<li>Output: a vector of estimated intercept and slope, from a linear regression of <code>lifeExp</code> on <code>year</code></li>
+<li><a href="https://r4ds.had.co.nz">R for Data Science text</a></li>
 </ul>
-<p>The ultimate goal is to apply this function to the Gapminder data for a specific country. We will eventually scale up to <em>all</em> countries using external machinery, e.g., the <code>dplyr::group_by()</code> + <code>dplyr::do()</code>.</p>
 </div>
-<div id="load-the-gapminder-data-3" class="section level2" number="48.2">
-<h2><span class="header-section-number">48.2</span> Load the Gapminder data</h2>
-<p>As usual, load gapminder. Load ggplot2 because we’ll make some plots and load dplyr too.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="functions-practicum.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb259-2"><a href="functions-practicum.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb259-3"><a href="functions-practicum.html#cb259-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-</div>
-<div id="get-data-to-practice-with" class="section level2" number="48.3">
-<h2><span class="header-section-number">48.3</span> Get data to practice with</h2>
-<p>I extract the data for one country in order to develop some working code interactively.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="functions-practicum.html#cb260-1" aria-hidden="true" tabindex="-1"></a>j_country <span class="ot">&lt;-</span> <span class="st">&quot;France&quot;</span> <span class="co"># pick, but do not hard wire, an example</span></span>
-<span id="cb260-2"><a href="functions-practicum.html#cb260-2" aria-hidden="true" tabindex="-1"></a>(j_dat <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> </span>
-<span id="cb260-3"><a href="functions-practicum.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> j_country))</span>
-<span id="cb260-4"><a href="functions-practicum.html#cb260-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 x 6</span></span>
-<span id="cb260-5"><a href="functions-practicum.html#cb260-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    country continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb260-6"><a href="functions-practicum.html#cb260-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb260-7"><a href="functions-practicum.html#cb260-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 France  Europe     1952    67.4 42459667     7030.</span></span>
-<span id="cb260-8"><a href="functions-practicum.html#cb260-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 France  Europe     1957    68.9 44310863     8663.</span></span>
-<span id="cb260-9"><a href="functions-practicum.html#cb260-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 France  Europe     1962    70.5 47124000    10560.</span></span>
-<span id="cb260-10"><a href="functions-practicum.html#cb260-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 France  Europe     1967    71.6 49569000    13000.</span></span>
-<span id="cb260-11"><a href="functions-practicum.html#cb260-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 France  Europe     1972    72.4 51732000    16107.</span></span>
-<span id="cb260-12"><a href="functions-practicum.html#cb260-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 France  Europe     1977    73.8 53165019    18293.</span></span>
-<span id="cb260-13"><a href="functions-practicum.html#cb260-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 France  Europe     1982    74.9 54433565    20294.</span></span>
-<span id="cb260-14"><a href="functions-practicum.html#cb260-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 France  Europe     1987    76.3 55630100    22066.</span></span>
-<span id="cb260-15"><a href="functions-practicum.html#cb260-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 France  Europe     1992    77.5 57374179    24704.</span></span>
-<span id="cb260-16"><a href="functions-practicum.html#cb260-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 France  Europe     1997    78.6 58623428    25890.</span></span>
-<span id="cb260-17"><a href="functions-practicum.html#cb260-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 France  Europe     2002    79.6 59925035    28926.</span></span>
-<span id="cb260-18"><a href="functions-practicum.html#cb260-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 France  Europe     2007    80.7 61083916    30470.</span></span></code></pre></div>
-<p>Always always always plot the data. Yes, even now.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="functions-practicum.html#cb261-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(j_dat, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
-<span id="cb261-2"><a href="functions-practicum.html#cb261-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb261-3"><a href="functions-practicum.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `geom_smooth()` using formula &#39;y ~ x&#39;</span></span></code></pre></div>
-<p><img src="0702_functionnotes_files/figure-html/first-example-scatterplot-1.png" width="672" /></p>
-</div>
-<div id="get-some-code-that-works" class="section level2" number="48.4">
-<h2><span class="header-section-number">48.4</span> Get some code that works</h2>
-<p>Fit the regression:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="functions-practicum.html#cb262-1" aria-hidden="true" tabindex="-1"></a>j_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> year, j_dat)</span>
-<span id="cb262-2"><a href="functions-practicum.html#cb262-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(j_fit)</span>
-<span id="cb262-3"><a href="functions-practicum.html#cb262-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)        year </span></span>
-<span id="cb262-4"><a href="functions-practicum.html#cb262-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -397.765       0.239</span></span></code></pre></div>
-<p>Whoa, check out that crazy intercept! Apparently the life expectancy in France around year 0 A.D. was minus 400 years! Never forget to sanity check a model. In this case, a reparametrization is in order. I think it makes more sense for the intercept to correspond to life expectancy in 1952, the earliest date in our dataset. Estimate the intercept eye-ball-o-metrically from the plot and confirm that we’ve got something sane and interpretable now.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="functions-practicum.html#cb263-1" aria-hidden="true" tabindex="-1"></a>j_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">I</span>(year <span class="sc">-</span> <span class="dv">1952</span>), j_dat)</span>
-<span id="cb263-2"><a href="functions-practicum.html#cb263-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(j_fit)</span>
-<span id="cb263-3"><a href="functions-practicum.html#cb263-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    (Intercept) I(year - 1952) </span></span>
-<span id="cb263-4"><a href="functions-practicum.html#cb263-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         67.790          0.239</span></span></code></pre></div>
-<div id="sidebar-regression-stuff" class="section level3" number="48.4.1">
-<h3><span class="header-section-number">48.4.1</span> Sidebar: regression stuff</h3>
-<p>There are two things above that might prompt questions.</p>
-<p>First, how did I know to get the estimated coefficients from a fitted model via <code>coef()</code>? Years of experience. But how might a novice learn such things? Read <a href="https://rdrr.io/r/stats/lm.html">the documentation for <code>lm()</code></a>, in this case. The “See also” section advises us about many functions that can operate on fitted linear model objects, including, but by no means limited to, <code>coef()</code>. Read <a href="https://rdrr.io/r/stats/coef.html">the documentation on <code>coef()</code></a> too.</p>
-<p>Second, what am I doing here: <code>lm(lifeExp ~ I(year - 1952))</code>? I want the intercept to correspond to 1952 and an easy way to accomplish that is to create a new predictor on the fly: year minus 1952. The way I achieve that in the model formula, <code>I(year - 1952)</code>, uses the <code>I()</code> function which “inhibits interpretation/conversion of objects.” By protecting the expression <code>year - 1952</code>, I ensure it is interpreted in the obvious arithmetical way.</p>
+<div id="syllabussoftware" class="section level3" number="0.6.3">
+<h3><span class="header-section-number">0.6.3</span> Software</h3>
+<div id="syllabusr" class="section level4" number="0.6.3.1">
+<h4><span class="header-section-number">0.6.3.1</span> R and RStudio</h4>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
 </div>
 </div>
-<div id="turn-working-code-into-a-function" class="section level2" number="48.5">
-<h2><span class="header-section-number">48.5</span> Turn working code into a function</h2>
-<p>Create the basic definition of a function and drop your working code inside. Add arguments and edit the inner code to match. Apply it to the practice data. Do you get the same result as before?</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="functions-practicum.html#cb264-1" aria-hidden="true" tabindex="-1"></a>le_lin_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, <span class="at">offset =</span> <span class="dv">1952</span>) {</span>
-<span id="cb264-2"><a href="functions-practicum.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  the_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">I</span>(year <span class="sc">-</span> offset), dat)</span>
-<span id="cb264-3"><a href="functions-practicum.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(the_fit)</span>
-<span id="cb264-4"><a href="functions-practicum.html#cb264-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb264-5"><a href="functions-practicum.html#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="fu">le_lin_fit</span>(j_dat)</span>
-<span id="cb264-6"><a href="functions-practicum.html#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      (Intercept) I(year - offset) </span></span>
-<span id="cb264-7"><a href="functions-practicum.html#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           67.790            0.239</span></span></code></pre></div>
-<p>I had to decide how to handle the offset. Given that I will scale this up to many countries, which, in theory, might have data for different dates, I chose to set a default of 1952. Strategies that compute the offset from data, either the main Gapminder dataset or the excerpt passed to this function, are also reasonable to consider.</p>
-<p>I loathe the names on this return value. This is not my first rodeo and I know that, downstream, these will contaminate variable names and factor levels and show up in public places like plots and tables. Fix names early!</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="functions-practicum.html#cb265-1" aria-hidden="true" tabindex="-1"></a>le_lin_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, <span class="at">offset =</span> <span class="dv">1952</span>) {</span>
-<span id="cb265-2"><a href="functions-practicum.html#cb265-2" aria-hidden="true" tabindex="-1"></a>  the_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">I</span>(year <span class="sc">-</span> offset), dat)</span>
-<span id="cb265-3"><a href="functions-practicum.html#cb265-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">coef</span>(the_fit), <span class="fu">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;slope&quot;</span>))</span>
-<span id="cb265-4"><a href="functions-practicum.html#cb265-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb265-5"><a href="functions-practicum.html#cb265-5" aria-hidden="true" tabindex="-1"></a><span class="fu">le_lin_fit</span>(j_dat)</span>
-<span id="cb265-6"><a href="functions-practicum.html#cb265-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; intercept     slope </span></span>
-<span id="cb265-7"><a href="functions-practicum.html#cb265-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    67.790     0.239</span></span></code></pre></div>
-<p>Much better!</p>
+<p>R is a free software environment for statistical computing and graphics. It compiles and runs on a wide variety of UNIX platforms, Windows, and MacOS.</p>
+<p>RStudio is a free <em>integrated development environment</em> (IDE), a powerful user interface for R.</p>
 </div>
-<div id="test-on-other-data-and-in-a-clean-workspace" class="section level2" number="48.6">
-<h2><span class="header-section-number">48.6</span> Test on other data and in a clean workspace</h2>
-<p>It’s always good to rotate through examples during development. The most common error this will help you catch is when you accidentally hard-wire your example into your function. If you’re paying attention to your informal tests, you will find it creepy that your function returns <strong>exactly the same results</strong> regardless which input data you give it. This actually happened to me while I was writing this document, I kid you not! I had left <code>j_fit</code> inside the call to <code>coef()</code>, instead of switching it to <code>the_fit</code>. How did I catch that error? I saw the fitted line below, which clearly did not have an intercept in the late 60s and a positive slope, as my first example did. Figures are a mighty weapon in the fight against nonsense. I don’t trust analyses that have few/no figures.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="functions-practicum.html#cb266-1" aria-hidden="true" tabindex="-1"></a>j_country <span class="ot">&lt;-</span> <span class="st">&quot;Zimbabwe&quot;</span></span>
-<span id="cb266-2"><a href="functions-practicum.html#cb266-2" aria-hidden="true" tabindex="-1"></a>(j_dat <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> j_country))</span>
-<span id="cb266-3"><a href="functions-practicum.html#cb266-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 x 6</span></span>
-<span id="cb266-4"><a href="functions-practicum.html#cb266-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    country  continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb266-5"><a href="functions-practicum.html#cb266-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb266-6"><a href="functions-practicum.html#cb266-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 Zimbabwe Africa     1952    48.5  3080907      407.</span></span>
-<span id="cb266-7"><a href="functions-practicum.html#cb266-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 Zimbabwe Africa     1957    50.5  3646340      519.</span></span>
-<span id="cb266-8"><a href="functions-practicum.html#cb266-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 Zimbabwe Africa     1962    52.4  4277736      527.</span></span>
-<span id="cb266-9"><a href="functions-practicum.html#cb266-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 Zimbabwe Africa     1967    54.0  4995432      570.</span></span>
-<span id="cb266-10"><a href="functions-practicum.html#cb266-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 Zimbabwe Africa     1972    55.6  5861135      799.</span></span>
-<span id="cb266-11"><a href="functions-practicum.html#cb266-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 Zimbabwe Africa     1977    57.7  6642107      686.</span></span>
-<span id="cb266-12"><a href="functions-practicum.html#cb266-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 Zimbabwe Africa     1982    60.4  7636524      789.</span></span>
-<span id="cb266-13"><a href="functions-practicum.html#cb266-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 Zimbabwe Africa     1987    62.4  9216418      706.</span></span>
-<span id="cb266-14"><a href="functions-practicum.html#cb266-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 Zimbabwe Africa     1992    60.4 10704340      693.</span></span>
-<span id="cb266-15"><a href="functions-practicum.html#cb266-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Zimbabwe Africa     1997    46.8 11404948      792.</span></span>
-<span id="cb266-16"><a href="functions-practicum.html#cb266-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 Zimbabwe Africa     2002    40.0 11926563      672.</span></span>
-<span id="cb266-17"><a href="functions-practicum.html#cb266-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 Zimbabwe Africa     2007    43.5 12311143      470.</span></span>
-<span id="cb266-18"><a href="functions-practicum.html#cb266-18" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(j_dat, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
-<span id="cb266-19"><a href="functions-practicum.html#cb266-19" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb266-20"><a href="functions-practicum.html#cb266-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `geom_smooth()` using formula &#39;y ~ x&#39;</span></span></code></pre></div>
-<p><img src="0702_functionnotes_files/figure-html/second-example-scatterplot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="functions-practicum.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">le_lin_fit</span>(j_dat)</span>
-<span id="cb267-2"><a href="functions-practicum.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; intercept     slope </span></span>
-<span id="cb267-3"><a href="functions-practicum.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    55.221    -0.093</span></span></code></pre></div>
-<p>The linear fit is comically bad, but yes I believe the visual line and the regression results match up.</p>
-<p>It’s also a good idea to clean out the workspace, rerun the minimum amount of code, and retest your function. This will help you catch another common mistake: accidentally relying on objects that were lying around in the workspace during development but that are not actually defined in your function nor passed as formal arguments.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="functions-practicum.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb268-2"><a href="functions-practicum.html#cb268-2" aria-hidden="true" tabindex="-1"></a>le_lin_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, <span class="at">offset =</span> <span class="dv">1952</span>) {</span>
-<span id="cb268-3"><a href="functions-practicum.html#cb268-3" aria-hidden="true" tabindex="-1"></a>  the_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">I</span>(year <span class="sc">-</span> offset), dat)</span>
-<span id="cb268-4"><a href="functions-practicum.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">coef</span>(the_fit), <span class="fu">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;slope&quot;</span>))</span>
-<span id="cb268-5"><a href="functions-practicum.html#cb268-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb268-6"><a href="functions-practicum.html#cb268-6" aria-hidden="true" tabindex="-1"></a><span class="fu">le_lin_fit</span>(gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Zimbabwe&quot;</span>))</span>
-<span id="cb268-7"><a href="functions-practicum.html#cb268-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; intercept     slope </span></span>
-<span id="cb268-8"><a href="functions-practicum.html#cb268-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    55.221    -0.093</span></span></code></pre></div>
+<div id="syllabusgit" class="section level4" number="0.6.3.2">
+<h4><span class="header-section-number">0.6.3.2</span> Git and Github</h4>
+<p>Git is a version control system. Its original purpose was to help groups of developers work collaboratively on big software projects. Git manages the evolution of a set of files – called a repository – in a structured way. Think of it like the “Track Changes” features from Microsoft Word.</p>
+<p>Github is a free IDE and hosting service for Git. As a Wake Forest student, you should be able to access the <a href="https://education.github.com/benefits?type=student">GitHub Student Developer Pack for free</a>. It includes a free PRO upgrade for your github account.</p>
 </div>
-<div id="are-we-there-yet" class="section level2" number="48.7">
-<h2><span class="header-section-number">48.7</span> Are we there yet?</h2>
-<p>Yes.</p>
-<p>Given how I plan to use this function, I don’t feel the need to put it under formal unit tests or put in argument validity checks.</p>
 </div>
-<div id="resources-3" class="section level2" number="48.8">
-<h2><span class="header-section-number">48.8</span> Resources</h2>
-<p>Packages for runtime assertions (the last 3 seem to be under more active development than <code>assertthat</code>):</p>
+</div>
+<div id="assignment-instructions" class="section level2" number="0.7">
+<h2><span class="header-section-number">0.7</span> Assignment Instructions</h2>
+<div id="portfolio" class="section level3" number="0.7.1">
+<h3><span class="header-section-number">0.7.1</span> Portfolio</h3>
+<!-- To Do: desportify Joe's introduction -->
+<p>EDA is like basketball. We can watch either being done, and appreciate the art and skill involved in high-level performance. In the hands of Lebron James or Michael Jordan, a basketball is a highly-tuned artistic instrument; in the hands of John Tukey, a graph sings the praises of data in melodies both harmonious and discordant, reflecting model, data, and mood. Part of this course will be devoted to Watching and Studying the master at his work.</p>
+<p>But basketball is played by thousands of bodies with less than NBA training and ability. Some novice basketball players are just learning their craft, and others will evolve into future LJs and MJs; others have lower aspirations, yet still enjoy participating. So also should EDA be played. A second part of this course will involve learning to do EDA by Doing It.</p>
+<p>Each of you will be expected to do several portfolio pieces. These projects can be done during class, as well as during out-of-class effort. The nature of most of the particular projects will be entirely up to you. You will report to your instructor during EDA Labs on what you have been doing and what you plan to do. You will give a 10-minute individual presentation to the class at the end of the course on what you did in one or two of your major projects. <!-- There are three requirements. Your projects must include some hand plotting. Your projects must include some computer work. And your projects must include one group project with two other people (your team projects). Results of this group project will also be presented toward the end of the course.--></p>
+<p>Each project will require some data, to which EDA techniques will be applied. You are welcomed (in fact, strongly encouraged) to use data with which you are currently involved; dissertation or thesis data, a research project, the almanac, data from an article, data from EDA or VDat, data you collect from your family or friends, or data provided to you by your instructor are possible sources.</p>
+</div>
+<div id="additional-ground-rules" class="section level3" number="0.7.2">
+<h3><span class="header-section-number">0.7.2</span> Additional Ground Rules</h3>
+<p>In this class, I actively encourage you to “double dip” that is incorporate your research into portfolio pieces and use these pieces in other places. However, I <em>Mason</em> have some ground rules. These rules have been implemented for a variety of reasons, but primarily they are to preserve my sanity by establishing some boundaries. As much as I adore this class, my students (especially you, dear reader!), and everything it stands for – it blurs a lot of lines because often I serve numerous roles while teaching this class. In particular, I may also be your mentor, your committee member, your collaborator, your letter of recommendation writer, your colleague, your confidant, your statistics consultant, your friend, or cat care-taker. I do my best to navigate these roles. However, for my own sanity, here are my basic rules.</p>
+<p>For anything that is related to a graduate school milestone (thesis, first year project, major area paper) or something else that you’re working with your advisor on… you need to <em>actively</em> discuss it with your advisor and get their approval in advance.</p>
+<p>They may not – and that’s okay. If they’re unsure, I’m very happy to schedule a quick 30 minute chat with all three of us. My role on anything milestone related is to assist you with the implementation or give you general feedback. I cannot give you advice related to modeling or anything that would merit a discussion about authorship on the final work. I may disagree with something they recommend that you do… such as use a specific software that isn’t R. (I do have many strong opinions about SPSS and AMOS, as well as modeling choices. However, there is nearly always room for debate in these issues. I try to remind folks that my opinion is just that – an opinion.)</p>
+<p>For all things related to your research at Wake Forest, <em>please defer to your advisor.</em> Everyone in the department are amazing at what they do. Seriously, each is an expert in their research area – just as I am an expert in R (and genetically-informed designs and strange data…). In all likelihood, they know more about the modeling in their specific area. I am very happy to share my expert opinions and I have the privilege to facilitate such conversations through the nature of this class. HOWEVER, please defer to your advisor for all design decisions. I will do my best to tell you when something is outside the scope of the class or if we’re approaching a gray area. I will not always be successful at navigating this issue. However, I will do my best to do so because I think it is worth the extra challenge.</p>
+<div id="possible-projects" class="section level4" number="0.7.2.1">
+<h4><span class="header-section-number">0.7.2.1</span> Possible Projects</h4>
+<p>Examples of appropriate portfolio pieces are listed below. I hope some or all of these will be worked on by members of the class. You should develop and work on your projects individually, but discussion with the instructor and others class members is encouraged and in fact expected.</p>
+<ol style="list-style-type: decimal">
+<li><p>Draw plots by hand of some data that are of interest to you, and transform the variables in several different ways. Interpret your results.</p></li>
+<li><p>Choose some data from EDA or VDat; table or plot them in a way that Tukey/Cleveland didn’t.</p></li>
+<li><p>Find some population data of interest to you (e.g., North Carolina, Forsyth County,your cat herd, etc.) and do several hand plots like those in Chapter 5 of EDA. Interpret results.</p></li>
+<li><p>Find some data in the World Almanac and plot and/or table them.</p></li>
+<li><p>Use some two-way data, and repeatedly extract the medians like Tukey does in Ch. 10 &amp; 11.</p></li>
+<li><p>Find some time series data, and smooth them in several different ways (see EDA, ch. 7). Data with seasonal patterns are especially interesting (see VDat, pp. 152-172).</p></li>
+<li><p>Write an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA, or other program to portray influence-enhanced scatterplots. Produce scatterplots of several relationships.</p></li>
+<li><p>Write a BASIC, FORTRAN, C, SAS, SPSS, JAVA, or other program to portray scatter plots on a computer. Give the user the option to plot X and/or Y as either raw data, logs, squares, cubes, reciprocals, roots, etc.</p></li>
+<li><p>Write an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA or other program to produce some exotic version of stem-and-leaf diagrams.</p></li>
+<li><p>Write a an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA or other program to plot in three-dimensions with time as one of the dimensions (i.e., a kinostatistical plot).</p></li>
+<li><p>Use R or SAS-Graph or some other dedicated graphical package to plot some interesting data (preferably in color, possibly in 3D, maybe even in higher than 3D).</p></li>
+<li><p>Write an R/SAS routine to do median smoothing by three, and use it on some data.</p></li>
+<li><p>Write an R program, or SAS MACRO or SAS PROC or SAS program to produce some EDA output (but don’t duplicate what PROC UNIVARIATE already does).</p></li>
+<li><p>Find an R program in the R library that does interesting EDA; apply it to some interesting data.</p></li>
+<li><p>Produce a correlation matrix between many variables, and develop a scatterplot matrix from it.</p></li>
+<li><p>Read the literature on graphical data analysis and develop some new graphical techniques. Program your techniques. Apply them to real data.</p></li>
+<li><p>Invent a new EDA graphical application, and apply it to real data.</p></li>
+</ol>
+<p>Additional ideas that aren’t thoroughly thought out:</p>
 <ul>
-<li><p>assertthat on <a href="https://CRAN.R-project.org/package=assertthat">cran</a> and <a href="https://github.com/hadley/assertthat">GitHub</a> - <em>the Hadleyverse option</em></p></li>
-<li><p>ensurer on <a href="https://CRAN.R-project.org/package=ensurer">cran</a> and <a href="https://github.com/smbache/ensurer">GitHub</a> - <em>general purpose, pipe-friendly</em></p></li>
-<li><p>assertr on <a href="https://CRAN.R-project.org/package=assertr">cran</a> and <a href="https://github.com/ropensci/assertr">GitHub</a> - <em>explicitly data pipeline oriented</em></p></li>
-<li><p>assertive on <a href="https://CRAN.R-project.org/package=assertive">cran</a> and <a href="https://bitbucket.org/richierocks/assertive/src/master/">Bitbucket</a> - <em>rich set of built-in functions</em></p></li>
-<li><p>Hadley Wickham’s book <a href="http://adv-r.had.co.nz">Advanced R</a> <span class="citation">(<a href="references.html#ref-wickham2015a" role="doc-biblioref">2015</a>)</span>:</p>
+<li>Data Cleaning Project using Lab Data</li>
+<li>Web scraping project</li>
+<li>Tidy Tuesday Project</li>
+<li>Data Innovation</li>
+<li>Recreate a classic visualization</li>
+<li>Interactive Project (Rshiny)</li>
+<li>Infographic</li>
+<li>master’s thesis / first year project</li>
+<li>Misleading Graph</li>
+<li>Impossible to Read</li>
+<li>Colorblind Friendly</li>
+<li>Visualization that only uses X colors</li>
+<li>Animated/video</li>
+<li>Tutorial</li>
+<li>Webscraper data</li>
+<li>Digital Humanities Project</li>
+<li>reproduce findings from an article in your content area</li>
+<li>machine learn!</li>
+<li>live dashboard</li>
+<li>maps/ geospatial things</li>
+<li>lie to me graphic</li>
+</ul>
+</div>
+<div id="documenting-your-project" class="section level4" number="0.7.2.2">
+<h4><span class="header-section-number">0.7.2.2</span> Documenting Your Project</h4>
+<p>You should keep a log describing all EDA projects you undertake. At the end of the course, two things will happen. First, you will give a 10 minute presentation in which you choose one of your EDA projects to describe to the class. Your description should include the goal of the project, the data you used, and a demonstration (PowerPoint, handout, holdup, computer demo, etc.) of the product. 2nd, you will turn in a Portfolio, which consists of two components:</p>
+<ol style="list-style-type: decimal">
+<li><p>A report describing all your projects. The total number depends on the scope and difficulty of each project (as specified in your contract). There may be projects that you don’t finish. That’s fine; EDA projects are hardly ever completely finished; write them up anyway. The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be Word Processed and of high quality in terms of writing, grammar, presentation, etc.</p></li>
+<li><p>A prototypical example of the product of each project (e.g., a graph, computer code, etc.). You may wish to put computer output into binders or appendices, graphs into report folders, etc.</p></li>
+</ol>
+<p>Portfolios will not be returned; if you wish to have a copy, make one before you turn it in. Portfolios are due the last week of class. Project reports will not be accepted late. Please, no exceptions!!!</p>
+</div>
+<div id="more-information-about-contract-grading" class="section level4" number="0.7.2.3">
+<h4><span class="header-section-number">0.7.2.3</span> More Information about contract grading</h4>
 <ul>
-<li>Section on <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#defensive-programming">defensive programming</a></li>
-<li>Section on <a href="http://adv-r.had.co.nz/Functions.html#function-arguments">function arguments</a></li>
-<li>Section on <a href="http://adv-r.had.co.nz/Functions.html#return-values">return values</a></li>
-</ul></li>
-<li><p>Unit testing with testthat</p>
-<ul>
-<li>On <a href="https://CRAN.R-project.org/package=testthat">cran</a>, development on <a href="https://github.com/r-lib/testthat">GitHub</a>, main <a href="https://testthat.r-lib.org">webpage</a></li>
-</ul></li>
-<li><p>Wickham and Bryan’s <a href="https://r-pkgs.org/index.html">R Packages</a> book <span class="citation">(<a href="references.html#ref-wickham-unpub" role="doc-biblioref">in progress</a>)</span></p>
-<ul>
-<li><a href="https://r-pkgs.org/tests.html">Testing chapter</a></li>
-</ul></li>
-<li><p>Wickham’s <a href="https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">testthat: Get Started with Testing</a> article in The R Journal <span class="citation">(<a href="references.html#ref-wickham2011b" role="doc-biblioref">2011a</a>)</span>. Maybe this is completely superseded by the newer chapter above? Be aware that parts could be out of date, but I recall it was a helpful read.</p></li>
+<li><p><a href="https://marckissel.netlify.app/post/on-the-unessay/" class="uri">https://marckissel.netlify.app/post/on-the-unessay/</a></p></li>
+<li><p><a href="https://esclark.hcommons.org/the-unessay/" class="uri">https://esclark.hcommons.org/the-unessay/</a></p></li>
+<li><p><a href="https://ryancordell.org/teaching/how-not-to-teach-digital-humanities/" class="uri">https://ryancordell.org/teaching/how-not-to-teach-digital-humanities/</a></p></li>
 </ul>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->
@@ -1456,13 +1417,18 @@ div.csl-indent {
 
 </div>
 </div>
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="functions-part1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lab08.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dont-miss-module-00.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="welcome-to-data-science.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1493,7 +1459,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0702_functionnotes.Rmd",
+"link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0002_guidelines.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1504,7 +1470,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0702_functionnotes.Rmd"],
+"download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/0002_guidelines.Rmd"],
 "search": {
 "engine": "fuse",
 "options": null
