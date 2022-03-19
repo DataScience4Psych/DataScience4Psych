@@ -4,6 +4,8 @@ Data Science for Psychologists (DSP) introduces on the principles of data scienc
 
 Please look at the course website for [specifics](https://datascience4psych.github.io/DataScience4Psych)
 
+[![pages-build-deployment](https://github.com/DataScience4Psych/DataScience4Psych/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/DataScience4Psych/DataScience4Psych/actions/workflows/pages/pages-build-deployment)
+
 # FAQ
 
 ## How do I download this material and keep up to date with any changes?
