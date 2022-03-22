@@ -8,9 +8,9 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 ```
 
-# Welcome to Overfitting and Cross Validation
+# Welcome to Overfitting and Cross-Validation
 
-This module is designed to introduce you to cross-validation and overfitting. Please watch the videos and work your way through the notes. **The videos start on the next page.**  You can find the video playlist for this module [here][pl_11]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides]. 
+This module is designed to introduce you to cross-validation and overfitting. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_11]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides]. 
 
 ```{r, echo=FALSE}
 include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
@@ -19,7 +19,7 @@ include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
 
 ## Module Materials
 
-* Slides from Lectures
+* Videos and Slides from Lectures
   * [Overfitting](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html)
   * [Cross-validation](https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html)
 * Suggested Readings
@@ -32,7 +32,7 @@ include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
 
 # Overfitting!
 
-You can follow along with the slides [here](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html) if they do not appear below.
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html) if they do not appear below. The embedded code for feature enginering can be found [here](#featurenotes)
 
 
 ```{r, echo=FALSE}
@@ -43,8 +43,8 @@ include_url(var_url, height = "400px")
 ## Prediction
 
 ```{r, echo=FALSE}
-video_url="https://www.youtube.com/watch?v=U70OmbO-DP4"
-embed_url(video_url) %>%
+"https://www.youtube.com/watch?v=U70OmbO-DP4" %>%
+embed_url() %>%
   use_align("center")
 ```
 
@@ -56,6 +56,7 @@ include_url(var_url, height = "400px")
 
 
 ## Workflow
+
 ```{r, echo=FALSE}
 
 video_url="https://www.youtube.com/watch?v=R4h9u-sQHwI"
@@ -71,7 +72,44 @@ include_url(var_url, height = "400px")
 ```
 
 
-# Notes on Feature Engineering
+
+# Cross-Validation
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html) if they do not appear below.
+
+```{r, echo=FALSE}
+# CV
+video_url="https://www.youtube.com/watch?v=KQ9f8s7RB5g"
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+
+
+```{r, echo=FALSE}
+var_url="https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html"
+include_url(var_url, height = "400px")
+```
+
+## V-Fold
+
+```{r, echo=FALSE}
+# v fold
+video_url="https://www.youtube.com/watch?v=quEVKV-Tk0Y"
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+
+
+```{r, echo=FALSE}
+var_url="https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html#35"
+include_url(var_url, height = "400px")
+```
+
+
+
+# Notes on Feature Engineering {#featurenotes}
 
 ```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -146,9 +184,7 @@ train_data %>%
 
 - Fit the model to the training data after these steps have been applied
 
-
 - Using the model estimates from the training data, predict outcomes for the test data
-
 
 - Evaluate the performance of the model on the test data
 
@@ -272,8 +308,6 @@ email_rec <- recipe(spam ~ ., data = email) %>%
 
 ## Building workflows
 
----
-
 ### Define model
 
 ```{r}
@@ -374,8 +408,6 @@ email_pred %>%
 
 ### Cutoff probability: 0.25
 
-
-
 Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.25**.
 
 
@@ -407,39 +439,6 @@ email_pred %>%
   count(spam_pred, spam) %>%
   pivot_wider(names_from = spam, values_from = n) %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
-```
-
-# Cross-Validation
-
-You can follow along with the slides [here](https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html) if they do not appear below.
-
-```{r, echo=FALSE}
-# CV
-video_url="https://www.youtube.com/watch?v=KQ9f8s7RB5g"
-embed_url(video_url) %>%
-  use_align("center")
-```
-
-
-
-```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html"
-include_url(var_url, height = "400px")
-```
-
-## V-Fold
-```{r, echo=FALSE}
-# v fold
-video_url="https://www.youtube.com/watch?v=quEVKV-Tk0Y"
-embed_url(video_url) %>%
-  use_align("center")
-```
-
-
-
-```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html#35"
-include_url(var_url, height = "400px")
 ```
 
 
