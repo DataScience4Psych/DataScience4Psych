@@ -1,0 +1,132 @@
+---
+title: "Parameterized Report Example: `r params$lake`"
+author: "Zachary M. Smith"
+date: "2/27/2020"
+output: html_document
+params: 
+  lake: Onondaga
+---
+
+```{r global-options, echo=FALSE}
+knitr::opts_chunk$set(fig.width = 8, fig.height = 4)
+```
+
+# Introduction
+
+This document was created during the _2020 NABs R Markdown workshop_ and will serve as an example workflow for my future use of __R Markdown__. This document will represent an exploratory analysis of macroinvertebrate metrics and environmental variable associated with `r params$lake` Lake.
+
+# Workflow
+
+1. Open R Studio
+2. Create an R Project
+3. Add a data folder to the R project directory
+4. Create an R Markdown document
+5. Use Knit to compile the document.
+
+# Import Data
+
+Import Zachary M. Smith's thesis data provided by Zachary M. Smith at the R Markdown Crash Course Workshop on March 3rd, 2020.
+
+* `unique_id` (character) unique sample ID
+* `lake` (character) lake code: caz = Cazenovia lake, onon = Onondaga, and ot = Otisco
+* `lat` (numeric) latitude of sampling location
+* `long` (numeric) longitude of sampling location
+* `substrate_size_d50` (numeric) median partical size from pebble count
+* `conductivity` (numeric) specific conductivity (µS/cm)
+* `richness` (numeric) taxonomic richness
+* `shannon` (numeric) Shannon-Wiener diversity index values
+* `pct_ephemeroptera` (numeric) relative abundance of Ephemeroptera taxa
+* `pct_amphipoda` (numeric) relative abundance of Amphipoda taxa
+* `pct_diptera` (numeric) relative abundance of Diptera taxa
+* `dom_1` (numeric) relative abundance of the most dominant taxon observed in each sample
+```{r import-data}
+thesis.df <- read.csv(file.path(here::here(),
+                                "data",
+                                "zms_thesis_metrics.csv"),
+                      stringsAsFactors = FALSE)
+```
+
+# Preprocessing
+
+Load the __tidyverse__ packages into the global environment.
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+```{r prep-lake}
+thesis.df <- thesis.df %>% 
+  mutate(lake = case_when(
+    lake %in% "caz" ~ "Cazenovia",
+    lake %in% "onon" ~ "Onondaga",
+    lake %in% "ot" ~ "Otisco",
+    TRUE ~ "ERROR"
+  ),
+  lake = factor(lake, levels = c("Onondaga",
+                                 "Otisco",
+                                 "Cazenovia")))
+```
+
+```{r filter-lake}
+thesis.df <- thesis.df %>% 
+  filter(lake %in% params$lake)
+```
+
+For more details about the __DT__ package visit https://rstudio.github.io/DT/.
+```{r dt}
+library(DT)
+
+datatable(thesis.df, options = list(scrollX = TRUE))
+```
+
+# Study Area
+
+For more details about the __leaflet__ package visit https://rstudio.github.io/leaflet/.
+```{r leaflet}
+library(leaflet)
+
+pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
+                   domain = c("Cazenovia", "Onondaga", "Otisco"))
+
+leaflet(data = thesis.df,
+        options = leafletOptions(minZoom = 7,
+                                 maxZoom = 13)) %>% 
+  addTiles() %>% 
+  addCircleMarkers(~long, ~lat,
+                   fillOpacity = 0.75,
+                   fillColor = ~pal(lake),
+                   stroke = FALSE,
+             popup = paste("Sample ID:", thesis.df$unique_id, "<br/>",
+                           "Lake:", thesis.df$lake, "<br/>",
+                           "Latitude:", thesis.df$lat, "<br/>",
+                           "Longitude:", thesis.df$long)
+             )
+
+```
+
+# Plot
+
+## Scatter Plot
+
+For more details about the __plotly__ package visit https://plot.ly/ggplot2/.
+```{r scatter-sub-dip, message=FALSE}
+library(plotly)
+
+scatter.plot <- ggplot(thesis.df, aes(substrate_size_d50, pct_diptera)) +
+  geom_point(aes(color = lake)) +
+  geom_smooth(method = "lm")
+
+ggplotly(scatter.plot)
+```
+
+## Boxplot
+
+```{r boxplot-lake-rich}
+ggplot(thesis.df, aes(lake, richness, fill = lake)) +
+  geom_boxplot()
+```
+
+# Conclusions
+
+1. The relative abundance of Diptera taxa in `r params$lake` Lake ranged from `r min(thesis.df$pct_diptera)` to `r max(thesis.df$pct_diptera)`.
+2. The median taxonomic richness observed in `r params$lake` Lake was `r median(thesis.df$richness)`.
+
