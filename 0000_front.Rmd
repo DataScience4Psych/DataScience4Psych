@@ -1,4 +1,4 @@
-
+<!- front page -->
 
 ```{r include = FALSE}
 source("common.R")
@@ -8,76 +8,71 @@ library(DT)
 library(vembedr)
 library(knitr)
 library(readr)
+library(gt)
 # devtools::install_github("hadley/emo")
 ```
 
 
 ## Mason Notes {-}
 
-
 ```{r message = FALSE, warning = FALSE, echo = FALSE}
-
 ds4p_status <- read_csv("admin/csv/ds4p_status.csv")
-ds4p_status$Status <- round(
-                          rowMeans(
-                            ds4p_status[,2:6],
-                            na.rm = TRUE),
-                          digits = 3)
+ds4p_status$Status <- round(rowMeans(ds4p_status[, 2:6],
+  na.rm = TRUE),
+digits = 3)
 ```
 
-
 This website is constantly changing. This new course is in active development, and approximately `r round(mean(ds4p_status$Status,na.rm = TRUE),digits = 3)*100`% done. I have made this process explicitly transparent because I want you to see how you can use R to produce some pretty neat things. Indeed, I've included the source code for this website in the class [repo][course_repo]. I encourage you to contribute to the [course code][course_git]. If you catch typos, errors, please issue a pull request with the fixes. If you find cool / useful resources, please add them. By the end of the semester, I would love for everyone to have contributed to the course materials. 
-
 
 
 ### How to use these notes {-}
 
 This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate, and use the hamburger icon (horizontal bars) at the top of the document to open or close the table of contents. At the top of the document, you'll see additional icons which you can click to search the document, change the size, font or color scheme of the page. The document will be updated (unpredictably) throughout the semester.
 
-
 Every module corresponds to a weeks worth of material. Most modules are dedicated to improving a specific skill or at the very least dedicated to a specific theme. Within each module, there are embedded videos, slides, activities, labs, and tutorials. The skills developed in each module build upon skills you've developed in previous modules. Eventually, this class will have more modules available than weeks in a semester, so that you -- the reader can choose your own adventure (err... module) you'd like to start with. 
 
-
 Although these notes share some of the features of a textbook, they are neither comprehensive nor completely original. The main purpose is to give you all a set of common materials on which to draw during the course. In class, we will sometimes do things outside the notes. The idea here is that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them.
+
 
 ### Status of course {-}
 
 In terms of timing, I will have each module completed by the start of the week. Given that the class meets on Tuesday and Thursday, the start of the "week" will be Monday at 12 p.m. EST. It is possible that I will get ahead of this deadline. You can see the current status of the course below. Although you are welcome to work ahead, be aware that I will be making changes to modules that haven't officially started yet. In addition, I may add optional materials to previous modules that might be helpful. 
 
-
 ```{r,echo=FALSE}
-
 # Gromit Placing Rail Tracks for 10 Hours
-
-embed_url("https://www.youtube.com/watch?v=fwJHNw9jU_U") %>%
+"https://www.youtube.com/watch?v=fwJHNw9jU_U" %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 This table provides the current status of the course. It lists proportions of specific components by module. Overall it is `r round(mean(ds4p_status$Status,na.rm = TRUE),digits = 5)*100`% complete. 
 
-
 ```{r message = FALSE, warning = FALSE, echo = FALSE}
-ds4p_status %>% 
-  DT::datatable(rownames = FALSE,
-                class = 'cell-border stripe',
-                #filter = list(position = 'top'),
-                options = list(pageLength = nrow(ds4p_status$Module), 
-                           autoWidth = TRUE,
-                           bInfo = FALSE,
-                           paging = FALSE))
+ds4p_status %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    # filter = list(position = 'top'),
+    options = list(
+      pageLength = nrow(ds4p_status$Module),
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE
+    )
+  )
 ```
-
-
 
 
 # Attribution {-}
 This class leans heavily on other peoples' materials and ideas. I have done my best to document the origin of the materials and ideas. In particular, I have noted those people whose work has been a major contribution as well as those who have additional contributions. You can see specific changes by examining the [edit history on the git repo](https://github.com/DataScience4Psych/DataScience4Psych/commits/main)
+
 
 ## Major Attributions  {-}
 
 * Jenny Bryan's ([jennybryan.org](https://jennybryan.org)) [STAT 545][stat545] and [Happy Git with R](https://happygitwithr.com/);
 * Joe Rodgers's PSY 8751 Exploratory and Graphical Data Analysis Course
 * Mine Çetinkaya-Rundel's [Data Science in a Box](https://datasciencebox.org/).
+
 
 ## Additional Attributions  {-}
 
@@ -99,81 +94,86 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 <i class="fab fa-creative-commons fa-2x"></i><i class="fab fa-creative-commons-by fa-2x"></i><i class="fab fa-creative-commons-sa fa-2x"></i>
 </center>
 
-*This information is a human-readable summary of (and not a substitute for) the license.
-Please see <https://creativecommons.org/licenses/by-sa/4.0/legalcode> for the full legal text.*
+*This information is a human-readable summary of (and not a substitute for) the license. Please see <https://creativecommons.org/licenses/by-sa/4.0/legalcode> for the full legal text.*
 
 **You are free to:**
 
-- **Share**---copy and redistribute the material in any medium or
-  format
+- **Share**---copy and redistribute the material in any medium or format
 
-- **Remix**---remix, transform, and build upon the material for any
-  purpose, even commercially.
+- **Remix**---remix, transform, and build upon the material for any purpose, even commercially.
 
-The licensor cannot revoke these freedoms as long as you follow the
-license terms.
+The licensor cannot revoke these freedoms as long as you follow the license terms.
 
 **Under the following terms:**
 
-- **Attribution**---You must give appropriate credit, provide a link
-  to the license, and indicate if changes were made. You may do so in
-  any reasonable manner, but not in any way that suggests the licensor
-  endorses you or your use.
+- **Attribution**---You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
   
 - **ShareAlike**---If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original. 
 
-- **No additional restrictions**---You may not apply legal terms or
-  technological measures that legally restrict others from doing
-  anything the license permits.
+- **No additional restrictions**---You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 
 **Notices:**
 
-You do not have to comply with the license for elements of the
-material in the public domain or where your use is permitted by an
-applicable exception or limitation.
+You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
 
-No warranties are given. The license may not give you all of the
-permissions necessary for your intended use. For example, other rights
-such as publicity, privacy, or moral rights may limit how you use the
-material.
+No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
 
 ```{r include = FALSE}
 # automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
+knitr::write_bib(
+  c(
+    .packages(),
+    "bookdown",
+    "knitr",
+    "rmarkdown"
+  ),
+  "packages.bib"
+)
 ```
 
 
 # Sitemap {-}
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
-library(gt)
-library(tidyverse)
 
-
-make_full = function(myurl,gituser="datascience4psych",myrepo="DataScience4Psych") {
-  paste0('https://',gituser,'.github.io/',myrepo,'/',myurl)
+make_full <- function(myurl,
+                      gituser = "datascience4psych",
+                      myrepo = "DataScience4Psych") {
+  paste0(
+    "https://",
+    gituser,
+    ".github.io/",
+    myrepo, "/",
+    myurl
+  )
 }
-make_hyperlink = function(myurl,mytext=myurl) {
-  paste0('<a href="',myurl,'">',mytext,'</a>')
+make_hyperlink <- function(myurl,
+                           mytext = myurl) {
+  paste0(
+    '<a href="',
+    myurl,
+    '">',
+    mytext,
+    "</a>"
+  )
 }
 
-df_docs=list.files(path="docs/", '[.]html$', recursive=TRUE)
-
-df <- data.frame(
-  stringsAsFactors = FALSE,
-              title = str_replace_all(str_remove(df_docs, "\\.html"),"[_-]"," "),
-              link = make_full(df_docs)
+df_docs <- list.files(
+  path = "docs/",
+  "[.]html$",
+  recursive = TRUE
 )
 
-
-df %>%
-    mutate(
-        link = glue::glue("[website]({link})"),
-        link = map(link, gt::md)) %>%
-    gt()
-
+data.frame(
+  stringsAsFactors = FALSE,
+  title = str_replace_all(str_remove(df_docs, "\\.html"), "[_-]", " "),
+  link = make_full(df_docs)
+) %>%
+  mutate(
+    link = glue::glue("[website]({link})"),
+    link = map(link, gt::md)
+  ) %>%
+  gt()
 ```
 
 
@@ -188,8 +188,8 @@ This version of the notes was built with:
 
 ```{r message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
 # needed because new_session is set to true in _bookdown.yml
-all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>% 
-  pull(Package) 
+all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>%
+  pull(Package)
 
 session <- devtools::session_info(pkgs = all_pkgs)
 
@@ -199,20 +199,21 @@ session$platform
 Along with these packages:
 
 ```{r message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
-session$packages %>% 
-  select(package, loadedversion, date, source) %>% 
-  DT::datatable(rownames = FALSE,
-                class = 'cell-border stripe',
-                filter = list(position = 'top'),
-                options = list(pageLength = nrow(session$packages), 
-                           autoWidth = TRUE,
-                           bInfo = FALSE,
-                           paging = FALSE))
+session$packages %>%
+  select(package, loadedversion, date, source) %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    filter = list(position = "top"),
+    options = list(
+      pageLength = nrow(session$packages),
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE
+    )
+  )
 ```
-
-
 
 ```{r links, child="admin/md/courselinks.md"}
+
 ```
-
-
