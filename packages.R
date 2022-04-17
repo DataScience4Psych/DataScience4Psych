@@ -1,16 +1,19 @@
 #libraries
-install.packages("devtools")
-install.packages(c("tidyverse", "rmarkdown"))
-install.packages(c("bookdown", "discord"))
-install.packages("vembedr")
+
+install.packages(c("devtools",
+                   "tidyverse",
+                   "rmarkdown",
+                   "bookdown",
+                   "discord",
+                   "vembedr",
+                   "datasauRus",
+                   "DT",
+                   "car",
+                   "latticeExtra",
+                   "manipulateWidget",
+                   "shiny",
+                   "rgl"))
 devtools::install_github("gadenbuie/tweetrmd")
-install.packages("datasauRus")
-install.packages("DT")
-install.packages("car")
-install.packages("latticeExtra")
-install.packages("manipulateWidget")
-install.packages("shiny")
-install.packages("rgl")
 devtools::install_github('gmonette/spida2')
 install.packages("p3d", repos = "http://R-Forge.R-project.org")
 
@@ -18,7 +21,7 @@ install.packages("tufte")
 devtools::install_github("rstudio-education/dsbox")
 
 install.packages("rafalib")
-install.packages("rgl")
+
 if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
 BiocManager::install("Biobase")
 BiocManager::install("SpikeInSubset")
