@@ -2,7 +2,7 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -41,14 +41,14 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ## What is a model?
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=XbyXxGDFmFQ" %>%
-embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d20_language/d20_language.html#1"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d20_language/d20_language.html#1" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -56,13 +56,13 @@ include_url(var_url, height = "400px")
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=Y0ehX5VI_Wo" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d20_language/d20_language.html#16"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d20_language/d20_language.html#16" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -75,13 +75,13 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=BVtVIO08KKE" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#1" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -108,24 +108,28 @@ Observed value = Fitted value + residual
 Let's get the fitted values and residuals for each voice part:
 
 ```{r}
-singer_lm = lm(height ~ 0 + voice.part, data=singer)
+lm_singer <- lm(height ~ 0 + voice.part,
+  data = singer
+)
 ```
 
-We can extract the fitted values using `fitted.values(singer.lm)` and the residuals with `residuals(singer.lm)` or `singer.lm$residuals`.
+We can extract the fitted values using `fitted.values(lm_singer)` and the residuals with `residuals(lm_singer)` or `lm_singer$residuals`.
 
 For convenience, we create a data frame with two columns: the voice parts and the residuals.
 
 
 ```{r}
-singer_res = data.frame(voice_part = singer$voice.part, residual = residuals(singer_lm))
+res_singer <- data.frame(voice_part = singer$voice.part, residual = residuals(lm_singer))
 ```
 
 We can also do this with `group_by` and `mutate`:
 ```{r}
-fits = singer %>%
-    group_by(voice.part) %>%
-    mutate(fit = mean(height),
-           residual = height - mean(height))
+fits <- singer %>%
+  group_by(voice.part) %>%
+  mutate(
+    fit = mean(height),
+    residual = height - mean(height)
+  )
 ```
 
 
@@ -141,13 +145,15 @@ The residuals are our estimates of the errors, and so we need to check both norm
 There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:
 
 ```{r}
-ggplot(singer_res, aes(x = voice_part, y = residual)) + geom_boxplot()
+ggplot(res_singer, aes(x = voice_part, y = residual)) +
+  geom_boxplot()
 ```
 
 
 We can also look at the ecdfs of the residuals for each voice part.
 ```{r}
-ggplot(singer_res, aes(x = residual, color = voice_part)) + stat_ecdf()
+ggplot(res_singer, aes(x = residual, color = voice_part)) +
+  stat_ecdf()
 ```
 
 
@@ -160,8 +166,9 @@ From these plots, it seems like the residuals in each group have approximately t
 We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:
 
 ```{r, fig.width = 6}
-ggplot(singer_res, aes(sample = residual)) +
-  stat_qq() + facet_wrap(~ voice_part, ncol=4) 
+ggplot(res_singer, aes(sample = residual)) +
+  stat_qq() +
+  facet_wrap(~voice_part, ncol = 4)
 ```
 
 Not only do the lines look reasonably straight, the scales look similar for all eight voice parts.
@@ -180,7 +187,7 @@ We've already checked for normality of the residuals within each voice part, but
 
 
 ```{r}
-ggplot(singer_res, aes(sample = residual)) +
+ggplot(res_singer, aes(sample = residual)) +
   stat_qq()
 ```
 
@@ -194,19 +201,19 @@ We don't know what their variance should be, but we can estimate it using the va
 Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:
 
 ```{r}
-ggplot(singer_res, aes(sample = residual)) +
-    stat_qq() +
-    geom_abline(aes(intercept = 0, slope = sd(singer_res$residual)))
+ggplot(res_singer, aes(sample = residual)) +
+  stat_qq() +
+  geom_abline(aes(intercept = 0, slope = sd(res_singer$residual)))
 ```
 
 
 ### The actually correct way
 
-Pedantic note: We should use an $n-8$ denominator instead of $n-1$ in the SD calculation for degrees of freedom reasons. The $n-8$ part is necessary because there are 7 different variables associated with the model we fitted with singer_lm. We can get the SD directly from the linear model:
+Pedantic note: We should use an $n-8$ denominator instead of $n-1$ in the SD calculation for degrees of freedom reasons. The $n-8$ part is necessary because there are 7 different variables associated with the model we fitted with lm_singer. We can get the SD directly from the linear model:
 
 ```{r}
-sd(singer_res$residual)
-round(summary(singer_lm)$sigma, 3)
+sd(res_singer$residual)
+round(summary(lm_singer)$sigma, 3)
 ```
 
 However, the difference between this and the SD above is negligible.
@@ -214,8 +221,9 @@ However, the difference between this and the SD above is negligible.
 Add the line:
 
 ```{r}
-ggplot(singer_res, aes(sample = residual)) +
-  stat_qq() + geom_abline(intercept = mean(singer_res$residual), slope=summary(singer_lm)$sigma)
+ggplot(res_singer, aes(sample = residual)) +
+  stat_qq() +
+  geom_abline(intercept = mean(res_singer$residual), slope = summary(lm_singer)$sigma)
 ```
 
 The straight line isn't absolutely perfect, but it's doing a pretty good job.
@@ -253,13 +261,13 @@ About data analysis:
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=7056Lt3yUY4" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#29"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#29" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -269,13 +277,13 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=tSzwRyO7cNw" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html#1"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html#1" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -291,14 +299,14 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=xTv1wqNKbHI" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#2"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#2" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -308,15 +316,15 @@ include_url(var_url, height = "400px")
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=SVoazCcAZ-s" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 
 
 ```{r, echo=FALSE}
-var_url="https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#24"
-include_url(var_url, height = "400px")
+"https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#24" %>%
+  include_url(height = "400px")
 ```
 
 
@@ -330,8 +338,8 @@ include_tweet("https://twitter.com/SMasonGarrison/status/1387230798332506114")
 
 
 include_tweet("https://twitter.com/tilok_saha/status/1466017023561912328")
-
 ```
 
 ```{r links, child="admin/md/courselinks.md"}
+
 ```
