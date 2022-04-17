@@ -1,4 +1,4 @@
-# (PART) Module 10 {-}
+# (PART) Module 10 {.unnumbered}
 
 ```{r include = FALSE}
 source("common.R")
@@ -10,47 +10,54 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 This module introduces you to the ideas behind fitting and interpreting models within the framework of tidymodels. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_10]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides]. In the spirit of transparency, I have strong [non-positive][tidymodelthoughts] thoughts on tidymodels, but I also think that it is useful for you to learn them. I have similar feelings about the necessary evil that is ANOVA or SPSS.
 
-
-
 ## Module Materials
-* Videos
-  * Located in the subchapters of this module
-* Slidedecks
-  * [Language of Models](https://datascience4psych.github.io/slides/d20_language/d20_language.html)
-  * [Fitting and interpreting models](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html)
-  * [Modeling non-linear relationships](https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html)
-  * [Models with multiple predictors](https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html)
 
-* Suggested Readings
-  * All subchapters of this module
-  * Articles
-      * [Rodgers, J. L. (2010). The epistemology of mathematical and statistical modeling: A quiet methodological revolution. American Psychologist, 65, 1-12.](https://core.ac.uk/reader/191832935)
-  * R4DS
-      * [Model Section](https://r4ds.had.co.nz/model-intro.html), including
-         * [Model Basics](https://r4ds.had.co.nz/model-basics.html)
-         * [Model Building](https://r4ds.had.co.nz/model-building.html)
+-   Videos
 
-* Lab
-  * Lab 10
+    -   Located in the subchapters of this module
+
+-   Slidedecks
+
+    -   [Language of Models](https://datascience4psych.github.io/slides/d20_language/d20_language.html)
+    -   [Fitting and interpreting models](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html)
+    -   [Modeling non-linear relationships](https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html)
+    -   [Models with multiple predictors](https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html)
+
+-   Suggested Readings
+
+    -   All subchapters of this module
+
+    -   Articles
+
+        -   [Rodgers, J. L. (2010). The epistemology of mathematical and statistical modeling: A quiet methodological revolution. American Psychologist, 65, 1-12.](https://core.ac.uk/reader/191832935)
+
+    -   R4DS
+
+        -   [Model Section](https://r4ds.had.co.nz/model-intro.html), including
+
+            -   [Model Basics](https://r4ds.had.co.nz/model-basics.html)
+            -   [Model Building](https://r4ds.had.co.nz/model-building.html)
+
+-   Lab
+
+    -   Lab 10
 
 # Language of Models!
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d20_language/d20_language.html) if they do not appear below.
 
-
 ## What is a model?
+
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=XbyXxGDFmFQ" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d20_language/d20_language.html#1" %>%
   include_url(height = "400px")
 ```
-
 
 ## Modeling the relationship between variables
 
@@ -65,11 +72,9 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   include_url(height = "400px")
 ```
 
-
 # Fitting and interpreting models
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html) if they do not appear below.
-
 
 ## Models with numerical explanatory variables
 
@@ -84,9 +89,7 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   include_url(height = "400px")
 ```
 
-
 ## A More Technical Worked Example
-
 
 Let's load our standard libraries:
 
@@ -96,10 +99,9 @@ library(ggplot2)
 library(tidyverse)
 ```
 
+-   If you've taken a regression course, you might recognize this model as a special case of a linear model.
 
-+ If you've taken a regression course, you might recognize this model as a special case of a linear model. 
-
-+ If you haven't, well, it doesn't really matter much except... we can use the `lm()` function to fit the model.
+-   If you haven't, well, it doesn't really matter much except... we can use the `lm()` function to fit the model.
 
 The advantage is that `lm()` easily splits the data into **fitted values** and **residuals**:
 
@@ -117,12 +119,12 @@ We can extract the fitted values using `fitted.values(lm_singer)` and the residu
 
 For convenience, we create a data frame with two columns: the voice parts and the residuals.
 
-
 ```{r}
 res_singer <- data.frame(voice_part = singer$voice.part, residual = residuals(lm_singer))
 ```
 
 We can also do this with `group_by` and `mutate`:
+
 ```{r}
 fits <- singer %>%
   group_by(voice.part) %>%
@@ -132,13 +134,11 @@ fits <- singer %>%
   )
 ```
 
-
 ### Does the linear model fit?
 
 To assess whether the linear model is a good fit to the data, we need to know whether the errors look like they come from normal distributions with the same variance.
 
 The residuals are our estimates of the errors, and so we need to check both normality and homoscedasticity.
-
 
 ### Homoscedasticity
 
@@ -149,17 +149,14 @@ ggplot(res_singer, aes(x = voice_part, y = residual)) +
   geom_boxplot()
 ```
 
-
 We can also look at the ecdfs of the residuals for each voice part.
+
 ```{r}
 ggplot(res_singer, aes(x = residual, color = voice_part)) +
   stat_ecdf()
 ```
 
-
-
 From these plots, it seems like the residuals in each group have approximately the same variance.
-
 
 ### Normality
 
@@ -171,13 +168,9 @@ ggplot(res_singer, aes(sample = residual)) +
   facet_wrap(~voice_part, ncol = 4)
 ```
 
-Not only do the lines look reasonably straight, the scales look similar for all eight voice parts.
-This suggests a model where all of the errors are normal with the *same* standard deviation.
-This is convenient because it is the form of a standard linear model:
+Not only do the lines look reasonably straight, the scales look similar for all eight voice parts. This suggests a model where all of the errors are normal with the *same* standard deviation. This is convenient because it is the form of a standard linear model:
 
 Singer height = Average height for their voice part + Normal($0, \sigma^2$) error.
-
-
 
 ### Normality of pooled residuals
 
@@ -185,18 +178,14 @@ If the linear model holds, then all the residuals come from the same normal dist
 
 We've already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.
 
-
 ```{r}
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq()
 ```
 
-
-
 It's easier to check normality if we plot the line that the points should fall on: if we think the points come from a $N(\mu, \sigma^2)$ distribution, they should lie on a line with intercept $\mu$ and slope $\sigma$ (the standard deviation).
 
-In the linear model, we assume that the mean of the error terms is zero.
-We don't know what their variance should be, but we can estimate it using the variance of the residuals.
+In the linear model, we assume that the mean of the error terms is zero. We don't know what their variance should be, but we can estimate it using the variance of the residuals.
 
 Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:
 
@@ -205,7 +194,6 @@ ggplot(res_singer, aes(sample = residual)) +
   stat_qq() +
   geom_abline(aes(intercept = 0, slope = sd(res_singer$residual)))
 ```
-
 
 ### The actually correct way
 
@@ -228,7 +216,6 @@ ggplot(res_singer, aes(sample = residual)) +
 
 The straight line isn't absolutely perfect, but it's doing a pretty good job.
 
-
 ### Our final model
 
 Since the errors seem to be pretty normal, our final model is:
@@ -237,27 +224,23 @@ Singer height = Average height for their voice part + Normal($0, 2.5^2$) error.
 
 Note: Although normality (or lack thereof) can be important for probabilistic prediction or (sometimes) for inferential data analysis, it's relatively unimportant for EDA. If your residuals are about normal that's nice, but as long as they're not horribly skewed they're probably not a problem.
 
-
-
 ### What have we learned?
 
 About singers:
 
-- We've seen that average height increases as the voice part range decreases.
+-   We've seen that average height increases as the voice part range decreases.
 
-- Within each voice part, the residuals look like they come from a normal distribution with the same variance for each voice part.
-This suggests that there's nothing further we need to do to explain singer heights: we have an average for each voice part, and there is no suggestion of systematic differences beyond that due to voice part.
-
+-   Within each voice part, the residuals look like they come from a normal distribution with the same variance for each voice part. This suggests that there's nothing further we need to do to explain singer heights: we have an average for each voice part, and there is no suggestion of systematic differences beyond that due to voice part.
 
 About data analysis:
 
-- We can use some of our univariate visualization tools, particularly boxplots and ecdfs, to look for evidence of heteroscedasticity.
+-   We can use some of our univariate visualization tools, particularly boxplots and ecdfs, to look for evidence of heteroscedasticity.
 
-- We can use normal QQ plots on both pooled and un-pooled residuals to look for evidence of non-normality.
+-   We can use normal QQ plots on both pooled and un-pooled residuals to look for evidence of non-normality.
 
-- If we wanted to do formal tests or parameter estimation for singer heights, we would feel pretty secure using results based on normal theory.
+-   If we wanted to do formal tests or parameter estimation for singer heights, we would feel pretty secure using results based on normal theory.
 
-## Models with categorical explanatory variables 
+## Models with categorical explanatory variables
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=7056Lt3yUY4" %>%
@@ -269,7 +252,6 @@ About data analysis:
 "https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#29" %>%
   include_url(height = "400px")
 ```
-
 
 # Modeling non-linear relationships
 
@@ -286,13 +268,9 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   include_url(height = "400px")
 ```
 
-
-
-
 # Modeling with multiple predictors
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html) if they do not appear below.
-
 
 ## The linear model with multiple predictors
 
@@ -303,15 +281,12 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#2" %>%
   include_url(height = "400px")
 ```
 
-
 ## Two numerical predictors
-
 
 ```{r, echo=FALSE}
 
@@ -320,18 +295,12 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
-
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#24" %>%
   include_url(height = "400px")
 ```
 
-
-
-
 ## My Thoughts on Tidy Modeling {tidymodelthoughts}
-
 
 ```{r, echo=FALSE}
 include_tweet("https://twitter.com/SMasonGarrison/status/1387230798332506114")

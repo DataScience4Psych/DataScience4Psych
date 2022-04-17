@@ -38,7 +38,7 @@ Note: Adapted from [Zachary M. Smith](https://github.com/zsmith27/rmarkdown_cras
 ![](img/r_project/project_type.png){width=600px}
 
 4. Enter a project name(below I have given the name "new_project"), the project directory (where the project should live), and select "Create Project"
-    + __Tip: Create a “project” folder that will act as your parent directory for all R projects. This will make it much easier to navigate to and between projects.__
+    + __Tip: Create a "project" folder that will act as your parent directory for all R projects. This will make it much easier to navigate to and between projects.__
 
 ![](img/r_project/create_new_project.png)
 
@@ -112,7 +112,7 @@ head(thesis.df)
 
 ![](img/rmarkdown/knit_button.png){width=160px}
 
-To view the html document, you must compile the document using Knit. The easiest way to knit a document is to navigate to and click on the Knit button (it looks like a ball of yarn) in the toolbar above the editor window. If a window appears saying “Install Required Packages” for R Markdown, install the necessary packages for knitting the document. The compiled file will be saved in the same directory as your Rmd file (your R Markdown file). I generally store the R Markdown file(s) in a sub-directory labeled “rmarkdown” within the R-project folder (rproject/markdown), which prevents the project directory from becoming cluttered-- this is __NOT__ necessary.
+To view the html document, you must compile the document using Knit. The easiest way to knit a document is to navigate to and click on the Knit button (it looks like a ball of yarn) in the toolbar above the editor window. If a window appears saying "Install Required Packages" for R Markdown, install the necessary packages for knitting the document. The compiled file will be saved in the same directory as your Rmd file (your R Markdown file). I generally store the R Markdown file(s) in a sub-directory labeled "rmarkdown" within the R-project folder (rproject/markdown), which prevents the project directory from becoming cluttered-- this is __NOT__ necessary.
 
 You can click on the small triangle to the right of the Knit button to view a drop-down menu of knitting options. Here you have the option to update the document type you want to knit (examples listed below).
 
@@ -222,7 +222,7 @@ Shiny documents enable you to embed a shiny application into an R Markdown docum
 
 ##	Heading Text
 
-Heading text follows one or more hash-sign(s) (#). The number of hash-signs determines the hierarchy of headings. For example, “# Heading 1” would represent the primary heading, “## Heading 2” would represent the secondary heading, “### Heading 3” would represent the tertiary heading, and so forth.
+Heading text follows one or more hash-sign(s) (#). The number of hash-signs determines the hierarchy of headings. For example, "# Heading 1" would represent the primary heading, "## Heading 2" would represent the secondary heading, "### Heading 3" would represent the tertiary heading, and so forth.
 
 ##	Plain Text
 
@@ -384,7 +384,7 @@ Note this feature is not available for use with __bookdown__.
 
 # Lesson 4: YAML Headers
 
-__YAML:__ YAML Ain’t Markup Language
+__YAML:__ YAML Ain't Markup Language
 
 A YAML header contains YAML arguments, such as "title", "author", and "output", demarcated by three dashes (---) on either end.
 
@@ -830,9 +830,9 @@ ggplotly(scatter.plot)
 
 # Lesson 6: Child Documents
 
-In general, I find that a single R Markdown file quickly becomes unwieldy. I recommend breaking the document up into multiple “child” documents and sourcing these child documents in a parent document. My child documents generally represent major subsections of the document. 
+In general, I find that a single R Markdown file quickly becomes unwieldy. I recommend breaking the document up into multiple "child" documents and sourcing these child documents in a parent document. My child documents generally represent major subsections of the document. 
 
-I prefer to store the parent R Markdown file in a folder labeled “markdown” (rproject/markdown) and the child R Markdown files in a sub-directory of my “markdown” folder called “sections” (rproject/markdown/sections). In the parent file, the child files are sourced within the code chunk header using `child = ‘sections/example.Rmd’`. After sourcing all the child chunks, the parent file can be knit (compiled) like a normal R markdown document. The child documents cannot be run in the parent file.
+I prefer to store the parent R Markdown file in a folder labeled "markdown" (rproject/markdown) and the child R Markdown files in a sub-directory of my "markdown" folder called "sections" (rproject/markdown/sections). In the parent file, the child files are sourced within the code chunk header using `child = 'sections/example.Rmd'`. After sourcing all the child chunks, the parent file can be knit (compiled) like a normal R markdown document. The child documents cannot be run in the parent file.
 
 ![](img/rmarkdown/child_document.png)
 
@@ -840,7 +840,7 @@ I prefer to store the parent R Markdown file in a folder labeled “markdown” 
 
 The parent file is great for organizing sections of your document, but the child documents cannot be executed within R Studio like a normal code chunk. Without the ability to easily execute the R code within the child documents it can become very difficult to develop new child documents because new child documents often depend on upstream code execution. 
 
-Imagine you have a parent document that sources child sections which import your data and clean your data. You now want to visualize your data; accordingly, you begin to develop a visualization child document, which depends on information from the upstream child sections. It would be inefficient and inappropriate to perform all the steps in the upstream child sections within the visualization section. Therefore, you need an effective way to execute the upstream child sections while you continue to develop the visualization section. The inefficient way of doing this is to open each child Rmd file in R Studio and execute them manually in the correct sequence. This becomes tedious after you have three or more documents (imagine doing this for 10+ child sections). The most efficient way that I have found to run upstream child sections is to extract the R-code chunks from each Rmd file, save them in a “raw_scripts” folder, and then source/execute the scripts within a regular R script file (.R).
+Imagine you have a parent document that sources child sections which import your data and clean your data. You now want to visualize your data; accordingly, you begin to develop a visualization child document, which depends on information from the upstream child sections. It would be inefficient and inappropriate to perform all the steps in the upstream child sections within the visualization section. Therefore, you need an effective way to execute the upstream child sections while you continue to develop the visualization section. The inefficient way of doing this is to open each child Rmd file in R Studio and execute them manually in the correct sequence. This becomes tedious after you have three or more documents (imagine doing this for 10+ child sections). The most efficient way that I have found to run upstream child sections is to extract the R-code chunks from each Rmd file, save them in a "raw_scripts" folder, and then source/execute the scripts within a regular R script file (.R).
 
 ###	R Code
 
@@ -854,7 +854,7 @@ r.files.vec <- list.files(sections.path)
 r.files.vec <- r.files.vec[grepl(".Rmd", r.files.vec)]
 ```
 
-Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a “raw_script/extracted” folder. The `map()` function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the `map()` loop,  the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
+Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a "raw_script/extracted" folder. The `map()` function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the `map()` loop,  the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
 ```{r, eval=FALSE}
 extracted.path <- file.path(rprojroot::find_root("r_in_practice.Rproj"),
                            "markdown",
@@ -872,7 +872,7 @@ purrr::map(r.files.vec, function(file.i) {
 })
 ```
 
-Finally, create a vector of file names (`source.vec`) stored in the “raw_script/extracted” folder. You will want to type these out manually (do not use `list.files()` functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. `map()` is then used to loop through each specified file in `source.vec`. Keep in mind that the order of the file names specified in `source.vec` will determine the order that these files are executed in the `map()` function; therefore, order the files in `source.vec` from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script. 
+Finally, create a vector of file names (`source.vec`) stored in the "raw_script/extracted" folder. You will want to type these out manually (do not use `list.files()` functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. `map()` is then used to loop through each specified file in `source.vec`. Keep in mind that the order of the file names specified in `source.vec` will determine the order that these files are executed in the `map()` function; therefore, order the files in `source.vec` from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script. 
 ```{r, eval=FALSE}
 source.vec <- c(
   "introduction.R",
@@ -896,7 +896,7 @@ Once all the R-scripts extracted from the upstream child R Markdown files have b
 2. Copy the Header and the relevant content below the header. Paste the content into the appropriate R Markdown document.
 3. Create a parent R Markdown document.
     + create a code chunk for each section.
-    + add `child = ‘insert-file-name-here.Rmd’` to the header of the appropriate code chunk
+    + add `child = 'insert-file-name-here.Rmd'` to the header of the appropriate code chunk
 4. Knit the document
 
 
