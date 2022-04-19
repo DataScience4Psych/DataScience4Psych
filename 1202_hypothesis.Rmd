@@ -35,7 +35,8 @@ One consultant tried to attract patients by noting that the average complication
 
 ```{r echo=FALSE}
 organ_donor <- tibble(
-  outcome = c(rep("complication", 3), rep("no complication", 59))
+  outcome = c(rep("complication", 3),
+              rep("no complication", 59))
 )
 ```
 
@@ -189,7 +190,10 @@ ggplot(sim_dist, aes(x = p_hat_sim)) +
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-sim3 <- sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
+sim3 <- sample(outcomes,
+               size = 62,
+               prob = c(0.1, 0.9),
+               replace = TRUE)
 
 table(sim3)
 
@@ -213,9 +217,13 @@ This is getting boring... We need a way to automate this process!
 
 ```{r}
 null_dist <- organ_donor %>%
-  specify(response = outcome, success = "complication") %>%
-  hypothesize(null = "point", p = c("complication" = 0.10, "no complication" = 0.90)) %>% 
-  generate(reps = 100, type = "simulate") %>% 
+  specify(response = outcome,
+          success = "complication") %>%
+  hypothesize(null = "point",
+              p = c("complication" = 0.10,
+                    "no complication" = 0.90)) %>% 
+  generate(reps = 100,
+           type = "simulate") %>% 
   calculate(stat = "prop")
 ```
 
@@ -298,11 +306,15 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 ### Run the test
 
 
-```{r}
+```{r, cache=TRUE}
 null_dist <- organ_donor %>%
-  specify(response = outcome, success = "complication") %>%
-  hypothesize(null = "point", p = c("complication" = 0.10, "no complication" = 0.90)) %>% 
-  generate(reps = 1000, type = "simulate") %>% 
+  specify(response = outcome,
+          success = "complication") %>%
+  hypothesize(null = "point",
+              p = c("complication" = 0.10,
+                    "no complication" = 0.90)) %>% 
+  generate(reps = 1000,
+           type = "simulate") %>% 
   calculate(stat = "prop")
 ```
 
@@ -311,7 +323,7 @@ null_dist <- organ_donor %>%
 ### Visualize and calculate
 
 
-```{r}
+```{r, cache=TRUE}
 ggplot(data = null_dist, mapping = aes(x = stat)) +
   geom_histogram(binwidth = 0.01) +
   geom_vline(xintercept = 3/62, color = "red")
@@ -475,7 +487,8 @@ on the board.
 
 ```{r}
 null_dist <- yawn %>%
-  specify(response = result, explanatory = group, 
+  specify(response = result,
+          explanatory = group, 
           success = "yawn") %>%
   hypothesize(null = "independence") %>%
   generate(100, type = "permute") %>%

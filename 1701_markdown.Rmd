@@ -37,7 +37,7 @@ Note: Adapted from [Zachary M. Smith](https://github.com/zsmith27/rmarkdown_cras
 
 ![](img/r_project/project_type.png){width=600px}
 
-4. Enter a project name(below I have given the name "new_project"), the project directory (where the project should live), and select "Create Project"
+4. Enter a project name (below I have given the name "new_project"), the project directory (where the project should live), and select "Create Project"
     + __Tip: Create a "project" folder that will act as your parent directory for all R projects. This will make it much easier to navigate to and between projects.__
 
 ![](img/r_project/create_new_project.png)
@@ -323,7 +323,7 @@ would render to this...
 
 You can insert images into your document using syntax similar to the hyperlink syntax above. 
 
-In the code below you can see the file path the to the image. This image will render without a caption
+In the code below, you can see the file path the to the image. This image will render without a caption
 
 `![](img/hex_symbols/rmarkdown.png)`
 
@@ -744,18 +744,24 @@ library(leaflet)
 
 data("quakes")
 
-leaflet(data = quakes,
-        options = leafletOptions(minZoom = 4,
-                                 maxZoom = 18)) %>% 
-  addTiles() %>% 
+leaflet(
+  data = quakes,
+  options = leafletOptions(
+    minZoom = 4,
+    maxZoom = 18
+  )
+) %>%
+  addTiles() %>%
   addCircleMarkers(~long, ~lat,
-                   fillOpacity = 0.75,
-                   stroke = FALSE,
-             popup = paste("Sample ID:", quakes$unique_id, "<br/>",
-                           "Magnitude:", quakes$mag, "<br/>",
-                           "Latitude:", quakes$lat, "<br/>",
-                           "Longitude:", quakes$long)
-             )
+    fillOpacity = 0.75,
+    stroke = FALSE,
+    popup = paste(
+      "Sample ID:", quakes$unique_id, "<br/>",
+      "Magnitude:", quakes$mag, "<br/>",
+      "Latitude:", quakes$lat, "<br/>",
+      "Longitude:", quakes$long
+    )
+  )
 ```
 
 Another neat feature is the ability to cluster points to better visualize density. You can do this by setting `clusterOptions = markerClusterOptions()`.
@@ -819,7 +825,9 @@ leaflet(data = thesis.df,
 ```{r scatter-sub-dip_example, message=FALSE, eval=FALSE}
 library(plotly)
 
-scatter.plot <- ggplot(thesis.df, aes(substrate_size_d50, pct_diptera)) +
+scatter.plot <- ggplot(thesis.df,
+                       aes(substrate_size_d50,
+                           pct_diptera)) +
   geom_point(aes(color = lake)) +
   geom_smooth(method = "lm")
 
