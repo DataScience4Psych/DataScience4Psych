@@ -13,33 +13,23 @@ This module introduces you to the ideas behind fitting and interpreting models w
 ## Module Materials
 
 -   Videos
-
     -   Located in the subchapters of this module
-
 -   Slidedecks
-
     -   [Language of Models](https://datascience4psych.github.io/slides/d20_language/d20_language.html)
     -   [Fitting and interpreting models](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html)
     -   [Modeling non-linear relationships](https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html)
     -   [Models with multiple predictors](https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html)
 
 -   Suggested Readings
-
     -   All subchapters of this module
-
     -   Articles
-
         -   [Rodgers, J. L. (2010). The epistemology of mathematical and statistical modeling: A quiet methodological revolution. American Psychologist, 65, 1-12.](https://core.ac.uk/reader/191832935)
-
     -   R4DS
-
         -   [Model Section](https://r4ds.had.co.nz/model-intro.html), including
-
             -   [Model Basics](https://r4ds.had.co.nz/model-basics.html)
             -   [Model Building](https://r4ds.had.co.nz/model-building.html)
 
 -   Lab
-
     -   Lab 10
 
 # Language of Models!
@@ -120,7 +110,8 @@ We can extract the fitted values using `fitted.values(lm_singer)` and the residu
 For convenience, we create a data frame with two columns: the voice parts and the residuals.
 
 ```{r}
-res_singer <- data.frame(voice_part = singer$voice.part, residual = residuals(lm_singer))
+res_singer <- data.frame(voice_part = singer$voice.part,
+                         residual = residuals(lm_singer))
 ```
 
 We can also do this with `group_by` and `mutate`:
@@ -239,6 +230,31 @@ About data analysis:
 -   We can use normal QQ plots on both pooled and un-pooled residuals to look for evidence of non-normality.
 
 -   If we wanted to do formal tests or parameter estimation for singer heights, we would feel pretty secure using results based on normal theory.
+
+
+### Commentary on Model Performance 
+
+```{r, echo=FALSE}
+include_tweet("https://twitter.com/JoshuaGrubbsPhD/status/1516592721468825607")
+
+#include_tweet("https://twitter.com/bmwiernik/status/1516597519228317701")
+
+include_tweet("https://twitter.com/KMKing_Psych/status/1516598327478865923")
+
+```
+
+```{r}
+library(performance)
+check_model(lm_singer)
+#model_performance(lm_singer)
+
+# QQ-plot
+plot(check_normality(lm_singer), type = "qq")
+
+# PP-plot
+plot(check_normality(lm_singer), type = "pp")
+```
+
 
 ## Models with categorical explanatory variables
 
