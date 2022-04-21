@@ -190,14 +190,14 @@ For example, maybe we want to simulate two unrelated variables and then look to 
 Let's generate two quantitative vectors of length 10, which I'll name `x` and `y`, and plot the results.  I'm using the defaults for `mean` and `sd`.
 
 ```{r}
-x = rnorm(n = 10, 
+x <- rnorm(n = 10, 
           mean = 0, 
           sd = 1)
-y = rnorm(n = 10, 
+y <- rnorm(n = 10, 
           mean = 0, 
           sd = 1)
 
-df_demo=data.frame(var1=x, var2=y)
+df_demo <- data.frame(var1=x, var2=y)
 
 plot(y ~ x)
 
@@ -205,7 +205,11 @@ plot(y ~ x)
 
 ```{r,echo=FALSE}
 
-ggplot(data=df_demo,aes(x=var1,y=var2))+geom_point()
+ggplot(
+  data = df_demo,
+  aes(x = var1,
+      y = var2)) +
+  geom_point()
 
 
 ```
@@ -221,13 +225,16 @@ From `Usage` we can see that by default we pull random numbers between 0 and 1. 
 Let's generate 5 numbers between 0 and 1.
 
 ```{r}
-runif(n = 5, min = 0, max = 1)
+runif(n = 5,
+      min = 0,
+      max = 1)
 ```
 
 What if we want to generate 5 numbers between 50 and 100?  We can change the parameter values.
 
 ```{r}
-runif(n = 5, min = 50, max = 100)
+runif(n = 5,
+      min = 50, max = 100)
 ```
 
 ## Example of using the simulated numbers from `runif()`
@@ -240,15 +247,15 @@ You see I'm still writing out my argument names for clarity, but you may get a s
 
 ```{r}
 set.seed(16)
-y = rnorm(n = 100, mean = 0, sd = 1)
-x1 = runif(n = 100, min = 1, max = 2)
+y <- rnorm(n = 100, mean = 0, sd = 1)
+x1 <- runif(n = 100, min = 1, max = 2)
 head(x1)
 ```
 
 Now simulate a second explanatory variable with values between 200 and 300.  This variable is also unrelated to the other two.
 
 ```{r}
-x2 = runif(n = 100, min = 200, max = 300)
+x2 <- runif(n = 100, min = 200, max = 300)
 head(x2)
 ```
 
@@ -272,7 +279,8 @@ The single parameter, `lambda`, is the mean.  It has no default setting so must 
 Let's generate five values from a Poisson distribution with a mean of 2.5.  Note that *mean* of the Poisson distribution can be any non-negative value (i.e., it doesn't have to be an integer) even though the observed values will be discrete integers.
 
 ```{r}
-rpois(n = 5, lambda = 2.5)
+rpois(n = 5,
+      lambda = 2.5)
 ```
 
 ## Example of using the simulated numbers from `rpois()`
@@ -283,7 +291,7 @@ We'll draw 100 values from a Poisson distribution with a mean of 5.  We'll name 
 
 
 ```{r}
-y = rpois(100, lambda = 5)
+y <- rpois(100, lambda = 5)
 ```
 
 The vector of values we simulated fall between 1 and 14.
@@ -301,7 +309,7 @@ hist(y)
 Let's do the same thing for a Poisson distribution with a mean of 100.  The range of values is pretty narrow; there are no values even remotely close to 0.
 
 ```{r}
-y = rpois(100, lambda = 100)
+y <- rpois(100, lambda = 100)
 summary(y)
 ```
 
@@ -423,8 +431,8 @@ First we'll make separate vectors for the continuous and categorical data and th
 Notice there is no need to use `cbind()` here, which is commonly done by R beginners (I know I did!).  Instead we can use `data.frame()` directly.
 
 ```{r}
-group = rep(letters[1:2], each = 3)
-response = rnorm(n = 6, mean = 0, sd = 1)
+group <- rep(letters[1:2], each = 3)
+response <- rnorm(n = 6, mean = 0, sd = 1)
 data.frame(group,
            response)
 ```
@@ -487,14 +495,14 @@ The dataset above is one with "no difference" among groups.  What if the means w
 Remembering how `rnorm()` works with a vector of means is key here.  The function draws iteratively from each distribution.  
 
 ```{r}
-response = rnorm(n = 6, mean = c(5, 10), sd = 1)
+response <- rnorm(n = 6, mean = c(5, 10), sd = 1)
 response
 ```
 
 How do we get the `group` pattern correct?
 
 ```{r, eval = FALSE}
-group = rep(letters[1:2], ?)
+group <- rep(letters[1:2], ?)
 ```
 
 We need to repeat the whole vector three times instead of elementwise.
@@ -502,7 +510,7 @@ We need to repeat the whole vector three times instead of elementwise.
 To get the groups in the correct order we need to use `times` or `length.out` in `rep()`.  With `length.out` we define the output length of the vector, which is 6.  Alternatively we could use `times = 3` to repeat the whole vector 3 times.
 
 ```{r}
-group = rep(letters[1:2], length.out = 6)
+group <- rep(letters[1:2], length.out = 6)
 group
 ```
 
@@ -606,9 +614,9 @@ The result is identical to my `replicate()` code above.  It took a little more c
 
 ```{r}
 set.seed(16)
-list1 = list() # Make an empty list to save output in
+list1 <- list() # Make an empty list to save output in
 for (i in 1:3) { # Indicate number of iterations with "i"
-    list1[[i]] = rnorm(n = 5, mean = 0, sd = 1) # Save output in list for each iteration
+    list1[[i]] <- rnorm(n = 5, mean = 0, sd = 1) # Save output in list for each iteration
 }
 list1
 ```
@@ -628,7 +636,7 @@ We could put this process as the `expr` argument in `replicate()` to get many si
 I'll replicate things 3 times again to easily see the output.  I still use `simplify = FALSE` to get things into a list.
 
 ```{r}
-simlist = replicate(n = 3, 
+simlist <- replicate(n = 3, 
           expr = data.frame(group = rep(letters[1:2], each = 3),
                             response = rnorm(n = 6, mean = 0, sd = 1) ),
           simplify = FALSE)
