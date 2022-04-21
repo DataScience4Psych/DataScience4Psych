@@ -36,11 +36,9 @@ glimpse(email)
 
 > Question: Would you expect longer or shorter emails to be spam?
 
-
-
 ```{r echo=FALSE, out.width="100%"}
 #email$spam_num=email$spam
-email$spam=as.factor(email$spam)
+email$spam <- as.factor(email$spam)
 ggplot(email,
        aes(x = num_char, 
            y = spam, 
@@ -133,7 +131,6 @@ $$ y_i ∼ Bern(p) $$
 - Logistic regression is just one example
 
 
-
 #### Three characteristics of GLMs
 
 All GLMs have the following three characteristics:
@@ -219,7 +216,9 @@ In R, we fit a GLM in the same way as a linear model except we
 ```{r}
 spam_fit <- logistic_reg() %>%
   set_engine("glm") %>%
-  fit(spam ~ num_char, data = email, family = "binomial")
+  fit(spam ~ num_char,
+      data = email,
+      family = "binomial")
 
 tidy(spam_fit)
 ```
@@ -244,6 +243,7 @@ $$\log\left(\frac{p}{1-p}\right) = -1.80-0.0621\times 2$$
 
 $$\frac{p}{1-p} = \exp(-1.9242) = 0.15 \rightarrow p = 0.15 \times (1 - p)$$
 
+
 $$p = 0.15 - 0.15p \rightarrow 1.15p = 0.15$$
 
 $$p = 0.15 / 1.15 = 0.13$$
@@ -262,7 +262,8 @@ newdata <- tibble(
   shape    = c(22, 24, 23)
   )
 
-y_hat <- predict(spam_fit, newdata, type = "raw")
+y_hat <- predict(spam_fit,
+                 newdata, type = "raw")
 p_hat <- exp(y_hat) / (1 + exp(y_hat))
 
 newdata <- newdata %>%
@@ -309,7 +310,7 @@ ggplot(spam_aug, aes(x = num_char)) +
 
 #### False positive and negative
 
-|                         | Email is spam                 | Email is not spam             |
+|                         | Email is spam                 | Email is not spam         |
 |-------------------------|-------------------------------|-------------------------------|
 | Email labeled spam     | True positive                 | False positive (Type 1 error) |
 | Email labeled not spam | False negative (Type 2 error) | True negative                 |

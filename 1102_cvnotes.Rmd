@@ -111,10 +111,14 @@ plot(rss ~ p_vec)
 
 
 ```{r}
-get_cv_error <- function(n_predictors, y, X, folds) {
-    cv_vec = numeric(length(unique(folds)))
+get_cv_error <- function(n_predictors,
+                         y,
+                         X,
+                         folds) 
+    {
+    cv_vec <- numeric(length(unique(folds)))
     for(f in unique(folds)) {
-        cv_vec[f] = rss_on_held_out(
+        cv_vec[f] <- rss_on_held_out(
                   n_predictors,
                   y_train = y[folds != f],
                   X_train = X[folds != f,],
@@ -122,24 +126,29 @@ get_cv_error <- function(n_predictors, y, X, folds) {
                   X_test = X[folds == f,])
     }
     return(mean(cv_vec))
-}
+    }
 
-rss_on_held_out = function(n_predictors, y_train, X_train, y_test, X_test) {
+rss_on_held_out <- function(n_predictors,
+                            y_train,
+                            X_train,
+                            y_test,
+                            X_test) {
     if(n_predictors == 0) {
-        lm_submodel = lm(y_train ~ 0)
-        preds_on_test = rep(0, length(y_test))
+        lm_submodel <- lm(y_train ~ 0)
+        preds_on_test <- rep(0, length(y_test))
     } else {
-        lm_submodel = lm(y_train ~ 0 + X_train[,1:n_predictors, drop = FALSE])
-        preds_on_test = X_test[,1:n_predictors, drop= FALSE] %*% coef(lm_submodel)
+        lm_submodel <- lm(y_train ~ 0 + X_train[,1:n_predictors, drop = FALSE])
+        preds_on_test <- X_test[,1:n_predictors, drop= FALSE] %*% coef(lm_submodel)
     }
 
     return(sum((y_test - preds_on_test)^2))
-}
-K = 5
+    }
+K <- 5
+
 ## normally you would do this at random
-folds = rep(1:K, each = n / K)
-p_vec = 0:p
-cv_errors = sapply(p_vec, get_cv_error, y, X, folds)
+folds <- rep(1:K, each = n / K)
+p_vec <- 0:p
+cv_errors <- sapply(p_vec, get_cv_error, y, X, folds)
 plot(cv_errors ~ p_vec)
 ```
 
@@ -169,5 +178,3 @@ Considerations:
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
-
-

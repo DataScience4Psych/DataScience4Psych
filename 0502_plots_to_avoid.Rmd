@@ -7,10 +7,7 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 # Plots Behaving Badly
 
-This section is based on talk by Karl W. Broman titled "How to Display Data Badly" in which he described how the default plots offered by Microsoft Excel "obscure your data and annoy your readers". 
-His lecture was inspired by Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147. 
-Howard was the first to elucidate the principles of the bad display of data. 
-But according to Karl "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
+This section is based on talk by Karl W. Broman titled "How to Display Data Badly" in which he described how the default plots offered by Microsoft Excel "obscure your data and annoy your readers". His lecture was inspired by Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147. Howard was the first to elucidate the principles of the bad display of data. But according to Karl "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
 
 ## General Principles
 
@@ -29,13 +26,18 @@ The aims of good data graphics is to display data accurately and clearly. Some r
 ### Piecharts
 
 ```{r,include=FALSE}
-browsers <- c(Opera=1,Safari=9,Firefox=20,IE=26,Chrome=44)
+browsers <- c(Opera=1,
+              Safari=9,
+              Firefox=20,
+              IE=26,
+              Chrome=44)
 ```
 
 Say we want the report the results from a poll asking about browser preference (taken in August 2013). The standard way of displaying these is with a piechart:
 
 ```{r, fig.align='center', fig.width=4}
-pie(browsers,main="Browser Usage (August 2013)")
+pie(browsers,
+    main="Browser Usage (August 2013)")
 ```
 
 But as stated by the help file for the `pie` function:
@@ -51,7 +53,8 @@ browsers
 If you do want to plot them, then a barplot is appropriate:
 
 ```{r, fig.align='center', fig.width=4.5}
-barplot(browsers,main="Browser Usage (August 2013)")
+barplot(browsers,
+        main="Browser Usage (August 2013)")
 ```
 
 Note that we can now pretty easily determine the percentages by following a horizontal line to the x-axis. Do avoid 3-D version as the obfuscate the plot and remove this particular advantage.
@@ -86,9 +89,13 @@ load("data/badgraphfig1.RData")
 
 library(rafalib)
 mypar(1,1)
-dat <- list(Treatment=x,Control=y)
-boxplot(dat,xlab="Group",ylab="Response",cex=0)
-stripchart(dat,vertical=TRUE,method="jitter",pch=16,add=TRUE,col=1)
+dat <- list(Treatment=x,
+            Control=y)
+boxplot(dat,xlab="Group",
+        ylab="Response",cex=0)
+stripchart(dat,vertical=TRUE,
+           method="jitter",
+           pch=16,add=TRUE,col=1)
 ```
 
 Note how much more we see here: the center, spread, range and the points themselves while in the barplot we only see the mean and the SE and the SE has more to do with sample size than the spread of the data.
@@ -109,11 +116,26 @@ load("data/badgraphfig3.RData")
 
 library(rafalib)
 mypar(1,2)
-dat <- list(Treatment=x,Control=y)
-boxplot(dat,xlab="Group",ylab="Response",xlab="Group",ylab="Response",cex=0)
-stripchart(dat,vertical=TRUE,method="jitter",pch=16,add=TRUE,col=1)
-boxplot(dat,xlab="Group",ylab="Response",xlab="Group",ylab="Response",log="y",cex=0)
-stripchart(dat,vertical=TRUE,method="jitter",pch=16,add=TRUE,col=1)
+dat <- list(Treatment=x,
+            Control=y)
+boxplot(dat,xlab="Group",
+        ylab="Response",
+        xlab="Group",
+        ylab="Response",cex=0)
+stripchart(dat,
+           vertical=TRUE,
+           method="jitter",
+           pch=16,
+           add=TRUE,
+           col=1)
+boxplot(dat,
+        xlab="Group",
+        ylab="Response",
+        xlab="Group",
+        ylab="Response",log="y",cex=0)
+stripchart(dat,vertical=TRUE,
+           method="jitter",pch=16,
+           add=TRUE,col=1)
 ```
 
 
@@ -125,8 +147,10 @@ The purpose of many statistical analyses is to determine relationships between t
 #download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig4.RData",tmpfile)
 load("data/badgraphfig4.RData")
 plot(x,y,lwd=2,type="n")
+
 fit <- lm(y~x)
 abline(fit$coef,lwd=2)
+
 b <- round(fit$coef,4)
 text(78, 200, paste("y =", b[1], "+", b[2], "x"), adj=c(0,0.5))
 rho <- round(cor(x,y),4) # 0.8567
@@ -150,10 +174,12 @@ In the plot on the left we see the original data which shows very high correlati
 # if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
 # BiocManager::install("Biobase")
 # BiocManager::install("SpikeInSubset")
+
 library(Biobase)
 library(SpikeInSubset)
 
 ```
+
 ```{r, fig.width=7.5 , fig.height=4, fig.align='center'}
 data(mas95)
 mypar(1,2)
@@ -299,10 +325,13 @@ legend("bottomleft", lwd=2, col=c(1, 2), c("Control", "Treated"))
 By default, statistical software like R return many significant digits. This does not mean we should report them. Cutting and pasting directly from R is a bad idea as you might end up showing a table like this for, say, heights of basketball players:
 
 ```{r}
-heights <- cbind(rnorm(8,73,3),rnorm(8,73,3),rnorm(8,80,3),
-                 rnorm(8,78,3),rnorm(8,78,3))
-colnames(heights)<-c("SG","PG","C","PF","SF")
-rownames(heights)<- paste("team",1:8)
+heights <- cbind(rnorm(8,73,3),
+                 rnorm(8,73,3),
+                 rnorm(8,80,3),
+                 rnorm(8,78,3),
+                 rnorm(8,78,3))
+colnames(heights) <- c("SG","PG","C","PF","SF")
+rownames(heights) <- paste("team",1:8)
 heights
 ```
 
@@ -339,9 +368,6 @@ Turning tables into graphs. The American Statistician 56:121-130
 * [Nature Methods columns](http://bang.clearscience.info/?p=546) 
 
 
-
-
-
 # ODD: Design choices in data visualization
 
 I have curated this collection of external video sources on design choices in data visualization.
@@ -353,7 +379,7 @@ When they're used well, graphs can help us intuitively grasp complex data. But a
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=E91bGT9BjYk" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -364,7 +390,7 @@ This animation was produced by some of my colleagues at Brown.
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=x-rDVXVwW9s" %>%
-embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -374,7 +400,7 @@ embed_url() %>%
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=O-3Mlj3MQ_Q" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -383,7 +409,7 @@ embed_url() %>%
 ```{r, echo=FALSE}
 
 "https://www.youtube.com/watch?v=14VYnFhBKcY" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
