@@ -22,7 +22,8 @@ library(tweetrmd) #... embedding tweets
 You can follow along with the slides [here][d09_wrangle]) if they do not appear below.
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d09_wrangle") %>%
+ds4p_urls %>%
+slide_url("d09_wrangle") %>%
  include_url(height = "400px")
 ```
 
@@ -31,7 +32,8 @@ slide_url(ds4p_urls,"d09_wrangle") %>%
 ## Activity 04: Hotels!
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d09_wrangle","#18") %>%
+ds4p_urls %>%
+slide_url("d09_wrangle","#18") %>%
  include_url(height = "400px")
 ```
 
@@ -133,9 +135,11 @@ ctib <- my_gap %>%
 ## this is a semi-dangerous way to add this variable
 ## I'd prefer to join on year, but we haven't covered joins yet
 my_gap <- my_gap %>%
-  mutate(tmp = rep(ctib$gdpPercap, nlevels(country)),
-         gdpPercapRel = gdpPercap / tmp,
-         tmp = NULL)
+  mutate(
+    tmp = rep(ctib$gdpPercap, nlevels(country)),
+    gdpPercapRel = gdpPercap / tmp,
+    tmp = NULL
+  )
 ```
 
 Note that, `mutate()` builds new variables sequentially so you can reference earlier ones (like `tmp`) when defining later ones (like `gdpPercapRel`). Also, you can get rid of a variable by setting it to `NULL`.
@@ -143,8 +147,8 @@ Note that, `mutate()` builds new variables sequentially so you can reference ear
 How could we sanity check that this worked? The Canadian values for `gdpPercapRel` better all be 1!
 
 ```{r}
-my_gap %>% 
-  filter(country == "Canada") %>% 
+my_gap %>%
+  filter(country == "Canada") %>%
   select(country, year, gdpPercapRel)
 ```
 
@@ -207,8 +211,8 @@ You've seen simple use of `select()`. There are two tricks you might enjoy:
   
 ```{r}
 my_gap %>%
-  filter(country == "Burundi", year > 1996) %>% 
-  select(yr = year, lifeExp, gdpPercap) %>% 
+  filter(country == "Burundi", year > 1996) %>%
+  select(yr = year, lifeExp, gdpPercap) %>%
   select(gdpPercap, everything())
 ```
 
@@ -259,7 +263,7 @@ my_gap %>%
 The `count()` function is an even more convenient function that does both grouping and counting.
 
 ```{r}
-my_gap %>% 
+my_gap %>%
   count(continent)
 ```
 
@@ -291,7 +295,7 @@ my_gap %>%
 my_gap %>%
   filter(year %in% c(1952, 2007)) %>%
   group_by(continent, year) %>%
-  summarize_at(vars(lifeExp, gdpPercap), list(~mean(.), ~median(.)))
+  summarize_at(vars(lifeExp, gdpPercap), list( ~ mean(.), ~ median(.)))
 ```
 
 Let's focus just on Asia. What are the minimum and maximum life expectancies seen by year?
@@ -300,7 +304,8 @@ Let's focus just on Asia. What are the minimum and maximum life expectancies see
 my_gap %>%
   filter(continent == "Asia") %>%
   group_by(year) %>%
-  summarize(min_lifeExp = min(lifeExp), max_lifeExp = max(lifeExp))
+  summarize(min_lifeExp = min(lifeExp),
+            max_lifeExp = max(lifeExp))
 ```
 
 Of course it would be much more interesting to see *which* country contributed these extreme observations. Is the minimum (maximum) always coming from the same country? We tackle that with window functions shortly.
@@ -314,10 +319,10 @@ Sometimes you don't want to collapse the $n$ rows for each group into one row. Y
 Let's make a new variable that is the years of life expectancy gained (lost) relative to 1952, for each individual country. We group by country and use `mutate()` to make a new variable. The `first()` function extracts the first value from a vector. Notice that `first()` is operating on the vector of life expectancies *within each country group*.
 
 ```{r}
-my_gap %>% 
-  group_by(country) %>% 
-  select(country, year, lifeExp) %>% 
-  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>% 
+my_gap %>%
+  group_by(country) %>%
+  select(country, year, lifeExp) %>%
+  mutate(lifeExp_gain = lifeExp - first(lifeExp)) %>%
   filter(year < 1963)
 ```
 
@@ -334,7 +339,7 @@ my_gap %>%
   filter(continent == "Asia") %>%
   select(year, country, lifeExp) %>%
   group_by(year) %>%
-  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>%
   arrange(year) %>%
   print(n = Inf)
 ```
@@ -358,7 +363,7 @@ For concreteness, I use `mutate()` to actually create these variables, even thou
 ```{r}
 asia %>%
   mutate(le_rank = min_rank(lifeExp),
-         le_desc_rank = min_rank(desc(lifeExp))) %>% 
+         le_desc_rank = min_rank(desc(lifeExp))) %>%
   filter(country %in% c("Afghanistan", "Japan", "Thailand"), year > 1995)
 ```
 
@@ -396,11 +401,11 @@ my_gap %>%
   group_by(continent, country) %>%
   ## within country, take (lifeExp in year i) - (lifeExp in year i - 1)
   ## positive means lifeExp went up, negative means it went down
-  mutate(le_delta = lifeExp - lag(lifeExp)) %>% 
+  mutate(le_delta = lifeExp - lag(lifeExp)) %>%
   ## within country, retain the worst lifeExp change = smallest or most negative
-  summarize(worst_le_delta = min(le_delta, na.rm = TRUE)) %>% 
+  summarize(worst_le_delta = min(le_delta, na.rm = TRUE)) %>%
   ## within continent, retain the row with the lowest worst_le_delta
-  top_n(-1, wt = worst_le_delta) %>% 
+  top_n(-1, wt = worst_le_delta) %>%
   arrange(worst_le_delta)
 ```
 

@@ -63,10 +63,7 @@ email %>%
 
 
 
-
 > Question: Would you expect emails that have subjects starting with "Re:", "RE:", "re:", or "rE:" to be spam or not?
-
-
 
 ```{r echo=FALSE}
 email %>%
@@ -87,7 +84,6 @@ email %>%
 - Both number of characters and whether the message has "re:" in the subject might be related to whether the email is spam. How do we come up with a model that will let us explore this relationship?
 
 - For simplicity, we'll focus on the number of characters (`num_char`) as predictor, but the model we describe can be expanded to take multiple predictors as well.
-
 
 
 This isn't something we can reasonably fit a linear model to -- we need something different!
@@ -164,11 +160,11 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 
 ```{r}
 d <- tibble(p = seq(0.001, 0.999, length.out = 1000)) %>%
-  mutate(logit_p = log(p/(1-p)))
+  mutate(logit_p = log(p / (1 - p)))
 
-ggplot(d, aes(x = p, y = logit_p)) + 
-  geom_line() + 
-  xlim(0,1) + 
+ggplot(d, aes(x = p, y = logit_p)) +
+  geom_line() +
+  xlim(0, 1) +
   ylab("logit(p)") +
   labs(title = "logit(p) vs. p")
 ```
@@ -248,11 +244,7 @@ $$p = 0.15 - 0.15p \rightarrow 1.15p = 0.15$$
 
 $$p = 0.15 / 1.15 = 0.13$$
 
-
-
 > Question: What is the probability that an email with 15000 characters is spam? What about an email with 40000 characters?
-
-
 
 
 ```{r spam-predict-viz, echo=FALSE, out.width = "100%", fig.asp=0.5}
@@ -295,8 +287,6 @@ ggplot(spam_aug, aes(x = num_char)) +
 - `r paste0(newdata$num_char[2], "K chars, P(spam) = ", round(newdata$p_hat[2], 2))`
 - `r paste0(newdata$num_char[3], "K chars, P(spam) = ", round(newdata$p_hat[3], 2))`
 
-
-
 > Question: Would you prefer an email with 2000 characters to be labeled as spam or not? How about 40,000 characters?
 
 
@@ -305,8 +295,6 @@ ggplot(spam_aug, aes(x = num_char)) +
 
 
 ## Sensitivity and specificity
-
-
 
 #### False positive and negative
 
@@ -319,7 +307,6 @@ ggplot(spam_aug, aes(x = num_char)) +
 - False negative rate = P(Labeled not spam | Email spam) = FN / (TP + FN) 
 
 - False positive rate = P(Labeled spam | Email not spam) = FP / (FP + TN)
-
 
 
 #### Sensitivity and specificity
@@ -338,9 +325,7 @@ ggplot(spam_aug, aes(x = num_char)) +
   - Specificity = 1 − False positive rate
 
 
-
 > Question: If you were designing a spam filter, would you want sensitivity and specificity to be high or low? What are the trade-offs associated with each decision? 
-
 
 ```{r links, child="admin/md/courselinks.md"}
 ```

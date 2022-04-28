@@ -107,7 +107,7 @@ max_minus_min(gapminder$pop)
 
 Either check these results "by hand" or apply the "does that even make sense?" test.
 
-### Test on weird stuff
+### Test on unexpected stuff
 
 Now we try to break our function. Don't get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it's not expecting.
 
@@ -119,7 +119,7 @@ max_minus_min("eggplants are purple") ## i have no excuse for this one
 
 How happy are you with those error messages? You must imagine that some entire __script__ has failed and that you were hoping to just `source()` it without re-reading it. If a colleague or future you encountered these errors, do you run screaming from the room? How hard is it to pinpoint the usage problem?
 
-### I will scare you now
+### Unbreakable
 
 Here are some great examples where the function __should break but it does not.__
 
@@ -156,7 +156,7 @@ And we see that it catches all of the self-inflicted damage we would like to avo
 
 ### if then stop
 
-`stopifnot()` doesn't provide a very good error message. The next approach is very widely used. Put your validity check inside an `if()` statement and call `stop()` yourself, with a custom error message, in the body.
+`stopifnot()` doesn't provide a helpful error message. The next approach is widely used. Put your validity check inside an `if()` statement and call `stop()` yourself, with a custom error message, in the body.
 
 ```{r error = TRUE}
 mmm2 <- function(x) {
@@ -297,7 +297,7 @@ qdiff2 <- function(zeus, hera) {
 qdiff2(zeus = gapminder$lifeExp, hera = 0:1)
 ```
 
-While I can name my arguments after Greek gods, it's usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names.
+While I can name my arguments after Greek gods, it's usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names. Future you will thank you.
 
 If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I've been doing all along and now you know why:
 
@@ -431,7 +431,9 @@ This works but it is dangerous to invert the default behavior of a well-known bu
 We could add an `na.rm =` argument to our own function. We might even enforce our preferred default -- but at least we're giving the user a way to control the behavior around `NA`s.
 
 ```{r error = TRUE}
-qdiff5 <- function(x, probs = c(0, 1), na.rm = TRUE) {
+qdiff5 <- function(x,
+                   probs = c(0, 1),
+                   na.rm = TRUE) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs, na.rm = na.rm)
   max(the_quantiles) - min(the_quantiles)
