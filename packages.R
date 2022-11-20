@@ -7,15 +7,16 @@ install.packages(c("devtools",
                    "discord",
                    "vembedr",
                    "datasauRus",
-                   "DT",
+                   "DT","gt",
                    "car",
                    "latticeExtra",
                    "manipulateWidget",
                    "shiny",
-                   "rgl","BGmisc"))
+                   "rgl","BGmisc","mosaicData"))
 devtools::install_github("gadenbuie/tweetrmd")
 devtools::install_github('gmonette/spida2')
 install.packages("p3d", repos = "http://R-Forge.R-project.org")
+if (!require("gapminder")) install.packages("gapminder")
 
 install.packages("tufte")
 devtools::install_github("rstudio-education/dsbox")
