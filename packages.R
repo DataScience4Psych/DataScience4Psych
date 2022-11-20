@@ -13,7 +13,7 @@ install.packages(c("devtools",
                    "manipulateWidget",
                    "shiny",
                    "rgl","BGmisc","leaflet","mosaicData",
-                   "performance",'see',"plotly"))
+                   "performance","see","plotly","RefManageR"))
 devtools::install_github("gadenbuie/tweetrmd")
 devtools::install_github('gmonette/spida2')
 install.packages("p3d", repos = "http://R-Forge.R-project.org")
@@ -23,7 +23,7 @@ install.packages("tufte")
 devtools::install_github("rstudio-education/dsbox")
 
 install.packages("rafalib")
-
+devtools::install_github("crsh/citr")
 if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
 BiocManager::install("Biobase")
 BiocManager::install("SpikeInSubset")
