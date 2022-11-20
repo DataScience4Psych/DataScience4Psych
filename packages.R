@@ -12,7 +12,7 @@ install.packages(c("devtools",
                    "latticeExtra",
                    "manipulateWidget",
                    "shiny",
-                   "rgl"))
+                   "rgl","BGmisc"))
 devtools::install_github("gadenbuie/tweetrmd")
 devtools::install_github('gmonette/spida2')
 install.packages("p3d", repos = "http://R-Forge.R-project.org")
