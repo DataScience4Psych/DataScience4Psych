@@ -12,7 +12,8 @@ install.packages(c("devtools",
                    "latticeExtra",
                    "manipulateWidget",
                    "shiny",
-                   "rgl","BGmisc","mosaicData"))
+                   "rgl","BGmisc","leaflet","mosaicData",
+                   "performance",'see',"plotly"))
 devtools::install_github("gadenbuie/tweetrmd")
 devtools::install_github('gmonette/spida2')
 install.packages("p3d", repos = "http://R-Forge.R-project.org")
