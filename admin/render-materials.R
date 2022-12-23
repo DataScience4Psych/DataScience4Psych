@@ -26,7 +26,7 @@ pacman::p_load(coronavirus,
 #               vroom,
                xaringan,
 webshot,
-manipulateWidget
+manipulateWidget,rafalib
               )
 
 if (!require("spida2"))  devtools::install_github('gmonette/spida2')
@@ -39,3 +39,9 @@ xaringans <- dir_info(recurse = 3, glob = "*.Rmd") %>%
   filter(!str_detect(path, "setup")) %>%
   pull(path)
 walk(xaringans, render)
+
+install.packages(c("bookdown", "devtools", "dichromat", "DT", "fs", "gapminder", "gender", "geonames", "git2r", "glue", "gridExtra", "htmltools", "httr", "knitr", "RColorBrewer", "rebird", "rmarkdown", "rplos", "rvest", "testthat", "tidyverse", "usethis", "viridis", "xfun", "xml2", "ropensci/genderdata", "rstudio/gt"))
+install.packages("gt")
+install.packages(c("tidyverse", "discord"))
+install.packages("osfr")
+install.packages("genderdata", repos = "https://dev.ropensci.org", type = "source")
