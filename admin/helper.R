@@ -2,6 +2,5 @@ install.packages(c("bookdown", "devtools", "dichromat", "DT", "fs", "gapminder",
 install.packages("gt")
 install.packages(c("tidyverse", "discord"))
 install.packages("osfr")
-install.packages("genderdata", repos = "https://dev.ropensci.org", type = "source")
 
 usethis::use_github_action(url = "https://raw.githubusercontent.com/ropenscilabs/actions_sandbox/master/.github/workflows/deploy_bookdown.yml")

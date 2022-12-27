@@ -14,21 +14,27 @@ pacman::p_load(coronavirus,
                ggridges,
                here,
                hexbin,
-               gt,
- #              maps,
+               gt,maps,
                NlsyLinks,
                patchwork,
                rmarkdown,
                skimr,dsbox,
- tufte,
+               tufte,
                tidyverse,
                uuid,
-#               vroom,
+               vroom,
                xaringan,
-webshot,
-manipulateWidget,rafalib
+               BiocManager,
+               webshot,
+               manipulateWidget,
+               rafalib
               )
 
+if (!require("genderdata")) install.packages("genderdata", repos = "https://dev.ropensci.org", type = "source")
+
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+if (!require("Biobase")) BiocManager::install("Biobase")
+if (!require("SpikeInSubset"))BiocManager::install("SpikeInSubset")
 if (!require("spida2"))  devtools::install_github('gmonette/spida2')
 if (!require("p3d"))  install.packages("p3d", repos = "http://R-Forge.R-project.org")
 devtools::install_github("rstudio-education/dsbox")
