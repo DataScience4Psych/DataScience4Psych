@@ -41,7 +41,7 @@ Before getting started, let's check that a bot has permissions to access pages o
 paths_allowed("https://collections.ed.ac.uk/art)")
 ```
 
-## Getting started
+## Getting started {.unnumbered}
 
 Go to the course GitHub organization and locate your lab repo, which should be named `lab-07-uoe-art`. Grab the URL of the repo, and fork your own copy.
 
@@ -53,7 +53,7 @@ use_git_config(user.name = "Your Name",
                user.email = "your.email@address.com")
 ``` 
 
-## R scripts vs. R Markdown documents
+## R scripts vs. R Markdown documents {.unnumbered}
 
 Today we will be using both R scripts and R Markdown documents:
 
@@ -79,7 +79,7 @@ lab that each file will be used for:
 |  |- 03-scrape-page-many.R       # iteration
 ```
   
-## SelectorGadget
+## SelectorGadget {.unnumbered}
 
 For this lab, I recommend using Google Chrome as your web browser. In case you haven't installed the SelectorGadget extension... go to the [SelectorGadget extension page](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en) on the Chrome Web Store and click on "Add to Chrome" (big blue button). A pop up window will ask _Add "SelectorGadget"?_, click "Add extension".
 
@@ -91,7 +91,7 @@ knitr::include_graphics("img/selectorgadget.png")
 
 You should now be able to access SelectorGadget by clicking on the icon next to the search bar in the Chrome browser.
 
-### Scraping a single page
+### Scraping a single page {.unnumbered}
 
 
 > **Tip:** To run the code you can highlight or put your cursor next to the lines of code you want to run and hit Command+Enter.
@@ -164,7 +164,7 @@ titles <- page %>%
   str_squish()
 ```
 
-### Links
+### Links {.unnumbered}
 
 The same nodes that contain the text for the titles also contains information on the links to individual art piece pages for each title. We can extract this information using a new function from the rvest package, `html_attr()`, which 
 extracts attributes.
@@ -199,22 +199,22 @@ links.
 of the webpage it takes you to. How does that url compare to what we scraped 
 above? How is it different? Using `str_replace()`, fix the URLs.
 
-### Artists
+### Artists {.unnumbered}
 
 2. Fill in the blanks to scrape artist names.
 
-### Put it altogether
+### Put it altogether {.unnumbered}
 
 3. Fill in the blanks to organize everything in a tibble.
 
-### Scrape the next page
+### Scrape the next page {.unnumbered}
 
 4. Click on the next page, and grab its url. Fill in the blank in 
 to define a new object: `second_url`. Copy-paste code from top of the R script 
 to scrape the new set of art pieces, and save the resulting data frame as 
 `second_ten`.
 
-## Functions
+## Functions {.unnumbered}
 
 > **Mason Comment:** I know that I haven't taught you explicitly how to write functions yet. But, you have learned enough from me (and wise Prof. Google) to teach yourself how to do it. Don't worry -- I'll be covering how to write functions explicitly in the next module. (Try it on your own first, and then take a sneek peak ahead if you want some reassurance that you're doing it "right". I believe in you!
 
@@ -271,7 +271,7 @@ scrape_page(first_url)
 scrape_page(second_url)
 ```
 
-## Iteration
+## Iteration {.unnumbered}
 
 <div class="box">
 Work in `scripts/03-scrape-page-many.R`.
@@ -287,7 +287,7 @@ by using R to iterate over all pages that contain information on the art collect
 
 That means we develop a list of URLs (of pages that each have 10 art pieces), and write some code that applies the `scrape_page()` function to each page, and combines the resulting data frames from each page into a single data frame with `r num_pieces` rows and 3 columns.
 
-### List of URLs
+### List of URLs {.unnumbered}
 
 Click through the first few of the pages in the art collection and observe their URLs to confirm the following pattern:
 
@@ -305,7 +305,7 @@ We can construct these URLs in R by pasting together two pieces: (1) a common
 
 7. Fill in the blanks to construct the list of URLs. 
 
-### Mapping
+### Mapping {.unnumbered}
 
 Finally, we're ready to iterate over the list of URLs we constructed. We will do this by **map**ping the function we developed over the list of URLs. There are a series of mapping functions in R (more details on that soon!), and they each take the following form:
 
@@ -321,11 +321,11 @@ map_dfr(urls, scrape_page)
 
 8. Fill in the blanks to scrape all pages, and to create a new data frame called `uoe_art`.
 
-### Write out data
+### Write out data {.unnumbered}
 
 9. Finally write out the data frame you constructed into the `data` folder so that you can use it in the analysis section.
 
-## Analysis
+## Analysis {.unnumbered}
 
 <div class="box">
 Work in `lab-07-uoe-art.Rmd` for the rest of the lab.
