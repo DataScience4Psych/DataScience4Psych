@@ -2,7 +2,6 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -94,10 +93,14 @@ means <- email %>%
   summarize(mean_num_char = mean(num_char)) %>%
   mutate(group = 1)
 
-ggplot(email, aes(x = num_char, y = spam, color = spam)) +
+ggplot(email, aes(x = num_char,
+                  y = spam, color = spam)) +
   geom_jitter(alpha = 0.2) +
-  geom_line(data = means, aes(x = mean_num_char, y = spam, group = group), color = "black", size = 1.5) +
-  labs(x = "Number of characters (in thousands)", y = "Spam") +
+  geom_line(data = means,
+            aes(x = mean_num_char, y = spam, group = group),
+            color = "black", size = 1.5) +
+  labs(x = "Number of characters (in thousands)",
+       y = "Spam") +
   scale_color_manual(values = c("#DEB4A0", "#CA235F")) +
   guides(color = FALSE)
 ```
@@ -123,7 +126,6 @@ $$ y_i ∼ Bern(p) $$
 
 - This is a very general way of addressing many problems in regression and the resulting models are called **generalized linear models (GLMs)**
 
-
 - Logistic regression is just one example
 
 
@@ -133,10 +135,8 @@ All GLMs have the following three characteristics:
 
 1. A probability distribution describing a generative model for the outcome variable
 
-
 2. A linear model:
 $$\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_k X_k$$
-
 
 3. A link function that relates the linear model to the parameter of the outcome distribution
   
@@ -145,7 +145,6 @@ $$\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_k X_k$$
 #### Logistic regression
 
 - Logistic regression is a GLM used to model a binary categorical outcome using numerical and categorical predictors
-
 
 - To finish specifying the Logistic model we just need to define a reasonable link function that connects $\eta_i$ to $p_i$: logit function
 
@@ -159,7 +158,8 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 #### Logit function, visualized
 
 ```{r}
-d <- tibble(p = seq(0.001, 0.999, length.out = 1000)) %>%
+d <- tibble(p = seq(0.001, 0.999,
+                    length.out = 1000)) %>%
   mutate(logit_p = log(p / (1 - p)))
 
 ggplot(d, aes(x = p, y = logit_p)) +
@@ -175,13 +175,11 @@ ggplot(d, aes(x = p, y = logit_p)) +
 
 - The logit function takes a value between 0 and 1 and maps it to a value between $-\infty$ and $\infty$
 
-
 - Inverse logit (logistic) function:
 $$g^{-1}(x) = \frac{\exp(x)}{1+\exp(x)} = \frac{1}{1+\exp(-x)}$$
 
 
 - The inverse logit function takes a value between $-\infty$ and $\infty$ and maps it to a value between 0 and 1
-
 
 - This formulation is also useful for interpreting the model, since the logit can be interpreted as the log odds of a success -- more on this later
 
@@ -208,7 +206,6 @@ In R, we fit a GLM in the same way as a linear model except we
 - define `family = "binomial"` for the link function to be used in the model
 
 
-
 ```{r}
 spam_fit <- logistic_reg() %>%
   set_engine("glm") %>%
@@ -216,7 +213,7 @@ spam_fit <- logistic_reg() %>%
       data = email,
       family = "binomial")
 
-tidy(spam_fit)
+#tidy(spam_fit)
 ```
 
 
@@ -268,7 +265,7 @@ spam_aug <- augment(spam_fit$fit) %>%
   mutate(prob = exp(.fitted) / (1 + exp(.fitted)))
 
 ggplot(spam_aug, aes(x = num_char)) +
-  geom_point(aes(y = as.numeric(spam)-1, color = spam), alpha = 0.3) +
+  geom_point(aes(y = as.numeric(spam) - 1, color = spam), alpha = 0.3) +
   scale_color_manual(values = c("#DEB4A0", "#CA235F")) +
   scale_y_continuous(breaks = c(0, 1)) +
   guides(color = FALSE) +
