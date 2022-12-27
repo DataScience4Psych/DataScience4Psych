@@ -25,18 +25,18 @@ The aims of good data graphics is to display data accurately and clearly. Some r
 ### Piecharts
 
 ```{r,include=FALSE}
-browsers <- c(Opera=1,
-              Safari=9,
-              Firefox=20,
-              IE=26,
-              Chrome=44)
+browsers <- c(Opera = 1,
+              Safari = 9,
+              Firefox = 20,
+              IE = 26,
+              Chrome = 44)
 ```
 
 Say we want the report the results from a poll asking about browser preference (taken in August 2013). The standard way of displaying these is with a piechart:
 
 ```{r, fig.align='center', fig.width=4}
 pie(browsers,
-    main="Browser Usage (August 2013)")
+    main = "Browser Usage (August 2013)")
 ```
 
 But as stated by the help file for the `pie` function:
@@ -53,7 +53,7 @@ If you do want to plot them, then a barplot is appropriate:
 
 ```{r, fig.align='center', fig.width=4.5}
 barplot(browsers,
-        main="Browser Usage (August 2013)")
+        main = "Browser Usage (August 2013)")
 ```
 
 Note that we can now pretty easily determine the percentages by following a horizontal line to the x-axis. Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.
@@ -75,7 +75,7 @@ The reason is that by removing the center we remove one of the visual cues for d
 
 ###  Barplots as data summaries
 
-While barplots are useful for showing percentages, they are incorrectly used to display data from two groups begin compared. Specifically, barplots are created with height equal to the group means and an antenna is added at the top to represent standard errors. This plot is simply showing two numbers per groups and the plot adds nothing:
+Although barplots are useful for showing percentages, they are incorrectly used to display data from two groups begin compared. Specifically, barplots are created with height equal to the group means and an antenna is added at the top to represent standard errors. This plot is simply showing two numbers per groups and the plot adds nothing:
 
 
 ```{r echo=FALSE, eval=TRUE,fig.align='center'}
@@ -410,11 +410,14 @@ zm <- apply(z, 1, mean)
 
 In this example we generate data with a simulation. We are studying a dose response relationship between two groups treatment and control. We have three groups of measurements for both control and treatment. Comparing treatment and control using the common barplot:
 
-<center>
-<img src="https://raw.githubusercontent.com/kbroman/Talk_Graphs/master/Figs/fig9d.png" width=400>
-</center>
+
+```{r echo=FALSE, eval=TRUE,fig.align='center'}
+knitr::include_graphics("img/fig9d.png")
+```
+
 
 Instead we should show each curve. We can use color to distinguish treatment and control and dashed and solid lines to distinguish the original data from the mean of the three groups.
+
 ```{r,fig.align='center',fig.width=5}
 plot(
   x,
