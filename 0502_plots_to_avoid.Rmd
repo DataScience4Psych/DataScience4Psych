@@ -1,6 +1,9 @@
 ```{r include = FALSE}
 source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+
+library(tidyverse)
+library(rafalib)
 ```
 
 
@@ -67,7 +70,7 @@ knitr::include_graphics("img/fig2b.png")
 Note that even worse that piecharts are donut plots.
 
 
-```{r echo=FALSE, eval=TRUE,fig.align='middle'}
+```{r echo=FALSE, eval=TRUE,fig.align='middle',fig.width=3}
 knitr::include_graphics("img/Donut-Chart.svg.png")
 ```
 
@@ -88,12 +91,15 @@ Much more informative is to summarizing with a boxplot. If the number of points 
 #library("downloader")
 #tmpfile <- tempfile()
 #download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig1.RData")
-load("data/badgraphfig1.RData")
-
+#load("data/badgraphfig1.RData")
+library(tidyverse)
 library(rafalib)
+
+df_fig1 <- read.csv("data/bromanfig1.csv")
+
 mypar(1,1)
-dat <- list(Treatment=x,
-            Control=y)
+dat <- list(Treatment=df_fig1$x,
+            Control=df_fig1$y)
 dat %>%
   boxplot(xlab = "Group",
           ylab = "Response",
@@ -120,16 +126,12 @@ knitr::include_graphics("img/fig3c.png")
 A quick look at the data demonstrates that this difference is mostly driven by just two points. A version showing the data in the log-scale is much more informative.
 
 ```{r, fig.align="center",fig.width=7,fig.height=4}
-#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig3.RData",tmpfile) ##overwrite
-#load(tmpfile)
-
-
-load("data/badgraphfig3.RData")
+df_fig3 <- read.csv("data/bromanfig3.csv")
 
 library(rafalib)
 mypar(1, 2)
-dat <- list(Treatment = x,
-            Control = y)
+dat <- list(Treatment = df_fig3$x,
+            Control = df_fig3$y)
 dat %>%
 boxplot(
   xlab = "Group",
@@ -171,27 +173,43 @@ dat %>%
 
 The purpose of many statistical analyses is to determine relationships between two variables. Sample correlations are typically reported and sometimes plots are displayed to show this. However, showing just the regression line is one way to display your data baldy as it hides the scatter. Surprisingly plots such as the following are commonly seen:
 
-```{r}
-#download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig4.RData",tmpfile)
-load("data/badgraphfig4.RData")
-plot(x, y, lwd = 2, type = "n")
+```{r,warning=FALSE}
+df_fig4 <- read.csv("data/bromanfig4.csv")
 
-fit <- lm(y ~ x)
-abline(fit$coef, lwd = 2)
+fit <- lm(y ~ x,
+          data = df_fig4)
 
-b <- round(fit$coef, 4)
-text(78, 200, paste("y =", b[1], "+", b[2], "x"), adj = c(0, 0.5))
+rho <- (round(cor(df_fig4$x,
+                  df_fig4$y),
+              4))
 
-rho <- round(cor(x, y), 4) # 0.8567
+ggplot(data = df_fig4,
+       aes(x = x, y = y)) +
+  geom_point(alpha=0) +
+  geom_abline(intercept = fit$coef[1],
+              slope = fit$coef[2], lwd = 1) +
+  geom_text(x = 85, y = 200,
+            label = paste("y =", round(fit$coef[1], 3),
+                          "+", round(fit$coef[2], 3), "x")) +
+  geom_text(x = 85, y = 187, 
+            label = expression(paste(rho, " = 0.8567")))
 
-text(78, 187, expression(paste(rho, " = 0.8567")), adj = c(0, 0.5))
+
 ```
 
 Showing the data is much more informative:
-```{r}
-plot(x, y, lwd = 2)
-fit <- lm(y ~ x)
-abline(fit$coef, lwd = 2)
+```{r,warning=FALSE}
+ggplot(data = df_fig4, aes(x = x, y = y)) +
+  geom_point() +
+  geom_abline(intercept = fit$coef[1],
+              slope = fit$coef[2], lwd = 1) +
+  geom_text(x = 85, y = 200,
+            label = paste("y =", round(fit$coef[1], 3),
+                          "+", round(fit$coef[2], 3), "x")) +
+  geom_text(x = 85, y = 187, 
+            label = expression(paste(rho, " = 0.8567")))
+
+
 ```
 
 ##  High correlation does not imply replication
@@ -213,19 +231,9 @@ library(SpikeInSubset)
 ```{r, fig.width=7.5 , fig.height=4, fig.align='center'}
 data(mas95)
 mypar(1, 2)
-r <- exprs(mas95)[, 1] ##original measures were not logged
-g <- exprs(mas95)[, 2]
 
-plot(r,
-  g,
-  lwd = 2,
-  cex = 0.2,
-  pch = 16,
-  xlab = expression(paste(E[1])),
-  ylab = expression(paste(E[2])),
-  main = paste0("corr=", signif(cor(r, g), 3))
-)
-abline(0, 1, col = 2, lwd = 2)
+df_mas95 <- data.frame(r = exprs(mas95)[, 1], ##original measures were not logged
+                       g = exprs(mas95)[, 2])
 
 f <- function(a,
               x,
@@ -234,54 +242,65 @@ f <- function(a,
   mean(x <= a & y <= a) - p
 }
 
-
 a95 <- uniroot(
   f,
   lower = 2000,
   upper = 20000,
-  x = r,
-  y = g)$root
+  x = df_mas95$r,
+  y = df_mas95$g)$root
 
-abline(a95, -1, lwd = 2, col = 1)
-text(
-  8500,
-  0,
-  "95% of data below this line",
-  col = 1,
-  cex = 1.2,
-  adj = c(0, 0)
-)
+string_cor = signif(cor(df_mas95$r, df_mas95$g), 3)
 
-r <- log2(r)
-g <- log2(g)
 
-plot(r,g,
-  lwd = 2,
-  cex = 0.2,
-  pch = 16,
-  xlab = expression(paste(log[2], " ", E[1])),
-  ylab = expression(paste(log[2], " ", E[2])),
-  main = paste0("corr=", signif(cor(r, g), 3))
-)
-abline(0, 1, col = 2, lwd = 2)
+ggplot(data = df_mas95, 
+       aes(x = r, y = g)) +
+  geom_point(color = "black",size=0.5) +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab(expression(paste(E[1]))) +
+  ylab(expression(paste(E[2]))) +
+  ggtitle(paste0("corr=", string_cor)) +
+
+  geom_abline(slope = -1, intercept = a95, color = "seagreen") +
+  geom_text(x = 8500, y = 0, 
+            label = "95% of data below this line",vjust = "inward", hjust = "inward",
+            color = "seagreen")
+
+
+df_mas95 <- df_mas95 %>% 
+  mutate(r = log2(r),
+         g = log2(g))
+
+string_cor = signif(cor(df_mas95$r, df_mas95$g), 3)
+
+ggplot(data = df_mas95, 
+       aes(x = r, y = g)) +
+  geom_point(color = "black",size=0.5) +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab(expression(paste(log[2], " ", E[1]))) +
+  ylab(expression(paste(log[2], " ", E[2]))) +
+  ggtitle(paste0("corr=",string_cor))
+
+
 ```
 
 Although the correlation is reduced in the log-scale, it is very close to 1 in both cases. Does this mean these data are reproduced? To examine how well the second vector reproduces the first 
 What we need to study the differences so we should instead plot that. In this plot we plot the difference (in the log scale) versus the average:
 
 ```{r,fig.align='center',fig.width=5,fig.height=5}
-mypar(1, 1)
-plot((r + g) / 2,
-     (r - g),
-     lwd = 2,
-     cex = 0.2,
-     pch = 16,
-     xlab = expression(paste("Ave{ ", log[2], " ", E[1], ", ", log[2], " ", E[2], " }")),
-     ylab = expression(paste(log[2], " { ", E[1], " / ", E[2], " }")),
-     main = paste0("SD=", signif(sqrt(mean((r - g) ^ 2
-     )), 3))
-)
-abline(h = 0, col = 2, lwd = 2)
+df_mas95 <- df_mas95 %>%
+  mutate(x = (r + g) / 2,
+         y = (r - g))
+
+string_sd = signif(sqrt(mean((df_mas95$r - df_mas95$g) ^ 2)), 3)
+
+
+ggplot(data = df_mas95, aes(x = x, y = y)) +
+  geom_point(size = .5, color = "black") +
+  geom_hline(yintercept = 0, color = "red") +
+  xlab(expression(paste("Ave{ ", log[2], " ", E[1], ", ", log[2], " ", E[2], " }"))) +
+  ylab(expression(paste(log[2], " { ", E[1], " / ", E[2], " }"))) +
+  ggtitle(paste0("SD=", string_sd))
+
 ```
 
 These are referred to as Bland-Altman plots or MA plots in the genomics literature and will say more later. In this plot we see that the typical difference in the log (base 2) scale between two replicated measures is about 1. This means that when measurements should be the same we will, on average, observe 2 fold difference. We can now compare this variability to the differences we want to detect and decide if this technology is precise enough for our purposes.
