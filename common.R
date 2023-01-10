@@ -9,7 +9,7 @@
 library(tweetrmd) #... embedding tweets
 library(vembedr)  #... embedding youtube videos
 library(knitr)
-
+library(tidyverse)
 
 
 
@@ -64,11 +64,17 @@ knitr::knit_hooks$set(chunk_envvar = function(before, options, envir) {
   }
 })
 
+
+# datasets
+
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv",
+                            sep="")
+ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+
+# Functions
 check_quietly <- purrr::quietly(devtools::check)
 install_quietly <- purrr::quietly(devtools::install)
 
-
-# functions
 shhh_check <- function(..., quiet = TRUE) {
   out <- check_quietly(..., quiet = quiet)
   out$result
@@ -82,6 +88,7 @@ pretty_install <- function(...) {
 }
 
 
+## no surprises
 sample_no_surprises <- function(x) {
   if (length(x) <= 1) {
     return(x)
@@ -90,9 +97,8 @@ sample_no_surprises <- function(x) {
   }
 }
 
-
+# show slides better
 slide_url=function(df_url,title,slide=NULL){
   var_url=paste0(df_url$link[df_url$title==title],slide)
   return(var_url)
 }
-
