@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-12" />
+<meta name="date" content="2023-01-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,7 +55,7 @@
 <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.26/datatables.js"></script>
 <link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -379,6 +379,7 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="lab01.html"><a href="lab01.html#data"><i class="fa fa-check"></i>Data</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="lab01.html"><a href="lab01.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+<li class="chapter" data-level="8.1" data-path="lab01.html"><a href="lab01.html#bonus-tips-by-yoo-ri"><i class="fa fa-check"></i><b>8.1</b> Bonus Tips by Yoo Ri</a></li>
 </ul></li>
 <li class="part"><span><b>II Module 02</b></span></li>
 <li class="chapter" data-level="9" data-path="welcome-to-data-and-visualization.html"><a href="welcome-to-data-and-visualization.html"><i class="fa fa-check"></i><b>9</b> Welcome to Data and Visualization</a>
@@ -1441,7 +1442,7 @@ div.csl-indent {
 <p>I adapted <a href="https://github.com/aosmith16/simulation-helper-functions">this tutorial</a> from <a href="https://github.com/aosmith16">Ariel Muldoon</a></p>
 </blockquote>
 <p>There are many reasons we might want to simulate data in R, and I find being able to simulate data to be incredibly useful in my day-to-day work. But how does someone get started simulating data?</p>
-<p>Today I’m going to take a closer look at some of the R functions that are useful to get to know when simulating data. These functions are all from base R packages, not in add-on packages, so some of them may already familiar to you.</p>
+<p>In this module, I’m going to take a closer look at some of the R functions that are useful to get to know when simulating data. These functions are all from base R packages, not in add-on packages, so some of them may already familiar to you.</p>
 <p>Here’s what we’ll do today:</p>
 <ol style="list-style-type: decimal">
 <li>Simulate quantitative variables via random number generation with <code>rnorm()</code>, <code>runif()</code> and <code>rpois()</code>.</li>
@@ -1466,16 +1467,16 @@ The <code>n</code> argument is the number of observations we want to generate. T
 </blockquote>
 <p>To get 5 random numbers from a <span class="math inline">\(Normal(0, 1)\)</span> (aka the <em>standard</em> normal) distribution we can write code like:</p>
 <div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="getting-started-with-simulating-data-in-r.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb463-2"><a href="getting-started-with-simulating-data-in-r.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  2.180  1.469 -0.297  0.135 -1.453</span></span></code></pre></div>
+<span id="cb463-2"><a href="getting-started-with-simulating-data-in-r.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.623  0.306 -0.136  1.096 -0.258</span></span></code></pre></div>
 <p>There are a couple things about this code and the output to discuss.</p>
-<p>First, the code got me 5 numbers, which is what I wanted. (Yay!) However, the code itself isn’t particularly clear. What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code). Since I used the default values for <code>mean</code> and <code>sd</code>, it’s not clear exactly what distribution I drew the numbers from.</p>
+<p>First, the code gave me 5 numbers, which is what I wanted. (Yay!😸) However, the code itself isn’t particularly clean. What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for <code>mean</code> and <code>sd</code>, it’s not clear exactly what distribution I drew the numbers from.</p>
 <div id="writing-out-arguments-for-clearer-code" class="section level3 hasAnchor" number="79.2.1">
 <h3><span class="header-section-number">79.2.1</span> Writing out arguments for clearer code<a href="getting-started-with-simulating-data-in-r.html#writing-out-arguments-for-clearer-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here’s more readable code to do the same thing, where I write out the mean and standard deviation arguments explicitly even though I’m using the default values. It is certainly not necessary to always be this careful, but I don’t think I’ve run into a time when it was bad to have clear code.</p>
 <div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="getting-started-with-simulating-data-in-r.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, </span>
 <span id="cb464-2"><a href="getting-started-with-simulating-data-in-r.html#cb464-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean =</span> <span class="dv">0</span>, </span>
 <span id="cb464-3"><a href="getting-started-with-simulating-data-in-r.html#cb464-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb464-4"><a href="getting-started-with-simulating-data-in-r.html#cb464-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  1.812 -0.155  0.268  0.390 -0.752</span></span></code></pre></div>
+<span id="cb464-4"><a href="getting-started-with-simulating-data-in-r.html#cb464-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.428  1.229  0.278 -0.528  2.313</span></span></code></pre></div>
 </div>
 <div id="setting-the-random-seed-for-reproducible-random-numbers" class="section level3 hasAnchor" number="79.2.2">
 <h3><span class="header-section-number">79.2.2</span> Setting the random seed for reproducible random numbers<a href="getting-started-with-simulating-data-in-r.html#setting-the-random-seed-for-reproducible-random-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
