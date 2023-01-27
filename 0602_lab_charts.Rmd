@@ -86,14 +86,12 @@ The values are percentage of hires of that type of faculty for each year.
 staff
 ```
 
-In order to recreate this visualization we need to first reshape the data to have one variable for faculty type and one variable for year.
-In other words, we will convert the data from wide format to long format.
+To recreate this visualization, we must first reshape the data by separating it into two variables: one for faculty type and one for year. In other words, we will be converting our data from wide format to long format.
 
-But before we do so, a thought exercise: *How many rows will the long-format data have?* It will have a row for each combination of year and faculty type.
-If there are 5 faculty types and 11 years of data, how many rows will we have?
 
-We do the wide to long conversion using a new function: `pivot_longer()`.
-The animation below show how this function works, as well as its counterpart `pivot_wider()`.
+However, before we do so, consider this thought exercise: *How many rows will the long-format data have?* Each combination of year and faculty type will have its own row. If there are 5 faculty types and 11 years of data, how many rows would we have?
+
+We can perform the conversion from wide to long format using a new function: `pivot_longer()`. The animation below demonstrates how this function works, as well as its counterpart `pivot_wider()`.
 
 ```{r echo=FALSE}
 knitr::include_graphics("img/tidyr-longer-wider.gif")
@@ -102,7 +100,9 @@ knitr::include_graphics("img/tidyr-longer-wider.gif")
 The function has the following arguments:
 
 ```{r eval=FALSE}
-pivot_longer(data, cols, names_to = "name")
+pivot_longer(data,
+             cols,
+             names_to = "name")
 ```
 
 -   The first argument is `data` as usual.
@@ -121,8 +121,7 @@ Let's take a look at what the new longer data frame looks like.
 staff_long
 ```
 
-And now let's plot is as a line plot.
-A possible approach for creating a line plot where we color the lines by faculty type is the following:
+And now, let's plot it as a line graph. A possible approach for creating a line plot and differentiating the lines by faculty type is to use the following method:
 
 ```{r eval=TRUE, fig.width=10}
 staff_long %>%
@@ -130,9 +129,7 @@ staff_long %>%
   geom_line()
 ```
 
-But note that this results in a message as well as an unexpected plot.
-The message is saying that there is only one observation for each faculty type year combination.
-We can fix this using the `group` aesthetic following.
+But note that this code results in a message, as well as an unexpected plot. The message informs us that there is only one observation for each faculty type and year combination. To address this, we can use the `group` aesthetic in the following code.
 
 ```{r eval=FALSE, fig.width=10}
 staff_long %>%
