@@ -67,13 +67,13 @@ This module covers the following learning goals:
 
 ## Generating random numbers
 
-One way to generate numeric data is to pull random numbers from some distribution.  This can be done via the functions for generating random deviates.  These functions always start with `r` (for "random").
+One way to generate numeric data is to pull random numbers from some distribution. We can do this bye using "random deviate" functions in R. These functions always start with the letter "r" to indicate that they generate random numbers.
 
-The basic distributions that I use the most for generating random numbers are the normal (`rnorm()`) and uniform (`runif()`) distributions.  We'll look at those today, plus the Poisson (`rpois()`) distribution for generating discrete counts. 
+The most commonly used distributions for generating random numbers are the normal  (`rnorm()`), uniform (`runif()`), and Poisson (`rpois()`) distributions. We'll take a closer look at these distributions and how they can be used to generate random numbers.
 
-There are many other distributions available as part of the **stats** package (e.g., binomial, F, log normal, beta, exponential, Gamma) and, as you can imagine, even more available in add-on packages.  I recently needed to generate data from the Tweedie distribution to test a modeling tool, which I could do via package **tweedie**.  
+Additionally, many other distributions are available as part of the **stats**  package, such as the binomial, F, log normal, beta, exponential, and Gamma distributions. And even more distributions are available in add-on packages. For example, if you needed to generate data from the Tweedie distribution, you can do that using the **tweedie** package.  
 
-The `r` functions for a chosen distribution all work basically the same way.  We define how many random numbers we want to generate in the first argument (`n`) and then define the parameters for the distribution we want to draw from.  This is easier to see with practice, so let's get started.
+The `r` functions for a chosen distribution all work similarly. You define how many random numbers you want to generate in the first argument (`n`) and then define the parameters for the distribution you want to draw from. This is easier to understand with practice, so let's get started!
 
 ## `rnorm()` to generate random numbers from the normal distribution
 
@@ -92,7 +92,7 @@ rnorm(5)
 
 There are a couple things about this code and the output to discuss.
 
-First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code).  Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from.   
+First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code).  Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from. 
 
 ### Writing out arguments for clearer code
 
@@ -108,7 +108,7 @@ rnorm(n = 5,
 
 Second, if we run this code again we'll get different numbers.  To get reproducible random numbers we need to *set the seed* via `set.seed()`.
 
-Making sure someone else will be able to exactly reproduce your results when running the same code can be desirable in teaching.  It is also is useful when making an example dataset to demonstrate a coding issue, like if you were asking a code question on Stack Overflow.
+Making sure someone else will be able to exactly reproduce your results when running the same code can be desirable in teaching.  It is also is useful when making an example data set to demonstrate a coding issue, like if you were asking a code question on Stack Overflow.
 
 I also will set the seed when I'm making a function for simulations and I want to make sure it works correctly.  Otherwise in most simulations we don't actually want or need to set the seed.
 
@@ -194,11 +194,13 @@ Let's generate two quantitative vectors of length 10, which I'll name `x` and `y
 x <- rnorm(n = 10, 
           mean = 0, 
           sd = 1)
+
 y <- rnorm(n = 10, 
           mean = 0, 
           sd = 1)
 
-df_demo <- data.frame(var1=x, var2=y)
+df_demo <- data.frame(var1=x,
+                      var2=y)
 
 plot(y ~ x)
 
@@ -214,6 +216,7 @@ ggplot(
 
 
 ```
+
 ## `runif()` pulls from the uniform distribution
 
 Pulling random numbers from other distributions is extremely similar to using `rnorm()`, so we'll go through them more quickly.
