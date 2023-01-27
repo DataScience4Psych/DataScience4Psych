@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-25" />
+<meta name="date" content="2023-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1173,9 +1173,10 @@ div.csl-indent {
 <li class="chapter" data-level="79.2.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#using-vectors-of-values-for-the-parameter-arguments"><i class="fa fa-check"></i><b>79.2.4</b> Using vectors of values for the parameter arguments</a></li>
 </ul></li>
 <li class="chapter" data-level="79.3" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rnorm"><i class="fa fa-check"></i><b>79.3</b> Example of using the simulated numbers from <code>rnorm()</code></a></li>
-<li class="chapter" data-level="79.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif"><i class="fa fa-check"></i><b>79.4</b> Example of using the simulated numbers from <code>runif()</code></a></li>
-<li class="chapter" data-level="79.5" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois"><i class="fa fa-check"></i><b>79.5</b> Discrete counts with <code>rpois()</code></a></li>
-<li class="chapter" data-level="79.6" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois"><i class="fa fa-check"></i><b>79.6</b> Example of using the simulated numbers from <code>rpois()</code></a></li>
+<li class="chapter" data-level="79.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#runif-pulls-from-the-uniform-distribution"><i class="fa fa-check"></i><b>79.4</b> <code>runif()</code> pulls from the uniform distribution</a></li>
+<li class="chapter" data-level="79.5" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif"><i class="fa fa-check"></i><b>79.5</b> Example of using the simulated numbers from <code>runif()</code></a></li>
+<li class="chapter" data-level="79.6" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois"><i class="fa fa-check"></i><b>79.6</b> Discrete counts with <code>rpois()</code></a></li>
+<li class="chapter" data-level="79.7" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois"><i class="fa fa-check"></i><b>79.7</b> Example of using the simulated numbers from <code>rpois()</code></a></li>
 </ul></li>
 <li class="chapter" data-level="80" data-path="generate-character-vectors-with-rep.html"><a href="generate-character-vectors-with-rep.html"><i class="fa fa-check"></i><b>80</b> Generate character vectors with <code>rep()</code></a>
 <ul>
@@ -1445,21 +1446,20 @@ div.csl-indent {
 <blockquote>
 <p>I adapted <a href="https://github.com/aosmith16/simulation-helper-functions">this tutorial</a> from <a href="https://github.com/aosmith16">Ariel Muldoon</a></p>
 </blockquote>
-<p>There are many reasons we might want to simulate data in R, and I find being able to simulate data to be incredibly useful in my day-to-day work. But how does someone get started simulating data?</p>
-<p>In this module, I’m going to take a closer look at some of the R functions that are useful to get to know when simulating data. These functions are all from base R packages, not in add-on packages, so some of them may already familiar to you.</p>
-<p>Here’s what we’ll do today:</p>
+<p>Simulating data in R can be really helpful, and in this module I’ll show you some easy-to-use R functions to get started. These functions are all from base R packages, so you might already know some of these functions. Let’s dive in!</p>
+<p>This module covers the following learning goals:</p>
 <ol style="list-style-type: decimal">
-<li>Simulate quantitative variables via random number generation with <code>rnorm()</code>, <code>runif()</code> and <code>rpois()</code>.</li>
-<li>Generate character variables that represent groups via <code>rep()</code>. We’ll explore how to create character vectors with different repeating patterns.</li>
-<li>Create data with both quantitative and categorical variables, making use of functions from the first two steps above.</li>
-<li>Learn to use <code>replicate()</code> to repeat the data simulation process many times.</li>
+<li><p>We’ll learn how to create simulated quantitative variables (like numbers) using <code>rnorm()</code>, <code>runif()</code>, and <code>rpois()</code>.</p></li>
+<li><p>Next, we’ll learn how to generate character variables (like group names) using <code>rep()</code>. We’ll also explore different ways to repeat patterns.</p></li>
+<li><p>After that, we’ll put it all together and learn how to create data with both quantitative and categorical variables.</p></li>
+<li><p>Finally, we’ll use <code>replicate()</code> to repeat the data simulation process multiple times.</p></li>
 </ol>
 <div id="generating-random-numbers" class="section level2 hasAnchor" number="79.1">
 <h2><span class="header-section-number">79.1</span> Generating random numbers<a href="getting-started-with-simulating-data-in-r.html#generating-random-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>One way to generate numeric data is to pull random numbers from some distribution. This can be done via the functions for generating random deviates. These functions always start with <code>r</code> (for “random”).</p>
-<p>The basic distributions that I use the most for generating random numbers are the normal (<code>rnorm()</code>) and uniform (<code>runif()</code>) distributions. We’ll look at those today, plus the Poisson (<code>rpois()</code>) distribution for generating discrete counts.</p>
-<p>There are many other distributions available as part of the <strong>stats</strong> package (e.g., binomial, F, log normal, beta, exponential, Gamma) and, as you can imagine, even more available in add-on packages. I recently needed to generate data from the Tweedie distribution to test a modeling tool, which I could do via package <strong>tweedie</strong>.</p>
-<p>The <code>r</code> functions for a chosen distribution all work basically the same way. We define how many random numbers we want to generate in the first argument (<code>n</code>) and then define the parameters for the distribution we want to draw from. This is easier to see with practice, so let’s get started.</p>
+<p>One way to generate numeric data is to pull random numbers from some distribution. We can do this bye using “random deviate” functions in R. These functions always start with the letter “r” to indicate that they generate random numbers.</p>
+<p>The most commonly used distributions for generating random numbers are the normal (<code>rnorm()</code>), uniform (<code>runif()</code>), and Poisson (<code>rpois()</code>) distributions. We’ll take a closer look at these distributions and how they can be used to generate random numbers.</p>
+<p>Additionally, many other distributions are available as part of the <strong>stats</strong> package, such as the binomial, F, log normal, beta, exponential, and Gamma distributions. And even more distributions are available in add-on packages. For example, if you needed to generate data from the Tweedie distribution, you can do that using the <strong>tweedie</strong> package.</p>
+<p>The <code>r</code> functions for a chosen distribution all work similarly. You define how many random numbers you want to generate in the first argument (<code>n</code>) and then define the parameters for the distribution you want to draw from. This is easier to understand with practice, so let’s get started!</p>
 </div>
 <div id="rnorm-to-generate-random-numbers-from-the-normal-distribution" class="section level2 hasAnchor" number="79.2">
 <h2><span class="header-section-number">79.2</span> <code>rnorm()</code> to generate random numbers from the normal distribution<a href="getting-started-with-simulating-data-in-r.html#rnorm-to-generate-random-numbers-from-the-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1471,7 +1471,7 @@ The <code>n</code> argument is the number of observations we want to generate. T
 </blockquote>
 <p>To get 5 random numbers from a <span class="math inline">\(Normal(0, 1)\)</span> (aka the <em>standard</em> normal) distribution we can write code like:</p>
 <div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="getting-started-with-simulating-data-in-r.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb463-2"><a href="getting-started-with-simulating-data-in-r.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.111 -0.710 -1.902 -1.427  0.142</span></span></code></pre></div>
+<span id="cb463-2"><a href="getting-started-with-simulating-data-in-r.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.603  0.593  1.287 -1.071  2.050</span></span></code></pre></div>
 <p>There are a couple things about this code and the output to discuss.</p>
 <p>First, the code gave me 5 numbers, which is what I wanted. (Yay!😸) However, the code itself isn’t particularly clean. What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for <code>mean</code> and <code>sd</code>, it’s not clear exactly what distribution I drew the numbers from.</p>
 <div id="writing-out-arguments-for-clearer-code" class="section level3 hasAnchor" number="79.2.1">
@@ -1480,12 +1480,12 @@ The <code>n</code> argument is the number of observations we want to generate. T
 <div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="getting-started-with-simulating-data-in-r.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, </span>
 <span id="cb464-2"><a href="getting-started-with-simulating-data-in-r.html#cb464-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean =</span> <span class="dv">0</span>, </span>
 <span id="cb464-3"><a href="getting-started-with-simulating-data-in-r.html#cb464-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb464-4"><a href="getting-started-with-simulating-data-in-r.html#cb464-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  1.706 -0.413 -1.723  1.717 -0.816</span></span></code></pre></div>
+<span id="cb464-4"><a href="getting-started-with-simulating-data-in-r.html#cb464-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  1.072 -0.935 -1.463 -0.363 -0.859</span></span></code></pre></div>
 </div>
 <div id="setting-the-random-seed-for-reproducible-random-numbers" class="section level3 hasAnchor" number="79.2.2">
 <h3><span class="header-section-number">79.2.2</span> Setting the random seed for reproducible random numbers<a href="getting-started-with-simulating-data-in-r.html#setting-the-random-seed-for-reproducible-random-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Second, if we run this code again we’ll get different numbers. To get reproducible random numbers we need to <em>set the seed</em> via <code>set.seed()</code>.</p>
-<p>Making sure someone else will be able to exactly reproduce your results when running the same code can be desirable in teaching. It is also is useful when making an example dataset to demonstrate a coding issue, like if you were asking a code question on Stack Overflow.</p>
+<p>Making sure someone else will be able to exactly reproduce your results when running the same code can be desirable in teaching. It is also is useful when making an example data set to demonstrate a coding issue, like if you were asking a code question on Stack Overflow.</p>
 <p>I also will set the seed when I’m making a function for simulations and I want to make sure it works correctly. Otherwise in most simulations we don’t actually want or need to set the seed.</p>
 <p>If we set the seed prior to running <code>rnorm()</code>, we can reproduce the values we generate.</p>
 <div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="getting-started-with-simulating-data-in-r.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">16</span>)</span>
@@ -1544,16 +1544,20 @@ The <code>n</code> argument is the number of observations we want to generate. T
 <div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="getting-started-with-simulating-data-in-r.html#cb472-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, </span>
 <span id="cb472-2"><a href="getting-started-with-simulating-data-in-r.html#cb472-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean =</span> <span class="dv">0</span>, </span>
 <span id="cb472-3"><a href="getting-started-with-simulating-data-in-r.html#cb472-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb472-4"><a href="getting-started-with-simulating-data-in-r.html#cb472-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, </span>
-<span id="cb472-5"><a href="getting-started-with-simulating-data-in-r.html#cb472-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean =</span> <span class="dv">0</span>, </span>
-<span id="cb472-6"><a href="getting-started-with-simulating-data-in-r.html#cb472-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb472-7"><a href="getting-started-with-simulating-data-in-r.html#cb472-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb472-8"><a href="getting-started-with-simulating-data-in-r.html#cb472-8" aria-hidden="true" tabindex="-1"></a>df_demo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">var1=</span>x, <span class="at">var2=</span>y)</span>
-<span id="cb472-9"><a href="getting-started-with-simulating-data-in-r.html#cb472-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb472-10"><a href="getting-started-with-simulating-data-in-r.html#cb472-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x)</span></code></pre></div>
+<span id="cb472-4"><a href="getting-started-with-simulating-data-in-r.html#cb472-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-5"><a href="getting-started-with-simulating-data-in-r.html#cb472-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, </span>
+<span id="cb472-6"><a href="getting-started-with-simulating-data-in-r.html#cb472-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean =</span> <span class="dv">0</span>, </span>
+<span id="cb472-7"><a href="getting-started-with-simulating-data-in-r.html#cb472-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb472-8"><a href="getting-started-with-simulating-data-in-r.html#cb472-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-9"><a href="getting-started-with-simulating-data-in-r.html#cb472-9" aria-hidden="true" tabindex="-1"></a>df_demo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">var1=</span>x,</span>
+<span id="cb472-10"><a href="getting-started-with-simulating-data-in-r.html#cb472-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var2=</span>y)</span>
+<span id="cb472-11"><a href="getting-started-with-simulating-data-in-r.html#cb472-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-12"><a href="getting-started-with-simulating-data-in-r.html#cb472-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x)</span></code></pre></div>
 <p><img src="1300_simulations_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p><img src="1300_simulations_files/figure-html/unnamed-chunk-12-1.png" width="672" />
-## <code>runif()</code> pulls from the uniform distribution</p>
+<p><img src="1300_simulations_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="runif-pulls-from-the-uniform-distribution" class="section level2 hasAnchor" number="79.4">
+<h2><span class="header-section-number">79.4</span> <code>runif()</code> pulls from the uniform distribution<a href="getting-started-with-simulating-data-in-r.html#runif-pulls-from-the-uniform-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Pulling random numbers from other distributions is extremely similar to using <code>rnorm()</code>, so we’ll go through them more quickly.</p>
 <p>I’ve started using <code>runif()</code> pretty regularly, especially when I want to easily generate numbers that are strictly positive but continuous. The uniform distribution is a continuous distribution, with numbers uniformly distributed between some minimum and maximum.</p>
 <p>From <code>Usage</code> we can see that by default we pull random numbers between 0 and 1. The first argument, as with all of these <code>r</code> functions, is the number of deviates we want to randomly generate:</p>
@@ -1570,8 +1574,8 @@ Let’s generate 5 numbers between 0 and 1.</p>
 <span id="cb474-2"><a href="getting-started-with-simulating-data-in-r.html#cb474-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">min =</span> <span class="dv">50</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
 <span id="cb474-3"><a href="getting-started-with-simulating-data-in-r.html#cb474-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 81.6 66.9 82.7 64.3 54.2</span></span></code></pre></div>
 </div>
-<div id="example-of-using-the-simulated-numbers-from-runif" class="section level2 hasAnchor" number="79.4">
-<h2><span class="header-section-number">79.4</span> Example of using the simulated numbers from <code>runif()</code><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-of-using-the-simulated-numbers-from-runif" class="section level2 hasAnchor" number="79.5">
+<h2><span class="header-section-number">79.5</span> Example of using the simulated numbers from <code>runif()</code><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One situation where I’ve found <code>runif()</code> handy is when I wanted to demonstrate the effect of the relative size of the variable values on the size of the estimated coefficient in a regression. For example, the size of the coefficient measured in kilometers is smaller than if that variable was converted into meters.</p>
 <p>Let’s generate some data with the response variable (<code>y</code>) pulled from a standard normal distribution and then an explanatory variable with values between 1 and 2. The two variables are unrelated.</p>
 <p>You see I’m still writing out my argument names for clarity, but you may get a sense how easy it would be to start cutting corners to avoid the extra typing.</p>
@@ -1594,8 +1598,8 @@ Let’s generate 5 numbers between 0 and 1.</p>
 <span id="cb477-7"><a href="getting-started-with-simulating-data-in-r.html#cb477-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           x1           x2  </span></span>
 <span id="cb477-8"><a href="getting-started-with-simulating-data-in-r.html#cb477-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.38089      0.10494     -0.00191</span></span></code></pre></div>
 </div>
-<div id="discrete-counts-with-rpois" class="section level2 hasAnchor" number="79.5">
-<h2><span class="header-section-number">79.5</span> Discrete counts with <code>rpois()</code><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="discrete-counts-with-rpois" class="section level2 hasAnchor" number="79.6">
+<h2><span class="header-section-number">79.6</span> Discrete counts with <code>rpois()</code><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s look at one last function for generating random numbers, this time for generating discrete integers (including 0) from a Poisson distribution with <code>rpois()</code>.</p>
 <p>I use <code>rpois()</code> for generating counts for exploring generalized linear models. I’ve also found this function useful in gaining a better understanding of the shape of Poisson distributions with different means.</p>
 <p>The Poisson distribution is a single parameter distribution. The function looks like:</p>
@@ -1608,8 +1612,8 @@ The single parameter, <code>lambda</code>, is the mean. It has no default settin
 <span id="cb478-2"><a href="getting-started-with-simulating-data-in-r.html#cb478-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">lambda =</span> <span class="fl">2.5</span>)</span>
 <span id="cb478-3"><a href="getting-started-with-simulating-data-in-r.html#cb478-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2 1 4 1 2</span></span></code></pre></div>
 </div>
-<div id="example-of-using-the-simulated-numbers-from-rpois" class="section level2 hasAnchor" number="79.6">
-<h2><span class="header-section-number">79.6</span> Example of using the simulated numbers from <code>rpois()</code><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-of-using-the-simulated-numbers-from-rpois" class="section level2 hasAnchor" number="79.7">
+<h2><span class="header-section-number">79.7</span> Example of using the simulated numbers from <code>rpois()</code><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s explore the Poisson distribution a little more, seeing how the distribution looks when changing the mean. Being able to look at how the Poisson distribution changes with the mean via simulation helped me understand the distribution better, including why it so often does a poor job modeling ecological count data.</p>
 <p>We’ll draw 100 values from a Poisson distribution with a mean of 5. We’ll name this vector <code>y</code> and take a look at a summary of those values.</p>
 <div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="getting-started-with-simulating-data-in-r.html#cb479-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">5</span>)</span></code></pre></div>

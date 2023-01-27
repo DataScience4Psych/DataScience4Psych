@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-25" />
+<meta name="date" content="2023-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1173,9 +1173,10 @@ div.csl-indent {
 <li class="chapter" data-level="79.2.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#using-vectors-of-values-for-the-parameter-arguments"><i class="fa fa-check"></i><b>79.2.4</b> Using vectors of values for the parameter arguments</a></li>
 </ul></li>
 <li class="chapter" data-level="79.3" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rnorm"><i class="fa fa-check"></i><b>79.3</b> Example of using the simulated numbers from <code>rnorm()</code></a></li>
-<li class="chapter" data-level="79.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif"><i class="fa fa-check"></i><b>79.4</b> Example of using the simulated numbers from <code>runif()</code></a></li>
-<li class="chapter" data-level="79.5" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois"><i class="fa fa-check"></i><b>79.5</b> Discrete counts with <code>rpois()</code></a></li>
-<li class="chapter" data-level="79.6" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois"><i class="fa fa-check"></i><b>79.6</b> Example of using the simulated numbers from <code>rpois()</code></a></li>
+<li class="chapter" data-level="79.4" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#runif-pulls-from-the-uniform-distribution"><i class="fa fa-check"></i><b>79.4</b> <code>runif()</code> pulls from the uniform distribution</a></li>
+<li class="chapter" data-level="79.5" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-runif"><i class="fa fa-check"></i><b>79.5</b> Example of using the simulated numbers from <code>runif()</code></a></li>
+<li class="chapter" data-level="79.6" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#discrete-counts-with-rpois"><i class="fa fa-check"></i><b>79.6</b> Discrete counts with <code>rpois()</code></a></li>
+<li class="chapter" data-level="79.7" data-path="getting-started-with-simulating-data-in-r.html"><a href="getting-started-with-simulating-data-in-r.html#example-of-using-the-simulated-numbers-from-rpois"><i class="fa fa-check"></i><b>79.7</b> Example of using the simulated numbers from <code>rpois()</code></a></li>
 </ul></li>
 <li class="chapter" data-level="80" data-path="generate-character-vectors-with-rep.html"><a href="generate-character-vectors-with-rep.html"><i class="fa fa-check"></i><b>80</b> Generate character vectors with <code>rep()</code></a>
 <ul>
@@ -1498,15 +1499,14 @@ The values are percentage of hires of that type of faculty for each year.</p>
 ## 5 Graduat…   20.5   16.5   18.1   18.8   18.7   19     20     19.9   19.5   19.4
 ## # … with 1 more variable: `2011` &lt;dbl&gt;, and abbreviated variable name
 ## #   ¹​faculty_type</code></pre>
-<p>In order to recreate this visualization we need to first reshape the data to have one variable for faculty type and one variable for year.
-In other words, we will convert the data from wide format to long format.</p>
-<p>But before we do so, a thought exercise: <em>How many rows will the long-format data have?</em> It will have a row for each combination of year and faculty type.
-If there are 5 faculty types and 11 years of data, how many rows will we have?</p>
-<p>We do the wide to long conversion using a new function: <code>pivot_longer()</code>.
-The animation below show how this function works, as well as its counterpart <code>pivot_wider()</code>.</p>
+<p>To recreate this visualization, we must first reshape the data by separating it into two variables: one for faculty type and one for year. In other words, we will be converting our data from wide format to long format.</p>
+<p>However, before we do so, consider this thought exercise: <em>How many rows will the long-format data have?</em> Each combination of year and faculty type will have its own row. If there are 5 faculty types and 11 years of data, how many rows would we have?</p>
+<p>We can perform the conversion from wide to long format using a new function: <code>pivot_longer()</code>. The animation below demonstrates how this function works, as well as its counterpart <code>pivot_wider()</code>.</p>
 <p><img src="img/tidyr-longer-wider.gif" /><!-- --></p>
 <p>The function has the following arguments:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="lab06.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_longer</span>(data, cols, <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="lab06.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_longer</span>(data,</span>
+<span id="cb229-2"><a href="lab06.html#cb229-2" aria-hidden="true" tabindex="-1"></a>             cols,</span>
+<span id="cb229-3"><a href="lab06.html#cb229-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">names_to =</span> <span class="st">&quot;name&quot;</span>)</span></code></pre></div>
 <ul>
 <li>The first argument is <code>data</code> as usual.</li>
 <li>The second argument, <code>cols</code>, is where you specify which columns to pivot into longer format – in this case all columns except for the <code>faculty_type</code></li>
@@ -1531,17 +1531,14 @@ The animation below show how this function works, as well as its counterpart <co
 ##  9 Full-Time Tenured Faculty 2007   17.2
 ## 10 Full-Time Tenured Faculty 2009   16.8
 ## # … with 45 more rows</code></pre>
-<p>And now let’s plot is as a line plot.
-A possible approach for creating a line plot where we color the lines by faculty type is the following:</p>
+<p>And now, let’s plot it as a line graph. A possible approach for creating a line plot and differentiating the lines by faculty type is to use the following method:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="lab06.html#cb233-1" aria-hidden="true" tabindex="-1"></a>staff_long <span class="sc">%&gt;%</span></span>
 <span id="cb233-2"><a href="lab06.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value, <span class="at">color =</span> faculty_type)) <span class="sc">+</span></span>
 <span id="cb233-3"><a href="lab06.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <pre><code>## `geom_line()`: Each group consists of only one observation.
 ## ℹ Do you need to adjust the group aesthetic?</code></pre>
 <p><img src="0602_lab_charts_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
-<p>But note that this results in a message as well as an unexpected plot.
-The message is saying that there is only one observation for each faculty type year combination.
-We can fix this using the <code>group</code> aesthetic following.</p>
+<p>But note that this code results in a message, as well as an unexpected plot. The message informs us that there is only one observation for each faculty type and year combination. To address this, we can use the <code>group</code> aesthetic in the following code.</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="lab06.html#cb235-1" aria-hidden="true" tabindex="-1"></a>staff_long <span class="sc">%&gt;%</span></span>
 <span id="cb235-2"><a href="lab06.html#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year,</span>
 <span id="cb235-3"><a href="lab06.html#cb235-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> value,</span>
@@ -1558,14 +1555,13 @@ We can fix this using the <code>group</code> aesthetic following.</p>
 </div>
 <div id="fisheries" class="section level3 unnumbered hasAnchor">
 <h3>Fisheries<a href="lab06.html#fisheries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Fisheries and Aquaculture Department of the Food and Agriculture Organization of the United Nations collects data on fisheries production of countries.
-<a href="https://en.wikipedia.org/wiki/Fishing_industry_by_country">This Wikipedia page</a> lists fishery production of countries for 2016.
-For each country, tonnage from capture and aquaculture are listed.
-Note that countries whose total harvest was less than 100,000 tons are not included in the visualization.</p>
-<p>A researcher shared with you the following visualization they created based on these data <!--😳-->.</p>
+<p>The Fisheries and Aquaculture Department of the Food and Agriculture Organization of the United Nations (FAO) collects data on the fisheries production of different countries. You can find a list of fishery production for various countries in 2016 on <a href="https://en.wikipedia.org/wiki/Fishing_industry_by_country">this Wikipedia page</a>.
+The data includes the tonnage of fish captured and farmed for each country.
+Note that countries whose total harvest was less than 100,000 tons are excluded from the visualization.</p>
+<p>A researcher has shared a visualization they created using these data with you.</p>
 <p><img src="img/fisheries.png" width="1121" /></p>
 <ol start="3" style="list-style-type: decimal">
-<li>Can you help them make improve it? First, brainstorm how you would improve it. Then create the improved visualization and write up the changes/decisions you made as bullet points. It’s ok if some of your improvements are aspirational, i.e. you don’t know how to implement it, but you think it’s a good idea. Ask a tutor for help, but also keep an eye on the time. Implement what you can and leave note identifying the aspirational improvements.</li>
+<li>Can you help them make improve it? First, brainstorm how you would improve it. Then create the improved visualization and document your changes/decisions with bullet points. It’s ok if some of your improvements are aspirational, i.e. you don’t know how to implement it, but you think it’s a good idea. Implement what you can and leave notes identifying the aspirational improvements that could not be made.</li>
 </ol>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="lab06.html#cb236-1" aria-hidden="true" tabindex="-1"></a>fisheries <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/fisheries.csv&quot;</span>)</span></code></pre></div>
 <p>✅ ⬆️ <em>Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
@@ -1574,7 +1570,7 @@ Note that countries whose total harvest was less than 100,000 tons are not inclu
 <div id="stretch-practice-with-smokers-in-whickham" class="section level2 unnumbered hasAnchor">
 <h2>Stretch Practice with Smokers in Whickham<a href="lab06.html#stretch-practice-with-smokers-in-whickham" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="img/whickham.png" width="527" /></p>
-<p>A study of conducted in Whickham, England recorded participants’ age, smoking status at baseline, and then 20 years later recorded their health outcome.</p>
+<p>A study conducted in Whickham, England recorded participants’ age and smoking status at baseline, and then 20 years later, their health outcome was recorded.</p>
 <div id="packages-6" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab06.html#packages-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now, we will work with the <code>mosaicData</code> package.</p>
@@ -1616,7 +1612,7 @@ Display each variable using an appropriate visualization.</p></li>
 </ul>
 <ol start="7" style="list-style-type: decimal">
 <li>Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by <code>age_cat</code>. What changed? What might explain this change? Extend the contingency table from earlier by
-breaking it down by age category and use it to help your narrative.</li>
+breaking it down by age category and use it to help your narrative. We can use the contingency table to examine how the relationship between smoking status and health outcome differs between different age groups. This extension will help us better understand the patterns we see in the visualization, and explain any changes we observe.</li>
 </ol>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="lab06.html#cb241-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
 <span id="cb241-2"><a href="lab06.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(smoker, age_cat, outcome)</span></code></pre></div>

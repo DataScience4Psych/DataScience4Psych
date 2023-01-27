@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Mason Notes | Data Science for Psychologists" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
+<meta property="og:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
+<meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
+
+<meta name="author" content="S. Mason Garrison" />
+
+<meta name="date" content="2023-01-27" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R">
+
+<title>Mason Notes | Data Science for Psychologists</title>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.27/datatables.js"></script>
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+<link rel="stylesheet" href="assets/toc.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if boostrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="part"><span><b>Front Matter</b></span></li>
+<li class="has-sub"><a href="index.html#welcome-to-psy-703" id="toc-welcome-to-psy-703">Welcome to PSY 703</a>
+<ul>
+<li class="has-sub"><a href="mason-notes.html#mason-notes" id="toc-mason-notes">Mason Notes</a>
+<ul>
+<li><a href="mason-notes.html#how-to-use-these-notes" id="toc-how-to-use-these-notes">How to use these notes</a></li>
+<li><a href="mason-notes.html#status-of-course" id="toc-status-of-course">Status of course</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="attribution.html#attribution" id="toc-attribution">Attribution</a>
+<ul>
+<li><a href="major-attributions.html#major-attributions" id="toc-major-attributions">Major Attributions</a></li>
+<li><a href="additional-attributions.html#additional-attributions" id="toc-additional-attributions">Additional Attributions</a></li>
+</ul></li>
+<li><a href="license.html#license" id="toc-license">License</a></li>
+<li><a href="sitemap.html#sitemap" id="toc-sitemap">Sitemap</a></li>
+<li><a href="colophon.html#colophon" id="toc-colophon">Colophon</a></li>
+<li class="part"><span><b>Module 00</b></span></li>
+<li class="has-sub"><a href="dont-miss-module-00.html#dont-miss-module-00" id="toc-dont-miss-module-00">Don’t Miss Module 00</a>
+<ul>
+<li><a href="0.1-big-ideas.html#big-ideas" id="toc-big-ideas"><span class="toc-section-number">0.1</span> Big Ideas</a></li>
+<li class="has-sub"><a href="0.2-course-modality.html#course-modality" id="toc-course-modality"><span class="toc-section-number">0.2</span> Course Modality</a>
+<ul>
+<li><a href="0.2-course-modality.html#successful-asynchronous-learning" id="toc-successful-asynchronous-learning"><span class="toc-section-number">0.2.1</span> Successful Asynchronous Learning</a></li>
+</ul></li>
+<li><a href="0.3-knowledge-is-power.html#knowledge-is-power" id="toc-knowledge-is-power"><span class="toc-section-number">0.3</span> Knowledge is Power</a></li>
+<li><a href="0.4-meet-prof.-mason.html#meet-prof.-mason" id="toc-meet-prof.-mason"><span class="toc-section-number">0.4</span> Meet Prof. Mason</a></li>
+<li><a href="0.5-website-tour.html#website-tour" id="toc-website-tour"><span class="toc-section-number">0.5</span> Website Tour</a></li>
+</ul></li>
+<li class="has-sub"><a href="guidance.html#guidance" id="toc-guidance">Guidance</a>
+<ul>
+<li class="has-sub"><a href="0.6-materials.html#materials" id="toc-materials"><span class="toc-section-number">0.6</span> Materials</a>
+<ul>
+<li><a href="0.6-materials.html#hardware" id="toc-hardware"><span class="toc-section-number">0.6.1</span> Hardware</a></li>
+<li><a href="0.6-materials.html#required-texts" id="toc-required-texts"><span class="toc-section-number">0.6.2</span> Required Texts</a></li>
+<li><a href="0.6-materials.html#syllabussoftware" id="toc-syllabussoftware"><span class="toc-section-number">0.6.3</span> Software</a></li>
+</ul></li>
+<li class="has-sub"><a href="0.7-assignment-instructions.html#assignment-instructions" id="toc-assignment-instructions"><span class="toc-section-number">0.7</span> Assignment Instructions</a>
+<ul>
+<li><a href="0.7-assignment-instructions.html#portfolio" id="toc-portfolio"><span class="toc-section-number">0.7.1</span> Portfolio</a></li>
+<li><a href="0.7-assignment-instructions.html#additional-ground-rules" id="toc-additional-ground-rules"><span class="toc-section-number">0.7.2</span> Additional Ground Rules</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Module 01</b></span></li>
+<li class="has-sub"><a href="1-welcome-to-data-science.html#welcome-to-data-science" id="toc-welcome-to-data-science"><span class="toc-section-number">1</span> Welcome to Data Science</a>
+<ul>
+<li class="has-sub"><a href="1.1-module-materials.html#module-materials" id="toc-module-materials"><span class="toc-section-number">1.1</span> Module Materials</a>
+<ul>
+<li><a href="1.1-module-materials.html#estimated-video-length" id="toc-estimated-video-length"><span class="toc-section-number">1.1.1</span> Estimated Video Length</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-what-is-data-science.html#what-is-data-science" id="toc-what-is-data-science"><span class="toc-section-number">2</span> What is Data Science?</a>
+<ul>
+<li class="has-sub"><a href="2.1-see-for-yourselves.html#see-for-yourselves" id="toc-see-for-yourselves"><span class="toc-section-number">2.1</span> See for yourselves!</a>
+<ul>
+<li><a href="2.1-see-for-yourselves.html#shiny-app" id="toc-shiny-app"><span class="toc-section-number">2.1.1</span> Shiny App</a></li>
+<li><a href="2.1-see-for-yourselves.html#hans-rosling" id="toc-hans-rosling"><span class="toc-section-number">2.1.2</span> Hans Rosling</a></li>
+<li><a href="2.1-see-for-yourselves.html#social-media" id="toc-social-media"><span class="toc-section-number">2.1.3</span> Social Media</a></li>
+<li><a href="2.1-see-for-yourselves.html#read-for-yourselves" id="toc-read-for-yourselves"><span class="toc-section-number">2.1.4</span> Read for yourselves!</a></li>
+</ul></li>
+<li><a href="2.2-course-structure-and-some-other-useful-things.html#course-structure-and-some-other-useful-things" id="toc-course-structure-and-some-other-useful-things"><span class="toc-section-number">2.2</span> Course structure and some other useful things</a></li>
+<li class="has-sub"><a href="2.3-in-class-activity.html#in-class-activity" id="toc-in-class-activity"><span class="toc-section-number">2.3</span> In-Class Activity</a>
+<ul>
+<li><a href="2.3-in-class-activity.html#un-votes" id="toc-un-votes"><span class="toc-section-number">2.3.1</span> UN Votes</a></li>
+<li><a href="2.3-in-class-activity.html#covid-data" id="toc-covid-data"><span class="toc-section-number">2.3.2</span> Covid Data</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="3-meet-our-toolbox.html#meet-our-toolbox" id="toc-meet-our-toolbox"><span class="toc-section-number">3</span> Meet our toolbox!</a>
+<ul>
+<li class="has-sub"><a href="3.1-r-and-rstudio.html#r-and-rstudio" id="toc-r-and-rstudio"><span class="toc-section-number">3.1</span> R and RStudio</a>
+<ul>
+<li><a href="3.1-r-and-rstudio.html#install" id="toc-install"><span class="toc-section-number">3.1.1</span> Install R and RStudio</a></li>
+<li><a href="3.1-r-and-rstudio.html#testing-testing" id="toc-testing-testing"><span class="toc-section-number">3.1.2</span> Testing testing</a></li>
+<li><a href="3.1-r-and-rstudio.html#add-on-packages" id="toc-add-on-packages"><span class="toc-section-number">3.1.3</span> Add-on packages</a></li>
+<li><a href="3.1-r-and-rstudio.html#further-resources" id="toc-further-resources"><span class="toc-section-number">3.1.4</span> Further resources</a></li>
+</ul></li>
+</ul></li>
+<li><a href="4-bechdal.html#bechdal" id="toc-bechdal"><span class="toc-section-number">4</span> Bechdel Activity</a></li>
+<li class="has-sub"><a href="5-thoughtful-workflow.html#thoughtful-workflow" id="toc-thoughtful-workflow"><span class="toc-section-number">5</span> Thoughtful Workflow</a>
+<ul>
+<li><a href="5.1-rmarkdown.html#rmarkdown" id="toc-rmarkdown"><span class="toc-section-number">5.1</span> R Markdown</a></li>
+<li class="has-sub"><a href="5.2-installgit.html#installgit" id="toc-installgit"><span class="toc-section-number">5.2</span> Git and Github</a>
+<ul>
+<li><a href="5.2-installgit.html#what-is-github" id="toc-what-is-github"><span class="toc-section-number">5.2.1</span> What is Github?</a></li>
+<li><a href="5.2-installgit.html#git" id="toc-git"><span class="toc-section-number">5.2.2</span> Git</a></li>
+</ul></li>
+<li><a href="5.3-getting-help-with-r.html#getting-help-with-r" id="toc-getting-help-with-r"><span class="toc-section-number">5.3</span> Getting Help with R</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-r_basics.html#r_basics" id="toc-r_basics"><span class="toc-section-number">6</span> R basics and workflows</a>
+<ul>
+<li class="has-sub"><a href="6.1-basics-of-working-with-r-at-the-command-line-and-rstudio-goodies.html#basics-of-working-with-r-at-the-command-line-and-rstudio-goodies" id="toc-basics-of-working-with-r-at-the-command-line-and-rstudio-goodies"><span class="toc-section-number">6.1</span> Basics of working with R at the command line and RStudio goodies</a>
+<ul>
+<li><a href="6.1-basics-of-working-with-r-at-the-command-line-and-rstudio-goodies.html#object-names" id="toc-object-names"><span class="toc-section-number">6.1.1</span> Object names</a></li>
+<li><a href="6.1-basics-of-working-with-r-at-the-command-line-and-rstudio-goodies.html#functions" id="toc-functions"><span class="toc-section-number">6.1.2</span> Functions</a></li>
+</ul></li>
+<li class="has-sub"><a href="6.2-workspace-and-working-directory.html#workspace-and-working-directory" id="toc-workspace-and-working-directory"><span class="toc-section-number">6.2</span> Workspace and working directory</a>
+<ul>
+<li><a href="6.2-workspace-and-working-directory.html#workspace-.rdata" id="toc-workspace-.rdata"><span class="toc-section-number">6.2.1</span> Workspace, <code>.RData</code></a></li>
+<li><a href="6.2-workspace-and-working-directory.html#working-directory" id="toc-working-directory"><span class="toc-section-number">6.2.2</span> Working directory</a></li>
+</ul></li>
+<li><a href="6.3-rprojs.html#rprojs" id="toc-rprojs"><span class="toc-section-number">6.3</span> RStudio projects</a></li>
+<li><a href="6.4-tradition.html#tradition" id="toc-tradition"><span class="toc-section-number">6.4</span> Tradition</a></li>
+</ul></li>
+<li class="has-sub"><a href="7-shorthappygit.html#shorthappygit" id="toc-shorthappygit"><span class="toc-section-number">7</span> RDD: Getting Started with Github</a>
+<ul>
+<li><a href="7.1-the-basics-of-github.html#the-basics-of-github" id="toc-the-basics-of-github"><span class="toc-section-number">7.1</span> The Basics of GitHub</a></li>
+<li><a href="7.2-octocat-git-and-github.html#octocat-git-and-github" id="toc-octocat-git-and-github"><span class="toc-section-number">7.2</span> :octocat: Git and GitHub</a></li>
+<li class="has-sub"><a href="7.3-octocat-understanding-the-github-flow.html#octocat-understanding-the-github-flow" id="toc-octocat-understanding-the-github-flow"><span class="toc-section-number">7.3</span> :octocat: Understanding the GitHub flow</a>
+<ul>
+<li><a href="7.3-octocat-understanding-the-github-flow.html#repositories" id="toc-repositories"><span class="toc-section-number">7.3.1</span> Repositories</a></li>
+<li><a href="7.3-octocat-understanding-the-github-flow.html#cloning" id="toc-cloning"><span class="toc-section-number">7.3.2</span> Cloning</a></li>
+<li><a href="7.3-octocat-understanding-the-github-flow.html#committing-and-pushing" id="toc-committing-and-pushing"><span class="toc-section-number">7.3.3</span> Committing and pushing</a></li>
+</ul></li>
+<li class="has-sub"><a href="7.4-github-terms-to-know.html#github-terms-to-know" id="toc-github-terms-to-know"><span class="toc-section-number">7.4</span> 💻 GitHub terms to know</a>
+<ul>
+<li><a href="7.4-github-terms-to-know.html#repositories-1" id="toc-repositories-1"><span class="toc-section-number">7.4.1</span> Repositories</a></li>
+<li><a href="7.4-github-terms-to-know.html#branches" id="toc-branches"><span class="toc-section-number">7.4.2</span> Branches</a></li>
+<li><a href="7.4-github-terms-to-know.html#forks" id="toc-forks"><span class="toc-section-number">7.4.3</span> Forks</a></li>
+<li><a href="7.4-github-terms-to-know.html#pull-requests" id="toc-pull-requests"><span class="toc-section-number">7.4.4</span> Pull requests</a></li>
+<li><a href="7.4-github-terms-to-know.html#issues" id="toc-issues"><span class="toc-section-number">7.4.5</span> Issues</a></li>
+<li><a href="7.4-github-terms-to-know.html#your-user-profile" id="toc-your-user-profile"><span class="toc-section-number">7.4.6</span> Your user profile</a></li>
+<li><a href="7.4-github-terms-to-know.html#using-markdown-on-github" id="toc-using-markdown-on-github"><span class="toc-section-number">7.4.7</span> Using markdown on GitHub</a></li>
+<li><a href="7.4-github-terms-to-know.html#engaging-with-the-github-community" id="toc-engaging-with-the-github-community"><span class="toc-section-number">7.4.8</span> Engaging with the GitHub community</a></li>
+</ul></li>
+<li><a href="7.5-install-intro.html#install-intro" id="toc-install-intro"><span class="toc-section-number">7.5</span> Half the battle</a></li>
+<li class="has-sub"><a href="7.6-github-acct.html#github-acct" id="toc-github-acct"><span class="toc-section-number">7.6</span> Register a GitHub account</a>
+<ul>
+<li><a href="7.6-github-acct.html#username-advice" id="toc-username-advice"><span class="toc-section-number">7.6.1</span> Username advice</a></li>
+<li><a href="7.6-github-acct.html#free-private-repos" id="toc-free-private-repos"><span class="toc-section-number">7.6.2</span> Free private repos</a></li>
+</ul></li>
+<li class="has-sub"><a href="7.7-install_git.html#install_git" id="toc-install_git"><span class="toc-section-number">7.7</span> Install Git</a>
+<ul>
+<li><a href="7.7-install_git.html#git-already-installed" id="toc-git-already-installed"><span class="toc-section-number">7.7.1</span> Git already installed?</a></li>
+</ul></li>
+<li class="has-sub"><a href="7.8-install-git-windows.html#install-git-windows" id="toc-install-git-windows"><span class="toc-section-number">7.8</span> Windows</a>
+<ul>
+<li><a href="7.8-install-git-windows.html#macos" id="toc-macos"><span class="toc-section-number">7.8.1</span> macOS</a></li>
+</ul></li>
+<li class="has-sub"><a href="7.9-hello-git.html#hello-git" id="toc-hello-git"><span class="toc-section-number">7.9</span> Introduce yourself to Git</a>
+<ul>
+<li><a href="7.9-hello-git.html#more-about-git-config" id="toc-more-about-git-config"><span class="toc-section-number">7.9.1</span> More about <code>git config</code></a></li>
+<li><a href="7.9-hello-git.html#git-editor" id="toc-git-editor"><span class="toc-section-number">7.9.2</span> Configure the Git editor</a></li>
+</ul></li>
+<li class="has-sub"><a href="7.10-git-client.html#git-client" id="toc-git-client"><span class="toc-section-number">7.10</span> Install a Git client</a>
+<ul>
+<li><a href="7.10-git-client.html#what-is-a-git-client-why-would-you-want-one" id="toc-what-is-a-git-client-why-would-you-want-one"><span class="toc-section-number">7.10.1</span> What is a Git client? Why would you want one?</a></li>
+<li><a href="7.10-git-client.html#a-picture-is-worth-a-thousand-words" id="toc-a-picture-is-worth-a-thousand-words"><span class="toc-section-number">7.10.2</span> A picture is worth a thousand words</a></li>
+<li><a href="7.10-git-client.html#no-one-is-giving-out-git-nerd-merit-badges" id="toc-no-one-is-giving-out-git-nerd-merit-badges"><span class="toc-section-number">7.10.3</span> No one is giving out Git Nerd merit badges</a></li>
+<li><a href="7.10-git-client.html#recommended-git-clients" id="toc-recommended-git-clients"><span class="toc-section-number">7.10.4</span> Recommended Git clients</a></li>
+</ul></li>
+<li><a href="7.11-resources.html#resources" id="toc-resources"><span class="toc-section-number">7.11</span> 📚 Resources</a></li>
+<li><a href="7.12-optional-next-steps.html#optional-next-steps" id="toc-optional-next-steps"><span class="toc-section-number">7.12</span> 📝 Optional next steps</a></li>
+</ul></li>
+<li class="has-sub"><a href="8-lab01.html#lab01" id="toc-lab01"><span class="toc-section-number">8</span> Lab: Hello R!</a>
+<ul>
+<li><a href="lab-goals.html#lab-goals" id="toc-lab-goals">Lab Goals</a></li>
+<li class="has-sub"><a href="getting-started.html#getting-started" id="toc-getting-started">Getting started</a>
+<ul>
+<li><a href="getting-started.html#option-1-use-rstudio" id="toc-option-1-use-rstudio">Option 1: Use RStudio</a></li>
+<li><a href="getting-started.html#option-2-use-github-desktop" id="toc-option-2-use-github-desktop">Option 2: Use Github Desktop</a></li>
+<li><a href="getting-started.html#option-3-brute-force" id="toc-option-3-brute-force">Option 3: Brute Force</a></li>
+</ul></li>
+<li class="has-sub"><a href="warm-up.html#warm-up" id="toc-warm-up">Warm up</a>
+<ul>
+<li><a href="warm-up.html#yaml" id="toc-yaml">YAML</a></li>
+<li><a href="warm-up.html#committing-changes" id="toc-committing-changes">Committing changes</a></li>
+<li><a href="warm-up.html#pushing-changes" id="toc-pushing-changes">Pushing changes</a></li>
+<li><a href="warm-up.html#packages" id="toc-packages">Packages</a></li>
+<li><a href="warm-up.html#data" id="toc-data">Data</a></li>
+</ul></li>
+<li><a href="exercises.html#exercises" id="toc-exercises">Exercises</a></li>
+<li><a href="8.1-bonus-tips-by-yoo-ri.html#bonus-tips-by-yoo-ri" id="toc-bonus-tips-by-yoo-ri"><span class="toc-section-number">8.1</span> Bonus Tips by Yoo Ri</a></li>
+</ul></li>
+<li class="part"><span><b>II Module 02</b></span></li>
+<li class="has-sub"><a href="9-welcome-to-data-and-visualization.html#welcome-to-data-and-visualization" id="toc-welcome-to-data-and-visualization"><span class="toc-section-number">9</span> Welcome to Data and Visualization</a>
+<ul>
+<li class="has-sub"><a href="9.1-module-materials-1.html#module-materials-1" id="toc-module-materials-1"><span class="toc-section-number">9.1</span> Module Materials</a>
+<ul>
+<li><a href="9.1-module-materials-1.html#estimated-video-length-1" id="toc-estimated-video-length-1"><span class="toc-section-number">9.1.1</span> Estimated Video Length</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="10-exploratory-data-analysis.html#exploratory-data-analysis" id="toc-exploratory-data-analysis"><span class="toc-section-number">10</span> Exploratory Data Analysis</a>
+<ul>
+<li class="has-sub"><a href="10.1-what-is-in-a-dataset.html#what-is-in-a-dataset" id="toc-what-is-in-a-dataset"><span class="toc-section-number">10.1</span> What is in a dataset?</a>
+<ul>
+<li><a href="10.1-what-is-in-a-dataset.html#why-do-we-visualize" id="toc-why-do-we-visualize"><span class="toc-section-number">10.1.1</span> Why do we visualize?</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="11-visualizing-data-with-ggplot2.html#visualizing-data-with-ggplot2" id="toc-visualizing-data-with-ggplot2"><span class="toc-section-number">11</span> Visualizing data with ggplot2</a>
+<ul>
+<li><a href="11.1-ggplot2-and-aesthetics.html#ggplot2-and-aesthetics" id="toc-ggplot2-and-aesthetics"><span class="toc-section-number">11.1</span> ggplot2 and aesthetics</a></li>
+</ul></li>
+<li class="has-sub"><a href="12-visualizing-numerical-data.html#visualizing-numerical-data" id="toc-visualizing-numerical-data"><span class="toc-section-number">12</span> Visualizing numerical data</a>
+<ul>
+<li><a href="12.1-looking-at-data.html#looking-at-data" id="toc-looking-at-data"><span class="toc-section-number">12.1</span> Looking at Data</a></li>
+<li><a href="12.2-more-on-visualizing-numerical-data.html#more-on-visualizing-numerical-data" id="toc-more-on-visualizing-numerical-data"><span class="toc-section-number">12.2</span> More on visualizing numerical data</a></li>
+</ul></li>
+<li><a href="13-visualizing-categorical-data.html#visualizing-categorical-data" id="toc-visualizing-categorical-data"><span class="toc-section-number">13</span> Visualizing categorical data</a></li>
+<li><a href="14-star-wars-activity.html#star-wars-activity" id="toc-star-wars-activity"><span class="toc-section-number">14</span> Star Wars Activity!</a></li>
+<li class="has-sub"><a href="15-visualization-examples.html#visualization-examples" id="toc-visualization-examples"><span class="toc-section-number">15</span> Visualization Examples</a>
+<ul>
+<li><a href="15.1-census-reporter-data-from-north-carolina.html#census-reporter-data-from-north-carolina" id="toc-census-reporter-data-from-north-carolina"><span class="toc-section-number">15.1</span> Census Reporter Data from North Carolina</a></li>
+</ul></li>
+<li class="has-sub"><a href="16-basiccare.html#basiccare" id="toc-basiccare"><span class="toc-section-number">16</span> Basic care and feeding of data in R</a>
+<ul>
+<li><a href="16.1-buckle-your-seatbelt.html#buckle-your-seatbelt" id="toc-buckle-your-seatbelt"><span class="toc-section-number">16.1</span> Buckle your seatbelt</a></li>
+<li><a href="16.2-data-frames-are-awesome.html#data-frames-are-awesome" id="toc-data-frames-are-awesome"><span class="toc-section-number">16.2</span> Data frames are awesome</a></li>
+<li><a href="16.3-get-the-gapminder-data.html#get-the-gapminder-data" id="toc-get-the-gapminder-data"><span class="toc-section-number">16.3</span> Get the Gapminder data</a></li>
+<li><a href="16.4-meet-the-gapminder-data-frame-or-tibble.html#meet-the-gapminder-data-frame-or-tibble" id="toc-meet-the-gapminder-data-frame-or-tibble"><span class="toc-section-number">16.4</span> Meet the <code>gapminder</code> data frame or “tibble”</a></li>
+<li><a href="16.5-look-at-the-variables-inside-a-data-frame.html#look-at-the-variables-inside-a-data-frame" id="toc-look-at-the-variables-inside-a-data-frame"><span class="toc-section-number">16.5</span> Look at the variables inside a data frame</a></li>
+<li><a href="16.6-recap.html#recap" id="toc-recap"><span class="toc-section-number">16.6</span> Recap</a></li>
+</ul></li>
+<li class="has-sub"><a href="17-lab02.html#lab02" id="toc-lab02"><span class="toc-section-number">17</span> Lab: Global plastic waste</a>
+<ul>
+<li><a href="learning-goals.html#learning-goals" id="toc-learning-goals">Learning goals</a></li>
+<li class="has-sub"><a href="getting-started-1.html#getting-started-1" id="toc-getting-started-1">Getting started</a>
+<ul>
+<li><a href="getting-started-1.html#packages-1" id="toc-packages-1">Packages</a></li>
+<li><a href="getting-started-1.html#data-1" id="toc-data-1">Data</a></li>
+</ul></li>
+<li><a href="warm-up-1.html#warm-up-1" id="toc-warm-up-1">Warm up</a></li>
+<li><a href="exercises-1.html#exercises-1" id="toc-exercises-1">Exercises</a></li>
+<li class="has-sub"><a href="wrapping-up.html#wrapping-up" id="toc-wrapping-up">Wrapping up</a>
+<ul>
+<li><a href="wrapping-up.html#yoo-ri-tips" id="toc-yoo-ri-tips"><span class="toc-section-number">17.0.1</span> Yoo Ri Tips</a></li>
+<li><a href="wrapping-up.html#exercise-5" id="toc-exercise-5"><span class="toc-section-number">17.0.2</span> Exercise 5</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Module 03</b></span></li>
+<li class="has-sub"><a href="18-welcome-to-the-tidyverse.html#welcome-to-the-tidyverse" id="toc-welcome-to-the-tidyverse"><span class="toc-section-number">18</span> Welcome to the tidyverse!</a>
+<ul>
+<li><a href="18.1-module-materials-2.html#module-materials-2" id="toc-module-materials-2"><span class="toc-section-number">18.1</span> Module Materials</a></li>
+<li><a href="18.2-estimated-video-length-2.html#estimated-video-length-2" id="toc-estimated-video-length-2"><span class="toc-section-number">18.2</span> Estimated Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="19-tidy-data.html#tidy-data" id="toc-tidy-data"><span class="toc-section-number">19</span> Tidy data</a>
+<ul>
+<li><a href="19.1-data-structures-in-r.html#data-structures-in-r" id="toc-data-structures-in-r"><span class="toc-section-number">19.1</span> Data structures in R</a></li>
+</ul></li>
+<li class="has-sub"><a href="20-grammar-of-data-wrangling.html#grammar-of-data-wrangling" id="toc-grammar-of-data-wrangling"><span class="toc-section-number">20</span> Grammar of data wrangling</a>
+<ul>
+<li><a href="20.1-piping.html#piping" id="toc-piping"><span class="toc-section-number">20.1</span> Piping</a></li>
+</ul></li>
+<li class="has-sub"><a href="21-dplyr_intro.html#dplyr_intro" id="toc-dplyr_intro"><span class="toc-section-number">21</span> Introduction to dplyr</a>
+<ul>
+<li><a href="21-dplyr_intro.html#load-dplyr-and-gapminder" id="toc-load-dplyr-and-gapminder"><span class="toc-section-number">21.0.1</span> Load dplyr and gapminder</a></li>
+<li><a href="21-dplyr_intro.html#say-hello-to-the-gapminder-tibble" id="toc-say-hello-to-the-gapminder-tibble"><span class="toc-section-number">21.0.2</span> Say hello to the <code>gapminder</code> tibble</a></li>
+<li><a href="21.1-think-before-you-create-excerpts-of-your-data.html#think-before-you-create-excerpts-of-your-data" id="toc-think-before-you-create-excerpts-of-your-data"><span class="toc-section-number">21.1</span> Think before you create excerpts of your data …</a></li>
+<li><a href="21.2-use-filter-to-subset-data-row-wise.html#use-filter-to-subset-data-row-wise" id="toc-use-filter-to-subset-data-row-wise"><span class="toc-section-number">21.2</span> Use <code>filter()</code> to subset data row-wise</a></li>
+<li><a href="21.3-meet-the-new-pipe-operator.html#meet-the-new-pipe-operator" id="toc-meet-the-new-pipe-operator"><span class="toc-section-number">21.3</span> Meet the new pipe operator</a></li>
+<li><a href="21.4-use-select-to-subset-the-data-on-variables-or-columns..html#use-select-to-subset-the-data-on-variables-or-columns." id="toc-use-select-to-subset-the-data-on-variables-or-columns."><span class="toc-section-number">21.4</span> Use <code>select()</code> to subset the data on variables or columns.</a></li>
+<li><a href="21.5-revel-in-the-convenience.html#revel-in-the-convenience" id="toc-revel-in-the-convenience"><span class="toc-section-number">21.5</span> Revel in the convenience</a></li>
+<li><a href="21.6-pure-predictable-pipeable.html#pure-predictable-pipeable" id="toc-pure-predictable-pipeable"><span class="toc-section-number">21.6</span> Pure, predictable, pipeable</a></li>
+</ul></li>
+<li class="has-sub"><a href="22-handson.html#handson" id="toc-handson"><span class="toc-section-number">22</span> Hands on Data Wrangling</a>
+<ul>
+<li><a href="22.1-working-with-a-single-data-frame.html#working-with-a-single-data-frame" id="toc-working-with-a-single-data-frame"><span class="toc-section-number">22.1</span> Working with a single data frame</a></li>
+<li><a href="22.2-activity-04-hotels.html#activity-04-hotels" id="toc-activity-04-hotels"><span class="toc-section-number">22.2</span> Activity 04: Hotels!</a></li>
+<li class="has-sub"><a href="22.3-dplyr_single.html#dplyr_single" id="toc-dplyr_single"><span class="toc-section-number">22.3</span> ODD: Single table dplyr functions</a>
+<ul>
+<li><a href="22.3-dplyr_single.html#load-dplyr-and-gapminder-1" id="toc-load-dplyr-and-gapminder-1"><span class="toc-section-number">22.3.1</span> Load dplyr and gapminder</a></li>
+<li><a href="22.3-dplyr_single.html#create-a-copy-of-gapminder" id="toc-create-a-copy-of-gapminder"><span class="toc-section-number">22.3.2</span> Create a copy of <code>gapminder</code></a></li>
+<li><a href="22.3-dplyr_single.html#use-mutate-to-add-new-variables" id="toc-use-mutate-to-add-new-variables"><span class="toc-section-number">22.3.3</span> Use <code>mutate()</code> to add new variables</a></li>
+<li><a href="22.3-dplyr_single.html#use-arrange-to-row-order-data-in-a-principled-way" id="toc-use-arrange-to-row-order-data-in-a-principled-way"><span class="toc-section-number">22.3.4</span> Use <code>arrange()</code> to row-order data in a principled way</a></li>
+<li><a href="22.3-dplyr_single.html#use-rename-to-rename-variables" id="toc-use-rename-to-rename-variables"><span class="toc-section-number">22.3.5</span> Use <code>rename()</code> to rename variables</a></li>
+<li><a href="22.3-dplyr_single.html#select-can-rename-and-reposition-variables" id="toc-select-can-rename-and-reposition-variables"><span class="toc-section-number">22.3.6</span> <code>select()</code> can rename and reposition variables</a></li>
+<li><a href="22.3-dplyr_single.html#group_by-is-a-mighty-weapon" id="toc-group_by-is-a-mighty-weapon"><span class="toc-section-number">22.3.7</span> <code>group_by()</code> is a mighty weapon</a></li>
+<li><a href="22.3-dplyr_single.html#grouped-mutate" id="toc-grouped-mutate"><span class="toc-section-number">22.3.8</span> Grouped mutate</a></li>
+<li><a href="22.3-dplyr_single.html#grand-finale" id="toc-grand-finale"><span class="toc-section-number">22.3.9</span> Grand Finale</a></li>
+<li><a href="22.3-dplyr_single.html#resources-1" id="toc-resources-1"><span class="toc-section-number">22.3.10</span> Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="23-working-with-multiple-data-frames.html#working-with-multiple-data-frames" id="toc-working-with-multiple-data-frames"><span class="toc-section-number">23</span> Working with multiple data frames</a>
+<ul>
+<li><a href="23.1-case-studies-in-joining.html#case-studies-in-joining" id="toc-case-studies-in-joining"><span class="toc-section-number">23.1</span> Case Studies in Joining</a></li>
+</ul></li>
+<li class="has-sub"><a href="24-merges.html#merges" id="toc-merges"><span class="toc-section-number">24</span> ODD: Merges and Collaboration</a>
+<ul>
+<li><a href="24.1-learning-goal.html#learning-goal" id="toc-learning-goal"><span class="toc-section-number">24.1</span> Learning goal</a></li>
+<li><a href="24.2-merges-and-merge-conflicts.html#merges-and-merge-conflicts" id="toc-merges-and-merge-conflicts"><span class="toc-section-number">24.2</span> Merges and merge conflicts</a></li>
+<li class="has-sub"><a href="24.3-merge-conflict-activity.html#merge-conflict-activity" id="toc-merge-conflict-activity"><span class="toc-section-number">24.3</span> Merge conflict activity</a>
+<ul>
+<li><a href="24.3-merge-conflict-activity.html#setup" id="toc-setup"><span class="toc-section-number">24.3.1</span> Setup</a></li>
+<li><a href="24.3-merge-conflict-activity.html#lets-cause-a-merge-conflict" id="toc-lets-cause-a-merge-conflict"><span class="toc-section-number">24.3.2</span> Let’s cause a merge conflict!</a></li>
+</ul></li>
+<li><a href="24.4-tips-for-collaborating-via-github.html#tips-for-collaborating-via-github" id="toc-tips-for-collaborating-via-github"><span class="toc-section-number">24.4</span> Tips for collaborating via GitHub</a></li>
+</ul></li>
+<li class="has-sub"><a href="25-lab03.html#lab03" id="toc-lab03"><span class="toc-section-number">25</span> Lab: Nobel laureates</a>
+<ul>
+<li><a href="learning-goals-1.html#learning-goals-1" id="toc-learning-goals-1">Learning goals</a></li>
+<li><a href="lab-prep.html#lab-prep" id="toc-lab-prep">Lab prep</a></li>
+<li class="has-sub"><a href="getting-started-2.html#getting-started-2" id="toc-getting-started-2">Getting started</a>
+<ul>
+<li><a href="getting-started-2.html#warm-up-2" id="toc-warm-up-2">Warm up</a></li>
+<li><a href="getting-started-2.html#packages-2" id="toc-packages-2">Packages</a></li>
+<li><a href="getting-started-2.html#data-2" id="toc-data-2">Data</a></li>
+</ul></li>
+<li class="has-sub"><a href="exercises-2.html#exercises-2" id="toc-exercises-2">Exercises</a>
+<ul>
+<li><a href="exercises-2.html#get-to-know-your-data" id="toc-get-to-know-your-data">Get to know your data</a></li>
+<li><a href="exercises-2.html#most-living-nobel-laureates-were-based-in-the-us-when-they-won-their-prizes" id="toc-most-living-nobel-laureates-were-based-in-the-us-when-they-won-their-prizes">Most living Nobel laureates were based in the US when they won their prizes</a></li>
+</ul></li>
+<li class="has-sub"><a href="but-of-those-us-based-nobel-laureates-many-were-born-in-other-countries.html#but-of-those-us-based-nobel-laureates-many-were-born-in-other-countries" id="toc-but-of-those-us-based-nobel-laureates-many-were-born-in-other-countries">But of those US-based Nobel laureates, many were born in other countries</a>
+<ul>
+<li><a href="but-of-those-us-based-nobel-laureates-many-were-born-in-other-countries.html#heres-where-those-immigrant-nobelists-were-born" id="toc-heres-where-those-immigrant-nobelists-were-born">Here’s where those immigrant Nobelists were born</a></li>
+</ul></li>
+<li><a href="interested-in-how-buzzfeed-made-their-visualizations.html#interested-in-how-buzzfeed-made-their-visualizations" id="toc-interested-in-how-buzzfeed-made-their-visualizations">Interested in how Buzzfeed made their visualizations?</a></li>
+</ul></li>
+<li class="part"><span><b>IV Module 04</b></span></li>
+<li class="has-sub"><a href="26-welcome-to-data-diving-with-types.html#welcome-to-data-diving-with-types" id="toc-welcome-to-data-diving-with-types"><span class="toc-section-number">26</span> Welcome to Data Diving with Types</a>
+<ul>
+<li><a href="26.1-module-materials-3.html#module-materials-3" id="toc-module-materials-3"><span class="toc-section-number">26.1</span> Module Materials</a></li>
+<li><a href="26.2-estimated-video-length-3.html#estimated-video-length-3" id="toc-estimated-video-length-3"><span class="toc-section-number">26.2</span> Estimated Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="27-data-types-and-recoding.html#data-types-and-recoding" id="toc-data-types-and-recoding"><span class="toc-section-number">27</span> Data types and recoding</a>
+<ul>
+<li><a href="27.1-why-should-you-care-about-data-types.html#why-should-you-care-about-data-types" id="toc-why-should-you-care-about-data-types"><span class="toc-section-number">27.1</span> Why should you care about data types?</a></li>
+<li class="has-sub"><a href="27.2-data-types.html#data-types" id="toc-data-types"><span class="toc-section-number">27.2</span> Data types!</a>
+<ul>
+<li><a href="27.2-data-types.html#another-hotels-activity" id="toc-another-hotels-activity"><span class="toc-section-number">27.2.1</span> Another Hotels Activity</a></li>
+</ul></li>
+<li><a href="27.3-special-values.html#special-values" id="toc-special-values"><span class="toc-section-number">27.3</span> Special Values</a></li>
+<li><a href="27.4-data-classes.html#data-classes" id="toc-data-classes"><span class="toc-section-number">27.4</span> Data classes</a></li>
+<li class="has-sub"><a href="27.5-working-with-factors.html#working-with-factors" id="toc-working-with-factors"><span class="toc-section-number">27.5</span> Working with factors</a>
+<ul>
+<li><a href="27.5-working-with-factors.html#an-another-hotels-activity" id="toc-an-another-hotels-activity"><span class="toc-section-number">27.5.1</span> (An) Another Hotels Activity</a></li>
+</ul></li>
+<li><a href="27.6-working-with-dates.html#working-with-dates" id="toc-working-with-dates"><span class="toc-section-number">27.6</span> Working with Dates</a></li>
+</ul></li>
+<li class="has-sub"><a href="28-importing-data.html#importing-data" id="toc-importing-data"><span class="toc-section-number">28</span> Importing data!</a>
+<ul>
+<li class="has-sub"><a href="28.1-importing-data-1.html#importing-data-1" id="toc-importing-data-1"><span class="toc-section-number">28.1</span> Importing data!</a>
+<ul>
+<li><a href="28.1-importing-data-1.html#another-activity" id="toc-another-activity"><span class="toc-section-number">28.1.1</span> Another Activity</a></li>
+</ul></li>
+<li class="has-sub"><a href="28.2-importing-and-variable-types.html#importing-and-variable-types" id="toc-importing-and-variable-types"><span class="toc-section-number">28.2</span> Importing and Variable Types!</a>
+<ul>
+<li><a href="28.2-importing-and-variable-types.html#more-activity" id="toc-more-activity"><span class="toc-section-number">28.2.1</span> More Activity</a></li>
+</ul></li>
+<li><a href="28.3-vroom.html#vroom" id="toc-vroom"><span class="toc-section-number">28.3</span> Vroom!</a></li>
+</ul></li>
+<li class="has-sub"><a href="29-import-export.html#import-export" id="toc-import-export"><span class="toc-section-number">29</span> Writing and reading files</a>
+<ul>
+<li class="has-sub"><a href="29.1-file-io-overview.html#file-io-overview" id="toc-file-io-overview"><span class="toc-section-number">29.1</span> File I/O overview</a>
+<ul>
+<li><a href="29.1-file-io-overview.html#data-import-mindset" id="toc-data-import-mindset"><span class="toc-section-number">29.1.1</span> Data import mindset</a></li>
+<li><a href="29.1-file-io-overview.html#data-export-mindset" id="toc-data-export-mindset"><span class="toc-section-number">29.1.2</span> Data export mindset</a></li>
+</ul></li>
+<li class="has-sub"><a href="29.2-lets-begin.html#lets-begin" id="toc-lets-begin"><span class="toc-section-number">29.2</span> Let’s Begin!</a>
+<ul>
+<li><a href="29.2-lets-begin.html#load-the-tidyverse" id="toc-load-the-tidyverse"><span class="toc-section-number">29.2.1</span> Load the tidyverse</a></li>
+<li><a href="29.2-lets-begin.html#locate-the-gapminder-data" id="toc-locate-the-gapminder-data"><span class="toc-section-number">29.2.2</span> Locate the Gapminder data</a></li>
+<li><a href="29.2-lets-begin.html#bring-rectangular-data-in" id="toc-bring-rectangular-data-in"><span class="toc-section-number">29.2.3</span> Bring rectangular data in</a></li>
+</ul></li>
+<li class="has-sub"><a href="29.3-compute-something-worthy-of-export.html#compute-something-worthy-of-export" id="toc-compute-something-worthy-of-export"><span class="toc-section-number">29.3</span> Compute something worthy of export</a>
+<ul>
+<li><a href="29.3-compute-something-worthy-of-export.html#write-rectangular-data-out" id="toc-write-rectangular-data-out"><span class="toc-section-number">29.3.1</span> Write rectangular data out</a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#invertibility" id="toc-invertibility"><span class="toc-section-number">29.3.2</span> Invertibility</a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#reordering-the-levels-of-the-country-factor" id="toc-reordering-the-levels-of-the-country-factor"><span class="toc-section-number">29.3.3</span> Reordering the levels of the country factor</a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#saverds-and-readrds" id="toc-saverds-and-readrds"><span class="toc-section-number">29.3.4</span> <code>saveRDS()</code> and <code>readRDS()</code></a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#retaining-factor-levels-upon-re-import" id="toc-retaining-factor-levels-upon-re-import"><span class="toc-section-number">29.3.5</span> Retaining factor levels upon re-import</a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#dput-and-dget" id="toc-dput-and-dget"><span class="toc-section-number">29.3.6</span> <code>dput()</code> and <code>dget()</code></a></li>
+<li><a href="29.3-compute-something-worthy-of-export.html#other-types-of-objects-to-use-dput-or-saverds-on" id="toc-other-types-of-objects-to-use-dput-or-saverds-on"><span class="toc-section-number">29.3.7</span> Other types of objects to use <code>dput()</code> or <code>saveRDS()</code> on</a></li>
+</ul></li>
+<li class="has-sub"><a href="29.4-clean-up.html#clean-up" id="toc-clean-up"><span class="toc-section-number">29.4</span> Clean up</a>
+<ul>
+<li><a href="29.4-clean-up.html#pitfalls-of-delimited-files" id="toc-pitfalls-of-delimited-files"><span class="toc-section-number">29.4.1</span> Pitfalls of delimited files</a></li>
+</ul></li>
+<li><a href="29.5-resources-2.html#resources-2" id="toc-resources-2"><span class="toc-section-number">29.5</span> Resources</a></li>
+</ul></li>
+<li class="has-sub"><a href="30-odd-transformations-data.html#odd-transformations-data" id="toc-odd-transformations-data"><span class="toc-section-number">30</span> ODD: Transformations data!</a>
+<ul>
+<li><a href="30.1-transforming-data-tukeys-ladder-of-powers.html#transforming-data-tukeys-ladder-of-powers" id="toc-transforming-data-tukeys-ladder-of-powers"><span class="toc-section-number">30.1</span> Transforming Data: Tukey’s Ladder of Powers</a></li>
+<li><a href="30.2-vectorizing-a-function.html#vectorizing-a-function" id="toc-vectorizing-a-function"><span class="toc-section-number">30.2</span> Vectorizing a function</a></li>
+<li class="has-sub"><a href="30.3-box-cox-transformation.html#box-cox-transformation" id="toc-box-cox-transformation"><span class="toc-section-number">30.3</span> Box Cox Transformation</a>
+<ul>
+<li><a href="30.3-box-cox-transformation.html#additional-resources" id="toc-additional-resources"><span class="toc-section-number">30.3.1</span> Additional Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="31-lab04.html#lab04" id="toc-lab04"><span class="toc-section-number">31</span> Lab: Visualizing spatial data</a>
+<ul>
+<li><a href="la-quinta-is-spanish-for-next-to-dennys-pt.-1.html#la-quinta-is-spanish-for-next-to-dennys-pt.-1" id="toc-la-quinta-is-spanish-for-next-to-dennys-pt.-1">La Quinta is Spanish for ‘next to Denny’s’, Pt. 1</a></li>
+<li class="has-sub"><a href="getting-started-3.html#getting-started-3" id="toc-getting-started-3">Getting started</a>
+<ul>
+<li><a href="getting-started-3.html#packages-3" id="toc-packages-3">Packages</a></li>
+<li><a href="getting-started-3.html#project-name" id="toc-project-name">Project name</a></li>
+<li><a href="getting-started-3.html#warm-up-3" id="toc-warm-up-3">Warm up</a></li>
+<li><a href="getting-started-3.html#yaml-1" id="toc-yaml-1">YAML</a></li>
+<li><a href="getting-started-3.html#commiting-and-pushing-changes" id="toc-commiting-and-pushing-changes">Commiting and pushing changes</a></li>
+</ul></li>
+<li><a href="the-data.html#the-data" id="toc-the-data">The data</a></li>
+<li><a href="exercises-3.html#exercises-3" id="toc-exercises-3">Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>V Module 05</b></span></li>
+<li class="has-sub"><a href="32-welcome-to-tips-for-effective-data-visualization.html#welcome-to-tips-for-effective-data-visualization" id="toc-welcome-to-tips-for-effective-data-visualization"><span class="toc-section-number">32</span> Welcome to Tips for effective data visualization</a>
+<ul>
+<li><a href="32.1-module-materials-4.html#module-materials-4" id="toc-module-materials-4"><span class="toc-section-number">32.1</span> Module Materials</a></li>
+<li><a href="32.2-estimated-video-length-4.html#estimated-video-length-4" id="toc-estimated-video-length-4"><span class="toc-section-number">32.2</span> Estimated Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="33-designing-effective-visualizations.html#designing-effective-visualizations" id="toc-designing-effective-visualizations"><span class="toc-section-number">33</span> Designing effective visualizations</a>
+<ul>
+<li><a href="33.1-principles-for-effective-visualizations.html#principles-for-effective-visualizations" id="toc-principles-for-effective-visualizations"><span class="toc-section-number">33.1</span> Principles for effective visualizations!</a></li>
+</ul></li>
+<li class="has-sub"><a href="34-deeper-diving-into-ggplot2.html#deeper-diving-into-ggplot2" id="toc-deeper-diving-into-ggplot2"><span class="toc-section-number">34</span> Deeper Diving into ggplot2!</a>
+<ul>
+<li><a href="34.1-what-are-the-components-of-a-plot.html#what-are-the-components-of-a-plot" id="toc-what-are-the-components-of-a-plot"><span class="toc-section-number">34.1</span> What are the components of a plot?</a></li>
+<li class="has-sub"><a href="34.2-stats-geoms-and-positions.html#stats-geoms-and-positions" id="toc-stats-geoms-and-positions"><span class="toc-section-number">34.2</span> Stats, Geoms, and Positions</a>
+<ul>
+<li><a href="34.2-stats-geoms-and-positions.html#jitter-to-the-rescue" id="toc-jitter-to-the-rescue"><span class="toc-section-number">34.2.1</span> Jitter to the rescue!</a></li>
+</ul></li>
+<li><a href="34.3-scales-and-coordinates.html#scales-and-coordinates" id="toc-scales-and-coordinates"><span class="toc-section-number">34.3</span> Scales and Coordinates</a></li>
+<li><a href="34.4-how-this-all-works-with-minard.html#how-this-all-works-with-minard" id="toc-how-this-all-works-with-minard"><span class="toc-section-number">34.4</span> How this all works with Minard</a></li>
+</ul></li>
+<li class="has-sub"><a href="35-plots-behaving-badly.html#plots-behaving-badly" id="toc-plots-behaving-badly"><span class="toc-section-number">35</span> Plots Behaving Badly</a>
+<ul>
+<li class="has-sub"><a href="35.1-general-principles.html#general-principles" id="toc-general-principles"><span class="toc-section-number">35.1</span> General Principles</a>
+<ul>
+<li><a href="35.1-general-principles.html#piecharts" id="toc-piecharts"><span class="toc-section-number">35.1.1</span> Piecharts</a></li>
+<li><a href="35.1-general-principles.html#barplots-as-data-summaries" id="toc-barplots-as-data-summaries"><span class="toc-section-number">35.1.2</span> Barplots as data summaries</a></li>
+<li><a href="35.1-general-principles.html#show-the-scatterplot" id="toc-show-the-scatterplot"><span class="toc-section-number">35.1.3</span> Show the scatterplot</a></li>
+</ul></li>
+<li><a href="35.2-high-correlation-does-not-imply-replication.html#high-correlation-does-not-imply-replication" id="toc-high-correlation-does-not-imply-replication"><span class="toc-section-number">35.2</span> High correlation does not imply replication</a></li>
+<li><a href="35.3-barpots-for-paired-data.html#barpots-for-paired-data" id="toc-barpots-for-paired-data"><span class="toc-section-number">35.3</span> Barpots for paired data</a></li>
+<li><a href="35.4-gratuitous-3d.html#gratuitous-3d" id="toc-gratuitous-3d"><span class="toc-section-number">35.4</span> Gratuitous 3D</a></li>
+<li><a href="35.5-ignoring-important-factors.html#ignoring-important-factors" id="toc-ignoring-important-factors"><span class="toc-section-number">35.5</span> Ignoring important factors</a></li>
+<li><a href="35.6-too-many-significant-digits.html#too-many-significant-digits" id="toc-too-many-significant-digits"><span class="toc-section-number">35.6</span> Too many significant digits</a></li>
+<li><a href="35.7-displaying-data-well.html#displaying-data-well" id="toc-displaying-data-well"><span class="toc-section-number">35.7</span> Displaying data well</a></li>
+<li><a href="35.8-some-further-reading.html#some-further-reading" id="toc-some-further-reading"><span class="toc-section-number">35.8</span> Some further reading:</a></li>
+</ul></li>
+<li class="has-sub"><a href="36-odd-design-choices-in-data-visualization.html#odd-design-choices-in-data-visualization" id="toc-odd-design-choices-in-data-visualization"><span class="toc-section-number">36</span> ODD: Design choices in data visualization</a>
+<ul>
+<li><a href="36.1-how-to-spot-a-misleading-graph.html#how-to-spot-a-misleading-graph" id="toc-how-to-spot-a-misleading-graph"><span class="toc-section-number">36.1</span> How to spot a misleading graph</a></li>
+<li><a href="36.2-data-visualization-and-misrepresentation.html#data-visualization-and-misrepresentation" id="toc-data-visualization-and-misrepresentation"><span class="toc-section-number">36.2</span> Data Visualization and Misrepresentation</a></li>
+<li><a href="36.3-vox-on-how-coronavirus-charts-can-mislead-us.html#vox-on-how-coronavirus-charts-can-mislead-us" id="toc-vox-on-how-coronavirus-charts-can-mislead-us"><span class="toc-section-number">36.3</span> Vox on How coronavirus charts can mislead us</a></li>
+<li><a href="36.4-vox-on-shut-up-about-the-y-axis.-it-shouldnt-always-start-at-zero..html#vox-on-shut-up-about-the-y-axis.-it-shouldnt-always-start-at-zero." id="toc-vox-on-shut-up-about-the-y-axis.-it-shouldnt-always-start-at-zero."><span class="toc-section-number">36.4</span> Vox on Shut up about the y-axis. It shouldn’t always start at zero.</a></li>
+<li><a href="36.5-gloriously-terrible-plots.html#gloriously-terrible-plots" id="toc-gloriously-terrible-plots"><span class="toc-section-number">36.5</span> Gloriously Terrible Plots!!</a></li>
+</ul></li>
+<li class="has-sub"><a href="37-secrets.html#secrets" id="toc-secrets"><span class="toc-section-number">37</span> ODD: Secrets of a happy graphing life</a>
+<ul>
+<li><a href="37.1-load-gapminder-and-the-tidyverse.html#load-gapminder-and-the-tidyverse" id="toc-load-gapminder-and-the-tidyverse"><span class="toc-section-number">37.1</span> Load gapminder and the tidyverse</a></li>
+<li><a href="37.2-hidden-data-wrangling-problems.html#hidden-data-wrangling-problems" id="toc-hidden-data-wrangling-problems"><span class="toc-section-number">37.2</span> Hidden data wrangling problems</a></li>
+<li class="has-sub"><a href="37.3-keep-stuff-in-data-frames.html#keep-stuff-in-data-frames" id="toc-keep-stuff-in-data-frames"><span class="toc-section-number">37.3</span> Keep stuff in data frames</a>
+<ul>
+<li><a href="37.3-keep-stuff-in-data-frames.html#explicit-data-frame-creation-via-tibbletibble-and-tibbletribble" id="toc-explicit-data-frame-creation-via-tibbletibble-and-tibbletribble"><span class="toc-section-number">37.3.1</span> Explicit data frame creation via <code>tibble::tibble()</code> and <code>tibble::tribble()</code></a></li>
+<li><a href="37.3-keep-stuff-in-data-frames.html#sidebar-with" id="toc-sidebar-with"><span class="toc-section-number">37.3.2</span> Sidebar: <code>with()</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="37.4-worked-example.html#worked-example" id="toc-worked-example"><span class="toc-section-number">37.4</span> Worked example</a>
+<ul>
+<li><a href="37.4-worked-example.html#reshape-your-data" id="toc-reshape-your-data"><span class="toc-section-number">37.4.1</span> Reshape your data</a></li>
+<li><a href="37.4-worked-example.html#iterate-over-the-variables-via-faceting" id="toc-iterate-over-the-variables-via-faceting"><span class="toc-section-number">37.4.2</span> Iterate over the variables via faceting</a></li>
+<li><a href="37.4-worked-example.html#recap-1" id="toc-recap-1"><span class="toc-section-number">37.4.3</span> Recap</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="38-save-figs.html#save-figs" id="toc-save-figs"><span class="toc-section-number">38</span> Writing figures to file</a>
+<ul>
+<li><a href="38.1-step-away-from-the-mouse.html#step-away-from-the-mouse" id="toc-step-away-from-the-mouse"><span class="toc-section-number">38.1</span> Step away from the mouse</a></li>
+<li><a href="38.2-good-names-are-like-breadcrumbs.html#good-names-are-like-breadcrumbs" id="toc-good-names-are-like-breadcrumbs"><span class="toc-section-number">38.2</span> Good names are like breadcrumbs</a></li>
+<li><a href="38.3-graphics-devices.html#graphics-devices" id="toc-graphics-devices"><span class="toc-section-number">38.3</span> Graphics devices</a></li>
+<li class="has-sub"><a href="38.4-write-figures-to-file-with-ggsave.html#write-figures-to-file-with-ggsave" id="toc-write-figures-to-file-with-ggsave"><span class="toc-section-number">38.4</span> Write figures to file with <code>ggsave()</code></a>
+<ul>
+<li><a href="38.4-write-figures-to-file-with-ggsave.html#passing-a-plot-object-to-ggsave" id="toc-passing-a-plot-object-to-ggsave"><span class="toc-section-number">38.4.1</span> Passing a plot object to <code>ggsave()</code></a></li>
+<li><a href="38.4-write-figures-to-file-with-ggsave.html#scaling" id="toc-scaling"><span class="toc-section-number">38.4.2</span> Scaling</a></li>
+</ul></li>
+<li><a href="38.5-write-non-ggplot2-figures-to-file.html#write-non-ggplot2-figures-to-file" id="toc-write-non-ggplot2-figures-to-file"><span class="toc-section-number">38.5</span> Write non-ggplot2 figures to file</a></li>
+<li class="has-sub"><a href="38.6-preemptive-answers-to-some-faqs.html#preemptive-answers-to-some-faqs" id="toc-preemptive-answers-to-some-faqs"><span class="toc-section-number">38.6</span> Preemptive answers to some FAQs</a>
+<ul>
+<li><a href="38.6-preemptive-answers-to-some-faqs.html#despair-over-non-existent-or-empty-figures" id="toc-despair-over-non-existent-or-empty-figures"><span class="toc-section-number">38.6.1</span> Despair over non-existent or empty figures</a></li>
+<li><a href="38.6-preemptive-answers-to-some-faqs.html#mysterious-empty-rplots.pdf-file" id="toc-mysterious-empty-rplots.pdf-file"><span class="toc-section-number">38.6.2</span> Mysterious empty <code>Rplots.pdf</code> file</a></li>
+</ul></li>
+<li><a href="38.7-chunk-name-determines-figure-file-name.html#chunk-name-determines-figure-file-name" id="toc-chunk-name-determines-figure-file-name"><span class="toc-section-number">38.7</span> Chunk name determines figure file name</a></li>
+<li><a href="38.8-clean-up-1.html#clean-up-1" id="toc-clean-up-1"><span class="toc-section-number">38.8</span> Clean up</a></li>
+</ul></li>
+<li class="has-sub"><a href="39-lab05.html#lab05" id="toc-lab05"><span class="toc-section-number">39</span> Lab: Wrangling spatial data</a>
+<ul>
+<li><a href="39.1-la-quinta-is-spanish-for-next-to-dennys-pt.-2.html#la-quinta-is-spanish-for-next-to-dennys-pt.-2" id="toc-la-quinta-is-spanish-for-next-to-dennys-pt.-2"><span class="toc-section-number">39.1</span> La Quinta is Spanish for <em>next to Denny’s</em>, Pt. 2”</a></li>
+<li class="has-sub"><a href="getting-started-4.html#getting-started-4" id="toc-getting-started-4">Getting started</a>
+<ul>
+<li><a href="getting-started-4.html#packages-4" id="toc-packages-4">Packages</a></li>
+<li><a href="getting-started-4.html#housekeeping" id="toc-housekeeping">Housekeeping</a></li>
+</ul></li>
+<li class="has-sub"><a href="warm-up-4.html#warm-up-4" id="toc-warm-up-4">Warm up</a>
+<ul>
+<li><a href="warm-up-4.html#yaml-2" id="toc-yaml-2">YAML</a></li>
+<li><a href="warm-up-4.html#commiting-and-pushing-changes-1" id="toc-commiting-and-pushing-changes-1">Commiting and pushing changes:</a></li>
+</ul></li>
+<li><a href="the-data-1.html#the-data-1" id="toc-the-data-1">The data</a></li>
+<li><a href="exercises-4.html#exercises-4" id="toc-exercises-4">Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>VI Module 06</b></span></li>
+<li class="has-sub"><a href="40-mod06.html#mod06" id="toc-mod06"><span class="toc-section-number">40</span> Welcome to Confounding and Communication!</a>
+<ul>
+<li><a href="40.1-module-materials-5.html#module-materials-5" id="toc-module-materials-5"><span class="toc-section-number">40.1</span> Module Materials</a></li>
+<li><a href="40.2-video-length.html#video-length" id="toc-video-length"><span class="toc-section-number">40.2</span> Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="41-scientific-studies-and-confounding.html#scientific-studies-and-confounding" id="toc-scientific-studies-and-confounding"><span class="toc-section-number">41</span> Scientific studies and confounding!</a>
+<ul>
+<li><a href="41.1-scientific-studies.html#scientific-studies" id="toc-scientific-studies"><span class="toc-section-number">41.1</span> Scientific studies</a></li>
+<li><a href="41.2-climate-change-a-conditional-probability-case-study.html#climate-change-a-conditional-probability-case-study" id="toc-climate-change-a-conditional-probability-case-study"><span class="toc-section-number">41.2</span> Climate Change: A Conditional Probability Case Study</a></li>
+<li><a href="41.3-introducing-simpsons-paradox-with-a-case-study.html#introducing-simpsons-paradox-with-a-case-study" id="toc-introducing-simpsons-paradox-with-a-case-study"><span class="toc-section-number">41.3</span> Introducing Simpson’s Paradox with a case study</a></li>
+<li><a href="41.4-revisiting-simpsons-paradox.html#revisiting-simpsons-paradox" id="toc-revisiting-simpsons-paradox"><span class="toc-section-number">41.4</span> Revisiting Simpson’s Paradox</a></li>
+</ul></li>
+<li><a href="42-communicating-data-science-results-effectively.html#communicating-data-science-results-effectively" id="toc-communicating-data-science-results-effectively"><span class="toc-section-number">42</span> Communicating data science results effectively!</a></li>
+<li class="has-sub"><a href="43-lab06.html#lab06" id="toc-lab06"><span class="toc-section-number">43</span> Lab: Ugly charts and Simpson’s paradox</a>
+<ul>
+<li class="has-sub"><a href="getting-started-5.html#getting-started-5" id="toc-getting-started-5">Getting started</a>
+<ul>
+<li><a href="getting-started-5.html#housekeeping-1" id="toc-housekeeping-1">Housekeeping</a></li>
+</ul></li>
+<li><a href="packages-5.html#packages-5" id="toc-packages-5">Packages</a></li>
+<li class="has-sub"><a href="take-a-sad-plot-and-make-it-better.html#take-a-sad-plot-and-make-it-better" id="toc-take-a-sad-plot-and-make-it-better">Take a sad plot and make it better</a>
+<ul>
+<li><a href="take-a-sad-plot-and-make-it-better.html#instructional-staff-employment-trends" id="toc-instructional-staff-employment-trends">Instructional staff employment trends</a></li>
+<li><a href="take-a-sad-plot-and-make-it-better.html#fisheries" id="toc-fisheries">Fisheries</a></li>
+</ul></li>
+<li class="has-sub"><a href="stretch-practice-with-smokers-in-whickham.html#stretch-practice-with-smokers-in-whickham" id="toc-stretch-practice-with-smokers-in-whickham">Stretch Practice with Smokers in Whickham</a>
+<ul>
+<li><a href="stretch-practice-with-smokers-in-whickham.html#packages-6" id="toc-packages-6">Packages</a></li>
+<li><a href="stretch-practice-with-smokers-in-whickham.html#the-data-2" id="toc-the-data-2">The data</a></li>
+<li><a href="stretch-practice-with-smokers-in-whickham.html#exercises-5" id="toc-exercises-5">Exercises</a></li>
+</ul></li>
+<li><a href="wrapping-up-1.html#wrapping-up-1" id="toc-wrapping-up-1">Wrapping up</a></li>
+<li><a href="more-ugly-charts.html#more-ugly-charts" id="toc-more-ugly-charts">More ugly charts</a></li>
+</ul></li>
+<li class="part"><span><b>VII Module 07</b></span></li>
+<li class="has-sub"><a href="44-welcome-to-web-scraping.html#welcome-to-web-scraping" id="toc-welcome-to-web-scraping"><span class="toc-section-number">44</span> Welcome to web scraping</a>
+<ul>
+<li><a href="44.1-module-materials-6.html#module-materials-6" id="toc-module-materials-6"><span class="toc-section-number">44.1</span> Module Materials</a></li>
+<li><a href="44.2-estimated-video-length-5.html#estimated-video-length-5" id="toc-estimated-video-length-5"><span class="toc-section-number">44.2</span> Estimated Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="45-scraping-the-web.html#scraping-the-web" id="toc-scraping-the-web"><span class="toc-section-number">45</span> Scraping the web</a>
+<ul>
+<li><a href="45.1-using-the-selectorgadget.html#using-the-selectorgadget" id="toc-using-the-selectorgadget"><span class="toc-section-number">45.1</span> Using the SelectorGadget!</a></li>
+<li><a href="45.2-top-250-movies-on-imdb.html#top-250-movies-on-imdb" id="toc-top-250-movies-on-imdb"><span class="toc-section-number">45.2</span> Top 250 movies on IMDB!</a></li>
+<li><a href="45.3-activity-08-imdb.html#activity-08-imdb" id="toc-activity-08-imdb"><span class="toc-section-number">45.3</span> Activity 08: IMDB!</a></li>
+<li><a href="45.4-useful-regex-things.html#useful-regex-things" id="toc-useful-regex-things"><span class="toc-section-number">45.4</span> Useful RegEx things…</a></li>
+</ul></li>
+<li class="has-sub"><a href="46-data-usually-finds-me.html#data-usually-finds-me" id="toc-data-usually-finds-me"><span class="toc-section-number">46</span> Data usually finds me</a>
+<ul>
+<li><a href="46.1-i-dont-go-looking-for-data-data-usually-finds-me.html#i-dont-go-looking-for-data-data-usually-finds-me" id="toc-i-dont-go-looking-for-data-data-usually-finds-me"><span class="toc-section-number">46.1</span> I don’t go looking for Data … Data usually finds me</a></li>
+<li class="has-sub"><a href="46.2-two-major-approaches.html#two-major-approaches" id="toc-two-major-approaches"><span class="toc-section-number">46.2</span> Two Major Approaches</a>
+<ul>
+<li><a href="46.2-two-major-approaches.html#where-do-you-start" id="toc-where-do-you-start"><span class="toc-section-number">46.2.1</span> Where do you start?</a></li>
+</ul></li>
+<li><a href="46.3-confirmatory-approach-to-archival-data.html#confirmatory-approach-to-archival-data" id="toc-confirmatory-approach-to-archival-data"><span class="toc-section-number">46.3</span> Confirmatory Approach to Archival Data</a></li>
+<li><a href="46.4-exploratory-approach.html#exploratory-approach" id="toc-exploratory-approach"><span class="toc-section-number">46.4</span> Exploratory Approach</a></li>
+<li><a href="46.5-data-retrieval-ranges-wildly.html#data-retrieval-ranges-wildly" id="toc-data-retrieval-ranges-wildly"><span class="toc-section-number">46.5</span> Data Retrieval Ranges Wildly</a></li>
+<li><a href="46.6-bit-of-context-marriage-study.html#bit-of-context-marriage-study" id="toc-bit-of-context-marriage-study"><span class="toc-section-number">46.6</span> Bit of Context: Marriage Study</a></li>
+<li><a href="46.7-list-of-data-places.html#list-of-data-places" id="toc-list-of-data-places"><span class="toc-section-number">46.7</span> List of Data Places</a></li>
+<li><a href="46.8-great-papers-to-get-you-started.html#great-papers-to-get-you-started" id="toc-great-papers-to-get-you-started"><span class="toc-section-number">46.8</span> Great Papers to Get You Started</a></li>
+</ul></li>
+<li class="has-sub"><a href="47-api-wrappers.html#api-wrappers" id="toc-api-wrappers"><span class="toc-section-number">47</span> Use API-wrapping packages</a>
+<ul>
+<li><a href="47.1-introduction.html#introduction" id="toc-introduction"><span class="toc-section-number">47.1</span> Introduction</a></li>
+<li class="has-sub"><a href="47.2-click-and-download.html#click-and-download" id="toc-click-and-download"><span class="toc-section-number">47.2</span> Click-and-Download</a>
+<ul>
+<li><a href="47.2-click-and-download.html#from-ropensci-web-services-page" id="toc-from-ropensci-web-services-page"><span class="toc-section-number">47.2.1</span> From rOpenSci web services page:</a></li>
+</ul></li>
+<li><a href="47.3-data-supplied-on-the-web.html#data-supplied-on-the-web" id="toc-data-supplied-on-the-web"><span class="toc-section-number">47.3</span> Data supplied on the web</a></li>
+<li class="has-sub"><a href="47.4-install-and-play.html#install-and-play" id="toc-install-and-play"><span class="toc-section-number">47.4</span> Install-and-play</a>
+<ul>
+<li><a href="47.4-install-and-play.html#load-the-tidyverse-1" id="toc-load-the-tidyverse-1"><span class="toc-section-number">47.4.1</span> Load the tidyverse</a></li>
+<li><a href="47.4-install-and-play.html#sightings-of-birds-rebird" id="toc-sightings-of-birds-rebird"><span class="toc-section-number">47.4.2</span> Sightings of birds: rebird</a></li>
+<li><a href="47.4-install-and-play.html#geonames" id="toc-geonames"><span class="toc-section-number">47.4.3</span> Searching geographic info: geonames</a></li>
+<li><a href="47.4-install-and-play.html#wikipedia-searching" id="toc-wikipedia-searching"><span class="toc-section-number">47.4.4</span> Wikipedia searching</a></li>
+<li><a href="47.4-install-and-play.html#plos-one" id="toc-plos-one"><span class="toc-section-number">47.4.5</span> Searching the Public Library of Science: rplos</a></li>
+<li><a href="47.4-install-and-play.html#is-it-a-boy-or-a-girl-gender-associated-names-throughout-us-history" id="toc-is-it-a-boy-or-a-girl-gender-associated-names-throughout-us-history"><span class="toc-section-number">47.4.6</span> Is it a boy or a girl? gender-associated names throughout US history</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="48-diy-web-data.html#diy-web-data" id="toc-diy-web-data"><span class="toc-section-number">48</span> DIY web data</a>
+<ul>
+<li class="has-sub"><a href="48.1-interacting-with-an-api.html#interacting-with-an-api" id="toc-interacting-with-an-api"><span class="toc-section-number">48.1</span> Interacting with an API</a>
+<ul>
+<li><a href="48.1-interacting-with-an-api.html#load-the-tidyverse-2" id="toc-load-the-tidyverse-2"><span class="toc-section-number">48.1.1</span> Load the tidyverse</a></li>
+<li><a href="48.1-interacting-with-an-api.html#examine-the-structure-of-api-requests-using-the-open-movie-database" id="toc-examine-the-structure-of-api-requests-using-the-open-movie-database"><span class="toc-section-number">48.1.2</span> Examine the structure of API requests using the Open Movie Database</a></li>
+<li><a href="48.1-interacting-with-an-api.html#create-an-omdb-api-key" id="toc-create-an-omdb-api-key"><span class="toc-section-number">48.1.3</span> Create an OMDb API Key</a></li>
+<li><a href="48.1-interacting-with-an-api.html#recreate-the-request-url-in-r" id="toc-recreate-the-request-url-in-r"><span class="toc-section-number">48.1.4</span> Recreate the request URL in R</a></li>
+<li><a href="48.1-interacting-with-an-api.html#get-data-using-the-curl-package" id="toc-get-data-using-the-curl-package"><span class="toc-section-number">48.1.5</span> Get data using the curl package</a></li>
+</ul></li>
+<li class="has-sub"><a href="48.2-intro-to-json-and-xml.html#intro-to-json-and-xml" id="toc-intro-to-json-and-xml"><span class="toc-section-number">48.2</span> Intro to JSON and XML</a>
+<ul>
+<li><a href="48.2-intro-to-json-and-xml.html#parsing-the-json-response-with-jsonlite" id="toc-parsing-the-json-response-with-jsonlite"><span class="toc-section-number">48.2.1</span> Parsing the JSON response with jsonlite</a></li>
+<li><a href="48.2-intro-to-json-and-xml.html#parsing-the-xml-response-using-xml2" id="toc-parsing-the-xml-response-using-xml2"><span class="toc-section-number">48.2.2</span> Parsing the XML response using xml2</a></li>
+</ul></li>
+<li><a href="48.3-introducing-the-easy-way-httr.html#introducing-the-easy-way-httr" id="toc-introducing-the-easy-way-httr"><span class="toc-section-number">48.3</span> Introducing the easy way: httr</a></li>
+<li class="has-sub"><a href="48.4-scraping.html#scraping" id="toc-scraping"><span class="toc-section-number">48.4</span> Scraping</a>
+<ul>
+<li><a href="48.4-scraping.html#obtain-a-table" id="toc-obtain-a-table"><span class="toc-section-number">48.4.1</span> Obtain a table</a></li>
+</ul></li>
+<li><a href="48.5-scraping-via-css-selectors.html#scraping-via-css-selectors" id="toc-scraping-via-css-selectors"><span class="toc-section-number">48.5</span> Scraping via CSS selectors</a></li>
+<li><a href="48.6-random-observations-on-scraping.html#random-observations-on-scraping" id="toc-random-observations-on-scraping"><span class="toc-section-number">48.6</span> Random observations on scraping</a></li>
+<li class="has-sub"><a href="48.7-extras.html#extras" id="toc-extras"><span class="toc-section-number">48.7</span> Extras</a>
+<ul>
+<li><a href="48.7-extras.html#airports" id="toc-airports"><span class="toc-section-number">48.7.1</span> Airports</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="49-lab07.html#lab07" id="toc-lab07"><span class="toc-section-number">49</span> Lab: Better Viz</a>
+<ul>
+<li><a href="conveying-the-right-message-through-visualization.html#conveying-the-right-message-through-visualization" id="toc-conveying-the-right-message-through-visualization">Conveying the right message through visualization</a></li>
+<li><a href="learning-goals-2.html#learning-goals-2" id="toc-learning-goals-2">Learning goals</a></li>
+<li class="has-sub"><a href="getting-started-6.html#getting-started-6" id="toc-getting-started-6">Getting started</a>
+<ul>
+<li><a href="getting-started-6.html#warm-up-5" id="toc-warm-up-5">Warm up</a></li>
+<li><a href="getting-started-6.html#packages-7" id="toc-packages-7">Packages</a></li>
+<li><a href="getting-started-6.html#data-3" id="toc-data-3">Data</a></li>
+</ul></li>
+<li><a href="exercises-6.html#exercises-6" id="toc-exercises-6">Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>VIII Module 08</b></span></li>
+<li class="has-sub"><a href="50-welcome-to-functions-and-automation.html#welcome-to-functions-and-automation" id="toc-welcome-to-functions-and-automation"><span class="toc-section-number">50</span> Welcome to Functions and Automation</a>
+<ul>
+<li><a href="50.1-module-materials-7.html#module-materials-7" id="toc-module-materials-7"><span class="toc-section-number">50.1</span> Module Materials</a></li>
+</ul></li>
+<li class="has-sub"><a href="51-functions-1.html#functions-1" id="toc-functions-1"><span class="toc-section-number">51</span> Functions!</a>
+<ul>
+<li><a href="51.1-code-along-pt-1.html#code-along-pt-1" id="toc-code-along-pt-1"><span class="toc-section-number">51.1</span> Code Along pt 1</a></li>
+<li><a href="51.2-functions-for-real.html#functions-for-real" id="toc-functions-for-real"><span class="toc-section-number">51.2</span> Functions for real!</a></li>
+<li><a href="51.3-code-along-pt-2.html#code-along-pt-2" id="toc-code-along-pt-2"><span class="toc-section-number">51.3</span> Code Along pt 2</a></li>
+<li><a href="51.4-writing-functions.html#writing-functions" id="toc-writing-functions"><span class="toc-section-number">51.4</span> Writing Functions</a></li>
+</ul></li>
+<li class="has-sub"><a href="52-automation.html#automation" id="toc-automation"><span class="toc-section-number">52</span> Automation</a>
+<ul>
+<li><a href="52.1-code-along-pt-3.html#code-along-pt-3" id="toc-code-along-pt-3"><span class="toc-section-number">52.1</span> Code Along pt 3</a></li>
+<li><a href="52.2-math-to-coding.html#math-to-coding" id="toc-math-to-coding"><span class="toc-section-number">52.2</span> Math to Coding</a></li>
+</ul></li>
+<li class="has-sub"><a href="53-functions-part1.html#functions-part1" id="toc-functions-part1"><span class="toc-section-number">53</span> Write your own R functions</a>
+<ul>
+<li><a href="53.1-what-and-why.html#what-and-why" id="toc-what-and-why"><span class="toc-section-number">53.1</span> What and why?</a></li>
+<li><a href="53.2-load-the-gapminder-data.html#load-the-gapminder-data" id="toc-load-the-gapminder-data"><span class="toc-section-number">53.2</span> Load the Gapminder data</a></li>
+<li><a href="53.3-max---min.html#max---min" id="toc-max---min"><span class="toc-section-number">53.3</span> Max - min</a></li>
+<li class="has-sub"><a href="53.4-get-something-that-works.html#get-something-that-works" id="toc-get-something-that-works"><span class="toc-section-number">53.4</span> Get something that works</a>
+<ul>
+<li><a href="53.4-get-something-that-works.html#skateboard-perfectly-formed-rear-view-mirror" id="toc-skateboard-perfectly-formed-rear-view-mirror"><span class="toc-section-number">53.4.1</span> Skateboard &gt;&gt; perfectly formed rear-view mirror</a></li>
+</ul></li>
+<li><a href="53.5-turn-the-working-interactive-code-into-a-function.html#turn-the-working-interactive-code-into-a-function" id="toc-turn-the-working-interactive-code-into-a-function"><span class="toc-section-number">53.5</span> Turn the working interactive code into a function</a></li>
+<li class="has-sub"><a href="53.6-test-your-function.html#test-your-function" id="toc-test-your-function"><span class="toc-section-number">53.6</span> Test your function</a>
+<ul>
+<li><a href="53.6-test-your-function.html#test-on-new-inputs" id="toc-test-on-new-inputs"><span class="toc-section-number">53.6.1</span> Test on new inputs</a></li>
+<li><a href="53.6-test-your-function.html#test-on-real-data-but-different-real-data" id="toc-test-on-real-data-but-different-real-data"><span class="toc-section-number">53.6.2</span> Test on real data but <em>different</em> real data</a></li>
+<li><a href="53.6-test-your-function.html#test-on-unexpected-stuff" id="toc-test-on-unexpected-stuff"><span class="toc-section-number">53.6.3</span> Test on unexpected stuff</a></li>
+<li><a href="53.6-test-your-function.html#unbreakable" id="toc-unbreakable"><span class="toc-section-number">53.6.4</span> Unbreakable</a></li>
+</ul></li>
+<li class="has-sub"><a href="53.7-check-the-validity-of-arguments.html#check-the-validity-of-arguments" id="toc-check-the-validity-of-arguments"><span class="toc-section-number">53.7</span> Check the validity of arguments</a>
+<ul>
+<li><a href="53.7-check-the-validity-of-arguments.html#stop-if-not" id="toc-stop-if-not"><span class="toc-section-number">53.7.1</span> stop if not</a></li>
+<li><a href="53.7-check-the-validity-of-arguments.html#if-then-stop" id="toc-if-then-stop"><span class="toc-section-number">53.7.2</span> if then stop</a></li>
+<li><a href="53.7-check-the-validity-of-arguments.html#sidebar-non-programming-uses-for-assertions" id="toc-sidebar-non-programming-uses-for-assertions"><span class="toc-section-number">53.7.3</span> Sidebar: non-programming uses for assertions</a></li>
+</ul></li>
+<li><a href="53.8-wrap-up-and-whats-next.html#wrap-up-and-whats-next" id="toc-wrap-up-and-whats-next"><span class="toc-section-number">53.8</span> Wrap-up and what’s next?</a></li>
+<li><a href="53.9-where-were-we-where-are-we-going.html#where-were-we-where-are-we-going" id="toc-where-were-we-where-are-we-going"><span class="toc-section-number">53.9</span> Where were we? Where are we going?</a></li>
+<li><a href="53.10-load-the-gapminder-data-1.html#load-the-gapminder-data-1" id="toc-load-the-gapminder-data-1"><span class="toc-section-number">53.10</span> Load the Gapminder data</a></li>
+<li><a href="53.11-restore-our-max-minus-min-function.html#restore-our-max-minus-min-function" id="toc-restore-our-max-minus-min-function"><span class="toc-section-number">53.11</span> Restore our max minus min function</a></li>
+<li><a href="53.12-generalize-our-function-to-other-quantiles.html#generalize-our-function-to-other-quantiles" id="toc-generalize-our-function-to-other-quantiles"><span class="toc-section-number">53.12</span> Generalize our function to other quantiles</a></li>
+<li><a href="53.13-get-something-that-works-again.html#get-something-that-works-again" id="toc-get-something-that-works-again"><span class="toc-section-number">53.13</span> Get something that works, again</a></li>
+<li><a href="53.14-turn-the-working-interactive-code-into-a-function-again.html#turn-the-working-interactive-code-into-a-function-again" id="toc-turn-the-working-interactive-code-into-a-function-again"><span class="toc-section-number">53.14</span> Turn the working interactive code into a function, again</a></li>
+<li><a href="53.15-argument-names-freedom-and-conventions.html#argument-names-freedom-and-conventions" id="toc-argument-names-freedom-and-conventions"><span class="toc-section-number">53.15</span> Argument names: freedom and conventions</a></li>
+<li><a href="53.16-what-a-function-returns.html#what-a-function-returns" id="toc-what-a-function-returns"><span class="toc-section-number">53.16</span> What a function returns</a></li>
+<li><a href="53.17-default-values-freedom-to-not-specify-the-arguments.html#default-values-freedom-to-not-specify-the-arguments" id="toc-default-values-freedom-to-not-specify-the-arguments"><span class="toc-section-number">53.17</span> Default values: freedom to NOT specify the arguments</a></li>
+<li><a href="53.18-check-the-validity-of-arguments-again.html#check-the-validity-of-arguments-again" id="toc-check-the-validity-of-arguments-again"><span class="toc-section-number">53.18</span> Check the validity of arguments, again</a></li>
+<li><a href="53.19-wrap-up-and-whats-next-1.html#wrap-up-and-whats-next-1" id="toc-wrap-up-and-whats-next-1"><span class="toc-section-number">53.19</span> Wrap-up and what’s next?</a></li>
+<li><a href="53.20-where-were-we-where-are-we-going-1.html#where-were-we-where-are-we-going-1" id="toc-where-were-we-where-are-we-going-1"><span class="toc-section-number">53.20</span> Where were we? Where are we going?</a></li>
+<li><a href="53.21-load-the-gapminder-data-2.html#load-the-gapminder-data-2" id="toc-load-the-gapminder-data-2"><span class="toc-section-number">53.21</span> Load the Gapminder data</a></li>
+<li><a href="53.22-restore-our-max-minus-min-function-1.html#restore-our-max-minus-min-function-1" id="toc-restore-our-max-minus-min-function-1"><span class="toc-section-number">53.22</span> Restore our max minus min function</a></li>
+<li><a href="53.23-be-proactive-about-nas.html#be-proactive-about-nas" id="toc-be-proactive-about-nas"><span class="toc-section-number">53.23</span> Be proactive about <code>NA</code>s</a></li>
+<li><a href="53.24-the-useful-but-mysterious-...-argument.html#the-useful-but-mysterious-...-argument" id="toc-the-useful-but-mysterious-...-argument"><span class="toc-section-number">53.24</span> The useful but mysterious <code>...</code> argument</a></li>
+<li><a href="53.25-use-testthat-for-formal-unit-tests.html#use-testthat-for-formal-unit-tests" id="toc-use-testthat-for-formal-unit-tests"><span class="toc-section-number">53.25</span> Use testthat for formal unit tests</a></li>
+</ul></li>
+<li class="has-sub"><a href="54-functions-practicum.html#functions-practicum" id="toc-functions-practicum"><span class="toc-section-number">54</span> Function-writing practicum</a>
+<ul>
+<li><a href="54.1-overview.html#overview" id="toc-overview"><span class="toc-section-number">54.1</span> Overview</a></li>
+<li><a href="54.2-load-the-gapminder-data-3.html#load-the-gapminder-data-3" id="toc-load-the-gapminder-data-3"><span class="toc-section-number">54.2</span> Load the Gapminder data</a></li>
+<li><a href="54.3-get-data-to-practice-with.html#get-data-to-practice-with" id="toc-get-data-to-practice-with"><span class="toc-section-number">54.3</span> Get data to practice with</a></li>
+<li class="has-sub"><a href="54.4-get-some-code-that-works.html#get-some-code-that-works" id="toc-get-some-code-that-works"><span class="toc-section-number">54.4</span> Get some code that works</a>
+<ul>
+<li><a href="54.4-get-some-code-that-works.html#sidebar-regression-stuff" id="toc-sidebar-regression-stuff"><span class="toc-section-number">54.4.1</span> Sidebar: regression stuff</a></li>
+</ul></li>
+<li><a href="54.5-turn-working-code-into-a-function.html#turn-working-code-into-a-function" id="toc-turn-working-code-into-a-function"><span class="toc-section-number">54.5</span> Turn working code into a function</a></li>
+<li><a href="54.6-test-on-other-data-and-in-a-clean-workspace.html#test-on-other-data-and-in-a-clean-workspace" id="toc-test-on-other-data-and-in-a-clean-workspace"><span class="toc-section-number">54.6</span> Test on other data and in a clean workspace</a></li>
+<li><a href="54.7-are-we-there-yet.html#are-we-there-yet" id="toc-are-we-there-yet"><span class="toc-section-number">54.7</span> Are we there yet?</a></li>
+<li><a href="54.8-resources-3.html#resources-3" id="toc-resources-3"><span class="toc-section-number">54.8</span> Resources</a></li>
+</ul></li>
+<li class="has-sub"><a href="55-lab08.html#lab08" id="toc-lab08"><span class="toc-section-number">55</span> Lab: University of Edinburgh Art Collection</a>
+<ul>
+<li><a href="getting-started-7.html#getting-started-7" id="toc-getting-started-7">Getting started</a></li>
+<li><a href="r-scripts-vs.-r-markdown-documents.html#r-scripts-vs.-r-markdown-documents" id="toc-r-scripts-vs.-r-markdown-documents">R scripts vs. R Markdown documents</a></li>
+<li class="has-sub"><a href="selectorgadget.html#selectorgadget" id="toc-selectorgadget">SelectorGadget</a>
+<ul>
+<li><a href="selectorgadget.html#scraping-a-single-page" id="toc-scraping-a-single-page">Scraping a single page</a></li>
+<li><a href="selectorgadget.html#titles" id="toc-titles"><span class="toc-section-number">55.0.1</span> Titles</a></li>
+<li><a href="selectorgadget.html#links" id="toc-links">Links</a></li>
+<li><a href="selectorgadget.html#artists" id="toc-artists">Artists</a></li>
+<li><a href="selectorgadget.html#put-it-altogether" id="toc-put-it-altogether">Put it altogether</a></li>
+<li><a href="selectorgadget.html#scrape-the-next-page" id="toc-scrape-the-next-page">Scrape the next page</a></li>
+</ul></li>
+<li><a href="functions-2.html#functions-2" id="toc-functions-2">Functions</a></li>
+<li class="has-sub"><a href="iteration.html#iteration" id="toc-iteration">Iteration</a>
+<ul>
+<li><a href="iteration.html#list-of-urls" id="toc-list-of-urls">List of URLs</a></li>
+<li><a href="iteration.html#mapping" id="toc-mapping">Mapping</a></li>
+<li><a href="iteration.html#write-out-data" id="toc-write-out-data">Write out data</a></li>
+</ul></li>
+<li><a href="analysis.html#analysis" id="toc-analysis">Analysis</a></li>
+</ul></li>
+<li class="part"><span><b>IX Module 09</b></span></li>
+<li class="has-sub"><a href="56-welcome-to-data-and-ethics.html#welcome-to-data-and-ethics" id="toc-welcome-to-data-and-ethics"><span class="toc-section-number">56</span> Welcome to Data and Ethics</a>
+<ul>
+<li><a href="56.1-module-materials-8.html#module-materials-8" id="toc-module-materials-8"><span class="toc-section-number">56.1</span> Module Materials</a></li>
+</ul></li>
+<li class="has-sub"><a href="57-data-science-and-ethics.html#data-science-and-ethics" id="toc-data-science-and-ethics"><span class="toc-section-number">57</span> Data Science and Ethics</a>
+<ul>
+<li><a href="57.1-module-commentary.html#module-commentary" id="toc-module-commentary"><span class="toc-section-number">57.1</span> Module Commentary</a></li>
+<li class="has-sub"><a href="57.2-misrepresenting-data.html#misrepresenting-data" id="toc-misrepresenting-data"><span class="toc-section-number">57.2</span> Misrepresenting Data</a>
+<ul>
+<li><a href="57.2-misrepresenting-data.html#graph-detective" id="toc-graph-detective"><span class="toc-section-number">57.2.1</span> Graph Detective</a></li>
+</ul></li>
+<li><a href="57.3-maps.html#maps" id="toc-maps"><span class="toc-section-number">57.3</span> Maps</a></li>
+</ul></li>
+<li class="has-sub"><a href="58-bias.html#bias" id="toc-bias"><span class="toc-section-number">58</span> Bias</a>
+<ul>
+<li class="has-sub"><a href="58.1-curated-videography.html#curated-videography" id="toc-curated-videography"><span class="toc-section-number">58.1</span> Curated Videography</a>
+<ul>
+<li><a href="58.1-curated-videography.html#data-science-ethics-in-6-minutes" id="toc-data-science-ethics-in-6-minutes"><span class="toc-section-number">58.1.1</span> Data Science Ethics in 6 Minutes</a></li>
+<li><a href="58.1-curated-videography.html#ai-for-good-in-the-r-and-python-ecosystems" id="toc-ai-for-good-in-the-r-and-python-ecosystems"><span class="toc-section-number">58.1.2</span> AI for Good in the R and Python ecosystems</a></li>
+<li><a href="58.1-curated-videography.html#are-we-automating-racism" id="toc-are-we-automating-racism"><span class="toc-section-number">58.1.3</span> Are We Automating Racism?</a></li>
+<li><a href="58.1-curated-videography.html#big-techs-b.s.-about-ai-ethics" id="toc-big-techs-b.s.-about-ai-ethics"><span class="toc-section-number">58.1.4</span> Big Tech’s B.S. about AI ethics</a></li>
+</ul></li>
+<li><a href="58.2-annotated-bibliography-instructions.html#annotated-bibliography-instructions" id="toc-annotated-bibliography-instructions"><span class="toc-section-number">58.2</span> Annotated Bibliography Instructions</a></li>
+</ul></li>
+<li class="has-sub"><a href="59-lab09.html#lab09" id="toc-lab09"><span class="toc-section-number">59</span> Lab: Modeling professor attractiveness and course evaluations</a>
+<ul>
+<li class="has-sub"><a href="getting-started-8.html#getting-started-8" id="toc-getting-started-8">Getting started</a>
+<ul>
+<li><a href="getting-started-8.html#packages-8" id="toc-packages-8">Packages</a></li>
+<li><a href="getting-started-8.html#housekeeping-2" id="toc-housekeeping-2">Housekeeping</a></li>
+</ul></li>
+<li class="has-sub"><a href="warm-up-6.html#warm-up-6" id="toc-warm-up-6">Warm up</a>
+<ul>
+<li><a href="warm-up-6.html#yaml-3" id="toc-yaml-3">YAML</a></li>
+<li><a href="warm-up-6.html#committing-and-pushing-changes" id="toc-committing-and-pushing-changes">Committing and pushing changes</a></li>
+</ul></li>
+<li><a href="the-data-3.html#the-data-3" id="toc-the-data-3">The data</a></li>
+<li class="has-sub"><a href="exercises-7.html#exercises-7" id="toc-exercises-7">Exercises</a>
+<ul>
+<li><a href="exercises-7.html#part-1-exploratory-data-analysis" id="toc-part-1-exploratory-data-analysis">Part 1: Exploratory Data Analysis</a></li>
+<li><a href="exercises-7.html#part-2-linear-regression-with-a-numerical-predictor" id="toc-part-2-linear-regression-with-a-numerical-predictor">Part 2: Linear regression with a numerical predictor</a></li>
+<li><a href="exercises-7.html#part-3-linear-regression-with-a-categorical-predictor" id="toc-part-3-linear-regression-with-a-categorical-predictor">Part 3: Linear regression with a categorical predictor</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>X Module 10</b></span></li>
+<li class="has-sub"><a href="60-welcome-to-modeling-the-tidy-way.html#welcome-to-modeling-the-tidy-way" id="toc-welcome-to-modeling-the-tidy-way"><span class="toc-section-number">60</span> Welcome to modeling the tidy way!</a>
+<ul>
+<li><a href="60.1-module-materials-9.html#module-materials-9" id="toc-module-materials-9"><span class="toc-section-number">60.1</span> Module Materials</a></li>
+</ul></li>
+<li class="has-sub"><a href="61-language-of-models.html#language-of-models" id="toc-language-of-models"><span class="toc-section-number">61</span> Language of Models!</a>
+<ul>
+<li><a href="61.1-what-is-a-model.html#what-is-a-model" id="toc-what-is-a-model"><span class="toc-section-number">61.1</span> What is a model?</a></li>
+<li><a href="61.2-modeling-the-relationship-between-variables.html#modeling-the-relationship-between-variables" id="toc-modeling-the-relationship-between-variables"><span class="toc-section-number">61.2</span> Modeling the relationship between variables</a></li>
+</ul></li>
+<li class="has-sub"><a href="62-fitting-and-interpreting-models.html#fitting-and-interpreting-models" id="toc-fitting-and-interpreting-models"><span class="toc-section-number">62</span> Fitting and interpreting models</a>
+<ul>
+<li><a href="62.1-models-with-numerical-explanatory-variables.html#models-with-numerical-explanatory-variables" id="toc-models-with-numerical-explanatory-variables"><span class="toc-section-number">62.1</span> Models with numerical explanatory variables</a></li>
+<li class="has-sub"><a href="62.2-a-more-technical-worked-example.html#a-more-technical-worked-example" id="toc-a-more-technical-worked-example"><span class="toc-section-number">62.2</span> A More Technical Worked Example</a>
+<ul>
+<li><a href="62.2-a-more-technical-worked-example.html#does-the-linear-model-fit" id="toc-does-the-linear-model-fit"><span class="toc-section-number">62.2.1</span> Does the linear model fit?</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#homoscedasticity" id="toc-homoscedasticity"><span class="toc-section-number">62.2.2</span> Homoscedasticity</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#normality" id="toc-normality"><span class="toc-section-number">62.2.3</span> Normality</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#normality-of-pooled-residuals" id="toc-normality-of-pooled-residuals"><span class="toc-section-number">62.2.4</span> Normality of pooled residuals</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#the-actually-correct-way" id="toc-the-actually-correct-way"><span class="toc-section-number">62.2.5</span> The actually correct way</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#our-final-model" id="toc-our-final-model"><span class="toc-section-number">62.2.6</span> Our final model</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#what-have-we-learned" id="toc-what-have-we-learned"><span class="toc-section-number">62.2.7</span> What have we learned?</a></li>
+<li><a href="62.2-a-more-technical-worked-example.html#commentary-on-model-performance" id="toc-commentary-on-model-performance"><span class="toc-section-number">62.2.8</span> Commentary on Model Performance</a></li>
+</ul></li>
+<li><a href="62.3-models-with-categorical-explanatory-variables.html#models-with-categorical-explanatory-variables" id="toc-models-with-categorical-explanatory-variables"><span class="toc-section-number">62.3</span> Models with categorical explanatory variables</a></li>
+</ul></li>
+<li><a href="63-modeling-non-linear-relationships.html#modeling-non-linear-relationships" id="toc-modeling-non-linear-relationships"><span class="toc-section-number">63</span> Modeling non-linear relationships</a></li>
+<li class="has-sub"><a href="64-modeling-with-multiple-predictors.html#modeling-with-multiple-predictors" id="toc-modeling-with-multiple-predictors"><span class="toc-section-number">64</span> Modeling with multiple predictors</a>
+<ul>
+<li><a href="64.1-the-linear-model-with-multiple-predictors.html#the-linear-model-with-multiple-predictors" id="toc-the-linear-model-with-multiple-predictors"><span class="toc-section-number">64.1</span> The linear model with multiple predictors</a></li>
+<li><a href="64.2-two-numerical-predictors.html#two-numerical-predictors" id="toc-two-numerical-predictors"><span class="toc-section-number">64.2</span> Two numerical predictors</a></li>
+<li><a href="64.3-my-thoughts-on-tidy-modeling-tidymodelthoughts.html#my-thoughts-on-tidy-modeling-tidymodelthoughts" id="toc-my-thoughts-on-tidy-modeling-tidymodelthoughts"><span class="toc-section-number">64.3</span> My Thoughts on Tidy Modeling {tidymodelthoughts}</a></li>
+</ul></li>
+<li class="has-sub"><a href="65-notes-on-logistic-regression.html#notes-on-logistic-regression" id="toc-notes-on-logistic-regression"><span class="toc-section-number">65</span> Notes on Logistic Regression</a>
+<ul>
+<li><a href="65.1-predicting-categorical-data.html#predicting-categorical-data" id="toc-predicting-categorical-data"><span class="toc-section-number">65.1</span> Predicting categorical data</a></li>
+<li><a href="65.2-sensitivity-and-specificity.html#sensitivity-and-specificity" id="toc-sensitivity-and-specificity"><span class="toc-section-number">65.2</span> Sensitivity and specificity</a></li>
+</ul></li>
+<li class="has-sub"><a href="66-lab10.html#lab10" id="toc-lab10"><span class="toc-section-number">66</span> Lab: Modeling with multiple predictors</a>
+<ul>
+<li><a href="professor-attractiveness-and-course-evaluations-pt.-2.html#professor-attractiveness-and-course-evaluations-pt.-2" id="toc-professor-attractiveness-and-course-evaluations-pt.-2">Professor attractiveness and course evaluations, Pt. 2</a></li>
+<li class="has-sub"><a href="getting-started-9.html#getting-started-9" id="toc-getting-started-9">Getting started</a>
+<ul>
+<li><a href="getting-started-9.html#packages-9" id="toc-packages-9">Packages</a></li>
+</ul></li>
+<li class="has-sub"><a href="warm-up-7.html#warm-up-7" id="toc-warm-up-7">Warm up</a>
+<ul>
+<li><a href="warm-up-7.html#yaml-4" id="toc-yaml-4">YAML</a></li>
+<li><a href="warm-up-7.html#commiting-and-pushing-changes-2" id="toc-commiting-and-pushing-changes-2">Commiting and pushing changes</a></li>
+</ul></li>
+<li><a href="the-data-4.html#the-data-4" id="toc-the-data-4">The data</a></li>
+<li class="has-sub"><a href="exercises-8.html#exercises-8" id="toc-exercises-8">Exercises</a>
+<ul>
+<li><a href="exercises-8.html#part-1-simple-linear-regression" id="toc-part-1-simple-linear-regression">Part 1: Simple linear regression</a></li>
+<li><a href="exercises-8.html#part-2-multiple-linear-regression" id="toc-part-2-multiple-linear-regression">Part 2: Multiple linear regression</a></li>
+<li><a href="exercises-8.html#part-3-the-search-for-the-best-model" id="toc-part-3-the-search-for-the-best-model">Part 3: The search for the best model</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>XI Module 11</b></span></li>
+<li class="has-sub"><a href="67-welcome-to-overfitting-and-cross-validation.html#welcome-to-overfitting-and-cross-validation" id="toc-welcome-to-overfitting-and-cross-validation"><span class="toc-section-number">67</span> Welcome to Overfitting and Cross-Validation</a>
+<ul>
+<li><a href="67.1-module-materials-10.html#module-materials-10" id="toc-module-materials-10"><span class="toc-section-number">67.1</span> Module Materials</a></li>
+</ul></li>
+<li class="has-sub"><a href="68-overfitting.html#overfitting" id="toc-overfitting"><span class="toc-section-number">68</span> Overfitting!</a>
+<ul>
+<li><a href="68.1-prediction.html#prediction" id="toc-prediction"><span class="toc-section-number">68.1</span> Prediction</a></li>
+<li><a href="68.2-workflow.html#workflow" id="toc-workflow"><span class="toc-section-number">68.2</span> Workflow</a></li>
+</ul></li>
+<li class="has-sub"><a href="69-cross-validation.html#cross-validation" id="toc-cross-validation"><span class="toc-section-number">69</span> Cross-Validation</a>
+<ul>
+<li><a href="69.1-v-fold.html#v-fold" id="toc-v-fold"><span class="toc-section-number">69.1</span> V-Fold</a></li>
+</ul></li>
+<li class="has-sub"><a href="70-featurenotes.html#featurenotes" id="toc-featurenotes"><span class="toc-section-number">70</span> Notes on Feature Engineering</a>
+<ul>
+<li class="has-sub"><a href="70.1-feature-engineering.html#feature-engineering" id="toc-feature-engineering"><span class="toc-section-number">70.1</span> Feature engineering</a>
+<ul>
+<li><a href="70.1-feature-engineering.html#same-training-and-testing-sets-as-before" id="toc-same-training-and-testing-sets-as-before"><span class="toc-section-number">70.1.1</span> Same training and testing sets as before</a></li>
+<li><a href="70.1-feature-engineering.html#a-simple-approach-mutate" id="toc-a-simple-approach-mutate"><span class="toc-section-number">70.1.2</span> A simple approach: <code>mutate()</code></a></li>
+</ul></li>
+<li><a href="70.2-modeling-workflow-revisited.html#modeling-workflow-revisited" id="toc-modeling-workflow-revisited"><span class="toc-section-number">70.2</span> Modeling workflow, revisited</a></li>
+<li class="has-sub"><a href="70.3-building-recipes.html#building-recipes" id="toc-building-recipes"><span class="toc-section-number">70.3</span> Building recipes</a>
+<ul>
+<li><a href="70.3-building-recipes.html#initiate-a-recipe" id="toc-initiate-a-recipe"><span class="toc-section-number">70.3.1</span> Initiate a recipe</a></li>
+<li><a href="70.3-building-recipes.html#remove-certain-variables" id="toc-remove-certain-variables"><span class="toc-section-number">70.3.2</span> Remove certain variables</a></li>
+<li><a href="70.3-building-recipes.html#feature-engineer-date" id="toc-feature-engineer-date"><span class="toc-section-number">70.3.3</span> Feature engineer date</a></li>
+<li><a href="70.3-building-recipes.html#discretize-numeric-variables" id="toc-discretize-numeric-variables"><span class="toc-section-number">70.3.4</span> Discretize numeric variables</a></li>
+<li><a href="70.3-building-recipes.html#create-dummy-variables" id="toc-create-dummy-variables"><span class="toc-section-number">70.3.5</span> Create dummy variables</a></li>
+<li><a href="70.3-building-recipes.html#remove-zero-variance-variables" id="toc-remove-zero-variance-variables"><span class="toc-section-number">70.3.6</span> Remove zero variance variables</a></li>
+<li><a href="70.3-building-recipes.html#all-in-one-place" id="toc-all-in-one-place"><span class="toc-section-number">70.3.7</span> All in one place</a></li>
+</ul></li>
+<li class="has-sub"><a href="70.4-building-workflows.html#building-workflows" id="toc-building-workflows"><span class="toc-section-number">70.4</span> Building workflows</a>
+<ul>
+<li><a href="70.4-building-workflows.html#define-model" id="toc-define-model"><span class="toc-section-number">70.4.1</span> Define model</a></li>
+<li><a href="70.4-building-workflows.html#define-workflow" id="toc-define-workflow"><span class="toc-section-number">70.4.2</span> Define workflow</a></li>
+<li><a href="70.4-building-workflows.html#fit-model-to-training-data" id="toc-fit-model-to-training-data"><span class="toc-section-number">70.4.3</span> Fit model to training data</a></li>
+<li><a href="70.4-building-workflows.html#make-predictions-for-test-data" id="toc-make-predictions-for-test-data"><span class="toc-section-number">70.4.4</span> Make predictions for test data</a></li>
+<li><a href="70.4-building-workflows.html#evaluate-the-performance" id="toc-evaluate-the-performance"><span class="toc-section-number">70.4.5</span> Evaluate the performance</a></li>
+</ul></li>
+<li class="has-sub"><a href="70.5-making-decisions.html#making-decisions" id="toc-making-decisions"><span class="toc-section-number">70.5</span> Making decisions</a>
+<ul>
+<li><a href="70.5-making-decisions.html#cutoff-probability-0.5" id="toc-cutoff-probability-0.5"><span class="toc-section-number">70.5.1</span> Cutoff probability: 0.5</a></li>
+<li><a href="70.5-making-decisions.html#cutoff-probability-0.25" id="toc-cutoff-probability-0.25"><span class="toc-section-number">70.5.2</span> Cutoff probability: 0.25</a></li>
+<li><a href="70.5-making-decisions.html#cutoff-probability-0.75" id="toc-cutoff-probability-0.75"><span class="toc-section-number">70.5.3</span> Cutoff probability: 0.75</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="71-odd-notes-on-cross-validation.html#odd-notes-on-cross-validation" id="toc-odd-notes-on-cross-validation"><span class="toc-section-number">71</span> ODD: Notes on Cross validation</a>
+<ul>
+<li><a href="71.1-example-regression.html#example-regression" id="toc-example-regression"><span class="toc-section-number">71.1</span> Example: Regression</a></li>
+<li><a href="71.2-example-mixture-models.html#example-mixture-models" id="toc-example-mixture-models"><span class="toc-section-number">71.2</span> Example: Mixture models</a></li>
+<li><a href="71.3-better-solution-cross-validation.html#better-solution-cross-validation" id="toc-better-solution-cross-validation"><span class="toc-section-number">71.3</span> Better Solution: Cross validation</a></li>
+<li><a href="71.4-example.html#example" id="toc-example"><span class="toc-section-number">71.4</span> Example</a></li>
+<li><a href="71.5-choice-of-k.html#choice-of-k" id="toc-choice-of-k"><span class="toc-section-number">71.5</span> Choice of <span class="math inline">\(K\)</span></a></li>
+<li><a href="71.6-summing-up.html#summing-up" id="toc-summing-up"><span class="toc-section-number">71.6</span> Summing up</a></li>
+</ul></li>
+<li class="has-sub"><a href="72-lab8b.html#lab8b" id="toc-lab8b"><span class="toc-section-number">72</span> Optional Lab 08</a>
+<ul>
+<li><a href="packages-10.html#packages-10" id="toc-packages-10">Packages</a></li>
+<li><a href="data-collection-via-web-scraping.html#data-collection-via-web-scraping" id="toc-data-collection-via-web-scraping">Data collection via web scraping</a></li>
+<li><a href="data-cleaning.html#data-cleaning" id="toc-data-cleaning">Data cleaning</a></li>
+<li><a href="data-visualization-and-interpretation.html#data-visualization-and-interpretation" id="toc-data-visualization-and-interpretation">Data visualization and interpretation</a></li>
+</ul></li>
+<li class="part"><span><b>XII Module 12</b></span></li>
+<li class="has-sub"><a href="73-welcome-to-quantifying-uncertainty.html#welcome-to-quantifying-uncertainty" id="toc-welcome-to-quantifying-uncertainty"><span class="toc-section-number">73</span> Welcome to Quantifying Uncertainty</a>
+<ul>
+<li><a href="73.1-module-materials-11.html#module-materials-11" id="toc-module-materials-11"><span class="toc-section-number">73.1</span> Module Materials</a></li>
+</ul></li>
+<li><a href="74-quantifying-uncertainty.html#quantifying-uncertainty" id="toc-quantifying-uncertainty"><span class="toc-section-number">74</span> Quantifying Uncertainty!</a></li>
+<li><a href="75-bootstrapping.html#bootstrapping" id="toc-bootstrapping"><span class="toc-section-number">75</span> Bootstrapping</a></li>
+<li class="has-sub"><a href="76-notes-on-hypothesis-testing.html#notes-on-hypothesis-testing" id="toc-notes-on-hypothesis-testing"><span class="toc-section-number">76</span> Notes on Hypothesis Testing</a>
+<ul>
+<li class="has-sub"><a href="76.1-hypothesis-testing-for-a-single-proportion.html#hypothesis-testing-for-a-single-proportion" id="toc-hypothesis-testing-for-a-single-proportion"><span class="toc-section-number">76.1</span> Hypothesis testing for a single proportion</a>
+<ul>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#organ-donors" id="toc-organ-donors"><span class="toc-section-number">76.1.1</span> Organ donors</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#data-4" id="toc-data-4"><span class="toc-section-number">76.1.2</span> Data</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#parameter-vs.-statistic" id="toc-parameter-vs.-statistic"><span class="toc-section-number">76.1.3</span> Parameter vs. statistic</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#correlation-vs.-causation" id="toc-correlation-vs.-causation"><span class="toc-section-number">76.1.4</span> Correlation vs. causation</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#two-claims" id="toc-two-claims"><span class="toc-section-number">76.1.5</span> Two claims</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#hypothesis-testing-as-a-court-trial" id="toc-hypothesis-testing-as-a-court-trial"><span class="toc-section-number">76.1.6</span> Hypothesis testing as a court trial</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#hypothesis-testing-framework" id="toc-hypothesis-testing-framework"><span class="toc-section-number">76.1.7</span> Hypothesis testing framework</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#setting-the-hypotheses" id="toc-setting-the-hypotheses"><span class="toc-section-number">76.1.8</span> Setting the hypotheses</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#simulating-the-null-distribution" id="toc-simulating-the-null-distribution"><span class="toc-section-number">76.1.9</span> Simulating the null distribution</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#what-do-we-expect" id="toc-what-do-we-expect"><span class="toc-section-number">76.1.10</span> What do we expect?</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#simulation" id="toc-simulation"><span class="toc-section-number">76.1.11</span> Simulation</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#using-tidymodels-to-generate-the-null-distribution" id="toc-using-tidymodels-to-generate-the-null-distribution"><span class="toc-section-number">76.1.12</span> Using tidymodels to generate the null distribution</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#visualizing-the-null-distribution" id="toc-visualizing-the-null-distribution"><span class="toc-section-number">76.1.13</span> Visualizing the null distribution</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#calculating-the-p-value-visually" id="toc-calculating-the-p-value-visually"><span class="toc-section-number">76.1.14</span> Calculating the p-value, visually</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#calculating-the-p-value-directly" id="toc-calculating-the-p-value-directly"><span class="toc-section-number">76.1.15</span> Calculating the p-value, directly</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#significance-level" id="toc-significance-level"><span class="toc-section-number">76.1.16</span> Significance level</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#conclusion" id="toc-conclusion"><span class="toc-section-number">76.1.17</span> Conclusion</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#lets-get-real" id="toc-lets-get-real"><span class="toc-section-number">76.1.18</span> Let’s get real</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#run-the-test" id="toc-run-the-test"><span class="toc-section-number">76.1.19</span> Run the test</a></li>
+<li><a href="76.1-hypothesis-testing-for-a-single-proportion.html#visualize-and-calculate" id="toc-visualize-and-calculate"><span class="toc-section-number">76.1.20</span> Visualize and calculate</a></li>
+</ul></li>
+<li class="has-sub"><a href="76.2-one-vs.-two-sided-hypothesis-tests.html#one-vs.-two-sided-hypothesis-tests" id="toc-one-vs.-two-sided-hypothesis-tests"><span class="toc-section-number">76.2</span> One vs. two sided hypothesis tests</a>
+<ul>
+<li><a href="76.2-one-vs.-two-sided-hypothesis-tests.html#types-of-alternative-hypotheses" id="toc-types-of-alternative-hypotheses"><span class="toc-section-number">76.2.1</span> Types of alternative hypotheses</a></li>
+</ul></li>
+<li class="has-sub"><a href="76.3-testing-for-independence.html#testing-for-independence" id="toc-testing-for-independence"><span class="toc-section-number">76.3</span> Testing for independence</a>
+<ul>
+<li><a href="76.3-testing-for-independence.html#is-yawning-contagious" id="toc-is-yawning-contagious"><span class="toc-section-number">76.3.1</span> Is yawning contagious?</a></li>
+<li><a href="76.3-testing-for-independence.html#study-description" id="toc-study-description"><span class="toc-section-number">76.3.2</span> Study description</a></li>
+<li><a href="76.3-testing-for-independence.html#proportion-of-yawners" id="toc-proportion-of-yawners"><span class="toc-section-number">76.3.3</span> Proportion of yawners</a></li>
+<li><a href="76.3-testing-for-independence.html#independence" id="toc-independence"><span class="toc-section-number">76.3.4</span> Independence?</a></li>
+<li><a href="76.3-testing-for-independence.html#dependence-or-another-possible-explanation" id="toc-dependence-or-another-possible-explanation"><span class="toc-section-number">76.3.5</span> Dependence, or another possible explanation?</a></li>
+<li><a href="76.3-testing-for-independence.html#two-competing-claims" id="toc-two-competing-claims"><span class="toc-section-number">76.3.6</span> Two competing claims</a></li>
+<li><a href="76.3-testing-for-independence.html#simulation-setup" id="toc-simulation-setup"><span class="toc-section-number">76.3.7</span> Simulation setup</a></li>
+<li><a href="76.3-testing-for-independence.html#running-the-simulation" id="toc-running-the-simulation"><span class="toc-section-number">76.3.8</span> Running the simulation</a></li>
+<li><a href="76.3-testing-for-independence.html#simulation-by-hand" id="toc-simulation-by-hand"><span class="toc-section-number">76.3.9</span> Simulation by hand</a></li>
+<li><a href="76.3-testing-for-independence.html#simulation-by-computation" id="toc-simulation-by-computation"><span class="toc-section-number">76.3.10</span> Simulation by computation</a></li>
+<li><a href="76.3-testing-for-independence.html#recap-2" id="toc-recap-2"><span class="toc-section-number">76.3.11</span> Recap</a></li>
+<li><a href="76.3-testing-for-independence.html#visualizing-the-null-distribution-1" id="toc-visualizing-the-null-distribution-1"><span class="toc-section-number">76.3.12</span> Visualizing the null distribution</a></li>
+<li><a href="76.3-testing-for-independence.html#calculating-the-p-value-visually-1" id="toc-calculating-the-p-value-visually-1"><span class="toc-section-number">76.3.13</span> Calculating the p-value, visually</a></li>
+<li><a href="76.3-testing-for-independence.html#calculating-the-p-value-directly-1" id="toc-calculating-the-p-value-directly-1"><span class="toc-section-number">76.3.14</span> Calculating the p-value, directly</a></li>
+<li><a href="76.3-testing-for-independence.html#conclusion-1" id="toc-conclusion-1"><span class="toc-section-number">76.3.15</span> Conclusion</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="77-lab11.html#lab11" id="toc-lab11"><span class="toc-section-number">77</span> Lab: So what if you smoke when pregnant?</a>
+<ul>
+<li><a href="77.1-simulation-based-inference.html#simulation-based-inference" id="toc-simulation-based-inference"><span class="toc-section-number">77.1</span> Simulation based inference</a></li>
+<li class="has-sub"><a href="77.2-getting-started-10.html#getting-started-10" id="toc-getting-started-10"><span class="toc-section-number">77.2</span> Getting started</a>
+<ul>
+<li><a href="77.2-getting-started-10.html#packages-11" id="toc-packages-11"><span class="toc-section-number">77.2.1</span> Packages</a></li>
+</ul></li>
+<li class="has-sub"><a href="77.3-housekeeping-3.html#housekeeping-3" id="toc-housekeeping-3"><span class="toc-section-number">77.3</span> Housekeeping</a>
+<ul>
+<li><a href="77.3-housekeeping-3.html#git-configuration-password-caching-1" id="toc-git-configuration-password-caching-1"><span class="toc-section-number">77.3.1</span> Git configuration / password caching</a></li>
+<li><a href="77.3-housekeeping-3.html#project-name-3" id="toc-project-name-3"><span class="toc-section-number">77.3.2</span> Project name</a></li>
+</ul></li>
+<li class="has-sub"><a href="77.4-warm-up-8.html#warm-up-8" id="toc-warm-up-8"><span class="toc-section-number">77.4</span> Warm up</a>
+<ul>
+<li><a href="77.4-warm-up-8.html#yaml-5" id="toc-yaml-5"><span class="toc-section-number">77.4.1</span> YAML</a></li>
+<li><a href="77.4-warm-up-8.html#commiting-and-pushing-changes-3" id="toc-commiting-and-pushing-changes-3"><span class="toc-section-number">77.4.2</span> Commiting and pushing changes</a></li>
+</ul></li>
+<li><a href="77.5-set-a-seed.html#set-a-seed" id="toc-set-a-seed"><span class="toc-section-number">77.5</span> Set a seed!</a></li>
+<li><a href="77.6-the-data-5.html#the-data-5" id="toc-the-data-5"><span class="toc-section-number">77.6</span> The data</a></li>
+<li class="has-sub"><a href="77.7-exercises-9.html#exercises-9" id="toc-exercises-9"><span class="toc-section-number">77.7</span> Exercises</a>
+<ul>
+<li><a href="77.7-exercises-9.html#baby-weights" id="toc-baby-weights"><span class="toc-section-number">77.7.1</span> Baby weights</a></li>
+<li><a href="77.7-exercises-9.html#baby-weight-vs.-smoking" id="toc-baby-weight-vs.-smoking"><span class="toc-section-number">77.7.2</span> Baby weight vs. smoking</a></li>
+<li><a href="77.7-exercises-9.html#baby-weight-vs.-mothers-age" id="toc-baby-weight-vs.-mothers-age"><span class="toc-section-number">77.7.3</span> Baby weight vs. mother’s age</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>XIII Module 13</b></span></li>
+<li class="has-sub"><a href="78-welcome-to-simulating-data.html#welcome-to-simulating-data" id="toc-welcome-to-simulating-data"><span class="toc-section-number">78</span> Welcome to Simulating Data</a>
+<ul>
+<li><a href="78.1-module-materials-12.html#module-materials-12" id="toc-module-materials-12"><span class="toc-section-number">78.1</span> Module Materials</a></li>
+<li><a href="78.2-estimated-video-length-6.html#estimated-video-length-6" id="toc-estimated-video-length-6"><span class="toc-section-number">78.2</span> Estimated Video Length</a></li>
+</ul></li>
+<li class="has-sub"><a href="79-getting-started-with-simulating-data-in-r.html#getting-started-with-simulating-data-in-r" id="toc-getting-started-with-simulating-data-in-r"><span class="toc-section-number">79</span> Getting started with simulating data in R</a>
+<ul>
+<li><a href="79.1-generating-random-numbers.html#generating-random-numbers" id="toc-generating-random-numbers"><span class="toc-section-number">79.1</span> Generating random numbers</a></li>
+<li class="has-sub"><a href="79.2-rnorm-to-generate-random-numbers-from-the-normal-distribution.html#rnorm-to-generate-random-numbers-from-the-normal-distribution" id="toc-rnorm-to-generate-random-numbers-from-the-normal-distribution"><span class="toc-section-number">79.2</span> <code>rnorm()</code> to generate random numbers from the normal distribution</a>
+<ul>
+<li><a href="79.2-rnorm-to-generate-random-numbers-from-the-normal-distribution.html#writing-out-arguments-for-clearer-code" id="toc-writing-out-arguments-for-clearer-code"><span class="toc-section-number">79.2.1</span> Writing out arguments for clearer code</a></li>
+<li><a href="79.2-rnorm-to-generate-random-numbers-from-the-normal-distribution.html#setting-the-random-seed-for-reproducible-random-numbers" id="toc-setting-the-random-seed-for-reproducible-random-numbers"><span class="toc-section-number">79.2.2</span> Setting the random seed for reproducible random numbers</a></li>
+<li><a href="79.2-rnorm-to-generate-random-numbers-from-the-normal-distribution.html#change-parameters-in-rnorm" id="toc-change-parameters-in-rnorm"><span class="toc-section-number">79.2.3</span> Change parameters in <code>rnorm()</code></a></li>
+<li><a href="79.2-rnorm-to-generate-random-numbers-from-the-normal-distribution.html#using-vectors-of-values-for-the-parameter-arguments" id="toc-using-vectors-of-values-for-the-parameter-arguments"><span class="toc-section-number">79.2.4</span> Using vectors of values for the parameter arguments</a></li>
+</ul></li>
+<li><a href="79.3-example-of-using-the-simulated-numbers-from-rnorm.html#example-of-using-the-simulated-numbers-from-rnorm" id="toc-example-of-using-the-simulated-numbers-from-rnorm"><span class="toc-section-number">79.3</span> Example of using the simulated numbers from <code>rnorm()</code></a></li>
+<li><a href="79.4-runif-pulls-from-the-uniform-distribution.html#runif-pulls-from-the-uniform-distribution" id="toc-runif-pulls-from-the-uniform-distribution"><span class="toc-section-number">79.4</span> <code>runif()</code> pulls from the uniform distribution</a></li>
+<li><a href="79.5-example-of-using-the-simulated-numbers-from-runif.html#example-of-using-the-simulated-numbers-from-runif" id="toc-example-of-using-the-simulated-numbers-from-runif"><span class="toc-section-number">79.5</span> Example of using the simulated numbers from <code>runif()</code></a></li>
+<li><a href="79.6-discrete-counts-with-rpois.html#discrete-counts-with-rpois" id="toc-discrete-counts-with-rpois"><span class="toc-section-number">79.6</span> Discrete counts with <code>rpois()</code></a></li>
+<li><a href="79.7-example-of-using-the-simulated-numbers-from-rpois.html#example-of-using-the-simulated-numbers-from-rpois" id="toc-example-of-using-the-simulated-numbers-from-rpois"><span class="toc-section-number">79.7</span> Example of using the simulated numbers from <code>rpois()</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="80-generate-character-vectors-with-rep.html#generate-character-vectors-with-rep" id="toc-generate-character-vectors-with-rep"><span class="toc-section-number">80</span> Generate character vectors with <code>rep()</code></a>
+<ul>
+<li><a href="80.1-using-letters-and-letters.html#using-letters-and-letters" id="toc-using-letters-and-letters"><span class="toc-section-number">80.1</span> Using <code>letters</code> and <code>LETTERS</code></a></li>
+<li><a href="80.2-repeat-each-element-of-a-vector-with-each.html#repeat-each-element-of-a-vector-with-each" id="toc-repeat-each-element-of-a-vector-with-each"><span class="toc-section-number">80.2</span> Repeat each element of a vector with <code>each</code></a></li>
+<li><a href="80.3-repeat-a-whole-vector-with-the-times-argument.html#repeat-a-whole-vector-with-the-times-argument" id="toc-repeat-a-whole-vector-with-the-times-argument"><span class="toc-section-number">80.3</span> Repeat a whole vector with the <code>times</code> argument</a></li>
+<li><a href="80.4-set-the-output-vector-length-with-the-length.out-argument.html#set-the-output-vector-length-with-the-length.out-argument" id="toc-set-the-output-vector-length-with-the-length.out-argument"><span class="toc-section-number">80.4</span> Set the output vector length with the <code>length.out</code> argument</a></li>
+<li><a href="80.5-repeat-each-element-a-different-number-of-times.html#repeat-each-element-a-different-number-of-times" id="toc-repeat-each-element-a-different-number-of-times"><span class="toc-section-number">80.5</span> Repeat each element a different number of <code>times</code></a></li>
+<li><a href="80.6-combining-each-with-times.html#combining-each-with-times" id="toc-combining-each-with-times"><span class="toc-section-number">80.6</span> Combining <code>each</code> with <code>times</code></a></li>
+<li><a href="80.7-combining-each-with-length.html#combining-each-with-length.out" id="toc-combining-each-with-length.out"><span class="toc-section-number">80.7</span> Combining <code>each</code> with <code>length.out</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="81-creating-datasets-with-quantiative-and-categorical-variables.html#creating-datasets-with-quantiative-and-categorical-variables" id="toc-creating-datasets-with-quantiative-and-categorical-variables"><span class="toc-section-number">81</span> Creating datasets with quantiative and categorical variables</a>
+<ul>
+<li><a href="81.1-simulate-data-with-no-differences-among-two-groups.html#simulate-data-with-no-differences-among-two-groups" id="toc-simulate-data-with-no-differences-among-two-groups"><span class="toc-section-number">81.1</span> Simulate data with no differences among two groups</a></li>
+<li><a href="81.2-simulate-data-with-a-difference-among-groups.html#simulate-data-with-a-difference-among-groups" id="toc-simulate-data-with-a-difference-among-groups"><span class="toc-section-number">81.2</span> Simulate data with a difference among groups</a></li>
+<li><a href="81.3-multiple-quantitative-variables-with-groups.html#multiple-quantitative-variables-with-groups" id="toc-multiple-quantitative-variables-with-groups"><span class="toc-section-number">81.3</span> Multiple quantitative variables with groups</a></li>
+</ul></li>
+<li class="has-sub"><a href="82-repeatedly-simulate-data-with-replicate.html#repeatedly-simulate-data-with-replicate" id="toc-repeatedly-simulate-data-with-replicate"><span class="toc-section-number">82</span> Repeatedly simulate data with <code>replicate()</code></a>
+<ul>
+<li><a href="82.1-simple-example-of-replicate.html#simple-example-of-replicate" id="toc-simple-example-of-replicate"><span class="toc-section-number">82.1</span> Simple example of <code>replicate()</code></a></li>
+<li><a href="82.2-an-equivalent-for-loop-example.html#an-equivalent-for-loop-example" id="toc-an-equivalent-for-loop-example"><span class="toc-section-number">82.2</span> An equivalent <code>for()</code> loop example</a></li>
+<li><a href="82.3-using-replicate-to-repeatedly-make-a-dataset.html#using-replicate-to-repeatedly-make-a-dataset" id="toc-using-replicate-to-repeatedly-make-a-dataset"><span class="toc-section-number">82.3</span> Using <code>replicate()</code> to repeatedly make a dataset</a></li>
+</ul></li>
+<li><a href="83-whats-the-next-step.html#whats-the-next-step" id="toc-whats-the-next-step"><span class="toc-section-number">83</span> What’s the next step?</a></li>
+<li class="part"><span><b>XIV Module 14</b></span></li>
+<li class="has-sub"><a href="84-rshiny.html#rshiny" id="toc-rshiny"><span class="toc-section-number">84</span> Welcome to interactive web apps</a>
+<ul>
+<li><a href="84.1-module-materials-13.html#module-materials-13" id="toc-module-materials-13"><span class="toc-section-number">84.1</span> Module Materials</a></li>
+</ul></li>
+<li><a href="85-rshiny-overview.html#rshiny-overview" id="toc-rshiny-overview"><span class="toc-section-number">85</span> RShiny Overview</a></li>
+<li class="has-sub"><a href="86-practical-advice-from-the-data-professor.html#practical-advice-from-the-data-professor" id="toc-practical-advice-from-the-data-professor"><span class="toc-section-number">86</span> Practical Advice from the Data Professor</a>
+<ul>
+<li><a href="86.1-web-apps-in-r-building-your-first-web-application-in-r.html#web-apps-in-r-building-your-first-web-application-in-r" id="toc-web-apps-in-r-building-your-first-web-application-in-r"><span class="toc-section-number">86.1</span> Web Apps in R: Building your First Web Application in R</a></li>
+<li><a href="86.2-web-apps-in-r-build-interactive-histogram-web-application-in-r.html#web-apps-in-r-build-interactive-histogram-web-application-in-r" id="toc-web-apps-in-r-build-interactive-histogram-web-application-in-r"><span class="toc-section-number">86.2</span> Web Apps in R: Build Interactive Histogram Web Application in R</a></li>
+<li><a href="86.3-web-apps-in-r-building-data-driven-web-application-in-r.html#web-apps-in-r-building-data-driven-web-application-in-r" id="toc-web-apps-in-r-building-data-driven-web-application-in-r"><span class="toc-section-number">86.3</span> Web Apps in R: Building Data-Driven Web Application in R</a></li>
+<li><a href="86.4-web-apps-in-r-building-the-machine-learning-web-application-in-r.html#web-apps-in-r-building-the-machine-learning-web-application-in-r" id="toc-web-apps-in-r-building-the-machine-learning-web-application-in-r"><span class="toc-section-number">86.4</span> Web Apps in R: Building the Machine Learning Web Application in R</a></li>
+<li><a href="86.5-web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring.html#web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring" id="toc-web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring"><span class="toc-section-number">86.5</span> Web Apps in R: Build BMI Calculator web application in R for health monitoring</a></li>
+</ul></li>
+<li class="has-sub"><a href="87-shiny-overview.html#shiny-overview" id="toc-shiny-overview"><span class="toc-section-number">87</span> All the Shiny things</a>
+<ul>
+<li><a href="87.1-shiny-slides.html#shiny-slides" id="toc-shiny-slides"><span class="toc-section-number">87.1</span> Building Slides</a></li>
+<li class="has-sub"><a href="87.2-shiny-tutorial.html#shiny-tutorial" id="toc-shiny-tutorial"><span class="toc-section-number">87.2</span> Building Shiny apps</a>
+<ul>
+<li><a href="87.2-shiny-tutorial.html#shiny-tutorial-1" id="toc-shiny-tutorial-1"><span class="toc-section-number">87.2.1</span> Before we begin</a></li>
+<li><a href="87.2-shiny-tutorial.html#shiny-tutorial-2" id="toc-shiny-tutorial-2"><span class="toc-section-number">87.2.2</span> Shiny app basics</a></li>
+<li><a href="87.2-shiny-tutorial.html#shiny-tutorial-3" id="toc-shiny-tutorial-3"><span class="toc-section-number">87.2.3</span> Create an empty Shiny app</a></li>
+<li><a href="87.2-shiny-tutorial.html#shiny-tutorial-4" id="toc-shiny-tutorial-4"><span class="toc-section-number">87.2.4</span> Load the dataset</a></li>
+</ul></li>
+<li class="has-sub"><a href="87.3-shiny-tutorial-5.html#shiny-tutorial-5" id="toc-shiny-tutorial-5"><span class="toc-section-number">87.3</span> Build the basic UI</a>
+<ul>
+<li><a href="87.3-shiny-tutorial-5.html#add-plain-text-to-the-ui" id="toc-add-plain-text-to-the-ui"><span class="toc-section-number">87.3.1</span> Add plain text to the UI</a></li>
+<li><a href="87.3-shiny-tutorial-5.html#shiny-tutorial-6" id="toc-shiny-tutorial-6"><span class="toc-section-number">87.3.2</span> Add inputs to the UI</a></li>
+<li><a href="87.3-shiny-tutorial-5.html#shiny-tutorial-7" id="toc-shiny-tutorial-7"><span class="toc-section-number">87.3.3</span> Add placeholders for outputs</a></li>
+<li><a href="87.3-shiny-tutorial-5.html#output-for-a-table-summary-of-the-results" id="toc-output-for-a-table-summary-of-the-results"><span class="toc-section-number">87.3.4</span> Output for a table summary of the results</a></li>
+</ul></li>
+<li class="has-sub"><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-8" id="toc-shiny-tutorial-8"><span class="toc-section-number">87.4</span> Checkpoint: what our app looks like after implementing the UI</a>
+<ul>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-9" id="toc-shiny-tutorial-9"><span class="toc-section-number">87.4.1</span> Implement server logic to create outputs</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#building-the-plot-output" id="toc-building-the-plot-output"><span class="toc-section-number">87.4.2</span> Building the plot output</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-10" id="toc-shiny-tutorial-10"><span class="toc-section-number">87.4.3</span> Reactivity 101</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-11" id="toc-shiny-tutorial-11"><span class="toc-section-number">87.4.4</span> Using <code>uiOutput()</code> to create UI elements dynamically</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#use-uioutput-in-our-app-to-populate-the-countries" id="toc-use-uioutput-in-our-app-to-populate-the-countries"><span class="toc-section-number">87.4.5</span> Use <code>uiOutput()</code> in our app to populate the countries</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-12" id="toc-shiny-tutorial-12"><span class="toc-section-number">87.4.6</span> Final Shiny app code</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-13" id="toc-shiny-tutorial-13"><span class="toc-section-number">87.4.7</span> Share your app with the world</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#shiny-tutorial-14" id="toc-shiny-tutorial-14"><span class="toc-section-number">87.4.8</span> More Shiny features to check out</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#scoping-rules-in-shiny-apps" id="toc-scoping-rules-in-shiny-apps"><span class="toc-section-number">87.4.9</span> Scoping rules in Shiny apps</a></li>
+<li><a href="87.4-shiny-tutorial-8.html#add-images" id="toc-add-images"><span class="toc-section-number">87.4.10</span> Add images</a></li>
+</ul></li>
+<li><a href="87.5-shiny-tutorial-15.html#shiny-tutorial-15" id="toc-shiny-tutorial-15"><span class="toc-section-number">87.5</span> Ideas to improve our app</a></li>
+</ul></li>
+<li class="has-sub"><a href="88-shiny-resources.html#shiny-resources" id="toc-shiny-resources"><span class="toc-section-number">88</span> Shiny Resources</a>
+<ul>
+<li><a href="88.1-awesome-add-on-packages-to-shiny.html#awesome-add-on-packages-to-shiny" id="toc-awesome-add-on-packages-to-shiny"><span class="toc-section-number">88.1</span> Awesome add-on packages to Shiny</a></li>
+</ul></li>
+<li class="part"><span><b>XV Module 15</b></span></li>
+<li class="has-sub"><a href="89-special-topics-machine-learn.html#special-topics-machine-learn" id="toc-special-topics-machine-learn"><span class="toc-section-number">89</span> Special Topics: Machine, Learn!</a>
+<ul>
+<li><a href="89.1-module-materials-14.html#module-materials-14" id="toc-module-materials-14"><span class="toc-section-number">89.1</span> Module Materials</a></li>
+</ul></li>
+<li class="has-sub"><a href="90-neural-networks.html#neural-networks" id="toc-neural-networks"><span class="toc-section-number">90</span> Neural Networks!</a>
+<ul>
+<li><a href="90.1-what-is-a-neural-network.html#what-is-a-neural-network" id="toc-what-is-a-neural-network"><span class="toc-section-number">90.1</span> What is a Neural Network?</a></li>
+<li class="has-sub"><a href="90.2-how-does-it-learn.html#how-does-it-learn" id="toc-how-does-it-learn"><span class="toc-section-number">90.2</span> How does it learn?</a>
+<ul>
+<li><a href="90.2-how-does-it-learn.html#teaching-a.i.-to-play-my-game" id="toc-teaching-a.i.-to-play-my-game"><span class="toc-section-number">90.2.1</span> Teaching A.I. to Play My Game!</a></li>
+<li><a href="90.2-how-does-it-learn.html#stickman-a.i.-learns-to-walk" id="toc-stickman-a.i.-learns-to-walk"><span class="toc-section-number">90.2.2</span> Stickman A.I. Learns To Walk</a></li>
+</ul></li>
+</ul></li>
+<li><a href="91-natural-language-processing.html#natural-language-processing" id="toc-natural-language-processing"><span class="toc-section-number">91</span> Natural Language Processing</a></li>
+<li class="part"><span><b>Module Last</b></span></li>
+<li class="has-sub"><a href="dont-miss-the-last-module.html#dont-miss-the-last-module" id="toc-dont-miss-the-last-module">Don’t Miss The Last Module</a>
+<ul>
+<li><a href="91.1-important-wake-forest-stuff.html#important-wake-forest-stuff" id="toc-important-wake-forest-stuff"><span class="toc-section-number">91.1</span> Important Wake Forest Stuff</a></li>
+<li class="has-sub"><a href="91.2-what-next.html#what-next" id="toc-what-next"><span class="toc-section-number">91.2</span> What Next?</a>
+<ul>
+<li><a href="91.2-what-next.html#industry-transition-stories" id="toc-industry-transition-stories"><span class="toc-section-number">91.2.1</span> Industry Transition Stories</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>XVI R</b></span></li>
+<li><a href="92-r-workflow.html#r-workflow" id="toc-r-workflow"><span class="toc-section-number">92</span> R Workflow</a></li>
+<li class="has-sub"><a href="93-r-project-development.html#r-project-development" id="toc-r-project-development"><span class="toc-section-number">93</span> R Project Development</a>
+<ul>
+<li><a href="93.1-overview-1.html#overview-1" id="toc-overview-1"><span class="toc-section-number">93.1</span> Overview</a></li>
+<li><a href="93.2-create-a-new-r-project.html#create-a-new-r-project" id="toc-create-a-new-r-project"><span class="toc-section-number">93.2</span> Create a New R Project</a></li>
+<li><a href="93.3-navigate-between-projects.html#navigate-between-projects" id="toc-navigate-between-projects"><span class="toc-section-number">93.3</span> Navigate Between Projects</a></li>
+<li><a href="93.4-recommended-workflow.html#recommended-workflow" id="toc-recommended-workflow"><span class="toc-section-number">93.4</span> Recommended Workflow</a></li>
+<li><a href="93.5-your-turn.html#your-turn" id="toc-your-turn"><span class="toc-section-number">93.5</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="94-rmd-creation.html#rmd-creation" id="toc-rmd-creation"><span class="toc-section-number">94</span> Rmd Creation</a>
+<ul>
+<li><a href="94.1-create-a-new-document.html#create-a-new-document" id="toc-create-a-new-document"><span class="toc-section-number">94.1</span> Create a New Document</a></li>
+<li><a href="94.2-compile-the-document.html#compile-the-document" id="toc-compile-the-document"><span class="toc-section-number">94.2</span> Compile the Document</a></li>
+<li class="has-sub"><a href="94.3-document-types.html#document-types" id="toc-document-types"><span class="toc-section-number">94.3</span> Document Types</a>
+<ul>
+<li><a href="94.3-document-types.html#html" id="toc-html"><span class="toc-section-number">94.3.1</span> HTML</a></li>
+<li><a href="94.3-document-types.html#pdf" id="toc-pdf"><span class="toc-section-number">94.3.2</span> PDF</a></li>
+<li><a href="94.3-document-types.html#word" id="toc-word"><span class="toc-section-number">94.3.3</span> Word</a></li>
+<li><a href="94.3-document-types.html#templates" id="toc-templates"><span class="toc-section-number">94.3.4</span> Templates</a></li>
+<li><a href="94.3-document-types.html#other-types" id="toc-other-types"><span class="toc-section-number">94.3.5</span> Other Types</a></li>
+</ul></li>
+<li><a href="94.4-your-turn-1.html#your-turn-1" id="toc-your-turn-1"><span class="toc-section-number">94.4</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="95-basic-syntax.html#basic-syntax" id="toc-basic-syntax"><span class="toc-section-number">95</span> Basic Syntax</a>
+<ul>
+<li><a href="95.1-heading-text.html#heading-text" id="toc-heading-text"><span class="toc-section-number">95.1</span> Heading Text</a></li>
+<li><a href="95.2-plain-text.html#plain-text" id="toc-plain-text"><span class="toc-section-number">95.2</span> Plain Text</a></li>
+<li><a href="95.3-bold-and-italicized-text.html#bold-and-italicized-text" id="toc-bold-and-italicized-text"><span class="toc-section-number">95.3</span> <strong>Bold</strong> and <em>Italicized</em> Text</a></li>
+<li class="has-sub"><a href="95.4-lists.html#lists" id="toc-lists"><span class="toc-section-number">95.4</span> Lists</a>
+<ul>
+<li><a href="95.4-lists.html#unordered-lists" id="toc-unordered-lists"><span class="toc-section-number">95.4.1</span> Unordered Lists</a></li>
+<li><a href="95.4-lists.html#ordered-lists" id="toc-ordered-lists"><span class="toc-section-number">95.4.2</span> Ordered Lists</a></li>
+</ul></li>
+<li><a href="95.5-link-to-a-section.html#link-to-a-section" id="toc-link-to-a-section"><span class="toc-section-number">95.5</span> Link to a Section</a></li>
+<li><a href="95.6-hyperlink.html#hyperlink" id="toc-hyperlink"><span class="toc-section-number">95.6</span> Hyperlink</a></li>
+<li><a href="95.7-insert-images.html#insert-images" id="toc-insert-images"><span class="toc-section-number">95.7</span> Insert Images</a></li>
+<li><a href="95.8-tabbed-sections.html#tabbed-sections" id="toc-tabbed-sections"><span class="toc-section-number">95.8</span> Tabbed Sections</a></li>
+<li><a href="95.9-your-turn-2.html#your-turn-2" id="toc-your-turn-2"><span class="toc-section-number">95.9</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="96-lesson-4-yaml-headers.html#lesson-4-yaml-headers" id="toc-lesson-4-yaml-headers"><span class="toc-section-number">96</span> Lesson 4: YAML Headers</a>
+<ul>
+<li class="has-sub"><a href="sitemap.html#title" id="toc-title"><span class="toc-section-number">96.1</span> Title</a>
+<ul>
+<li><a href="96.1-title.html#subtitle" id="toc-subtitle"><span class="toc-section-number">96.1.1</span> Subtitle</a></li>
+</ul></li>
+<li><a href="96.2-authors.html#authors" id="toc-authors"><span class="toc-section-number">96.2</span> Author(s)</a></li>
+<li><a href="96.3-date.html#date" id="toc-date"><span class="toc-section-number">96.3</span> Date</a></li>
+<li class="has-sub"><a href="96.4-table-of-contents-toc.html#table-of-contents-toc" id="toc-table-of-contents-toc"><span class="toc-section-number">96.4</span> Table of Contents (TOC)</a>
+<ul>
+<li><a href="96.4-table-of-contents-toc.html#floating-table-of-contents-toc" id="toc-floating-table-of-contents-toc"><span class="toc-section-number">96.4.1</span> Floating Table of Contents (TOC)</a></li>
+</ul></li>
+<li><a href="96.5-themes.html#themes" id="toc-themes"><span class="toc-section-number">96.5</span> Themes</a></li>
+<li class="has-sub"><a href="96.6-code-folding.html#code-folding" id="toc-code-folding"><span class="toc-section-number">96.6</span> Code Folding</a>
+<ul>
+<li><a href="96.6-code-folding.html#example-without-code-folding" id="toc-example-without-code-folding"><span class="toc-section-number">96.6.1</span> Example without Code Folding</a></li>
+<li><a href="96.6-code-folding.html#examples-with-code-folding" id="toc-examples-with-code-folding"><span class="toc-section-number">96.6.2</span> Examples with Code Folding</a></li>
+</ul></li>
+<li><a href="96.7-output.html#output" id="toc-output"><span class="toc-section-number">96.7</span> output</a></li>
+<li><a href="96.8-custom-template.html#custom-template" id="toc-custom-template"><span class="toc-section-number">96.8</span> Custom Template</a></li>
+<li><a href="96.9-ymlthis.html#ymlthis" id="toc-ymlthis"><span class="toc-section-number">96.9</span> ymlthis</a></li>
+<li><a href="96.10-your-turn-3.html#your-turn-3" id="toc-your-turn-3"><span class="toc-section-number">96.10</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="97-lesson-5-code-chunks-and-inline-code.html#lesson-5-code-chunks-and-inline-code" id="toc-lesson-5-code-chunks-and-inline-code"><span class="toc-section-number">97</span> Lesson 5: Code Chunks and Inline Code</a>
+<ul>
+<li class="has-sub"><a href="97.1-code-chunks.html#code-chunks" id="toc-code-chunks"><span class="toc-section-number">97.1</span> Code Chunks</a>
+<ul>
+<li><a href="97.1-code-chunks.html#shortcuts" id="toc-shortcuts"><span class="toc-section-number">97.1.1</span> Shortcuts</a></li>
+<li><a href="97.1-code-chunks.html#options" id="toc-options"><span class="toc-section-number">97.1.2</span> Options</a></li>
+</ul></li>
+<li><a href="97.2-inline-code.html#inline-code" id="toc-inline-code"><span class="toc-section-number">97.2</span> Inline Code</a></li>
+<li><a href="97.3-your-turn-part-1.html#your-turn-part-1" id="toc-your-turn-part-1"><span class="toc-section-number">97.3</span> Your Turn (Part 1)</a></li>
+<li class="has-sub"><a href="97.4-interactive-features.html#interactive-features" id="toc-interactive-features"><span class="toc-section-number">97.4</span> Interactive Features</a>
+<ul>
+<li><a href="97.4-interactive-features.html#dt" id="toc-dt"><span class="toc-section-number">97.4.1</span> DT</a></li>
+<li><a href="97.4-interactive-features.html#plotly" id="toc-plotly"><span class="toc-section-number">97.4.2</span> Plotly</a></li>
+<li><a href="97.4-interactive-features.html#leaflet" id="toc-leaflet"><span class="toc-section-number">97.4.3</span> Leaflet</a></li>
+</ul></li>
+<li><a href="97.5-your-turn-part-2.html#your-turn-part-2" id="toc-your-turn-part-2"><span class="toc-section-number">97.5</span> Your Turn (Part 2)</a></li>
+</ul></li>
+<li class="has-sub"><a href="98-child-documents.html#child-documents" id="toc-child-documents"><span class="toc-section-number">98</span> Child Documents</a>
+<ul>
+<li class="has-sub"><a href="98.1-extract-and-run-r-code-from-r-markdown-files.html#extract-and-run-r-code-from-r-markdown-files" id="toc-extract-and-run-r-code-from-r-markdown-files"><span class="toc-section-number">98.1</span> Extract and Run R-Code from R Markdown Files</a>
+<ul>
+<li><a href="98.1-extract-and-run-r-code-from-r-markdown-files.html#r-code" id="toc-r-code"><span class="toc-section-number">98.1.1</span> R Code</a></li>
+</ul></li>
+<li><a href="98.2-your-turn-4.html#your-turn-4" id="toc-your-turn-4"><span class="toc-section-number">98.2</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="99-parameterized-reports.html#parameterized-reports" id="toc-parameterized-reports"><span class="toc-section-number">99</span> Parameterized Reports</a>
+<ul>
+<li><a href="99.1-params.html#params" id="toc-params"><span class="toc-section-number">99.1</span> params</a></li>
+<li><a href="99.2-knitting.html#knitting" id="toc-knitting"><span class="toc-section-number">99.2</span> Knitting</a></li>
+<li><a href="99.3-rmarkdownrender.html#rmarkdownrender" id="toc-rmarkdownrender"><span class="toc-section-number">99.3</span> rmarkdown::render()</a></li>
+<li><a href="99.4-your-turn-5.html#your-turn-5" id="toc-your-turn-5"><span class="toc-section-number">99.4</span> Your Turn</a></li>
+</ul></li>
+<li class="has-sub"><a href="thoughts-from-hadley-wickham-on-tidyverse.html#thoughts-from-hadley-wickham-on-tidyverse" id="toc-thoughts-from-hadley-wickham-on-tidyverse">Thoughts from Hadley Wickham on Tidyverse</a>
+<ul>
+<li><a href="99.5-dive-into-hadley-wickhams-tidyverse.html#dive-into-hadley-wickhams-tidyverse" id="toc-dive-into-hadley-wickhams-tidyverse"><span class="toc-section-number">99.5</span> Dive into Hadley Wickham’s Tidyverse</a></li>
+<li><a href="99.6-current-state-of-the-tidyverse-2020.html#current-state-of-the-tidyverse-2020" id="toc-current-state-of-the-tidyverse-2020"><span class="toc-section-number">99.6</span> Current State of the Tidyverse (2020)</a></li>
+</ul></li>
+<li class="part"><span><b>XVII Back Matter</b></span></li>
+<li class="has-sub"><a href="100-good-resources.html#good-resources" id="toc-good-resources"><span class="toc-section-number">100</span> Good Resources</a>
+<ul>
+<li><a href="100.1-cheatsheets.html#cheatsheets" id="toc-cheatsheets"><span class="toc-section-number">100.1</span> Cheatsheets</a></li>
+</ul></li>
+<li class="has-sub"><a href="101-media-without-a-home-yet.html#media-without-a-home-yet" id="toc-media-without-a-home-yet"><span class="toc-section-number">101</span> Media without a home yet</a>
+<ul>
+<li><a href="101.1-sips-resources.html#sips-resources" id="toc-sips-resources"><span class="toc-section-number">101.1</span> SIPS Resources</a></li>
+<li><a href="101.2-visualizing-linear-models-an-r-bag-of-tricks.html#visualizing-linear-models-an-r-bag-of-tricks" id="toc-visualizing-linear-models-an-r-bag-of-tricks"><span class="toc-section-number">101.2</span> Visualizing Linear Models: An R Bag of Tricks</a></li>
+<li><a href="101.3-for-new-programmers-learning-keyboard-shortcuts.html#for-new-programmers-learning-keyboard-shortcuts" id="toc-for-new-programmers-learning-keyboard-shortcuts"><span class="toc-section-number">101.3</span> For new programmers learning keyboard shortcuts…</a></li>
+<li><a href="101.4-are-you-a-student-if-yes-this-is-the-best-data-science-project-for-you.html#are-you-a-student-if-yes-this-is-the-best-data-science-project-for-you" id="toc-are-you-a-student-if-yes-this-is-the-best-data-science-project-for-you"><span class="toc-section-number">101.4</span> Are you a student? If yes, this is the best data science project for you!</a></li>
+<li><a href="101.5-rstudio-is-magic.html#rstudio-is-magic" id="toc-rstudio-is-magic"><span class="toc-section-number">101.5</span> rstudio is magic</a></li>
+<li><a href="101.6-automation-quote.html#automation-quote" id="toc-automation-quote"><span class="toc-section-number">101.6</span> automation quote</a></li>
+<li><a href="101.7-how-computer-memory-works.html#how-computer-memory-works" id="toc-how-computer-memory-works"><span class="toc-section-number">101.7</span> How computer memory works!</a></li>
+<li><a href="101.8-is-coding-a-math-skill-or-a-language-skill-neither-both.html#is-coding-a-math-skill-or-a-language-skill-neither-both" id="toc-is-coding-a-math-skill-or-a-language-skill-neither-both"><span class="toc-section-number">101.8</span> Is Coding a Math Skill or a Language Skill? Neither? Both?</a></li>
+<li><a href="101.9-quantum-computers-explained.html#quantum-computers-explained" id="toc-quantum-computers-explained"><span class="toc-section-number">101.9</span> Quantum Computers Explained!</a></li>
+<li><a href="101.10-the-rise-of-the-machines-why-automation-is-different-this-time.html#the-rise-of-the-machines-why-automation-is-different-this-time" id="toc-the-rise-of-the-machines-why-automation-is-different-this-time"><span class="toc-section-number">101.10</span> The Rise of the Machines – Why Automation is Different this Time</a></li>
+<li><a href="101.11-emergence-how-stupid-things-become-smart-together.html#emergence-how-stupid-things-become-smart-together" id="toc-emergence-how-stupid-things-become-smart-together"><span class="toc-section-number">101.11</span> Emergence – How Stupid Things Become Smart Together</a></li>
+<li><a href="101.12-how-not-to-ask-for-help.html#how-not-to-ask-for-help" id="toc-how-not-to-ask-for-help"><span class="toc-section-number">101.12</span> How not to ask for help</a></li>
+<li><a href="101.13-the-birthday-paradox.html#the-birthday-paradox" id="toc-the-birthday-paradox"><span class="toc-section-number">101.13</span> The Birthday Paradox</a></li>
+<li><a href="101.14-why-cant-you-divide-by-zero.html#why-cant-you-divide-by-zero" id="toc-why-cant-you-divide-by-zero"><span class="toc-section-number">101.14</span> Why can’t you divide by zero?</a></li>
+<li><a href="101.15-yea-hes-chewing-up-my-stats-homework-but-that-face-though.html#yea-hes-chewing-up-my-stats-homework-but-that-face-though" id="toc-yea-hes-chewing-up-my-stats-homework-but-that-face-though"><span class="toc-section-number">101.15</span> Yea he’s chewing up my stats homework but that face though…</a></li>
+<li><a href="101.16-coding-kitty.html#coding-kitty" id="toc-coding-kitty"><span class="toc-section-number">101.16</span> Coding Kitty</a></li>
+<li><a href="101.17-democratic-databases-science-on-github.html#democratic-databases-science-on-github" id="toc-democratic-databases-science-on-github"><span class="toc-section-number">101.17</span> Democratic databases: science on GitHub</a></li>
+<li><a href="101.18-ten-simple-rules-for-getting-started-on-twitter-as-a-scientist.html#ten-simple-rules-for-getting-started-on-twitter-as-a-scientist" id="toc-ten-simple-rules-for-getting-started-on-twitter-as-a-scientist"><span class="toc-section-number">101.18</span> Ten simple rules for getting started on Twitter as a scientist</a></li>
+<li><a href="101.19-nyt-data-ethics-stuff.html#nyt-data-ethics-stuff" id="toc-nyt-data-ethics-stuff"><span class="toc-section-number">101.19</span> NYT data ethics stuff</a></li>
+<li><a href="101.20-section.html#section" id="toc-section"><span class="toc-section-number">101.20</span> </a></li>
+</ul></li>
+<li class="has-sub"><a href="public-health.html#public-health" id="toc-public-health">Public Health</a>
+<ul>
+<li><a href="crowns-and-tears-a-covid-19-visualization-with-a-music-box-and-punch-cards.html#crowns-and-tears-a-covid-19-visualization-with-a-music-box-and-punch-cards" id="toc-crowns-and-tears-a-covid-19-visualization-with-a-music-box-and-punch-cards">Crowns and Tears: A Covid-19 visualization with a Music Box and punch cards</a></li>
+<li><a href="masks.html#masks" id="toc-masks">Masks</a></li>
+<li class="has-sub"><a href="dashboards.html#dashboards" id="toc-dashboards">Dashboards</a>
+<ul>
+<li><a href="dashboards.html#wake-forest" id="toc-wake-forest">Wake Forest</a></li>
+<li><a href="dashboards.html#north-carolina" id="toc-north-carolina">North Carolina</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references" id="toc-references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="mason-notes" class="section level2 unnumbered">
+<h2>Mason Notes</h2>
+<p>This website is constantly changing. I am actively developing this course, and is approximately 91.9% done. I have made this process explicitly transparent because I want you to see how you can use R to produce some pretty neat things. Indeed, I’ve included the source code for this website in the class <a href="https://github.com/DataScience4Psych">repo</a>. I encourage you to contribute to the <a href="https://github.com/DataScience4Psych/DataScience4Psych">course code</a>. If you catch typos or errors, please issue a pull request with the fixes. If you find cool or useful resources, please add them. By the end of the semester, I would love for everyone to have contributed to the course materials.</p>
+<div id="how-to-use-these-notes" class="section level3 unnumbered">
+<h3>How to use these notes</h3>
+<p>To navigate these course notes, use the table of contents on the left side of the screen. You can open or close the table of contents using the hamburger icon (horizontal bars) at the top of the document. There are also additional icons at the top of the document that allow you to search the document, change the size, font, or color scheme of the page. The document will be updated (unpredictably) throughout the semester.</p>
+<p>Every module corresponds to a week’s worth of material. Most modules are dedicated to improving a specific skill or at the very least dedicated to a specific theme. Within each module, there are embedded videos, slides, activities, labs, and tutorials. The skills developed in each module build upon skills you’ve developed in previous modules. Eventually, this class will have more modules available than weeks in a semester, so that you – the reader – can choose your own adventure (err… module) you’d like to start with.</p>
+<p>Although these notes have some textbook-like features, they are neither comprehensive nor completely original. The main purpose is to give you all a set of common materials to draw upon during the course. In class, we will sometimes do things outside the notes. The idea here is that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them.</p>
+</div>
+<div id="status-of-course" class="section level3 unnumbered">
+<h3>Status of course</h3>
+<p>In terms of timing, I will have each module completed by the start of the week. Given that the class meets on Tuesday and Thursday, the start of the “week” will be Monday at 12 p.m. EST. I may get ahead of this deadline. You can see the current status of the course below. Although you are welcome to work ahead, be aware that I will be making changes to modules that haven’t officially started yet. In addition, I may add optional materials to previous modules that might be helpful.</p>
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/fwJHNw9jU_U" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<p>This table provides the current status of the course. It lists proportions of specific components by module. Overall, it is 91.912% complete.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d0e8ecb41e77ce0c8963" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d0e8ecb41e77ce0c8963">{"x":{"filter":"none","vertical":false,"data":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0.5,0.5,null],[null,1,1,1,1,1,1,1,1,1,1,1,1,0,null,null,null],[1,1,1,1,1,1,1,1,1,0.5,1,1,1,1,0,0,null],[null,1,1,1,1,1,null,1,1,null,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,0.875,1,1,1,0.75,0.5,0.5,1]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>Module<\/th>\n      <th>Slides<\/th>\n      <th>Lab<\/th>\n      <th>Videos<\/th>\n      <th>Application<\/th>\n      <th>Lecture Notes<\/th>\n      <th>Status<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[0,1,2,3,4,5,6]}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<!-- </div> -->
+<p style="text-align: center;">
+<a href="index.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/DataScience4Psych/DataScience4Psych/edit/main/0000_front.Rmd"><button class="btn btn-default">Edit</button></a>
+<a href="attribution.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
