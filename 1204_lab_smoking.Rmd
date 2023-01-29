@@ -13,13 +13,13 @@ options(
 knitr::opts_chunk$set(eval = TRUE)
 ```
 
-In 2004, the state of North Carolina released a large data set containing information on births recorded in this state. This data set is useful to researchers studying the relation between habits and practices of expectant mothers and the birth of their children. We will work with a random sample of observations from this data set.
+In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers' habits and practices and their child's birth. In this lab, we'll be exploring a randomly selected subset of the data.
 
 ## Getting started
 
 ### Packages
 
-In this lab we will work with the **tidyverse**, **infer**, and **openintro** packages. We can install and load them with the following:
+In this lab, we will work with the **tidyverse**, **infer**, and **openintro** packages. We can install and load them with the following code:
 
 ```{r load-packages, message=FALSE}
 library(tidyverse) 
@@ -39,7 +39,6 @@ Update the name of your project to match the lab's title.
 
 ## Warm up
 
-
 Before we introduce the data, let's warm up with some simple exercises.
 
 ### YAML
@@ -56,7 +55,8 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ## Set a seed!
 
-In this lab, we'll be generating random samples. The last thing you want is those samples to change every time you knit your document. So, you should set a seed. There's an R chunk in your R Markdown file set aside for this. Locate it and add a seed.
+In this lab, we'll be generating random samples. To ensure consistency, it's crucial to set a seed before generating the samples. Otherwise, the data will change each time you knit your lab. You can do set your seed by locating the designated R chunk in your R Markdown file and adding the seed value there.
+
 
 ## The data
 
@@ -66,8 +66,7 @@ Load the `ncbirths` data from the `openintro` package:
 data(ncbirths)
 ```
 
-We have observations on 13 different variables, some categorical and some 
-numerical. The meaning of each variable is as follows.
+We have observations on 13 different variables, some categorical and some numerical. The meaning of each variable is provided in the following table.
 
 variable         | description
 ---------------- | ---------------------------------------------
@@ -89,7 +88,7 @@ variable         | description
 
 1.  What are the cases in this data set? How many cases are there in our sample?
 
-The first step in the analysis of a new dataset is getting acquainted with the data. Make summaries of the variables in your dataset, determine  which variables are  categorical and which are numerical. For numerical variables, are there outliers? If you aren't sure or want to take a closer look at the data, make a graph.
+Before analyzing any new dataset, it's important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren't sure or want to take a closer look at the data, create a graph.
 
 ### Baby weights
 
@@ -105,9 +104,9 @@ Our null hypothesis should state "there is nothing going on", i.e. no change sin
 
 Our alternative hypothesis should reflect the research question, i.e. some change since 1995. Since the research question doesn't state a direction for the change, we use a two sided alternative hypothesis: $H_A: \mu \ne 7.43~pounds$.
 
-3. Create a filtered data frame called `ncbirths_white` that contain data only from white mothers. Then, calculate the mean of the weights of their babies.
+2. Create a filtered data frame called `ncbirths_white` that contain data only from white mothers. Then, calculate the mean of the weights of their babies.
 
-4. Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.
+3. Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.
 
 Let's discuss how this test would work. Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds. In order to do so, we 
 
@@ -117,15 +116,15 @@ Let's discuss how this test would work. Our goal is to simulate a null distribut
 - shift this distribution to be centered at the null value by subtracting / adding X to all boostrap mean (X = difference between mean of bootstrap distribution and null value), and
 - calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.
 
-5. Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
+4. Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
 
 ### Baby weight vs. smoking
 
 Consider the possible relationship between a mother's smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps  us quickly visualize trends, identify strong associations, and develop research questions.
 
-6.  Make side-by-side boxplots displaying the relationship between `habit` and `weight`. What does the plot highlight about the relationship between these two variables?
+5.  Make side-by-side boxplots displaying the relationship between `habit` and `weight`. What does the plot highlight about the relationship between these two variables?
 
-7. Before moving forward, save a version of the dataset omitting observations where there are NAs for `habit`. You can call this version `ncbirths_habitgiven`.
+6. Before moving forward, save a version of the dataset omitting observations where there are NAs for `habit`. You can call this version `ncbirths_habitgiven`.
 
 The box plots show how the medians of the two distributions compare, but we can also compare the means of the distributions using the following to first group the data by the `habit` variable, and then calculate the mean`weight` in these groups using.
 
@@ -137,23 +136,23 @@ ncbirths_habitgiven %>%
 
 There is an observed difference, but is this difference statistically significant? In order to answer this question, we will conduct a hypothesis test.
 
-8. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.
+7. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.
 
-9. Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.
+8. Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.
 
-10. Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
+9. Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
 
-11. Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.
+10. Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.
 
 ### Baby weight vs. mother's age
  
 In this portion of the analysis, we focus on two variables. The first one is `maturemom`.
 
-12. First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.
+11. First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.
 
 The other variable of interest is `lowbirthweight`.
 
-13. Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. State the hypotheses, verify the conditions, run the test and calculate the p-value, and state your conclusion in context of the research question. Use $\alpha = 0.05$. If you find a significant difference, construct a confidence interval, at the equivalent level to the hypothesis test, for the difference between the proportions of low birth weight babies between mature and younger moms, and interpret this interval in context of the data.
+12. Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. State the hypotheses, verify the conditions, run the test and calculate the p-value, and state your conclusion in context of the research question. Use $\alpha = 0.05$. If you find a significant difference, construct a confidence interval, at the equivalent level to the hypothesis test, for the difference between the proportions of low birth weight babies between mature and younger moms, and interpret this interval in context of the data.
 
 
 ```{r links, child="admin/md/courselinks.md"}
