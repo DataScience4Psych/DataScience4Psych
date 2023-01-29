@@ -21,7 +21,7 @@ message("No OMDb key available. Code chunks will not be evaluated.")
 
 ## Interacting with an API
 
-In Chapter \@ref(api-wrappers) we experimented with several packages that "wrapped" APIs.  That is, they handled the creation of the request and the formatting of the output. In this chapter we're going to look at (part of) what these functions were doing.
+Earlier, we experimented with several packages that "wrapped" APIs.  They handle request creation and output formatting. In this section, we're going to look at (part of) what these functions were doing.
 
 ### Load the tidyverse
 
@@ -33,7 +33,7 @@ library(tidyverse)
 
 ### Examine the structure of API requests using the Open Movie Database
 
-First we're going to examine the structure of API requests via the [Open Movie Database](http://www.omdbapi.com/) (OMDb). OMDb is very similar to IMDb, except it has a nice, simple API. We can go to the website, input some search parameters, and obtain both the XML query and the response from it. 
+First, we're going to examine the structure of API requests using the [Open Movie Database](http://www.omdbapi.com/) (OMDb). OMDb is similar to IMDb but has a simpler API.  We can go to the website, input some search parameters, and obtain both the XML query and the response from it. 
 
 <!--TODO: Will frequently get an "Error: Daily request limit reached" message when using the demo. Seems to be an issue on their end: https://github.com/omdbapi/OMDb-API/issues/124 Maybe remove this exercise from the chapter to avoid problems?-->
 
@@ -152,7 +152,7 @@ options("this_is_my_key" = XXXX)
 key <- getOption("this_is_my_key")
 ```
 
-This is a simple means to keep your keys private, especially if you are sharing the same authentication across several projects.
+This approach is a simple way to keep your keys private, especially when sharing authentication across multiple projects.
 
 
 #### A few timely reminders about your `.Rprofile`
@@ -178,7 +178,7 @@ request <- glue::glue("http://www.omdbapi.com/?t=Interstellar&y=2014&plot=short&
 request
 ```
 
-This works, but it only works for movie titled `Interstellar` from 2014 where we want the short plot and the XML format. Let's try to pull out more variables and paste them in with `glue`:
+This code works, but it only works for a movie titled `Interstellar` from `2014` where we want the `short` plot in an `XML` format. Let's try to pull out more variables and paste them in with `glue`:
 
 ```{r}
 glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&apikey={api_key}",
@@ -189,7 +189,7 @@ glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&ap
            api_key = movie_key)
 ```
 
-We could go even further and make this into a function called `omdb()` that we can reuse more easily.
+We could go even further and make this code into a function called `omdb()` that we can reuse more easily.
 
 ```{r}
 omdb <- function(title, year, plot, format, api_key) {
