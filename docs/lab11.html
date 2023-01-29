@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-27" />
+<meta name="date" content="2023-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1445,13 +1445,13 @@ div.csl-indent {
 <h1><span class="header-section-number">77</span> Lab: So what if you smoke when pregnant?<a href="lab11.html#lab11" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="simulation-based-inference" class="section level2 hasAnchor" number="77.1">
 <h2><span class="header-section-number">77.1</span> Simulation based inference<a href="lab11.html#simulation-based-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In 2004, the state of North Carolina released a large data set containing information on births recorded in this state. This data set is useful to researchers studying the relation between habits and practices of expectant mothers and the birth of their children. We will work with a random sample of observations from this data set.</p>
+<p>In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers’ habits and practices and their child’s birth. In this lab, we’ll be exploring a randomly selected subset of the data.</p>
 </div>
 <div id="getting-started-10" class="section level2 hasAnchor" number="77.2">
 <h2><span class="header-section-number">77.2</span> Getting started<a href="lab11.html#getting-started-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="packages-11" class="section level3 hasAnchor" number="77.2.1">
 <h3><span class="header-section-number">77.2.1</span> Packages<a href="lab11.html#packages-11" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this lab we will work with the <strong>tidyverse</strong>, <strong>infer</strong>, and <strong>openintro</strong> packages. We can install and load them with the following:</p>
+<p>In this lab, we will work with the <strong>tidyverse</strong>, <strong>infer</strong>, and <strong>openintro</strong> packages. We can install and load them with the following code:</p>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="lab11.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
 <span id="cb460-2"><a href="lab11.html#cb460-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
 <span id="cb460-3"><a href="lab11.html#cb460-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
@@ -1487,14 +1487,13 @@ div.csl-indent {
 </div>
 <div id="set-a-seed" class="section level2 hasAnchor" number="77.5">
 <h2><span class="header-section-number">77.5</span> Set a seed!<a href="lab11.html#set-a-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this lab, we’ll be generating random samples. The last thing you want is those samples to change every time you knit your document. So, you should set a seed. There’s an R chunk in your R Markdown file set aside for this. Locate it and add a seed.</p>
+<p>In this lab, we’ll be generating random samples. To ensure consistency, it’s crucial to set a seed before generating the samples. Otherwise, the data will change each time you knit your lab. You can do set your seed by locating the designated R chunk in your R Markdown file and adding the seed value there.</p>
 </div>
 <div id="the-data-5" class="section level2 hasAnchor" number="77.6">
 <h2><span class="header-section-number">77.6</span> The data<a href="lab11.html#the-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the <code>ncbirths</code> data from the <code>openintro</code> package:</p>
 <div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="lab11.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ncbirths)</span></code></pre></div>
-<p>We have observations on 13 different variables, some categorical and some
-numerical. The meaning of each variable is as follows.</p>
+<p>We have observations on 13 different variables, some categorical and some numerical. The meaning of each variable is provided in the following table.</p>
 <table>
 <colgroup>
 <col width="26%" />
@@ -1567,7 +1566,7 @@ numerical. The meaning of each variable is as follows.</p>
 <ol style="list-style-type: decimal">
 <li>What are the cases in this data set? How many cases are there in our sample?</li>
 </ol>
-<p>The first step in the analysis of a new dataset is getting acquainted with the data. Make summaries of the variables in your dataset, determine which variables are categorical and which are numerical. For numerical variables, are there outliers? If you aren’t sure or want to take a closer look at the data, make a graph.</p>
+<p>Before analyzing any new dataset, it’s important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren’t sure or want to take a closer look at the data, create a graph.</p>
 <div id="baby-weights" class="section level3 hasAnchor" number="77.7.1">
 <h3><span class="header-section-number">77.7.1</span> Baby weights<a href="lab11.html#baby-weights" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <blockquote>
@@ -1577,7 +1576,7 @@ numerical. The meaning of each variable is as follows.</p>
 <p>We want to evaluate whether the average weight of Caucasian babies has changed since 1995.</p>
 <p>Our null hypothesis should state “there is nothing going on”, i.e. no change since 1995: <span class="math inline">\(H_0: \mu = 7.43~pounds\)</span>.</p>
 <p>Our alternative hypothesis should reflect the research question, i.e. some change since 1995. Since the research question doesn’t state a direction for the change, we use a two sided alternative hypothesis: <span class="math inline">\(H_A: \mu \ne 7.43~pounds\)</span>.</p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="2" style="list-style-type: decimal">
 <li><p>Create a filtered data frame called <code>ncbirths_white</code> that contain data only from white mothers. Then, calculate the mean of the weights of their babies.</p></li>
 <li><p>Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.</p></li>
 </ol>
@@ -1589,23 +1588,23 @@ numerical. The meaning of each variable is as follows.</p>
 <li>shift this distribution to be centered at the null value by subtracting / adding X to all boostrap mean (X = difference between mean of bootstrap distribution and null value), and</li>
 <li>calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.</li>
 </ul>
-<ol start="5" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li>Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in context of the data and the hypothesis test.</li>
 </ol>
 </div>
 <div id="baby-weight-vs.-smoking" class="section level3 hasAnchor" number="77.7.2">
 <h3><span class="header-section-number">77.7.2</span> Baby weight vs. smoking<a href="lab11.html#baby-weight-vs.-smoking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider the possible relationship between a mother’s smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.</p>
-<ol start="6" style="list-style-type: decimal">
-<li><p>Make side-by-side boxplots displaying the relationship between <code>habit</code> and <code>weight</code>. What does the plot highlight about the relationship between these two variables?</p></li>
-<li><p>Before moving forward, save a version of the dataset omitting observations where there are NAs for <code>habit</code>. You can call this version <code>ncbirths_habitgiven</code>.</p></li>
+<p>Consider the relationship between a mother’s smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.</p>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Make side-by-side box plots displaying the relationship between <code>habit</code> and <code>weight</code>. What does the plot highlight about the relationship between these two variables?</p></li>
+<li><p>Before continuing, create a cleaned version of the dataset by removing any observations with NAs in the <code>habit</code> column. Name this version <code>ncbirths_habitgiven</code>.</p></li>
 </ol>
-<p>The box plots show how the medians of the two distributions compare, but we can also compare the means of the distributions using the following to first group the data by the <code>habit</code> variable, and then calculate the mean<code>weight</code> in these groups using.</p>
+<p>We can use these box plots to visualize the difference in medians. We can also compare the means of the distributions by grouping the data according to the <code>habit</code> variable and then calculating the mean <code>weight</code> for each group using the following code:</p>
 <div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="lab11.html#cb462-1" aria-hidden="true" tabindex="-1"></a>ncbirths_habitgiven <span class="sc">%&gt;%</span></span>
 <span id="cb462-2"><a href="lab11.html#cb462-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
 <span id="cb462-3"><a href="lab11.html#cb462-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
-<p>There is an observed difference, but is this difference statistically significant? In order to answer this question, we will conduct a hypothesis test.</p>
-<ol start="8" style="list-style-type: decimal">
+<p>We can see that there’s an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.</p>
+<ol start="7" style="list-style-type: decimal">
 <li><p>Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.</p></li>
 <li><p>Are the conditions necessary for conducting simulation based inference satisfied? Explain your reasoning.</p></li>
 <li><p>Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.</p></li>
@@ -1615,12 +1614,21 @@ numerical. The meaning of each variable is as follows.</p>
 <div id="baby-weight-vs.-mothers-age" class="section level3 hasAnchor" number="77.7.3">
 <h3><span class="header-section-number">77.7.3</span> Baby weight vs. mother’s age<a href="lab11.html#baby-weight-vs.-mothers-age" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this portion of the analysis, we focus on two variables. The first one is <code>maturemom</code>.</p>
-<ol start="12" style="list-style-type: decimal">
+<ol start="11" style="list-style-type: decimal">
 <li>First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.</li>
 </ol>
 <p>The other variable of interest is <code>lowbirthweight</code>.</p>
+<ol start="12" style="list-style-type: decimal">
+<li>Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. Use <span class="math inline">\(\alpha = 0.05\)</span>.</li>
+</ol>
+<ul>
+<li>State the hypotheses</li>
+<li>Verify the conditions</li>
+<li>Run the test and calculate the p-value</li>
+<li>State your conclusion within context of the research question</li>
+</ul>
 <ol start="13" style="list-style-type: decimal">
-<li>Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. State the hypotheses, verify the conditions, run the test and calculate the p-value, and state your conclusion in context of the research question. Use <span class="math inline">\(\alpha = 0.05\)</span>. If you find a significant difference, construct a confidence interval, at the equivalent level to the hypothesis test, for the difference between the proportions of low birth weight babies between mature and younger moms, and interpret this interval in context of the data.</li>
+<li>Calculate a confidence interval for the difference between the proportions of low birth weight babies between mature and younger mothers. Interpret the interval in the context of the data and explain what it means.</li>
 </ol>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->

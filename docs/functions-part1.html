@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-27" />
+<meta name="date" content="2023-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1443,7 +1443,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="functions-part1" class="section level1 hasAnchor" number="53">
 <h1><span class="header-section-number">53</span> Write your own R functions<a href="functions-part1.html#functions-part1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>These notes are adapted from Jenny Bryan’s stat545.</p>
+<p>I’ve adapted these notes from Jenny Bryan’s stat545.</p>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->
 <!--AE Links-->
@@ -1515,7 +1515,7 @@ Figure 53.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viabl
 </div>
 <div id="turn-the-working-interactive-code-into-a-function" class="section level2 hasAnchor" number="53.5">
 <h2><span class="header-section-number">53.5</span> Turn the working interactive code into a function<a href="functions-part1.html#turn-the-working-interactive-code-into-a-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Add NO new functionality! Just write your very first R function.</p>
+<p>Add NO new functionality! Just write your very simple R function.</p>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="functions-part1.html#cb315-1" aria-hidden="true" tabindex="-1"></a>max_minus_min <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)</span>
 <span id="cb315-2"><a href="functions-part1.html#cb315-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb315-3"><a href="functions-part1.html#cb315-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max_minus_min</span>(gapminder<span class="sc">$</span>lifeExp)</span>
@@ -1636,7 +1636,7 @@ Figure 53.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viabl
 </div>
 <div id="where-were-we-where-are-we-going" class="section level2 hasAnchor" number="53.9">
 <h2><span class="header-section-number">53.9</span> Where were we? Where are we going?<a href="functions-part1.html#where-were-we-where-are-we-going" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In <a href="functions-part1.html#functions-part1">part 1</a> we wrote our first R function to compute the difference between the max and min of a numeric vector. We checked the validity of the function’s only argument and, informally, we verified that it worked pretty well.</p>
+<p>In <a href="functions-part1.html#functions-part1">part 1</a> we wrote our simple R function to compute the difference between the max and min of a numeric vector. We checked the validity of the function’s only argument and, informally, we verified that it worked pretty well.</p>
 <p>In this part, we generalize this function, learn more technical details about R functions, and set default values for some arguments.</p>
 </div>
 <div id="load-the-gapminder-data-1" class="section level2 hasAnchor" number="53.10">
@@ -1723,7 +1723,7 @@ Figure 53.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viabl
 <span id="cb328-5"><a href="functions-part1.html#cb328-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb328-6"><a href="functions-part1.html#cb328-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qdiff2</span>(<span class="at">zeus =</span> gapminder<span class="sc">$</span>lifeExp, <span class="at">hera =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>)</span>
 <span id="cb328-7"><a href="functions-part1.html#cb328-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 59</span></span></code></pre></div>
-<p>While I can name my arguments after Greek gods, it’s usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names. Future you will thank you.</p>
+<p>Although I can name my arguments after Greek gods, it’s usually a bad idea. Take all opportunities to make things more self-explanatory via meaningful names. Future you will thank you.</p>
 <p>If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I’ve been doing all along and now you know why:</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="functions-part1.html#cb329-1" aria-hidden="true" tabindex="-1"></a>qdiff1</span>
 <span id="cb329-2"><a href="functions-part1.html#cb329-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function(x, probs) {</span></span>
@@ -1731,7 +1731,7 @@ Figure 53.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viabl
 <span id="cb329-4"><a href="functions-part1.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x = x, probs = probs)</span></span>
 <span id="cb329-5"><a href="functions-part1.html#cb329-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
 <span id="cb329-6"><a href="functions-part1.html#cb329-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
-<span id="cb329-7"><a href="functions-part1.html#cb329-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x00000218286df5e8&gt;</span></span></code></pre></div>
+<span id="cb329-7"><a href="functions-part1.html#cb329-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x0000014cc08b7fb0&gt;</span></span></code></pre></div>
 <p>We took this detour so you could see there is no <em>structural</em> relationship between my arguments (<code>x</code> and <code>probs</code>) and those of <code>quantile()</code> (also <code>x</code> and <code>probs</code>). The similarity or equivalence of the names <strong>accomplishes nothing</strong> as far as R is concerned; it is solely for the benefit of humans reading, writing, and using the code. Which is very important!</p>
 </div>
 <div id="what-a-function-returns" class="section level2 hasAnchor" number="53.16">
@@ -1778,7 +1778,7 @@ Figure 53.1: From <a href="https://blog.fastmonkeys.com/2014/06/18/minimum-viabl
 <span id="cb335-4"><a href="functions-part1.html#cb335-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   the_quantiles &lt;- quantile(x, probs)</span></span>
 <span id="cb335-5"><a href="functions-part1.html#cb335-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   max(the_quantiles) - min(the_quantiles)</span></span>
 <span id="cb335-6"><a href="functions-part1.html#cb335-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; }</span></span>
-<span id="cb335-7"><a href="functions-part1.html#cb335-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x000002181eeaf778&gt;</span></span></code></pre></div>
+<span id="cb335-7"><a href="functions-part1.html#cb335-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x0000014cbd9fc378&gt;</span></span></code></pre></div>
 <p>What we’ve accomplished:</p>
 <ul>
 <li>We’ve generalized our first function to take a difference between arbitrary quantiles.</li>
