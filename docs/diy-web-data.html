@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2023-01-29" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1449,7 +1449,7 @@ div.csl-indent {
 <!--Original author: Andrew MacDonald-->
 <div id="interacting-with-an-api" class="section level2 hasAnchor" number="48.1">
 <h2><span class="header-section-number">48.1</span> Interacting with an API<a href="diy-web-data.html#interacting-with-an-api" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In Chapter <a href="api-wrappers.html#api-wrappers">47</a> we experimented with several packages that “wrapped” APIs. That is, they handled the creation of the request and the formatting of the output. In this chapter we’re going to look at (part of) what these functions were doing.</p>
+<p>Earlier, we experimented with several packages that “wrapped” APIs. They handle request creation and output formatting. In this section, we’re going to look at (part of) what these functions were doing.</p>
 <div id="load-the-tidyverse-2" class="section level3 hasAnchor" number="48.1.1">
 <h3><span class="header-section-number">48.1.1</span> Load the tidyverse<a href="diy-web-data.html#load-the-tidyverse-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will be using the functions from the <a href="https://www.tidyverse.org">tidyverse</a> throughout this chapter, so go ahead and load tidyverse package now.</p>
@@ -1457,7 +1457,7 @@ div.csl-indent {
 </div>
 <div id="examine-the-structure-of-api-requests-using-the-open-movie-database" class="section level3 hasAnchor" number="48.1.2">
 <h3><span class="header-section-number">48.1.2</span> Examine the structure of API requests using the Open Movie Database<a href="diy-web-data.html#examine-the-structure-of-api-requests-using-the-open-movie-database" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>First we’re going to examine the structure of API requests via the <a href="http://www.omdbapi.com/">Open Movie Database</a> (OMDb). OMDb is very similar to IMDb, except it has a nice, simple API. We can go to the website, input some search parameters, and obtain both the XML query and the response from it.</p>
+<p>First, we’re going to examine the structure of API requests using the <a href="http://www.omdbapi.com/">Open Movie Database</a> (OMDb). OMDb is similar to IMDb but has a simpler API. We can go to the website, input some search parameters, and obtain both the XML query and the response from it.</p>
 <!--TODO: Will frequently get an "Error: Daily request limit reached" message when using the demo. Seems to be an issue on their end: https://github.com/omdbapi/OMDb-API/issues/124 Maybe remove this exercise from the chapter to avoid problems?-->
 <p><strong>Exercise:</strong> determine the shape of an API request. Scroll down to the <a href="http://www.omdbapi.com/#examples">“Examples” section</a> on the OMDb site and play around with the parameters. Take a look at the resulting API call and the query you get back.</p>
 <p>If we enter the following parameters:</p>
@@ -1525,7 +1525,7 @@ div.csl-indent {
 <span id="cb278-2"><a href="diy-web-data.html#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">&quot;this_is_my_key&quot;</span> <span class="ot">=</span> XXXX)</span>
 <span id="cb278-3"><a href="diy-web-data.html#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="do">## later, in the R script:</span></span>
 <span id="cb278-4"><a href="diy-web-data.html#cb278-4" aria-hidden="true" tabindex="-1"></a>key <span class="ot">&lt;-</span> <span class="fu">getOption</span>(<span class="st">&quot;this_is_my_key&quot;</span>)</span></code></pre></div>
-<p>This is a simple means to keep your keys private, especially if you are sharing the same authentication across several projects.</p>
+<p>This approach is a simple way to keep your keys private, especially when sharing authentication across multiple projects.</p>
 </div>
 <div id="a-few-timely-reminders-about-your-.rprofile" class="section level4 hasAnchor" number="48.1.3.2">
 <h4><span class="header-section-number">48.1.3.2</span> A few timely reminders about your <code>.Rprofile</code><a href="diy-web-data.html#a-few-timely-reminders-about-your-.rprofile" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1544,14 +1544,14 @@ div.csl-indent {
 <p>How can we recreate the same request URLs in R? We could use the <a href="https://glue.tidyverse.org/"><code>glue</code> package</a> to paste together the base URL, parameter labels, and parameter values:</p>
 <div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="diy-web-data.html#cb280-1" aria-hidden="true" tabindex="-1"></a>request <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;http://www.omdbapi.com/?t=Interstellar&amp;y=2014&amp;plot=short&amp;r=xml&amp;apikey={movie_key}&quot;</span>)</span>
 <span id="cb280-2"><a href="diy-web-data.html#cb280-2" aria-hidden="true" tabindex="-1"></a>request</span></code></pre></div>
-<p>This works, but it only works for movie titled <code>Interstellar</code> from 2014 where we want the short plot and the XML format. Let’s try to pull out more variables and paste them in with <code>glue</code>:</p>
+<p>This code works, but it only works for a movie titled <code>Interstellar</code> from <code>2014</code> where we want the <code>short</code> plot in an <code>XML</code> format. Let’s try to pull out more variables and paste them in with <code>glue</code>:</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="diy-web-data.html#cb281-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;http://www.omdbapi.com/?t={title}&amp;y={year}&amp;plot={plot}&amp;r={format}&amp;apikey={api_key}&quot;</span>,</span>
 <span id="cb281-2"><a href="diy-web-data.html#cb281-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">&quot;Interstellar&quot;</span>,</span>
 <span id="cb281-3"><a href="diy-web-data.html#cb281-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year =</span> <span class="st">&quot;2014&quot;</span>,</span>
 <span id="cb281-4"><a href="diy-web-data.html#cb281-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">plot =</span> <span class="st">&quot;short&quot;</span>,</span>
 <span id="cb281-5"><a href="diy-web-data.html#cb281-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">&quot;xml&quot;</span>,</span>
 <span id="cb281-6"><a href="diy-web-data.html#cb281-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">api_key =</span> movie_key)</span></code></pre></div>
-<p>We could go even further and make this into a function called <code>omdb()</code> that we can reuse more easily.</p>
+<p>We could go even further and make this code into a function called <code>omdb()</code> that we can reuse more easily.</p>
 <div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="diy-web-data.html#cb282-1" aria-hidden="true" tabindex="-1"></a>omdb <span class="ot">&lt;-</span> <span class="cf">function</span>(title, year, plot, format, api_key) {</span>
 <span id="cb282-2"><a href="diy-web-data.html#cb282-2" aria-hidden="true" tabindex="-1"></a>  glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;http://www.omdbapi.com/?t={title}&amp;y={year}&amp;plot={plot}&amp;r={format}&amp;apikey={api_key}&quot;</span>)</span>
 <span id="cb282-3"><a href="diy-web-data.html#cb282-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
