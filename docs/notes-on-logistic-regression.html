@@ -1459,32 +1459,32 @@ div.csl-indent {
 <li>Outcome: whether the email is spam or not</li>
 <li>Predictors: number of characters, whether the email had “Re:” in the subject, time at which email was sent, number of times the word “inherit” shows up in the email, etc.</li>
 </ul>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="notes-on-logistic-regression.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openintro)</span>
-<span id="cb400-2"><a href="notes-on-logistic-regression.html#cb400-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(email)</span>
-<span id="cb400-3"><a href="notes-on-logistic-regression.html#cb400-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(email)</span>
-<span id="cb400-4"><a href="notes-on-logistic-regression.html#cb400-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 3,921</span></span>
-<span id="cb400-5"><a href="notes-on-logistic-regression.html#cb400-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 21</span></span>
-<span id="cb400-6"><a href="notes-on-logistic-regression.html#cb400-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ spam         &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-7"><a href="notes-on-logistic-regression.html#cb400-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ to_multiple  &lt;fct&gt; 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-8"><a href="notes-on-logistic-regression.html#cb400-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ from         &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span id="cb400-9"><a href="notes-on-logistic-regression.html#cb400-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ cc           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 0, 2, 0, …</span></span>
-<span id="cb400-10"><a href="notes-on-logistic-regression.html#cb400-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ sent_email   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, …</span></span>
-<span id="cb400-11"><a href="notes-on-logistic-regression.html#cb400-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ time         &lt;dttm&gt; 2012-01-01 01:16:41, 2012-01-01 02:03:59, 2012-01-01 11:…</span></span>
-<span id="cb400-12"><a href="notes-on-logistic-regression.html#cb400-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ image        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-13"><a href="notes-on-logistic-regression.html#cb400-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ attach       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-14"><a href="notes-on-logistic-regression.html#cb400-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dollar       &lt;dbl&gt; 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 0, …</span></span>
-<span id="cb400-15"><a href="notes-on-logistic-regression.html#cb400-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ winner       &lt;fct&gt; no, no, no, no, no, no, no, no, no, no, no, no, no, no, n…</span></span>
-<span id="cb400-16"><a href="notes-on-logistic-regression.html#cb400-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ inherit      &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-17"><a href="notes-on-logistic-regression.html#cb400-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ viagra       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-18"><a href="notes-on-logistic-regression.html#cb400-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ password     &lt;dbl&gt; 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, …</span></span>
-<span id="cb400-19"><a href="notes-on-logistic-regression.html#cb400-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ num_char     &lt;dbl&gt; 11.370, 10.504, 7.773, 13.256, 1.231, 1.091, 4.837, 7.421…</span></span>
-<span id="cb400-20"><a href="notes-on-logistic-regression.html#cb400-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ line_breaks  &lt;int&gt; 202, 202, 192, 255, 29, 25, 193, 237, 69, 68, 25, 79, 191…</span></span>
-<span id="cb400-21"><a href="notes-on-logistic-regression.html#cb400-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ format       &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …</span></span>
-<span id="cb400-22"><a href="notes-on-logistic-regression.html#cb400-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ re_subj      &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, …</span></span>
-<span id="cb400-23"><a href="notes-on-logistic-regression.html#cb400-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exclaim_subj &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, …</span></span>
-<span id="cb400-24"><a href="notes-on-logistic-regression.html#cb400-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ urgent_subj  &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
-<span id="cb400-25"><a href="notes-on-logistic-regression.html#cb400-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exclaim_mess &lt;dbl&gt; 0, 1, 6, 48, 1, 1, 1, 18, 1, 0, 2, 1, 0, 10, 4, 10, 20, 0…</span></span>
-<span id="cb400-26"><a href="notes-on-logistic-regression.html#cb400-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ number       &lt;fct&gt; big, small, small, small, none, none, big, small, small, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="notes-on-logistic-regression.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openintro)</span>
+<span id="cb401-2"><a href="notes-on-logistic-regression.html#cb401-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(email)</span>
+<span id="cb401-3"><a href="notes-on-logistic-regression.html#cb401-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(email)</span>
+<span id="cb401-4"><a href="notes-on-logistic-regression.html#cb401-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 3,921</span></span>
+<span id="cb401-5"><a href="notes-on-logistic-regression.html#cb401-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 21</span></span>
+<span id="cb401-6"><a href="notes-on-logistic-regression.html#cb401-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ spam         &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-7"><a href="notes-on-logistic-regression.html#cb401-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ to_multiple  &lt;fct&gt; 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-8"><a href="notes-on-logistic-regression.html#cb401-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ from         &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
+<span id="cb401-9"><a href="notes-on-logistic-regression.html#cb401-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ cc           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 0, 2, 0, …</span></span>
+<span id="cb401-10"><a href="notes-on-logistic-regression.html#cb401-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ sent_email   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, …</span></span>
+<span id="cb401-11"><a href="notes-on-logistic-regression.html#cb401-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ time         &lt;dttm&gt; 2012-01-01 01:16:41, 2012-01-01 02:03:59, 2012-01-01 11:…</span></span>
+<span id="cb401-12"><a href="notes-on-logistic-regression.html#cb401-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ image        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-13"><a href="notes-on-logistic-regression.html#cb401-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ attach       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-14"><a href="notes-on-logistic-regression.html#cb401-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dollar       &lt;dbl&gt; 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 0, …</span></span>
+<span id="cb401-15"><a href="notes-on-logistic-regression.html#cb401-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ winner       &lt;fct&gt; no, no, no, no, no, no, no, no, no, no, no, no, no, no, n…</span></span>
+<span id="cb401-16"><a href="notes-on-logistic-regression.html#cb401-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ inherit      &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-17"><a href="notes-on-logistic-regression.html#cb401-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ viagra       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-18"><a href="notes-on-logistic-regression.html#cb401-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ password     &lt;dbl&gt; 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, …</span></span>
+<span id="cb401-19"><a href="notes-on-logistic-regression.html#cb401-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ num_char     &lt;dbl&gt; 11.370, 10.504, 7.773, 13.256, 1.231, 1.091, 4.837, 7.421…</span></span>
+<span id="cb401-20"><a href="notes-on-logistic-regression.html#cb401-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ line_breaks  &lt;int&gt; 202, 202, 192, 255, 29, 25, 193, 237, 69, 68, 25, 79, 191…</span></span>
+<span id="cb401-21"><a href="notes-on-logistic-regression.html#cb401-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ format       &lt;fct&gt; 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …</span></span>
+<span id="cb401-22"><a href="notes-on-logistic-regression.html#cb401-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ re_subj      &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, …</span></span>
+<span id="cb401-23"><a href="notes-on-logistic-regression.html#cb401-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exclaim_subj &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, …</span></span>
+<span id="cb401-24"><a href="notes-on-logistic-regression.html#cb401-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ urgent_subj  &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span>
+<span id="cb401-25"><a href="notes-on-logistic-regression.html#cb401-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ exclaim_mess &lt;dbl&gt; 0, 1, 6, 48, 1, 1, 1, 18, 1, 0, 2, 1, 0, 10, 4, 10, 20, 0…</span></span>
+<span id="cb401-26"><a href="notes-on-logistic-regression.html#cb401-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ number       &lt;fct&gt; big, small, small, small, none, none, big, small, small, …</span></span></code></pre></div>
 <blockquote>
 <p>Question: Would you expect longer or shorter emails to be spam?</p>
 </blockquote>
@@ -1556,15 +1556,15 @@ div.csl-indent {
 </div>
 <div id="logit-function-visualized" class="section level4 hasAnchor" number="66.1.0.7">
 <h4><span class="header-section-number">66.1.0.7</span> Logit function, visualized<a href="notes-on-logistic-regression.html#logit-function-visualized" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="notes-on-logistic-regression.html#cb404-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>,</span>
-<span id="cb404-2"><a href="notes-on-logistic-regression.html#cb404-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb404-3"><a href="notes-on-logistic-regression.html#cb404-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logit_p =</span> <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)))</span>
-<span id="cb404-4"><a href="notes-on-logistic-regression.html#cb404-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb404-5"><a href="notes-on-logistic-regression.html#cb404-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> logit_p)) <span class="sc">+</span></span>
-<span id="cb404-6"><a href="notes-on-logistic-regression.html#cb404-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb404-7"><a href="notes-on-logistic-regression.html#cb404-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb404-8"><a href="notes-on-logistic-regression.html#cb404-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;logit(p)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb404-9"><a href="notes-on-logistic-regression.html#cb404-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;logit(p) vs. p&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="notes-on-logistic-regression.html#cb405-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>,</span>
+<span id="cb405-2"><a href="notes-on-logistic-regression.html#cb405-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">length.out =</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb405-3"><a href="notes-on-logistic-regression.html#cb405-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logit_p =</span> <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)))</span>
+<span id="cb405-4"><a href="notes-on-logistic-regression.html#cb405-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb405-5"><a href="notes-on-logistic-regression.html#cb405-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> logit_p)) <span class="sc">+</span></span>
+<span id="cb405-6"><a href="notes-on-logistic-regression.html#cb405-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb405-7"><a href="notes-on-logistic-regression.html#cb405-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb405-8"><a href="notes-on-logistic-regression.html#cb405-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;logit(p)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb405-9"><a href="notes-on-logistic-regression.html#cb405-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;logit(p) vs. p&quot;</span>)</span></code></pre></div>
 <p><img src="1002_logistic_notes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="properties-of-the-logit" class="section level4 hasAnchor" number="66.1.0.8">
@@ -1598,22 +1598,22 @@ div.csl-indent {
 <li>use <code>"glm"</code> instead of <code>"lm"</code> as the engine</li>
 <li>define <code>family = "binomial"</code> for the link function to be used in the model</li>
 </ul>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="notes-on-logistic-regression.html#cb405-1" aria-hidden="true" tabindex="-1"></a>spam_fit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb405-2"><a href="notes-on-logistic-regression.html#cb405-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb405-3"><a href="notes-on-logistic-regression.html#cb405-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(spam <span class="sc">~</span> num_char,</span>
-<span id="cb405-4"><a href="notes-on-logistic-regression.html#cb405-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> email,</span>
-<span id="cb405-5"><a href="notes-on-logistic-regression.html#cb405-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb405-6"><a href="notes-on-logistic-regression.html#cb405-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb405-7"><a href="notes-on-logistic-regression.html#cb405-7" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy(spam_fit)</span></span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="notes-on-logistic-regression.html#cb406-1" aria-hidden="true" tabindex="-1"></a>spam_fit <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb406-2"><a href="notes-on-logistic-regression.html#cb406-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-3"><a href="notes-on-logistic-regression.html#cb406-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(spam <span class="sc">~</span> num_char,</span>
+<span id="cb406-4"><a href="notes-on-logistic-regression.html#cb406-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> email,</span>
+<span id="cb406-5"><a href="notes-on-logistic-regression.html#cb406-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb406-6"><a href="notes-on-logistic-regression.html#cb406-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb406-7"><a href="notes-on-logistic-regression.html#cb406-7" aria-hidden="true" tabindex="-1"></a><span class="co">#tidy(spam_fit)</span></span></code></pre></div>
 </div>
 <div id="spam-model" class="section level4 hasAnchor" number="66.1.0.11">
 <h4><span class="header-section-number">66.1.0.11</span> Spam model<a href="notes-on-logistic-regression.html#spam-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="notes-on-logistic-regression.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
-<span id="cb406-2"><a href="notes-on-logistic-regression.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span id="cb406-3"><a href="notes-on-logistic-regression.html#cb406-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
-<span id="cb406-4"><a href="notes-on-logistic-regression.html#cb406-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb406-5"><a href="notes-on-logistic-regression.html#cb406-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
-<span id="cb406-6"><a href="notes-on-logistic-regression.html#cb406-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="notes-on-logistic-regression.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(spam_fit)</span>
+<span id="cb407-2"><a href="notes-on-logistic-regression.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span id="cb407-3"><a href="notes-on-logistic-regression.html#cb407-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic   p.value</span></span>
+<span id="cb407-4"><a href="notes-on-logistic-regression.html#cb407-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb407-5"><a href="notes-on-logistic-regression.html#cb407-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)  -1.80     0.0716     -25.1  2.04e-139</span></span>
+<span id="cb407-6"><a href="notes-on-logistic-regression.html#cb407-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 num_char     -0.0621   0.00801     -7.75 9.50e- 15</span></span></code></pre></div>
 <p>Model:
 <span class="math display">\[\log\left(\frac{p}{1-p}\right) = -1.80-0.0621\times \text{num_char}\]</span></p>
 </div>

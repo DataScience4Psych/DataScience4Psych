@@ -16,6 +16,7 @@ library(htmlwidgets)
 ## Options
 knitr::opts_chunk$set(
   comment = "#>",
+  error = TRUE,
   collapse = TRUE
   # cache = TRUE,
   # fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
@@ -26,7 +27,6 @@ knitr::opts_chunk$set(
   # fig.asp = 0.618,  # 1 / phi
   # fig.show = "hold"
 )
-
 options(
   rlang_trace_top_env = rlang::current_env(),
   rlang__backtrace_on_error = "none"
@@ -106,7 +106,9 @@ slide_url <- function(df_url,
 }
 
 # try include_tweet
-try_include_tweet <- function(tweet_url, plain = FALSE, ...){
-  return(try(include_tweet(tweet_url, plain = plain, ...),silent = TRUE))
-         }
+try_include_tweet <- function(tweet_url,
+                              plain = FALSE, ...){
+  return(try(tweetrmd::include_tweet(tweet_url = tweet_url, plain = plain, ...),
+             silent = TRUE))
+}
 
