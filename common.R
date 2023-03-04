@@ -10,7 +10,7 @@ library(tweetrmd) #... embedding tweets
 library(vembedr)  #... embedding youtube videos
 library(knitr)
 library(tidyverse)
-
+library(htmlwidgets)
 
 
 ## Options
@@ -98,7 +98,7 @@ sample_no_surprises <- function(x) {
 }
 
 # show slides better
-slide_url=function(df_url,title,slide=NULL){
+slide_url <- function(df_url,title,slide=NULL){
   var_url=paste0(df_url$link[df_url$title==title],slide)
   return(var_url)
 }
