@@ -1,0 +1,427 @@
+# R basics and workflows {#r_basics}
+
+
+
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Who is R? Why is R troubling PhD students?<a href="https://twitter.com/AcademicChatter?ref_src=twsrc%5Etfw">@AcademicChatter</a> <a href="https://twitter.com/hashtag/AcademicTwitter?src=hash&amp;ref_src=twsrc%5Etfw">#AcademicTwitter</a></p>&mdash; Dr. Marie Curie (@CurieDr) <a href="https://twitter.com/CurieDr/status/1355911682585931777?ref_src=twsrc%5Etfw">January 31, 2021</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+```
+
+
+There is an implicit contract between computers and scripting languages. The computer will do tedious tasks for you. In return, you must be explicit in your instructions. The computer does not have the ability to extrapolate. So we have to work within the range of what it does understand. And that is where this entire course comes into play. We are learning how to communicate in a way that it does understand. So let's begin!
+
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">The 8 year old is learning Python, and after a dealing with a syntax bug she asks: “If the computer knows I’m missing a semicolon here, why won’t it add it itself?”<br><br>I don’t know. I really don’t know.</p>&mdash; Joe Magerramov (@_joemag_) <a href="https://twitter.com/_joemag_/status/1490899167446589443?ref_src=twsrc%5Etfw">February 8, 2022</a></blockquote>
+
+```
+## Basics of working with R at the command line and RStudio goodies
+
+Launch RStudio/R.
+
+Notice the default panes:
+
+* Console (entire left)
+* Environment/History (tabbed in upper right)
+* Files/Plots/Packages/Help (tabbed in lower right)
+
+FYI: you can change the default location of the panes, among many other things: [Customizing RStudio](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio).
+
+Go into the Console, where we interact with the live R process.
+
+Make an assignment and then inspect the object you just created:
+
+
+```r
+x <- 3 * 4
+x
+#> [1] 12
+```
+
+All R statements where you create objects -- "assignments" -- have this form:
+
+```r
+objectName <- value
+```
+and in my head I hear, e.g., "x gets 12".
+
+You will make lots of assignments. Even thought, the operator `<-` is a hassle to type, resist the urge to  use `=`. Technically, it would work. But it will be really confusing later. Instead, try RStudio's keyboard shortcut: Alt + - (the minus sign).
+
+Notice that RStudio auto-magically surrounds `<-` with spaces, which demonstrates a useful code formatting practice. Code is miserable to read on a good day. Give your eyes a break and use spaces.
+
+RStudio offers many handy [keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts). Also, Alt+Shift+K brings up a keyboard shortcut reference card.
+
+### Object names
+
+Object names cannot start with a digit and cannot contain certain other characters such as a comma or a space. You will be wise to adopt a [convention for demarcating words](https://en.wikipedia.org/wiki/Snake_case) in names.
+
+```
+i_use_snake_case
+other.people.use.periods
+evenOthersUseCamelCase
+```
+
+Make another assignment:
+
+```r
+this_is_a_really_long_name <- 2.5
+```
+
+To inspect this assignment, try out RStudio's completion facility: type the first few characters, press TAB, add characters until you disambiguate, then press return.
+
+Make another assignment:
+
+```r
+mason_rocks <- 2 ^ 3
+```
+
+Let's try to inspect:
+
+```r
+masonrocks
+#> Error in eval(expr, envir, enclos): object 'masonrocks' not found
+masn_rocks
+#> Error in eval(expr, envir, enclos): object 'masn_rocks' not found
+```
+
+Here's where that implicit contract comes in. The computer (and R) will do amazing things, if we can ask it to do those things in a way it understands. 
+Typos matter. Case matters. Precision matters. We have to work within it's narrow range of ability. The computer isn't accommodating, unfortunately. 
+
+However, if you struggle with precise typing, it might be worth your time to teach your computer to be accommodating. And as a result, you might discover that you have a real knack for programming... and that knack will lead you toward quantitative psychology... and teaching data science for psychologists... 
+
+In other words, [I have some typing macros](https://github.com/smasongarrison/AutoHotKey_Scripts) and tricks that may help you. If there's interest, I can carve out some time in-class to discuss them.
+
+### Functions
+
+R has a mind-blowing collection of built-in functions that are accessed like so:
+
+
+```r
+functionName(arg1 = val1, arg2 = val2, and so on)
+```
+
+Let's try using `seq()` which makes regular sequences of numbers and, while we're at it, demo more helpful features of RStudio.
+
+Type `se` and hit TAB. A pop up shows you possible completions. Specify `seq()` by typing more to disambiguate or using the up/down arrows to select. Notice the floating tool-tip-type help that pops up, reminding you of a function's arguments. If you want even more help, press F1 as directed to get the full documentation in the help tab of the lower right pane. Now open the parentheses and notice the automatic addition of the closing parenthesis and the placement of cursor in the middle.  Type the arguments `1, 10` and hit return. RStudio also exits the parenthetical expression for you.  IDEs are great.
+
+
+```r
+seq(1, 10)
+#>  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Because we didn't specify step size, the default value of `by` in the function definition is used. In this case, the default is 1. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use `name = value`.
+
+
+Make this assignment and notice similar help with quotation marks.
+
+
+```r
+yo <- "hello world"
+```
+
+If you just make an assignment, you don't get to see the value. Then you're tempted to immediately inspect.
+
+
+```r
+y <- seq(1, 10)
+y
+#>  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+This common action can be shortened by surrounding the assignment with parentheses. These combined action causes assignment and "print to screen" to happen.
+
+
+```r
+(y <- seq(1, 10))
+#>  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+Not all functions have (or require) arguments:
+
+```r
+date()
+#> [1] "Sat Mar  4 14:32:09 2023"
+```
+
+
+Now look at your workspace -- in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:
+
+
+```r
+objects()
+#>  [1] "check_quietly"              "ds4p_funyoutube"           
+#>  [3] "ds4p_urls"                  "install_quietly"           
+#>  [5] "mason_rocks"                "pretty_install"            
+#>  [7] "sample_no_surprises"        "shhh_check"                
+#>  [9] "slide_url"                  "this_is_a_really_long_name"
+#> [11] "x"                          "y"                         
+#> [13] "yo"
+ls()
+#>  [1] "check_quietly"              "ds4p_funyoutube"           
+#>  [3] "ds4p_urls"                  "install_quietly"           
+#>  [5] "mason_rocks"                "pretty_install"            
+#>  [7] "sample_no_surprises"        "shhh_check"                
+#>  [9] "slide_url"                  "this_is_a_really_long_name"
+#> [11] "x"                          "y"                         
+#> [13] "yo"
+```
+
+If you want to remove the object named `y`, you can do this:
+
+
+```r
+rm(y)
+```
+
+To remove everything:
+
+
+```r
+rm(list = ls())
+```
+
+or click the broom in RStudio's Environment pane.
+
+## Workspace and working directory
+
+One day you will need to quit R, go do something else and return to your analysis later.
+
+One day you will have multiple analyses going that use R and you want to keep them separate.
+
+One day you will need to bring data from the outside world into R and send numerical results and figures from R back out into the world.
+
+To handle these real life situations, you need to make two decisions:
+
+* What about your analysis is "real", i.e. will you save it as your lasting record of what happened?
+* Where does your analysis "live"?
+
+### Workspace, `.RData`
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">A lot of grad school so far has been fighting with R. R-guing, if you will</p>&mdash; Valerie Polad (@valeriepolad) <a href="https://twitter.com/valeriepolad/status/1448857970046087192?ref_src=twsrc%5Etfw">October 15, 2021</a></blockquote>
+
+```
+
+
+As a beginning R user, it's OK to consider your workspace "real". _Very soon_, I urge you to evolve to the next level, where you consider your saved R scripts as "real". (In either case, of course the input data is very much real and requires preservation!) With the input data and the R code you used, you can reproduce
+_everything_. You can make your analysis fancier. You can get to the bottom of puzzling results and discover and fix bugs in your code. You can reuse the code to conduct similar analyses in new projects. You can remake a figure with different aspect ratio or save is as TIFF instead of PDF. You are ready to take questions. You are ready for the future.
+
+If you regard your workspace as "real" (saving and reloading all the time), if you need to redo analysis ... you're going to either redo a lot of typing (making mistakes all the way) or will have to mine your R history for the commands you used. Rather than [becoming an expert on managing the R history](https://support.rstudio.com/hc/en-us/articles/200526217-Command-History), a better use of your time and energy is to keep your "good" R code in a script for future reuse.
+
+Because it can be useful sometimes, note the commands you've recently run appear in the History pane.
+
+But you don't have to choose right now and the two strategies are not incompatible. Let's demo the save / reload the workspace approach.
+
+Upon quitting R, you have to decide if you want to save your workspace, for potential restoration the next time you launch R. Depending on your set up, R or your IDE, e.g. RStudio, will probably prompt you to make this decision.
+
+Quit R/RStudio, either from the menu, using a keyboard shortcut, or by typing `q()` in the Console. You'll get a prompt like this:
+
+> Save workspace image to ~/.Rdata?
+
+_Note where the workspace image is to be saved_ and then click "Save".
+
+Using your favorite method, visit the directory where image was saved and verify there is a file named `.RData`. You will also see a file `.Rhistory`, holding the commands submitted in your recent session.
+
+Restart RStudio. In the Console you will see a line like this:
+
+```
+[Workspace loaded from ~/.RData]
+```
+
+indicating that your workspace has been restored. Look in the Workspace pane and you'll see the same objects as before. In the History tab of the same pane, you should also see your command history. You're back in business. This way of starting and stopping analytical work will not serve you well for long but it's a start.
+
+### Working directory
+
+Any process running on your computer has a notion of its "working directory". In R, this is where R will look, by default, for files you ask it to load. It also where, by default, any files you write to disk will go. Chances are your current working directory is the directory we inspected above, i.e. the one where RStudio wanted to save the workspace.
+
+You can explicitly check your working directory with:
+
+
+```r
+getwd()
+```
+
+It is also displayed at the top of the RStudio console.
+
+As a beginning R user, it's OK let your home directory or any other weird directory on your computer be R's working directory. _Very soon_, I urge you to evolve to the next level, where you organize your projects into directories and, when working on project A, set R's working directory to the associated directory.
+
+__Although I do not recommend it__, in case you're curious, you can set R's working directory at the command line like so:
+
+
+```r
+setwd("~/myCoolProject")
+```
+
+__Although I do not recommend it__, you can also use RStudio's Files pane to navigate to a directory and then set it as working directory from the menu: *Session > Set Working Directory > To Files Pane Location*. (You'll see even more options there). Or within the Files pane, choose "More" and "Set As Working Directory".
+
+But there's a better way. A way that also puts you on the path to managing your R work like an expert.
+
+## RStudio projects {#rprojs}
+
+Keeping all the files associated with a project organized together -- input data, R scripts, results, figures -- is such a wise and common practice that RStudio has built-in support for this via its [_projects_](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
+
+Let's make one to use for the rest of this class. Do this: *File > New Project...*. The directory name you choose here will be the project name. Call it whatever you want (or follow me for convenience).
+
+I created a directory and, therefore RStudio project, called `swc` in my `tmp` directory, FYI.
+
+
+```r
+setwd("~/tmp/swc")
+```
+
+Now check that the "home" directory for your project is the working directory of our current R process:
+
+```r
+getwd()
+```
+_I can't print my output here because this document itself does not reside in the RStudio Project we just created._
+
+Let's enter a few commands in the Console, as if we are just beginning a project:
+
+
+```r
+a <- 2
+b <- -3
+sig_sq <- 0.5
+x <- runif(40)
+y <- a + b * x + rnorm(40, sd = sqrt(sig_sq))
+(avg_x <- mean(x))
+#> [1] 0.497
+write(avg_x, "avg_x.txt")
+plot(x, y)
+abline(a, b, col = "purple")
+```
+
+<img src="0102_rbasics_files/figure-html/toy-line-1.png" width="672" />
+
+```r
+dev.print(pdf, "toy_line_plot.pdf")
+#> png 
+#>   2
+```
+
+Let's say this is a good start of an analysis and your ready to start preserving the logic and code. Visit the History tab of the upper right pane. Select these commands. Click "To Source". Now you have a new pane containing a nascent R script. Click on the floppy disk to save. Give it a name ending in `.R` or `.r`, I used `toy-line.r` and note that, by default, it will go in the directory associated with your project.
+
+Quit RStudio. Inspect the folder associated with your project if you wish. Maybe view the PDF in an external viewer.
+
+Restart RStudio. Notice that things, by default, restore to where we were earlier, e.g. objects in the workspace, the command history, which files are open for editing, where we are in the file system browser, the working directory for the R process, etc. These are all Good Things.
+
+Change some things about your code. Top priority would be to set a sample size `n` at the top, e.g. `n <- 40`, and then replace all the hard-wired 40s with `n`. Change some other minor-but-detectable stuff, e.g. alter the sample size `n`, the slope of the line `b`,the color of the line ... whatever. Practice the different ways to re-run the code:
+
+* Walk through line by line by keyboard shortcut (Command+Enter) or mouse (click "Run" in the upper right corner of editor pane).
+  
+* Source the entire document -- equivalent to entering `source('toy-line.r')` in the Console -- by keyboard shortcut (Shift+Command+S) or mouse (click "Source" in the upper right corner of editor pane or select from the mini-menu accessible from the associated down triangle).
+  
+* Source with echo from the Source mini-menu.
+  
+Visit your figure in an external viewer to verify that the PDF is changing as you expect.
+
+In your favorite OS-specific way, search your files for `toy_line_plot.pdf` and presumably you will find the PDF itself (no surprise) but _also the script that created it (`toy-line.r`)_. This latter phenomenon is a huge win. One day you will want to remake a figure or just simply understand where it came from. If you rigorously save figures to file __with R code and not ever ever ever the mouse or the clipboard__, you will sing my praises one day. Trust me.
+
+## Tradition
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/gRdfX7ut8gw" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+```
+
+
+It is traditional to save R scripts with a `.R` or `.r` suffix. Follow this convention unless you have some extraordinary reason not to. 
+
+Comments start with one or more `#` symbols. Use them. RStudio helps you (de)comment selected lines with Ctrl+Shift+C (Windows and Linux) or Command+Shift+C (Mac).
+
+Clean out the workspace, i.e. pretend like you've just revisited this project after a long absence.  The broom icon or `rm(list = ls())`. Good idea to do this, restart R (available from the Session menu), re-run your analysis to truly check that the code you're saving is complete and correct (or at least rule out obvious problems!).
+
+This workflow will serve you well in the future:
+
+* Create an RStudio project for an analytical project
+* Keep inputs there (we'll soon talk about importing)
+* Keep scripts there; edit them, run them in bits or as a whole from there
+* Keep outputs there (like the PDF written above)
+
+Avoid using the mouse for pieces of your analytical workflow, such as loading a dataset or saving a figure. Terribly important for reproducibility and for making it possible to retrospectively determine how a numerical table or PDF was actually produced (searching on local disk on filename, among `.R` files, will lead to the relevant script).
+
+Many long-time users never save the workspace, never save `.RData` files (I'm one of them), never save or consult the history. Once you get to that point, there are options available in RStudio to deactivate the loading of `.RData` and permanently suppress the prompt on exit to save the workspace (go to *Tools > Options > General*).
+
+For the record, when loading data into R or writing outputs to file, you can always specify the absolute path and thereby insulate yourself from the current working directory. This method is rarely necessary when using RStudio projects, and can be challenging for collaborators.
+
+
+
+
+
+<!--DS4P Links-->
+[course_web]: https://datascience4psych.github.io/DataScience4Psych
+[course_git]: https://github.com/DataScience4Psych/DataScience4Psych
+[course_repo]: https://github.com/DataScience4Psych
+[course_slides]: https://github.com/DataScience4Psych/slides
+[course_syllabus]: https://smasongarrison.github.io/syllabi/ 
+<!-- https://smasongarrison.github.io/syllabi/data-science.html -->
+[syllabi]: https://smasongarrison.github.io/syllabi
+[pl_00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
+[pl_01]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup
+[pl_02]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI
+[pl_03]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaHmjzdRvfg0yhOIYQnfjwE
+[pl_04]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYWFcel6_vp8__RUKLxhX4y
+[pl_05]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYMIguiV1F8RagMYibTY4iW
+[pl_06]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYV_KDod3Mk9-RmtFXii9Dv
+[pl_07]: https://www.youtube.com/watch?list=PLKrrdtYgOUYZxvEvQ8-PcWrOY_dwY_ETI
+[pl_08]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZgOzYB_dmauw55M7jXvsdo
+[pl_09]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbaiTmldRY2ddsLrHp3z6yO
+[pl_10]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbPw5iYzYEzoOKa7mJKNIhq
+[pl_11]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZ-u6LzBbanrNFoeLHKaLL6
+[pl_12]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbwRS-9Htmb80_t1NG-021e
+[pl_13]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_14]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_15]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYa5MoYrV8EsWQ5jIr5ZYMpM
+[pl_all]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZomNqf-1dtCDW94ySdLv-9
+
+
+<!--AE Links-->
+[ae01a_unvotes]: https://github.com/DataScience4Psych/ae01a_unvotes
+[ae01b_covid]: https://github.com/DataScience4Psych/ae01b_covid
+[ae02_bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+[ae03_starwars]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
+
+
+<!-- Lab Links-->
+
+[lab01_hello]: https://github.com/DataScience4Psych/lab-01-hello-r
+
+<!--Slides-->
+[d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
+[d02_toolkit]: https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html
+[d03_dataviz]: https://datascience4psych.github.io/slides/d03_dataviz/d03_dataviz.html
+[d04_ggplot2]: https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html
+[d05_viznum]: https://datascience4psych.github.io/slides/d05_viznum/d05_viznum.html
+[d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
+[d07_tidy]: https://datascience4psych.github.io/slides/d07_tidy/d07_tidy.html
+[d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
+[d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
+[d10_dfs]: https://datascience4psych.github.io/slides/d10_dfs/d10_dfs.html
+[d11_types]: https://datascience4psych.github.io/slides/d11_types/d11_types.html
+[d12_import]: https://datascience4psych.github.io/slides/d12_import/d12_import.html
+[d13_goodviz]: https://datascience4psych.github.io/slides/d13_goodviz/d13_goodviz.html
+[d13b_moreggplot]: https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html
+[d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
+[d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
+[d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
+[d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
+[d18_ethics]: https://datascience4psych.github.io/slides/d18_ethics/d18_ethics.html
+[d19_bias]: https://datascience4psych.github.io/slides/d19_bias/d19_bias.html
+
+
+<!--externals-->
+
+[stat545]: https://stat545.com
+[r4ds]: https://r4ds.had.co.nz
+[cran]: https://cloud.r-project.org

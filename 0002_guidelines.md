@@ -1,0 +1,216 @@
+# Guidance {.unnumbered}
+
+
+
+This document provides some basic assignment instructions and information. It is not the syllabus for students taking this course. Please see the [data science syllabus](https://smasongarrison.github.io/syllabi/data-science.html) on my [syllabus website](https://smasongarrison.github.io/syllabi/). And yes, the bookdown theme looks familiar...
+
+<!-- To Do: find a way to embed a pdf in rmarkdown -->
+
+## Materials
+
+### Hardware
+
+This class requires that you have a laptop that can run R.
+
+### Required Texts
+
+The text is intended to supplement the videos, lecture notes, tutorials, activities, and labs. You probably need to consume all of them in order to be successful in this class. All materials for this course are open source, including the multimedia course notes. 
+- Garrison's Data Science for Psychologists (https://datascience4psych.github.io/DataScience4Psych/)
+- Wickham and Grolemund's [R for Data Science text][r4ds]
+
+### Software {#syllabussoftware}
+
+#### R and RStudio {#syllabusr}
+
+
+```{=html}
+<div class="vembedr" align="center">
+<div>
+<iframe src="https://www.youtube.com/embed/kVIZGCT5p9U" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+```
+
+R is a free software environment for statistical computing and graphics. It compiles and runs on a wide variety of UNIX platforms, Windows, and MacOS.
+
+RStudio is a free *integrated development environment* (IDE), a powerful user interface for R.
+
+#### Git and Github {#syllabusgit}
+
+Git is a version control system. Its original purpose was to help groups of developers work collaboratively on big software projects. Git manages the evolution of a set of files -- called a repository -- in a structured way. Think of it like the "Track Changes" features from Microsoft Word.
+
+Github is a free IDE and hosting service for Git. As a Wake Forest student, you should be able to access the [GitHub Student Developer Pack for free](https://education.github.com/benefits?type=student). It includes a free PRO upgrade for your github account.
+
+## Assignment Instructions
+
+### Portfolio {#portfolio}
+
+This description is from my advisor, Joe Rodgers. 
+<!-- To Do: desportify Joe's introduction -->
+
+DS is like basketball. We can watch either being done, and appreciate the art and skill involved in high-level performance. In the hands of Lebron James or Michael Jordan, a basketball is a highly-tuned artistic instrument; in the hands of John Tukey, a graph sings the praises of data in melodies both harmonious and discordant, reflecting model, data, and mood. Part of this course will be devoted to Watching and Studying the master at his work.
+
+But basketball is played by thousands of bodies with less than NBA training and ability. Some novice basketball players are just learning their craft, and others will evolve into future LJs and MJs; others have lower aspirations, yet still enjoy participating. So also should DS be played. A second part of this course will involve learning to do EDA by Doing It.
+
+Each of you will be expected to do several portfolio pieces. These projects can be done during class, as well as during out-of-class effort. The nature of most of the particular projects will be entirely up to you. You will report to your instructor during EDA Labs on what you have been doing and what you plan to do. You will give a 10-minute individual presentation to the class at the end of the course on what you did in one or two of your major projects. <!-- There are three requirements. Your projects must include some hand plotting. Your projects must include some computer work. And your projects must include one group project with two other people (your team projects). Results of this group project will also be presented toward the end of the course.-->
+
+Each project will require some data, to which EDA techniques will be applied. You are welcomed (in fact, strongly encouraged) to use data with which you are currently involved; dissertation or thesis data, a research project, the almanac, data from an article, data from EDA or VDat, data you collect from your family or friends, or data provided to you by your instructor are possible sources.
+
+### Additional Ground Rules
+
+In this class, I actively encourage you to "double-dip." My aim is for you to incorporate your research into portfolio pieces and use these pieces in other places. However, I *Mason* have some ground rules. These rules have been implemented for various reasons, but they primarily preserve my sanity by establishing some boundaries. As much as I adore this class, my students (especially you, dear reader!), and everything it stands for -- it blurs many lines because I often serve numerous roles while teaching this class. In particular, I may also be your mentor, committee member, collaborator, letter of recommendation writer, colleague, confidant, statistics consultant, friend, or cat caretaker. I do my best to navigate these roles. However, for my sanity, here are my basic rules.
+
+For anything that is related to a graduate school milestone (thesis, first year project, major area paper) or something else that you're working with your advisor on... you need to *actively* discuss it with your advisor and get their approval in advance.
+
+They may not -- and that's okay. If they're unsure, I'm very happy to schedule a quick 30 minute chat with all three of us. My role on anything milestone related is to assist you with the implementation or give you general feedback. I cannot give you advice related to modeling or anything that would merit a discussion about authorship on the final work. I may disagree with something they recommend that you do... such as use a specific software that isn't R. (I do have many strong opinions about SPSS and AMOS, as well as modeling choices. However, there is nearly always room for debate in these issues. I try to remind folks that my opinion is just that -- an opinion.)
+
+For all things related to your research at Wake Forest, *please defer to your advisor.* Everyone in the department are amazing at what they do. Seriously, each is an expert in their research area -- just as I am an expert in R (and genetically-informed designs and strange data...). In all likelihood, they know more about the modeling in their specific area. I am happy to share my expert opinions and I have the privilege to facilitate such conversations through the nature of this class. HOWEVER, please defer to your advisor for all design decisions. I will do my best to tell you when something is outside the scope of the class or if we're approaching a gray area. I will not always be successful at navigating this issue. However, I will do my best to do so because I think it is worth the extra challenge.
+
+#### Possible Projects
+
+Examples of appropriate portfolio pieces are listed below. I hope some or all of these will be worked on by members of the class. You should develop and work on your projects individually, but discussion with the instructor and others class members is encouraged and in fact expected.
+
+1)  Draw plots by hand of some data that are of interest to you, and transform the variables in several different ways. Interpret your results.
+
+2)  Choose some data from EDA or VDat; table or plot them in a way that Tukey/Cleveland didn't.
+
+3)  Find some population data of interest to you (e.g., North Carolina, Forsyth County,your cat herd, etc.) and do several hand plots like those in Chapter 5 of EDA. Interpret results.
+
+4)  Find some data in the World Almanac and plot and/or table them.
+
+5)  Use some two-way data, and repeatedly extract the medians like Tukey does in Ch. 10 & 11.
+
+6)  Find some time series data, and smooth them in several different ways (see EDA, ch. 7). Data with seasonal patterns are especially interesting (see VDat, pp. 152-172).
+
+7)  Write an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA, or other program to portray influence-enhanced scatterplots. Produce scatterplots of several relationships.
+
+8)  Write a BASIC, FORTRAN, C, SAS, SPSS, JAVA, or other program to portray scatter plots on a computer. Give the user the option to plot X and/or Y as either raw data, logs, squares, cubes, reciprocals, roots, etc.
+
+9)  Write an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA or other program to produce some exotic version of stem-and-leaf diagrams.
+
+10) Write a an R, SAS-Graph, SPSS, BASIC, FORTRAN, C, JAVA or other program to plot in three-dimensions with time as one of the dimensions (i.e., a kinostatistical plot).
+
+11) Use R or SAS-Graph or some other dedicated graphical package to plot some interesting data (preferably in color, possibly in 3D, maybe even in higher than 3D).
+
+12) Write an R/SAS routine to do median smoothing by three, and use it on some data.
+
+13) Write an R program, or SAS MACRO or SAS PROC or SAS program to produce some EDA output (but don't duplicate what PROC UNIVARIATE already does).
+
+14) Find an R program in the R library that does interesting EDA; apply it to some interesting data.
+
+15) Produce a correlation matrix between many variables, and develop a scatterplot matrix from it.
+
+16) Read the literature on graphical data analysis and develop some new graphical techniques. Program your techniques. Apply them to real data.
+
+17) Invent a new EDA graphical application, and apply it to real data.
+
+Additional ideas that aren't thoroughly thought out:
+
+-   Data Cleaning Project using Lab Data
+-   Web scraping project
+-   Tidy Tuesday Project
+-   Data Innovation
+-   Recreate a classic visualization
+-   Interactive Project (Rshiny)
+-   Infographic
+-   master's thesis / first year project
+-   Misleading Graph
+-   Impossible to Read
+-   Colorblind Friendly
+-   Visualization that only uses X colors
+-   Animated/video
+-   Tutorial
+-   Webscraper data
+-   Digital Humanities Project
+-   reproduce findings from an article in your content area
+-   machine learn!
+-   live dashboard
+-   maps/ geospatial things
+-   lie to me graphic
+
+#### Documenting Your Project
+
+You should keep a log describing all EDA projects you undertake. At the end of the course, two things will happen. First, you will give a 10 minute presentation in which you choose one of your EDA projects to describe to the class. Your description should include the goal of the project, the data you used, and a demonstration (PowerPoint, handout, holdup, computer demo, etc.) of the product. 2nd, you will turn in a Portfolio, which consists of two components:
+
+1)  A report describing all your projects. The total number depends on the scope and difficulty of each project (as specified in your contract). There may be projects that you don't finish. That's fine; EDA projects are hardly ever completely finished; write them up anyway. The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+
+2)  A prototypical example of the product of each project (e.g., a graph, computer code, etc.). You may wish to put computer output into binders or appendices, graphs into report folders, etc.
+
+Portfolios will not be returned; if you wish to have a copy, make one before you turn it in. Portfolios are due the last week of class. Project reports will not be accepted late. Please, no exceptions!!!
+
+#### More Information about contract grading
+
+-   <https://marckissel.netlify.app/post/on-the-unessay/>
+
+-   <https://esclark.hcommons.org/the-unessay/>
+
+-   <https://ryancordell.org/teaching/how-not-to-teach-digital-humanities/>
+
+
+
+<!--DS4P Links-->
+[course_web]: https://datascience4psych.github.io/DataScience4Psych
+[course_git]: https://github.com/DataScience4Psych/DataScience4Psych
+[course_repo]: https://github.com/DataScience4Psych
+[course_slides]: https://github.com/DataScience4Psych/slides
+[course_syllabus]: https://smasongarrison.github.io/syllabi/ 
+<!-- https://smasongarrison.github.io/syllabi/data-science.html -->
+[syllabi]: https://smasongarrison.github.io/syllabi
+[pl_00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
+[pl_01]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup
+[pl_02]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI
+[pl_03]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaHmjzdRvfg0yhOIYQnfjwE
+[pl_04]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYWFcel6_vp8__RUKLxhX4y
+[pl_05]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYMIguiV1F8RagMYibTY4iW
+[pl_06]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYV_KDod3Mk9-RmtFXii9Dv
+[pl_07]: https://www.youtube.com/watch?list=PLKrrdtYgOUYZxvEvQ8-PcWrOY_dwY_ETI
+[pl_08]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZgOzYB_dmauw55M7jXvsdo
+[pl_09]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbaiTmldRY2ddsLrHp3z6yO
+[pl_10]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbPw5iYzYEzoOKa7mJKNIhq
+[pl_11]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZ-u6LzBbanrNFoeLHKaLL6
+[pl_12]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbwRS-9Htmb80_t1NG-021e
+[pl_13]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_14]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_15]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYa5MoYrV8EsWQ5jIr5ZYMpM
+[pl_all]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZomNqf-1dtCDW94ySdLv-9
+
+
+<!--AE Links-->
+[ae01a_unvotes]: https://github.com/DataScience4Psych/ae01a_unvotes
+[ae01b_covid]: https://github.com/DataScience4Psych/ae01b_covid
+[ae02_bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+[ae03_starwars]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
+
+
+<!-- Lab Links-->
+
+[lab01_hello]: https://github.com/DataScience4Psych/lab-01-hello-r
+
+<!--Slides-->
+[d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
+[d02_toolkit]: https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html
+[d03_dataviz]: https://datascience4psych.github.io/slides/d03_dataviz/d03_dataviz.html
+[d04_ggplot2]: https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html
+[d05_viznum]: https://datascience4psych.github.io/slides/d05_viznum/d05_viznum.html
+[d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
+[d07_tidy]: https://datascience4psych.github.io/slides/d07_tidy/d07_tidy.html
+[d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
+[d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
+[d10_dfs]: https://datascience4psych.github.io/slides/d10_dfs/d10_dfs.html
+[d11_types]: https://datascience4psych.github.io/slides/d11_types/d11_types.html
+[d12_import]: https://datascience4psych.github.io/slides/d12_import/d12_import.html
+[d13_goodviz]: https://datascience4psych.github.io/slides/d13_goodviz/d13_goodviz.html
+[d13b_moreggplot]: https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html
+[d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
+[d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
+[d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
+[d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
+[d18_ethics]: https://datascience4psych.github.io/slides/d18_ethics/d18_ethics.html
+[d19_bias]: https://datascience4psych.github.io/slides/d19_bias/d19_bias.html
+
+
+<!--externals-->
+
+[stat545]: https://stat545.com
+[r4ds]: https://r4ds.had.co.nz
+[cran]: https://cloud.r-project.org
