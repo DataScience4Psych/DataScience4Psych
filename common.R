@@ -9,6 +9,7 @@
 library(tweetrmd) #... embedding tweets
 library(vembedr)  #... embedding youtube videos
 library(knitr)
+library(webshot)				
 library(tidyverse)
 library(htmlwidgets)
 
