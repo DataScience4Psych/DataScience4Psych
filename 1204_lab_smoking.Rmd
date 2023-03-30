@@ -1,5 +1,6 @@
 # Lab: So what if you smoke when pregnant? {#lab11}
 
+
 ## Simulation based inference
 
 ```{r include=FALSE}
@@ -13,7 +14,7 @@ options(
 knitr::opts_chunk$set(eval = TRUE)
 ```
 
-In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers' habits and practices and their child's birth. In this lab, we'll be exploring a randomly selected subset of the data.
+In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers' habits and practices and their child's birth. In this lab, we'll be exploring a randomly selected subset of the data. You'll learn how to use simulation-based inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You will also explore the relationships between other variables, such as the mother's age and the baby's birth weight. Through the exercises, you will practice data manipulation, visualization, hypothesis testing, and calculating confidence intervals.
 
 ## Getting started
 
@@ -27,33 +28,32 @@ library(infer)
 library(openintro)
 ```
 
-## Housekeeping
+### Housekeeping
 
-### Git configuration / password caching
+#### Git configuration / password caching
 
 Configure your Git user name and email. If you cannot remember the instructions, refer to an earlier lab. Also remember that you can cache your password for a limited amount of time.
 
-### Project name
+#### Project name
 
 Update the name of your project to match the lab's title.
 
-## Warm up
+### Warm up
 
-Before we introduce the data, let's warm up with some simple exercises.
+Before diving into the dataset, let's warm up with some simple exercises.
 
-### YAML
+#### YAML
 
-Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
+Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document. Doing so will allow you to personalize your Rmd file.
 
-### Commiting and pushing changes
+#### Commiting and pushing changes
 
 - Go to the **Git** pane in your RStudio. 
 - View the **Diff** and confirm that you are happy with the changes.
 - Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
 - Click on **Push**. This will prompt a dialogue box where you first need to enter your user name, and then your password.
 
-
-## Set a seed!
+### Set a seed!
 
 In this lab, we'll be generating random samples. To ensure consistency, it's crucial to set a seed before generating the samples. Otherwise, the data will change each time you knit your lab. You can do set your seed by locating the designated R chunk in your R Markdown file and adding the seed value there.
 
@@ -84,31 +84,34 @@ variable         | description
 `habit`          | status of the mother as a `nonsmoker` or a `smoker`.
 `whitemom`       | whether mom is `white` or `not white`.
 
+
+
+Before analyzing any new dataset, it's important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren't sure or want to take a closer look at the data, create a graph.
+
 ## Exercises
 
 1.  What are the cases in this data set? How many cases are there in our sample?
-
-Before analyzing any new dataset, it's important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren't sure or want to take a closer look at the data, create a graph.
 
 ### Baby weights
 
 
 > Wen, Shi Wu, Michael S. Kramer, and Robert H. Usher. "Comparison of birth weight distributions between Chinese and Caucasian infants." American Journal of Epidemiology 141.12 (1995): 1177-1187.
 
+<!-- I've decided to capitalize "White" to not perpetuate the idea that only  it over other. "When we ignore the specificity and significance of Whiteness—the things that it is, the things that it does—we contribute to its seeming neutrality and thereby grant it power to maintain its invisibility."  https://zora.medium.com/im-a-black-scholar-who-studies-race-here-s-why-i-capitalize-white-f94883aa2dd3 --> 
 
-A 1995 study suggests that average weight of Caucasian babies born in the US is 3,369 grams (7.43 pounds). In this dataset, we only have information on mother's race, so we will make the simplifying assumption that babies of Caucasian mothers are also Caucasian, i.e. `whitemom = "white"`. (Yes, I know that this assumption is a gross oversimplification).
+A 1995 study suggests that average weight of White babies born in the US is 3,369 grams (7.43 pounds).In this dataset, we have pretty limited information on race, we only know whether the mother is white. We will make the simplifying assumption that babies of White mothers are also White, i.e. `whitemom = "white"`. (Yes, I know that this assumption is a gross oversimplification).
 
-We want to evaluate whether the average weight of Caucasian babies has changed since 1995.
+We want to evaluate whether the average weight of White babies has changed since 1995.
 
 Our null hypothesis should state "there is nothing going on", i.e. no change since 1995: $H_0: \mu = 7.43~pounds$.
 
-Our alternative hypothesis should reflect the research question, i.e. some change since 1995. Since the research question doesn't state a direction for the change, we use a two sided alternative hypothesis: $H_A: \mu \ne 7.43~pounds$.
+Our alternative hypothesis should reflect the research question, i.e., some change since 1995. Since the research question doesn't state a direction for the change, we use a two-sided alternative hypothesis: $H_A: \mu \ne 7.43~pounds$.
 
-2. Create a filtered data frame called `ncbirths_white` that contain data only from white mothers. Then, calculate the mean of the weights of their babies.
+2. Create a filtered data frame called ncbirths_white that contains data only from White mothers. Then, calculate the mean of the weights of their babies.
 
-3. Are the criteria necessary for conducting simulation based inference satisfied? Explain your reasoning.
+3. Are the criteria necessary for conducting simulation-based inference satisfied? Explain your reasoning.
 
-Let's discuss how this test would work. Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds. In order to do so, we 
+Let's discuss how this test would work. Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds. In order to do so, we:
 <! -- Mason make this clearer to why we need to actually do this -->
 - take a bootstrap sample of from the original sample,
 - calculate this bootstrap sample's mean,
@@ -116,11 +119,12 @@ Let's discuss how this test would work. Our goal is to simulate a null distribut
 - shift this distribution to be centered at the null value by subtracting / adding X to all boostrap mean (X = difference between mean of bootstrap distribution and null value), and
 - calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.
 
-4. Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
+4. Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in the context of the data and the hypothesis test.
 
 ### Baby weight vs. smoking
 
 Consider the relationship between a mother's smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.
+
 
 5. Make side-by-side box plots displaying the relationship between `habit` and `weight`. What does the plot highlight about the relationship between these two variables?
 
