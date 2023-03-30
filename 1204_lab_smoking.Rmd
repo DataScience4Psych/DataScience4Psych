@@ -99,7 +99,7 @@ Before analyzing any new dataset, it's important to get to know your data. Start
 
 <!-- I've decided to capitalize "White" to not perpetuate the idea that only  it over other. "When we ignore the specificity and significance of Whiteness—the things that it is, the things that it does—we contribute to its seeming neutrality and thereby grant it power to maintain its invisibility."  https://zora.medium.com/im-a-black-scholar-who-studies-race-here-s-why-i-capitalize-white-f94883aa2dd3 --> 
 
-A 1995 study suggests that average weight of White babies born in the US is 3,369 grams (7.43 pounds).In this dataset, we have pretty limited information on race, we only know whether the mother is white. We will make the simplifying assumption that babies of White mothers are also White, i.e. `whitemom = "white"`. (Yes, I know that this assumption is a gross oversimplification).
+A 1995 study suggests that average weight of White babies born in the US is 3,369 grams (7.43 pounds).In this dataset, we have pretty limited information on race, we only know whether the mother is White. We will make the simplifying assumption that babies of White mothers are also White, i.e. `whitemom = "white"`. (Yes, I know that this assumption is a gross oversimplification).
 
 We want to evaluate whether the average weight of White babies has changed since 1995.
 
@@ -107,7 +107,7 @@ Our null hypothesis should state "there is nothing going on", i.e. no change sin
 
 Our alternative hypothesis should reflect the research question, i.e., some change since 1995. Since the research question doesn't state a direction for the change, we use a two-sided alternative hypothesis: $H_A: \mu \ne 7.43~pounds$.
 
-2. Create a filtered data frame called ncbirths_white that contains data only from White mothers. Then, calculate the mean of the weights of their babies.
+2. Create a filtered data frame called `ncbirths_white` that contains data only from White mothers. Then, calculate the mean of the weights of their babies.
 
 3. Are the criteria necessary for conducting simulation-based inference satisfied? Explain your reasoning.
 
@@ -125,30 +125,34 @@ Let's discuss how this test would work. Our goal is to simulate a null distribut
 
 Consider the relationship between a mother's smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.
 
-
 5. Make side-by-side box plots displaying the relationship between `habit` and `weight`. What does the plot highlight about the relationship between these two variables?
 
-6. Before continuing, create a cleaned version of the dataset by removing any observations with NAs in the `habit` column. Name this version `ncbirths_habitgiven`.
 
-We can use these box plots to visualize the difference in medians.  We can also compare the means of the distributions by grouping the data according to the `habit` variable and then calculating the mean `weight` for each group using the following code:
+6. Before continuing, create a cleaned version of the dataset by removing any rows with missing values for `habit` or `weight`. Name this version `ncbirths_clean`.
+
+7. Calculate the observed difference in means between the baby weights of smoking and non-smoking mothers.
 
 ```{r habit-means, eval=FALSE}
-ncbirths_habitgiven %>%
+ncbirths_clean %>%
   group_by(habit) %>%
   summarise(mean_weight = mean(weight))
 ```
 
 We can see that there's an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.
 
-7. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.
 
-8. Are the criteria necessary for conducting simulation based inference satisfied? Explain your reasoning.
+8. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.
+
+$H_0$: _________ ($\mu_1 = \mu_2$)
+
+$H_A$: _________ ($\mu_1 \ne \mu_2$)
+
 
 9. Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
 
 10. Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.
 
-### Baby weight vs. mother's age
+### Mother's age vs. baby weight
  
 In this portion of the analysis, we focus on two variables. The first one is `maturemom`.
 
@@ -164,7 +168,11 @@ The other variable of interest is `lowbirthweight`.
 
 13. Calculate a confidence interval for the difference between the proportions of low birth weight babies between mature and younger mothers. Interpret the interval in the context of the data and explain what it means.
 
+## Wrap up
 
+In this lab, you practiced using simulation-based inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You also explored the relationships between other variables, such as the mother's age and the baby's birth weight. You've gained experience with data manipulation, visualization, hypothesis testing, and calculating confidence intervals.
+
+Remember to save your work, commit your changes, and push them to your Git repository!
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
