@@ -1,0 +1,49 @@
+# R Commands
+
+```{r include = FALSE}
+source("common.R")
+ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+
+
+generate_rdoc_url <- function(function_name =  "base::summary",
+                              package_name = NULL,
+                              topic_name = NULL) {
+  if(is.null(package_name)|is.null(topic_name)){
+  package_name <- sub("::.*", "", function_name)
+  topic_name <- sub(".*::", "", function_name)
+  } else {
+    
+    package_name <-  help.search(function_name,fields="name")[["matches"]][,"Name" == function_name]
+  package_name <-  package_name[ package_name$Name==function_name]
+    if (is.null(package_name)) {
+      warning("Function not found in any package.")
+      return(NULL)
+    }
+    
+  }
+  
+  base_url <- "https://www.rdocumentation.org/packages/"
+  topic_url <- paste0(base_url, package_name, "/topics/", topic_name)
+  
+  return(topic_url)
+}
+
+
+```
+
+
+Below is a list of R commands along with links to their help pages:
+
+- [`summary()`](https://www.rdocumentation.org/packages/base/versions/4.1.0/topics/summary): Provides summary statistics for numeric data.
+- [`plot()`](https://www.rdocumentation.org/packages/graphics/versions/4.1.0/topics/plot): Creates various types of plots.
+- [`lm()`](https://www.rdocumentation.org/packages/stats/versions/4.1.0/topics/lm): Fits linear regression models.
+- [`read.csv()`](https://www.rdocumentation.org/packages/utils/versions/4.1.0/topics/read.table): Reads a CSV file into a data frame.
+- [`install.packages()`](https://www.rdocumentation.org/packages/utils/versions/4.1.0/topics/install.packages): Installs R packages from CRAN.
+
+You can add more commands to the list as needed. Simply include the command name within backticks (`command()`), and provide the corresponding help page URL in the link text.
+
+Save the above code in an R Markdown file (e.g., `command_reference.Rmd`) and knit it to an HTML document. The resulting HTML file will display the list of R commands with clickable links to their respective help pages.
+
+Remember to replace the example links with the appropriate URLs for the commands you want to include in your reference. You can find the help page URLs for specific R functions on the official R documentation website (https://www.rdocumentation.org/).
+
+I hope this helps! Let me know if you have any further questions.
