@@ -23,7 +23,6 @@ remove_me <- c(
 x %in% glue("`{remove_me}`") %>% table()
 x <- x[!x %in% glue("`{remove_me}`")]
 
-tibble(x = x) %>% 
-  count(x, sort = TRUE) %>% 
+tibble(x = x) %>%
+  count(x, sort = TRUE) %>%
   View()
-

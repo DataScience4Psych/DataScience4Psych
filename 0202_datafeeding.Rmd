@@ -176,13 +176,15 @@ In the figures below, we see how factors can be put to work in figures. The `con
 
 ```{r factors-nice-for-plots, fig.show = 'hold', out.width = '49%'}
 ## we exploit the fact that ggplot2 was installed and loaded via the tidyverse
-p <- ggplot(filter(gapminder, continent != "Oceania"),
-            aes(x = gdpPercap, y = lifeExp)) # just initializes
+p <- ggplot(
+  filter(gapminder, continent != "Oceania"),
+  aes(x = gdpPercap, y = lifeExp)
+) # just initializes
 p <- p + scale_x_log10() # log the x axis the right way
 p + geom_point() # scatterplot
 p + geom_point(aes(color = continent)) # map continent to color
-p + geom_point(alpha = (1/3), size = 3) + geom_smooth(lwd = 3, se = FALSE)
-p + geom_point(alpha = (1/3), size = 3) + facet_wrap(~ continent) +
+p + geom_point(alpha = (1 / 3), size = 3) + geom_smooth(lwd = 3, se = FALSE)
+p + geom_point(alpha = (1 / 3), size = 3) + facet_wrap(~continent) +
   geom_smooth(lwd = 1.5, se = FALSE)
 ```
 
@@ -197,9 +199,9 @@ Variants of that: indicate continent by color, do for just one continent, do for
 hDat <- subset(gapminder, subset = year == 2007)
 str(hDat)
 table(hDat$continent)
-#xyplot(lifeExp ~ gdpPercap, hDat)
-#xyplot(lifeExp ~ gdpPercap, hDat, group = continent, auto.key = TRUE)
-#xyplot(lifeExp ~ gdpPercap | continent, hDat)
+# xyplot(lifeExp ~ gdpPercap, hDat)
+# xyplot(lifeExp ~ gdpPercap, hDat, group = continent, auto.key = TRUE)
+# xyplot(lifeExp ~ gdpPercap | continent, hDat)
 ```
 ## if you want just some rows and/or just some variables, for inspection or to
 ## assign as a new object, use subset()

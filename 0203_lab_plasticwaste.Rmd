@@ -89,27 +89,37 @@ Did you expect this result? You might consider doing some research on Trinidad a
 Another way of visualizing numerical data is using density plots.
 
 ```{r plastic_waste_per_cap-dens}
-ggplot(data = plastic_waste,
-       aes(x = plastic_waste_per_cap)) +
+ggplot(
+  data = plastic_waste,
+  aes(x = plastic_waste_per_cap)
+) +
   geom_density()
 ```
 
 And compare distributions across continents by coloring density curves by continent.
 
 ```{r plastic_waste_per_cap-dens-color}
-ggplot(data = plastic_waste, 
-       mapping = aes(x = plastic_waste_per_cap, 
-                     color = continent)) +
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = plastic_waste_per_cap,
+    color = continent
+  )
+) +
   geom_density()
 ```
 
 The resulting plot may be a little difficult to read, so let's also fill the curves in with colors as well.
 
 ```{r plastic_waste_per_cap-dens-color-fill}
-ggplot(data = plastic_waste, 
-       mapping = aes(x = plastic_waste_per_cap, 
-                     color = continent, 
-                     fill = continent)) +
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = plastic_waste_per_cap,
+    color = continent,
+    fill = continent
+  )
+) +
   geom_density()
 ```
 
@@ -120,10 +130,14 @@ We can change the transparency level of the fill color to help with this problem
 The `alpha` argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque. There is no way to tell what value will work best, so you just need to try a few.
 
 ```{r plastic_waste_per_cap-dens-color-fill-alpha}
-ggplot(data = plastic_waste, 
-       mapping = aes(x = plastic_waste_per_cap, 
-                     color = continent, 
-                     fill = continent)) +
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = plastic_waste_per_cap,
+    color = continent,
+    fill = continent
+  )
+) +
   geom_density(alpha = 0.7)
 ```
 
@@ -138,9 +152,13 @@ This plot still doesn't look great...
 And yet another way to visualize this relationship is using side-by-side box plots.
 
 ```{r plastic_waste_per_cap-box}
-ggplot(data = plastic_waste, 
-       mapping = aes(x = continent, 
-                     y = plastic_waste_per_cap)) +
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = continent,
+    y = plastic_waste_per_cap
+  )
+) +
   geom_boxplot()
 ```
 
@@ -165,21 +183,25 @@ If you still have some time left, move on to the remaining exercises below.
 5.1. Recreate the following plot, and interpret what you see in context of the data.
 
 ```{r echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
-plastic_waste %>% 
+plastic_waste %>%
   mutate(coastal_pop_prop = coastal_pop / total_pop) %>%
   filter(plastic_waste_per_cap < 3) %>%
-  ggplot(aes(x = coastal_pop_prop,
-             y = plastic_waste_per_cap,
-             color = continent)) + 
-    geom_point() +
-    geom_smooth(color = "black") +
-    scale_color_viridis_d() +
-    labs(x = "Coastal population proportion (Coastal / total population)", 
-         y = "Plastic waste per capita ", 
-         color = "Continent",
-         title = "Plastic waste vs. coastal population proportion",
-         subtitle = "by continent") +
-    theme_minimal()
+  ggplot(aes(
+    x = coastal_pop_prop,
+    y = plastic_waste_per_cap,
+    color = continent
+  )) +
+  geom_point() +
+  geom_smooth(color = "black") +
+  scale_color_viridis_d() +
+  labs(
+    x = "Coastal population proportion (Coastal / total population)",
+    y = "Plastic waste per capita ",
+    color = "Continent",
+    title = "Plastic waste vs. coastal population proportion",
+    subtitle = "by continent"
+  ) +
+  theme_minimal()
 ```
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*

@@ -4,7 +4,7 @@ These lecture notes are an optional deep-dive into cross-validation. The lecture
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -95,17 +95,16 @@ p <- 20
 X <- matrix(rnorm(n * p), nrow = n)
 y <- rnorm(n)
 get_rss_submodels <- function(n_predictors, y, X) {
-    if(n_predictors == 0) {
-        lm_submodel <- lm(y ~ 0)
-    } else {
-        lm_submodel <- lm(y ~ 0 + X[,1:n_predictors, drop = FALSE])
-    }
-    return(sum(residuals(lm_submodel)^2))
+  if (n_predictors == 0) {
+    lm_submodel <- lm(y ~ 0)
+  } else {
+    lm_submodel <- lm(y ~ 0 + X[, 1:n_predictors, drop = FALSE])
+  }
+  return(sum(residuals(lm_submodel)^2))
 }
 p_vec <- 0:p
 rss <- sapply(p_vec, get_rss_submodels, y, X)
 plot(rss ~ p_vec)
-
 ```
 
 
@@ -114,35 +113,35 @@ plot(rss ~ p_vec)
 get_cv_error <- function(n_predictors,
                          y,
                          X,
-                         folds) 
-    {
-    cv_vec <- numeric(length(unique(folds)))
-    for(f in unique(folds)) {
-        cv_vec[f] <- rss_on_held_out(
-                  n_predictors,
-                  y_train = y[folds != f],
-                  X_train = X[folds != f,],
-                  y_test = y[folds == f],
-                  X_test = X[folds == f,])
-    }
-    return(mean(cv_vec))
-    }
+                         folds) {
+  cv_vec <- numeric(length(unique(folds)))
+  for (f in unique(folds)) {
+    cv_vec[f] <- rss_on_held_out(
+      n_predictors,
+      y_train = y[folds != f],
+      X_train = X[folds != f, ],
+      y_test = y[folds == f],
+      X_test = X[folds == f, ]
+    )
+  }
+  return(mean(cv_vec))
+}
 
 rss_on_held_out <- function(n_predictors,
                             y_train,
                             X_train,
                             y_test,
                             X_test) {
-    if(n_predictors == 0) {
-        lm_submodel <- lm(y_train ~ 0)
-        preds_on_test <- rep(0, length(y_test))
-    } else {
-        lm_submodel <- lm(y_train ~ 0 + X_train[,1:n_predictors, drop = FALSE])
-        preds_on_test <- X_test[,1:n_predictors, drop= FALSE] %*% coef(lm_submodel)
-    }
+  if (n_predictors == 0) {
+    lm_submodel <- lm(y_train ~ 0)
+    preds_on_test <- rep(0, length(y_test))
+  } else {
+    lm_submodel <- lm(y_train ~ 0 + X_train[, 1:n_predictors, drop = FALSE])
+    preds_on_test <- X_test[, 1:n_predictors, drop = FALSE] %*% coef(lm_submodel)
+  }
 
-    return(sum((y_test - preds_on_test)^2))
-    }
+  return(sum((y_test - preds_on_test)^2))
+}
 K <- 5
 
 ## normally you would do this at random

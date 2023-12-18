@@ -10,7 +10,7 @@ library(magrittr)
 ```
 
 ```{r current-collections, include = FALSE}
-first_url="https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0"
+first_url <- "https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0"
 
 num_pieces <- read_html(first_url) %>%
   html_nodes(".no-results") %>%
@@ -49,8 +49,10 @@ Run the following (but update it for your name and email!) in the Console to con
 
 ```{r git-config, eval=FALSE}
 library(usethis)
-use_git_config(user.name = "Your Name", 
-               user.email = "your.email@address.com")
+use_git_config(
+  user.name = "Your Name",
+  user.email = "your.email@address.com"
+)
 ``` 
 
 ## R scripts vs. R Markdown documents {.unnumbered}
@@ -184,9 +186,9 @@ The moral of the story is: the link is stored in the `href` attribute.
 
 ```{r}
 page %>%
-  html_nodes(".iteminfo") %>%   # same nodes
-  html_node("h3 a") %>%         # as before
-  html_attr("href")             # but get href attribute instead of text
+  html_nodes(".iteminfo") %>% # same nodes
+  html_node("h3 a") %>% # as before
+  html_attr("href") # but get href attribute instead of text
 ```
 
 These don't really look like urls as we know them though. They're relative 
@@ -227,7 +229,7 @@ You've been using R functions, now it's time to write your own!
 Let's start simple. Here is a function that takes in an argument `x`, and adds 2 to it.
 
 ```{r}
-add_two <- function(x){
+add_two <- function(x) {
   x + 2
 }
 ```
@@ -242,7 +244,7 @@ add_two(10)
 The skeleton for defining functions in R is as follows:
 
 ```{r eval=FALSE}
-function_name <- function(input){
+function_name <- function(input) {
   # do something with the input(s)
   # return something
 }
@@ -255,7 +257,7 @@ Then, a function for scraping a page should look something like:
 
 
 ```{r}
-function_name <- function(url){
+function_name <- function(url) {
   # read page at url
   # extract title, link, artist info for n pieces on page
   # return a n x 3 tibble

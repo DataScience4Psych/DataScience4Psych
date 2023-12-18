@@ -29,7 +29,7 @@ names(mismanaged_vs_gdp) <- c(
   "year",
   "mismanaged_plastic_waste_per_cap",
   "gdp_per_cap",
-  "total_pop" 
+  "total_pop"
 )
 
 # coast_vs_waste ---------------------------------------------------------------
@@ -46,7 +46,9 @@ names(coast_vs_waste) <- c(
 # create IDs -------------------------------------------------------------------
 
 waste_vs_gdp <- waste_vs_gdp %>% mutate(id = paste0(code, year))
-mismanaged_vs_gdp <- mismanaged_vs_gdp %>% filter(!is.na(code)) %>% mutate(id = paste0(code, year))
+mismanaged_vs_gdp <- mismanaged_vs_gdp %>%
+  filter(!is.na(code)) %>%
+  mutate(id = paste0(code, year))
 coast_vs_waste <- coast_vs_waste %>% mutate(id = paste0(code, year))
 
 # join -------------------------------------------------------------------------
@@ -55,9 +57,11 @@ plastic_waste_raw <- full_join(waste_vs_gdp, mismanaged_vs_gdp, by = "id") %>%
   full_join(coast_vs_waste, by = "id")
 
 plastic_waste <- plastic_waste_raw %>%
-  select(code, entity, year, gdp_per_cap.x, 
-         plastic_waste_per_cap, mismanaged_plastic_waste_per_cap, mismanaged_plastic_waste,
-         coastal_pop, total_pop) %>%
+  select(
+    code, entity, year, gdp_per_cap.x,
+    plastic_waste_per_cap, mismanaged_plastic_waste_per_cap, mismanaged_plastic_waste,
+    coastal_pop, total_pop
+  ) %>%
   rename(
     gdp_per_cap = gdp_per_cap.x
   ) %>%

@@ -1,7 +1,7 @@
 ```{r include = FALSE}
 source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
-library(tweetrmd) #... embedding tweets
+library(tweetrmd) # ... embedding tweets
 ```
 
 
@@ -11,10 +11,9 @@ library(tweetrmd) #... embedding tweets
 ## Working with a single data frame
 
 ```{r, echo=FALSE}
-
 # hands on wrangling
 "https://www.youtube.com/watch?v=eeKBSjv7K6E" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -22,8 +21,8 @@ You can follow along with the slides [here][d09_wrangle]) if they do not appear 
 
 ```{r, echo=FALSE}
 ds4p_urls %>%
-slide_url("d09_wrangle") %>%
- include_url(height = "400px")
+  slide_url("d09_wrangle") %>%
+  include_url(height = "400px")
 ```
 
 
@@ -32,15 +31,15 @@ slide_url("d09_wrangle") %>%
 
 ```{r, echo=FALSE}
 ds4p_urls %>%
-slide_url("d09_wrangle","#18") %>%
- include_url(height = "400px")
+  slide_url("d09_wrangle", "#18") %>%
+  include_url(height = "400px")
 ```
 
 You can find the materials for the Hotels activity [here](https://github.com/DataScience4Psych/ae-04-hotels-datawrangling). The compiled version should look something like the following...
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/ae-04-hotels-datawrangling/hotels-datawrangling.html" %>%
- include_url(height = "400px")
+  include_url(height = "400px")
 ```
 
 
@@ -194,9 +193,11 @@ When I first cleaned this Gapminder excerpt, I was a [`camelCase`](https://en.wi
 
 ```{r}
 my_gap %>%
-  rename(life_exp = lifeExp,
-         gdp_percap = gdpPercap,
-         gdp_percap_rel = gdpPercapRel)
+  rename(
+    life_exp = lifeExp,
+    gdp_percap = gdpPercap,
+    gdp_percap_rel = gdpPercapRel
+  )
 ```
 
 I did NOT assign the post-rename object back to `my_gap` because that would make the chunks in this tutorial harder to copy/paste and run out of order. In real life, I would probably assign this back to `my_gap`, in a data preparation script, and proceed with the new variable names.
@@ -271,8 +272,10 @@ What if we wanted to add the number of unique countries for each continent? You 
 ```{r}
 my_gap %>%
   group_by(continent) %>%
-  summarize(n = n(),
-            n_countries = n_distinct(country))
+  summarize(
+    n = n(),
+    n_countries = n_distinct(country)
+  )
 ```
 
 #### General summarization
@@ -294,7 +297,7 @@ my_gap %>%
 my_gap %>%
   filter(year %in% c(1952, 2007)) %>%
   group_by(continent, year) %>%
-  summarize_at(vars(lifeExp, gdpPercap), list( ~ mean(.), ~ median(.)))
+  summarize_at(vars(lifeExp, gdpPercap), list(~ mean(.), ~ median(.)))
 ```
 
 Let's focus just on Asia. What are the minimum and maximum life expectancies seen by year?
@@ -303,8 +306,10 @@ Let's focus just on Asia. What are the minimum and maximum life expectancies see
 my_gap %>%
   filter(continent == "Asia") %>%
   group_by(year) %>%
-  summarize(min_lifeExp = min(lifeExp),
-            max_lifeExp = max(lifeExp))
+  summarize(
+    min_lifeExp = min(lifeExp),
+    max_lifeExp = max(lifeExp)
+  )
 ```
 
 Of course it would be much more interesting to see *which* country contributed these extreme observations. Is the minimum (maximum) always coming from the same country? We tackle that with window functions shortly.
@@ -361,8 +366,10 @@ For concreteness, I use `mutate()` to actually create these variables, even thou
 
 ```{r}
 asia %>%
-  mutate(le_rank = min_rank(lifeExp),
-         le_desc_rank = min_rank(desc(lifeExp))) %>%
+  mutate(
+    le_rank = min_rank(lifeExp),
+    le_desc_rank = min_rank(desc(lifeExp))
+  ) %>%
   filter(country %in% c("Afghanistan", "Japan", "Thailand"), year > 1995)
 ```
 
@@ -384,7 +391,7 @@ my_gap %>%
   select(year, country, lifeExp) %>%
   arrange(year) %>%
   group_by(year) %>%
-  #top_n(1, wt = lifeExp)        ## gets the min
+  # top_n(1, wt = lifeExp)        ## gets the min
   top_n(1, wt = desc(lifeExp)) ## gets the max
 ```
 

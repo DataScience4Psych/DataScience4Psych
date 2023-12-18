@@ -9,9 +9,9 @@ library(tufte)
 library(knitr)
 options(
   htmltools.dir.version = FALSE, # for blogdown
-  show.signif.stars = FALSE,     # for regression output
+  show.signif.stars = FALSE, # for regression output
   digits = 2
-  )
+)
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
@@ -39,11 +39,10 @@ In this lab, we will use the **tidyverse** and **dsbox** packages. The *dsbox** 
 ```{r,eval=FALSE}
 install.packages("devtools")
 devtools::install_github("rstudio-education/dsbox")
-
 ```
 ```{r eval = TRUE, message = FALSE}
-library(tidyverse) 
-library(dsbox) 
+library(tidyverse)
+library(dsbox)
 ```
 
 If you cannot get `dsbox` to install, you can also download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda). 
@@ -139,10 +138,10 @@ dn %>%
 ```{r eval=FALSE}
 lq %>%
   mutate(country = case_when(
-    state %in% state.abb     ~ "United States",
+    state %in% state.abb ~ "United States",
     state %in% c("ON", "BC") ~ "Canada",
-    state == "ANT"           ~ "Colombia",
-    ...                      # fill in the rest
+    state == "ANT" ~ "Colombia",
+    ... # fill in the rest
   ))
 ```
 
@@ -187,9 +186,11 @@ dn_lq <- bind_rows(dn, lq)
 We can plot the locations of the two establishments using a scatter plot, and color the points by the establishment type. Note that the latitude is plotted on the x-axis and the longitude on the y-axis.
 
 ```{r}
-ggplot(dn_lq, mapping = aes(x = longitude,
-                            y = latitude,
-                            color = establishment)) +
+ggplot(dn_lq, mapping = aes(
+  x = longitude,
+  y = latitude,
+  color = establishment
+)) +
   geom_point()
 ```
 

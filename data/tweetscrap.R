@@ -9,7 +9,7 @@ br <- tml %>%
   filter(is.na(in_reply_to_screen_name)) %>%
   slice(
     which(str_detect(text, "IS IT JUST ME")):
-      max(which(str_detect(text, "[bB]lows")))
+    max(which(str_detect(text, "[bB]lows")))
   ) %>%
   mutate(first_word = word(text, 1)) # updated to use stringr::word
 

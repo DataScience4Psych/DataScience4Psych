@@ -2,7 +2,7 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./data/ds4p_urls.csv")
 ```
 
@@ -15,85 +15,89 @@ This chapter is a collection of basic base R code that I've used in my undergrad
 ```{r,error=TRUE}
 ######## Levels of Measurement Examples
 # Ratio Example
-library(HistData)   # loads the HistData package
-data("Galton")			# loads the Galton dataset
-attach(Galton)			# attaches the dataset
-head(Galton, n=10)  # First ten rows of data
-hist(child)	# Histogram		hist(Galton$child)  is the same, use if you do not want to attach the data file
-plot(density(child))		# Density Plot
-detach(Galton)			# Remember to detach you dataset!
+library(HistData) # loads the HistData package
+data("Galton") # loads the Galton dataset
+attach(Galton) # attaches the dataset
+head(Galton, n = 10) # First ten rows of data
+hist(child) # Histogram		hist(Galton$child)  is the same, use if you do not want to attach the data file
+plot(density(child)) # Density Plot
+detach(Galton) # Remember to detach you dataset!
 
 # Interval Example
 library(datasets)
 data("nottem")
-nottem[1:10] 			# First ten rows of data
-hist(nottem) 			# Histogram
-plot(density(nottem)) 	# Density Plot
+nottem[1:10] # First ten rows of data
+hist(nottem) # Histogram
+plot(density(nottem)) # Density Plot
 
 # Ordinal Example
 library(ggplot2movies)
 data(movies)
 
-variable<-movies$rating
-head(movies, n=10) 		# First ten rows of data
-hist(variable) 			# Histogram
-plot(density(variable)) 	# Density Plot
+variable <- movies$rating
+head(movies, n = 10) # First ten rows of data
+hist(variable) # Histogram
+plot(density(variable)) # Density Plot
 
 
 # Nominal Example
 library(vcd)
 data(Arthritis)
-Arthritis[1:10, ]  		# First ten rows of data
+Arthritis[1:10, ] # First ten rows of data
 
-variable<-Arthritis$Treatment
-hist(variable) 				# Histogram error
+variable <- Arthritis$Treatment
+hist(variable) # Histogram error
 
-barplot_fix<-prop.table(table(variable))
+barplot_fix <- prop.table(table(variable))
 
-barplot(barplot_fix)	# Sometimes, R is silly
+barplot(barplot_fix) # Sometimes, R is silly
 
 
 ######## Summary Examples
 # Bar chart
 library(car)
 counts <- table(mtcars$gear)
-barplot(counts, main="Car Distribution",
-  	xlab="Number of Gears")
+barplot(counts,
+  main = "Car Distribution",
+  xlab = "Number of Gears"
+)
 hist(counts)
 
 # Pie chart
 mytable <- table(iris$Species)
-lbls <- paste(names(mytable), "\n", mytable, sep="")
-pie(mytable, labels = lbls,
-		main="Pie Chart of Species\n (with sample sizes)")
+lbls <- paste(names(mytable), "\n", mytable, sep = "")
+pie(mytable,
+  labels = lbls,
+  main = "Pie Chart of Species\n (with sample sizes)"
+)
 
 # Histogram
 library(MASS)
-variable<-cats$Bwt
+variable <- cats$Bwt
 hist(variable)
-variable<-variable*2.2   #Convert to Imperial
+variable <- variable * 2.2 # Convert to Imperial
 hist(variable)
 
 # Stem and Leaf plot
-stem(faithful$eruptions,scale=1)
+stem(faithful$eruptions, scale = 1)
 
 ######## Central Tendency
 library(pscl)
 data(prussian)
-variable<-prussian$y #horse kick fatality by year
+variable <- prussian$y # horse kick fatality by year
 
 # Mean
 mean(variable)
 
-#Median
+# Median
 median(variable)
 
-#Mode
+# Mode
 mode(variable) # That's not mode!
 # Function to examine mode
 Mode <- function(x) {
-	ux <- unique(x)   #finds all unique values
-	ux[which.max(tabulate(match(x, ux)))] #returns the value which is most frequent
+  ux <- unique(x) # finds all unique values
+  ux[which.max(tabulate(match(x, ux)))] # returns the value which is most frequent
 }
 Mode(variable)
 ## summary
@@ -105,7 +109,7 @@ describe(variable)
 ######## Spread
 # Range
 range(variable)
-max(variable) -min(variable)
+max(variable) - min(variable)
 
 # 5 Number Summary / Quartiles
 summary(variable)
@@ -118,7 +122,7 @@ sqrt(var(variable))
 sd(variable)
 
 ################ Rescaling
-variable<-movies$rating
+variable <- movies$rating
 scale(variable)[1:10]
 
 plot(density(variable)) # no scaling
@@ -131,64 +135,69 @@ plot(density(scale(variable))) # with scaling
 
 # Display the normal distributions with various means
 
-x <- seq(-80, 80, length=1000)
+x <- seq(-80, 80, length = 1000)
 hx <- dnorm(x)
-colors <- c("red", "blue","green", "green", "gold", "black")
+colors <- c("red", "blue", "green", "green", "gold", "black")
 
-plot(x, hx, type="l", lty=2, xlab="x value",
-		 ylab="Density", main="Comparison of normal Distributions",xlim=c(-5, 7))
-location<-c(2,4,-2)
-for (i in 1:3){
-	lines(x, dnorm(x,mean=location[i]), lwd=1, col=colors[i])
+plot(x, hx,
+  type = "l", lty = 2, xlab = "x value",
+  ylab = "Density", main = "Comparison of normal Distributions", xlim = c(-5, 7)
+)
+location <- c(2, 4, -2)
+for (i in 1:3) {
+  lines(x, dnorm(x, mean = location[i]), lwd = 1, col = colors[i])
 }
 
 
 # Display the normal distributions with various standard deviations
-plot(x, hx, type="l", lty=2, xlab="x value",
-		 ylab="Density", main="Comparison of normal Distributions",xlim=c(-10, 10))
+plot(x, hx,
+  type = "l", lty = 2, xlab = "x value",
+  ylab = "Density", main = "Comparison of normal Distributions", xlim = c(-10, 10)
+)
 
-for (i in c(.5,2,4,6)){
-	lines(x, dnorm(x,sd=i), lwd=1, col=colors[i])
+for (i in c(.5, 2, 4, 6)) {
+  lines(x, dnorm(x, sd = i), lwd = 1, col = colors[i])
 }
 #### Z-Score Problem
 # Data
 
-IQ <-c(
-114,
-130,
-74,
-100,
-120,
-112,
-104,
-132,
-107,
-89,
-111,
-103,
-102,
-128,
-98,
-91,
-118,
-96,
-114,
-119,
-112,
-114,
-86,
-112,
-103,
-72,
-93,
-105,
-111,
-108,
-103)
+IQ <- c(
+  114,
+  130,
+  74,
+  100,
+  120,
+  112,
+  104,
+  132,
+  107,
+  89,
+  111,
+  103,
+  102,
+  128,
+  98,
+  91,
+  118,
+  96,
+  114,
+  119,
+  112,
+  114,
+  86,
+  112,
+  103,
+  72,
+  93,
+  105,
+  111,
+  108,
+  103
+)
 
 # Stem plot
 
-stem(IQ,scale=1)
+stem(IQ, scale = 1)
 
 # Mean and SD
 mean(IQ)
@@ -198,20 +207,20 @@ sd(IQ)
 # What proportion of scores are within one standard deviation of the mean?
 
 ## 1 SD above
-above1<- mean(IQ)+ 1*sd(IQ)
+above1 <- mean(IQ) + 1 * sd(IQ)
 
 
 ## 1 SD below
-below1<- mean(IQ)- 1*sd(IQ)
+below1 <- mean(IQ) - 1 * sd(IQ)
 
 ## numbers within range
-x<-IQ
-y = c( below1, above1)
-(x = x[ x >= y[1] & x <= y[2]])
+x <- IQ
+y <- c(below1, above1)
+(x <- x[x >= y[1] & x <= y[2]])
 
 # What would these proportions be in an exactly Normal distribution?
 ## Hard way
-pnorm(above1,mean=mean(IQ),sd=sd(IQ)) - pnorm(below1,mean=mean(IQ),sd=sd(IQ))
+pnorm(above1, mean = mean(IQ), sd = sd(IQ)) - pnorm(below1, mean = mean(IQ), sd = sd(IQ))
 
 ## Easy Way
 pnorm(1) - pnorm(-1)
@@ -225,7 +234,7 @@ pnorm(1) - pnorm(-1)
 
 ## probability X <= 55
 pnorm(55, 100, 15)
-pnorm(55, 100, 15)*2
+pnorm(55, 100, 15) * 2
 
 # more significant?
 1 - pt(2.54, 24)
@@ -239,63 +248,62 @@ pnorm(55, 100, 15)*2
 library(HSAUR)
 data("womensrole")
 
-data=womensrole[womensrole$education<5,]
-data2=womensrole[womensrole$sex=="Male",]
+data <- womensrole[womensrole$education < 5, ]
+data2 <- womensrole[womensrole$sex == "Male", ]
 
 #### Correlation
 # Correlation
 summary(womensrole$agree)
 attach(womensrole)
-cor(x=education,y=agree)
-plot(x=education,y=agree) # Two variables, y and x together
+cor(x = education, y = agree)
+plot(x = education, y = agree) # Two variables, y and x together
 detach(womensrole)
 
-womensrole$percentage_agree<-womensrole$agree/(womensrole$agree+womensrole$disagree)
+womensrole$percentage_agree <- womensrole$agree / (womensrole$agree + womensrole$disagree)
 summary(womensrole$percentage_agree)
 
 attach(womensrole)
-cor(x=education,y=percentage_agree)
-cor(x=education,y=percentage_agree,use="pairwise.complete") # missing data
-plot(x=education,y=agree)
-plot(x=education,y=percentage_agree,xlab="Years of Education",ylab="Percent who agree")
+cor(x = education, y = percentage_agree)
+cor(x = education, y = percentage_agree, use = "pairwise.complete") # missing data
+plot(x = education, y = agree)
+plot(x = education, y = percentage_agree, xlab = "Years of Education", ylab = "Percent who agree")
 detach(womensrole)
 
 ## Continuous predictor -> continuous Outcome
-fit.object <- lm(data=womensrole,percentage_agree ~ education)
+fit.object <- lm(data = womensrole, percentage_agree ~ education)
 summary(fit.object)
-cor(womensrole$education,womensrole$percentage_agree,use="pairwise.complete")
-plot(womensrole$education,womensrole$percentage_agree)
+cor(womensrole$education, womensrole$percentage_agree, use = "pairwise.complete")
+plot(womensrole$education, womensrole$percentage_agree)
 abline(fit.object, col = "red")
 ## predict
 ### at what levels of education do you want estimated agreement?
-new.df <- data.frame(education=c(0, 6, 12))
+new.df <- data.frame(education = c(0, 6, 12))
 predict(fit.object, new.df)
 
 
 ## Categoreical predictor -> continuous Outcome
-fit.object <- lm(data=womensrole,percentage_agree ~ sex)
+fit.object <- lm(data = womensrole, percentage_agree ~ sex)
 summary(fit.object)
-plot(womensrole$sex,womensrole$percentage_agree)
+plot(womensrole$sex, womensrole$percentage_agree)
 abline(fit.object, col = "red")
 
 
 
 ## continuous predictor -> catergorical Outcome
 #
-#Predict classification of being "short movie" from length of running time
-options(scipen=10) # to remove scientific notation from print out
-fit.object <- glm(data=movies,as.factor(Short) ~ length,family=binomial())
+# Predict classification of being "short movie" from length of running time
+options(scipen = 10) # to remove scientific notation from print out
+fit.object <- glm(data = movies, as.factor(Short) ~ length, family = binomial())
 summary(fit.object)
-plot(as.factor(movies$Short),movies$length)
+plot(as.factor(movies$Short), movies$length)
 abline(fit.object, col = "red")
 exp(coef(fit.object))
 ## catergorical predictor -> catergorical Outcome
 #
-#Predict classification of being "short movie" from whether it is an animated film or not
-fit.object <- glm(data=movies,as.factor(Short) ~ as.factor(Animation),family=binomial())
+# Predict classification of being "short movie" from whether it is an animated film or not
+fit.object <- glm(data = movies, as.factor(Short) ~ as.factor(Animation), family = binomial())
 summary(fit.object)
- exp(coef(fit.object))
-
+exp(coef(fit.object))
 ```
 
 
@@ -307,25 +315,25 @@ summary(fit.object)
 
 
 ```{r cent}
-
 # Display the normal distributions with various means
 
-x <- seq(-80, 80, length=1000)
+x <- seq(-80, 80, length = 1000)
 hx <- dnorm(x)
-colors <- c("red", "blue","green", "purple", "black")
+colors <- c("red", "blue", "green", "purple", "black")
 
-plot(x, hx, type="l", lty=2, xlab="x value",ylab="Density", main="Distributions with Different Means",xlim=c(-7, 7))
-location<-c(2,4,-2,-4)
-labels=paste0("Mean = ",location)
-labels[length(labels)+1]="Mean = 0"
+plot(x, hx, type = "l", lty = 2, xlab = "x value", ylab = "Density", main = "Distributions with Different Means", xlim = c(-7, 7))
+location <- c(2, 4, -2, -4)
+labels <- paste0("Mean = ", location)
+labels[length(labels) + 1] <- "Mean = 0"
 
-for (i in 1:length(location)){
-	lines(x, dnorm(x,mean=location[i]), lwd=1, col=colors[i])
+for (i in 1:length(location)) {
+  lines(x, dnorm(x, mean = location[i]), lwd = 1, col = colors[i])
 }
 
-legend("topright", inset=.05, title="Distributions",
-  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
-
+legend("topright",
+  inset = .05, title = "Distributions",
+  labels, lwd = 2, lty = c(1, 1, 1, 1, 2), col = colors
+)
 ```
 
 
@@ -364,14 +372,13 @@ $\bar{X}= \frac{1}{n}  \sum^{n}_{i=1}x_{i}$
 library(pscl)
 data(prussian)
 
-#horse kick fatalities by year
+# horse kick fatalities by year
 prussian$y
 
-variable<-prussian$y 
+variable <- prussian$y
 
 # Mean
 mean(variable)
-
 ```
 
 
@@ -394,33 +401,31 @@ mean(variable)
 - Often used for ordinal data
 
 ```{r median,echo=TRUE}
-
-#Median
+# Median
 median(variable)
 
 # By hand
 
 # Sample Size?
-(sample.size=length(variable))
+(sample.size <- length(variable))
 
 # Even or Odd
 ## Test if number is divisible by 2.
 ## If yes, then even
 ## Else, is odd
-sample.size %% 2 == 0 
+sample.size %% 2 == 0
 
 # Sort our values
-variable=sort(variable)
+variable <- sort(variable)
 
 # if odd, grab the midpoint value sample size / 2
 
-variable[sample.size/2]
+variable[sample.size / 2]
 
 
 # if even grab the average of the midpoint values sample size / 2  and sample size+1 / 2
 
-(variable[sample.size/2] + variable[1+sample.size/2])/2
-
+(variable[sample.size / 2] + variable[1 + sample.size / 2]) / 2
 ```
 
 
@@ -429,13 +434,13 @@ variable[sample.size/2]
 - Local modes are the highest point with a subset of the distribution, there can be multiple ones
 
 ```{r mode,echo=TRUE}
-#Mode
+# Mode
 mode(variable) # That's not mode!
 
 # Function to examine mode
 Mode <- function(x) {
-	ux <- unique(x)   #finds all unique values
-	ux[which.max(tabulate(match(x, ux)))] #returns the value which is most frequent
+  ux <- unique(x) # finds all unique values
+  ux[which.max(tabulate(match(x, ux)))] # returns the value which is most frequent
 }
 Mode(variable)
 ```
@@ -466,19 +471,21 @@ describe(variable)
     - High variance has a very wide distribution, bulk of distribution is spread out
     
 ```{r spread}
-
 # Display the normal distributions with various standard deviations
-plot(x, hx, type="l", lty=2, xlab="x value",
-		 ylab="Density", main="Distributions with Different Standard Deviations",xlim=c(-7, 7))
-spread=c(.5,2,4)
-labels=paste0("SD = ",spread)
-labels[length(labels)+1]="SD = 1"
-for (i in 1:length(spread)){
-	lines(x, dnorm(x,sd=spread[i]), lwd=1, col=colors[i])
-} 
-legend("topright", inset=.05, title="Distributions",
-  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors[c(1:3,5)])
-
+plot(x, hx,
+  type = "l", lty = 2, xlab = "x value",
+  ylab = "Density", main = "Distributions with Different Standard Deviations", xlim = c(-7, 7)
+)
+spread <- c(.5, 2, 4)
+labels <- paste0("SD = ", spread)
+labels[length(labels) + 1] <- "SD = 1"
+for (i in 1:length(spread)) {
+  lines(x, dnorm(x, sd = spread[i]), lwd = 1, col = colors[i])
+}
+legend("topright",
+  inset = .05, title = "Distributions",
+  labels, lwd = 2, lty = c(1, 1, 1, 1, 2), col = colors[c(1:3, 5)]
+)
 ```
 ## Measures of Spread around the Median
 
@@ -500,11 +507,10 @@ legend("topright", inset=.05, title="Distributions",
 ```{r,echo=TRUE}
 # Range
 range(variable)
-max(variable) -min(variable)
+max(variable) - min(variable)
 
 # 5 Number Summary / Quartiles
 summary(variable)
-
 ```
 
 

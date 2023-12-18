@@ -75,9 +75,8 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ```
 
 ```{r, echo=FALSE}
-
-slide_url(ds4p_urls,"d21_fitting") %>%
-include_url(height = "400px")
+slide_url(ds4p_urls, "d21_fitting") %>%
+  include_url(height = "400px")
 ```
 
 ## A More Technical Worked Example
@@ -111,8 +110,10 @@ We can extract the fitted values using `fitted.values(lm_singer)` and the residu
 For convenience, we create a data frame with two columns: the voice parts and the residuals.
 
 ```{r}
-res_singer <- data.frame(voice_part = singer$voice.part,
-                         residual = residuals(lm_singer))
+res_singer <- data.frame(
+  voice_part = singer$voice.part,
+  residual = residuals(lm_singer)
+)
 ```
 
 We can also do this with `group_by` and `mutate`:
@@ -184,8 +185,10 @@ Therefore, we add a line with the mean of the residuals (which should be zero) a
 ```{r}
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq() +
-  geom_abline(aes(intercept = 0,
-                  slope = sd(res_singer$residual)))
+  geom_abline(aes(
+    intercept = 0,
+    slope = sd(res_singer$residual)
+  ))
 ```
 
 ### The actually correct way
@@ -237,19 +240,17 @@ About data analysis:
 ### Commentary on Model Performance 
 
 ```{r, echo=FALSE}
-
 try_include_tweet("https://twitter.com/JoshuaGrubbsPhD/status/1516592721468825607")
 
 try_include_tweet("https://twitter.com/bmwiernik/status/1516597519228317701")
 
 try_include_tweet("https://twitter.com/KMKing_Psych/status/1516598327478865923")
-
 ```
 
 ```{r}
 library(performance)
 check_model(lm_singer)
-#model_performance(lm_singer)
+# model_performance(lm_singer)
 
 # QQ-plot
 plot(check_normality(lm_singer), type = "qq")
@@ -294,7 +295,6 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ## The linear model with multiple predictors
 
 ```{r, echo=FALSE}
-
 "https://www.youtube.com/watch?v=xTv1wqNKbHI" %>%
   embed_url() %>%
   use_align("center")
@@ -308,7 +308,6 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ## Two numerical predictors
 
 ```{r, echo=FALSE}
-
 "https://www.youtube.com/watch?v=SVoazCcAZ-s" %>%
   embed_url() %>%
   use_align("center")
@@ -329,5 +328,4 @@ tweet_embed("https://twitter.com/tilok_saha/status/1466017023561912328")
 ```
 
 ```{r links, child="admin/md/courselinks.md"}
-
 ```

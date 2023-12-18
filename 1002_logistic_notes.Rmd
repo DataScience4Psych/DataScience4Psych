@@ -29,34 +29,37 @@ set.seed(1234)
 library(openintro)
 data(email)
 glimpse(email)
-
 ```
 
 
 > Question: Would you expect longer or shorter emails to be spam?
 
 ```{r echo=FALSE, out.width="100%"}
-#email$spam_num=email$spam
+# email$spam_num=email$spam
 email$spam <- as.factor(email$spam)
-ggplot(email,
-       aes(x = num_char, 
-           y = spam, 
-           fill = spam, 
-           color = spam))+
+ggplot(
+  email,
+  aes(
+    x = num_char,
+    y = spam,
+    fill = spam,
+    color = spam
+  )
+) +
   geom_density_ridges() +
   labs(
-    x = "Number of characters (in thousands)", 
+    x = "Number of characters (in thousands)",
     y = "Spam",
     title = "Spam vs. number of characters"
-    ) +
+  ) +
   guides(color = "none", fill = "none") +
   scale_fill_manual(values = c("#E48957", "#CA235F")) +
   scale_color_manual(values = c("#DEB4A0", "#CA235F"))
 ```
 
 ```{r echo=FALSE}
-email %>% 
-  group_by(spam) %>% 
+email %>%
+  group_by(spam) %>%
   summarize(mean_num_char = mean(num_char))
 ```
 
@@ -69,11 +72,11 @@ email %>%
   ggplot(aes(x = re_subj, fill = spam)) +
   geom_bar(position = "fill") +
   labs(
-    x = 'Whether "re:", "RE:", etc. was in the email subject.', 
-    fill = "Spam", 
+    x = 'Whether "re:", "RE:", etc. was in the email subject.',
+    fill = "Spam",
     y = NULL,
     title = 'Spam vs. "re:" in subject'
-    ) +
+  ) +
   scale_fill_manual(values = c("#DEB4A0", "#CA235F"))
 ```
 
@@ -93,14 +96,20 @@ means <- email %>%
   summarize(mean_num_char = mean(num_char)) %>%
   mutate(group = 1)
 
-ggplot(email, aes(x = num_char,
-                  y = spam, color = spam)) +
+ggplot(email, aes(
+  x = num_char,
+  y = spam, color = spam
+)) +
   geom_jitter(alpha = 0.2) +
-  geom_line(data = means,
-            aes(x = mean_num_char, y = spam, group = group),
-            color = "black", linewidth = 1.5) +
-  labs(x = "Number of characters (in thousands)",
-       y = "Spam") +
+  geom_line(
+    data = means,
+    aes(x = mean_num_char, y = spam, group = group),
+    color = "black", linewidth = 1.5
+  ) +
+  labs(
+    x = "Number of characters (in thousands)",
+    y = "Spam"
+  ) +
   scale_color_manual(values = c("#DEB4A0", "#CA235F")) +
   guides(color = "none")
 ```
@@ -159,7 +168,8 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 
 ```{r}
 d <- tibble(p = seq(0.001, 0.999,
-                    length.out = 1000)) %>%
+  length.out = 1000
+)) %>%
   mutate(logit_p = log(p / (1 - p)))
 
 ggplot(d, aes(x = p, y = logit_p)) +
@@ -210,10 +220,11 @@ In R, we fit a GLM in the same way as a linear model except we
 spam_fit <- logistic_reg() %>%
   set_engine("glm") %>%
   fit(spam ~ num_char,
-      data = email,
-      family = "binomial")
+    data = email,
+    family = "binomial"
+  )
 
-#tidy(spam_fit)
+# tidy(spam_fit)
 ```
 
 
@@ -249,10 +260,12 @@ newdata <- tibble(
   num_char = c(2, 15, 40),
   color    = c("#A7D5E8", "#e9d968", "#8fada7"),
   shape    = c(22, 24, 23)
-  )
+)
 
 y_hat <- predict(spam_fit,
-                 newdata, type = "raw")
+  newdata,
+  type = "raw"
+)
 p_hat <- exp(y_hat) / (1 + exp(y_hat))
 
 newdata <- newdata %>%
@@ -270,12 +283,14 @@ ggplot(spam_aug, aes(x = num_char)) +
   scale_y_continuous(breaks = c(0, 1)) +
   guides(color = "none") +
   geom_line(aes(y = prob)) +
-  geom_point(data = newdata, aes(x = num_char, y = p_hat), 
-             fill = newdata$color, shape = newdata$shape, 
-             stroke = 1, size = 6) +
+  geom_point(
+    data = newdata, aes(x = num_char, y = p_hat),
+    fill = newdata$color, shape = newdata$shape,
+    stroke = 1, size = 6
+  ) +
   labs(
     x = "Number of characters (in thousands)",
-    y = "Spam", 
+    y = "Spam",
     title = "Spam vs. number of characters"
   )
 ```

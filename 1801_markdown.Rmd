@@ -72,11 +72,15 @@ Quickly navigate between recently opened R projects by clicking on the drop-down
     -   Notice that the entire file path to CSV of interest ("zms_thesis_metrics.csv") was not specified just `file.path("data", "zms_thesis_metrics.csv")`.
 
     ```{r, eval=FALSE}
-    thesis.df <- read.csv(file.path("data",
-                                    "zms_thesis_metrics.csv"),
-                          stringsAsFactors = FALSE)
+thesis.df <- read.csv(
+  file.path(
+    "data",
+    "zms_thesis_metrics.csv"
+  ),
+  stringsAsFactors = FALSE
+)
 
-    head(thesis.df)
+head(thesis.df)
     ```
 
 6.  View `thesis.df` in the Environment panel
@@ -709,16 +713,20 @@ You can reformat the date using the `format()` function, as depicted in the imag
 3.  Add a code chunk below `libary(tidyverse)` to preprocess lake name (`lake`) associated with each sample.
 
 ```{r prep-lake-example, eval=FALSE}
-thesis.df <- thesis.df %>% 
-  mutate(lake = case_when(
-    lake %in% "caz" ~ "Cazenovia",
-    lake %in% "onon" ~ "Onondaga",
-    lake %in% "ot" ~ "Otisco",
-    TRUE ~ "ERROR"
-  ),
-  lake = factor(lake, levels = c("Onondaga",
-                                 "Otisco",
-                                 "Cazenovia")))
+thesis.df <- thesis.df %>%
+  mutate(
+    lake = case_when(
+      lake %in% "caz" ~ "Cazenovia",
+      lake %in% "onon" ~ "Onondaga",
+      lake %in% "ot" ~ "Otisco",
+      TRUE ~ "ERROR"
+    ),
+    lake = factor(lake, levels = c(
+      "Onondaga",
+      "Otisco",
+      "Cazenovia"
+    ))
+  )
 ```
 
 4.  Add a code chunk just below the YAML header to specify global code chunk options
@@ -727,7 +735,7 @@ thesis.df <- thesis.df %>%
     -   in the header specify `echo=FALSE` to hide this code chunk-- your reader does not need to see this
 
     ```{r global-options-example, eval=FALSE}
-    knitr::opts_chunk$set()
+knitr::opts_chunk$set()
     ```
 
 5.  Add a code chunk to generate a scatter plot.
@@ -735,8 +743,8 @@ thesis.df <- thesis.df %>%
     -   Add a caption
 
     ```{r scatter-example, eval=FALSE}
-    ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
-      geom_point()
+ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
+  geom_point()
     ```
 
 6.  Add a code chunk generate a boxplot.
@@ -745,8 +753,8 @@ thesis.df <- thesis.df %>%
     -   Add a caption
 
     ```{r boxplot-example, eval=FALSE}
-    ggplot(thesis.df, aes(lake, richness, fill = lake)) +
-      geom_boxplot()
+ggplot(thesis.df, aes(lake, richness, fill = lake)) +
+  geom_boxplot()
     ```
 
 7.  Add a brief interpretation of the figures into the "Conclusions" section.
@@ -790,8 +798,10 @@ I generally use **plotly** in conjunction with **ggplot2**. The **plotly** funct
 ```{r plotly_example, message=FALSE}
 library(plotly)
 
-scatter.plot <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length,
-                                 color = Species)) +
+scatter.plot <- ggplot(iris, aes(
+  x = Petal.Width, y = Petal.Length,
+  color = Species
+)) +
   geom_point()
 
 ggplotly(scatter.plot)
@@ -835,19 +845,25 @@ library(leaflet)
 
 data("quakes")
 
-leaflet(data = quakes,
-        options = leafletOptions(minZoom = 4,
-                                 maxZoom = 18)) %>% 
-  addTiles() %>% 
+leaflet(
+  data = quakes,
+  options = leafletOptions(
+    minZoom = 4,
+    maxZoom = 18
+  )
+) %>%
+  addTiles() %>%
   addCircleMarkers(~long, ~lat,
-                   fillOpacity = 0.75,
-                   stroke = FALSE,
-             popup = paste("Sample ID:", quakes$unique_id, "<br/>",
-                           "Magnitude:", quakes$mag, "<br/>",
-                           "Latitude:", quakes$lat, "<br/>",
-                           "Longitude:", quakes$long),
-             clusterOptions = markerClusterOptions()
-             )
+    fillOpacity = 0.75,
+    stroke = FALSE,
+    popup = paste(
+      "Sample ID:", quakes$unique_id, "<br/>",
+      "Magnitude:", quakes$mag, "<br/>",
+      "Latitude:", quakes$lat, "<br/>",
+      "Longitude:", quakes$long
+    ),
+    clusterOptions = markerClusterOptions()
+  )
 ```
 
 ## Your Turn (Part 2)
@@ -857,9 +873,9 @@ leaflet(data = quakes,
     -   add this link (<https://rstudio.github.io/DT/>) to your description above the code chunk to describe where you can find more information on **DT**
 
     ```{r dt-example, eval=FALSE}
-    library(DT)
+library(DT)
 
-    datatable(thesis.df, options = list(scrollX = TRUE))
+datatable(thesis.df, options = list(scrollX = TRUE))
     ```
 
 2.  Add a code chunk below the "Study Area" header and add the following **leaflet** code
@@ -867,24 +883,31 @@ leaflet(data = quakes,
     -   add this link (<https://rstudio.github.io/leaflet/>) to your description above the code chunk to describe where you can find more information on **leaflet**
 
     ```{r leaflet-example, eval=FALSE}
-    library(leaflet)
+library(leaflet)
 
-    pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
-                       domain = c("Cazenovia", "Onondaga", "Otisco"))
+pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
+  domain = c("Cazenovia", "Onondaga", "Otisco")
+)
 
-    leaflet(data = thesis.df,
-            options = leafletOptions(minZoom = 7,
-                                     maxZoom = 13)) %>% 
-      addTiles() %>% 
-      addCircleMarkers(~long, ~lat,
-                       fillOpacity = 0.75,
-                       fillColor = ~pal(lake),
-                       stroke = FALSE,
-                 popup = paste("Sample ID:", thesis.df$unique_id, "<br/>",
-                               "Lake:", thesis.df$lake, "<br/>",
-                               "Latitude:", thesis.df$lat, "<br/>",
-                               "Longitude:", thesis.df$long)
-                 )
+leaflet(
+  data = thesis.df,
+  options = leafletOptions(
+    minZoom = 7,
+    maxZoom = 13
+  )
+) %>%
+  addTiles() %>%
+  addCircleMarkers(~long, ~lat,
+    fillOpacity = 0.75,
+    fillColor = ~ pal(lake),
+    stroke = FALSE,
+    popup = paste(
+      "Sample ID:", thesis.df$unique_id, "<br/>",
+      "Lake:", thesis.df$lake, "<br/>",
+      "Latitude:", thesis.df$lat, "<br/>",
+      "Longitude:", thesis.df$long
+    )
+  )
     ```
 
 3.  Edit the scatter plot code chunk to make the figure interactive with **plotly**
@@ -896,15 +919,19 @@ leaflet(data = quakes,
         -   For example, you can zoom in, click on points to get more information, take a snapshot of the current plot, etc.
 
         ```{r scatter-sub-dip_example, message=FALSE, eval=FALSE}
-        library(plotly)
+library(plotly)
 
-        scatter.plot <- ggplot(thesis.df,
-                               aes(substrate_size_d50,
-                                   pct_diptera)) +
-          geom_point(aes(color = lake)) +
-          geom_smooth(method = "lm")
+scatter.plot <- ggplot(
+  thesis.df,
+  aes(
+    substrate_size_d50,
+    pct_diptera
+  )
+) +
+  geom_point(aes(color = lake)) +
+  geom_smooth(method = "lm")
 
-        ggplotly(scatter.plot)
+ggplotly(scatter.plot)
         ```
 
 # Child Documents
@@ -926,9 +953,11 @@ Imagine you have a parent document that sources child sections which import your
 In this section we establish the file path to the folder that contains all the child documents. The names of the child documents are extracted and stored as a vector. The `grepl()` function is used to retain only the Rmd files stored in the vector.
 
 ```{r, eval=FALSE}
-sections.path <- file.path(rprojroot::find_root("r_in_practice.Rproj"),
-                           "markdown",
-                           "sections")
+sections.path <- file.path(
+  rprojroot::find_root("r_in_practice.Rproj"),
+  "markdown",
+  "sections"
+)
 r.files.vec <- list.files(sections.path)
 r.files.vec <- r.files.vec[grepl(".Rmd", r.files.vec)]
 ```
@@ -936,10 +965,12 @@ r.files.vec <- r.files.vec[grepl(".Rmd", r.files.vec)]
 Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a "raw_script/extracted" folder. The `map()` function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the `map()` loop, the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
 
 ```{r, eval=FALSE}
-extracted.path <- file.path(rprojroot::find_root("r_in_practice.Rproj"),
-                           "markdown",
-                           "raw_scripts",
-                           "extracted")
+extracted.path <- file.path(
+  rprojroot::find_root("r_in_practice.Rproj"),
+  "markdown",
+  "raw_scripts",
+  "extracted"
+)
 
 purrr::map(r.files.vec, function(file.i) {
   # print(file.i)
@@ -948,7 +979,7 @@ purrr::map(r.files.vec, function(file.i) {
   knitr::purl(
     file.path(sections.path, file.i),
     file.path(extracted.path, extracted.file)
-    )
+  )
 })
 ```
 
@@ -1052,8 +1083,10 @@ The document will then render.
 The **rmarkdown** function `render()` can also be used to compile the document. The `input` specifies the parameterized .Rmd file. The `params` argument species the parameter values to be used when rendering the document. Note that the value supplied to `params` must be wrapped by `list()`.
 
 ```{r, eval=FALSE}
-rmarkdown::render(input = "parameterized/param_template.Rmd",
-                  params = list(species = "setosa"))
+rmarkdown::render(
+  input = "parameterized/param_template.Rmd",
+  params = list(species = "setosa")
+)
 ```
 
 It would not be efficient to specify each parameter of interest one-by-one. Instead a loop can be written to iteratively generate parameterized documents. Below the function `lapply()` is used to create the loop. `unique(iris$Species)` supplies a vector of unique species names (i.e., "setosa", "versicolor", and "virginica") to generate parameterized reports. `species.i` is specified as a placeholder to represent each unique species in the iris data set; therefore `species.i` is used to specify what the species parameter should equal and it is used to generate a unique and easy to interpret file name `output_file = paste0(species.i, ".HTML")`.
@@ -1061,8 +1094,9 @@ It would not be efficient to specify each parameter of interest one-by-one. Inst
 ```{r, eval=FALSE}
 lapply(unique(iris$Species), function(species.i) {
   rmarkdown::render("parameterized/param_template.Rmd",
-                    params = list(species = species.i),
-                    output_file = paste0(species.i, ".HTML"))
+    params = list(species = species.i),
+    output_file = paste0(species.i, ".HTML")
+  )
 })
 ```
 
@@ -1075,7 +1109,7 @@ lapply(unique(iris$Species), function(species.i) {
 5.  Filter `thesis.df` to only represent the specified lake parameter
 
 ```{r filter-lake_example, eval=FALSE}
-thesis.df <- thesis.df %>% 
+thesis.df <- thesis.df %>%
   filter(lake %in% params$lake)
 ```
 

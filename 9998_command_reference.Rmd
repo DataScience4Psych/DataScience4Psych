@@ -5,30 +5,26 @@ source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 
-generate_rdoc_url <- function(function_name =  "base::summary",
+generate_rdoc_url <- function(function_name = "base::summary",
                               package_name = NULL,
                               topic_name = NULL) {
-  if(is.null(package_name)|is.null(topic_name)){
-  package_name <- sub("::.*", "", function_name)
-  topic_name <- sub(".*::", "", function_name)
+  if (is.null(package_name) | is.null(topic_name)) {
+    package_name <- sub("::.*", "", function_name)
+    topic_name <- sub(".*::", "", function_name)
   } else {
-    
-    package_name <-  help.search(function_name,fields="name")[["matches"]][,"Name" == function_name]
-  package_name <-  package_name[ package_name$Name==function_name]
+    package_name <- help.search(function_name, fields = "name")[["matches"]][, "Name" == function_name]
+    package_name <- package_name[package_name$Name == function_name]
     if (is.null(package_name)) {
       warning("Function not found in any package.")
       return(NULL)
     }
-    
   }
-  
+
   base_url <- "https://www.rdocumentation.org/packages/"
   topic_url <- paste0(base_url, package_name, "/topics/", topic_name)
-  
+
   return(topic_url)
 }
-
-
 ```
 
 

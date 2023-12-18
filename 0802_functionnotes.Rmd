@@ -4,7 +4,7 @@ I've adapted these notes from Jenny Bryan's stat545.
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -76,7 +76,6 @@ Add NO new functionality! Just write your very simple R function.
 max_minus_min <- function(x) max(x) - min(x)
 
 max_minus_min(gapminder$lifeExp)
-
 ```
 
 Check that you're getting the same answer as you did with your interactive code. Test it eyeball-o-metrically at this point.
@@ -124,7 +123,7 @@ How happy are you with those error messages? You must imagine that some entire _
 Here are some great examples where the function __should break but it does not.__
 
 ```{r}
-max_minus_min(gapminder[c('lifeExp', 'gdpPercap', 'pop')])
+max_minus_min(gapminder[c("lifeExp", "gdpPercap", "pop")])
 max_minus_min(c(TRUE, TRUE, FALSE, TRUE, TRUE))
 ```
 
@@ -148,7 +147,7 @@ mmm <- function(x) {
 mmm(gapminder)
 mmm(gapminder$country)
 mmm("eggplants are purple")
-mmm(gapminder[c('lifeExp', 'gdpPercap', 'pop')])
+mmm(gapminder[c("lifeExp", "gdpPercap", "pop")])
 mmm(c(TRUE, TRUE, FALSE, TRUE, TRUE))
 ```
 
@@ -160,9 +159,11 @@ And we see that it catches all of the self-inflicted damage we would like to avo
 
 ```{r error = TRUE}
 mmm2 <- function(x) {
-  if(!is.numeric(x)) {
-    stop('I am so sorry, but this function only works for numeric input!\n',
-         'You have provided an object of class: ', class(x)[1])
+  if (!is.numeric(x)) {
+    stop(
+      "I am so sorry, but this function only works for numeric input!\n",
+      "You have provided an object of class: ", class(x)[1]
+    )
   }
   max(x) - min(x)
 }
@@ -248,10 +249,12 @@ First, play around with the `quantile()` function. Convince yourself you know ho
 ```{r}
 quantile(gapminder$lifeExp)
 quantile(gapminder$lifeExp,
-         probs = 0.5)
+  probs = 0.5
+)
 median(gapminder$lifeExp)
 quantile(gapminder$lifeExp,
-         robs = c(0.25, 0.75))
+  robs = c(0.25, 0.75)
+)
 boxplot(gapminder$lifeExp, plot = FALSE)$stats
 ```
 
@@ -493,12 +496,12 @@ We will construct a test with `test_that()` and, within it, we put one or more *
 ```{r eval = FALSE}
 library(testthat)
 
-test_that('invalid args are detected', {
+test_that("invalid args are detected", {
   expect_error(qdiff6("eggplants are purple"))
   expect_error(qdiff6(iris))
 })
 
-test_that('NA handling works', {
+test_that("NA handling works", {
   expect_error(qdiff6(c(1:5, NA), na.rm = FALSE))
   expect_equal(qdiff6(c(1:5, NA)), 4)
 })
@@ -512,7 +515,7 @@ qdiff_no_NA <- function(x, probs = c(0, 1)) {
   max(the_quantiles) - min(the_quantiles)
 }
 
-test_that('NA handling works', {
+test_that("NA handling works", {
   expect_that(qdiff_no_NA(c(1:5, NA)), equals(4))
 })
 ```
@@ -555,7 +558,7 @@ I extract the data for one country in order to develop some working code interac
 
 ```{r}
 j_country <- "France" # pick, but do not hard wire, an example
-(j_dat <- gapminder %>% 
+(j_dat <- gapminder %>%
   filter(country == j_country))
 ```
 

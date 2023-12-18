@@ -1,6 +1,6 @@
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -125,7 +125,7 @@ frenchbirds %>%
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
 ```{r eval = FALSE}
-eagle <- ebirdgeo(species = 'Haliaeetus leucocephalus', lat = 42, lng = -76)
+eagle <- ebirdgeo(species = "Haliaeetus leucocephalus", lat = 42, lng = -76)
 eagle %>%
   head() %>%
   kable()
@@ -133,7 +133,7 @@ eagle %>%
 
 rebird **knows where you are**:
 ```{r eval = FALSE,error=TRUE}
-ebirdgeo(species = 'Buteo lagopus')
+ebirdgeo(species = "Buteo lagopus")
 ```
 
 ### Searching geographic info: geonames {#geonames}
@@ -199,9 +199,11 @@ francedata <- countryInfo %>%
 ```
 
 ```{r eval = FALSE,error=TRUE}
-frenchcities <-	with(francedata, GNcities(north = north, east = east,
-                                          south = south, west = west,
-                                          maxRows = 500))
+frenchcities <- with(francedata, GNcities(
+  north = north, east = east,
+  south = south, west = west,
+  maxRows = 500
+))
 ```
 
 ```{r eval = FALSE}
@@ -214,10 +216,14 @@ glimpse(frenchcities)
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
 
 ```{r, eval = FALSE,error=TRUE}
-rio_english <- GNfindNearbyWikipedia(lat = -22.9083, lng = -43.1964,
-                                     radius = 20, lang = "en", maxRows = 500)
-rio_portuguese <- GNfindNearbyWikipedia(lat = -22.9083, lng = -43.1964,
-                                        radius = 20, lang = "pt", maxRows = 500)
+rio_english <- GNfindNearbyWikipedia(
+  lat = -22.9083, lng = -43.1964,
+  radius = 20, lang = "en", maxRows = 500
+)
+rio_portuguese <- GNfindNearbyWikipedia(
+  lat = -22.9083, lng = -43.1964,
+  radius = 20, lang = "pt", maxRows = 500
+)
 ```
 
 ```{r eval = FALSE,error=TRUE}
@@ -241,7 +247,7 @@ library(rplos)
 Let's follow along with the [`rOpenSci` tutorial](https://ropensci.org/tutorials/rplos_tutorial.html) and do some searches:
 
 ```{r,error=TRUE}
-searchplos(q= "Helianthus", fl= "id", limit = 5)
+searchplos(q = "Helianthus", fl = "id", limit = 5)
 ```
 
 ```{r,error=TRUE}
@@ -264,7 +270,7 @@ Here is a list of [options for the search](http://api.plos.org/solr/search-field
 The `highplos()` function does "highlighted searches on PLOS Journals full-text content".
 
 ```{r,error=TRUE}
-highlighted <- highplos(q='alcohol', hl.fl = 'abstract', rows=10)
+highlighted <- highplos(q = "alcohol", hl.fl = "abstract", rows = 10)
 ```
 
 We can then pass this output to `highbrow()`, which will open up our default browser where we can browse the highlighted fragments. When we run `highbrow(highlighted)` in our R Console this is what we see in our browser:

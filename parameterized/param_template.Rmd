@@ -40,10 +40,14 @@ Import Zachary M. Smith's thesis data provided by Zachary M. Smith at the R Mark
 * `pct_diptera` (numeric) relative abundance of Diptera taxa
 * `dom_1` (numeric) relative abundance of the most dominant taxon observed in each sample
 ```{r import-data}
-thesis.df <- read.csv(file.path(here::here(),
-                                "data",
-                                "zms_thesis_metrics.csv"),
-                      stringsAsFactors = FALSE)
+thesis.df <- read.csv(
+  file.path(
+    here::here(),
+    "data",
+    "zms_thesis_metrics.csv"
+  ),
+  stringsAsFactors = FALSE
+)
 ```
 
 # Preprocessing
@@ -54,20 +58,24 @@ library(tidyverse)
 ```
 
 ```{r prep-lake}
-thesis.df <- thesis.df %>% 
-  mutate(lake = case_when(
-    lake %in% "caz" ~ "Cazenovia",
-    lake %in% "onon" ~ "Onondaga",
-    lake %in% "ot" ~ "Otisco",
-    TRUE ~ "ERROR"
-  ),
-  lake = factor(lake, levels = c("Onondaga",
-                                 "Otisco",
-                                 "Cazenovia")))
+thesis.df <- thesis.df %>%
+  mutate(
+    lake = case_when(
+      lake %in% "caz" ~ "Cazenovia",
+      lake %in% "onon" ~ "Onondaga",
+      lake %in% "ot" ~ "Otisco",
+      TRUE ~ "ERROR"
+    ),
+    lake = factor(lake, levels = c(
+      "Onondaga",
+      "Otisco",
+      "Cazenovia"
+    ))
+  )
 ```
 
 ```{r filter-lake}
-thesis.df <- thesis.df %>% 
+thesis.df <- thesis.df %>%
   filter(lake %in% params$lake)
 ```
 
@@ -85,22 +93,28 @@ For more details about the __leaflet__ package visit https://rstudio.github.io/l
 library(leaflet)
 
 pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
-                   domain = c("Cazenovia", "Onondaga", "Otisco"))
+  domain = c("Cazenovia", "Onondaga", "Otisco")
+)
 
-leaflet(data = thesis.df,
-        options = leafletOptions(minZoom = 7,
-                                 maxZoom = 13)) %>% 
-  addTiles() %>% 
+leaflet(
+  data = thesis.df,
+  options = leafletOptions(
+    minZoom = 7,
+    maxZoom = 13
+  )
+) %>%
+  addTiles() %>%
   addCircleMarkers(~long, ~lat,
-                   fillOpacity = 0.75,
-                   fillColor = ~pal(lake),
-                   stroke = FALSE,
-             popup = paste("Sample ID:", thesis.df$unique_id, "<br/>",
-                           "Lake:", thesis.df$lake, "<br/>",
-                           "Latitude:", thesis.df$lat, "<br/>",
-                           "Longitude:", thesis.df$long)
-             )
-
+    fillOpacity = 0.75,
+    fillColor = ~ pal(lake),
+    stroke = FALSE,
+    popup = paste(
+      "Sample ID:", thesis.df$unique_id, "<br/>",
+      "Lake:", thesis.df$lake, "<br/>",
+      "Latitude:", thesis.df$lat, "<br/>",
+      "Longitude:", thesis.df$long
+    )
+  )
 ```
 
 # Plot

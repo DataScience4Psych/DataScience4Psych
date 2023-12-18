@@ -1,11 +1,11 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("data/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./data/ds4p_urls.csv")
-if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
-library(tweetrmd) #... embedding tweets
-library(vembedr)  #... embeding youtube videos
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd) # ... embedding tweets
+library(vembedr) # ... embeding youtube videos
 library(knitr)
 ```
 
@@ -25,7 +25,7 @@ library(broom)
 library(viridis)
 load("../../datasets/lattice.RData")
 ggplot(dating, aes(x = carbon, y = thorium - carbon)) +
-    geom_point()
+  geom_point()
 ```
 
 ------
@@ -34,20 +34,20 @@ Last time, we saw that the linear regression line doesn't follow the data well, 
 
 ```{r}
 library(MASS)
-dating = dating %>% mutate(diff = thorium - carbon)
-dating.lm = lm(diff ~ carbon, data = dating)
-dating.rlm.huber = rlm(diff ~ carbon, data = dating, psi = psi.huber, maxit = 100)
-dating.rlm.bisquare = rlm(diff ~ carbon, data = dating, psi = psi.bisquare)
+dating <- dating %>% mutate(diff = thorium - carbon)
+dating.lm <- lm(diff ~ carbon, data = dating)
+dating.rlm.huber <- rlm(diff ~ carbon, data = dating, psi = psi.huber, maxit = 100)
+dating.rlm.bisquare <- rlm(diff ~ carbon, data = dating, psi = psi.bisquare)
 
 ggplot(dating) +
-    ## raw data
-    geom_point(aes(x = carbon, y = diff)) +
-    ## rlm bisquare fit
-    geom_line(aes(x = carbon, y = dating.rlm.bisquare$fitted.values), color = 'red') +
-    ## rlm huber fit
-    geom_line(aes(x = carbon, y = .fitted), color = 'orange', data = augment(dating.rlm.huber)) +
-    ## lm fit
-    geom_line(aes(x = carbon, y = .fitted), data = augment(dating.lm), color = 'blue')
+  ## raw data
+  geom_point(aes(x = carbon, y = diff)) +
+  ## rlm bisquare fit
+  geom_line(aes(x = carbon, y = dating.rlm.bisquare$fitted.values), color = "red") +
+  ## rlm huber fit
+  geom_line(aes(x = carbon, y = .fitted), color = "orange", data = augment(dating.rlm.huber)) +
+  ## lm fit
+  geom_line(aes(x = carbon, y = .fitted), data = augment(dating.lm), color = "blue")
 ```
 
 ## Robust regression: Details for Tukey's Bisquare
@@ -103,52 +103,52 @@ Repeat until convergence:
 
 
 ```{r}
-dating.rlm.0 = lm(diff ~ carbon, data = dating)
+dating.rlm.0 <- lm(diff ~ carbon, data = dating)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.0$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.0$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 -----
 
 ```{r}
-dating.rlm.1 = rlm(diff ~ carbon, data = dating, maxit = 1, psi = psi.bisquare)
+dating.rlm.1 <- rlm(diff ~ carbon, data = dating, maxit = 1, psi = psi.bisquare)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.1$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.1$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 -----
 
 ```{r}
-dating.rlm.2 = rlm(diff ~ carbon, data = dating, maxit = 2, psi = psi.bisquare)
+dating.rlm.2 <- rlm(diff ~ carbon, data = dating, maxit = 2, psi = psi.bisquare)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.2$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.2$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 -----
 
 ```{r}
-dating.rlm.3 = rlm(diff ~ carbon, data = dating, maxit = 3, psi = psi.bisquare)
+dating.rlm.3 <- rlm(diff ~ carbon, data = dating, maxit = 3, psi = psi.bisquare)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.3$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.3$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 -----
 
 
 ```{r}
-dating.rlm.11 = rlm(diff ~ carbon, data = dating, maxit = 11, psi = psi.bisquare)
+dating.rlm.11 <- rlm(diff ~ carbon, data = dating, maxit = 11, psi = psi.bisquare)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.11$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.11$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 
@@ -156,11 +156,11 @@ ggplot(dating) +
 
 
 ```{r}
-dating.rlm.12 = rlm(diff ~ carbon, data = dating, maxit = 12, psi = psi.bisquare)
+dating.rlm.12 <- rlm(diff ~ carbon, data = dating, maxit = 12, psi = psi.bisquare)
 ggplot(dating) +
-    geom_point(aes(x = carbon, y = diff)) +
-    geom_line(aes(x = carbon, y = dating.rlm.12$fitted.values), color = 'red') +
-    ylim(c(0,7))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = dating.rlm.12$fitted.values), color = "red") +
+  ylim(c(0, 7))
 ```
 
 -----
@@ -169,18 +169,21 @@ ggplot(dating) +
 To see how the algorithm gets to the final fit, we can solve for the fits for all iterations between 1 and 15 and plot them:
 
 ```{r, echo=FALSE}
-fits = sapply(seq(1,15,by = 1), function(maxit)
-    rlm(diff ~ carbon, data = dating, init = dating.lm.init,
-        maxit = maxit, psi = psi.bisquare)$fitted.values)
-fits = data.frame(fits, carbon = dating$carbon, diff = dating$diff)
-fits_melted = fits %>% gather(X1:X15, key = iter_char, value = fit)
-fits_final = fits_melted %>%
-    separate(iter_char, sep = "X", into = c("none", "it")) %>%
-        mutate(iteration = factor(it, levels = as.character(1:15), ordered = TRUE))
+fits <- sapply(seq(1, 15, by = 1), function(maxit) {
+  rlm(diff ~ carbon,
+    data = dating, init = dating.lm.init,
+    maxit = maxit, psi = psi.bisquare
+  )$fitted.values
+})
+fits <- data.frame(fits, carbon = dating$carbon, diff = dating$diff)
+fits_melted <- fits %>% gather(X1:X15, key = iter_char, value = fit)
+fits_final <- fits_melted %>%
+  separate(iter_char, sep = "X", into = c("none", "it")) %>%
+  mutate(iteration = factor(it, levels = as.character(1:15), ordered = TRUE))
 ggplot(fits_final) +
-    geom_point(aes(x = carbon, y = diff)) + 
-    geom_line(aes(x = carbon, y = fit, color = iteration)) +
-    theme(legend.key.size = unit(2, "mm"), legend.text=element_text(size=10))
+  geom_point(aes(x = carbon, y = diff)) +
+  geom_line(aes(x = carbon, y = fit, color = iteration)) +
+  theme(legend.key.size = unit(2, "mm"), legend.text = element_text(size = 10))
 ```
 
 
@@ -246,22 +249,27 @@ $$
 More useful is to look at the penalty functions:
 
 ```{r, echo = FALSE, fig.height=2}
-huber = function(e, k) {
-    if(abs(e) < k) return(.5 * e^2)
-    k * abs(e) - .5 * k^2
+huber <- function(e, k) {
+  if (abs(e) < k) {
+    return(.5 * e^2)
+  }
+  k * abs(e) - .5 * k^2
 }
-bisquare = function(e, k) {
-    if(abs(e) < k) return (k^2 / 6 * (1 - (1 - (e/k)^2)^3))
-    return(k^2 / 6)
+bisquare <- function(e, k) {
+  if (abs(e) < k) {
+    return(k^2 / 6 * (1 - (1 - (e / k)^2)^3))
+  }
+  return(k^2 / 6)
 }
-evec = seq(-6, 6, length.out = 400)
-huberpen = sapply(evec, huber, 1.345)
-bisquarepen = sapply(evec, bisquare, 4.685)
-leastsquares = evec^2
-penalties = data.frame(error = evec, huber = huberpen, bisquare = bisquarepen, leastsquares)
-penalties = penalties %>% gather(huber, bisquare, leastsquares, key = "type", value = "penalty")
+evec <- seq(-6, 6, length.out = 400)
+huberpen <- sapply(evec, huber, 1.345)
+bisquarepen <- sapply(evec, bisquare, 4.685)
+leastsquares <- evec^2
+penalties <- data.frame(error = evec, huber = huberpen, bisquare = bisquarepen, leastsquares)
+penalties <- penalties %>% gather(huber, bisquare, leastsquares, key = "type", value = "penalty")
 ggplot(penalties, aes(x = error, y = penalty)) +
-    geom_line() + facet_wrap(~ type, scales = "free_y")
+  geom_line() +
+  facet_wrap(~type, scales = "free_y")
 ```
 
 ## Comparison of the two methods
@@ -287,8 +295,8 @@ We wanted to know about the relationship between the two dating methods. We have
 
 ```{r}
 ggplot(augment(dating.rlm.bisquare)) +
-    stat_qq(aes(sample = .resid)) +
-    geom_abline(aes(intercept = median(.resid), slope = mad(.resid)))
+  stat_qq(aes(sample = .resid)) +
+  geom_abline(aes(intercept = median(.resid), slope = mad(.resid)))
 ```
 
 We see that, apart from the outliers, the residuals follow a line. That means that the majority of the data seem to follow a normal distribution, and we're happy with the fit.
@@ -320,7 +328,7 @@ table(ethanol$C)
 
 Because of this, we are going to treat C as a factor variable for now. Let's make it into an ordered factor:
 ```{r}
-ethanol = ethanol %>% mutate(Cfac = factor(C, levels = sort(unique(C)), ordered = TRUE))
+ethanol <- ethanol %>% mutate(Cfac = factor(C, levels = sort(unique(C)), ordered = TRUE))
 ```
 
 
@@ -333,7 +341,9 @@ How would we investigate this?
 We've seen faceting already:
 
 ```{r}
-ggplot(ethanol) + geom_point(aes(x = E, y = NOx)) + facet_wrap(~ Cfac)
+ggplot(ethanol) +
+  geom_point(aes(x = E, y = NOx)) +
+  facet_wrap(~Cfac)
 ```
 
 ------
@@ -342,7 +352,7 @@ With the faceting it's hard to see differences between the curves. What if we re
 
 ```{r}
 ggplot(ethanol, aes(x = E, y = NOx, color = Cfac)) +
-    geom_point()
+  geom_point()
 ```
 
 ------
@@ -351,8 +361,8 @@ What about if we add smoothers?
 
 ```{r}
 ggplot(ethanol, aes(x = E, y = NOx, color = Cfac)) +
-    geom_point() +
-    stat_smooth(method = "loess", se = FALSE)
+  geom_point() +
+  stat_smooth(method = "loess", se = FALSE)
 ```
 
 
@@ -373,7 +383,9 @@ We've already looked at the relationship between price and carat, and we'd like 
 First try faceting out by clarity:
 
 ```{r}
-ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + facet_wrap(~ clarity)
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +
+  facet_wrap(~clarity)
 ```
 
 We notice that the relationship is hollow up, and so we remember what we learned about straightening out relationships and try log-transforming price.
@@ -381,7 +393,9 @@ We notice that the relationship is hollow up, and so we remember what we learned
 -----
 
 ```{r}
-ggplot(diamonds, aes(x = carat, y = log10(price))) + geom_point() + facet_wrap(~ clarity)
+ggplot(diamonds, aes(x = carat, y = log10(price))) +
+  geom_point() +
+  facet_wrap(~clarity)
 ```
 
 log-transform is too much (now it's hollow down), so we try an intermediate transform, the square root.
@@ -390,7 +404,8 @@ log-transform is too much (now it's hollow down), so we try an intermediate tran
 
 ```{r}
 ggplot(diamonds, aes(x = carat, y = sqrt(price))) +
-    geom_point() + facet_wrap(~ clarity)
+  geom_point() +
+  facet_wrap(~clarity)
 ```
 
 The square root does a good job at straightening out the relationship. Note that we could also have used the square of carat to predict price, which would have also straightened out the relationship and which might be more interpretable. We'll stick with square root of price for now though.
@@ -402,7 +417,8 @@ The problem with faceting out is that it's hard to compare the slopes. We can tr
 
 
 ```{r}
-ggplot(diamonds, aes(x = carat, y = sqrt(price), color = clarity)) + geom_point()
+ggplot(diamonds, aes(x = carat, y = sqrt(price), color = clarity)) +
+  geom_point()
 ```
 
 This helps a bit, and we see the general trend that the slope increases with clarity, but there's still a lot of overplotting and it is hard to compare the relationships. Let's try adding a linear smoother.
@@ -411,8 +427,8 @@ This helps a bit, and we see the general trend that the slope increases with cla
 
 ```{r}
 ggplot(diamonds, aes(x = carat, y = sqrt(price), color = clarity)) +
-    geom_point() +
-    stat_smooth(method = "lm", se = FALSE)
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE)
 ```
 
 There seemed to be some outliers, particularly in the low clarities, so we might want to try a robust linear smoother. This changes the slopes slightly.
@@ -420,8 +436,8 @@ There seemed to be some outliers, particularly in the low clarities, so we might
 -----
 ```{r}
 ggplot(diamonds, aes(x = carat, y = sqrt(price), color = clarity)) +
-    geom_point() +
-    stat_smooth(method = "rlm", method.args = list(psi = psi.bisquare, maxit = 40), se = FALSE)
+  geom_point() +
+  stat_smooth(method = "rlm", method.args = list(psi = psi.bisquare, maxit = 40), se = FALSE)
 ```
 
 With either of the smoothers, we can see much more clearly how the relationship changes with clarity.
@@ -431,5 +447,5 @@ The slopes for the top three levels of clarity are virtually identical, the lowe
 
 ```{r}
 ggplot(diamonds, aes(x = carat, y = sqrt(price), color = clarity)) +
-    stat_smooth(method = "rlm", method.args = list(psi = psi.bisquare, maxit = 40), se = FALSE)
+  stat_smooth(method = "rlm", method.args = list(psi = psi.bisquare, maxit = 40), se = FALSE)
 ```

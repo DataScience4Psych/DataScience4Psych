@@ -2,7 +2,7 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
@@ -11,22 +11,22 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```{r, echo=FALSE}
 # 07
 "https://www.youtube.com/watch?v=hnUGwlyqx1M" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 You can follow along with the slides [here][d12_import] if they do not appear below.
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d12_import") %>%
-include_url(height = "400px")
+slide_url(ds4p_urls, "d12_import") %>%
+  include_url(height = "400px")
 ```
 
 ### Another Activity
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d12_import","#9") %>%
- include_url(height = "400px")
+slide_url(ds4p_urls, "d12_import", "#9") %>%
+  include_url(height = "400px")
 ```
 
 You can find the materials for the Nobels and sales activities [here](https://github.com/DataScience4Psych/ae-06-nobels-sales-dataimport).
@@ -35,23 +35,23 @@ You can find the materials for the Nobels and sales activities [here](https://gi
 
 ```{r, echo=FALSE}
 # 08
-"https://www.youtube.com/watch?v=g7G8ZTnDSv8"  %>%
-embed_url() %>%
+"https://www.youtube.com/watch?v=g7G8ZTnDSv8" %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 You can follow along with the slides [here][d12_import] if they do not appear below.
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d12_import","#17") %>%
- include_url(height = "400px")
+slide_url(ds4p_urls, "d12_import", "#17") %>%
+  include_url(height = "400px")
 ```
 
 ### More Activity
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d12_import","#22") %>%
- include_url(height = "400px")
+slide_url(ds4p_urls, "d12_import", "#22") %>%
+  include_url(height = "400px")
 ```
 
 You can find the materials for the Nobels and sales activities [here](https://github.com/DataScience4Psych/ae-06-nobels-sales-dataimport).
@@ -61,15 +61,15 @@ You can find the materials for the Nobels and sales activities [here](https://gi
 ```{r, echo=FALSE}
 # :D
 "https://www.youtube.com/watch?v=EmB1yyzRX0c" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 You can follow along with the slides [here][#d12_import] if they do not appear below.
 
 ```{r, echo=FALSE}
-slide_url(ds4p_urls,"d12_import","#30") %>%
- include_url(height = "400px")
+slide_url(ds4p_urls, "d12_import", "#30") %>%
+  include_url(height = "400px")
 ```
 
 ```{r, echo=FALSE}
@@ -145,8 +145,10 @@ The most noticeable difference between the readr functions and base is that read
 
 ```{r}
 gapminder <- gapminder %>%
-  mutate(country = factor(country),
-         continent = factor(continent))
+  mutate(
+    country = factor(country),
+    continent = factor(continent)
+  )
 str(gapminder)
 ```
 
@@ -162,8 +164,8 @@ We need compute something worth writing to file. Let's create a country-level su
 
 ```{r}
 gap_life_exp <- gapminder %>%
-  group_by(country, continent) %>% 
-  summarize(life_exp = max(lifeExp)) %>% 
+  group_by(country, continent) %>%
+  summarize(life_exp = max(lifeExp)) %>%
   ungroup()
 gap_life_exp
 ```
@@ -182,7 +184,7 @@ Let's look at the first few lines of `gap_life_exp.csv`. If you're following alo
 
 ```{r echo = FALSE, comment = NA}
 "gap_life_exp.csv" %>%
-  readLines(n = 6) %>% 
+  readLines(n = 6) %>%
   cat(sep = "\n")
 ```
 
@@ -191,7 +193,7 @@ This output is pretty decent looking, though there is no visible alignment or se
 -   It's not really fair to complain about the lack of visible alignment. Remember we are ["writing data for computers"](https://twitter.com/vsbuffalo/statuses/358699162679787521). If you really want to browse around the file, use `View()` in RStudio or open it in Microsoft Excel (!) but don't succumb to the temptation to start doing artisanal data manipulations there ... get back to R and construct commands that you can re-run the next 15 times you import/clean/aggregate/export the same dataset. Trust me, it will happen.
 
 ```{r, echo=FALSE}
-"https://twitter.com/vsbuffalo/statuses/358699162679787521" %>% 
+"https://twitter.com/vsbuffalo/statuses/358699162679787521" %>%
   try_include_tweet()
 ```
 
@@ -216,7 +218,7 @@ I reorder the country factor levels according to the life expectancy summary we'
 
 ```{r}
 head(levels(gap_life_exp$country)) # alphabetical order
-gap_life_exp <- gap_life_exp %>% 
+gap_life_exp <- gap_life_exp %>%
   mutate(country = fct_reorder(country, life_exp))
 head(levels(gap_life_exp$country)) # in increasing order of maximum life expectancy
 head(gap_life_exp)
@@ -256,13 +258,15 @@ Here is a concrete demonstration of how non-alphabetical factor level order is l
 write_csv(gap_life_exp, "gap_life_exp.csv")
 saveRDS(gap_life_exp, "gap_life_exp.rds")
 rm(gap_life_exp)
-head(gap_life_exp) # will cause error! proving gap_life_exp is really gone 
-gap_via_csv <- read_csv("gap_life_exp.csv") %>% 
+head(gap_life_exp) # will cause error! proving gap_life_exp is really gone
+gap_via_csv <- read_csv("gap_life_exp.csv") %>%
   mutate(country = factor(country))
 gap_via_rds <- readRDS("gap_life_exp.rds")
-country_levels <- country_levels %>% 
-  mutate(via_csv = head(levels(gap_via_csv$country)),
-         via_rds = head(levels(gap_via_rds$country)))
+country_levels <- country_levels %>%
+  mutate(
+    via_csv = head(levels(gap_via_csv$country)),
+    via_rds = head(levels(gap_via_rds$country))
+  )
 country_levels
 ```
 
@@ -281,8 +285,8 @@ dput(gap_life_exp, "gap_life_exp-dput.txt")
 Now let's look at the first few lines of the file `gap_life_exp-dput.txt`.
 
 ```{r echo = FALSE, comment = NA}
-"gap_life_exp-dput.txt" %>% 
-  readLines(n = 6) %>% 
+"gap_life_exp-dput.txt" %>%
+  readLines(n = 6) %>%
   cat(sep = "\n")
 ```
 
@@ -290,7 +294,7 @@ Huh? Don't worry about it. Remember we are ["writing data for computers"](https:
 
 ```{r}
 gap_life_exp_dget <- dget("gap_life_exp-dput.txt")
-country_levels <- country_levels %>% 
+country_levels <- country_levels %>%
   mutate(via_dput = head(levels(gap_life_exp_dget$country)))
 country_levels
 ```

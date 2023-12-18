@@ -3,9 +3,8 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep="")
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
-
 ```
 
 # Welcome to Overfitting and Cross-Validation
@@ -37,30 +36,29 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#1" %>%
-include_url(height = "400px")
+  include_url(height = "400px")
 ```
 
 ## Prediction
 
 ```{r, echo=FALSE}
 "https://www.youtube.com/watch?v=U70OmbO-DP4" %>%
-embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#2" %>%
-include_url(height = "400px")
+  include_url(height = "400px")
 ```
 
 
 ## Workflow
 
 ```{r, echo=FALSE}
-
 "https://www.youtube.com/watch?v=R4h9u-sQHwI" %>%
- embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -68,7 +66,7 @@ include_url(height = "400px")
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#17" %>%
-include_url(height = "400px")
+  include_url(height = "400px")
 ```
 
 
@@ -80,7 +78,7 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 ```{r, echo=FALSE}
 # CV
 "https://www.youtube.com/watch?v=KQ9f8s7RB5g" %>%
-embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -88,7 +86,7 @@ embed_url() %>%
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html" %>%
-include_url(height = "400px")
+  include_url(height = "400px")
 ```
 
 ## V-Fold
@@ -96,7 +94,7 @@ include_url(height = "400px")
 ```{r, echo=FALSE}
 # v fold
 "https://www.youtube.com/watch?v=quEVKV-Tk0Y" %>%
-embed_url() %>%
+  embed_url() %>%
   use_align("center")
 ```
 
@@ -104,7 +102,7 @@ embed_url() %>%
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html#35" %>%
-include_url( height = "400px")
+  include_url(height = "400px")
 ```
 
 
@@ -121,17 +119,16 @@ library(knitr)
 set.seed(1234)
 options(
   warnPartialMatchArgs = FALSE,
-  warnPartialMatchAttr = FALSE, 
+  warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE,
   width = 100
 )
 
 data(email)
-#email$spam_num=email$spam
-email$spam=as.factor(email$spam)
+# email$spam_num=email$spam
+email$spam <- as.factor(email$spam)
 
-plot_colors=c("#E48957", "#CA235F")
-
+plot_colors <- c("#E48957", "#CA235F")
 ```
 
 
@@ -150,16 +147,16 @@ plot_colors=c("#E48957", "#CA235F")
 ### Same training and testing sets as before
 
 ```{r}
-# Fix random numbers by setting the seed 
-# Enables analysis to be reproducible when random numbers are used 
+# Fix random numbers by setting the seed
+# Enables analysis to be reproducible when random numbers are used
 set.seed(1066)
 
-# Put 80% of the data into the training set 
+# Put 80% of the data into the training set
 email_split <- initial_split(email, prop = 0.80)
 
 # Create data frames for the two sets:
 train_data <- training(email_split)
-test_data  <- testing(email_split)
+test_data <- testing(email_split)
 ```
 
 
@@ -170,9 +167,9 @@ test_data  <- testing(email_split)
 train_data %>%
   mutate(
     date = date(time),
-    dow  = wday(time),
+    dow = wday(time),
     month = month(time)
-    ) %>%
+  ) %>%
   select(time, date, dow, month) %>%
   sample_n(size = 5) # shuffle to show a variety
 ```
@@ -199,9 +196,9 @@ train_data %>%
 
 ```{r initiate-recipe, results="hide"}
 email_rec <- recipe(
-  spam ~ .,          # formula
-  data = train_data  # data to use for cataloguing names and types of variables
-  )
+  spam ~ ., # formula
+  data = train_data # data to use for cataloguing names and types of variables
+)
 
 summary(email_rec)
 ```
@@ -295,7 +292,7 @@ email_rec
 ```{r}
 email_rec <- recipe(spam ~ ., data = email) %>%
   step_rm(from, sent_email) %>%
-  step_date(time, features = c("dow", "month")) %>%               
+  step_date(time, features = c("dow", "month")) %>%
   step_rm(time) %>%
   step_cut(cc, attach, dollar, breaks = c(0, 1)) %>%
   step_cut(inherit, password, breaks = c(0, 1, 5, 10, 20)) %>%
@@ -312,7 +309,7 @@ email_rec <- recipe(spam ~ ., data = email) %>%
 ### Define model
 
 ```{r}
-email_mod <- logistic_reg() %>% 
+email_mod <- logistic_reg() %>%
   set_engine("glm")
 
 email_mod
@@ -323,8 +320,8 @@ email_mod
 **Workflows** bring together models and recipes so that they can be easily applied to both the training and test data.
 
 ```{r}
-email_wflow <- workflow() %>% 
-  add_model(email_mod) %>% 
+email_wflow <- workflow() %>%
+  add_model(email_mod) %>%
   add_recipe(email_rec)
 ```
 
@@ -337,7 +334,7 @@ email_wflow
 ### Fit model to training data
 
 ```{r}
-email_fit <- email_wflow %>% 
+email_fit <- email_wflow %>%
   fit(data = train_data)
 ```
 
@@ -350,8 +347,8 @@ tidy(email_fit) %>% print(n = 31)
 ### Make predictions for test data
 
 ```{r}
-email_pred <- predict(email_fit, test_data, type = "prob") %>% 
-  bind_cols(test_data) 
+email_pred <- predict(email_fit, test_data, type = "prob") %>%
+  bind_cols(test_data)
 
 email_pred
 ```
@@ -398,7 +395,7 @@ email_pred %>%
   mutate(
     spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
     spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
-    ) %>%
+  ) %>%
   count(spam_pred, spam) %>%
   pivot_wider(names_from = spam, values_from = n) %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
@@ -418,7 +415,7 @@ email_pred %>%
   mutate(
     spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
     spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
-    ) %>%
+  ) %>%
   count(spam_pred, spam) %>%
   pivot_wider(names_from = spam, values_from = n) %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
@@ -436,7 +433,7 @@ email_pred %>%
   mutate(
     spam      = if_else(spam == 1, "Email is spam", "Email is not spam"),
     spam_pred = if_else(.pred_1 > cutoff_prob, "Email labelled spam", "Email labelled not spam")
-    ) %>%
+  ) %>%
   count(spam_pred, spam) %>%
   pivot_wider(names_from = spam, values_from = n) %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
