@@ -49,7 +49,7 @@ ggplot(email,
     y = "Spam",
     title = "Spam vs. number of characters"
     ) +
-  guides(color = FALSE, fill = FALSE) +
+  guides(color = "none", fill = "none") +
   scale_fill_manual(values = c("#E48957", "#CA235F")) +
   scale_color_manual(values = c("#DEB4A0", "#CA235F"))
 ```
@@ -85,7 +85,7 @@ email %>%
 - For simplicity, we'll focus on the number of characters (`num_char`) as predictor, but the model we describe can be expanded to take multiple predictors as well.
 
 
-This isn't something we can reasonably fit a linear model to -- we need something different!
+We can't reasonably fit a linear model to this data-- we need something different!
 
 ```{r echo=FALSE, out.width="70%"}
 means <- email %>%
@@ -98,11 +98,11 @@ ggplot(email, aes(x = num_char,
   geom_jitter(alpha = 0.2) +
   geom_line(data = means,
             aes(x = mean_num_char, y = spam, group = group),
-            color = "black", size = 1.5) +
+            color = "black", linewidth = 1.5) +
   labs(x = "Number of characters (in thousands)",
        y = "Spam") +
   scale_color_manual(values = c("#DEB4A0", "#CA235F")) +
-  guides(color = FALSE)
+  guides(color = "none")
 ```
 
 
@@ -268,7 +268,7 @@ ggplot(spam_aug, aes(x = num_char)) +
   geom_point(aes(y = as.numeric(spam) - 1, color = spam), alpha = 0.3) +
   scale_color_manual(values = c("#DEB4A0", "#CA235F")) +
   scale_y_continuous(breaks = c(0, 1)) +
-  guides(color = FALSE) +
+  guides(color = "none") +
   geom_line(aes(y = prob)) +
   geom_point(data = newdata, aes(x = num_char, y = p_hat), 
              fill = newdata$color, shape = newdata$shape, 
