@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-01-22" />
+<meta name="date" content="2024-01-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -63,6 +63,10 @@
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -1448,69 +1452,69 @@ div.csl-indent {
 <div id="load-dplyr-and-gapminder" class="section level3 hasAnchor" number="21.0.1">
 <h3><span class="header-section-number">21.0.1</span> Load dplyr and gapminder<a href="dplyr_intro.html#load-dplyr-and-gapminder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>I choose to load the tidyverse, which will load dplyr, among other packages we’ll use incidentally below.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="dplyr_intro.html#cb75-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="dplyr_intro.html#cb74-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Also load gapminder.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="dplyr_intro.html#cb76-1" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="dplyr_intro.html#cb75-1" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 </div>
 <div id="say-hello-to-the-gapminder-tibble" class="section level3 hasAnchor" number="21.0.2">
 <h3><span class="header-section-number">21.0.2</span> Say hello to the <code>gapminder</code> tibble<a href="dplyr_intro.html#say-hello-to-the-gapminder-tibble" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>gapminder</code> data frame is a special kind of data frame: a tibble.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="dplyr_intro.html#cb77-1" tabindex="-1"></a>gapminder</span>
-<span id="cb77-2"><a href="dplyr_intro.html#cb77-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,704 × 6</span></span>
-<span id="cb77-3"><a href="dplyr_intro.html#cb77-3" tabindex="-1"></a><span class="co">#&gt;    country     continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb77-4"><a href="dplyr_intro.html#cb77-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb77-5"><a href="dplyr_intro.html#cb77-5" tabindex="-1"></a><span class="co">#&gt;  1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
-<span id="cb77-6"><a href="dplyr_intro.html#cb77-6" tabindex="-1"></a><span class="co">#&gt;  2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
-<span id="cb77-7"><a href="dplyr_intro.html#cb77-7" tabindex="-1"></a><span class="co">#&gt;  3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
-<span id="cb77-8"><a href="dplyr_intro.html#cb77-8" tabindex="-1"></a><span class="co">#&gt;  4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
-<span id="cb77-9"><a href="dplyr_intro.html#cb77-9" tabindex="-1"></a><span class="co">#&gt;  5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
-<span id="cb77-10"><a href="dplyr_intro.html#cb77-10" tabindex="-1"></a><span class="co">#&gt;  6 Afghanistan Asia       1977    38.4 14880372      786.</span></span>
-<span id="cb77-11"><a href="dplyr_intro.html#cb77-11" tabindex="-1"></a><span class="co">#&gt;  7 Afghanistan Asia       1982    39.9 12881816      978.</span></span>
-<span id="cb77-12"><a href="dplyr_intro.html#cb77-12" tabindex="-1"></a><span class="co">#&gt;  8 Afghanistan Asia       1987    40.8 13867957      852.</span></span>
-<span id="cb77-13"><a href="dplyr_intro.html#cb77-13" tabindex="-1"></a><span class="co">#&gt;  9 Afghanistan Asia       1992    41.7 16317921      649.</span></span>
-<span id="cb77-14"><a href="dplyr_intro.html#cb77-14" tabindex="-1"></a><span class="co">#&gt; 10 Afghanistan Asia       1997    41.8 22227415      635.</span></span>
-<span id="cb77-15"><a href="dplyr_intro.html#cb77-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,694 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="dplyr_intro.html#cb76-1" tabindex="-1"></a>gapminder</span>
+<span id="cb76-2"><a href="dplyr_intro.html#cb76-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,704 × 6</span></span>
+<span id="cb76-3"><a href="dplyr_intro.html#cb76-3" tabindex="-1"></a><span class="co">#&gt;    country     continent  year lifeExp      pop gdpPercap</span></span>
+<span id="cb76-4"><a href="dplyr_intro.html#cb76-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb76-5"><a href="dplyr_intro.html#cb76-5" tabindex="-1"></a><span class="co">#&gt;  1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
+<span id="cb76-6"><a href="dplyr_intro.html#cb76-6" tabindex="-1"></a><span class="co">#&gt;  2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
+<span id="cb76-7"><a href="dplyr_intro.html#cb76-7" tabindex="-1"></a><span class="co">#&gt;  3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
+<span id="cb76-8"><a href="dplyr_intro.html#cb76-8" tabindex="-1"></a><span class="co">#&gt;  4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
+<span id="cb76-9"><a href="dplyr_intro.html#cb76-9" tabindex="-1"></a><span class="co">#&gt;  5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
+<span id="cb76-10"><a href="dplyr_intro.html#cb76-10" tabindex="-1"></a><span class="co">#&gt;  6 Afghanistan Asia       1977    38.4 14880372      786.</span></span>
+<span id="cb76-11"><a href="dplyr_intro.html#cb76-11" tabindex="-1"></a><span class="co">#&gt;  7 Afghanistan Asia       1982    39.9 12881816      978.</span></span>
+<span id="cb76-12"><a href="dplyr_intro.html#cb76-12" tabindex="-1"></a><span class="co">#&gt;  8 Afghanistan Asia       1987    40.8 13867957      852.</span></span>
+<span id="cb76-13"><a href="dplyr_intro.html#cb76-13" tabindex="-1"></a><span class="co">#&gt;  9 Afghanistan Asia       1992    41.7 16317921      649.</span></span>
+<span id="cb76-14"><a href="dplyr_intro.html#cb76-14" tabindex="-1"></a><span class="co">#&gt; 10 Afghanistan Asia       1997    41.8 22227415      635.</span></span>
+<span id="cb76-15"><a href="dplyr_intro.html#cb76-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,694 more rows</span></span></code></pre></div>
 <p>It’s tibble-ness is why we get nice compact printing. For a reminder of the problems with base data frame printing, go type <code>iris</code> in the R Console or, better yet, print a data frame to screen that has lots of columns.</p>
 <p>Note how <code>gapminder</code>’s <code>class()</code> includes <code>tbl_df</code>; the “tibble” terminology is a nod to this.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="dplyr_intro.html#cb78-1" tabindex="-1"></a><span class="fu">class</span>(gapminder)</span>
-<span id="cb78-2"><a href="dplyr_intro.html#cb78-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="dplyr_intro.html#cb77-1" tabindex="-1"></a><span class="fu">class</span>(gapminder)</span>
+<span id="cb77-2"><a href="dplyr_intro.html#cb77-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></span></code></pre></div>
 <p>Some functions, like <code>print()</code>, know about tibbles and do something special. However, other functions do not, like <code>summary()</code>. In those cases, the tibble will be treated the same as a regular data frame because every tibble is also a regular data frame.</p>
 <p>To turn any data frame into a tibble, use <code>as_tibble()</code>:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="dplyr_intro.html#cb79-1" tabindex="-1"></a><span class="fu">as_tibble</span>(iris)</span>
-<span id="cb79-2"><a href="dplyr_intro.html#cb79-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 150 × 5</span></span>
-<span id="cb79-3"><a href="dplyr_intro.html#cb79-3" tabindex="-1"></a><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
-<span id="cb79-4"><a href="dplyr_intro.html#cb79-4" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span></span>
-<span id="cb79-5"><a href="dplyr_intro.html#cb79-5" tabindex="-1"></a><span class="co">#&gt;  1          5.1         3.5          1.4         0.2 setosa </span></span>
-<span id="cb79-6"><a href="dplyr_intro.html#cb79-6" tabindex="-1"></a><span class="co">#&gt;  2          4.9         3            1.4         0.2 setosa </span></span>
-<span id="cb79-7"><a href="dplyr_intro.html#cb79-7" tabindex="-1"></a><span class="co">#&gt;  3          4.7         3.2          1.3         0.2 setosa </span></span>
-<span id="cb79-8"><a href="dplyr_intro.html#cb79-8" tabindex="-1"></a><span class="co">#&gt;  4          4.6         3.1          1.5         0.2 setosa </span></span>
-<span id="cb79-9"><a href="dplyr_intro.html#cb79-9" tabindex="-1"></a><span class="co">#&gt;  5          5           3.6          1.4         0.2 setosa </span></span>
-<span id="cb79-10"><a href="dplyr_intro.html#cb79-10" tabindex="-1"></a><span class="co">#&gt;  6          5.4         3.9          1.7         0.4 setosa </span></span>
-<span id="cb79-11"><a href="dplyr_intro.html#cb79-11" tabindex="-1"></a><span class="co">#&gt;  7          4.6         3.4          1.4         0.3 setosa </span></span>
-<span id="cb79-12"><a href="dplyr_intro.html#cb79-12" tabindex="-1"></a><span class="co">#&gt;  8          5           3.4          1.5         0.2 setosa </span></span>
-<span id="cb79-13"><a href="dplyr_intro.html#cb79-13" tabindex="-1"></a><span class="co">#&gt;  9          4.4         2.9          1.4         0.2 setosa </span></span>
-<span id="cb79-14"><a href="dplyr_intro.html#cb79-14" tabindex="-1"></a><span class="co">#&gt; 10          4.9         3.1          1.5         0.1 setosa </span></span>
-<span id="cb79-15"><a href="dplyr_intro.html#cb79-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 140 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="dplyr_intro.html#cb78-1" tabindex="-1"></a><span class="fu">as_tibble</span>(iris)</span>
+<span id="cb78-2"><a href="dplyr_intro.html#cb78-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 150 × 5</span></span>
+<span id="cb78-3"><a href="dplyr_intro.html#cb78-3" tabindex="-1"></a><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
+<span id="cb78-4"><a href="dplyr_intro.html#cb78-4" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span></span>
+<span id="cb78-5"><a href="dplyr_intro.html#cb78-5" tabindex="-1"></a><span class="co">#&gt;  1          5.1         3.5          1.4         0.2 setosa </span></span>
+<span id="cb78-6"><a href="dplyr_intro.html#cb78-6" tabindex="-1"></a><span class="co">#&gt;  2          4.9         3            1.4         0.2 setosa </span></span>
+<span id="cb78-7"><a href="dplyr_intro.html#cb78-7" tabindex="-1"></a><span class="co">#&gt;  3          4.7         3.2          1.3         0.2 setosa </span></span>
+<span id="cb78-8"><a href="dplyr_intro.html#cb78-8" tabindex="-1"></a><span class="co">#&gt;  4          4.6         3.1          1.5         0.2 setosa </span></span>
+<span id="cb78-9"><a href="dplyr_intro.html#cb78-9" tabindex="-1"></a><span class="co">#&gt;  5          5           3.6          1.4         0.2 setosa </span></span>
+<span id="cb78-10"><a href="dplyr_intro.html#cb78-10" tabindex="-1"></a><span class="co">#&gt;  6          5.4         3.9          1.7         0.4 setosa </span></span>
+<span id="cb78-11"><a href="dplyr_intro.html#cb78-11" tabindex="-1"></a><span class="co">#&gt;  7          4.6         3.4          1.4         0.3 setosa </span></span>
+<span id="cb78-12"><a href="dplyr_intro.html#cb78-12" tabindex="-1"></a><span class="co">#&gt;  8          5           3.4          1.5         0.2 setosa </span></span>
+<span id="cb78-13"><a href="dplyr_intro.html#cb78-13" tabindex="-1"></a><span class="co">#&gt;  9          4.4         2.9          1.4         0.2 setosa </span></span>
+<span id="cb78-14"><a href="dplyr_intro.html#cb78-14" tabindex="-1"></a><span class="co">#&gt; 10          4.9         3.1          1.5         0.1 setosa </span></span>
+<span id="cb78-15"><a href="dplyr_intro.html#cb78-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 140 more rows</span></span></code></pre></div>
 </div>
 <div id="think-before-you-create-excerpts-of-your-data" class="section level2 hasAnchor" number="21.1">
 <h2><span class="header-section-number">21.1</span> Think before you create excerpts of your data …<a href="dplyr_intro.html#think-before-you-create-excerpts-of-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you feel the urge to store a little snippet of your data:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="dplyr_intro.html#cb80-1" tabindex="-1"></a>(canada <span class="ot">&lt;-</span> gapminder[<span class="dv">241</span><span class="sc">:</span><span class="dv">252</span>, ])</span>
-<span id="cb80-2"><a href="dplyr_intro.html#cb80-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 6</span></span>
-<span id="cb80-3"><a href="dplyr_intro.html#cb80-3" tabindex="-1"></a><span class="co">#&gt;    country continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb80-4"><a href="dplyr_intro.html#cb80-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb80-5"><a href="dplyr_intro.html#cb80-5" tabindex="-1"></a><span class="co">#&gt;  1 Canada  Americas   1952    68.8 14785584    11367.</span></span>
-<span id="cb80-6"><a href="dplyr_intro.html#cb80-6" tabindex="-1"></a><span class="co">#&gt;  2 Canada  Americas   1957    70.0 17010154    12490.</span></span>
-<span id="cb80-7"><a href="dplyr_intro.html#cb80-7" tabindex="-1"></a><span class="co">#&gt;  3 Canada  Americas   1962    71.3 18985849    13462.</span></span>
-<span id="cb80-8"><a href="dplyr_intro.html#cb80-8" tabindex="-1"></a><span class="co">#&gt;  4 Canada  Americas   1967    72.1 20819767    16077.</span></span>
-<span id="cb80-9"><a href="dplyr_intro.html#cb80-9" tabindex="-1"></a><span class="co">#&gt;  5 Canada  Americas   1972    72.9 22284500    18971.</span></span>
-<span id="cb80-10"><a href="dplyr_intro.html#cb80-10" tabindex="-1"></a><span class="co">#&gt;  6 Canada  Americas   1977    74.2 23796400    22091.</span></span>
-<span id="cb80-11"><a href="dplyr_intro.html#cb80-11" tabindex="-1"></a><span class="co">#&gt;  7 Canada  Americas   1982    75.8 25201900    22899.</span></span>
-<span id="cb80-12"><a href="dplyr_intro.html#cb80-12" tabindex="-1"></a><span class="co">#&gt;  8 Canada  Americas   1987    76.9 26549700    26627.</span></span>
-<span id="cb80-13"><a href="dplyr_intro.html#cb80-13" tabindex="-1"></a><span class="co">#&gt;  9 Canada  Americas   1992    78.0 28523502    26343.</span></span>
-<span id="cb80-14"><a href="dplyr_intro.html#cb80-14" tabindex="-1"></a><span class="co">#&gt; 10 Canada  Americas   1997    78.6 30305843    28955.</span></span>
-<span id="cb80-15"><a href="dplyr_intro.html#cb80-15" tabindex="-1"></a><span class="co">#&gt; 11 Canada  Americas   2002    79.8 31902268    33329.</span></span>
-<span id="cb80-16"><a href="dplyr_intro.html#cb80-16" tabindex="-1"></a><span class="co">#&gt; 12 Canada  Americas   2007    80.7 33390141    36319.</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="dplyr_intro.html#cb79-1" tabindex="-1"></a>(canada <span class="ot">&lt;-</span> gapminder[<span class="dv">241</span><span class="sc">:</span><span class="dv">252</span>, ])</span>
+<span id="cb79-2"><a href="dplyr_intro.html#cb79-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 6</span></span>
+<span id="cb79-3"><a href="dplyr_intro.html#cb79-3" tabindex="-1"></a><span class="co">#&gt;    country continent  year lifeExp      pop gdpPercap</span></span>
+<span id="cb79-4"><a href="dplyr_intro.html#cb79-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb79-5"><a href="dplyr_intro.html#cb79-5" tabindex="-1"></a><span class="co">#&gt;  1 Canada  Americas   1952    68.8 14785584    11367.</span></span>
+<span id="cb79-6"><a href="dplyr_intro.html#cb79-6" tabindex="-1"></a><span class="co">#&gt;  2 Canada  Americas   1957    70.0 17010154    12490.</span></span>
+<span id="cb79-7"><a href="dplyr_intro.html#cb79-7" tabindex="-1"></a><span class="co">#&gt;  3 Canada  Americas   1962    71.3 18985849    13462.</span></span>
+<span id="cb79-8"><a href="dplyr_intro.html#cb79-8" tabindex="-1"></a><span class="co">#&gt;  4 Canada  Americas   1967    72.1 20819767    16077.</span></span>
+<span id="cb79-9"><a href="dplyr_intro.html#cb79-9" tabindex="-1"></a><span class="co">#&gt;  5 Canada  Americas   1972    72.9 22284500    18971.</span></span>
+<span id="cb79-10"><a href="dplyr_intro.html#cb79-10" tabindex="-1"></a><span class="co">#&gt;  6 Canada  Americas   1977    74.2 23796400    22091.</span></span>
+<span id="cb79-11"><a href="dplyr_intro.html#cb79-11" tabindex="-1"></a><span class="co">#&gt;  7 Canada  Americas   1982    75.8 25201900    22899.</span></span>
+<span id="cb79-12"><a href="dplyr_intro.html#cb79-12" tabindex="-1"></a><span class="co">#&gt;  8 Canada  Americas   1987    76.9 26549700    26627.</span></span>
+<span id="cb79-13"><a href="dplyr_intro.html#cb79-13" tabindex="-1"></a><span class="co">#&gt;  9 Canada  Americas   1992    78.0 28523502    26343.</span></span>
+<span id="cb79-14"><a href="dplyr_intro.html#cb79-14" tabindex="-1"></a><span class="co">#&gt; 10 Canada  Americas   1997    78.6 30305843    28955.</span></span>
+<span id="cb79-15"><a href="dplyr_intro.html#cb79-15" tabindex="-1"></a><span class="co">#&gt; 11 Canada  Americas   2002    79.8 31902268    33329.</span></span>
+<span id="cb79-16"><a href="dplyr_intro.html#cb79-16" tabindex="-1"></a><span class="co">#&gt; 12 Canada  Americas   2007    80.7 33390141    36319.</span></span></code></pre></div>
 <p>Stop and ask yourself …</p>
 <blockquote>
 <p>Do I want to create mini datasets for each level of some factor (or unique combination of several factors) … in order to compute or graph something?</p>
@@ -1523,48 +1527,48 @@ div.csl-indent {
 <div id="use-filter-to-subset-data-row-wise" class="section level2 hasAnchor" number="21.2">
 <h2><span class="header-section-number">21.2</span> Use <code>filter()</code> to subset data row-wise<a href="dplyr_intro.html#use-filter-to-subset-data-row-wise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>filter()</code> takes logical expressions and returns the rows for which all are <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="dplyr_intro.html#cb81-1" tabindex="-1"></a><span class="fu">filter</span>(gapminder, lifeExp <span class="sc">&lt;</span> <span class="dv">29</span>)</span>
-<span id="cb81-2"><a href="dplyr_intro.html#cb81-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
-<span id="cb81-3"><a href="dplyr_intro.html#cb81-3" tabindex="-1"></a><span class="co">#&gt;   country     continent  year lifeExp     pop gdpPercap</span></span>
-<span id="cb81-4"><a href="dplyr_intro.html#cb81-4" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb81-5"><a href="dplyr_intro.html#cb81-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan Asia       1952    28.8 8425333      779.</span></span>
-<span id="cb81-6"><a href="dplyr_intro.html#cb81-6" tabindex="-1"></a><span class="co">#&gt; 2 Rwanda      Africa     1992    23.6 7290203      737.</span></span>
-<span id="cb81-7"><a href="dplyr_intro.html#cb81-7" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Rwanda&quot;</span>, year <span class="sc">&gt;</span> <span class="dv">1979</span>)</span>
-<span id="cb81-8"><a href="dplyr_intro.html#cb81-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
-<span id="cb81-9"><a href="dplyr_intro.html#cb81-9" tabindex="-1"></a><span class="co">#&gt;   country continent  year lifeExp     pop gdpPercap</span></span>
-<span id="cb81-10"><a href="dplyr_intro.html#cb81-10" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb81-11"><a href="dplyr_intro.html#cb81-11" tabindex="-1"></a><span class="co">#&gt; 1 Rwanda  Africa     1982    46.2 5507565      882.</span></span>
-<span id="cb81-12"><a href="dplyr_intro.html#cb81-12" tabindex="-1"></a><span class="co">#&gt; 2 Rwanda  Africa     1987    44.0 6349365      848.</span></span>
-<span id="cb81-13"><a href="dplyr_intro.html#cb81-13" tabindex="-1"></a><span class="co">#&gt; 3 Rwanda  Africa     1992    23.6 7290203      737.</span></span>
-<span id="cb81-14"><a href="dplyr_intro.html#cb81-14" tabindex="-1"></a><span class="co">#&gt; 4 Rwanda  Africa     1997    36.1 7212583      590.</span></span>
-<span id="cb81-15"><a href="dplyr_intro.html#cb81-15" tabindex="-1"></a><span class="co">#&gt; 5 Rwanda  Africa     2002    43.4 7852401      786.</span></span>
-<span id="cb81-16"><a href="dplyr_intro.html#cb81-16" tabindex="-1"></a><span class="co">#&gt; 6 Rwanda  Africa     2007    46.2 8860588      863.</span></span>
-<span id="cb81-17"><a href="dplyr_intro.html#cb81-17" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Rwanda&quot;</span>, <span class="st">&quot;Afghanistan&quot;</span>))</span>
-<span id="cb81-18"><a href="dplyr_intro.html#cb81-18" tabindex="-1"></a><span class="co">#&gt; # A tibble: 24 × 6</span></span>
-<span id="cb81-19"><a href="dplyr_intro.html#cb81-19" tabindex="-1"></a><span class="co">#&gt;    country     continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb81-20"><a href="dplyr_intro.html#cb81-20" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb81-21"><a href="dplyr_intro.html#cb81-21" tabindex="-1"></a><span class="co">#&gt;  1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
-<span id="cb81-22"><a href="dplyr_intro.html#cb81-22" tabindex="-1"></a><span class="co">#&gt;  2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
-<span id="cb81-23"><a href="dplyr_intro.html#cb81-23" tabindex="-1"></a><span class="co">#&gt;  3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
-<span id="cb81-24"><a href="dplyr_intro.html#cb81-24" tabindex="-1"></a><span class="co">#&gt;  4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
-<span id="cb81-25"><a href="dplyr_intro.html#cb81-25" tabindex="-1"></a><span class="co">#&gt;  5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
-<span id="cb81-26"><a href="dplyr_intro.html#cb81-26" tabindex="-1"></a><span class="co">#&gt;  6 Afghanistan Asia       1977    38.4 14880372      786.</span></span>
-<span id="cb81-27"><a href="dplyr_intro.html#cb81-27" tabindex="-1"></a><span class="co">#&gt;  7 Afghanistan Asia       1982    39.9 12881816      978.</span></span>
-<span id="cb81-28"><a href="dplyr_intro.html#cb81-28" tabindex="-1"></a><span class="co">#&gt;  8 Afghanistan Asia       1987    40.8 13867957      852.</span></span>
-<span id="cb81-29"><a href="dplyr_intro.html#cb81-29" tabindex="-1"></a><span class="co">#&gt;  9 Afghanistan Asia       1992    41.7 16317921      649.</span></span>
-<span id="cb81-30"><a href="dplyr_intro.html#cb81-30" tabindex="-1"></a><span class="co">#&gt; 10 Afghanistan Asia       1997    41.8 22227415      635.</span></span>
-<span id="cb81-31"><a href="dplyr_intro.html#cb81-31" tabindex="-1"></a><span class="co">#&gt; # ℹ 14 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="dplyr_intro.html#cb80-1" tabindex="-1"></a><span class="fu">filter</span>(gapminder, lifeExp <span class="sc">&lt;</span> <span class="dv">29</span>)</span>
+<span id="cb80-2"><a href="dplyr_intro.html#cb80-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
+<span id="cb80-3"><a href="dplyr_intro.html#cb80-3" tabindex="-1"></a><span class="co">#&gt;   country     continent  year lifeExp     pop gdpPercap</span></span>
+<span id="cb80-4"><a href="dplyr_intro.html#cb80-4" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb80-5"><a href="dplyr_intro.html#cb80-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan Asia       1952    28.8 8425333      779.</span></span>
+<span id="cb80-6"><a href="dplyr_intro.html#cb80-6" tabindex="-1"></a><span class="co">#&gt; 2 Rwanda      Africa     1992    23.6 7290203      737.</span></span>
+<span id="cb80-7"><a href="dplyr_intro.html#cb80-7" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Rwanda&quot;</span>, year <span class="sc">&gt;</span> <span class="dv">1979</span>)</span>
+<span id="cb80-8"><a href="dplyr_intro.html#cb80-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span id="cb80-9"><a href="dplyr_intro.html#cb80-9" tabindex="-1"></a><span class="co">#&gt;   country continent  year lifeExp     pop gdpPercap</span></span>
+<span id="cb80-10"><a href="dplyr_intro.html#cb80-10" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb80-11"><a href="dplyr_intro.html#cb80-11" tabindex="-1"></a><span class="co">#&gt; 1 Rwanda  Africa     1982    46.2 5507565      882.</span></span>
+<span id="cb80-12"><a href="dplyr_intro.html#cb80-12" tabindex="-1"></a><span class="co">#&gt; 2 Rwanda  Africa     1987    44.0 6349365      848.</span></span>
+<span id="cb80-13"><a href="dplyr_intro.html#cb80-13" tabindex="-1"></a><span class="co">#&gt; 3 Rwanda  Africa     1992    23.6 7290203      737.</span></span>
+<span id="cb80-14"><a href="dplyr_intro.html#cb80-14" tabindex="-1"></a><span class="co">#&gt; 4 Rwanda  Africa     1997    36.1 7212583      590.</span></span>
+<span id="cb80-15"><a href="dplyr_intro.html#cb80-15" tabindex="-1"></a><span class="co">#&gt; 5 Rwanda  Africa     2002    43.4 7852401      786.</span></span>
+<span id="cb80-16"><a href="dplyr_intro.html#cb80-16" tabindex="-1"></a><span class="co">#&gt; 6 Rwanda  Africa     2007    46.2 8860588      863.</span></span>
+<span id="cb80-17"><a href="dplyr_intro.html#cb80-17" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Rwanda&quot;</span>, <span class="st">&quot;Afghanistan&quot;</span>))</span>
+<span id="cb80-18"><a href="dplyr_intro.html#cb80-18" tabindex="-1"></a><span class="co">#&gt; # A tibble: 24 × 6</span></span>
+<span id="cb80-19"><a href="dplyr_intro.html#cb80-19" tabindex="-1"></a><span class="co">#&gt;    country     continent  year lifeExp      pop gdpPercap</span></span>
+<span id="cb80-20"><a href="dplyr_intro.html#cb80-20" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb80-21"><a href="dplyr_intro.html#cb80-21" tabindex="-1"></a><span class="co">#&gt;  1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
+<span id="cb80-22"><a href="dplyr_intro.html#cb80-22" tabindex="-1"></a><span class="co">#&gt;  2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
+<span id="cb80-23"><a href="dplyr_intro.html#cb80-23" tabindex="-1"></a><span class="co">#&gt;  3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
+<span id="cb80-24"><a href="dplyr_intro.html#cb80-24" tabindex="-1"></a><span class="co">#&gt;  4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
+<span id="cb80-25"><a href="dplyr_intro.html#cb80-25" tabindex="-1"></a><span class="co">#&gt;  5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
+<span id="cb80-26"><a href="dplyr_intro.html#cb80-26" tabindex="-1"></a><span class="co">#&gt;  6 Afghanistan Asia       1977    38.4 14880372      786.</span></span>
+<span id="cb80-27"><a href="dplyr_intro.html#cb80-27" tabindex="-1"></a><span class="co">#&gt;  7 Afghanistan Asia       1982    39.9 12881816      978.</span></span>
+<span id="cb80-28"><a href="dplyr_intro.html#cb80-28" tabindex="-1"></a><span class="co">#&gt;  8 Afghanistan Asia       1987    40.8 13867957      852.</span></span>
+<span id="cb80-29"><a href="dplyr_intro.html#cb80-29" tabindex="-1"></a><span class="co">#&gt;  9 Afghanistan Asia       1992    41.7 16317921      649.</span></span>
+<span id="cb80-30"><a href="dplyr_intro.html#cb80-30" tabindex="-1"></a><span class="co">#&gt; 10 Afghanistan Asia       1997    41.8 22227415      635.</span></span>
+<span id="cb80-31"><a href="dplyr_intro.html#cb80-31" tabindex="-1"></a><span class="co">#&gt; # ℹ 14 more rows</span></span></code></pre></div>
 <p>Compare with some base R code to accomplish the same things:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="dplyr_intro.html#cb82-1" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>lifeExp <span class="sc">&lt;</span> <span class="dv">29</span>, ] <span class="do">## repeat `gapminder`, [i, j] indexing is distracting</span></span>
-<span id="cb82-2"><a href="dplyr_intro.html#cb82-2" tabindex="-1"></a><span class="fu">subset</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Rwanda&quot;</span>) <span class="do">## almost same as filter; quite nice actually</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="dplyr_intro.html#cb81-1" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>lifeExp <span class="sc">&lt;</span> <span class="dv">29</span>, ] <span class="do">## repeat `gapminder`, [i, j] indexing is distracting</span></span>
+<span id="cb81-2"><a href="dplyr_intro.html#cb81-2" tabindex="-1"></a><span class="fu">subset</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Rwanda&quot;</span>) <span class="do">## almost same as filter; quite nice actually</span></span></code></pre></div>
 <p>Under no circumstances should you subset your data the way I did at first:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="dplyr_intro.html#cb83-1" tabindex="-1"></a>excerpt <span class="ot">&lt;-</span> gapminder[<span class="dv">241</span><span class="sc">:</span><span class="dv">252</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="dplyr_intro.html#cb82-1" tabindex="-1"></a>excerpt <span class="ot">&lt;-</span> gapminder[<span class="dv">241</span><span class="sc">:</span><span class="dv">252</span>, ]</span></code></pre></div>
 <p>Why is this approach a terrible idea?</p>
 <ul>
 <li>It is not self-documenting. What is so special about rows 241 through 252?</li>
 <li>It is fragile. This line of code will produce different results if someone changes the row order of <code>gapminder</code>, e.g. sorts the data earlier in the script.</li>
 </ul>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="dplyr_intro.html#cb84-1" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Canada&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="dplyr_intro.html#cb83-1" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">&quot;Canada&quot;</span>)</span></code></pre></div>
 <p>This call explains itself and is fairly robust.</p>
 </div>
 <div id="meet-the-new-pipe-operator" class="section level2 hasAnchor" number="21.3">
@@ -1572,25 +1576,25 @@ div.csl-indent {
 <p>Before we go any further, we should exploit the new pipe operator that the tidyverse imports from the <a href="https://magrittr.tidyverse.org">magrittr</a> package by Stefan Bache. This is going to change your data analytical life. You no longer need to enact multi-operation commands by nesting them inside each other, like so many <a href="https://en.wikipedia.org/wiki/Matryoshka_doll">Russian nesting dolls</a>. This new syntax leads to code that is much easier to write and to read.</p>
 <p>Here’s what it looks like: <code>%&gt;%</code>. The RStudio keyboard shortcut: Ctrl+Shift+M (Windows), Cmd+Shift+M (Mac).</p>
 <p>Let’s demo, then I’ll explain.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="dplyr_intro.html#cb85-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
-<span id="cb85-2"><a href="dplyr_intro.html#cb85-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="dplyr_intro.html#cb84-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb84-2"><a href="dplyr_intro.html#cb84-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span id="cb84-3"><a href="dplyr_intro.html#cb84-3" tabindex="-1"></a><span class="co">#&gt;   country     continent  year lifeExp      pop gdpPercap</span></span>
+<span id="cb84-4"><a href="dplyr_intro.html#cb84-4" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
+<span id="cb84-5"><a href="dplyr_intro.html#cb84-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
+<span id="cb84-6"><a href="dplyr_intro.html#cb84-6" tabindex="-1"></a><span class="co">#&gt; 2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
+<span id="cb84-7"><a href="dplyr_intro.html#cb84-7" tabindex="-1"></a><span class="co">#&gt; 3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
+<span id="cb84-8"><a href="dplyr_intro.html#cb84-8" tabindex="-1"></a><span class="co">#&gt; 4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
+<span id="cb84-9"><a href="dplyr_intro.html#cb84-9" tabindex="-1"></a><span class="co">#&gt; 5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
+<span id="cb84-10"><a href="dplyr_intro.html#cb84-10" tabindex="-1"></a><span class="co">#&gt; 6 Afghanistan Asia       1977    38.4 14880372      786.</span></span></code></pre></div>
+<p>This code is equivalent to <code>head(gapminder)</code>. The pipe operator takes the thing on the left-hand-side and <strong>pipes</strong> it into the function call on the right-hand-side – literally, drops it in as the first argument.</p>
+<p>Never fear, you can still specify other arguments to this function! To see the first 3 rows of <code>gapminder</code>, we could say <code>head(gapminder, 3)</code> or this:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="dplyr_intro.html#cb85-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
+<span id="cb85-2"><a href="dplyr_intro.html#cb85-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb85-3"><a href="dplyr_intro.html#cb85-3" tabindex="-1"></a><span class="co">#&gt;   country     continent  year lifeExp      pop gdpPercap</span></span>
 <span id="cb85-4"><a href="dplyr_intro.html#cb85-4" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
 <span id="cb85-5"><a href="dplyr_intro.html#cb85-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
 <span id="cb85-6"><a href="dplyr_intro.html#cb85-6" tabindex="-1"></a><span class="co">#&gt; 2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
-<span id="cb85-7"><a href="dplyr_intro.html#cb85-7" tabindex="-1"></a><span class="co">#&gt; 3 Afghanistan Asia       1962    32.0 10267083      853.</span></span>
-<span id="cb85-8"><a href="dplyr_intro.html#cb85-8" tabindex="-1"></a><span class="co">#&gt; 4 Afghanistan Asia       1967    34.0 11537966      836.</span></span>
-<span id="cb85-9"><a href="dplyr_intro.html#cb85-9" tabindex="-1"></a><span class="co">#&gt; 5 Afghanistan Asia       1972    36.1 13079460      740.</span></span>
-<span id="cb85-10"><a href="dplyr_intro.html#cb85-10" tabindex="-1"></a><span class="co">#&gt; 6 Afghanistan Asia       1977    38.4 14880372      786.</span></span></code></pre></div>
-<p>This code is equivalent to <code>head(gapminder)</code>. The pipe operator takes the thing on the left-hand-side and <strong>pipes</strong> it into the function call on the right-hand-side – literally, drops it in as the first argument.</p>
-<p>Never fear, you can still specify other arguments to this function! To see the first 3 rows of <code>gapminder</code>, we could say <code>head(gapminder, 3)</code> or this:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="dplyr_intro.html#cb86-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
-<span id="cb86-2"><a href="dplyr_intro.html#cb86-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
-<span id="cb86-3"><a href="dplyr_intro.html#cb86-3" tabindex="-1"></a><span class="co">#&gt;   country     continent  year lifeExp      pop gdpPercap</span></span>
-<span id="cb86-4"><a href="dplyr_intro.html#cb86-4" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span></span>
-<span id="cb86-5"><a href="dplyr_intro.html#cb86-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan Asia       1952    28.8  8425333      779.</span></span>
-<span id="cb86-6"><a href="dplyr_intro.html#cb86-6" tabindex="-1"></a><span class="co">#&gt; 2 Afghanistan Asia       1957    30.3  9240934      821.</span></span>
-<span id="cb86-7"><a href="dplyr_intro.html#cb86-7" tabindex="-1"></a><span class="co">#&gt; 3 Afghanistan Asia       1962    32.0 10267083      853.</span></span></code></pre></div>
+<span id="cb85-7"><a href="dplyr_intro.html#cb85-7" tabindex="-1"></a><span class="co">#&gt; 3 Afghanistan Asia       1962    32.0 10267083      853.</span></span></code></pre></div>
 <p>I’ve advised you to think “gets” whenever you see the assignment operator, <code>&lt;-</code>. Similarly, you should think “then” whenever you see the pipe operator, <code>%&gt;%</code>.</p>
 <p>You are probably not impressed yet, but the magic will soon happen.</p>
 </div>
@@ -1598,72 +1602,72 @@ div.csl-indent {
 <h2><span class="header-section-number">21.4</span> Use <code>select()</code> to subset the data on variables or columns.<a href="dplyr_intro.html#use-select-to-subset-the-data-on-variables-or-columns." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Back to dplyr….</p>
 <p>Use <code>select()</code> to subset the data on variables or columns. Here’s a conventional call:</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="dplyr_intro.html#cb87-1" tabindex="-1"></a><span class="fu">select</span>(gapminder, year, lifeExp)</span>
-<span id="cb87-2"><a href="dplyr_intro.html#cb87-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,704 × 2</span></span>
-<span id="cb87-3"><a href="dplyr_intro.html#cb87-3" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
-<span id="cb87-4"><a href="dplyr_intro.html#cb87-4" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb87-5"><a href="dplyr_intro.html#cb87-5" tabindex="-1"></a><span class="co">#&gt;  1  1952    28.8</span></span>
-<span id="cb87-6"><a href="dplyr_intro.html#cb87-6" tabindex="-1"></a><span class="co">#&gt;  2  1957    30.3</span></span>
-<span id="cb87-7"><a href="dplyr_intro.html#cb87-7" tabindex="-1"></a><span class="co">#&gt;  3  1962    32.0</span></span>
-<span id="cb87-8"><a href="dplyr_intro.html#cb87-8" tabindex="-1"></a><span class="co">#&gt;  4  1967    34.0</span></span>
-<span id="cb87-9"><a href="dplyr_intro.html#cb87-9" tabindex="-1"></a><span class="co">#&gt;  5  1972    36.1</span></span>
-<span id="cb87-10"><a href="dplyr_intro.html#cb87-10" tabindex="-1"></a><span class="co">#&gt;  6  1977    38.4</span></span>
-<span id="cb87-11"><a href="dplyr_intro.html#cb87-11" tabindex="-1"></a><span class="co">#&gt;  7  1982    39.9</span></span>
-<span id="cb87-12"><a href="dplyr_intro.html#cb87-12" tabindex="-1"></a><span class="co">#&gt;  8  1987    40.8</span></span>
-<span id="cb87-13"><a href="dplyr_intro.html#cb87-13" tabindex="-1"></a><span class="co">#&gt;  9  1992    41.7</span></span>
-<span id="cb87-14"><a href="dplyr_intro.html#cb87-14" tabindex="-1"></a><span class="co">#&gt; 10  1997    41.8</span></span>
-<span id="cb87-15"><a href="dplyr_intro.html#cb87-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,694 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="dplyr_intro.html#cb86-1" tabindex="-1"></a><span class="fu">select</span>(gapminder, year, lifeExp)</span>
+<span id="cb86-2"><a href="dplyr_intro.html#cb86-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,704 × 2</span></span>
+<span id="cb86-3"><a href="dplyr_intro.html#cb86-3" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
+<span id="cb86-4"><a href="dplyr_intro.html#cb86-4" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb86-5"><a href="dplyr_intro.html#cb86-5" tabindex="-1"></a><span class="co">#&gt;  1  1952    28.8</span></span>
+<span id="cb86-6"><a href="dplyr_intro.html#cb86-6" tabindex="-1"></a><span class="co">#&gt;  2  1957    30.3</span></span>
+<span id="cb86-7"><a href="dplyr_intro.html#cb86-7" tabindex="-1"></a><span class="co">#&gt;  3  1962    32.0</span></span>
+<span id="cb86-8"><a href="dplyr_intro.html#cb86-8" tabindex="-1"></a><span class="co">#&gt;  4  1967    34.0</span></span>
+<span id="cb86-9"><a href="dplyr_intro.html#cb86-9" tabindex="-1"></a><span class="co">#&gt;  5  1972    36.1</span></span>
+<span id="cb86-10"><a href="dplyr_intro.html#cb86-10" tabindex="-1"></a><span class="co">#&gt;  6  1977    38.4</span></span>
+<span id="cb86-11"><a href="dplyr_intro.html#cb86-11" tabindex="-1"></a><span class="co">#&gt;  7  1982    39.9</span></span>
+<span id="cb86-12"><a href="dplyr_intro.html#cb86-12" tabindex="-1"></a><span class="co">#&gt;  8  1987    40.8</span></span>
+<span id="cb86-13"><a href="dplyr_intro.html#cb86-13" tabindex="-1"></a><span class="co">#&gt;  9  1992    41.7</span></span>
+<span id="cb86-14"><a href="dplyr_intro.html#cb86-14" tabindex="-1"></a><span class="co">#&gt; 10  1997    41.8</span></span>
+<span id="cb86-15"><a href="dplyr_intro.html#cb86-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,694 more rows</span></span></code></pre></div>
 <p>And here’s the same operation, but written with the pipe operator and piped through <code>head()</code>:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="dplyr_intro.html#cb88-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb88-2"><a href="dplyr_intro.html#cb88-2" tabindex="-1"></a>  <span class="fu">select</span>(year, lifeExp) <span class="sc">%&gt;%</span></span>
-<span id="cb88-3"><a href="dplyr_intro.html#cb88-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span>
-<span id="cb88-4"><a href="dplyr_intro.html#cb88-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span id="cb88-5"><a href="dplyr_intro.html#cb88-5" tabindex="-1"></a><span class="co">#&gt;    year lifeExp</span></span>
-<span id="cb88-6"><a href="dplyr_intro.html#cb88-6" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb88-7"><a href="dplyr_intro.html#cb88-7" tabindex="-1"></a><span class="co">#&gt; 1  1952    28.8</span></span>
-<span id="cb88-8"><a href="dplyr_intro.html#cb88-8" tabindex="-1"></a><span class="co">#&gt; 2  1957    30.3</span></span>
-<span id="cb88-9"><a href="dplyr_intro.html#cb88-9" tabindex="-1"></a><span class="co">#&gt; 3  1962    32.0</span></span>
-<span id="cb88-10"><a href="dplyr_intro.html#cb88-10" tabindex="-1"></a><span class="co">#&gt; 4  1967    34.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="dplyr_intro.html#cb87-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="dplyr_intro.html#cb87-2" tabindex="-1"></a>  <span class="fu">select</span>(year, lifeExp) <span class="sc">%&gt;%</span></span>
+<span id="cb87-3"><a href="dplyr_intro.html#cb87-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span>
+<span id="cb87-4"><a href="dplyr_intro.html#cb87-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span id="cb87-5"><a href="dplyr_intro.html#cb87-5" tabindex="-1"></a><span class="co">#&gt;    year lifeExp</span></span>
+<span id="cb87-6"><a href="dplyr_intro.html#cb87-6" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb87-7"><a href="dplyr_intro.html#cb87-7" tabindex="-1"></a><span class="co">#&gt; 1  1952    28.8</span></span>
+<span id="cb87-8"><a href="dplyr_intro.html#cb87-8" tabindex="-1"></a><span class="co">#&gt; 2  1957    30.3</span></span>
+<span id="cb87-9"><a href="dplyr_intro.html#cb87-9" tabindex="-1"></a><span class="co">#&gt; 3  1962    32.0</span></span>
+<span id="cb87-10"><a href="dplyr_intro.html#cb87-10" tabindex="-1"></a><span class="co">#&gt; 4  1967    34.0</span></span></code></pre></div>
 <p>Think: “Take <code>gapminder</code>, then select the variables year and lifeExp, then show the first 4 rows.”</p>
 </div>
 <div id="revel-in-the-convenience" class="section level2 hasAnchor" number="21.5">
 <h2><span class="header-section-number">21.5</span> Revel in the convenience<a href="dplyr_intro.html#revel-in-the-convenience" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here’s the data for Cambodia, but only certain variables:</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="dplyr_intro.html#cb89-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb89-2"><a href="dplyr_intro.html#cb89-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Cambodia&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb89-3"><a href="dplyr_intro.html#cb89-3" tabindex="-1"></a>  <span class="fu">select</span>(year, lifeExp)</span>
-<span id="cb89-4"><a href="dplyr_intro.html#cb89-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 2</span></span>
-<span id="cb89-5"><a href="dplyr_intro.html#cb89-5" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
-<span id="cb89-6"><a href="dplyr_intro.html#cb89-6" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb89-7"><a href="dplyr_intro.html#cb89-7" tabindex="-1"></a><span class="co">#&gt;  1  1952    39.4</span></span>
-<span id="cb89-8"><a href="dplyr_intro.html#cb89-8" tabindex="-1"></a><span class="co">#&gt;  2  1957    41.4</span></span>
-<span id="cb89-9"><a href="dplyr_intro.html#cb89-9" tabindex="-1"></a><span class="co">#&gt;  3  1962    43.4</span></span>
-<span id="cb89-10"><a href="dplyr_intro.html#cb89-10" tabindex="-1"></a><span class="co">#&gt;  4  1967    45.4</span></span>
-<span id="cb89-11"><a href="dplyr_intro.html#cb89-11" tabindex="-1"></a><span class="co">#&gt;  5  1972    40.3</span></span>
-<span id="cb89-12"><a href="dplyr_intro.html#cb89-12" tabindex="-1"></a><span class="co">#&gt;  6  1977    31.2</span></span>
-<span id="cb89-13"><a href="dplyr_intro.html#cb89-13" tabindex="-1"></a><span class="co">#&gt;  7  1982    51.0</span></span>
-<span id="cb89-14"><a href="dplyr_intro.html#cb89-14" tabindex="-1"></a><span class="co">#&gt;  8  1987    53.9</span></span>
-<span id="cb89-15"><a href="dplyr_intro.html#cb89-15" tabindex="-1"></a><span class="co">#&gt;  9  1992    55.8</span></span>
-<span id="cb89-16"><a href="dplyr_intro.html#cb89-16" tabindex="-1"></a><span class="co">#&gt; 10  1997    56.5</span></span>
-<span id="cb89-17"><a href="dplyr_intro.html#cb89-17" tabindex="-1"></a><span class="co">#&gt; 11  2002    56.8</span></span>
-<span id="cb89-18"><a href="dplyr_intro.html#cb89-18" tabindex="-1"></a><span class="co">#&gt; 12  2007    59.7</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="dplyr_intro.html#cb88-1" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb88-2"><a href="dplyr_intro.html#cb88-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Cambodia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb88-3"><a href="dplyr_intro.html#cb88-3" tabindex="-1"></a>  <span class="fu">select</span>(year, lifeExp)</span>
+<span id="cb88-4"><a href="dplyr_intro.html#cb88-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 2</span></span>
+<span id="cb88-5"><a href="dplyr_intro.html#cb88-5" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
+<span id="cb88-6"><a href="dplyr_intro.html#cb88-6" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb88-7"><a href="dplyr_intro.html#cb88-7" tabindex="-1"></a><span class="co">#&gt;  1  1952    39.4</span></span>
+<span id="cb88-8"><a href="dplyr_intro.html#cb88-8" tabindex="-1"></a><span class="co">#&gt;  2  1957    41.4</span></span>
+<span id="cb88-9"><a href="dplyr_intro.html#cb88-9" tabindex="-1"></a><span class="co">#&gt;  3  1962    43.4</span></span>
+<span id="cb88-10"><a href="dplyr_intro.html#cb88-10" tabindex="-1"></a><span class="co">#&gt;  4  1967    45.4</span></span>
+<span id="cb88-11"><a href="dplyr_intro.html#cb88-11" tabindex="-1"></a><span class="co">#&gt;  5  1972    40.3</span></span>
+<span id="cb88-12"><a href="dplyr_intro.html#cb88-12" tabindex="-1"></a><span class="co">#&gt;  6  1977    31.2</span></span>
+<span id="cb88-13"><a href="dplyr_intro.html#cb88-13" tabindex="-1"></a><span class="co">#&gt;  7  1982    51.0</span></span>
+<span id="cb88-14"><a href="dplyr_intro.html#cb88-14" tabindex="-1"></a><span class="co">#&gt;  8  1987    53.9</span></span>
+<span id="cb88-15"><a href="dplyr_intro.html#cb88-15" tabindex="-1"></a><span class="co">#&gt;  9  1992    55.8</span></span>
+<span id="cb88-16"><a href="dplyr_intro.html#cb88-16" tabindex="-1"></a><span class="co">#&gt; 10  1997    56.5</span></span>
+<span id="cb88-17"><a href="dplyr_intro.html#cb88-17" tabindex="-1"></a><span class="co">#&gt; 11  2002    56.8</span></span>
+<span id="cb88-18"><a href="dplyr_intro.html#cb88-18" tabindex="-1"></a><span class="co">#&gt; 12  2007    59.7</span></span></code></pre></div>
 <p>and what a typical base R call would look like:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="dplyr_intro.html#cb90-1" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">&quot;Cambodia&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;lifeExp&quot;</span>)]</span>
-<span id="cb90-2"><a href="dplyr_intro.html#cb90-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 2</span></span>
-<span id="cb90-3"><a href="dplyr_intro.html#cb90-3" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
-<span id="cb90-4"><a href="dplyr_intro.html#cb90-4" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb90-5"><a href="dplyr_intro.html#cb90-5" tabindex="-1"></a><span class="co">#&gt;  1  1952    39.4</span></span>
-<span id="cb90-6"><a href="dplyr_intro.html#cb90-6" tabindex="-1"></a><span class="co">#&gt;  2  1957    41.4</span></span>
-<span id="cb90-7"><a href="dplyr_intro.html#cb90-7" tabindex="-1"></a><span class="co">#&gt;  3  1962    43.4</span></span>
-<span id="cb90-8"><a href="dplyr_intro.html#cb90-8" tabindex="-1"></a><span class="co">#&gt;  4  1967    45.4</span></span>
-<span id="cb90-9"><a href="dplyr_intro.html#cb90-9" tabindex="-1"></a><span class="co">#&gt;  5  1972    40.3</span></span>
-<span id="cb90-10"><a href="dplyr_intro.html#cb90-10" tabindex="-1"></a><span class="co">#&gt;  6  1977    31.2</span></span>
-<span id="cb90-11"><a href="dplyr_intro.html#cb90-11" tabindex="-1"></a><span class="co">#&gt;  7  1982    51.0</span></span>
-<span id="cb90-12"><a href="dplyr_intro.html#cb90-12" tabindex="-1"></a><span class="co">#&gt;  8  1987    53.9</span></span>
-<span id="cb90-13"><a href="dplyr_intro.html#cb90-13" tabindex="-1"></a><span class="co">#&gt;  9  1992    55.8</span></span>
-<span id="cb90-14"><a href="dplyr_intro.html#cb90-14" tabindex="-1"></a><span class="co">#&gt; 10  1997    56.5</span></span>
-<span id="cb90-15"><a href="dplyr_intro.html#cb90-15" tabindex="-1"></a><span class="co">#&gt; 11  2002    56.8</span></span>
-<span id="cb90-16"><a href="dplyr_intro.html#cb90-16" tabindex="-1"></a><span class="co">#&gt; 12  2007    59.7</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="dplyr_intro.html#cb89-1" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">&quot;Cambodia&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;lifeExp&quot;</span>)]</span>
+<span id="cb89-2"><a href="dplyr_intro.html#cb89-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 2</span></span>
+<span id="cb89-3"><a href="dplyr_intro.html#cb89-3" tabindex="-1"></a><span class="co">#&gt;     year lifeExp</span></span>
+<span id="cb89-4"><a href="dplyr_intro.html#cb89-4" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb89-5"><a href="dplyr_intro.html#cb89-5" tabindex="-1"></a><span class="co">#&gt;  1  1952    39.4</span></span>
+<span id="cb89-6"><a href="dplyr_intro.html#cb89-6" tabindex="-1"></a><span class="co">#&gt;  2  1957    41.4</span></span>
+<span id="cb89-7"><a href="dplyr_intro.html#cb89-7" tabindex="-1"></a><span class="co">#&gt;  3  1962    43.4</span></span>
+<span id="cb89-8"><a href="dplyr_intro.html#cb89-8" tabindex="-1"></a><span class="co">#&gt;  4  1967    45.4</span></span>
+<span id="cb89-9"><a href="dplyr_intro.html#cb89-9" tabindex="-1"></a><span class="co">#&gt;  5  1972    40.3</span></span>
+<span id="cb89-10"><a href="dplyr_intro.html#cb89-10" tabindex="-1"></a><span class="co">#&gt;  6  1977    31.2</span></span>
+<span id="cb89-11"><a href="dplyr_intro.html#cb89-11" tabindex="-1"></a><span class="co">#&gt;  7  1982    51.0</span></span>
+<span id="cb89-12"><a href="dplyr_intro.html#cb89-12" tabindex="-1"></a><span class="co">#&gt;  8  1987    53.9</span></span>
+<span id="cb89-13"><a href="dplyr_intro.html#cb89-13" tabindex="-1"></a><span class="co">#&gt;  9  1992    55.8</span></span>
+<span id="cb89-14"><a href="dplyr_intro.html#cb89-14" tabindex="-1"></a><span class="co">#&gt; 10  1997    56.5</span></span>
+<span id="cb89-15"><a href="dplyr_intro.html#cb89-15" tabindex="-1"></a><span class="co">#&gt; 11  2002    56.8</span></span>
+<span id="cb89-16"><a href="dplyr_intro.html#cb89-16" tabindex="-1"></a><span class="co">#&gt; 12  2007    59.7</span></span></code></pre></div>
 </div>
 <div id="pure-predictable-pipeable" class="section level2 hasAnchor" number="21.6">
 <h2><span class="header-section-number">21.6</span> Pure, predictable, pipeable<a href="dplyr_intro.html#pure-predictable-pipeable" class="anchor-section" aria-label="Anchor link to header"></a></h2>
