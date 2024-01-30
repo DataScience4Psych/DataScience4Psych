@@ -1,6 +1,5 @@
 # (PART) Module 11 {-}
 
-
 ```{r include = FALSE}
 source("common.R")
 ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
@@ -9,12 +8,11 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 # Welcome to Overfitting and Cross-Validation
 
-This module is designed to introduce you to cross-validation and overfitting. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_11]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides]. 
+This module is designed to introduce you to cross-validation and overfitting. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_11]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides].
 
 ```{r, echo=FALSE, eval=FALSE}
 try_include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
 ```
-
 
 ## Module Materials
 
@@ -26,13 +24,12 @@ try_include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
   * Articles
     * [de Rooij, M., & Weeda, W. (2020). Cross-validation: A method every psychologist should know. Advances in Methods and Practices in Psychological Science, 3(2), 248-263.](https://journals.sagepub.com/doi/full/10.1177/2515245919898466)
     * [MacCallum, R. C., Zhang, S., Preacher, K. J., & Rucker, D. D. (2002). On the practice of dichotomization of quantitative variables. Psychological Methods, 7, 19-40.](http://www.quantpsy.org/pubs/maccallum_zhang_preacher_rucker_2002.pdf)
-  * R4DS 
+  * R4DS
     * [Many Models](https://r4ds.had.co.nz/many-models.html)
 
-# Overfitting!
+# Overfitting
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html) if they do not appear below. The embedded code for feature enginering can be found [here](#featurenotes)
-
 
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#1" %>%
@@ -47,12 +44,10 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#2" %>%
   include_url(height = "400px")
 ```
-
 
 ## Workflow
 
@@ -62,14 +57,10 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
-
 ```{r, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#17" %>%
   include_url(height = "400px")
 ```
-
-
 
 # Cross-Validation
 
@@ -82,10 +73,8 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
-
 ```{r, echo=FALSE}
-"https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html" %>%
+slide_url(ds4p_urls, "d25_crossvalidation") %>%
   include_url(height = "400px")
 ```
 
@@ -98,15 +87,10 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
   use_align("center")
 ```
 
-
-
 ```{r, echo=FALSE}
-"https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html#35" %>%
+slide_url(ds4p_urls, "d25_crossvalidation", "#35") %>%
   include_url(height = "400px")
 ```
-
-
-
 
 # Notes on Feature Engineering {#featurenotes}
 
@@ -131,18 +115,13 @@ email$spam <- as.factor(email$spam)
 plot_colors <- c("#E48957", "#CA235F")
 ```
 
-
 ## Feature engineering
 
-- We prefer simple models when possible, but **parsimony** does not mean sacrificing accuracy (or predictive performance) in the interest of simplicity
+* We prefer simple models when possible, but **parsimony** does not mean sacrificing accuracy (or predictive performance) in the interest of simplicity
 
+* Variables that go into the model and how they are represented are just as critical to success of the model
 
-- Variables that go into the model and how they are represented are just as critical to success of the model
-
-
-- **Feature engineering** allows us to get creative with our predictors in an effort to make them more useful for our model (to increase its predictive performance) 
-
-
+* **Feature engineering** allows us to get creative with our predictors in an effort to make them more useful for our model (to increase its predictive performance)
 
 ### Same training and testing sets as before
 
@@ -159,8 +138,6 @@ train_data <- training(email_split)
 test_data <- testing(email_split)
 ```
 
-
-
 ### A simple approach: `mutate()`
 
 ```{r}
@@ -174,23 +151,17 @@ train_data %>%
   sample_n(size = 5) # shuffle to show a variety
 ```
 
-
-
 ## Modeling workflow, revisited
 
-- Create a **recipe** for feature engineering steps to be applied to the training data
+* Create a **recipe** for feature engineering steps to be applied to the training data
 
-- Fit the model to the training data after these steps have been applied
+* Fit the model to the training data after these steps have been applied
 
-- Using the model estimates from the training data, predict outcomes for the test data
+* Using the model estimates from the training data, predict outcomes for the test data
 
-- Evaluate the performance of the model on the test data
-
-
+* Evaluate the performance of the model on the test data
 
 ## Building recipes
-
-
 
 ### Initiate a recipe
 
@@ -203,13 +174,9 @@ email_rec <- recipe(
 summary(email_rec)
 ```
 
-
 ```{r echo=FALSE}
 summary(email_rec) %>% print(n = 21)
 ```
-
-
-
 
 ### Remove certain variables
 
@@ -218,12 +185,9 @@ email_rec <- email_rec %>%
   step_rm(from, sent_email)
 ```
 
-
 ```{r echo=FALSE}
 email_rec
 ```
-
-
 
 ### Feature engineer date
 
@@ -233,15 +197,13 @@ email_rec <- email_rec %>%
   step_rm(time)
 ```
 
-
 ```{r echo=FALSE}
 email_rec
 ```
 
-
 ### Discretize numeric variables
 
-Proceed with major caution! And please be sure to read [MacCallum, R. C., Zhang, S., Preacher, K. J., & Rucker, D. D. (2002). On the practice of dichotomization of quantitative variables. Psychological Methods, 7, 19-40.](http://www.quantpsy.org/pubs/maccallum_zhang_preacher_rucker_2002.pdf) and play around with the demo data from Kris's website: http://www.quantpsy.org/mzpr.htm
+Proceed with major caution! And please be sure to read [MacCallum, R. C., Zhang, S., Preacher, K. J., & Rucker, D. D. (2002). On the practice of dichotomization of quantitative variables. Psychological Methods, 7, 19-40.](http://www.quantpsy.org/pubs/maccallum_zhang_preacher_rucker_2002.pdf) and play around with the demo data from Kris's website: <http://www.quantpsy.org/mzpr.htm>
 
 ```{r}
 email_rec <- email_rec %>%
@@ -249,13 +211,9 @@ email_rec <- email_rec %>%
   step_cut(inherit, password, breaks = c(0, 1, 5, 10, 20))
 ```
 
-
 ```{r echo=FALSE}
 email_rec
 ```
-
-
-
 
 ### Create dummy variables
 
@@ -264,13 +222,9 @@ email_rec <- email_rec %>%
   step_dummy(all_nominal(), -all_outcomes())
 ```
 
-
 ```{r echo=FALSE}
 email_rec
 ```
-
-
-
 
 ### Remove zero variance variables
 
@@ -281,11 +235,9 @@ email_rec <- email_rec %>%
   step_zv(all_predictors())
 ```
 
-
 ```{r echo=FALSE}
 email_rec
 ```
-
 
 ### All in one place
 
@@ -299,10 +251,6 @@ email_rec <- recipe(spam ~ ., data = email) %>%
   step_dummy(all_nominal(), -all_outcomes()) %>%
   step_zv(all_predictors())
 ```
-
-
-
-
 
 ## Building workflows
 
@@ -325,11 +273,9 @@ email_wflow <- workflow() %>%
   add_recipe(email_rec)
 ```
 
-
 ```{r echo=FALSE}
 email_wflow
 ```
-
 
 ### Fit model to training data
 
@@ -338,11 +284,9 @@ email_fit <- email_wflow %>%
   fit(data = train_data)
 ```
 
-
 ```{r}
 tidy(email_fit) %>% print(n = 31)
 ```
-
 
 ### Make predictions for test data
 
@@ -353,10 +297,7 @@ email_pred <- predict(email_fit, test_data, type = "prob") %>%
 email_pred
 ```
 
-
-
 ### Evaluate the performance
-
 
 ```{r roc}
 email_pred %>%
@@ -368,8 +309,6 @@ email_pred %>%
   autoplot()
 ```
 
-
-
 ```{r}
 email_pred %>%
   roc_auc(
@@ -379,15 +318,11 @@ email_pred %>%
   )
 ```
 
-
-
 ## Making decisions
-
 
 ### Cutoff probability: 0.5
 
 Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.5**.
-
 
 ```{r confusion-50}
 cutoff_prob <- 0.5
@@ -401,13 +336,9 @@ email_pred %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
 ```
 
-
-
-
 ### Cutoff probability: 0.25
 
 Suppose we decide to label an email as spam if the model predicts the probability of spam to be **more than 0.25**.
-
 
 ```{r confusion-25}
 cutoff_prob <- 0.25
@@ -420,8 +351,6 @@ email_pred %>%
   pivot_wider(names_from = spam, values_from = n) %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
 ```
-
-
 
 ### Cutoff probability: 0.75
 
@@ -439,8 +368,5 @@ email_pred %>%
   kable(col.names = c("", "Email is not spam", "Email is spam"))
 ```
 
-
 ```{r links, child="admin/md/courselinks.md"}
 ```
-
-

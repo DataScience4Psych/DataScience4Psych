@@ -8,11 +8,12 @@ source("common.R")
 set.seed(4561)
 ```
 
-*Feel free to ignore it if you don't need this extra scaffolding / bit of support.* But I strongly encourage you to take a look, even if you think you know what you're doing. 
+*Feel free to ignore it if you don't need this extra scaffolding / bit of support.* But I strongly encourage you to take a look, even if you think you know what you're doing.
 
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/ChelseaParlett/status/1439003000740085760")
 ```
+
 ## Buckle your seatbelt
 
 Now is the time to make sure you are working in an appropriate directory on your computer, probably through the use of an [RStudio project](#rprojs). Enter `getwd()` in the Console to see current working directory or, in RStudio, this is displayed in the bar at the top of Console.
@@ -21,7 +22,7 @@ You should clean out your workspace. In RStudio, click on the "Clear" broom icon
 
 Now restart R. Restarting will ensure you don't have any packages loaded from previous calls to `library()`. In RStudio, use *Session > Restart R*. Otherwise, quit R with `q()` and re-launch it.
 
-Why do we do this? So that the code you write is complete and re-runnable. If you return to a clean slate often, you will root out hidden dependencies where one snippet of code only works because it relies on objects created by code saved elsewhere or, much worse, never saved at all. Similarly, an aggressive clean slate approach will expose any usage of packages that have not been explicitly loaded. 
+Why do we do this? So that the code you write is complete and re-runnable. If you return to a clean slate often, you will root out hidden dependencies where one snippet of code only works because it relies on objects created by code saved elsewhere or, much worse, never saved at all. Similarly, an aggressive clean slate approach will expose any usage of packages that have not been explicitly loaded.
 
 Finally, open a new R script and develop and run your code from there. In RStudio, use *File > New File > R Script*. Save this script with a name ending in `.r` or `.R`, containing no spaces or other funny stuff, and that evokes whatever it is we're doing today. __Example:__ `cm004_data-care-feeding.r`.
 
@@ -32,8 +33,8 @@ Another great idea is to do this in an R Markdown document. See [Test drive R Ma
 Whenever you have rectangular, spreadsheet-y data, your default data receptacle in R is a data frame. Do not depart from this practice without good reason. Data frames are awesome because...
 
 * Data frames package related variables neatly together,
-  - keeping them in sync vis-a-vis row order
-  - applying any filtering of observations uniformly
+  * keeping them in sync vis-a-vis row order
+  * applying any filtering of observations uniformly
 * Most functions for inference, modeling, and graphing are happy to be passed a data frame via a `data =` argument. This has been true in base R for a long time.
 * The set of packages known as the [tidyverse](https://www.tidyverse.org) takes this one step further and explicitly prioritizes the processing of data frames. This includes popular packages like dplyr and ggplot2. In fact the tidyverse prioritizes a special flavor of data frame, called a "tibble".
 
@@ -65,7 +66,7 @@ str(gapminder)
 
 We could print the `gapminder` object itself to screen. However, if you've used R before, you might be reluctant to do this, because large datasets just fill up your Console and provide very little insight.
 
-This is the first big win for **tibbles**. The [tidyverse](https://tidyverse.tidyverse.org) offers a special case of R's default data frame: the "tibble", which is a nod to the actual class of these objects, `tbl_df`.
+This is the first big win for __tibbles__. The [tidyverse](https://tidyverse.tidyverse.org) offers a special case of R's default data frame: the "tibble", which is a nod to the actual class of these objects, `tbl_df`.
 
 If you have not already done so, install the tidyverse meta-package now:
 
@@ -213,7 +214,7 @@ subset(gapminder, subset = country == "Uruguay", select = c(country, year, lifeE
 plot(lifeExp ~ year, gapminder, subset = country == "Zimbabwe")
 plot(lifeExp ~ log(gdpPercap), gapminder, subset = year == 2007)
 
-## exercise:
+## exercise
 ## get data for which life expectancy is less than 32 years
 ## assign to an object
 ## how many rows? how many observations per continent?
@@ -236,7 +237,6 @@ plot(lifeExp ~ log(gdpPercap), gapminder, subset = year == 2007)
 * Do basic statistical and visual sanity checking of each variable.
 
 * Refer to variables by name, e.g., `gapminder$lifeExp`, not by column number. Your code will be more hardy and readable.
-
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
