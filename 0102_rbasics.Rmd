@@ -6,14 +6,11 @@ library(tweetrmd) # ... embedding tweets
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/CurieDr/status/1355911682585931777", omit_script = FALSE)
 ```
 
-
 There is an implicit contract between computers and scripting languages. The computer will do tedious tasks for you. In return, you must be explicit in your instructions. The computer does not have the ability to extrapolate. So we have to work within the range of what it does understand. And that is where this entire course comes into play. We are learning how to communicate in a way that it does understand. So let's begin!
-
 
 ```{r, echo=FALSE}
 "https://twitter.com/_joemag_/status/1490899167446589443" %>%
@@ -42,9 +39,11 @@ x
 ```
 
 All R statements where you create objects -- "assignments" -- have this form:
+
 ```{r eval = FALSE}
 objectName <- value
 ```
+
 and in my head I hear, e.g., "x gets 12".
 
 You will make lots of assignments. Even thought, the operator `<-` is a hassle to type, resist the urge to  use `=`. Technically, it would work. But it will be really confusing later. Instead, try RStudio's keyboard shortcut: Alt + - (the minus sign).
@@ -64,6 +63,7 @@ evenOthersUseCamelCase
 ```
 
 Make another assignment:
+
 ```{r}
 this_is_a_really_long_name <- 2.5
 ```
@@ -71,19 +71,21 @@ this_is_a_really_long_name <- 2.5
 To inspect this assignment, try out RStudio's completion facility: type the first few characters, press TAB, add characters until you disambiguate, then press return.
 
 Make another assignment:
+
 ```{r}
 mason_rocks <- 2^3
 ```
 
 Let's try to inspect:
+
 ```{r error=TRUE}
 masonrocks
 masn_rocks
 ```
 
-Here's where that implicit contract comes in. The computer (and R) will do amazing things, if we can ask it to do those things in a way it understands. Typos matter. Case matters. Precision matters. We have to work within it's narrow range of ability. The computer isn't accommodating, unfortunately. 
+Here's where that implicit contract comes in. The computer (and R) will do amazing things, if we can ask it to do those things in a way it understands. Typos matter. Case matters. Precision matters. We have to work within it's narrow range of ability. The computer isn't accommodating, unfortunately.
 
-However, if you struggle with precise typing, it might be worth your time to teach your computer to be accommodating. And as a result, you might discover that you have a real knack for programming... and that knack will lead you toward quantitative psychology... and teaching data science for psychologists... 
+However, if you struggle with precise typing, it might be worth your time to teach your computer to be accommodating. And as a result, you might discover that you have a real knack for programming... and that knack will lead you toward quantitative psychology... and teaching data science for psychologists...
 
 In other words, [I have some typing macros](https://github.com/smasongarrison/AutoHotKey_Scripts) and tricks that may help you. If there's interest, I can carve out some time in-class to discuss them.
 
@@ -105,7 +107,6 @@ seq(1, 10)
 
 The above also demonstrates something about how R resolves function arguments. You can always specify in `name = value` form. But if you do not, R attempts to resolve by position. So above, it is assumed that we want a sequence `from = 1` that goes `to = 10`. Because we didn't specify step size, the default value of `by` in the function definition is used. In this case, the default is 1. For functions I call often, I might use this resolve by position for the first argument or maybe the first two. After that, I always use `name = value`.
 
-
 Make this assignment and notice similar help with quotation marks.
 
 ```{r}
@@ -126,10 +127,10 @@ This common action can be shortened by surrounding the assignment with parenthes
 ```
 
 Not all functions have (or require) arguments:
+
 ```{r}
 date()
 ```
-
 
 Now look at your workspace -- in the upper right pane. The workspace is where user-defined objects accumulate. You can also get a listing of these objects with commands:
 
@@ -170,7 +171,6 @@ To handle these real life situations, you need to make two decisions:
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/valeriepolad/status/1448857970046087192")
 ```
-
 
 As a beginning R user, it's OK to consider your workspace "real". _Very soon_, I urge you to evolve to the next level, where you consider your saved R scripts as "real". (In either case, of course the input data is very much real and requires preservation!) With the input data and the R code you used, you can reproduce _everything_. You can make your analysis fancier. You can get to the bottom of puzzling results and discover and fix bugs in your code. You can reuse the code to conduct similar analyses in new projects. You can remake a figure with different aspect ratio or save is as TIFF instead of PDF. You are ready to take questions. You are ready for the future.
 
@@ -218,7 +218,7 @@ __Although I do not recommend it__, in case you're curious, you can set R's work
 setwd("~/myCoolProject")
 ```
 
-__Although I do not recommend it__, you can also use RStudio's Files pane to navigate to a directory and then set it as working directory from the menu: *Session > Set Working Directory > To Files Pane Location*. (You'll see even more options there). Or within the Files pane, choose "More" and "Set As Working Directory".
+__Although I do not recommend it__, you can also use RStudio's Files pane to navigate to a directory and then set it as working directory from the menu: _Session > Set Working Directory > To Files Pane Location_. (You'll see even more options there). Or within the Files pane, choose "More" and "Set As Working Directory".
 
 But there's a better way. A way that also puts you on the path to managing your R work like an expert.
 
@@ -226,10 +226,9 @@ But there's a better way. A way that also puts you on the path to managing your 
 
 Keeping all the files associated with a project organized together -- input data, R scripts, results, figures -- is such a wise and common practice that RStudio has built-in support for this via its [_projects_](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
-Let's make one to use for the rest of this class. Do this: *File > New Project...*. The directory name you choose here will be the project name. Call it whatever you want (or follow me for convenience).
+Let's make one to use for the rest of this class. Do this: _File > New Project..._. The directory name you choose here will be the project name. Call it whatever you want (or follow me for convenience).
 
 I created a directory and, therefore RStudio project, called `swc` in my `tmp` directory, FYI.
-
 
 ```r
 setwd("~/tmp/swc")
@@ -240,6 +239,7 @@ Now check that the "home" directory for your project is the working directory of
 ```r
 getwd()
 ```
+
 _I can't print my output here because this document itself does not reside in the RStudio Project we just created._
 
 Let's enter a few commands in the Console, as if we are just beginning a project:
@@ -284,8 +284,7 @@ In your favorite OS-specific way, search your files for `toy_line_plot.pdf` and 
   use_align("center")
 ```
 
-
-It is traditional to save R scripts with a `.R` or `.r` suffix. Follow this convention unless you have some extraordinary reason not to. 
+It is traditional to save R scripts with a `.R` or `.r` suffix. Follow this convention unless you have some extraordinary reason not to.
 
 Comments start with one or more `#` symbols. Use them. RStudio helps you (de)comment selected lines with Ctrl+Shift+C (Windows and Linux) or Command+Shift+C (Mac).
 
@@ -300,7 +299,7 @@ This workflow will serve you well in the future:
 
 Avoid using the mouse for pieces of your analytical workflow, such as loading a dataset or saving a figure. Terribly important for reproducibility and for making it possible to retrospectively determine how a numerical table or PDF was actually produced (searching on local disk on filename, among `.R` files, will lead to the relevant script).
 
-Many long-time users never save the workspace, never save `.RData` files (I'm one of them), never save or consult the history. Once you get to that point, there are options available in RStudio to deactivate the loading of `.RData` and permanently suppress the prompt on exit to save the workspace (go to *Tools > Options > General*).
+Many long-time users never save the workspace, never save `.RData` files (I'm one of them), never save or consult the history. Once you get to that point, there are options available in RStudio to deactivate the loading of `.RData` and permanently suppress the prompt on exit to save the workspace (go to _Tools > Options > General_).
 
 For the record, when loading data into R or writing outputs to file, you can always specify the absolute path and thereby insulate yourself from the current working directory. This method is rarely necessary when using RStudio projects, and can be challenging for collaborators.
 

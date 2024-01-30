@@ -159,7 +159,7 @@
 
 [shiny-official-web]: https://shiny.rstudio.com
 [shiny-official-tutorial]: https://shiny.rstudio.com/tutorial/
-[shiny-cheatsheet]: https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
+[shiny-cheatsheet]: https://github.com/rstudio/cheatsheets/raw/main/shiny.pdf
 [shiny-articles]: https://shiny.rstudio.com/articles/
 [shiny-bookdown]: https://bookdown.org/yihui/rmarkdown/shiny-documents.html
 [shiny-google-groups]: https://groups.google.com/forum/#!forum/shiny-discuss
@@ -205,7 +205,6 @@
 
 
 
-[testthat-article]: https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf
 [worry-about-color]: https://github.com/DataScience4Psych/DataScience4Psych/blob/master/admin/pdfs/Why%20Should%20Engineers%20and%20Scientists%20Be%20Worried%20About%20Color.pdf
 [escaping-rgbland-pdf]: https://eeecon.uibk.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf
 [escaping-rgbland-doi]: https://doi.org/10.1016/j.csda.2008.11.033

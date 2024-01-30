@@ -8,7 +8,6 @@ ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-
 ```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidymodels)
@@ -16,8 +15,6 @@ library(openintro)
 library(ggridges)
 set.seed(1234)
 ```
-
-
 
 We have:
 
@@ -36,13 +33,12 @@ We would like to choose one model from the set of candidate models indexed by $\
 - Models: $y_i = X \beta + \epsilon$, $\beta_j = 0, j \in S_\theta$, where $S_\theta \subseteq \{1,\ldots, p\}$.
 
 - Model quality: Squared-error loss. If $\hat \beta_\theta$ are our estimates of the regression coefficients in model $\theta$, model quality is measured by
+
 $$
 L(\hat \beta_\theta, (y_i, X_i)) = (y_i - X_i^T \hat \beta_\theta)^2
 $$
 
 We want to choose a subset of the predictors that do the best job of explaining the response.
-
-
 
 Naive solution: Find the model that has the lowest value for the squared-error loss.
 
@@ -58,9 +54,7 @@ Why doesn't this work?
 
 We want to choose the number of mixture components that best explains the data.
 
-
 Naive solution: Choose the number of mixture components that minimizes the negative log likelihood of the data.
-
 
 ## Better Solution: Cross validation
 
@@ -69,8 +63,6 @@ Idea: Instead of measuring model quality on the same data we used to fit the mod
 If we knew the true distribution of the data, we could simulate new data and use a Monte Carlo estimate based on the simulations.
 
 We can't actually get new data, and so we hold some back when we fit the model and then pretend that the held back data is new data.
-
-
 
 Procedure:
 
@@ -81,6 +73,7 @@ Procedure:
 - For each fold and each value of the tuning parameter $\theta$, fit the model on $X^{(-k)}$ to get $\hat f_\theta^{(k)}$
 
 - Compute
+
 $$
 \text{CV}(\theta) = \frac{1}{n} \sum_{k=1}^K \sum_{x \in X^{(k)}} L(\hat f_\theta^{(k)}, x)
 $$
@@ -106,8 +99,6 @@ p_vec <- 0:p
 rss <- sapply(p_vec, get_rss_submodels, y, X)
 plot(rss ~ p_vec)
 ```
-
-
 
 ```{r}
 get_cv_error <- function(n_predictors,
@@ -165,7 +156,6 @@ Considerations:
 
 - If your problem is structured (e.g. time series, spatial), you should choose the folds to respect the structure.
 
-
 ## Summing up
 
 - We can use simulations to estimate arbitrary functions of our random variables.
@@ -173,7 +163,6 @@ Considerations:
 - If we know the underlying distribution, we can simply simulate from it (Monte Carlo integration).
 
 - If we don't know the underlying distribution, we can "simulate" from the data by resampling from the data (cross validation; ish). Resampling methods will do well to the extent that the observed data reflect the true data-generating distribution.
-
 
 ```{r links, child="admin/md/courselinks.md"}
 ```

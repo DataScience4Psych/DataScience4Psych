@@ -2,7 +2,6 @@
 
 These notes are adapted from Jenny Bryan's stat545 and were originally written by Andrew MacDonald.
 
-
 ```{r include = FALSE}
 source("common.R")
 can_render <- Sys.getenv("OMDB_API_KEY", unset = "") != ""
@@ -15,9 +14,6 @@ message("No OMDb key available. Code chunks will not be evaluated.")
 
 <!--Original content: https://stat545.com/webdata03_activity.html-->
 <!--Original author: Andrew MacDonald-->
-
-
-
 
 ## Interacting with an API
 
@@ -33,7 +29,7 @@ library(tidyverse)
 
 ### Examine the structure of API requests using the Open Movie Database
 
-First, we're going to examine the structure of API requests using the [Open Movie Database](http://www.omdbapi.com/) (OMDb). OMDb is similar to IMDb but has a simpler API.  We can go to the website, input some search parameters, and obtain both the XML query and the response from it. 
+First, we're going to examine the structure of API requests using the [Open Movie Database](http://www.omdbapi.com/) (OMDb). OMDb is similar to IMDb but has a simpler API.  We can go to the website, input some search parameters, and obtain both the XML query and the response from it.
 
 <!--TODO: Will frequently get an "Error: Daily request limit reached" message when using the demo. Seems to be an issue on their end: https://github.com/omdbapi/OMDb-API/issues/124 Maybe remove this exercise from the chapter to avoid problems?-->
 
@@ -41,9 +37,9 @@ First, we're going to examine the structure of API requests using the [Open Movi
 
 If we enter the following parameters:
 
-+ `title = Interstellar`, 
-+ `year = 2014`, 
-+ `plot = full`, 
++ `title = Interstellar`,
++ `year = 2014`,
++ `plot = full`,
 + `response = JSON`
 
 Here is what we see:
@@ -98,29 +94,31 @@ library(usethis)
 edit_r_environ()
 ```
 
-1. Add `OMDB_API_KEY=<your-secret-key>` on a new line, press enter to add a blank line at the end (important!), save the file, and close it. 
+1. Add `OMDB_API_KEY=<your-secret-key>` on a new line, press enter to add a blank line at the end (important!), save the file, and close it.
     + Note that we use `<your-secret-key>` as a placeholder here and throughout these instructions. Your actual API key will look something like: `p319s0aa` (no quotes or other characters like `<` or `>` should go on the right of the `=` sign).
 1. Restart R.
 1. You can now access your OMDb API key from the R console and save it as an object:
 
     ```{r fake-get-fake-key, eval = FALSE}
+
 Sys.getenv("OMDB_API_KEY")
     ```
-    
+
     ```{r real-see-fake-key, echo = FALSE}
 Sys.getenv("OMDB_API_KEY_FAKE")
     ```
-    
-    
+
 1. We can use this to easily add our API key to the request URL. Let's make this API key an object we can refer to as `movie_key`:
 
 ```{r}
 # save it as an object
 movie_key <- Sys.getenv("OMDB_API_KEY")
 ```
-    
+
     ```{r save-fake-key, echo = FALSE}
+
 # save it as an object
+
 movie_key <- Sys.getenv("OMDB_API_KEY_FAKE")
     ```
 
@@ -130,17 +128,17 @@ movie_key <- Sys.getenv("OMDB_API_KEY_FAKE")
 
 Now we follow the rOpenSci [tutorial on API keys](https://github.com/ropensci/rOpenSci/wiki/Installation-and-use-of-API-keys):
 
-* ___Add `.Rprofile` to your `.gitignore` !!___
-* Make a `.Rprofile` file ([windows tips](http://cran.r-project.org/bin/windows/rw-FAQ.html#What-are-HOME-and-working-directories_003f); [mac tips](http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#The-R-Console)).
-* Write the following in it:
++ _**Add `.Rprofile` to your `.gitignore` !!**_
++ Make a `.Rprofile` file ([windows tips](http://cran.r-project.org/bin/windows/rw-FAQ.html#What-are-HOME-and-working-directories_003f); [mac tips](http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#The-R-Console)).
++ Write the following in it:
 
 ```{r eval = FALSE}
 options(OMBD_API_KEY = "YOUR_KEY")
 ```
 
-* Restart R (i.e. reopen your RStudio project).
++ Restart R (i.e. reopen your RStudio project).
 
-This code adds another element to the list of options, which you can see by calling `options()`. Part of the work done by `rplos::searchplos()` and friends is to go and obtain the value of this option with the function `getOption("OMBD_API_KEY")`.  This indicates two things: 
+This code adds another element to the list of options, which you can see by calling `options()`. Part of the work done by `rplos::searchplos()` and friends is to go and obtain the value of this option with the function `getOption("OMBD_API_KEY")`.  This indicates two things:
 
 1. Spelling is important when you set the option in your `.Rprofile`
 2. You can do a similar process for an arbitrary package or key. For example:
@@ -154,7 +152,6 @@ key <- getOption("this_is_my_key")
 
 This approach is a simple way to keep your keys private, especially when sharing authentication across multiple projects.
 
-
 #### A few timely reminders about your `.Rprofile`
 
 ```r
@@ -162,12 +159,11 @@ print("This is Andrew's Rprofile and you can't have it!")
 options(OMBD_API_KEY = "XXXXXXXXX")
 ```
 
-* It must end with a blank line!
-* It lives in the project's working directory, i.e. the location of your `.Rproj`.
-* It must be gitignored.
++ It must end with a blank line!
++ It lives in the project's working directory, i.e. the location of your `.Rproj`.
++ It must be gitignored.
 
 Remember that using `.Rprofile` makes your code un-reproducible.  In this case, that is exactly what we want!  
-
 
 ### Recreate the request URL in R
 
@@ -200,7 +196,6 @@ omdb <- function(title, year, plot, format, api_key) {
 
 ### Get data using the curl package
 
-
 Now we have a handy function that returns the API query. We can paste in the link, but we can also obtain data from within R using the [curl](https://CRAN.R-project.org/package=curl) package. Install/load the curl package first.
 
 ```{r message = FALSE, warning = FALSE}
@@ -209,7 +204,8 @@ library(curl)
 ```
 
 Using curl to get the data in XML format:
-```{r fake-xml-req, eval = FALSE} 
+
+```{r fake-xml-req, eval = FALSE}
 request_xml <- omdb(
   title = "Interstellar", year = "2014", plot = "short",
   format = "xml", api_key = movie_key
@@ -233,8 +229,8 @@ close(con)
 answer_xml
 ```
 
-
 Using curl to get the data in JSON format:
+
 ```{r fake-json-req, eval = FALSE}
 request_json <- omdb(
   title = "Interstellar", year = "2014", plot = "short",
@@ -265,7 +261,7 @@ We have two forms of data that are obviously structured. What are they?
 
 <!--TODO: Add more to this section?-->
 
-There are two common languages of web services: 
+There are two common languages of web services:
 
 1. **J**ava**S**cript **O**bject **N**otation (JSON)
 1. e**X**tensible **M**arkup **L**anguage (XML)
@@ -298,7 +294,7 @@ And here is XML (also from [this site](https://zapier.com/learn/apis/chapter-3-d
 </order>
 ```
 
-You can see that both of these data structures are quite easy to read. They are "self-describing". In other words, they tell you how they are meant to be read. There are easy means of taking these data types and creating R objects. 
+You can see that both of these data structures are quite easy to read. They are "self-describing". In other words, they tell you how they are meant to be read. There are easy means of taking these data types and creating R objects.
 
 ### Parsing the JSON response with jsonlite
 
@@ -310,6 +306,7 @@ library(jsonlite)
 ```
 
 Parsing our JSON response with `fromJSON()`:
+
 ```{r}
 answer_json %>%
   fromJSON()
@@ -339,10 +336,10 @@ Parsing our XML response with `read_xml()`:
 (xml_parsed <- read_xml(answer_xml))
 ```
 
-Not exactly the result we were hoping for! However, this does tell us about the XML document's structure: 
+Not exactly the result we were hoping for! However, this does tell us about the XML document's structure:
 
-* It has a `<root>` node, which has a single child node, `<movie>`. 
-* The information we want is all stored as attributes (e.g. title, year, etc.).
++ It has a `<root>` node, which has a single child node, `<movie>`.
++ The information we want is all stored as attributes (e.g. title, year, etc.).
 
 The xml2 package has various functions to assist in navigating through XML. We can use the `xml_children()` function to extract all of the children nodes (i.e. the single child, `<movie>`):
 
@@ -369,20 +366,19 @@ attrs %>%
 [httr][httr-web] is yet another star in the [tidyverse](https://www.tidyverse.org). It is a package designed to facilitate all things HTTP from within R. This includes the major HTTP verbs, which are:
 
 <!--TODO: Find source for these definitions-->
-* __`GET()`__ - Fetch an existing resource. The URL contains all the necessary information the server needs to locate and return the resource.
-* __`POST()`__ - Create a new resource. POST requests usually carry a payload that specifies the data for the new resource.
-* __`PUT()`__ - Update an existing resource. The payload may contain the updated data for the resource.
-* __`DELETE()`__ - Delete an existing resource.
++ **`GET()`** - Fetch an existing resource. The URL contains all the necessary information the server needs to locate and return the resource.
++ **`POST()`** - Create a new resource. POST requests usually carry a payload that specifies the data for the new resource.
++ **`PUT()`** - Update an existing resource. The payload may contain the updated data for the resource.
++ **`DELETE()`** - Delete an existing resource.
 
 <!--TODO: It's not clear in the original stat545 lesson what this is referring to. I checked the paragraphs above and below and wasn't able to find them at this site. Keeping the link here to revisit later.
 
 (from [HTTP made really easy](http://www.jmarshall.com/easy/http/))
 -->
 
-
 HTTP is the foundation for APIs; understanding how it works is the key to interacting with all the diverse APIs out there. An excellent beginning resource for APIs (including HTTP basics) is [An Introduction to APIs](https://zapier.com/learn/apis/) by Brian Cooksey.
 
-httr also facilitates a variety of ___authentication___ protocols.
+httr also facilitates a variety of _**authentication**_ protocols.
 
 httr contains one function for every HTTP verb. The functions have the same names as the verbs (e.g. `GET()`, `POST()`).  They have more informative outputs than simply using curl and come with nice convenience functions for working with the output:
 
@@ -392,6 +388,7 @@ library(httr)
 ```
 
 Using httr to get the data in JSON format:
+
 ```{r fake-httr-json, eval = FALSE}
 request_json <- omdb(
   title = "Interstellar", year = "2014", plot = "short",
@@ -411,6 +408,7 @@ content(response_json, as = "parsed", type = "application/json")
 ```
 
 Using httr to get the data in XML format:
+
 ```{r fake-httr-xml, eval = FALSE}
 request_xml <- omdb(
   title = "Interstellar", year = "2014", plot = "short",
@@ -471,7 +469,6 @@ It is very good to [learn your HTTP status codes](https://www.flickr.com/photos/
 
 The documentation for httr includes a vignette of ["Best practices for writing an API package"](https://httr.r-lib.org/articles/api-packages.html), which is useful for when you want to bring your favorite web resource into the world of R.
 
-
 ## Scraping
 
 What if data is present on a website, but isn't provided in an API at all? It is possible to grab that information too.  How easy that is to do depends a lot on the quality of the website that we are using.
@@ -506,7 +503,6 @@ Knit the document and click "View in Browser". It should look like this:
 ```{r child = 'supporting-docs/scraping.Rmd'}
 ```
 
-
 We have created a simple HTML table with the head of `gapminder` in it! We can get our data back by parsing this table into a data frame again. Extracting data from HTML is called "scraping", and we can do it in R with the rvest package:
 
 ```{r message = FALSE, warning = FALSE}
@@ -524,7 +520,6 @@ read_html("supporting-docs/GapminderHead.html") %>%
   html_table()
 ```
 
-
 ## Scraping via CSS selectors
 
 Let's practice scraping websites using our newfound abilities. Here is a table of research [publications by country](https://www.scimagojr.com/countryrank.php).
@@ -540,7 +535,7 @@ research <- read_html("https://www.scimagojr.com/countryrank.php") %>%
   html_table(fill = TRUE)
 ```
 
-If you look at the structure of `research` (i.e. via `str(research)`) you'll see that we've obtained a list of data.frames. The top of the page contains another table element. This was also scraped! 
+If you look at the structure of `research` (i.e. via `str(research)`) you'll see that we've obtained a list of data.frames. The top of the page contains another table element. This was also scraped!
 
 Can we be more specific about what we obtain from this page? We can, by highlighting that table with CSS selectors:
 
@@ -551,11 +546,10 @@ research <- read_html("http://www.scimagojr.com/countryrank.php") %>%
 glimpse(research)
 ```
 
-
 ## Random observations on scraping
 
-* Make sure you've obtained ONLY what you want! Scroll over the whole page to ensure that SelectorGadget hasn't found too many things.
-* If you are having trouble parsing, try selecting a smaller subset of the thing you are seeking (e.g. being more precise).
++ Make sure you've obtained ONLY what you want! Scroll over the whole page to ensure that SelectorGadget hasn't found too many things.
++ If you are having trouble parsing, try selecting a smaller subset of the thing you are seeking (e.g. being more precise).
 
 **MOST IMPORTANTLY** confirm that there is NO [rOpenSci package](https://ropensci.org/packages/) and NO API before you [spend hours scraping](https://rpubs.com/aammd/kivascrape) (the [API was right here](http://build.kiva.org/)).
 
@@ -572,6 +566,7 @@ https://airport.api.aero/airport/?user_key={yourkey}
 ```
 
 List of all the airports matching Toronto:
+
 ```
 https://airport.api.aero/airport/match/toronto?user_key={yourkey}
 ```
@@ -587,8 +582,6 @@ Do you need just the US airports? [This API does that](https://github.com/Federa
 ```{r include = FALSE}
 Sys.unsetenv("OMDB_API_KEY")
 ```
-
-
 
 ```{r links, child="admin/md/courselinks.md"}
 ```

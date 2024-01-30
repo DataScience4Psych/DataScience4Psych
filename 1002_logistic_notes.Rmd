@@ -13,10 +13,7 @@ library(ggridges)
 set.seed(1234)
 ```
 
-
-
 ## Predicting categorical data
-
 
 #### Spam filters
 
@@ -24,13 +21,11 @@ set.seed(1234)
 - Outcome: whether the email is spam or not
 - Predictors: number of characters, whether the email had "Re:" in the subject, time at which email was sent, number of times the word "inherit" shows up in the email, etc.
 
-
 ```{r}
 library(openintro)
 data(email)
 glimpse(email)
 ```
-
 
 > Question: Would you expect longer or shorter emails to be spam?
 
@@ -63,8 +58,6 @@ email %>%
   summarize(mean_num_char = mean(num_char))
 ```
 
-
-
 > Question: Would you expect emails that have subjects starting with "Re:", "RE:", "re:", or "rE:" to be spam or not?
 
 ```{r echo=FALSE}
@@ -80,13 +73,11 @@ email %>%
   scale_fill_manual(values = c("#DEB4A0", "#CA235F"))
 ```
 
-
 #### Modeling spam
 
 - Both number of characters and whether the message has "re:" in the subject might be related to whether the email is spam. How do we come up with a model that will let us explore this relationship?
 
 - For simplicity, we'll focus on the number of characters (`num_char`) as predictor, but the model we describe can be expanded to take multiple predictors as well.
-
 
 We can't reasonably fit a linear model to this data-- we need something different!
 
@@ -114,7 +105,6 @@ ggplot(email, aes(
   guides(color = "none")
 ```
 
-
 #### Framing the problem
 
 - We can treat each outcome (spam and not) as successes and failures arising from separate Bernoulli trials
@@ -124,19 +114,15 @@ ggplot(email, aes(
 
 $$ y_i ∼ Bern(p) $$
 
-
 - We can then use the predictor variables to model that probability of success, $p_i$
 
-
 - We can't just use a linear model for $p_i$ (since $p_i$ must be between 0 and 1) but we can transform the linear model to have the appropriate range
-
 
 #### Generalized linear models
 
 - This is a very general way of addressing many problems in regression and the resulting models are called **generalized linear models (GLMs)**
 
 - Logistic regression is just one example
-
 
 #### Three characteristics of GLMs
 
@@ -149,20 +135,15 @@ $$\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_k X_k$$
 
 3. A link function that relates the linear model to the parameter of the outcome distribution
   
-
-
 #### Logistic regression
 
 - Logistic regression is a GLM used to model a binary categorical outcome using numerical and categorical predictors
 
 - To finish specifying the Logistic model we just need to define a reasonable link function that connects $\eta_i$ to $p_i$: logit function
 
-
 - **Logit function:** For $0\le p \le 1$
 
 $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
-
-
 
 #### Logit function, visualized
 
@@ -179,8 +160,6 @@ ggplot(d, aes(x = p, y = logit_p)) +
   labs(title = "logit(p) vs. p")
 ```
 
-
-
 #### Properties of the logit
 
 - The logit function takes a value between 0 and 1 and maps it to a value between $-\infty$ and $\infty$
@@ -188,11 +167,9 @@ ggplot(d, aes(x = p, y = logit_p)) +
 - Inverse logit (logistic) function:
 $$g^{-1}(x) = \frac{\exp(x)}{1+\exp(x)} = \frac{1}{1+\exp(-x)}$$
 
-
 - The inverse logit function takes a value between $-\infty$ and $\infty$ and maps it to a value between 0 and 1
 
 - This formulation is also useful for interpreting the model, since the logit can be interpreted as the log odds of a success -- more on this later
-
 
 #### The logistic regression model
 
@@ -201,20 +178,17 @@ $$g^{-1}(x) = \frac{\exp(x)}{1+\exp(x)} = \frac{1}{1+\exp(-x)}$$
   - $\eta_i = \beta_0+\beta_1 x_{1,i} + \cdots + \beta_n x_{n,i}$
   - $\text{logit}(p_i) = \eta_i$
 
-
 - From which we get
 
 $$p_i = \frac{\exp(\beta_0+\beta_1 x_{1,i} + \cdots + \beta_k x_{k,i})}{1+\exp(\beta_0+\beta_1 x_{1,i} + \cdots + \beta_k x_{k,i})}$$
-
 
 #### Modeling spam
 
 In R, we fit a GLM in the same way as a linear model except we
 
 - specify the model with `logistic_reg()`
-- use `"glm"` instead of `"lm"` as the engine 
+- use `"glm"` instead of `"lm"` as the engine
 - define `family = "binomial"` for the link function to be used in the model
-
 
 ```{r}
 spam_fit <- logistic_reg() %>%
@@ -227,33 +201,26 @@ spam_fit <- logistic_reg() %>%
 # tidy(spam_fit)
 ```
 
-
-
 #### Spam model
 
 ```{r}
 tidy(spam_fit)
 ```
 
-
 Model:
 $$\log\left(\frac{p}{1-p}\right) = -1.80-0.0621\times \text{num_char}$$
 
-
-
-#### P(spam) for an email with 2000 characters 
+#### P(spam) for an email with 2000 characters
 
 $$\log\left(\frac{p}{1-p}\right) = -1.80-0.0621\times 2$$
 
 $$\frac{p}{1-p} = \exp(-1.9242) = 0.15 \rightarrow p = 0.15 \times (1 - p)$$
-
 
 $$p = 0.15 - 0.15p \rightarrow 1.15p = 0.15$$
 
 $$p = 0.15 / 1.15 = 0.13$$
 
 > Question: What is the probability that an email with 15000 characters is spam? What about an email with 40000 characters?
-
 
 ```{r spam-predict-viz, echo=FALSE, out.width = "100%", fig.asp=0.5}
 newdata <- tibble(
@@ -301,10 +268,8 @@ ggplot(spam_aug, aes(x = num_char)) +
 
 > Question: Would you prefer an email with 2000 characters to be labeled as spam or not? How about 40,000 characters?
 
-
 ```{r ref.label="spam-predict-viz", echo=FALSE, fig.asp=0.5}
 ```
-
 
 ## Sensitivity and specificity
 
@@ -315,11 +280,9 @@ ggplot(spam_aug, aes(x = num_char)) +
 | Email labeled spam     | True positive                 | False positive (Type 1 error) |
 | Email labeled not spam | False negative (Type 2 error) | True negative                 |
 
-
-- False negative rate = P(Labeled not spam | Email spam) = FN / (TP + FN) 
+- False negative rate = P(Labeled not spam | Email spam) = FN / (TP + FN)
 
 - False positive rate = P(Labeled spam | Email not spam) = FP / (FP + TN)
-
 
 #### Sensitivity and specificity
 
@@ -328,16 +291,13 @@ ggplot(spam_aug, aes(x = num_char)) +
 | Email labeled spam     | True positive                 | False positive (Type 1 error) |
 | Email labeled not spam | False negative (Type 2 error) | True negative                 |
 
-
-
 - Sensitivity = P(Labeled spam | Email spam) = TP / (TP + FN)
   - Sensitivity = 1 − False negative rate
   
-- Specificity = P(Labeled not spam | Email not spam) = TN / (FP + TN) 
+- Specificity = P(Labeled not spam | Email not spam) = TN / (FP + TN)
   - Specificity = 1 − False positive rate
 
-
-> Question: If you were designing a spam filter, would you want sensitivity and specificity to be high or low? What are the trade-offs associated with each decision? 
+> Question: If you were designing a spam filter, would you want sensitivity and specificity to be high or low? What are the trade-offs associated with each decision?
 
 ```{r links, child="admin/md/courselinks.md"}
 ```

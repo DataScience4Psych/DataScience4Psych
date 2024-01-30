@@ -1,6 +1,6 @@
 ## Standard Libraries
-library(tweetrmd)     # Embedding tweets
-library(vembedr)      # Embedding YouTube videos
+library(tweetrmd) # Embedding tweets
+library(vembedr) # Embedding YouTube videos
 library(knitr)
 library(webshot)
 library(tidyverse)
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   error = TRUE,
   collapse = TRUE
-  # Additional options can be included as needed
+# Additional options can be included as needed
 )
 
 ## Global options

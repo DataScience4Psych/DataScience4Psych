@@ -4,17 +4,13 @@ ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-
 # Use API-wrapping packages {#api-wrappers}
 
 These readings are adapted from Jenny Bryan's stat545 and were originally written by Andrew MacDonald. I've added bits and pieces.
 
-
-
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/rfunctionaday/status/1381848183928729600")
 ```
-
 
 ## Introduction
 
@@ -36,7 +32,7 @@ In the simplest case, the data you need is already on the internet in a tabular 
 
 The second case is most useful when the data you want has been provided in a format that needs cleanup. For example, the World Value Survey makes several datasets available as Excel sheets. The safest option here is to download the `.xls` file, then read it into R with `readxl::read_excel()` or something similar. An exception to this is data provided as Google Spreadsheets, which can be read straight into R using the [`googlesheets`](https://github.com/jennybc/googlesheets) package.
 
-### From rOpenSci web services page:
+### From rOpenSci web services page
 
 From rOpenSci's [CRAN Task View: Web Technologies and Services](https://github.com/ropensci/webservices):
 
@@ -44,7 +40,6 @@ From rOpenSci's [CRAN Task View: Web Technologies and Services](https://github.c
 * `curl::curl()` for SSL.
 * `httr::GET` data read this way needs to be parsed later with `read.table()`.
 * `rio::import()` can "read a number of common data formats directly from an `https://` URL".  Isn't that very similar to the previous?
-
 
 What about packages that install data?
 
@@ -81,7 +76,6 @@ library(tidyverse)
 library(rebird)
 ```
 
-
 #### Search birds by geography
 
 The eBird website categorizes some popular locations as "Hotspots". These are areas where there are both lots of birds and lots of birders. One such location is at Iona Island, near Vancouver. You can see data for this Hotspot at [http://ebird.org/ebird/hotspot/L261851](http://ebird.org/ebird/hotspot/L261851).
@@ -91,7 +85,6 @@ At that link, you will see a page like this:
 ```{r ebird-iona-island, echo = FALSE, fig.cap = "Iona Island", out.width = "80%"}
 knitr::include_graphics("img/Iona_island.png")
 ```
-
 
 The data already looks to be organized in a data frame! rebird allows us to read these data directly into R (the ID code for Iona Island is **"L261851"**).
 
@@ -132,6 +125,7 @@ eagle %>%
 ```
 
 rebird **knows where you are**:
+
 ```{r eval = FALSE,error=TRUE}
 ebirdgeo(species = "Buteo lagopus")
 ```
@@ -153,9 +147,11 @@ The [geonames package website](https://docs.ropensci.org/geonames/) tells us tha
 1. Tell R your GeoNames username.
 
 To do the last step, we could run this line in R...
+
 ```r
 options(geonamesUsername="my_user_name")
 ```
+
 ...but this is insecure. We don't want to risk committing this line and pushing it to our public GitHub page!
 
 Instead, we can add this line to our `.Rprofile` so it will be hidden. One way to edit your `.Rprofile` is with the helper function `edit_r_profile()` from the [usethis][usethis-web] package. Install/load the usethis package and run `edit_r_profile()` in the R Console:
@@ -186,10 +182,9 @@ countryInfo <- GNcountryInfo()
 glimpse(countryInfo)
 ```
 
-
 This `countryInfo` dataset is very helpful for accessing the rest of the data because it gives us the standardized codes for country and language.
 
-#### Remixing geonames and rebird:
+#### Remixing geonames and rebird
 
 What are the cities of France?
 
@@ -210,7 +205,6 @@ frenchcities <- with(francedata, GNcities(
 glimpse(frenchcities)
 ```
 
-
 ### Wikipedia searching
 
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
@@ -230,8 +224,6 @@ rio_portuguese <- GNfindNearbyWikipedia(
 nrow(rio_english)
 nrow(rio_portuguese)
 ```
-
-
 
 ### Searching the Public Library of Science: rplos {#plos-one}
 
@@ -264,8 +256,7 @@ searchplos("*:*", fl = "id")
 
 Here is a list of [options for the search](http://api.plos.org/solr/search-fields/) or you can run `data(plosfields)` followed by `plosfields` in the R Console.
 
-
-#### Take a highbrow look!
+#### Take a highbrow look
 
 The `highplos()` function does "highlighted searches on PLOS Journals full-text content".
 
@@ -283,11 +274,9 @@ knitr::include_graphics("img/rplos-highbrow.png")
 
 We can use the `plot_throughtime()` function to visualize the results of a search over time.
 
-
 ```{r,error=TRUE}
 plot_throughtime(terms = "phylogeny", limit = 200)
 ```
-
 
 ### Is it a boy or a girl? gender-associated names throughout US history
 
@@ -301,11 +290,11 @@ library(gender)
 ```
 
 Let's do some searches for the name Kelsey.
+
 ```{r,error=TRUE}
 gender("Kelsey")
 gender("Kelsey", years = 1940)
 ```
-
 
 ```{r links1, child="admin/md/courselinks.md"}
 ```

@@ -1,8 +1,6 @@
 # (PART) Module 13 {-}
 
-
 # Welcome to Simulating Data
-
 
 ```{r include = FALSE}
 source("common.R")
@@ -16,8 +14,6 @@ library(knitr)
 library(tidyverse)
 ```
 
-
-
 This module is designed to introduce you to the key ideas behind simulating data. In essence, we are making our own data instead of using someone else's. Eventually, there will be video lectures. Once those videos exist, please watch the videos and work your way through the notes. **The videos will eventually start on the next page.**  You will eventually be able to find the video playlist for this module [here][pl_13]. The slides used to make the videos in this module will be able to be found in the [slides repo][course_slides].
 
 ```{r, echo=FALSE}
@@ -25,17 +21,16 @@ This module is designed to introduce you to the key ideas behind simulating data
 try_include_tweet()
 ```
 
-
 ## Module Materials
 
 * Slides from Lectures
 * Suggested Readings
   * All subchapters of this module, including
-      * ...
-  * R4DS     
-      * [TBD](https://r4ds.had.co.nz/), including
-        * [TBD]
-        * [TBD]
+    * ...
+  * R4DS
+    * [TBD](https://r4ds.had.co.nz/), including
+      * [TBD]
+      * [TBD]
 * Activities
   * [TBD]
 * Lab
@@ -45,18 +40,15 @@ try_include_tweet()
 
 <!--https://ytplaylist-len.herokuapp.com/ -->
 
-
 No of videos : TBD
 
 Average length of video : TBD
 
 Total length of playlist : TBD
 
-
 # Getting started with simulating data in R
 
-> I adapted [this tutorial](https://github.com/aosmith16/simulation-helper-functions) from [Ariel Muldoon](https://github.com/aosmith16) 
-
+> I adapted [this tutorial](https://github.com/aosmith16/simulation-helper-functions) from [Ariel Muldoon](https://github.com/aosmith16)
 
 Simulating data in R can be really helpful, and in this module I'll show you some easy-to-use R functions to get started. These functions are all from base R packages, so you might already know some of these functions.  Let's dive in!
 
@@ -97,7 +89,7 @@ rnorm(5)
 
 I want to discuss a couple things about this code and the output.
 
-First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code).  Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from. 
+First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code).  Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from.
 
 ### Writing out arguments for clearer code
 
@@ -159,7 +151,7 @@ rnorm(n = 5,
 
 We can also use vectors for arguments! We can pull random numbers from a normal distribution with distinct parameters if we use a vector for the parameter arguments.  For example, this could be useful for simulating data with different group means but the same variance.  We might want to use something like this if we were making data that we would analyze using an ANOVA.
 
-I'll keep the standard deviation at 1 but will draw data from three distribution centered at three different locations: one at 0, one at 5, and one at 20. I request 10 total draws by changing `n` to 10. 
+I'll keep the standard deviation at 1 but will draw data from three distribution centered at three different locations: one at 0, one at 5, and one at 20. I request 10 total draws by changing `n` to 10.
 
 Note the repeating pattern: the function iteratively draws one value from each distribution until the total number requested is reached.  This can lead to imbalance in the sample size per distribution.
 
@@ -298,7 +290,6 @@ Let's explore the Poisson distribution a little more, seeing how the distributio
 
 We'll draw 100 values from a Poisson distribution with a mean of 5.  We'll name this vector `y` and take a look at a summary of those values.
 
-
 ```{r}
 y <- rpois(100, lambda = 5)
 ```
@@ -370,7 +361,7 @@ rep(letters[1:2], each = 3)
 
 ## Repeat a whole vector with the `times` argument
 
-The `times` argument can be used when we want to repeat the whole vector rather than repeating it elementwise. 
+The `times` argument can be used when we want to repeat the whole vector rather than repeating it elementwise.
 
 We'll make a two-group variable again, but this time we'll change the repeating pattern of the values in the variable.
 
@@ -424,7 +415,6 @@ rep(letters[1:2], each = 2, length.out = 7)
 
 Note you can't use `length.out` and `times` together (if you try, `length.out` will be given priority and `times` ignored).
 
-
 # Creating datasets with quantiative and categorical variables
 
 We now have some tools for creating quantitative data as well as categorical.  Which means it's time to make some datasets!  We'll create several simple ones to get the general idea.
@@ -457,7 +447,7 @@ data.frame(group = rep(letters[1:2], each = 3),
 
 Now let's add another categorical variable to this dataset.  
 
-Say we are in a situation involving two factors, not one.  We have a single observations for every combination of the two factors (i.e., the two factors are *crossed*).    
+Say we are in a situation involving two factors, not one.  We have a single observations for every combination of the two factors (i.e., the two factors are *crossed*).
 
 The second factor, which we'll call `factor`, will take on the values "C", "D", and "E".  
 
@@ -538,7 +528,7 @@ For our last dataset we'll have two groups, with 10 observations per group.
 rep(LETTERS[3:4], each = 10)
 ```
 
-Let's make a dataset that has two quantitative variables, unrelated to both each other and the groups.  One variable ranges from 10 and 15 and one from 100 and 150. 
+Let's make a dataset that has two quantitative variables, unrelated to both each other and the groups.  One variable ranges from 10 and 15 and one from 100 and 150.
 
 How many observations should we draw from each uniform distribution?
 
@@ -638,7 +628,6 @@ Earlier we were making datasets with random numbers and some grouping variables.
 data.frame(group = rep(letters[1:2], each = 3),
            response = rnorm(n = 6, mean = 0, sd = 1) )
 ```
-
 
 We could put this process as the `expr` argument in `replicate()` to get many simulated datasets.  I would do something like this if I wanted to compare the long-run performance of two different statistical tools using the exact same random datasets.  
 

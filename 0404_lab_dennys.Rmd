@@ -29,8 +29,7 @@ This lab was inspired by John Reiser's post in his *New Jersey geographer* blog.
 
 ## Getting started {.unnumbered}
 
-
-Go to the course GitHub organization and locate the lab repo, which should be named something like  `lab-04-viz-sp-data`. [This link should take you to the lab](https://github.com/DataScience4Psych/lab-04-viz-sp-data). Either Fork it or copy it as a template. Then clone it in RStudio. First, open the R Markdown document `lab-04.Rmd` and Knit it. Make sure it compiles without errors. The output will be in the file markdown `.md` file with the same name.
+Go to the course GitHub organization and locate the lab repo, which should be named something like  `lab-04-viz-sp-data`. [This link should take you to the lab](https://github.com/DataScience4Psych/lab-04-viz-sp-data). Either Fork it or use the template. Then clone it in RStudio. First, open the R Markdown document `lab-04.Rmd` and Knit it. Make sure it compiles without errors. The output will be in the file markdown `.md` file with the same name.
 
 ### Packages {.unnumbered}
 
@@ -40,12 +39,13 @@ In this lab, we will use the **tidyverse** and **dsbox** packages. The *dsbox** 
 install.packages("devtools")
 devtools::install_github("rstudio-education/dsbox")
 ```
+
 ```{r eval = TRUE, message = FALSE}
 library(tidyverse)
 library(dsbox)
 ```
 
-If you cannot get `dsbox` to install, you can also download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda). 
+If you cannot get `dsbox` to install, you can also download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda).
 
 ```
 githubURL_1 <- "https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda"
@@ -56,7 +56,6 @@ load(url(githubURL_1))
 load(url(githubURL_2))
 
 ```
-
 
 ### Project name {.unnumbered}
 
@@ -72,15 +71,14 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ### Commiting and pushing changes {.unnumbered}
 
-- Go to the **Git** pane in your RStudio. 
+- Go to the **Git** pane in your RStudio.
 - View the **Diff** and confirm that you are happy with the changes.
 - Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
 - Click on **Push**. This action will prompt a dialogue box where you first need to enter your user name, and then your password.
 
-
 ## The data {.unnumbered}
 
-The datasets we'll use are called `dennys` and `laquinta` from the **dsbox** package. 
+The datasets we'll use are called `dennys` and `laquinta` from the **dsbox** package.
 Note that these data were scraped from [here](https://locations.dennys.com/) and [here](https://www.lq.com/en/findandbook/hotel-listings.html), respectively.
 
 To help with our analysis we will also use a dataset on US states:
@@ -93,14 +91,13 @@ Each observation in this dataset represents a state, including DC. Along with th
 
 ## Exercises  {.unnumbered}
 
-1. What are the dimensions of the Denny's dataset? (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent? What are the variables? 
+1. What are the dimensions of the Denny's dataset? (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent? What are the variables?
 
 2. What are the dimensions of the La Quinta's dataset? What does each row in the dataset represent? What are the variables?
 
-We would like to limit our analysis to Denny's and La Quinta locations in the United States. 
+We would like to limit our analysis to Denny's and La Quinta locations in the United States.
 
 3. Take a look at the websites that the data come from (linked above). Are there any La Quinta's locations outside of the US? If so, which countries? What about Denny's?  
-
 
 4. Now take a look at the data. What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites). Don't worry about whether you know how to implement this, just brainstorm some ideas. Write down at least one as your answer, but you're welcomed to write down a few options too.
 
@@ -108,12 +105,9 @@ We will determine whether or not the establishment has a location outside the US
 
 5. Find the Denny's locations that are outside the US, if any. To do so, filter the Denny's locations for observations where `state` is not in `states$abbreviation`. The code for this is given below. Note that the `%in%` operator matches the states listed in the `state` variable to those listed in `states$abbreviation`. The `!` operator means **not**. Are there any Denny's locations outside the US?
 
-> Hint: Some of the abbreviations may not be familiar to you. Professor Google might be able to help. 
-
-
+> Hint: Some of the abbreviations may not be familiar to you. Professor Google might be able to help.
 
 > "Filter for `state`s that are not in `states$abbreviation`."
-
 
 ```{r}
 dn %>%
@@ -122,9 +116,7 @@ dn %>%
 
 6. Add a country variable to the Denny's dataset and set all observations equal to `"United States"`. Remember, you can use the `mutate` function for adding a variable. Make sure to save the result of this as `dn` again so that the stored data frame contains the new variable going forward.
 
-
 > Comment: We don't need to tell R how many times to repeat the character string "United States" to fill in the data for all observations, R takes care of that automatically.
-
 
 ```{r}
 dn %>%
@@ -194,7 +186,7 @@ ggplot(dn_lq, mapping = aes(
   geom_point()
 ```
 
-The following two questions ask you to create visualizations. These visualizations should follow best practices you learned in class, such as informative titles, axis labels, etc. See http://ggplot2.tidyverse.org/reference/labs.html for help with the syntax. You can also choose different themes to change the overall look of your plots, see http://ggplot2.tidyverse.org/reference/ggtheme.html for help with these.
+The following two questions ask you to create visualizations. These visualizations should follow best practices you learned in class, such as informative titles, axis labels, etc. See <http://ggplot2.tidyverse.org/reference/labs.html> for help with the syntax. You can also choose different themes to change the overall look of your plots, see <http://ggplot2.tidyverse.org/reference/ggtheme.html> for help with these.
 
 11. Filter the data for observations in North Carolina only, and recreate the plot. You should also adjust the transparency of the points, by setting the `alpha` level, so that it's easier to see the overplotted ones. Visually, does Mitch Hedberg's joke appear to hold here?
 
