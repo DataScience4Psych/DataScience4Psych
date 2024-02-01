@@ -31,11 +31,21 @@
 [ae01b_covid]: https://github.com/DataScience4Psych/ae01b_covid
 [ae02_bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
 [ae03_starwars]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
-
+[ae08_imdb]: https://github.com/DataScience4Psych/ae-08-imdb-webscraping
 
 <!-- Lab Links-->
 
 [lab01_hello]: https://github.com/DataScience4Psych/lab-01-hello-r
+[lab02]: https://github.com/DataScience4Psych/lab-02-plastic-waste
+[lab03]: https://github.com/DataScience4Psych/lab-03-nobel-laureates
+[lab04]: https://github.com/DataScience4Psych/lab-04-viz-sp-data
+[lab05]: https://github.com/DataScience4Psych/lab-05-wrangle-sp-data
+[lab06]: https://github.com/DataScience4Psych/lab_06_sad_plots
+[lab07]: https://github.com/DataScience4Psych/lab_07_betterviz
+[lab08]: https://github.com/DataScience4Psych/lab-08-uoe-art
+[lab09]: https://github.com/DataScience4Psych/lab-09-slr-course-evals
+[lab10]: https://github.com/DataScience4Psych/lab-10-mlr-course-evals
+[lab11]: https://github.com/DataScience4Psych/lab-11-inference-smoking
 
 <!--Slides-->
 [d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
