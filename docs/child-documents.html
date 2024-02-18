@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-02-01" />
+<meta name="date" content="2024-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1472,42 +1472,42 @@ div.csl-indent {
 <div id="r-code" class="section level3 hasAnchor" number="99.1.1">
 <h3><span class="header-section-number">99.1.1</span> R Code<a href="child-documents.html#r-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this section we establish the file path to the folder that contains all the child documents. The names of the child documents are extracted and stored as a vector. The <code>grepl()</code> function is used to retain only the Rmd files stored in the vector.</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="child-documents.html#cb570-1" tabindex="-1"></a>sections.path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
-<span id="cb570-2"><a href="child-documents.html#cb570-2" tabindex="-1"></a>  rprojroot<span class="sc">::</span><span class="fu">find_root</span>(<span class="st">&quot;r_in_practice.Rproj&quot;</span>),</span>
-<span id="cb570-3"><a href="child-documents.html#cb570-3" tabindex="-1"></a>  <span class="st">&quot;markdown&quot;</span>,</span>
-<span id="cb570-4"><a href="child-documents.html#cb570-4" tabindex="-1"></a>  <span class="st">&quot;sections&quot;</span></span>
-<span id="cb570-5"><a href="child-documents.html#cb570-5" tabindex="-1"></a>)</span>
-<span id="cb570-6"><a href="child-documents.html#cb570-6" tabindex="-1"></a>r.files.vec <span class="ot">&lt;-</span> <span class="fu">list.files</span>(sections.path)</span>
-<span id="cb570-7"><a href="child-documents.html#cb570-7" tabindex="-1"></a>r.files.vec <span class="ot">&lt;-</span> r.files.vec[<span class="fu">grepl</span>(<span class="st">&quot;.Rmd&quot;</span>, r.files.vec)]</span></code></pre></div>
-<p>Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a “raw_script/extracted” folder. The <code>map()</code> function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the <code>map()</code> loop, the <code>purl()</code> function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="child-documents.html#cb571-1" tabindex="-1"></a>extracted.path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="child-documents.html#cb571-1" tabindex="-1"></a>sections.path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
 <span id="cb571-2"><a href="child-documents.html#cb571-2" tabindex="-1"></a>  rprojroot<span class="sc">::</span><span class="fu">find_root</span>(<span class="st">&quot;r_in_practice.Rproj&quot;</span>),</span>
 <span id="cb571-3"><a href="child-documents.html#cb571-3" tabindex="-1"></a>  <span class="st">&quot;markdown&quot;</span>,</span>
-<span id="cb571-4"><a href="child-documents.html#cb571-4" tabindex="-1"></a>  <span class="st">&quot;raw_scripts&quot;</span>,</span>
-<span id="cb571-5"><a href="child-documents.html#cb571-5" tabindex="-1"></a>  <span class="st">&quot;extracted&quot;</span></span>
-<span id="cb571-6"><a href="child-documents.html#cb571-6" tabindex="-1"></a>)</span>
-<span id="cb571-7"><a href="child-documents.html#cb571-7" tabindex="-1"></a></span>
-<span id="cb571-8"><a href="child-documents.html#cb571-8" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(r.files.vec, <span class="cf">function</span>(file.i) {</span>
-<span id="cb571-9"><a href="child-documents.html#cb571-9" tabindex="-1"></a>  <span class="co"># print(file.i)</span></span>
-<span id="cb571-10"><a href="child-documents.html#cb571-10" tabindex="-1"></a>  file.name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;.Rmd&quot;</span>, <span class="st">&quot;&quot;</span>, file.i)</span>
-<span id="cb571-11"><a href="child-documents.html#cb571-11" tabindex="-1"></a>  extracted.file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(file.name, <span class="st">&quot;.R&quot;</span>)</span>
-<span id="cb571-12"><a href="child-documents.html#cb571-12" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">purl</span>(</span>
-<span id="cb571-13"><a href="child-documents.html#cb571-13" tabindex="-1"></a>    <span class="fu">file.path</span>(sections.path, file.i),</span>
-<span id="cb571-14"><a href="child-documents.html#cb571-14" tabindex="-1"></a>    <span class="fu">file.path</span>(extracted.path, extracted.file)</span>
-<span id="cb571-15"><a href="child-documents.html#cb571-15" tabindex="-1"></a>  )</span>
-<span id="cb571-16"><a href="child-documents.html#cb571-16" tabindex="-1"></a>})</span></code></pre></div>
+<span id="cb571-4"><a href="child-documents.html#cb571-4" tabindex="-1"></a>  <span class="st">&quot;sections&quot;</span></span>
+<span id="cb571-5"><a href="child-documents.html#cb571-5" tabindex="-1"></a>)</span>
+<span id="cb571-6"><a href="child-documents.html#cb571-6" tabindex="-1"></a>r.files.vec <span class="ot">&lt;-</span> <span class="fu">list.files</span>(sections.path)</span>
+<span id="cb571-7"><a href="child-documents.html#cb571-7" tabindex="-1"></a>r.files.vec <span class="ot">&lt;-</span> r.files.vec[<span class="fu">grepl</span>(<span class="st">&quot;.Rmd&quot;</span>, r.files.vec)]</span></code></pre></div>
+<p>Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a “raw_script/extracted” folder. The <code>map()</code> function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the <code>map()</code> loop, the <code>purl()</code> function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.</p>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="child-documents.html#cb572-1" tabindex="-1"></a>extracted.path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
+<span id="cb572-2"><a href="child-documents.html#cb572-2" tabindex="-1"></a>  rprojroot<span class="sc">::</span><span class="fu">find_root</span>(<span class="st">&quot;r_in_practice.Rproj&quot;</span>),</span>
+<span id="cb572-3"><a href="child-documents.html#cb572-3" tabindex="-1"></a>  <span class="st">&quot;markdown&quot;</span>,</span>
+<span id="cb572-4"><a href="child-documents.html#cb572-4" tabindex="-1"></a>  <span class="st">&quot;raw_scripts&quot;</span>,</span>
+<span id="cb572-5"><a href="child-documents.html#cb572-5" tabindex="-1"></a>  <span class="st">&quot;extracted&quot;</span></span>
+<span id="cb572-6"><a href="child-documents.html#cb572-6" tabindex="-1"></a>)</span>
+<span id="cb572-7"><a href="child-documents.html#cb572-7" tabindex="-1"></a></span>
+<span id="cb572-8"><a href="child-documents.html#cb572-8" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(r.files.vec, <span class="cf">function</span>(file.i) {</span>
+<span id="cb572-9"><a href="child-documents.html#cb572-9" tabindex="-1"></a>  <span class="co"># print(file.i)</span></span>
+<span id="cb572-10"><a href="child-documents.html#cb572-10" tabindex="-1"></a>  file.name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;.Rmd&quot;</span>, <span class="st">&quot;&quot;</span>, file.i)</span>
+<span id="cb572-11"><a href="child-documents.html#cb572-11" tabindex="-1"></a>  extracted.file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(file.name, <span class="st">&quot;.R&quot;</span>)</span>
+<span id="cb572-12"><a href="child-documents.html#cb572-12" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">purl</span>(</span>
+<span id="cb572-13"><a href="child-documents.html#cb572-13" tabindex="-1"></a>    <span class="fu">file.path</span>(sections.path, file.i),</span>
+<span id="cb572-14"><a href="child-documents.html#cb572-14" tabindex="-1"></a>    <span class="fu">file.path</span>(extracted.path, extracted.file)</span>
+<span id="cb572-15"><a href="child-documents.html#cb572-15" tabindex="-1"></a>  )</span>
+<span id="cb572-16"><a href="child-documents.html#cb572-16" tabindex="-1"></a>})</span></code></pre></div>
 <p>Finally, create a vector of file names (<code>source.vec</code>) stored in the “raw_script/extracted” folder. You will want to type these out manually (do not use <code>list.files()</code> functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. <code>map()</code> is then used to loop through each specified file in <code>source.vec</code>. Keep in mind that the order of the file names specified in <code>source.vec</code> will determine the order that these files are executed in the <code>map()</code> function; therefore, order the files in <code>source.vec</code> from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script.</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="child-documents.html#cb572-1" tabindex="-1"></a>source.vec <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb572-2"><a href="child-documents.html#cb572-2" tabindex="-1"></a>  <span class="st">&quot;introduction.R&quot;</span>,</span>
-<span id="cb572-3"><a href="child-documents.html#cb572-3" tabindex="-1"></a>  <span class="st">&quot;quick_reference.R&quot;</span>,</span>
-<span id="cb572-4"><a href="child-documents.html#cb572-4" tabindex="-1"></a>  <span class="st">&quot;installation_updates.R&quot;</span>,</span>
-<span id="cb572-5"><a href="child-documents.html#cb572-5" tabindex="-1"></a>  <span class="st">&quot;r_project.R&quot;</span>,</span>
-<span id="cb572-6"><a href="child-documents.html#cb572-6" tabindex="-1"></a>  <span class="st">&quot;version_control.R&quot;</span></span>
-<span id="cb572-7"><a href="child-documents.html#cb572-7" tabindex="-1"></a>)</span>
-<span id="cb572-8"><a href="child-documents.html#cb572-8" tabindex="-1"></a></span>
-<span id="cb572-9"><a href="child-documents.html#cb572-9" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(source.vec, <span class="cf">function</span>(source.i) {</span>
-<span id="cb572-10"><a href="child-documents.html#cb572-10" tabindex="-1"></a>  <span class="fu">source</span>(<span class="fu">file.path</span>(extracted.path, source.i))</span>
-<span id="cb572-11"><a href="child-documents.html#cb572-11" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="child-documents.html#cb573-1" tabindex="-1"></a>source.vec <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb573-2"><a href="child-documents.html#cb573-2" tabindex="-1"></a>  <span class="st">&quot;introduction.R&quot;</span>,</span>
+<span id="cb573-3"><a href="child-documents.html#cb573-3" tabindex="-1"></a>  <span class="st">&quot;quick_reference.R&quot;</span>,</span>
+<span id="cb573-4"><a href="child-documents.html#cb573-4" tabindex="-1"></a>  <span class="st">&quot;installation_updates.R&quot;</span>,</span>
+<span id="cb573-5"><a href="child-documents.html#cb573-5" tabindex="-1"></a>  <span class="st">&quot;r_project.R&quot;</span>,</span>
+<span id="cb573-6"><a href="child-documents.html#cb573-6" tabindex="-1"></a>  <span class="st">&quot;version_control.R&quot;</span></span>
+<span id="cb573-7"><a href="child-documents.html#cb573-7" tabindex="-1"></a>)</span>
+<span id="cb573-8"><a href="child-documents.html#cb573-8" tabindex="-1"></a></span>
+<span id="cb573-9"><a href="child-documents.html#cb573-9" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(source.vec, <span class="cf">function</span>(source.i) {</span>
+<span id="cb573-10"><a href="child-documents.html#cb573-10" tabindex="-1"></a>  <span class="fu">source</span>(<span class="fu">file.path</span>(extracted.path, source.i))</span>
+<span id="cb573-11"><a href="child-documents.html#cb573-11" tabindex="-1"></a>})</span></code></pre></div>
 <p>Once all the R-scripts extracted from the upstream child R Markdown files have been executed, you can begin or continue work on a new child R Markdown document. I keep all the above code in a single R-script and execute the entire script each time I use this file to make sure all of the files are up-to-date.</p>
 </div>
 </div>
