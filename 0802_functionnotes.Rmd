@@ -22,205 +22,102 @@ Why are we covering this now, smack in the middle of data aggregation? Powerful 
 
 ## Load the Gapminder data
 
-We'll begin by loading the `nycflights13` dataset, which contains information about all flights that departed from New York City in 2013. This dataset provides a rich source of real-world data for practicing data manipulation and analysis
+We'll begin by loading the `gapminder` dataset, which contains information about data related to countries' populations, gdp per capita, and life expectancy around the world. This dataset provides a rich source of real-world data for practicing data manipulation and analysis
 
 ```{r start_func1}
-library(nycflights13)
-library(dplyr)
-data("flights")
-#str(flights)
+library(gapminder)
+str(gapminder)
 ```
 
-## Example Analysis: Average Delay by Airline
+## Example Analysis: Max - min
 
-Consider we want to compute the average delay experienced by each airline. This is a great example of a typical input for a function. You can imagine wanting to get this statistic to evaluate airline performance. You might want to do this for different years, months, or days of the week. You might want to do this for different airports, or for different combinations of airports. You might want to do this for different types of delays. You might want to do this for different subsets of the data, e.g., only for flights that were delayed. You might want to do this for different airlines. You might want to do this for different combinations of the above. 
+Consider a numeric vector; we want to compute the difference between its max and min. `lifeExp` or `pop` or `gdpPercap` are great examples of a typical input for a function. You can imagine wanting to get this statistic as one of many potentially summary statistics. You might want to do this by year, country, continent, or combinations thereof.
 
 ## Get something that works
 
-First, develop some working code for interactive use, using a representative input. I'll use flights operated by a specific airline as an example.
+First, develop some working code for interactive use, using a representative input. I'll use life expectancy as our example variable.
 
-R functions that will be useful: mean() and filter() from the `dplyr` package.
-```{r}
-
-## Investigate the structure of the flights dataset
-str(flights)
-## get to know the functions mentioned above
-
-mean(flights$dep_delay)
-
-filter(.data = flights, carrier == "AA")
-
-```
-```{r,echo=FALSE}
-# Assuming flights is a dataframe with dep_delay and carrier columns
-flights %>%
-  na.omit() %>%
-  group_by(carrier) %>%
-  summarise(Mean_Dep_Delay = mean(dep_delay, na.rm = TRUE)) %>%
-  kable(col.names = c("Carrier", "Average Departure Delay"))
-```
-
-Now lets go through some natural solutions to get the average delay for the airline "AA"
-
-### Using `dplyr` for Data Filtering and Summary
-
-This solution employs the dplyr package to filter flights by the airline code and then calculate the average departure delay.
-```{r}
-flights %>%
-  filter(carrier == "AA") %>%
-  summarise(average_delay = mean(dep_delay, na.rm = TRUE))
-```
-
-### Using Base R with Subsetting
-
-Here, we use base R to achieve the same task without the `dplyr` package, directly subsetting the dataframe.
-```{r}
-
-mean(flights$dep_delay[flights$carrier=="AA"], na.rm = TRUE)
-```
-
-### Using `with()` Function
-
-The with() function provides a convenient way to perform operations within a dataframe subset, making the code more readable.
+R functions that will be useful: `min()`, `max()`, `range()`. (__Read their documentation:__ [here][rdocs-extremes] and [here][rdocs-range])
 
 ```{r}
-with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
+## Investigate the structure of the dataset
+min(gapminder$lifeExp)
+max(gapminder$lifeExp)
+range(gapminder$lifeExp)
 ```
-
-### Using `aggregate()` Function
-
-The aggregate() function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
+Now lets go through some natural solutions to get the difference in the max and min of the `lifeExp` variable.
 
 ```{r}
-aggregate(dep_delay ~ carrier, data = flights[flights$carrier == "AA", ], FUN = mean, na.rm = TRUE)$dep_delay
+## some natural solutions
+max(gapminder$lifeExp) - min(gapminder$lifeExp)
+with(gapminder, max(lifeExp) - min(lifeExp))
+range(gapminder$lifeExp)[2] - range(gapminder$lifeExp)[1]
+with(gapminder, range(lifeExp)[2] - range(lifeExp)[1])
+diff(range(gapminder$lifeExp))
 ```
 
-###  Using tapply() Function
+Internalize this "answer" because our informal testing relies on you noticing departures from this.
 
-The tapply() function applies a function to subsets of a vector, which we can use to calculate the average delay for "AA" flights.
-```{r}
-tapply(flights$dep_delay, flights$carrier, mean, na.rm = TRUE)["AA"]
-```
+### Skateboard >> perfectly formed rear-view mirror
 
-Now, internalize this "answer" because our informal testing relies on you noticing departures from this number when we generalize the function.
+This image [widely attributed to the Spotify development team][min-viable-product] conveys an important point.
 
-## Turn the Working Interactive Code into a Function
-
-When crafting your own functions in R, it's beneficial to start with a straightforward, minimal version that accomplishes the basic task at hand. This approach is akin to building a 'skateboard'—a simple, yet functional product. Let's apply this philosophy to our task of calculating the average delay for a specific airline in the nycflights13 dataset.
-
-Initial Simple Function: The 'Skateboard'
-```{r}
-average_delay_by_airline <- function(airline_code) {
-  flights %>%
-    filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
-}
-
-```
-
-Check that you're getting the same answer as you did with your interactive code.
-```{r}
-# Test the function with American Airlines (AA)
-average_delay_by_airline("AA")
-```
-
-This function represents our 'skateboard'. It's basic, and we have added no new functionality. Yet, it gets the job done by providing the average delay for a given airline code. It doesn't include error handling or support for additional details like distinguishing between departure and arrival delays, but it serves as a solid starting point. This is a minimal viable product (MVP) that we can build upon to create a more complex function (the 'car').
-
-```{r spotify-howtobuildmvp, echo = FALSE, out.width = "60%", fig.cap = "This image [widely attributed to the Spotify development team][min-viable-product] conveys an important point. From [Your ultimate guide to Minimum Viable Product (+great examples)](https://web.archive.org/web/20220318100638/https://blog.fastmonkeys.com/2014/06/18/minimum-viable-product-your-ultimate-guide-to-mvp-great-examples/)"}
+```{r spotify-howtobuildmvp, echo = FALSE, out.width = "60%", fig.cap = "From [Your ultimate guide to Minimum Viable Product (+great examples)](https://blog.fastmonkeys.com/2014/06/18/minimum-viable-product-your-ultimate-guide-to-mvp-great-examples/)"}
 knitr::include_graphics("img/spotify-howtobuildmvp.jpg")
 ```
 
+Build that skateboard before you build the car or some fancy car part. A limited-but-functioning thing is very useful. It also keeps the spirits high.
 
 This idea is related to the valuable [Telescope Rule][telescope-rule]:
 
 > It is faster to make a four-inch mirror then a six-inch mirror than to make a six-inch mirror.
 
+## Turn the working interactive code into a function
+
+Add NO new functionality! Just write your very simple R function.
+
+```{r}
+max_minus_min <- function(x) max(x) - min(x)
+
+max_minus_min(gapminder$lifeExp)
+```
+
+Check that you're getting the same answer as you did with your interactive code. Test it eyeball-o-metrically at this point.
+
+## Test your function
 
 ### Test on new inputs
 
 Pick some new artificial inputs where you know (at least approximately) what your function should return.
 
 ```{r}
-average_delay_by_airline("UA")
-
-average_delay_by_airline(c("UA","AA"))
+max_minus_min(1:10)
+max_minus_min(runif(1000))
 ```
 
-I know that UA had about 12 minutes of a delay. Now, I've also intentionally, tried out a vector of airline codes. This is a good way to check that your function is vectorized, i.e., that it can handle multiple inputs at once. (This is a good habit to get into, as it can save you from writing loops and can make your code more efficient.)
+I know that 10 minus 1 is 9. I know that random uniform [0, 1] variates will be between 0 and 1. Therefore max - min should be less than 1. If I take LOTS of them, max - min should be pretty close to 1.
+
+It is intentional that I tested on integer input as well as floating point. Likewise, I like to use valid-but-random data for this sort of check.
 
 ### Test on real data but *different* real data
 
-Back to the real world now. So typically, the next step is to check to see if your function can handle different data. This is a good way to check if your function is robust and generalizable. However, ours doesn't. It's hard-wired to the `flights` dataset. We'll fix that in the next section.
+Back to the real world now. Two other quantitative variables are lying around: `gdpPercap` and `pop`. Let's have a go.
 
 ```{r}
-average_delay_by_airline <- function(data=flights, airline_code) {
-  data %>%
-    filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
-}
+max_minus_min(gapminder$gdpPercap)
+max_minus_min(gapminder$pop)
 ```
 
-I've now added another variable to the function, `data`, which defaults to `flights`. This is a good habit to get into. It makes your function more flexible and more generalizable. It also makes it easier to test your function on different datasets. Now, we can test our function on a modified `flights` dataset, that I have named the `flights2` dataset. The only thing I have done to this dataset is multiplied all of the delays by 2.
+Either check these results "by hand" or apply the "does that even make sense?" test.
 
-```{r}
-flights2 <- flights
+### Test on unexpected stuff
 
-flights2$dep_delay <- flights2$dep_delay * 2
-
-average_delay_by_airline(flights2, "AA")
-```
-
-
-# Enhancing the Function: Towards the 'Perfectly Formed Rear-View Mirror'
-Once you have a basic function that works, you can incrementally add features to make it more robust and versatile. This could include error handling (to gracefully deal with unexpected inputs), parameters for selecting between departure and arrival delays, or options for filtering by specific airports or dates.
-
-Let's do error handling first. We'll add a check to ensure that the airline code provided to the function is valid. If it's not, we'll return an informative error message.
-
-```{r}
-
-average_delay_by_airline_advanced <- function(data = flights, airline_code) {
-  if (!airline_code %in% data$carrier) {
-    stop("Airline code not found in the dataset.")
-  }
-  data %>%
-    filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
-}
-```
-
-
-Let's add the capability to choose between departure (dep_delay) and arrival (arr_delay) delays. 
-
-```{r}
-# Enhanced function to calculate average delay, with options for delay type and error handling
-average_delay_by_airline_advanced <- function(data = flights, airline_code, delay_type = "dep_delay") {
-  if (!airline_code %in% data$carrier) {
-    stop("Airline code not found in the dataset.")
-  }
-  if (!delay_type %in% c("dep_delay", "arr_delay")) {
-    stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
-  }
-  
-  data %>%
-    filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
-}
-
-
-# Test the enhanced function
-average_delay_by_airline_advanced(airline_code = "AA", "arr_delay")
-```
-
-In this version, the function now accepts an additional argument, `delay_type`, which allows the user to specify the type of delay they are interested in analyzing. The function checks if the provided delay_type is valid and uses dynamic column selection via `get(delay_type)` to compute the mean delay. 
-
-
-# Test on Unexpected Inputs
-
-Now, let's try to break our function. Don't get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it's not expecting.
+Now we try to break our function. Don't get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it's not expecting.
 
 ```{r error = TRUE}
-average_delay_by_airline_advanced(flights) ## hey sometimes things "just work" on data.frames!
-average_delay_by_airline_advanced("eggplants are purple") ## i have no excuse for this one
+max_minus_min(gapminder) ## hey sometimes things "just work" on data.frames!
+max_minus_min(gapminder$country) ## factors are kind of like integer vectors, no?
+max_minus_min("eggplants are purple") ## i have no excuse for this one
 ```
 
 How happy are you with those error messages? You must imagine that some entire __script__ has failed and that you were hoping to just `source()` it without re-reading it. If a colleague or future you encountered these errors, do you run screaming from the room? How hard is it to pinpoint the usage problem?
