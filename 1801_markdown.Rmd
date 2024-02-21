@@ -1,23 +1,14 @@
-# R Project Workflow
+# Efficient Workflow with R Projects and R Markdown
 
-Note: Adapted from [Zachary M. Smith](https://github.com/zsmith27/rmarkdown_crash-course)
+R Projects and R Markdown offer a powerful duo for streamlining data analysis and reporting in R. The R Project structure streamlines file access through relative paths, ensuring the integrity of file paths even when the project is relocated. It is designed for seamless integration with version control systems like Git and encourages a tidy workspace by storing data, scripts, and outputs within the project directory. This section takes heavy inspiration from [Zachary M. Smith](https://github.com/zsmith27/rmarkdown_crash-course).
 
-## Overview
+## R Projects: Your Workspace Anchor
 
-- Easier to access files (relative path)
+R Projects establish a self-contained environment for any data analysis project. They help in organizing your work and ensuring that file paths are consistent, making your work portable and easier to share with collaborators.
 
-  - Relative paths help prevent broken paths
+### Create a New R Project
 
-    - In general, DO NOT use setwd()
-    - Will work if the project folder is moved to a new location on you local machine or moved to a new machine.
-
-- Designed to easily integrate with version control (GIT)
-
-- In general, all data, scripts, and output should be stored within the project directory.
-
-## Create a New R Project
-
-1. Create a new R project by clicking on the drop-down menu at the top right of RStudio and selecting "New Project"
+1. **Start New Project**:  In RStudio, create a new R project by clicking on the drop-down menu in top right of your window and selecting "New Project"
 
 ![](img/r_project/create_project.png){width="1000px"}
 
@@ -71,7 +62,6 @@ Quickly navigate between recently opened R projects by clicking on the drop-down
     - Notice that the entire file path to CSV of interest ("zms_thesis_metrics.csv") was not specified just `file.path("data", "zms_thesis_metrics.csv")`.
 
     ```{r, eval=FALSE}
-
 thesis.df <- read.csv(
   file.path(
     "data",
@@ -736,7 +726,6 @@ thesis.df <- thesis.df %>%
     - in the header specify `echo=FALSE` to hide this code chunk-- your reader does not need to see this
 
     ```{r global-options-example, eval=FALSE}
-
 knitr::opts_chunk$set()
     ```
 
@@ -745,7 +734,6 @@ knitr::opts_chunk$set()
     - Add a caption
 
     ```{r scatter-example, eval=FALSE}
-
 ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
   geom_point()
     ```
@@ -756,7 +744,6 @@ ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
     - Add a caption
 
     ```{r boxplot-example, eval=FALSE}
-
 ggplot(thesis.df, aes(lake, richness, fill = lake)) +
   geom_boxplot()
     ```
@@ -877,7 +864,6 @@ leaflet(
     - add this link (<https://rstudio.github.io/DT/>) to your description above the code chunk to describe where you can find more information on **DT**
 
     ```{r dt-example, eval=FALSE}
-
 library(DT)
 
 datatable(thesis.df, options = list(scrollX = TRUE))
@@ -888,7 +874,6 @@ datatable(thesis.df, options = list(scrollX = TRUE))
     - add this link (<https://rstudio.github.io/leaflet/>) to your description above the code chunk to describe where you can find more information on **leaflet**
 
     ```{r leaflet-example, eval=FALSE}
-
 library(leaflet)
 
 pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
@@ -925,7 +910,6 @@ leaflet(
         - For example, you can zoom in, click on points to get more information, take a snapshot of the current plot, etc.
 
         ```{r scatter-sub-dip_example, message=FALSE, eval=FALSE}
-
 library(plotly)
 
 scatter.plot <- ggplot(
