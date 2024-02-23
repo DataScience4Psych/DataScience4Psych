@@ -20,7 +20,7 @@ This section aims to demystify the __process__ experienced R useRs follow to wri
 
 Why are we covering this now, smack in the middle of data aggregation? Powerful machines like dplyr, purrr, and the built-in "apply" family of functions, are ready and waiting to apply your purpose-built functions to various bits of your data. If you can express your analytical wishes in a function, these tools will give you great power.
 
-## Load the Gapminder data
+## Load the nycflights13 data
 
 We'll begin by loading the `nycflights13` dataset, which contains information about all flights that departed from New York City in 2013. This dataset provides a rich source of real-world data for practicing data manipulation and analysis
 
@@ -33,7 +33,7 @@ data("flights")
 
 ## Example Analysis: Average Delay by Airline
 
-Consider we want to compute the average delay experienced by each airline. This is a great example of a typical input for a function. You can imagine wanting to get this statistic to evaluate airline performance. You might want to do this for different years, months, or days of the week. You might want to do this for different airports, or for different combinations of airports. You might want to do this for different types of delays. You might want to do this for different subsets of the data, e.g., only for flights that were delayed. You might want to do this for different airlines. You might want to do this for different combinations of the above. 
+Consider we want to compute the average delay experienced by each airline. This is a great example of a typical input for a function. You can imagine wanting to get this statistic to evaluate airline performance. You might want to do this for different years, months, or days of the week. You might want to do this for different airports, or for different combinations of airports. You might want to do this for different types of delays. You might want to do this for different subsets of the data, e.g., only for flights that were delayed. You might want to do this for different airlines. You might want to do this for different combinations of the above.
 
 ## Get something that works
 
@@ -108,7 +108,7 @@ Now, internalize this "answer" because our informal testing relies on you notici
 
 When crafting your own functions in R, it's beneficial to start with a straightforward, minimal version that accomplishes the basic task at hand. This approach is akin to building a 'skateboard'—a simple, yet functional product. Let's apply this philosophy to our task of calculating the average delay for a specific airline in the nycflights13 dataset.
 
-Initial Simple Function: The 'Skateboard'
+### Initial Simple Function: The 'Skateboard'
 ```{r}
 average_delay_by_airline <- function(airline_code) {
   flights %>%
@@ -135,7 +135,7 @@ This idea is related to the valuable [Telescope Rule][telescope-rule]:
 
 > It is faster to make a four-inch mirror then a six-inch mirror than to make a six-inch mirror.
 
-
+## Test the Function
 ### Test on new inputs
 
 Pick some new artificial inputs where you know (at least approximately) what your function should return.
@@ -143,17 +143,16 @@ Pick some new artificial inputs where you know (at least approximately) what you
 ```{r}
 average_delay_by_airline("UA")
 
-average_delay_by_airline(c("UA","AA"))
 ```
 
-I know that UA had about 12 minutes of a delay. Now, I've also intentionally, tried out a vector of airline codes. This is a good way to check that your function is vectorized, i.e., that it can handle multiple inputs at once. (This is a good habit to get into, as it can save you from writing loops and can make your code more efficient.)
+I know that UA had about 12 minutes of a delay.
 
 ### Test on real data but *different* real data
 
 Back to the real world now. So typically, the next step is to check to see if your function can handle different data. This is a good way to check if your function is robust and generalizable. However, ours doesn't. It's hard-wired to the `flights` dataset. We'll fix that in the next section.
 
 ```{r}
-average_delay_by_airline <- function(data=flights, airline_code) {
+average_delay_by_airline <- function(data = flights, airline_code) {
   data %>%
     filter(carrier == airline_code) %>%
     summarise(average_delay = mean(dep_delay, na.rm = TRUE))
@@ -172,35 +171,14 @@ average_delay_by_airline(flights2, "AA")
 
 
 # Enhancing the Function: Towards the 'Perfectly Formed Rear-View Mirror'
+
 Once you have a basic function that works, you can incrementally add features to make it more robust and versatile. This could include error handling (to gracefully deal with unexpected inputs), parameters for selecting between departure and arrival delays, or options for filtering by specific airports or dates.
 
-Let's do error handling first. We'll add a check to ensure that the airline code provided to the function is valid. If it's not, we'll return an informative error message.
-
-```{r}
-
-average_delay_by_airline_advanced <- function(data = flights, airline_code) {
-  if (!airline_code %in% data$carrier) {
-    stop("Airline code not found in the dataset.")
-  }
-  data %>%
-    filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
-}
-```
-
-
-Let's add the capability to choose between departure (dep_delay) and arrival (arr_delay) delays. 
+Let's add the capability to choose between departure (dep_delay) and arrival (arr_delay) delays.
 
 ```{r}
 # Enhanced function to calculate average delay, with options for delay type and error handling
-average_delay_by_airline_advanced <- function(data = flights, airline_code, delay_type = "dep_delay") {
-  if (!airline_code %in% data$carrier) {
-    stop("Airline code not found in the dataset.")
-  }
-  if (!delay_type %in% c("dep_delay", "arr_delay")) {
-    stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
-  }
-  
+average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   data %>%
     filter(carrier == airline_code) %>%
     summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
@@ -208,10 +186,10 @@ average_delay_by_airline_advanced <- function(data = flights, airline_code, dela
 
 
 # Test the enhanced function
-average_delay_by_airline_advanced(airline_code = "AA", "arr_delay")
+average_delay_by_airline(airline_code = "AA",delay_type = "arr_delay")
 ```
 
-In this version, the function now accepts an additional argument, `delay_type`, which allows the user to specify the type of delay they are interested in analyzing. The function checks if the provided delay_type is valid and uses dynamic column selection via `get(delay_type)` to compute the mean delay. 
+In this version, the function now accepts an additional argument, `delay_type`, which allows the user to specify the type of delay they are interested in analyzing. The function checks if the provided delay_type is valid and uses dynamic column selection via `get(delay_type)` to compute the mean delay.
 
 
 # Test on Unexpected Inputs
@@ -219,22 +197,41 @@ In this version, the function now accepts an additional argument, `delay_type`, 
 Now, let's try to break our function. Don't get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it's not expecting.
 
 ```{r error = TRUE}
-average_delay_by_airline_advanced(flights) ## hey sometimes things "just work" on data.frames!
-average_delay_by_airline_advanced("eggplants are purple") ## i have no excuse for this one
+average_delay_by_airline(flights)
+
+average_delay_by_airline (airline_code="AB")
+
+average_delay_by_airline(delay_type = "arr-delay")
+
+
 ```
 
 How happy are you with those error messages? You must imagine that some entire __script__ has failed and that you were hoping to just `source()` it without re-reading it. If a colleague or future you encountered these errors, do you run screaming from the room? How hard is it to pinpoint the usage problem?
 
-### Unbreakable
 
-Here are some great examples where the function __should break but it does not.__
+## Error Handling
 
-```{r}
-max_minus_min(gapminder[c("lifeExp", "gdpPercap", "pop")])
-max_minus_min(c(TRUE, TRUE, FALSE, TRUE, TRUE))
+We'll add some simple checks to ensure that the airline code provided to the function is valid. If it's not, we'll return an informative error message. We'll also add a check to ensure that the delay type provided is valid.
+
+
+```{r,error=TRUE}
+average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
+  # Check if any of the provided airline codes are not in the dataset
+  if (!any(airline_code %in% c(data$carrier, NA))) {
+    stop("One or more airline codes not found in the dataset.")
+  }
+ if (!delay_type %in% c("dep_delay", "arr_delay")) {
+    stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
+  }
+
+  data %>%
+    filter(carrier == airline_code) %>%
+    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+}
+
 ```
 
-In both cases, R's eagerness to make sense of our requests is unfortunately successful. In the first case, a data.frame containing just the quantitative variables is eventually coerced into numeric vector. We can compute max minus min, even though it makes absolutely no sense at all. In the second case, a logical vector is converted to zeroes and ones, which might merit an error or at least a warning.
+
 
 ## Check the validity of arguments
 
@@ -244,18 +241,26 @@ For functions that will be used again -- which is not all of them! -- it is good
 
 ### stop if not
 
-`stopifnot()` is the entry level solution. I use it here to make sure the input `x` is a numeric vector.
+`stopifnot()` is the entry level solution. I use it here to make sure the input `data` is a data.frame.
 
 ```{r error = TRUE}
-mmm <- function(x) {
-  stopifnot(is.numeric(x))
-  max(x) - min(x)
+mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
+  stopifnot(is.data.frame(data))
+  # Check if any of the provided airline codes are not in the dataset
+  if (!any(airline_code %in% c(data$carrier, NA))) {
+    stop("One or more airline codes not found in the dataset.")
+  }
+ if (!delay_type %in% c("dep_delay", "arr_delay")) {
+    stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
+  }
+
+  data %>%
+    filter(carrier == airline_code) %>%
+    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
-mmm(gapminder)
-mmm(gapminder$country)
+
 mmm("eggplants are purple")
-mmm(gapminder[c("lifeExp", "gdpPercap", "pop")])
-mmm(c(TRUE, TRUE, FALSE, TRUE, TRUE))
+
 ```
 
 And we see that it catches all of the self-inflicted damage we would like to avoid.
@@ -278,7 +283,7 @@ mmm2(gapminder)
 ```
 
 In addition to a gratuitous apology, the error raised also contains two more pieces of helpful info:
-  
+
 * *Which* function threw the error.
 * Hints on how to fix things: expected class of input vs actual class.
 
@@ -303,7 +308,7 @@ What we've accomplished:
 * We've written our first function.
 * We are checking the validity of its input, argument `x`.
 * We've done a good amount of informal testing.
-  
+
 Where to next? In [part 2](#functions-part2) we generalize this function to take differences in other quantiles and learn how to set default values for arguments.
 
 ## Where were we? Where are we going?
@@ -338,7 +343,7 @@ The max and the min are special cases of a __quantile__. Here are other special 
 * median = 0.5 quantile
 * 1st quartile = 0.25 quantile
 * 3rd quartile = 0.75 quantile
-  
+
 If you're familiar with [box plots][wiki-boxplot], the rectangle typically runs from the 1st quartile to the 3rd quartile, with a line at the median.
 
 If $q$ is the $p$-th quantile of a set of $n$ observations, what does that mean? Approximately $pn$ of the observations are less than $q$ and $(1 - p)n$ are greater than $q$. Yeah, you need to worry about rounding to an integer and less/greater than or equal to, but these details aren't critical here.
@@ -477,7 +482,7 @@ What we've accomplished:
 
 * We've generalized our first function to take a difference between arbitrary quantiles.
 * We've specified default values for the probabilities that set the quantiles.
-  
+
 Where to next? Next, we tackle `NA`s, the special `...` argument, and formal unit testing.
 
 ## Where were we? Where are we going?
@@ -642,7 +647,7 @@ Now we use that knowledge to write another useful function, within the context o
 
 * Input: a data.frame that contains (at least) a life expectancy variable `lifeExp` and a variable for year `year`
 * Output: a vector of estimated intercept and slope, from a linear regression of `lifeExp` on `year`
-  
+
 The ultimate goal is to apply this function to the Gapminder data for a specific country. We will eventually scale up to *all* countries using external machinery, e.g., the `dplyr::group_by()` + `dplyr::do()`.
 
 ## Load the Gapminder data
@@ -657,12 +662,12 @@ library(dplyr)
 
 ## Get data to practice with
 
-I extract the data for one country in order to develop some working code interactively.
+I've extract the data for one country in order to develop some working code interactively.
 
 ```{r}
 j_country <- "France" # pick, but do not hard wire, an example
 (j_dat <- gapminder %>%
-  filter(country == j_country))
+   filter(country == j_country))
 ```
 
 Always always always plot the data. Yes, even now.
