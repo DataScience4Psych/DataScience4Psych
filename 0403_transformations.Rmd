@@ -29,35 +29,76 @@ We'll be using data from @fox2016applied. You may need to download the data manu
 #if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
 # devtools::install_github("gmonette/spida2")
 ```
-```{r}
-if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
+```{r,message=FALSE}
+#if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
 library(p3d)
 library(car)
 library(latticeExtra)
-library(ggthemes)
+library(gridExtra)
 # read data
 un <- read.table("data/UnitedNations.txt", header = TRUE)%>%
   mutate(country = rownames(.)) # Assigning country names
 ```
 
-Let's visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You've likely used a log-transformation before, but we'll be exploring larger and more general family of transformations.
+Let's visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You've likely used a log-transformation before, but we'll be exploring the more general family of transformations.
 
-```{r,warning=FALSE}
-ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
+```{r,warning=FALSE,echo=FALSE , fig.width=6}
+
+
+# First plot
+p1 <- ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
   geom_point(color = "steelblue") +
-  labs(title = "Infant Mortality vs. GDP per Capita",
+  labs(title = "Infant Mortality",
+       subtitle ="vs. GDP per Capita",
        x = "GDP per Capita", y = "Infant Mortality") +
-  theme_bw()
+  geom_smooth(method = "lm",
+            color = "red", se = FALSE) +
+  theme_bw() + coord_cartesian(ylim=c(0, 250) )
 
-ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
+# Second plot
+p2 <- ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
   geom_point(color = "steelblue") +
-  labs(title = "Log-Transformed Infant Mortality vs. GDP per Capita",
+  labs(title = "Log-Transformed Infant Mortality",
+       subtitle ="vs. GDP per Capita",
        x = "Log(GDP per Capita)", y = "Log(Infant Mortality)") +
-  theme_bw()
+  theme_bw()  + geom_smooth(method = "lm",
+            color = "red", se = FALSE) +
+  theme_bw() + coord_cartesian(ylim=c(0, log(250)) )
+
+# Arrange the plots side by side
+grid.arrange(p1, p2, ncol = 2)
+
 ```
 
+It's clear that the log-transformation has straightened out the data, allowing us to fit a more useful regression line. However, we're not limited to just a log transformation. We can use an entire family of transformations to modify our data. This family of transformations is called Tukey's Ladder of Powers.
+
 John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions  and the shape of relationships between variables. 
-The basic idea stems from the fact that functions of the form $y' = y^p, \quad y > 0$ have a graph that is concave up if $p >1$, and concave down if $0<p<1$ (or $p < 0$).  We can use this information to modify the shape of a distribution or the shape of a relationship between variables by using a power transformation ( $p$) on our data. This family of transformations is called Tukey's Ladder of Powers.
+The basic idea stems from the fact that functions of the form $y' = y^p, \quad y > 0$ have a graph that is concave up if $p >1$, and concave down if $0<p<1$ (or $p < 0$).  
+
+
+```{r, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
+# Create a data frame for plotting
+x_vals <- seq(-2, 2, by = 0.1)
+df <- expand.grid(x = x_vals, type = c("Concave Up", "Concave Down"))
+df$y <- with(df, ifelse(type == "Concave Up", x^2, -x^2+4))
+
+# Plot
+ggplot(df, aes(x = x, y = y, col = type)) +
+  geom_line() +
+  labs(title = "Illustration of Concave Up and Down",
+       x = "x", y = "y") +
+  theme_minimal() +
+  scale_color_manual(values = c("Concave Up" = "blue", "Concave Down" = "red")) +
+  facet_wrap(~type, scales = "free_y") +theme_bw() +
+  theme(legend.position = "none")
+```
+
+Concave Up ($y= x^2$): This plot shows a parabolic curve opening upwards, illustrating the concept of a concave up graph where the slope of the tangent line increases as $x$ increases.
+
+Concave Down ($y= -x^2$): Conversely, this plot shows a parabolic curve opening downwards, illustrating a concave down graph where the slope of the tangent line decreases as $x$ increases.
+
+
+We can use this information to modify the shape of a distribution or the shape of a relationship between variables by using a power transformation ( $p$) on our data. This family of transformations is called Tukey's Ladder of Powers.
 
 Notably, $p < 0$, $y' = - y^p, \quad y > 0$, is also concave down.
 
@@ -82,8 +123,28 @@ pow <- function(y, p) {
   }
 }
 
+# Testing the transformation with a sequence of x values
+x <- seq(-1, 3, by = .5)
+
+# Applying the transformation for different powers of p
+x_transformed <- tibble(
+  x = x,
+  `p=2` = pow(x, 2),
+  `p=0` = pow(x, 0),
+  `p=-1` = pow(x, -1)
+)
+
+
+# Visualizing the transformed data
+x_transformed_long <- pivot_longer(x_transformed, cols = starts_with("p"), names_to = "Power", values_to = "Transformed")
+
+ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
+  geom_line() +
+  labs(title = "Visualization of Power Transformations", x = "Original x", y = "Transformed x")
+
+
 # test:
-x <- seq(-1, 3, .5)
+x <- seq(-1, 3,by =  .5)
 x # note that these transformations are really intended for y > 0
 pow(x, 2)
 pow(x, 0) %>%
@@ -91,6 +152,7 @@ pow(x, 0) %>%
 pow(x, -1) %>%
   name(x) %>%
   cbind()
+
 plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
 plot(function(x) pow(x, p = .5), xlim = c(0, 3))
@@ -120,6 +182,11 @@ pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
   y <- rep(y, length.out = length(p))
   ifelse(p == 0, log(y), (y^p - 1) / p)
+}
+
+# To apply the function over vectors of y and p, ensuring vectorized operations:
+vectorized_pow <- function(y, p) {
+  map2(y, p, pow)
 }
 # test:
 pow(-1:4, c(2, 0, -1, 1, 3))
