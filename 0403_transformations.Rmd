@@ -1,63 +1,67 @@
-# ODD: Transformations data
+# ODD: Data Transformations and Tukey's Ladder of Powers
 
 ```{r include = FALSE}
 source("common.R")
-
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-This optional deep dive covers data transformations, and Tukey's ladder of powers.
+This optional deep dive covers data transformations, with a special focus on Tukey's Ladder of Powers, an invaluable tool for reshaping data distributions and relationships between variables. Our journey through this topic is inspired by @fox2016applied (ch. 4, pp. 28 - 80)
 
 ## Transforming Data: Tukey's Ladder of Powers
 
+
+John Tukey introduced a methodological toolkit, likened to a set of drill bits of varying sizes, for modifying the shapes of distributions and relationships between variables. This section delves into these transformations, particularly focusing on the mathematical formulations that underpin this approach.
+
 <!-- http://blackwell.math.yorku.ca/math4939/lectures/transforming_data_tukeys_ladder_of_powers.R -->
 
-This material is based on @fox2016applied ch. 4, pp. 28 - 80.
+### Dataset Preparation and Visualization
 
-We will use the following data set(s) from @fox2016applied.
+We'll be using data from @fox2016applied. You may need to download the data manually and save it in the "data" directory within your current working directory. The dataset is available [here](http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt). You can use this r code `download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt"), "data/UnitedNations.txt")` to download the data.
 
-```{r}
-# Download these files manually.
-# Make sure to the directory to the file in which this file was saved
+```{r, echo=FALSE}
+# Manual dataset preparation steps:
+# 1. Download 'UnitedNations.txt' from the specified URL.
+# 2. Save it in the "data" directory within your current working directory.
+# URL for dataset download (uncomment and use as needed):
 # fox_data <- "http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/"
-# download.file(paste0(fox_data,'UnitedNations.txt'),'UnitedNations.txt')
-
+# download.file(paste0(fox_data, "UnitedNations.txt"), "data/UnitedNations.txt")
 #
-if (!require("spida2")) devtools::install_github("gmonette/spida2")
+#if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
+# devtools::install_github("gmonette/spida2")
+```
+```{r}
 if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
-
 library(p3d)
 library(car)
-library(spida2)
 library(latticeExtra)
-
+library(ggthemes)
 # read data
-un <- read.table("data/UnitedNations.txt", header = TRUE)
-head(un)
-un$country <- rownames(un)
+un <- read.table("data/UnitedNations.txt", header = TRUE)%>%
+  mutate(country = rownames(.)) # Assigning country names
 ```
 
-Finding transformations to make regressions behave
+Let's visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You've likely used a log-transformation before, but we'll be exploring larger and more general family of transformations.
 
-```{r}
-gd()
-xyplot(infantMortality ~ GDPperCapita, un)
-xyplot(log(infantMortality) ~ log(GDPperCapita), un)
+```{r,warning=FALSE}
+ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
+  geom_point(color = "steelblue") +
+  labs(title = "Infant Mortality vs. GDP per Capita",
+       x = "GDP per Capita", y = "Infant Mortality") +
+  theme_bw()
+
+ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
+  geom_point(color = "steelblue") +
+  labs(title = "Log-Transformed Infant Mortality vs. GDP per Capita",
+       x = "Log(GDP per Capita)", y = "Log(Infant Mortality)") +
+  theme_bw()
 ```
 
-John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions  and the shape of relationships between variables. The basic idea stems from the fact that functions of the form
+John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions  and the shape of relationships between variables. 
+The basic idea stems from the fact that functions of the form $y' = y^p, \quad y > 0$ have a graph that is concave up if $p >1$, and concave down if $0<p<1$ (or $p < 0$).  We can use this information to modify the shape of a distribution or the shape of a relationship between variables by using a power transformation ( $p$) on our data. This family of transformations is called Tukey's Ladder of Powers.
 
-$$y' = y^p, \quad y > 0$$
+Notably, $p < 0$, $y' = - y^p, \quad y > 0$, is also concave down.
 
-have a graph that is concave up if $p >1$, and concave down if $0<p<1$.
-
-For $p < 0$,
-
-$$y' = - y^p, \quad y > 0$$
-
-The graph is also concave down.
-
-This graph leaves out $p=0$ but we will see shortly that $y' = \ln y$ is the sensible transformation that corresponds to $p = 0$.
+Now, this graph leaves out $p=0$ but we will see shortly that $y' = \ln y$ is the sensible transformation that corresponds to $p = 0$.
 
 Now, we standardize the family of power transformations so that they have the value 0 when $y = 1$ and so their derivative is equal to 1 when $y=1$.
 
