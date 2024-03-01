@@ -39,31 +39,20 @@ paths_allowed("https://collections.ed.ac.uk/art)")
 
 ## Getting started {.unnumbered}
 
-Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Grab the URL of the repo, and fork your own copy.
+Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Grab the URL of the repo, and make a template for your own copy.
 
-Run the following (but update it for your name and email!) in the Console to configure Git:
 
-```{r git-config, eval=FALSE}
-library(usethis)
-use_git_config(
-  user.name = "Your Name",
-  user.email = "your.email@address.com"
-)
-```
 
 ## R scripts vs. R Markdown documents {.unnumbered}
 
 Today we will be using both R scripts and R Markdown documents:
 
 - `.R`: R scripts are plain text files containing **only** code and brief comments,
-  - We'll use R scripts in the web scraping stage and ultimately save the scraped
-  data as a csv.
+  - We'll use R scripts in the web scraping stage and ultimately save the scraped data as a csv.
 - `.Rmd`: R Markdown documents are plain text files containing.
-  - We'll use an R Markdown document in the web analysis stage, where we start
-  off by reading in the csv file we wrote out in the scraping stage.
+  - We'll use an R Markdown document in the web analysis stage, where we start off by reading in the csv file we wrote out in the scraping stage.
   
-Here is the organization of your repo, and the corresponding section in the
-lab that each file will be used for:
+Here is the organization of your repo, and the corresponding section in the lab that each file will be used for:
 
 ```
 |-data
@@ -110,8 +99,7 @@ first_url <- "https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburg
 page <- read_html(first_url)
 ```
 
-For the ten pieces on this page, we will extract `title`, `artist`, and `link`
-information, and put these three variables in a data frame.
+For the ten pieces on this page, we will extract `title`, `artist`, and `link` information, and put these three variables in a data frame.
 
 ### Titles
 
@@ -309,7 +297,7 @@ map_dfr(urls, scrape_page)
 ## Analysis {.unnumbered}
 
 <div class="box">
-Work in `lab-07-uoe-art.Rmd` for the rest of the lab.
+Work in `lab-08-uoe-art.Rmd` for the rest of the lab.
 </div>
 
 Now that we have a tidy dataset that we can analyze, let's do that!
@@ -326,22 +314,25 @@ Once we have completed separating the single `title` column into `title` and `da
 
 > **Hint:** Remember escaping special characters from that video? Which video... oh you know the one. You'll need to use that trick again.
 
-10. Fill in the blanks in to implement the data wrangling we described above. Note that this approach will result in some warnings when you run the code, and that's OK! Read the warnings, and explain what they mean, and why we are ok with leaving them in given that our objective is to just capture `year` where it's convenient to do so.
+10. Fill in the blanks to implement the data wrangling we described above. Note that this approach will result in some warnings when you run the code, and that's OK! Read the warnings, and explain what they mean, and why we are ok with leaving them in given that our objective is to just capture `year` where it's convenient to do so.
 
 11. Print out a summary of the data frame using the `skim()` function. How many pieces have artist info missing? How many have year info missing?
 
-12. Make a histogram of years. Use a reasonable binwidth. Do you see anything out of the ordinary?
+12. Make a histogram of years. Use a reasonable bin width. Do you see anything out of the ordinary?
+
+13. Find which piece has the out-of-the-ordinary year and go to its page on the art collection website to find the correct year for it. Can you tell why our code didn't capture the correct year information? Correct the error in the data frame and visualize the data again.
 
 > **Hint:** You'll want to use `mutate()` and `if_else()` or `case_when()` to
 implement the correction.
 
-13. Find which piece has the out of the ordinary year and go to its page on the art collection website to find the correct year for it. Can you tell why our code didn't capture the correct year information? Correct the error in the data frame and visualize the data again.
 
 14. Who is the most commonly featured artist in the collection? Do you know them? Any guess as to why the university has so many pieces from them?
 
-> **Hint:** You'll want to use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
-
 15. Final question! How many art pieces have the word "child" in their title? See if you can figure it out, and ask for help if not.
+
+> **Hint:** yOU can use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
+
+
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
