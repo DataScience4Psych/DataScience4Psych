@@ -39,31 +39,19 @@ paths_allowed("https://collections.ed.ac.uk/art)")
 
 ## Getting started {.unnumbered}
 
-Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Grab the URL of the repo, and fork your own copy.
+Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Grab the URL of the repo, and make a template for your own copy.
 
-Run the following (but update it for your name and email!) in the Console to configure Git:
-
-```{r git-config, eval=FALSE}
-library(usethis)
-use_git_config(
-  user.name = "Your Name",
-  user.email = "your.email@address.com"
-)
-```
 
 ## R scripts vs. R Markdown documents {.unnumbered}
 
 Today we will be using both R scripts and R Markdown documents:
 
 - `.R`: R scripts are plain text files containing **only** code and brief comments,
-  - We'll use R scripts in the web scraping stage and ultimately save the scraped
-  data as a csv.
+  - We'll use R scripts in the web scraping stage and ultimately save the scraped data as a csv.
 - `.Rmd`: R Markdown documents are plain text files containing.
-  - We'll use an R Markdown document in the web analysis stage, where we start
-  off by reading in the csv file we wrote out in the scraping stage.
+  - We'll use an R Markdown document in the web analysis stage, where we start off by reading in the csv file we wrote out in the scraping stage.
   
-Here is the organization of your repo, and the corresponding section in the
-lab that each file will be used for:
+Here is the organization of your repo, and the corresponding section in the lab that each file will be used for:
 
 ```
 |-data
@@ -110,8 +98,7 @@ first_url <- "https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburg
 page <- read_html(first_url)
 ```
 
-For the ten pieces on this page, we will extract `title`, `artist`, and `link`
-information, and put these three variables in a data frame.
+For the ten pieces on this page, we will extract `title`, `artist`, and `link` information, and put these three variables in a data frame.
 
 ### Titles
 
@@ -139,7 +126,7 @@ page %>%
 And get rid of all the spurious whitespace in the text with `str_squish()`:
 
 ```{marginfigure}
-Take a look at the help docs for `str_squish()` (with `?str_squish`) to 
+Take a look at the help docs for `str_squish()` (with `?str_squish`) to
 ```
 
 ```{r}
@@ -185,14 +172,11 @@ page %>%
   html_attr("href") # but get href attribute instead of text
 ```
 
-These don't really look like urls as we know them though. They're relative
-links.
+These don't really look like urls as we know them though. They're relative links.
 
 > Note: See the help for `str_replace()` to find out how it works. Remember that the first argument is passed in from the pipeline, so you just need to define the `pattern` and `replacement` arguments.
 
-1. Click on one of art piece titles in your browser and take note of the url
-of the webpage it takes you to. How does that url compare to what we scraped
-above? How is it different? Using `str_replace()`, fix the URLs.
+1. Click on one of art piece titles in your browser and take note of the URL of the webpage it takes you to. How does that URL compare to what we scraped above? How is it different? Using `str_replace()`, fix the URLs.
 
 ### Artists {.unnumbered}
 
@@ -204,14 +188,10 @@ above? How is it different? Using `str_replace()`, fix the URLs.
 
 ### Scrape the next page {.unnumbered}
 
-4. Click on the next page, and grab its url. Fill in the blank in
-to define a new object: `second_url`. Copy-paste code from top of the R script
-to scrape the new set of art pieces, and save the resulting data frame as
-`second_ten`.
+4. Click on the next page, and grab its url. Fill in the blank in to define a new object: `second_url`. Copy-paste code from top of the R script to scrape the new set of art pieces, and save the resulting data frame as `second_ten`.
 
 ## Functions {.unnumbered}
 
-> **Mason Comment:** I know that I haven't taught you explicitly how to write functions yet. But, you have learned enough from me (and wise Prof. Google) to teach yourself how to do it. Don't worry -- I'll be covering how to write functions explicitly in the next module. (Try it on your own first, and then take a sneek peak ahead if you want some reassurance that you're doing it "right". I believe in you!
 
 <div class="box">
 Work in `scripts/02-scrape-page-function.R`.
@@ -270,9 +250,7 @@ scrape_page(second_url)
 Work in `scripts/03-scrape-page-many.R`.
 </div>
 
-We went from manually scraping individual pages to writing a function to do
-the same. Next, we will work on making our workflow a little more efficient
-by using R to iterate over all pages that contain information on the art collection.
+We went from manually scraping individual pages to writing a function to do the same. Next, we will work on making our workflow a little more efficient by using R to iterate over all pages that contain information on the art collection.
 
 > **Reminder:** The collection has `r num_pieces` pieces in total, as of the last time this page was compiled.
 
@@ -291,8 +269,7 @@ Click through the first few of the pages in the art collection and observe their
 [sometext]offset=2900  # Pieces 2900-2909
 ```
 
-We can construct these URLs in R by pasting together two pieces: (1) a common
-(`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to 2900. Two new functions are helpful for accomplishing this: `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
+We can construct these URLs in R by pasting together two pieces: (1) a common (`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to 2900. Two new functions are helpful for accomplishing this: `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
 
 7. Fill in the blanks to construct the list of URLs.
 
@@ -319,16 +296,14 @@ map_dfr(urls, scrape_page)
 ## Analysis {.unnumbered}
 
 <div class="box">
-Work in `lab-07-uoe-art.Rmd` for the rest of the lab.
+Work in `lab-08-uoe-art.Rmd` for the rest of the lab.
 </div>
 
 Now that we have a tidy dataset that we can analyze, let's do that!
 
 We'll start with some data cleaning, to clean up the dates that appear at the end of some title text in parentheses. Some of these are years, others are more specific dates, some art pieces have no date information whatsoever, and others have some non-date information in parentheses. This should be interesting to clean up!
 
-First thing we'll try is to separate the `title` column into two: one for the
-actual `title` and the other for the `date` if it exists. In human speak, we
-need to
+First thing we'll try is to separate the `title` column into two: one for the actual `title` and the other for the `date` if it exists. In human speak, we need to
 
 > "separate the `title` column at the first occurence of `(` and put the contents on one side of the `(` into a column called `title` and the contents on the other side into a column called `date`"
 
@@ -338,23 +313,25 @@ Once we have completed separating the single `title` column into `title` and `da
 
 > **Hint:** Remember escaping special characters from that video? Which video... oh you know the one. You'll need to use that trick again.
 
-10. Fill in the blanks in to implement the data wrangling we described above. Note that this approach will result in some warnings when you run the code, and that's OK!
-Read the warnings, and explain what they mean, and why we are ok with leaving them in given that our objective is to just capture `year` where it's convenient to do so.
+10. Fill in the blanks to implement the data wrangling we described above. Note that this approach will result in some warnings when you run the code, and that's OK! Read the warnings, and explain what they mean, and why we are ok with leaving them in given that our objective is to just capture `year` where it's convenient to do so.
 
 11. Print out a summary of the data frame using the `skim()` function. How many pieces have artist info missing? How many have year info missing?
 
-12. Make a histogram of years. Use a reasonable binwidth. Do you see anything out of the ordinary?
+12. Make a histogram of years. Use a reasonable bin width. Do you see anything out of the ordinary?
+
+13. Find which piece has the out-of-the-ordinary year and go to its page on the art collection website to find the correct year for it. Can you tell why our code didn't capture the correct year information? Correct the error in the data frame and visualize the data again.
 
 > **Hint:** You'll want to use `mutate()` and `if_else()` or `case_when()` to
 implement the correction.
 
-13. Find which piece has the out of the ordinary year and go to its page on the art collection website to find the correct year for it. Can you tell why our code didn't capture the correct year information? Correct the error in the data frame and visualize the data again.
 
 14. Who is the most commonly featured artist in the collection? Do you know them? Any guess as to why the university has so many pieces from them?
 
-> **Hint:** You'll want to use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
-
 15. Final question! How many art pieces have the word "child" in their title? See if you can figure it out, and ask for help if not.
+
+> **Hint:** yOU can use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
+
+
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
