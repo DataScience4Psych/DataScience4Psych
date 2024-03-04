@@ -62,7 +62,7 @@ Quickly navigate between recently opened R projects by clicking on the drop-down
     - Notice that the entire file path to CSV of interest ("zms_thesis_metrics.csv") was not specified just `file.path("data", "zms_thesis_metrics.csv")`.
 
     ```{r, eval=FALSE}
-thesis.df <- read.csv(
+df_thesis <- read.csv(
   file.path(
     "data",
     "zms_thesis_metrics.csv"
@@ -70,19 +70,19 @@ thesis.df <- read.csv(
   stringsAsFactors = FALSE
 )
 
-head(thesis.df)
+head(df_thesis)
     ```
 
-6. View `thesis.df` in the Environment panel
+6. View `df_thesis` in the Environment panel
 
     - How many rows and columns does our data frame have?
 
-    - Click on the drop-down menu (the blue circle to the left of `thesis.df`).
+    - Click on the drop-down menu (the blue circle to the left of `df_thesis`).
 
         - Can you identify the column type (e.g., Character, Numeric, Integer, or Factor) of the columns `unique_id`, `substrate_size_d50`, `richness`, and `pct_diptera`?
         - What are the first, second, and third `unique_id`'s represented in the data frame and which `richness` values are associated with each `unique_id`?
 
-    - Click on the button to view the data (the small girdded table to the far-right of `thesis.df`)
+    - Click on the button to view the data (the small girdded table to the far-right of `df_thesis`)
 
         - Filter the data frame to only see data from Onondaga Lake (`lake` = "onon")
 
@@ -704,7 +704,7 @@ You can reformat the date using the `format()` function, as depicted in the imag
 3. Add a code chunk below `libary(tidyverse)` to preprocess lake name (`lake`) associated with each sample.
 
 ```{r prep-lake-example, eval=FALSE}
-thesis.df <- thesis.df %>%
+df_thesis <- df_thesis %>%
   mutate(
     lake = case_when(
       lake %in% "caz" ~ "Cazenovia",
@@ -734,7 +734,7 @@ knitr::opts_chunk$set()
     - Add a caption
 
     ```{r scatter-example, eval=FALSE}
-ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
+ggplot(df_thesis, aes(substrate_size_d50, pct_diptera, color = lake)) +
   geom_point()
     ```
 
@@ -744,7 +744,7 @@ ggplot(thesis.df, aes(substrate_size_d50, pct_diptera, color = lake)) +
     - Add a caption
 
     ```{r boxplot-example, eval=FALSE}
-ggplot(thesis.df, aes(lake, richness, fill = lake)) +
+ggplot(df_thesis, aes(lake, richness, fill = lake)) +
   geom_boxplot()
     ```
 
@@ -789,13 +789,13 @@ I generally use **plotly** in conjunction with **ggplot2**. The **plotly** funct
 ```{r plotly_example, message=FALSE}
 library(plotly)
 
-scatter.plot <- ggplot(iris, aes(
+p_scatter <- ggplot(iris, aes(
   x = Petal.Width, y = Petal.Length,
   color = Species
 )) +
   geom_point()
 
-ggplotly(scatter.plot)
+ggplotly(p_scatter)
 ```
 
 ### Leaflet
@@ -866,7 +866,7 @@ leaflet(
     ```{r dt-example, eval=FALSE}
 library(DT)
 
-datatable(thesis.df, options = list(scrollX = TRUE))
+datatable(df_thesis, options = list(scrollX = TRUE))
     ```
 
 2. Add a code chunk below the "Study Area" header and add the following **leaflet** code
@@ -881,7 +881,7 @@ pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
 )
 
 leaflet(
-  data = thesis.df,
+  data = df_thesis,
   options = leafletOptions(
     minZoom = 7,
     maxZoom = 13
@@ -893,10 +893,10 @@ leaflet(
     fillColor = ~ pal(lake),
     stroke = FALSE,
     popup = paste(
-      "Sample ID:", thesis.df$unique_id, "<br/>",
-      "Lake:", thesis.df$lake, "<br/>",
-      "Latitude:", thesis.df$lat, "<br/>",
-      "Longitude:", thesis.df$long
+      "Sample ID:", df_thesis$unique_id, "<br/>",
+      "Lake:", df_thesis$lake, "<br/>",
+      "Latitude:", df_thesis$lat, "<br/>",
+      "Longitude:", df_thesis$long
     )
   )
     ```
@@ -912,8 +912,8 @@ leaflet(
         ```{r scatter-sub-dip_example, message=FALSE, eval=FALSE}
 library(plotly)
 
-scatter.plot <- ggplot(
-  thesis.df,
+p_scatter <- ggplot(
+  df_thesis,
   aes(
     substrate_size_d50,
     pct_diptera
@@ -922,7 +922,7 @@ scatter.plot <- ggplot(
   geom_point(aes(color = lake)) +
   geom_smooth(method = "lm")
 
-ggplotly(scatter.plot)
+ggplotly(p_scatter)
         ```
 
 # Child Documents
@@ -944,40 +944,40 @@ Imagine you have a parent document that sources child sections which import your
 In this section we establish the file path to the folder that contains all the child documents. The names of the child documents are extracted and stored as a vector. The `grepl()` function is used to retain only the Rmd files stored in the vector.
 
 ```{r, eval=FALSE}
-sections.path <- file.path(
+sections_path <- file.path(
   rprojroot::find_root("r_in_practice.Rproj"),
   "markdown",
   "sections"
 )
-r.files.vec <- list.files(sections.path)
-r.files.vec <- r.files.vec[grepl(".Rmd", r.files.vec)]
+r_files_vec <- list.files(sections_path)
+r_files_vec <- r_files_vec[grepl(".Rmd", r_files_vec)]
 ```
 
-Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a "raw_script/extracted" folder. The `map()` function from the purrr package is used to loop through each file in the vector (r.files.vec). Within the `map()` loop, the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
+Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a "raw_script/extracted" folder. The `map()` function from the purrr package is used to loop through each file in the vector (r_files_vec). Within the `map()` loop, the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
 
 ```{r, eval=FALSE}
-extracted.path <- file.path(
+extracted_path <- file.path(
   rprojroot::find_root("r_in_practice.Rproj"),
   "markdown",
   "raw_scripts",
   "extracted"
 )
 
-purrr::map(r.files.vec, function(file.i) {
+purrr::map(r_files_vec, function(file.i) {
   # print(file.i)
-  file.name <- gsub(".Rmd", "", file.i)
-  extracted.file <- paste0(file.name, ".R")
+  file_name <- gsub(".Rmd", "", file.i)
+  extracted_file <- paste0(file_name, ".R")
   knitr::purl(
-    file.path(sections.path, file.i),
-    file.path(extracted.path, extracted.file)
+    file.path(sections_path, file.i),
+    file.path(extracted_path, extracted_file)
   )
 })
 ```
 
-Finally, create a vector of file names (`source.vec`) stored in the "raw_script/extracted" folder. You will want to type these out manually (do not use `list.files()` functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. `map()` is then used to loop through each specified file in `source.vec`. Keep in mind that the order of the file names specified in `source.vec` will determine the order that these files are executed in the `map()` function; therefore, order the files in `source.vec` from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script.
+Finally, create a vector of file names (`vec_source`) stored in the "raw_script/extracted" folder. You will want to type these out manually (do not use `list.files()` functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. `map()` is then used to loop through each specified file in `vec_source`. Keep in mind that the order of the file names specified in `vec_source` will determine the order that these files are executed in the `map()` function; therefore, order the files in `vec_source` from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script.
 
 ```{r, eval=FALSE}
-source.vec <- c(
+vec_source <- c(
   "introduction.R",
   "quick_reference.R",
   "installation_updates.R",
@@ -985,8 +985,8 @@ source.vec <- c(
   "version_control.R"
 )
 
-purrr::map(source.vec, function(source.i) {
-  source(file.path(extracted.path, source.i))
+purrr::map(vec_source, function(source_i) {
+  source(file.path(extracted_path, source_i))
 })
 ```
 
@@ -1040,10 +1040,10 @@ The parameters can also be used to filter the original data frame to a subset of
 ```{r, eval=FALSE}
 data(iris)
 
-iris.sub <- iris[iris$Species %in% params$species, ]
+iris_sub <- iris[iris$Species %in% params$species, ]
 ```
 
-The parameter can be referenced frequently to update the text in the document or to filter to the data of interest. In the image below, the iris data set will be filtered by the specified parameter to generate `iris.sub`. `iris.sub` will be used to calculate the mean value for each flower characteristic.
+The parameter can be referenced frequently to update the text in the document or to filter to the data of interest. In the image below, the iris data set will be filtered by the specified parameter to generate `iris_sub`. `iris_sub` will be used to calculate the mean value for each flower characteristic.
 
 <center>
 
@@ -1097,18 +1097,18 @@ lapply(unique(iris$Species), function(species.i) {
 2. add `params:` and specify lake as a parameter with Onondaga as the default (`lake: Onondaga`) to the YAML header
 3. Use inline code to have the YAML title update to include the specified parameter (`params$lake`)
 4. In your introductory paragraph, use inline code to specify that this document is specific to X Lake.
-5. Filter `thesis.df` to only represent the specified lake parameter
+5. Filter `df_thesis` to only represent the specified lake parameter
 
 ```{r filter-lake_example, eval=FALSE}
-thesis.df <- thesis.df %>%
+df_thesis <- df_thesis %>%
   filter(lake %in% params$lake)
 ```
 
 5. Update your conclusion section text to specify that the results are from X Lake and use inline code to specify:
 
-    - the minimum relative abundance of Diptera taxa `min(thesis.df$pct_diptera)`
-    - the maximum relative abundance of Diptera taxa `max(thesis.df$pct_diptera)`
-    - the median richness value observed in the lake `median(thesis.df$richness)`
+    - the minimum relative abundance of Diptera taxa `min(df_thesis$pct_diptera)`
+    - the maximum relative abundance of Diptera taxa `max(df_thesis$pct_diptera)`
+    - the median richness value observed in the lake `median(df_thesis$richness)`
 
 6. Render the document using the "Knit with Parameters..." button
 
