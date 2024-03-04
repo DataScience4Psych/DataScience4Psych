@@ -40,7 +40,7 @@ Import Zachary M. Smith's thesis data provided by Zachary M. Smith at the R Mark
 * `pct_diptera` (numeric) relative abundance of Diptera taxa
 * `dom_1` (numeric) relative abundance of the most dominant taxon observed in each sample
 ```{r import-data}
-thesis.df <- read.csv(
+df_thesis <- read.csv(
   file.path(
     here::here(),
     "data",
@@ -58,7 +58,7 @@ library(tidyverse)
 ```
 
 ```{r prep-lake}
-thesis.df <- thesis.df %>%
+df_thesis <- df_thesis %>%
   mutate(
     lake = case_when(
       lake %in% "caz" ~ "Cazenovia",
@@ -75,7 +75,7 @@ thesis.df <- thesis.df %>%
 ```
 
 ```{r filter-lake}
-thesis.df <- thesis.df %>%
+df_thesis <- df_thesis %>%
   filter(lake %in% params$lake)
 ```
 
@@ -83,7 +83,7 @@ For more details about the __DT__ package visit https://rstudio.github.io/DT/.
 ```{r dt}
 library(DT)
 
-datatable(thesis.df, options = list(scrollX = TRUE))
+datatable(df_thesis, options = list(scrollX = TRUE))
 ```
 
 # Study Area
@@ -97,7 +97,7 @@ pal <- colorFactor(c("#619Cff", "#F8766D", "#00BA38"),
 )
 
 leaflet(
-  data = thesis.df,
+  data = df_thesis,
   options = leafletOptions(
     minZoom = 7,
     maxZoom = 13
@@ -109,10 +109,10 @@ leaflet(
     fillColor = ~ pal(lake),
     stroke = FALSE,
     popup = paste(
-      "Sample ID:", thesis.df$unique_id, "<br/>",
-      "Lake:", thesis.df$lake, "<br/>",
-      "Latitude:", thesis.df$lat, "<br/>",
-      "Longitude:", thesis.df$long
+      "Sample ID:", df_thesis$unique_id, "<br/>",
+      "Lake:", df_thesis$lake, "<br/>",
+      "Latitude:", df_thesis$lat, "<br/>",
+      "Longitude:", df_thesis$long
     )
   )
 ```
@@ -125,22 +125,22 @@ For more details about the __plotly__ package visit https://plot.ly/ggplot2/.
 ```{r scatter-sub-dip, message=FALSE}
 library(plotly)
 
-scatter.plot <- ggplot(thesis.df, aes(substrate_size_d50, pct_diptera)) +
+p_scatter<- ggplot(df_thesis, aes(substrate_size_d50, pct_diptera)) +
   geom_point(aes(color = lake)) +
   geom_smooth(method = "lm")
 
-ggplotly(scatter.plot)
+ggplotly(p_scatter)
 ```
 
 ## Boxplot
 
 ```{r boxplot-lake-rich}
-ggplot(thesis.df, aes(lake, richness, fill = lake)) +
+ggplot(df_thesis, aes(lake, richness, fill = lake)) +
   geom_boxplot()
 ```
 
 # Conclusions
 
-1. The relative abundance of Diptera taxa in `r params$lake` Lake ranged from `r min(thesis.df$pct_diptera)` to `r max(thesis.df$pct_diptera)`.
-2. The median taxonomic richness observed in `r params$lake` Lake was `r median(thesis.df$richness)`.
+1. The relative abundance of Diptera taxa in `r params$lake` Lake ranged from `r min(df_thesis$pct_diptera)` to `r max(df_thesis$pct_diptera)`.
+2. The median taxonomic richness observed in `r params$lake` Lake was `r median(df_thesis$richness)`.
 

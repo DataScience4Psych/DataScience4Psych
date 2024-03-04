@@ -1,11 +1,11 @@
 # devtools::install_github("zsmith27/mmir")
 library(mmir)
 
-thesis.df <- read.csv(file.path("data", "zms_thesis.csv"),
+df_thesis <- read.csv(file.path("data", "zms_thesis.csv"),
   stringsAsFactors = FALSE
 )
 
-metrics.df <- thesis.df %>%
+metrics.df <- df_thesis %>%
   dplyr::select(-X) %>%
   dplyr::group_nest(
     unique_id, lake, lat, long,

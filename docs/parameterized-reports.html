@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-02-29" />
+<meta name="date" content="2024-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1421,16 +1421,6 @@ div.csl-indent {
 <li class="chapter" data-level="101.20" data-path="media-without-a-home-yet.html"><a href="media-without-a-home-yet.html#section"><i class="fa fa-check"></i><b>101.20</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="102" data-path="r-commands.html"><a href="r-commands.html"><i class="fa fa-check"></i><b>102</b> R Commands</a></li>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html"><i class="fa fa-check"></i>Public Health</a>
-<ul>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html#crowns-and-tears-a-covid-19-visualization-with-a-music-box-and-punch-cards"><i class="fa fa-check"></i>Crowns and Tears: A Covid-19 visualization with a Music Box and punch cards</a></li>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html#masks"><i class="fa fa-check"></i>Masks</a></li>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html#dashboards"><i class="fa fa-check"></i>Dashboards</a>
-<ul>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html#wake-forest"><i class="fa fa-check"></i>Wake Forest</a></li>
-<li class="chapter" data-level="" data-path="public-health.html"><a href="public-health.html#north-carolina"><i class="fa fa-check"></i>North Carolina</a></li>
-</ul></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><center>
@@ -1478,8 +1468,8 @@ div.csl-indent {
 <p>The parameters can also be used to filter the original data frame to a subset of interest. For example, the iris data frame can be filtered to only include the specified species of interest using the code below.</p>
 <div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="parameterized-reports.html#cb574-1" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
 <span id="cb574-2"><a href="parameterized-reports.html#cb574-2" tabindex="-1"></a></span>
-<span id="cb574-3"><a href="parameterized-reports.html#cb574-3" tabindex="-1"></a>iris.sub <span class="ot">&lt;-</span> iris[iris<span class="sc">$</span>Species <span class="sc">%in%</span> params<span class="sc">$</span>species, ]</span></code></pre></div>
-<p>The parameter can be referenced frequently to update the text in the document or to filter to the data of interest. In the image below, the iris data set will be filtered by the specified parameter to generate <code>iris.sub</code>. <code>iris.sub</code> will be used to calculate the mean value for each flower characteristic.</p>
+<span id="cb574-3"><a href="parameterized-reports.html#cb574-3" tabindex="-1"></a>iris_sub <span class="ot">&lt;-</span> iris[iris<span class="sc">$</span>Species <span class="sc">%in%</span> params<span class="sc">$</span>species, ]</span></code></pre></div>
+<p>The parameter can be referenced frequently to update the text in the document or to filter to the data of interest. In the image below, the iris data set will be filtered by the specified parameter to generate <code>iris_sub</code>. <code>iris_sub</code> will be used to calculate the mean value for each flower characteristic.</p>
 <center>
 <p><img src="img/rmarkdown/param_iris-summary.png" /></p>
 </center>
@@ -1517,16 +1507,16 @@ div.csl-indent {
 <li>add <code>params:</code> and specify lake as a parameter with Onondaga as the default (<code>lake: Onondaga</code>) to the YAML header</li>
 <li>Use inline code to have the YAML title update to include the specified parameter (<code>params$lake</code>)</li>
 <li>In your introductory paragraph, use inline code to specify that this document is specific to X Lake.</li>
-<li>Filter <code>thesis.df</code> to only represent the specified lake parameter</li>
+<li>Filter <code>df_thesis</code> to only represent the specified lake parameter</li>
 </ol>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="parameterized-reports.html#cb577-1" tabindex="-1"></a>thesis.df <span class="ot">&lt;-</span> thesis.df <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="parameterized-reports.html#cb577-1" tabindex="-1"></a>df_thesis <span class="ot">&lt;-</span> df_thesis <span class="sc">%&gt;%</span></span>
 <span id="cb577-2"><a href="parameterized-reports.html#cb577-2" tabindex="-1"></a>  <span class="fu">filter</span>(lake <span class="sc">%in%</span> params<span class="sc">$</span>lake)</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Update your conclusion section text to specify that the results are from X Lake and use inline code to specify:</p>
 <ul>
-<li>the minimum relative abundance of Diptera taxa <code>min(thesis.df$pct_diptera)</code></li>
-<li>the maximum relative abundance of Diptera taxa <code>max(thesis.df$pct_diptera)</code></li>
-<li>the median richness value observed in the lake <code>median(thesis.df$richness)</code></li>
+<li>the minimum relative abundance of Diptera taxa <code>min(df_thesis$pct_diptera)</code></li>
+<li>the maximum relative abundance of Diptera taxa <code>max(df_thesis$pct_diptera)</code></li>
+<li>the median richness value observed in the lake <code>median(df_thesis$richness)</code></li>
 </ul></li>
 <li><p>Render the document using the “Knit with Parameters…” button</p>
 <ul>
