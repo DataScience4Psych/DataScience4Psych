@@ -64,7 +64,7 @@ Part 1: Simulating Our Colonists
 
 Instead of analyzing other people's data, you'll be generating your own.  You will generate basic attributes for 100 potential colonists. These attributes include age, health, and fitness levels, which are critical for survival on Mars.
 
-1. We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill diversity, potential for growth, and the sustainability of the colony.  Age will be simulated using a normal distribution, which is a common method for modeling age in populations.
+1. We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill diversity, potential for growth, and the sustainability of the colony.
 
 <!--
 1. Task 1: Generating Basic Attributes
@@ -85,11 +85,23 @@ sd = 5: The standard deviation, representing age variability around the mean.
 
 Here's the code to generate the age distribution:
 ```{r}
+
 age <- rnorm(100, mean = 30, sd = 5)
-hist(age, main="Histogram of Colonist Ages", xlab="Age", breaks=10, col="darkblue")
 ```
 
-Analyze the histogram of the age distribution that you've generated. How does the distribution of ages reflect the needs of a Mars colony?
+Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the age diversity within our potential Mars colony.
+
+```{r}
+library(ggplot2)
+ggplot(data = data.frame(age), aes(x = age)) +
+  geom_histogram(breaks = seq(from = 5*floor(min(age)/5), to = max(age) + 5, by = 5), fill = "darkblue", color = "black") +
+  labs(title = "Histogram of Colonist Ages", x = "Age", y = "Frequency") +
+  theme_minimal()
+```
+
+Analyze the histogram of the age distribution that you've generated. How does the distribution of ages reflect the needs of a Mars colony? Given this distribution how unusual would it be to have a colonist who was `r round(as.numeric(difftime(Sys.Date(), as.Date("1971-06-28"), units = "days")) / 365.25, digits = 1)` years old?
+
+This histogram allows us to visually assess the spread and central tendency of ages within our group of colonists. With a mean age of 30 and a standard deviation of 5, we expect most colonists to be in their late twenties to early thirties, which is ideal for the physical demands of establishing a new colony.
 
 
 1. Task 2: Skill Correlations
