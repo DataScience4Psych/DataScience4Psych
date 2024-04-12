@@ -6,13 +6,13 @@ library(tidyverse)
 library(rafalib)
 ```
 
-# Plots Behaving Badly
+# Plots Behaving Badly: Lessons in Data Misrepresentation
 
-This section is based on a talk by Karl W. Broman titled "How to Display Data Badly," in which he described how the default plots offered by Microsoft Excel "obscure your data and annoy your readers". His lecture was inspired by (Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147)[https://www.jstor.org/stable/2683253]. Howard was the first to elucidate the principles of the bad display of data. But according to [Karl](https://github.com/kbroman/Talk_Graphs/blob/master/plots_to_avoid.Rmd) "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
+This section explores common pitfalls in data visualization, inspired by Karl W. Broman's talk on how default plotting choices, like those in Microsoft Excel, can "obscure your data and annoy your readers". We'll examine how to intentionally create bad plots to understand good design practices better. Broman's lecture was inspired by (Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147)[https://www.jstor.org/stable/2683253]. Wainer was the first to set forth the principles of the bad display of data. But according to [Karl](https://github.com/kbroman/Talk_Graphs/blob/master/plots_to_avoid.Rmd) "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
+
+
 
 ## General Principles
-
-General principles
 
 The aims of good data graphics is to display data accurately and clearly. Some rules for displaying data badly:
 
@@ -23,45 +23,36 @@ The aims of good data graphics is to display data accurately and clearly. Some r
 * Use a poorly chosen scale.
 * Ignore significant figures.
 
-### Piecharts
+### The Problem with Pie Charts
 
-```{r,include=FALSE}
-browsers <- c(
-  Opera = 1,
-  Safari = 9,
-  Firefox = 20,
-  IE = 26,
-  Chrome = 44
-)
+Pie charts are criticized for their inefficiency in conveying information. They do not allow easy comparison of sections as humans are better at comparing lengths, not areas. Here's an example using browser usage data from an August 2013 poll:
+
+#### Displaying Browser Usage Data with a Pie Chart
+
+Consider a poll asking about browser preferences collected in August 2013. The typical display method would be a pie chart:
+
+```{r pie-chart-display, fig.align='center', fig.width=4}
+browsers <- c(Opera = 1, Safari = 9, Firefox = 20, IE = 26, Chrome = 44)
+pie(browsers, main = "Browser Usage (August 2013)")
 ```
 
-Say we want the report the results from a poll asking about browser preference (taken in August 2013). The standard way of displaying these is with a piechart:
+#### Why Pie Charts Fail
 
-```{r, fig.align='center', fig.width=4}
-pie(browsers,
-  main = "Browser Usage (August 2013)"
-)
-```
+The `pie` function's help file itself warns against using pie charts for presentation:
 
-But as stated by the help file for the `pie` function:
 
 > Pie charts are a very bad way of displaying information. The eye is good at judging linear measures and bad at judging relative areas. A bar chart or dot chart is a preferable way of displaying this type of data.
 
-To see this, look at the figure above an try to determine the percentages just from looking at the plot. Simply showing the numbers is not only clear but it saves on printing costs.
+To test this, try determining the exact market shares of the browsers from the pie chart above. It's challenging to assess precise proportions just by looking at the angles and areas.
 
-```{r}
-browsers
-```
+#### A Better Alternative: Bar Charts
 
-If you do want to plot them, then a barplot is appropriate:
+If we need to visualize this data more effectively, a bar chart is more appropriate:
 
 ```{r, fig.align='center', fig.width=4.5}
-barplot(browsers,
-  main = "Browser Usage (August 2013)"
-)
+barplot(browsers, main = "Browser Usage (August 2013)")
 ```
-
-Note that we can now pretty easily determine the percentages by following a horizontal line to the x-axis. Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.
+The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.)
 
 ```{r echo=FALSE, eval=TRUE,fig.align='center'}
 knitr::include_graphics("img/fig2b.png")
@@ -398,7 +389,7 @@ boxplot(before,
 )
 ```
 
-## Gratuitous  3D
+## Gratuitous 3D
 
 The follow figure shows three curves. Pseudo 3D is used but it is not clear way. Maybe to separate the three curves? Note how difficult it is to determine the values of the curves at any given point:
 
