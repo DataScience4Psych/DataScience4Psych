@@ -1,10 +1,8 @@
-# Notes on Simulations
+# Getting Started with Data Simulations in R {#data_simulations}
 
-```{r include = FALSE}
+
+```{r setup, include = FALSE}
 source("common.R")
-```
-
-```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidymodels)
 library(DT)
@@ -12,60 +10,82 @@ library(emo)
 library(openintro)
 ```
 
-## Getting started with simulating data in R
+This module introduces the basics of data simulation using R.  Although we won't cover every aspect of data simulation in this module, we'll delve into some of the core functions. Drawing inspiration from [Ariel Muldoon](https://github.com/aosmith16)'s [tutorial](https://github.com/aosmith16/simulation-helper-functions) on simulation helper functions, this module introduces practical methods for creating simulated datasets.
 
-> I adapted [this tutorial](https://github.com/aosmith16/simulation-helper-functions) from [Ariel Muldoon](https://github.com/aosmith16)
+Our focus will be on functions from the base R package, which is included with every installation of R.  These functions are easy to use and are great for getting started with simulations. We will cover various approaches to generating both quantitative and categorical variables, enhancing your data science toolkit.
 
-Simulating data in R can be really helpful, and in this module I'll show you some easy-to-use R functions to get started. These functions are all from base R packages, so you might already know some of these functions.  Let's dive in!
 
-This module covers the following learning goals:
 
-1. We'll learn how to create simulated quantitative variables (like numbers) using `rnorm()`, `runif()`, and `rpois()`.
 
-2. Next, we'll learn how to generate character variables (like group names) using `rep()`. We'll also explore different ways to repeat patterns.
+## Learning goals
 
-3. After that, we'll put it all together and learn how to create data with both quantitative and categorical variables.
+1. To create simulated quantitative variables using functions such as `rnorm()`, `runif()`, and `rpois()`.
+2. To generate categorical variables like group names using `rep()`, and explore various methods to replicate patterns.
+3. To integrate the creation of datasets that include both quantitative and categorical variables.
+4. To use `replicate()` to perform the data simulation process multiple times.
 
-4. Finally, we'll use `replicate()` to repeat the data simulation process multiple times.
+## Generating Random Variables
 
-### Generating random numbers
+### Generating Random Numbers
 
-One way to generate numeric data is to pull random numbers from some distribution. We can do this by using "random deviate" functions in R. These functions always start with the letter "r" to indicate that they generate random numbers.
+One method for generating numeric data in R involves using the "random deviate" functions to pull random numbers from statistical distributions. These functions, which all begin with the letter 'r', are designed to generate random numbers from specific statistical distributions. The letter "r" to indicate that they generate random numbers (e.g., `rnorm()` for the normal distribution). Here are some of the most commonly used random deviate functions in R:
+- **Normal Distribution** (`rnorm()`): Used for generating data that follows a Gaussian distribution.
+- **Uniform Distribution** (`runif()`): Ideal for creating evenly distributed numbers over a specified range.
+- **Poisson Distribution** (`rpois()`): Useful for modeling count-based data, such as the number of events happening within a fixed period
 
-The most commonly used distributions for generating random numbers are the normal  (`rnorm()`), uniform (`runif()`), and Poisson (`rpois()`) distributions. We'll take a closer look at these distributions and how they can be used to generate random numbers.
+These functions are part of the core **stats** package, which also includes tools for generating data from binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages.
 
-Additionally, many other distributions are available as part of the **stats**  package, such as the binomial, F, log normal, beta, exponential, and Gamma distributions. And even more distributions are available in add-on packages. For example, if you needed to generate data from the Tweedie distribution, you can do that using the **tweedie** package.  
+The `r` functions for a chosen distribution all work similarly. The syntax for these functions typically requires specifying the number of random numbers to generate (`n`) and defining the parameters for the distribution you want to draw from. 
 
-The `r` functions for a chosen distribution all work similarly. You define how many random numbers you want to generate in the first argument (`n`) and then define the parameters for the distribution you want to draw from. This is easier to understand with practice, so let's get started!
-
-### `rnorm()` to generate random numbers from the normal distribution
-
-I use `rnorm()` a lot, sometimes with good reason and other times when I need some numbers and I really don't care too much about what they are.
-
-There are three arguments to `rnorm()`.  From the `Usage` section of the documentation:
-
-> rnorm(n, mean = 0, sd = 1)
-The `n` argument is the number of observations we want to generate.  The `mean` and `sd` arguments show what the default values are (note that `sd` is the *standard deviation*, not the variance).  Not all `r` functions have defaults to the arguments like this.
-
-To get 5 random numbers from a $Normal(0, 1)$ (aka the *standard* normal) distribution we can write code like:
+For example, to generate random values from these distributions, you would use:
 
 ```{r}
-rnorm(5)
+# Generating five random normal values
+rnorm(5, mean = 0, sd = 1)
+
+# Generating five uniform values between 0 and 1
+runif(5, min = 0, max = 1)
+
+# Generating five Poisson-distributed values with a mean of 3
+rpois(5, lambda = 3)
 ```
 
-I want to discuss a couple things about this code and the output.
+### Deep Dive into the Normal Distribution (`rnorm()`)
 
-First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code).  Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from.
+`rnorm()` is frequently used in statistical simulations to generate random numbers that follow a normal (Gaussian) distribution. Here's how you can utilize it:
 
-#### Writing out arguments for clearer code
+#### Basic Usage of `rnorm()`
 
-Here's more readable code to do the same thing. It is more readable because I have written out the mean and standard deviation arguments explicitly even though I'm using the default values.  It is certainly not necessary to always be this careful, but I don't think I've run into a time when it was bad to have clear code.
+The function `rnorm()` requires three main arguments:
+
+- n: the number of observations to generate.
+- mean: the mean of the normal distribution.
+- sd: the standard deviation of the distribution. (note that `sd` is the *standard deviation*, not the variance)
+
+Using these, generating five random numbers from a $Normal(0, 1)$ (aka the *standard* normal) standard distribution can be performed as follows:
+
+```{r}
+rnorm(5) # This uses the default values for mean and sd
+```
+### Writing Out Arguments Explicitly
+
+Let's talk about this code and it's output. 
+
+First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from. When future me revisits this code, she will have to remember what the defaults are. Is that a realistic request? Maybe, but future me has to remember a lot of things, so as a kindness to her, its worthwhile to make those arguments explicit. That way future me does not have to remember what the defaults are and she can quickly work her way through the code. 
+
+In other words, specify the arguments explicitly, even if you are using default values. This practice makes your code self-documenting, meaning that anyone reading it can understand at a glance which distribution the data comes from, without needing to remember the default settings of the function.
+
+Here's a more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:
 
 ```{r}
 rnorm(n = 5, 
       mean = 0, 
       sd = 1)
 ```
+
+When I'm writing code for a project that I know will be shared with others, I always (try to) write out the arguments. When I'm writing code for myself, I'm more likely to use the defaults. It's a balance between being kind to future me and being efficient in the moment.
+
+
 
 #### Setting the random seed for reproducible random numbers
 
@@ -622,8 +642,7 @@ simlist[[1]]
 
 I'm ending here, but there's still more to learn about simulations.  For a simulation to explore long-run behavior, some process is going to be repeated many times.  We did this via `replicate()`.  The next step would be to extract whatever results are of interest.  This latter process is often going to involve some sort of looping.  
 
-By saving our generated variables or data.frames into a list we've made it so we can loop via list looping functions like `lapply()` or `purrr::map()`.  The family of *map* functions are newer and have a lot of convenient output types that make them pretty useful.  If you want to see how that might look for a simulations, you can see a few examples in my blog post [A closer look at replicate() and purrr::map() for simulations](https://aosmith.rbind.io/2018/06/05/a-closer-look-at-replicate-and-purrr/).
-
+By saving our generated variables or data.frames into a list we've made it so we can loop via list looping functions like `lapply()` or `purrr::map()`.  The family of *map* functions are newer and have a lot of convenient output types that make them pretty useful.  
 Happy simulating!
 
 ```{r links, child="admin/md/courselinks.md"}
