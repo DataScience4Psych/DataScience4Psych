@@ -19,19 +19,19 @@ Our focus will be on functions from the base R package, which is included with e
 
 ## Learning goals
 
-1. To create simulated quantitative variables using functions such as `rnorm()`, `runif()`, and `rpois()`.
+1. To generate quantitative variables using functions such as `rnorm()`, `runif()`, and `rpois()`.
 2. To generate categorical variables like group names using `rep()`, and explore various methods to replicate patterns.
 3. To integrate the creation of datasets that include both quantitative and categorical variables.
 4. To use `replicate()` to perform the data simulation process multiple times.
 
-## Generating Random Variables
+## Generating Variables
 
 ### Generating Random Numbers
 
 One method for generating numeric data in R involves using the "random deviate" functions to pull random numbers from statistical distributions. These functions, which all begin with the letter 'r', are designed to generate random numbers from specific statistical distributions. The letter "r" to indicate that they generate random numbers (e.g., `rnorm()` for the normal distribution). Here are some of the most commonly used random deviate functions in R:
 - **Normal Distribution** (`rnorm()`): Used for generating data that follows a Gaussian distribution.
 - **Uniform Distribution** (`runif()`): Ideal for creating evenly distributed numbers over a specified range.
-- **Poisson Distribution** (`rpois()`): Useful for modeling count-based data, such as the number of events happening within a fixed period
+- **Poisson Distribution** (`rpois()`): Useful for modeling count-based data, such as the number of events happening within a fixed period.
 
 These functions are part of the core **stats** package, which also includes tools for generating data from binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages.
 
@@ -52,21 +52,18 @@ rpois(5, lambda = 3)
 
 ### Deep Dive into the Normal Distribution (`rnorm()`)
 
-`rnorm()` is frequently used in statistical simulations to generate random numbers that follow a normal (Gaussian) distribution. Here's how you can utilize it:
+`rnorm()` is frequently used in statistical simulations to generate random numbers that follow a normal (Gaussian) distribution. The function `rnorm()` requires three main arguments:
 
-#### Basic Usage of `rnorm()`
-
-The function `rnorm()` requires three main arguments:
-
-- n: the number of observations to generate.
-- mean: the mean of the normal distribution.
-- sd: the standard deviation of the distribution. (note that `sd` is the *standard deviation*, not the variance)
+- `n`: the number of observations to generate.
+- `mean`: the mean of the normal distribution.
+- `sd`: the standard deviation of the distribution. (note that `sd` is the *standard deviation*, not the variance)
 
 Using these, generating five random numbers from a $Normal(0, 1)$ (aka the *standard* normal) standard distribution can be performed as follows:
 
 ```{r}
 rnorm(5) # This uses the default values for mean and sd
 ```
+
 ### Writing Out Arguments Explicitly
 
 Let's talk about this code and it's output. 
@@ -86,10 +83,9 @@ rnorm(n = 5,
 When I'm writing code for a project that I know will be shared with others, I always (try to) write out the arguments. When I'm writing code for myself, I'm more likely to use the defaults. It's a balance between being kind to future me and being efficient in the moment.
 
 
-
 #### Setting the random seed for reproducible random numbers
 
-Second, if we run this code again we'll get different numbers.  To get reproducible random numbers we need to *set the seed* via `set.seed()`.
+Second, if we run this code again we'll get different numbers. To get reproducible random numbers we need to *set the seed* via `set.seed()`.
 
 Making sure someone else will be able to exactly reproduce your results when running the same code can be desirable in teaching.  It is also is useful when making an example data set to demonstrate a coding issue, like if you were asking a code question on Stack Overflow.
 
@@ -160,6 +156,7 @@ Things are different for the `n` argument.  If a vector is passed to `n`, the *l
 Here's an example. Since the vector for `n` is length 3, we only get 3 values.
 
 ```{r}
+
 rnorm(n = c(2, 10, 10), 
       mean = c(0, 5, 20), 
       sd = c(1, 5, 20) )
@@ -167,7 +164,7 @@ rnorm(n = c(2, 10, 10),
 
 ### Example of using the simulated numbers from `rnorm()`
 
-Up to this point we've printed the results of each simulation. In reality we'd want to save our vectors as objects in R to use them for some further task.  
+Up to this point we've printed the results of each simulation. In reality, we'd want to save our vectors as objects in R to use them for some further task.  
 
 For example, maybe we want to simulate two unrelated variables and then look to see how correlated they appear to be.  This can be a fun exercise to demonstrate how variables can appear to be related by chance even when we know they are not, especially at small sample sizes.
 
@@ -185,18 +182,11 @@ y <- rnorm(n = 10,
 df_demo <- data.frame(var1=x,
                       var2=y)
 
-plot(y ~ x)
-
-```
-
-```{r,echo=FALSE}
-
 ggplot(
   data = df_demo,
   aes(x = var1,
       y = var2)) +
-  geom_point()
-
+  geom_point(color="#56B4E9",size=7) + theme_bw() + labs(title="Scatterplot of Two Random Variables")
 
 ```
 
@@ -209,6 +199,7 @@ I've started using `runif()` pretty regularly, especially when I want to easily 
 From `Usage` we can see that by default we pull random numbers between 0 and 1.  The first argument, as with all of these `r` functions, is the number of deviates we want to randomly generate:
 
 > runif(n, min = 0, max = 1)
+
 Let's generate 5 numbers between 0 and 1.
 
 ```{r}
@@ -289,7 +280,11 @@ summary(y)
 There is mild right-skew when we draw a histogram of the values.
 
 ```{r}
-hist(y)
+palette_OkabeIto <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
+df_demo <- data.frame(y)
+ggplot(df_demo, aes(x=y)) + geom_histogram(binwidth=1,color="black", fill="#E69F00") +
+  labs(title="Poisson distribution with a mean of 5",x= "Value", y = "Count") + theme_bw()
+
 ```
 
 Let's do the same thing for a Poisson distribution with a mean of 100.  The range of values is pretty narrow; there are no values even remotely close to 0.
@@ -299,25 +294,29 @@ y <- rpois(100, lambda = 100)
 summary(y)
 ```
 
-And the distribution is pretty symmetric compared to the distribution with the smaller mean.
+The distribution is pretty symmetric compared to the distribution with the smaller mean.
 
 ```{r}
-hist(y)
+
+df_demo <- data.frame(y)
+ggplot(df_demo, aes(x=y)) + geom_histogram(binwidth=5,color="black",fill= "#CC79A7") +
+  labs(title="Poisson distribution with a mean of 100",x= "Value", y = "Count") + theme_bw()
+
 ```
 
 An alternative to the Poisson distribution for discrete integers is the negative binomial distribution.  Packages **MASS** has a function called `rnegbin()` for random number generation from the negative binomial distribution.
 
 ## Generate character vectors with `rep()`
 
-Quantitative variables are great, but in simulations we're often going to need categorical variables, as well.  
+Quantitative variables are great, but in simulations we're often going to need categorical variables, as well. Categorical variables are useful for simulations that involve groups or treatments.
 
-In my own work these are usually sort of "grouping" or "treatment" variable.  This means I need to have repeated observations of each character value.  The `rep()` function is one way to avoid having to write out an entire vector manually.  It's for *replicating elements of vectors and lists*.
+The `rep()` function in R simplifies the creation of these kinds of variables by *replicating elements of vectors or lists*. This functionality is particularly useful for avoiding having to write out an entire vector manually. This makes it easier to construct large datasets. 
 
 ### Using `letters` and `LETTERS`
 
 The first argument of `rep()` is the vector to be repeated.  One option is to write out the character vector you want to repeat.  You can also get a simple character vector through the use of `letters` or `LETTERS`.  These are *built in constants* in R.  `letters` is the 26 lowercase letters of the Roman alphabet and `LETTERS` is the 26 uppercase letters.
 
-Letters can be pulled out via the extract brackets (`[`).  I use these built-in constants for pure convenience when I need to make a basic categorical vector and it doesn't matter what form those categories take.  I find it more straightforward to type out the word and brackets than a vector of characters (complete with all those pesky quotes and such).
+Letters can be pulled out via the extract brackets (`[`).  These built-in constants are convenient for when I need to make a basic categorical vector and it doesn't matter what form those categories take.  I find it more straightforward to type out the word and brackets than a vector of characters (complete with all those pesky quotes and such).
 
 Here are the first two `letters`.
 
@@ -339,7 +338,7 @@ With `each` we repeat each unique character in the vector the defined number of 
 
 Let's repeat two characters three times each.  The resulting vector is 6 observations long.  
 
-This is an example of how I might make a grouping variable for simulating data to be used in a two-sample analysis.  
+This is an example of how you can quickly make a grouping variable for simulating data to be used in a two-sample analysis.  
 
 ```{r}
 rep(letters[1:2], each = 3)
@@ -407,11 +406,13 @@ We now have some tools for creating quantitative data as well as categorical.  W
 
 ### Simulate data with no differences among two groups
 
-Let's start by simulating data that we would use in a simple two-sample analysis with no difference between groups.  We'll make a total of 6 observations, three in each group.
+Let's start by simulating data for a simple two-sample analysis with no difference between the groups. We'll create a dataset with six observations—three for each group.
+
+We will use the functions discussed earlier to create this dataset and store the results in a data frame for organization and ease of access. Unlike some beginners who might use cbind() for this purpose, it's more efficient and standard to use data.frame() directly:
 
 We'll be using the tools we reviewed above but will now name the output and combine them into a data.frame.  This last step isn't always necessary, but does help keep things organized in certain types of simulations.
 
-First we'll make separate vectors for the continuous and categorical data and then bind them together via `data.frame()`.  
+First, we'll make separate vectors for the continuous and categorical data and then bind them together via `data.frame()`.
 
 Notice there is no need to use `cbind()` here, which is commonly done by R beginners (I know I did!).  Instead we can use `data.frame()` directly.
 
@@ -422,20 +423,19 @@ data.frame(group,
            response)
 ```
 
-When I make a data.frame like this I prefer to make my vectors and the data.frame simultaneously to avoid having a lot of variables cluttering up my R Environment.  
-
-I often teach/blog with all the steps clearly delineated as I think it's easier when you are starting out, so (as always) use the method that works for you.
+Some people like to define the vectors and the data frame simultaneously to minimize clutter in the R environment. Here is how you can do it all at once:
 
 ```{r}
 data.frame(group = rep(letters[1:2], each = 3),
            response = rnorm(n = 6, mean = 0, sd = 1) )
 ```
 
-Now let's add another categorical variable to this dataset.  
+(Personally, I like having longer code that is easier for future Mason to read.  But it's up to you!)
 
-Say we are in a situation involving two factors, not one.  We have a single observations for every combination of the two factors (i.e., the two factors are *crossed*).
 
-The second factor, which we'll call `factor`, will take on the values "C", "D", and "E".  
+Now, let’s add another layer to our dataset by introducing a second categorical variable. Assume we have two factors, not one, and that these factors are 'crossed'—meaning every possible combination of the two factors appears at least once in the dataset.
+
+For the second factor, which we'll call `factor`, let's give it the values "C", "D", and "E":
 
 ```{r}
 LETTERS[3:5]
