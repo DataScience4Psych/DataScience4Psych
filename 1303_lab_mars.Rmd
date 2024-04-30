@@ -1,70 +1,49 @@
 # Lab: Simulating data {#lab12}
-## Preparing for Life on the Red Planet
 
-```{r include=FALSE}
-library(tufte)
-library(knitr)
+In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. We'll learn how to create and manipulate datasets in R, simulating various attributes of our colonists, like their skills, health, and adaptability to the Martian environment.
+
+## Learning goals {.unnumbered}
+
+- Simulate Quantitative Variables: Learn to create simulated quantitative variables representing colonist attributes using `rnorm()`, `runif()`, and `rpois()`.
+
+- Generate Character Variables: Use `rep()` to create categorical variables that represent different groups within the colonists, such as their professions or roles in the colony.
+
+- Replication of Data Simulation: Utilize `replicate()` to repeat the data simulation process, representing multiple scenarios or batches of potential colonists.
+
+
+## Getting started and warming up {.unnumbered}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE, # for regression output
   digits = 2
 )
-#knitr::opts_chunk$set(eval = FALSE)
+# You can add other libraries as needed
 ```
 
-In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. We'll learn how to create and manipulate datasets in R, simulating various attributes of our colonists, like their skills, health, and adaptability to the Martian environment.
+### Packages {.unnumbered}
 
-## Getting started {.unnumbered}
+In this lab, we will work with the **tidyverse**, **ggplot2**, and **PACKAGE** packages. We can install and load them with the following code:
 
-- Go to the course organization on GitHub.
+```{r load-packages, message=FALSE}
+# Install and load the tidyverse package
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
 
-- Find your lab repo.
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
 
-### Housekeeping {.unnumbered}
-
-#### Password caching {.unnumbered}
-
-If you would like your git password cached for a week for this project, type the following in the Terminal:
-
-```{bash eval=FALSE}
-git config --global credential.helper 'cache --timeout 604800'
 ```
 
-#### Project name {.unnumbered}
 
-Currently your project is called *Untitled Project*. Update the name of your project to be "Lab 12 - Simulating Data".
-
-## Warm up {.unnumbered}
-
-Before we introduce the data, let's warm up with some simple exercises.
-
-### YAML {.unnumbered}
-
-Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
-
-### Commiting and pushing changes: {.unnumbered}
-
-- Go to the **Git** pane in your RStudio.
-- View the **Diff** and confirm that you are happy with the changes.
-- Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
-- Click on **Push**. This action will prompt a dialogue box where you first need to enter your user name, and then your password.
-
-## Learning Goals {.unnumbered}
-
-- Simulate Quantitative Variables: Learn to create simulated quantitative variables representing colonist attributes using `rnorm()`, `runif()`, and `rpois()`.
-
-- Generate Character Variables: Use rep() to create categorical variables that represent different groups within the colonists, such as their professions or roles in the colony.
-
-- Replication of Data Simulation: Utilize replicate() to repeat the data simulation process, representing multiple scenarios or batches of potential colonists.
 
 ## Exercises {.unnumbered}
 
-### Part 1: Simulating Our Colonists
-
 Instead of analyzing other people's data, you'll be generating your own.  You will generate basic attributes for 100 potential colonists. These attributes include age, health, and fitness levels, which are critical for survival on Mars.
 
-We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill, diversity, potential for growth, and the sustainability of the colony.
-
+### Exercise 1: Simulating Our Colonists {.unnumbered}
 <!--
 1. Task 1: Generating Basic Attributes
 - Objective: Learn to create a dataset of n observations with specific characteristics.
@@ -72,9 +51,10 @@ We'll start by simulating the age of our colonists. Age is a crucial factor in c
  - Generate health and fitness levels to ensure our colonists are fit for the challenges of Mars.
 -->
 
-#### Setting Up Your Simulation:
+We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill, diversity, potential for growth, and the sustainability of the colony.
 
-We'll use the `rnorm()` function, which is perfect for this task because it generates normally distributed random numbers.
+
+__Setting Up Your Simulation__. We'll use the `rnorm()` function, which is perfect for this task because it generates normally distributed random numbers. Let's examine the arguments for `rnorm()` using the `?rnorm` command in R.
 
 Parameters:
 
@@ -90,21 +70,21 @@ age <- rnorm(100, mean = 30, sd = 5)
 ```
 
 
-1. Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
+
+**1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
 
 
-```{r,error=TRUE,include=FALSE}
-
-df_colonists <- data.frame(id = 1:100,
-                              age        )
-```
-
-```{r,error=TRUE}
+```{r exercise1.1,error=TRUE}
 
 df_colonists <- data.frame(id = 1:100,
                                       )
 ```
 
+```{r exercise1.1solution, error=TRUE,include=FALSE}
+
+df_colonists <- data.frame(id = 1:100,
+                              age )
+```
 
 Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.
 
@@ -132,40 +112,210 @@ ggplot(df, aes(x = age, fill = seed)) +
   theme_minimal()
 ```
 
-1.B. Consider the histograms of the age distribution that we've generated (as well as two more I added). 
-
-How does the distribution of ages reflect the needs of a Mars colony? Given this distribution how unusual would it be to have a colonist who was `r round(as.numeric(difftime(Sys.Date(), as.Date("1971-06-28"), units = "days")) / 365.25, digits = 1)` years old?
+**1.2.** Consider the histograms of the age distribution that we've generated (as well as two more I added). What do you notice about the age distribution of our colonists? How does the seed affect the spread of the distribution?
 
 
+Next, we'll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.
 
-1.C. Add a uniformally-distributed variable to your colonists.
+__Setting Up Your Simulation__. We'll use the `runif()` function to generate random numbers drawn from a uniform distribution. This distribution is ideal for simulating health and fitness levels, as it ensures equal probability across the range of values. 
 
-Now, let's simulate data from another attribute. Unlike, age, this variable follows a uniform distribution. For a uniform distribution,  Obviously, this variable is a critical factor in the success of our Mars colony.
+Examine the arguments for `runif()`, using the `?runif` command in R. Notice that although some of the arguments are the same, such as n, and parameters for the distribution are different. 
 
-```r{}
-runif(100, min = 0, max = 100)
+On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Gauging Astronaut Readiness; Musk, `r round(as.numeric(format(Sys.Date(), "%Y"))+1,digits=0)`) scale, which ranges from 0 to 100. Like the suspiciously-similar Apgar score for newborns, a score of 0 indicates that a colonist has no signs of life: no heartbeat, no breathing, no response to stimulation, no muscle tone, and central cyanosis/pallor. A score of 100 indicates a colonist in perfect health. Take this scoring into consideration when you simulate the health of your colonists.
+
+**1.3.**  Add a uniformally-distributed MARSGAR variable to your colonists.
+
+```{r exercise1.3solution, error=TRUE} 
+set.seed(123)
+
+df_colonists$marsgar <- runif(100, min = 50, max = 100)
+```
+
+Now, let us examine our colonists. We will create a scatter plot to visualize the relationship between age and health. This will help us understand the health distribution of our potential Mars colony.
+
+```{r,echo=FALSE}
+library(viridis)
+# Fit a linear model
+model <- lm(marsgar ~ age, data = df_colonists)
+
+# Extract coefficients
+intercept <- coef(model)[1]
+slope <- coef(model)[2]
+
+# Create equation string
+# Ensure the plus sign is included for positive slopes and the minus is handled by the format
+equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
+
+# Adjusting the equation for positive/negative slope
+equation <- ifelse(slope >= 0,
+                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
+                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+
+# Viridis color for both line and text
+viridis_color <- viridis(1, option = "D")[1]
+
+
+ggplot(df_colonists, aes(x = age, y = marsgar)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color) + 
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
+
+  labs(title = "Scatter Plot of Colonist Age and Health", x = "Age", y = "MARSGAR") +
+  theme_minimal()
+
+
 
 ```
 
- 
+
+What a contrived plot! It seems that there's no relationship between age and health in the data. How odd! (Or is it?) 
+
+> Spoiler: It's not odd. We generated the data univariately, so there's no reason for there to be a relationship between age and health.
 
 
-Simulate data from a uniform distribution. Now, let's simulate data from another attribute: VARIABLE. VARIABLE is a critical factor in the success of our Mars colony. We'll simulate health scores for our colonists using a uniform distribition.
+
+## Exercise 2: Growing Our Colonists {.unnumbered}
+
+Next, we'll simulate the relationship among several attributes of our colonists. We'll consider technical skills, problem-solving abilities, psychological resilience, teamwork, and adaptability. These attributes are crucial for the success of our Mars colony, ensuring that our colonists can work together effectively and overcome challenges.
+
+There are several ways to simulate variables with specific correlations. I will show two approaches: using mvrnorm, which generates data from a multivariate distribustion, and using a less coputationally efficient, but more accessible approach, using multiple steps.
+
+
+### basic method
+Let's use age to simulate technical skills. We'll assume that older colonists have higher technical skills, as they have more experience and knowledge. We'll create a variable, `technical_skills` as a function of age, with some random noise added in.
+
+```{r exercise2.1, error=TRUE}
+
+# Simulate technical skills based on age
+
+# Set the seed for reproducibility
+set.seed(1235)
+
+# Create a variable for technical skills
+
+df_colonists$technical_skills <- 1 * df_colonists$age + rnorm(100, mean = 0, sd = 5)
+
+```
+
+Now, let's visualize the relationship between age and technical skills using a scatter plot.
+
+```{r,echo=FALSE}
+
+
+# Fit a linear model
+model <- lm(technical_skills ~ age, data = df_colonists)
+
+# Extract coefficients
+intercept <- coef(model)[1]
+slope <- coef(model)[2]
+
+# Create equation string
+# Ensure the plus sign is included for positive slopes and the minus is handled by the format
+equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
+
+# Adjusting the equation for positive/negative slope
+equation <- ifelse(slope >= 0,
+                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
+                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+
+# Viridis color for both line and text
+viridis_color <- viridis(1, option = "D")[1]
+
+
+ggplot(df_colonists, aes(x = age, y = technical_skills)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color) + 
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
+
+  labs(title = "Scatter Plot of Colonist Age and technical_skills", x = "Age", y = "technical_skills") +
+  theme_minimal()
 
 
 
-#### Task 2: Skill Correlations
+```
 
+Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy.
 
+One popular method is to use the `mvrnorm()` function from the `MASS` package. This function generates multivariate normal random numbers, allowing us to specify the mean vector, covariance matrix, and number of observations.
+
+<!--
 
 1. Task 2: Skill Correlations
 - Objective: Understand how to simulate variables with specific correlations.
   - Create variables for technical skills and problem-solving abilities, ensuring a realistic correlation between them.
 
+-->
+
+
+<!-- 
 1. Task 3: Advanced Attributes Simulation
 - Objective: Dive deeper into simulations by generating more complex relationships between variables.
   - Simulate a set of psychological resilience, teamwork, and adaptability scores with predefined correlations and partial correlations.
-  
+-->
+
+To simulate correlated variables, the MASS package's mvrnorm() function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.
+
+Parameters for Simulation:
+
+n = 100: We are simulating attributes for 100 colonists.
+mu = c(50, 50): Represents the average scores for technical skills and problem-solving abilities.
+Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the skills.
+
+```{r exercise1.2, error=TRUE} 
+library(MASS)
+
+# Define mean and covariance matrix
+mean_skills <- c(50, 50)
+cov_matrix <- matrix(c(100, 50, 50, 100), ncol = 2)
+
+# Generate correlated data
+skills_data <- mvrnorm(n = 100, mu = mean_skills, Sigma = cov_matrix, empirical = TRUE)
+colnames(skills_data) <- c("TechnicalSkills", "ProblemSolving")
+
+df_colonists <- cbind(df_colonists, skills_data)
+
+
+
+
+# Fit a linear model
+model <- lm(TechnicalSkills ~ ProblemSolving, data = df_colonists)
+
+# Extract coefficients
+intercept <- coef(model)[1]
+slope <- coef(model)[2]
+
+# Create equation string
+# Ensure the plus sign is included for positive slopes and the minus is handled by the format
+equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
+
+# Adjusting the equation for positive/negative slope
+equation <- ifelse(slope >= 0,
+                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
+                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+
+# Visualizing the correlation
+library(ggplot2)
+ggplot(df_colonists, aes(x = ProblemSolving, y = TechnicalSkills)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color) + 
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
+
+  labs(title = "Scatter Plot of Colonist ProblemSolving and TechnicalSkillss", x = "ProblemSolving", y = "TechnicalSkillss") +
+  theme_minimal()
+
+```
+
+
+
+
+## Stretch Tasks (Optional) {.unnumbered}
+
+This section offer additional optional activities for students who wish to deepen their understanding.
+
+```{r further-analysis}
+# Code for further analysis goes here
+```
+
 ### Part 2: Analyzing Our Simulated Colonists
 
 1. Task 4: Descriptive Statistics
@@ -183,3 +333,12 @@ Simulate data from a uniform distribution. Now, let's simulate data from another
 1. Task 7: Analysis of Repeated Samples
 - Objective: Analyze repeated samples to identify patterns and potential challenges.
   - Store and summarize the results of repeated sampling in a comprehensive dataframe, analyzing the resilience of our population across simulations.
+
+## Conclusion {.unnumbered}
+
+Summarize what has been learned in this lab and why it matters. Include any challenges faced and how they were overcome.
+
+### Additional Resources {.unnumbered}
+
+- [Link to resource 1](http://example.com)
+- [Following is another useful resource](http://example.com)
