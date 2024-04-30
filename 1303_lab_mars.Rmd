@@ -61,10 +61,9 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ### Part 1: Simulating Our Colonists
 
-
 Instead of analyzing other people's data, you'll be generating your own.  You will generate basic attributes for 100 potential colonists. These attributes include age, health, and fitness levels, which are critical for survival on Mars.
 
-1. We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill diversity, potential for growth, and the sustainability of the colony.
+We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill, diversity, potential for growth, and the sustainability of the colony.
 
 <!--
 1. Task 1: Generating Basic Attributes
@@ -73,35 +72,90 @@ Instead of analyzing other people's data, you'll be generating your own.  You wi
  - Generate health and fitness levels to ensure our colonists are fit for the challenges of Mars.
 -->
 
-Setting Up Your Simulation:
+#### Setting Up Your Simulation:
 
 We'll use the `rnorm()` function, which is perfect for this task because it generates normally distributed random numbers.
 
 Parameters:
 
-n = 100: The number of random ages we want to generate.
-mean = 30: The average age of our colonists. We're targeting a young, but experienced group of individuals.
-sd = 5: The standard deviation, representing age variability around the mean.
+- n = 100: The number of random ages we want to generate.
+- mean = 30: The average age of our colonists. We're targeting a young, but experienced group of individuals.
+- sd = 5: The standard deviation, representing age variability around the mean.
 
-Here's the code to generate the age distribution:
+Here's code to generate an age distribution:
 
 ```{r}
+set.seed(123)
 age <- rnorm(100, mean = 30, sd = 5)
 ```
 
+
+1. Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
+
+
+```{r,error=TRUE,include=FALSE}
+
+df_colonists <- data.frame(id = 1:100,
+                              age        )
+```
+
+```{r,error=TRUE}
+
+df_colonists <- data.frame(id = 1:100,
+                                      )
+```
+
+
 Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.
 
-```{r}
+```{r,echo=FALSE}
+set.seed(100)
+age2 <- rnorm(100, mean = 30, sd = 5)
+
+set.seed(1000)
+age3 <- rnorm(100, mean = 30, sd = 5)
+
+df <- data.frame( age = c(age, age2, age3), 
+                  seed = c(rep("Seed 123", length(age)),
+                           rep("Seed 100", length(age2)),
+                           rep("Seed 1000", length(age3))))
+
 library(ggplot2)
-ggplot(data = data.frame(age), aes(x = age)) +
-  geom_histogram(breaks = seq(from = 5*floor(min(age)/5), to = max(age) + 5, by = 5), fill = "darkblue", color = "black") +
-  labs(title = "Histogram of Colonist Ages", x = "Age", y = "Frequency") +
+
+# Create a histogram to visualize the age distributions separately
+ggplot(df, aes(x = age, fill = seed)) +
+    geom_histogram(position = "dodge", 
+                   breaks = seq(from = 5 * floor(min(age) / 5), to = 5 * ceiling(max(age) / 5), by = 5), 
+                   color = "black") +
+  scale_fill_viridis_d()+
+  labs(title = "Histogram of Colonist Ages by Seed", x = "Age", y = "Frequency") +
   theme_minimal()
 ```
 
-Analyze the histogram of the age distribution that you've generated. How does the distribution of ages reflect the needs of a Mars colony? Given this distribution how unusual would it be to have a colonist who was `r round(as.numeric(difftime(Sys.Date(), as.Date("1971-06-28"), units = "days")) / 365.25, digits = 1)` years old?
+1.B. Consider the histograms of the age distribution that we've generated (as well as two more I added). 
 
-This histogram allows us to visually assess the spread and central tendency of ages within our group of colonists. With a mean age of 30 and a standard deviation of 5, we expect most colonists to be in their late twenties to early thirties, which is ideal for the physical demands of establishing a new colony.
+How does the distribution of ages reflect the needs of a Mars colony? Given this distribution how unusual would it be to have a colonist who was `r round(as.numeric(difftime(Sys.Date(), as.Date("1971-06-28"), units = "days")) / 365.25, digits = 1)` years old?
+
+
+
+1.C. Add a uniformally-distributed variable to your colonists.
+
+Now, let's simulate data from another attribute. Unlike, age, this variable follows a uniform distribution. For a uniform distribution,  Obviously, this variable is a critical factor in the success of our Mars colony.
+
+```r{}
+runif(100, min = 0, max = 100)
+
+```
+
+ 
+
+
+Simulate data from a uniform distribution. Now, let's simulate data from another attribute: VARIABLE. VARIABLE is a critical factor in the success of our Mars colony. We'll simulate health scores for our colonists using a uniform distribition.
+
+
+
+#### Task 2: Skill Correlations
+
 
 
 1. Task 2: Skill Correlations
