@@ -41,7 +41,7 @@ library(ggplot2)
 
 ## Exercises {.unnumbered}
 
-Instead of analyzing other people's data, you'll be generating your own.  You will generate basic attributes for 100 potential colonists. These attributes include age, health, and fitness levels, which are critical for survival on Mars.
+Instead of analyzing other people's data, we'll be generating our own!  You will generate basic attributes for 100 potential colonists. These attributes include age, health, and fitness levels, which are critical for survival on Mars.
 
 ### Exercise 1: Simulating Our Colonists {.unnumbered}
 <!--
@@ -76,14 +76,14 @@ age <- rnorm(100, mean = 30, sd = 5)
 
 ```{r exercise1.1,error=TRUE}
 
-df_colonists <- data.frame(id = 1:100,
-                                      )
+df_colonists <- data.frame(id = 1:100, # this is our id column
+                                      ) # add the age column here
 ```
 
 ```{r exercise1.1solution, error=TRUE,include=FALSE}
 
-df_colonists <- data.frame(id = 1:100,
-                              age )
+df_colonists <- data.frame(id = 1:100,  # this is our id column
+                              age ) # add the age column here
 ```
 
 Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.
@@ -114,6 +114,22 @@ ggplot(df, aes(x = age, fill = seed)) +
 
 **1.2.** Consider the histograms of the age distribution that we've generated (as well as two more I added). What do you notice about the age distribution of our colonists? How does the seed affect the spread of the distribution?
 
+Next, we'll simulate a categorical variable to represent the roles of our colonists. We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to generate this variable, ensuring an equal distribution of roles among our colonists.
+
+```{r exercise1.3, error=TRUE}
+
+df_colonists$role <- rep(c("engineer", "scientist", "medic"), length.out = 100)
+
+```
+
+```{r, pie}
+ggplot(df_colonists, aes(x = "", fill = role)) +
+  geom_bar(width = 1) +
+  coord_polar("y") +
+  labs(title = "Pie Chart of Colonist Roles", fill = "Role") +
+  theme_minimal()
+
+```
 
 Next, we'll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.
 
@@ -123,7 +139,7 @@ Examine the arguments for `runif()`, using the `?runif` command in R. Notice tha
 
 On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Gauging Astronaut Readiness; Musk, `r round(as.numeric(format(Sys.Date(), "%Y"))+1,digits=0)`) scale, which ranges from 0 to 100. Like the suspiciously-similar Apgar score for newborns, a score of 0 indicates that a colonist has no signs of life: no heartbeat, no breathing, no response to stimulation, no muscle tone, and central cyanosis/pallor. A score of 100 indicates a colonist in perfect health. Take this scoring into consideration when you simulate the health of your colonists.
 
-**1.3.**  Add a uniformally-distributed MARSGAR variable to your colonists.
+**1.3.**  Add a uniformally-distributed MARSGAR variable to your colony.
 
 ```{r exercise1.3solution, error=TRUE} 
 set.seed(123)
@@ -181,8 +197,12 @@ Next, we'll simulate the relationship among several attributes of our colonists.
 There are several ways to simulate variables with specific correlations. I will show two approaches: using mvrnorm, which generates data from a multivariate distribustion, and using a less coputationally efficient, but more accessible approach, using multiple steps.
 
 
-### basic method
-Let's use age to simulate technical skills. We'll assume that older colonists have higher technical skills, as they have more experience and knowledge. We'll create a variable, `technical_skills` as a function of age, with some random noise added in.
+### Basic method
+
+Let's use age to simulate technical skills. We'll assume that older colonists have higher technical skills, as they have more experience and knowledge. We'll create a variable, `technical_skills` as a function of age, with some random noise added in. For the sake of simplicity, we'll assume a linear relationship between age and technical skills. For each year older a colonist is, we'll add 2 points to their technical skills, with some random noise added in. 
+
+We'll do this by creating a regression equestion, `technical_skills = 2 * age + noise`, where the noise is normally distributed with a mean of 0 and a standard deviation of 1. 
+
 
 ```{r exercise2.1, error=TRUE}
 
@@ -193,14 +213,13 @@ set.seed(1235)
 
 # Create a variable for technical skills
 
-df_colonists$technical_skills <- 1 * df_colonists$age + rnorm(100, mean = 0, sd = 5)
+df_colonists$technical_skills <- 2 * df_colonists$age + rnorm(100, mean = 0, sd = 1)
 
 ```
 
 Now, let's visualize the relationship between age and technical skills using a scatter plot.
 
 ```{r,echo=FALSE}
-
 
 # Fit a linear model
 model <- lm(technical_skills ~ age, data = df_colonists)
@@ -231,12 +250,11 @@ ggplot(df_colonists, aes(x = age, y = technical_skills)) +
   theme_minimal()
 
 
-
 ```
 
-Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy.
 
-One popular method is to use the `mvrnorm()` function from the `MASS` package. This function generates multivariate normal random numbers, allowing us to specify the mean vector, covariance matrix, and number of observations.
+
+Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates multivariate normal random numbers, allowing us to specify the mean vector, covariance matrix, and number of observations.
 
 <!--
 
@@ -300,7 +318,7 @@ ggplot(df_colonists, aes(x = ProblemSolving, y = TechnicalSkills)) +
   geom_smooth(method = "lm", se = FALSE, color = viridis_color) + 
   geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
 
-  labs(title = "Scatter Plot of Colonist ProblemSolving and TechnicalSkillss", x = "ProblemSolving", y = "TechnicalSkillss") +
+  labs(title = "Scatter Plot of Colonist ProblemSolving and TechnicalSkills", x = "ProblemSolving", y = "TechnicalSkills") +
   theme_minimal()
 
 ```
@@ -342,3 +360,4 @@ Summarize what has been learned in this lab and why it matters. Include any chal
 
 - [Link to resource 1](http://example.com)
 - [Following is another useful resource](http://example.com)
+
