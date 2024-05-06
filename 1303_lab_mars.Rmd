@@ -281,7 +281,7 @@ df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colon
 
 
 
-## Exploring Correlations with mvrnorm
+### Exploring Correlations with mvrnorm
 
 Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' skills.
 
@@ -352,6 +352,125 @@ ggplot(df_colonists, aes(x = ProblemSolving, y = TechnicalSkills)) +
 
 ```
 
+## Exercise 3: Preparing for the Unexpected {.unnumbered}
+
+In space colonization, just like in any complex project management, it's essential to prepare for variability and uncertainty. To test the resilience of our simulated Mars colony, we'll generate multiple sets of potential colonists. By examining these various batches, we can assess how robust our colony's attributes are and whether they can adapt to different scenarios.
+
+
+
+### Setting Up the Simulation
+
+In this task, we will simulate interdependent skills using the mvrnorm function from the MASS package. This function allows us to generate data from a multivariate normal distribution, giving us control over the means, variances, and covariances of the simulated variables—ideal for modeling complex skill relationships among colonists.
+```{r}
+library(MASS)  # Ensure the MASS package is loaded for mvrnorm
+```
+
+Parameters for Simulation
+
+Define the mean skills levels and a covariance matrix to simulate technical skills and problem-solving abilities with a realistic correlation:
+
+```{r}
+mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix showing how these skills correlate
+
+```
+
+### Simulating Data
+Generate the skills for 100 colonists, repeating this process multiple times to analyze the consistency and resilience of skill distribution:
+
+```{r}
+
+set.seed(124)
+num_simulations <- 100  # Number of times to simulate the colonist data
+all_simulations <- replicate(num_simulations, mvrnorm(n = 100, mu = mean_skills, Sigma = cov_skills, empirical = TRUE))
+```
+```{r}
+set.seed(124)
+sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
+repetitions_per_condition <- 20  # Number of repetitions for each sample size
+
+# Initialize a DataFrame to store results
+simulation_results <- data.frame(
+  Condition = integer(),
+  SampleSize = integer(),
+  Repetition = integer(),
+  Covariance = numeric()
+)
+
+# Nested loop for simulations
+for (size in sample_sizes) {
+  for (rep in 1:repetitions_per_condition) {
+    skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = TRUE)
+    current_covariance <- cov(skills_data[, 1], skills_data[, 2])
+  
+    # Append results
+    simulation_results <- rbind(simulation_results, data.frame(
+      SampleSize = size,
+      Repetition = rep,
+      Covariance = current_covariance
+    ))
+  }
+}
+
+
+```
+
+
+
+
+
+```{r}
+library(ggplot2)
+
+# Plotting the average covariance for each sample size
+average_covariances <- simulation_results %>%
+  group_by(SampleSize) %>%
+  summarize(AverageCovariance = mean(Covariance))
+
+ggplot(average_covariances, aes(x = SampleSize, y = AverageCovariance)) +
+  geom_line() + 
+  geom_point() +
+  theme_minimal() +
+  ggtitle("Average Covariance by Sample Size") +
+  xlab("Sample Size") +
+  ylab("Average Covariance")
+```
+
+
+
+
+
+
+
+
+
+
+
+# Simulate 5 different samples of 20 colonists each from our original pool
+samples <- replicate(5, sample_n(colonists, 20), simplify = FALSE)
+
+
+This code uses the replicate() function to draw five random samples from our colonist dataset. Each sample consists of 20 individuals, allowing us to see how smaller groups might vary from the full population.
+
+
+Repeated Sample Analysis
+Now, let's dive into these samples. We want to uncover any patterns or inconsistencies that emerge from repeatedly sampling our colonist pool. Are some combinations of skills and demographics more successful than others? Does the distribution of roles affect the group's overall health or technical capabilities?
+
+
+# Analyzing each sample by summarizing its main attributes
+sample_summaries <- lapply(samples, function(sample) {
+  summary_stats <- summarize(sample,
+    Average_Age = mean(Age),
+    SD_Age = sd(Age),
+    Average_Health = mean(Health),
+    SD_Health = sd(Health),
+    Average_TechnicalSkills = mean(TechnicalSkills),
+    SD_TechnicalSkills = sd(TechnicalSkills),
+    Average_ProblemSolving = mean(ProblemSolving),
+    SD_ProblemSolving = sd(ProblemSolving)
+  )
+  return(summary_stats)
+})
 
 
 
