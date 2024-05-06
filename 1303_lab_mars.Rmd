@@ -1,5 +1,7 @@
 # Lab: Simulating data {#lab12}
 
+Welcome to the Mars Colony Simulation Lab! In this session, we embark on a journey not just to another world but into the realm of data science applied in space colonization. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R, preparing you for complex data manipulation and scenario analysis essential for real-world applications.
+
 In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. We'll learn how to create and manipulate datasets in R, simulating various attributes of our colonists, like their skills, health, and adaptability to the Martian environment.
 
 ## Learning goals {.unnumbered}
@@ -47,11 +49,8 @@ Instead of analyzing other people's data, we'll be generating our own!  You will
 <!--
 1. Task 1: Generating Basic Attributes
 - Objective: Learn to create a dataset of n observations with specific characteristics.
-  - Simulate the age distribution of 100 colonists using a normal distribution.
- - Generate health and fitness levels to ensure our colonists are fit for the challenges of Mars.
 -->
-
-We'll start by simulating the age of our colonists. Age is a crucial factor in colony planning as it impacts the skill, diversity, potential for growth, and the sustainability of the colony.
+Imagine you're choosing the first 100 colonists for Mars. Let’s simulate their ages assuming a mean age of 30 and a standard deviation of 5—aiming for youth but with sufficient experience.
 
 
 __Setting Up Your Simulation__. We'll use the `rnorm()` function, which is perfect for this task because it generates normally distributed random numbers. Let's examine the arguments for `rnorm()` using the `?rnorm` command in R.
@@ -68,7 +67,6 @@ Here's code to generate an age distribution:
 set.seed(123)
 age <- rnorm(100, mean = 30, sd = 5)
 ```
-
 
 
 **1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
@@ -114,7 +112,9 @@ ggplot(df, aes(x = age, fill = seed)) +
 
 **1.2.** Consider the histograms of the age distribution that we've generated (as well as two more I added). What do you notice about the age distribution of our colonists? How does the seed affect the spread of the distribution?
 
-Next, we'll simulate a categorical variable to represent the roles of our colonists. We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to generate this variable, ensuring an equal distribution of roles among our colonists.
+
+What roles would these colonists have? Let's decide. We need engineers, scientists, and medics in equal numbers.
+We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to simulate this categorical variable.
 
 ```{r exercise1.2, error=TRUE}
 
@@ -207,9 +207,9 @@ There are several ways to simulate variables with specific correlations. I will 
 
 ### Basic method
 
-Let's use age to simulate technical skills. We'll assume that older colonists have higher technical skills, as they have more experience and knowledge. We'll create a variable, `technical_skills` as a function of age, with some random noise added in. For the sake of simplicity, we'll assume a linear relationship between age and technical skills. For each year older a colonist is, we'll add 2 points to their technical skills, with some random noise added in. 
+To start, let's illustrate a simpler method using `rnorm` to simulate how certain attributes like age could influence others such as technical skills—assuming that older colonists, with more experience, likely have higher technical skills. 
 
-We'll do this by creating a regression equestion, `technical_skills = 2 * age + noise`, where the noise is normally distributed with a mean of 0 and a standard deviation of 1. 
+To model this, we define the variable `technical_skills` as a linear function of `age`, incorporating random noise for variability. Specifically, we use the regression equation `technical_skills = 2 * age + noise`, where `noise` is normally distributed with a mean of zero and a standard deviation of one. This implies that for each additional year of age, a colonist's technical skills increase by two points, with some random noise added in. 
 
 
 ```{r exercise2.1, error=TRUE}
@@ -260,6 +260,7 @@ ggplot(df_colonists, aes(x = age, y = technical_skills)) +
 
 ```
 
+
 Now its your turn! Simulate problem-solving abilities based on their assigned role. Recall that the options are "engineer", "scientist", "medic". First you need to think about the relationship between the role AND the variable being simulated. Then you can write up the equation that would create that relationship. And then you can write the code to simulate the variable.
 
 
@@ -277,9 +278,12 @@ df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_c
 df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
 ```
 
-## mvrnorm
 
-Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates multivariate normal random numbers, allowing us to specify the mean vector, covariance matrix, and number of observations.
+
+
+## Exploring Correlations with mvrnorm
+
+Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' skills.
 
 <!--
 
@@ -301,7 +305,7 @@ To simulate correlated variables, the MASS package's mvrnorm() function from mul
 Parameters for Simulation:
 
 n = 100: We are simulating attributes for 100 colonists.
-mu = c(50, 50): Represents the average scores for technical skills and problem-solving abilities.
+mu = c( 70, 75, 80): Represents the average scores for technical skills and problem-solving abilities.
 Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the skills.
 
 ```{r exercise3.2, error=TRUE} 
@@ -347,6 +351,8 @@ ggplot(df_colonists, aes(x = ProblemSolving, y = TechnicalSkills)) +
   theme_minimal()
 
 ```
+
+
 
 
 
