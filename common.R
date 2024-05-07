@@ -81,3 +81,19 @@ try_include_tweet <- function(tweet_url, plain = FALSE, ...) {
   return(try(tweetrmd::include_tweet(tweet_url = tweet_url, plain = plain, ...),
              silent = TRUE))
 }
+
+
+library(stringr)
+embed_youtube_alt <- function(youtube_id) {
+  if (knitr::is_html_output(excludes = "epub")) {
+    url <- str_c("https://www.youtube.com/embed/", youtube_id)
+    return(knitr::include_url(url))
+  } else {
+    # Download thumbnail and use that
+    dir_path <- 'img/youtube'
+    if (!dir.exists(dir_path)) dir.create(dir_path)
+    file_path <- str_c(dir_path, '/', youtube_id, '.jpg')
+    if (!file.exists(file_path)) webshot(str_c("https://img.youtube.com/vi/", youtube_id, "/mqdefault.jpg"),vwidth = 320,vheight=180, file = file_path)
+    return(knitr::include_graphics(str_c(file_path)))
+  }
+}
