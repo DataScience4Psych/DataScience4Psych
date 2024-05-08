@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-05-07" />
+<meta name="date" content="2024-05-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1525,9 +1525,9 @@ div.csl-indent {
 <div id="a-more-technical-worked-example" class="section level2 hasAnchor" number="65.2">
 <h2><span class="header-section-number">65.2</span> A More Technical Worked Example<a href="fitting-and-interpreting-models.html#a-more-technical-worked-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s load our standard libraries:</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="fitting-and-interpreting-models.html#cb392-1" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
-<span id="cb392-2"><a href="fitting-and-interpreting-models.html#cb392-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb392-3"><a href="fitting-and-interpreting-models.html#cb392-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="fitting-and-interpreting-models.html#cb393-1" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb393-2"><a href="fitting-and-interpreting-models.html#cb393-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb393-3"><a href="fitting-and-interpreting-models.html#cb393-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <ul>
 <li><p>If you’ve taken a regression course, you might recognize this model as a special case of a linear model.</p></li>
 <li><p>If you haven’t, well, it doesn’t really matter much except… we can use the <code>lm()</code> function to fit the model.</p></li>
@@ -1535,22 +1535,22 @@ div.csl-indent {
 <p>The advantage is that <code>lm()</code> easily splits the data into <strong>fitted values</strong> and <strong>residuals</strong>:</p>
 <p>Observed value = Fitted value + residual</p>
 <p>Let’s get the fitted values and residuals for each voice part:</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="fitting-and-interpreting-models.html#cb393-1" tabindex="-1"></a>lm_singer <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> voice.part,</span>
-<span id="cb393-2"><a href="fitting-and-interpreting-models.html#cb393-2" tabindex="-1"></a>  <span class="at">data =</span> singer</span>
-<span id="cb393-3"><a href="fitting-and-interpreting-models.html#cb393-3" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="fitting-and-interpreting-models.html#cb394-1" tabindex="-1"></a>lm_singer <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> voice.part,</span>
+<span id="cb394-2"><a href="fitting-and-interpreting-models.html#cb394-2" tabindex="-1"></a>  <span class="at">data =</span> singer</span>
+<span id="cb394-3"><a href="fitting-and-interpreting-models.html#cb394-3" tabindex="-1"></a>)</span></code></pre></div>
 <p>We can extract the fitted values using <code>fitted.values(lm_singer)</code> and the residuals with <code>residuals(lm_singer)</code> or <code>lm_singer$residuals</code>.</p>
 <p>For convenience, we create a data frame with two columns: the voice parts and the residuals.</p>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="fitting-and-interpreting-models.html#cb394-1" tabindex="-1"></a>res_singer <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb394-2"><a href="fitting-and-interpreting-models.html#cb394-2" tabindex="-1"></a>  <span class="at">voice_part =</span> singer<span class="sc">$</span>voice.part,</span>
-<span id="cb394-3"><a href="fitting-and-interpreting-models.html#cb394-3" tabindex="-1"></a>  <span class="at">residual =</span> <span class="fu">residuals</span>(lm_singer)</span>
-<span id="cb394-4"><a href="fitting-and-interpreting-models.html#cb394-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="fitting-and-interpreting-models.html#cb395-1" tabindex="-1"></a>res_singer <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb395-2"><a href="fitting-and-interpreting-models.html#cb395-2" tabindex="-1"></a>  <span class="at">voice_part =</span> singer<span class="sc">$</span>voice.part,</span>
+<span id="cb395-3"><a href="fitting-and-interpreting-models.html#cb395-3" tabindex="-1"></a>  <span class="at">residual =</span> <span class="fu">residuals</span>(lm_singer)</span>
+<span id="cb395-4"><a href="fitting-and-interpreting-models.html#cb395-4" tabindex="-1"></a>)</span></code></pre></div>
 <p>We can also do this with <code>group_by</code> and <code>mutate</code>:</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="fitting-and-interpreting-models.html#cb395-1" tabindex="-1"></a>fits <span class="ot">&lt;-</span> singer <span class="sc">%&gt;%</span></span>
-<span id="cb395-2"><a href="fitting-and-interpreting-models.html#cb395-2" tabindex="-1"></a>  <span class="fu">group_by</span>(voice.part) <span class="sc">%&gt;%</span></span>
-<span id="cb395-3"><a href="fitting-and-interpreting-models.html#cb395-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb395-4"><a href="fitting-and-interpreting-models.html#cb395-4" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">mean</span>(height),</span>
-<span id="cb395-5"><a href="fitting-and-interpreting-models.html#cb395-5" tabindex="-1"></a>    <span class="at">residual =</span> height <span class="sc">-</span> <span class="fu">mean</span>(height)</span>
-<span id="cb395-6"><a href="fitting-and-interpreting-models.html#cb395-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="fitting-and-interpreting-models.html#cb396-1" tabindex="-1"></a>fits <span class="ot">&lt;-</span> singer <span class="sc">%&gt;%</span></span>
+<span id="cb396-2"><a href="fitting-and-interpreting-models.html#cb396-2" tabindex="-1"></a>  <span class="fu">group_by</span>(voice.part) <span class="sc">%&gt;%</span></span>
+<span id="cb396-3"><a href="fitting-and-interpreting-models.html#cb396-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb396-4"><a href="fitting-and-interpreting-models.html#cb396-4" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">mean</span>(height),</span>
+<span id="cb396-5"><a href="fitting-and-interpreting-models.html#cb396-5" tabindex="-1"></a>    <span class="at">residual =</span> height <span class="sc">-</span> <span class="fu">mean</span>(height)</span>
+<span id="cb396-6"><a href="fitting-and-interpreting-models.html#cb396-6" tabindex="-1"></a>  )</span></code></pre></div>
 <div id="does-the-linear-model-fit" class="section level3 hasAnchor" number="65.2.1">
 <h3><span class="header-section-number">65.2.1</span> Does the linear model fit?<a href="fitting-and-interpreting-models.html#does-the-linear-model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To assess whether the linear model is a good fit to the data, we need to know whether the errors look like they come from normal distributions with the same variance.</p>
@@ -1559,21 +1559,21 @@ div.csl-indent {
 <div id="homoscedasticity" class="section level3 hasAnchor" number="65.2.2">
 <h3><span class="header-section-number">65.2.2</span> Homoscedasticity<a href="fitting-and-interpreting-models.html#homoscedasticity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:</p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="fitting-and-interpreting-models.html#cb396-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> voice_part, <span class="at">y =</span> residual)) <span class="sc">+</span></span>
-<span id="cb396-2"><a href="fitting-and-interpreting-models.html#cb396-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="fitting-and-interpreting-models.html#cb397-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> voice_part, <span class="at">y =</span> residual)) <span class="sc">+</span></span>
+<span id="cb397-2"><a href="fitting-and-interpreting-models.html#cb397-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>We can also look at the ecdfs of the residuals for each voice part.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="fitting-and-interpreting-models.html#cb397-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> residual, <span class="at">color =</span> voice_part)) <span class="sc">+</span></span>
-<span id="cb397-2"><a href="fitting-and-interpreting-models.html#cb397-2" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="fitting-and-interpreting-models.html#cb398-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> residual, <span class="at">color =</span> voice_part)) <span class="sc">+</span></span>
+<span id="cb398-2"><a href="fitting-and-interpreting-models.html#cb398-2" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>()</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>From these plots, it seems like the residuals in each group have approximately the same variance.</p>
 </div>
 <div id="normality" class="section level3 hasAnchor" number="65.2.3">
 <h3><span class="header-section-number">65.2.3</span> Normality<a href="fitting-and-interpreting-models.html#normality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="fitting-and-interpreting-models.html#cb398-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb398-2"><a href="fitting-and-interpreting-models.html#cb398-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb398-3"><a href="fitting-and-interpreting-models.html#cb398-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>voice_part, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="fitting-and-interpreting-models.html#cb399-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
+<span id="cb399-2"><a href="fitting-and-interpreting-models.html#cb399-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb399-3"><a href="fitting-and-interpreting-models.html#cb399-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>voice_part, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-17-1.png" width="576" /></p>
 <p>Not only do the lines look reasonably straight, the scales look similar for all eight voice parts. This suggests a model where all of the errors are normal with the <em>same</em> standard deviation. This is convenient because it is the form of a standard linear model:</p>
 <p>Singer height = Average height for their voice part + Normal(<span class="math inline">\(0, \sigma^2\)</span>) error.</p>
@@ -1582,34 +1582,34 @@ div.csl-indent {
 <h3><span class="header-section-number">65.2.4</span> Normality of pooled residuals<a href="fitting-and-interpreting-models.html#normality-of-pooled-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If the linear model holds, then all the residuals come from the same normal distribution.</p>
 <p>We’ve already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="fitting-and-interpreting-models.html#cb399-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb399-2"><a href="fitting-and-interpreting-models.html#cb399-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="fitting-and-interpreting-models.html#cb400-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
+<span id="cb400-2"><a href="fitting-and-interpreting-models.html#cb400-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>It’s easier to check normality if we plot the line that the points should fall on: if we think the points come from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution, they should lie on a line with intercept <span class="math inline">\(\mu\)</span> and slope <span class="math inline">\(\sigma\)</span> (the standard deviation).</p>
 <p>In the linear model, we assume that the mean of the error terms is zero. We don’t know what their variance should be, but we can estimate it using the variance of the residuals.</p>
 <p>Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="fitting-and-interpreting-models.html#cb400-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb400-2"><a href="fitting-and-interpreting-models.html#cb400-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb400-3"><a href="fitting-and-interpreting-models.html#cb400-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(</span>
-<span id="cb400-4"><a href="fitting-and-interpreting-models.html#cb400-4" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="dv">0</span>,</span>
-<span id="cb400-5"><a href="fitting-and-interpreting-models.html#cb400-5" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">sd</span>(res_singer<span class="sc">$</span>residual)</span>
-<span id="cb400-6"><a href="fitting-and-interpreting-models.html#cb400-6" tabindex="-1"></a>  ))</span>
-<span id="cb400-7"><a href="fitting-and-interpreting-models.html#cb400-7" tabindex="-1"></a><span class="co">#&gt; Warning: Use of `res_singer$residual` is discouraged.</span></span>
-<span id="cb400-8"><a href="fitting-and-interpreting-models.html#cb400-8" tabindex="-1"></a><span class="co">#&gt; ℹ Use `residual` instead.</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="fitting-and-interpreting-models.html#cb401-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
+<span id="cb401-2"><a href="fitting-and-interpreting-models.html#cb401-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb401-3"><a href="fitting-and-interpreting-models.html#cb401-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(</span>
+<span id="cb401-4"><a href="fitting-and-interpreting-models.html#cb401-4" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="dv">0</span>,</span>
+<span id="cb401-5"><a href="fitting-and-interpreting-models.html#cb401-5" tabindex="-1"></a>    <span class="at">slope =</span> <span class="fu">sd</span>(res_singer<span class="sc">$</span>residual)</span>
+<span id="cb401-6"><a href="fitting-and-interpreting-models.html#cb401-6" tabindex="-1"></a>  ))</span>
+<span id="cb401-7"><a href="fitting-and-interpreting-models.html#cb401-7" tabindex="-1"></a><span class="co">#&gt; Warning: Use of `res_singer$residual` is discouraged.</span></span>
+<span id="cb401-8"><a href="fitting-and-interpreting-models.html#cb401-8" tabindex="-1"></a><span class="co">#&gt; ℹ Use `residual` instead.</span></span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="the-actually-correct-way" class="section level3 hasAnchor" number="65.2.5">
 <h3><span class="header-section-number">65.2.5</span> The actually correct way<a href="fitting-and-interpreting-models.html#the-actually-correct-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Pedantic note: We should use an <span class="math inline">\(n-8\)</span> denominator instead of <span class="math inline">\(n-1\)</span> in the SD calculation for degrees of freedom reasons. The <span class="math inline">\(n-8\)</span> part is necessary because there are 7 different variables associated with the model we fitted with lm_singer. We can get the SD directly from the linear model:</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="fitting-and-interpreting-models.html#cb401-1" tabindex="-1"></a><span class="fu">sd</span>(res_singer<span class="sc">$</span>residual)</span>
-<span id="cb401-2"><a href="fitting-and-interpreting-models.html#cb401-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.47</span></span>
-<span id="cb401-3"><a href="fitting-and-interpreting-models.html#cb401-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lm_singer)<span class="sc">$</span>sigma, <span class="dv">3</span>)</span>
-<span id="cb401-4"><a href="fitting-and-interpreting-models.html#cb401-4" tabindex="-1"></a><span class="co">#&gt; [1] 2.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="fitting-and-interpreting-models.html#cb402-1" tabindex="-1"></a><span class="fu">sd</span>(res_singer<span class="sc">$</span>residual)</span>
+<span id="cb402-2"><a href="fitting-and-interpreting-models.html#cb402-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.47</span></span>
+<span id="cb402-3"><a href="fitting-and-interpreting-models.html#cb402-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(lm_singer)<span class="sc">$</span>sigma, <span class="dv">3</span>)</span>
+<span id="cb402-4"><a href="fitting-and-interpreting-models.html#cb402-4" tabindex="-1"></a><span class="co">#&gt; [1] 2.5</span></span></code></pre></div>
 <p>However, the difference between this and the SD above is negligible.</p>
 <p>Add the line:</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="fitting-and-interpreting-models.html#cb402-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
-<span id="cb402-2"><a href="fitting-and-interpreting-models.html#cb402-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb402-3"><a href="fitting-and-interpreting-models.html#cb402-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(res_singer<span class="sc">$</span>residual), <span class="at">slope =</span> <span class="fu">summary</span>(lm_singer)<span class="sc">$</span>sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="fitting-and-interpreting-models.html#cb403-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
+<span id="cb403-2"><a href="fitting-and-interpreting-models.html#cb403-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb403-3"><a href="fitting-and-interpreting-models.html#cb403-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(res_singer<span class="sc">$</span>residual), <span class="at">slope =</span> <span class="fu">summary</span>(lm_singer)<span class="sc">$</span>sigma)</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>The straight line isn’t absolutely perfect, but it’s doing a pretty good job.</p>
 </div>
@@ -1639,19 +1639,19 @@ div.csl-indent {
 
 <blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">I FUCKING TOLD HIM</p>&mdash; Kevin M. King (@KMKing_Psych) <a href="https://twitter.com/KMKing_Psych/status/1516598327478865923?ref_src=twsrc%5Etfw">April 20, 2022</a></blockquote>
 
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="fitting-and-interpreting-models.html#cb403-1" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb403-2"><a href="fitting-and-interpreting-models.html#cb403-2" tabindex="-1"></a><span class="fu">check_model</span>(lm_singer)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="fitting-and-interpreting-models.html#cb404-1" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb404-2"><a href="fitting-and-interpreting-models.html#cb404-2" tabindex="-1"></a><span class="fu">check_model</span>(lm_singer)</span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="fitting-and-interpreting-models.html#cb404-1" tabindex="-1"></a><span class="co"># model_performance(lm_singer)</span></span>
-<span id="cb404-2"><a href="fitting-and-interpreting-models.html#cb404-2" tabindex="-1"></a></span>
-<span id="cb404-3"><a href="fitting-and-interpreting-models.html#cb404-3" tabindex="-1"></a><span class="co"># QQ-plot</span></span>
-<span id="cb404-4"><a href="fitting-and-interpreting-models.html#cb404-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;qq&quot;</span>)</span>
-<span id="cb404-5"><a href="fitting-and-interpreting-models.html#cb404-5" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="fitting-and-interpreting-models.html#cb405-1" tabindex="-1"></a><span class="co"># model_performance(lm_singer)</span></span>
+<span id="cb405-2"><a href="fitting-and-interpreting-models.html#cb405-2" tabindex="-1"></a></span>
+<span id="cb405-3"><a href="fitting-and-interpreting-models.html#cb405-3" tabindex="-1"></a><span class="co"># QQ-plot</span></span>
+<span id="cb405-4"><a href="fitting-and-interpreting-models.html#cb405-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;qq&quot;</span>)</span>
+<span id="cb405-5"><a href="fitting-and-interpreting-models.html#cb405-5" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="fitting-and-interpreting-models.html#cb405-1" tabindex="-1"></a></span>
-<span id="cb405-2"><a href="fitting-and-interpreting-models.html#cb405-2" tabindex="-1"></a><span class="co"># PP-plot</span></span>
-<span id="cb405-3"><a href="fitting-and-interpreting-models.html#cb405-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;pp&quot;</span>)</span>
-<span id="cb405-4"><a href="fitting-and-interpreting-models.html#cb405-4" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="fitting-and-interpreting-models.html#cb406-1" tabindex="-1"></a></span>
+<span id="cb406-2"><a href="fitting-and-interpreting-models.html#cb406-2" tabindex="-1"></a><span class="co"># PP-plot</span></span>
+<span id="cb406-3"><a href="fitting-and-interpreting-models.html#cb406-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;pp&quot;</span>)</span>
+<span id="cb406-4"><a href="fitting-and-interpreting-models.html#cb406-4" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
 <p><img src="1001_fitting_files/figure-html/unnamed-chunk-23-3.png" width="672" /></p>
 </div>
 </div>

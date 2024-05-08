@@ -113,23 +113,54 @@ ggplot(df, aes(x = age, fill = seed)) +
 **1.2.** Consider the histograms of the age distribution that we've generated (as well as two more I added). What do you notice about the age distribution of our colonists? How does the seed affect the spread of the distribution?
 
 
-What roles would these colonists have? Let's decide. We need engineers, scientists, and medics in equal numbers.
-We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to simulate this categorical variable.
+What roles would these colonists have? Let's decide..... We need engineers, scientists, and medics in equal numbers.
 
-```{r exercise1.2, error=TRUE}
 
-df_colonists$role <- rep(c("engineer", "scientist", "medic"), length.out = 100)
+We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to simulate this categorical variable. I've demonstrated several ways you can use `rep()` to create the `role` variable. Try them out. 
 
+
+```{r exercise1.3_examples, error=TRUE}
+set.seed(1)
+role1 <- rep(c("engineer", "scientist", "medic"), 
+             length.out = 100)
+# this works if we want to set a specific number of each role
+role2 <- rep(c("engineer", "scientist", "medic"), 
+             each = 34, 
+             length.out = 100)
+
+role3 <- rep(c("engineer", "scientist", "medic"), 
+             times = c(33, 33, 33), 
+             length.out = 100)
+             
+# if you want to use sampling weights
+role4 <- sample(c("engineer", "scientist", "medic"), 
+                replace = TRUE, 
+                size = 100, prob = c(1,1,1))
 ```
 
 ```{r, pie}
-ggplot(df_colonists, aes(x = "", fill = role)) +
-  geom_bar(width = 1) +
-  coord_polar("y") +
-  labs(title = "Pie Chart of Colonist Roles", fill = "Role") +
+df <- data.frame( role = c(role1, role2, role3,role4), 
+                  method = c(rep("Method A", length(role1)),
+                           rep("Method B", length(role2)),
+                           rep("Method C", length(role3)),
+                           rep("Method D", length(role4))))
+
+ggplot(df, aes(x = role, fill = method)) +
+  geom_bar(position = position_dodge()) +
+  labs(title = "Distribution of Colonists by Method", x = "Role", y = "Count") +
+  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
   theme_minimal()
 
 ```
+
+
+**1.3.** Create a role variable that suites the needs of your colony, and explain why you chose that method.
+
+```{r exercise1.3solution, error=TRUE,include=FALSE}
+df_colonists$role <- role1 
+
+```
+
 
 Next, we'll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.
 
@@ -139,9 +170,9 @@ Examine the arguments for `runif()`, using the `?runif` command in R. Notice tha
 
 On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Gauging Astronaut Readiness; Musk, `r round(as.numeric(format(Sys.Date(), "%Y"))+1,digits=0)`) scale, which ranges from 0 to 100. Like the suspiciously-similar Apgar score for newborns, a score of 0 indicates that a colonist has no signs of life: no heartbeat, no breathing, no response to stimulation, no muscle tone, and central cyanosis/pallor. A score of 100 indicates a colonist in perfect health. Take this scoring into consideration when you simulate the health of your colonists.
 
-**1.3.**  Add a uniformally-distributed MARSGAR variable to your colony.
+**1.4.**  Add a uniformally-distributed MARSGAR variable to your colony.
 
-```{r exercise1.3, error=TRUE} 
+```{r exercise1.4, error=TRUE} 
 set.seed(123)
 
 df_colonists$marsgar <- 1 # "replace this with your code"
@@ -149,7 +180,7 @@ df_colonists$marsgar <- 1 # "replace this with your code"
 ```
 
 
-```{r exercise1.3solution, error=TRUE} 
+```{r exercise1.4solution, error=TRUE} 
 set.seed(123)
 
 df_colonists$marsgar <- runif(100, min = 50, max = 100)
@@ -282,7 +313,11 @@ df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colon
 
 ### Exploring Correlations with mvrnorm
 
-Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits.
+Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits, as well as considering the implications for selecting colonists with specific attributes.
+
+
+
+
 
 
 <!-- 
@@ -304,7 +339,8 @@ library(MASS)
 
 # Define mean and covariance matrix
 mean_traits <- c(50, 50)
-cov_matrix <- matrix(c(100, 50, 50, 100), ncol = 2)
+cov_matrix <- matrix(c(100, 50, 
+                       50, 100), ncol = 2)
 
 # Generate correlated data
 

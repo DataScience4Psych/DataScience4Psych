@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-05-07" />
+<meta name="date" content="2024-05-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1513,22 +1513,22 @@ div.csl-indent {
 <h1><span class="header-section-number">79</span> Notes on Hypothesis Testing<a href="notes-on-hypothesis-testing.html#notes-on-hypothesis-testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="hypothesis-testing-for-a-single-proportion" class="section level2 hasAnchor" number="79.1">
 <h2><span class="header-section-number">79.1</span> Hypothesis testing for a single proportion<a href="notes-on-hypothesis-testing.html#hypothesis-testing-for-a-single-proportion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="notes-on-hypothesis-testing.html#cb442-1" tabindex="-1"></a><span class="do">## Packages</span></span>
-<span id="cb442-2"><a href="notes-on-hypothesis-testing.html#cb442-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb442-3"><a href="notes-on-hypothesis-testing.html#cb442-3" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="notes-on-hypothesis-testing.html#cb443-1" tabindex="-1"></a><span class="do">## Packages</span></span>
+<span id="cb443-2"><a href="notes-on-hypothesis-testing.html#cb443-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb443-3"><a href="notes-on-hypothesis-testing.html#cb443-3" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
 <div id="case-study-organ-donors" class="section level3 hasAnchor" number="79.1.1">
 <h3><span class="header-section-number">79.1.1</span> Case Study: Organ Donors<a href="notes-on-hypothesis-testing.html#case-study-organ-donors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Organ donors may seek the assistance of a medical consultant to help them navigate the surgical process. The consultant’s goal is to minimize any potential complications during the procedure and recovery. Patients may choose a consultant based on their past clients’ complication rates.</p>
 <p>A consultant marketed her services by highlighting her exceptional track record. She stated that while the average complication rate for liver donor surgeries in the US is 10%, only 3 out of 62 surgeries she facilitated resulted in complications. She believes this rate demonstrates the significant impact of her work in reducing complications, making her a top choice for potential patients.</p>
 <div id="data-4" class="section level4 hasAnchor" number="79.1.1.1">
 <h4><span class="header-section-number">79.1.1.1</span> Data<a href="notes-on-hypothesis-testing.html#data-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="notes-on-hypothesis-testing.html#cb443-1" tabindex="-1"></a>organ_donor <span class="sc">%&gt;%</span></span>
-<span id="cb443-2"><a href="notes-on-hypothesis-testing.html#cb443-2" tabindex="-1"></a>  <span class="fu">count</span>(outcome)</span>
-<span id="cb443-3"><a href="notes-on-hypothesis-testing.html#cb443-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb443-4"><a href="notes-on-hypothesis-testing.html#cb443-4" tabindex="-1"></a><span class="co">#&gt;   outcome             n</span></span>
-<span id="cb443-5"><a href="notes-on-hypothesis-testing.html#cb443-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;int&gt;</span></span>
-<span id="cb443-6"><a href="notes-on-hypothesis-testing.html#cb443-6" tabindex="-1"></a><span class="co">#&gt; 1 complication        3</span></span>
-<span id="cb443-7"><a href="notes-on-hypothesis-testing.html#cb443-7" tabindex="-1"></a><span class="co">#&gt; 2 no complication    59</span></span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="notes-on-hypothesis-testing.html#cb444-1" tabindex="-1"></a>organ_donor <span class="sc">%&gt;%</span></span>
+<span id="cb444-2"><a href="notes-on-hypothesis-testing.html#cb444-2" tabindex="-1"></a>  <span class="fu">count</span>(outcome)</span>
+<span id="cb444-3"><a href="notes-on-hypothesis-testing.html#cb444-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span id="cb444-4"><a href="notes-on-hypothesis-testing.html#cb444-4" tabindex="-1"></a><span class="co">#&gt;   outcome             n</span></span>
+<span id="cb444-5"><a href="notes-on-hypothesis-testing.html#cb444-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;int&gt;</span></span>
+<span id="cb444-6"><a href="notes-on-hypothesis-testing.html#cb444-6" tabindex="-1"></a><span class="co">#&gt; 1 complication        3</span></span>
+<span id="cb444-7"><a href="notes-on-hypothesis-testing.html#cb444-7" tabindex="-1"></a><span class="co">#&gt; 2 no complication    59</span></span></code></pre></div>
 </div>
 </div>
 <div id="parameter-vs.-statistic" class="section level3 hasAnchor" number="79.1.2">
@@ -1630,17 +1630,17 @@ div.csl-indent {
 </div>
 <div id="using-tidymodels-to-generate-the-null-distribution" class="section level3 hasAnchor" number="79.1.11">
 <h3><span class="header-section-number">79.1.11</span> Using tidymodels to generate the null distribution<a href="notes-on-hypothesis-testing.html#using-tidymodels-to-generate-the-null-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="notes-on-hypothesis-testing.html#cb447-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> organ_donor <span class="sc">%&gt;%</span></span>
-<span id="cb447-2"><a href="notes-on-hypothesis-testing.html#cb447-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome,</span>
-<span id="cb447-3"><a href="notes-on-hypothesis-testing.html#cb447-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;complication&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb447-4"><a href="notes-on-hypothesis-testing.html#cb447-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb447-5"><a href="notes-on-hypothesis-testing.html#cb447-5" tabindex="-1"></a>              <span class="at">p =</span> <span class="fu">c</span>(<span class="st">&quot;complication&quot;</span> <span class="ot">=</span> <span class="fl">0.10</span>,</span>
-<span id="cb447-6"><a href="notes-on-hypothesis-testing.html#cb447-6" tabindex="-1"></a>                    <span class="st">&quot;no complication&quot;</span> <span class="ot">=</span> <span class="fl">0.90</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-7"><a href="notes-on-hypothesis-testing.html#cb447-7" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">100</span>,</span>
-<span id="cb447-8"><a href="notes-on-hypothesis-testing.html#cb447-8" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">&quot;simulate&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb447-9"><a href="notes-on-hypothesis-testing.html#cb447-9" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
-<span id="cb447-10"><a href="notes-on-hypothesis-testing.html#cb447-10" tabindex="-1"></a><span class="co">#&gt; The `&quot;simulate&quot;` generation type has been renamed to `&quot;draw&quot;`. Use `type =</span></span>
-<span id="cb447-11"><a href="notes-on-hypothesis-testing.html#cb447-11" tabindex="-1"></a><span class="co">#&gt; &quot;draw&quot;` instead to quiet this message.</span></span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="notes-on-hypothesis-testing.html#cb448-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> organ_donor <span class="sc">%&gt;%</span></span>
+<span id="cb448-2"><a href="notes-on-hypothesis-testing.html#cb448-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome,</span>
+<span id="cb448-3"><a href="notes-on-hypothesis-testing.html#cb448-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;complication&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb448-4"><a href="notes-on-hypothesis-testing.html#cb448-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb448-5"><a href="notes-on-hypothesis-testing.html#cb448-5" tabindex="-1"></a>              <span class="at">p =</span> <span class="fu">c</span>(<span class="st">&quot;complication&quot;</span> <span class="ot">=</span> <span class="fl">0.10</span>,</span>
+<span id="cb448-6"><a href="notes-on-hypothesis-testing.html#cb448-6" tabindex="-1"></a>                    <span class="st">&quot;no complication&quot;</span> <span class="ot">=</span> <span class="fl">0.90</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb448-7"><a href="notes-on-hypothesis-testing.html#cb448-7" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">100</span>,</span>
+<span id="cb448-8"><a href="notes-on-hypothesis-testing.html#cb448-8" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">&quot;simulate&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb448-9"><a href="notes-on-hypothesis-testing.html#cb448-9" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
+<span id="cb448-10"><a href="notes-on-hypothesis-testing.html#cb448-10" tabindex="-1"></a><span class="co">#&gt; The `&quot;simulate&quot;` generation type has been renamed to `&quot;draw&quot;`. Use `type =</span></span>
+<span id="cb448-11"><a href="notes-on-hypothesis-testing.html#cb448-11" tabindex="-1"></a><span class="co">#&gt; &quot;draw&quot;` instead to quiet this message.</span></span></code></pre></div>
 <pre><code>#&gt; Response: outcome (factor)
 #&gt; Null Hypothesis: point
 #&gt; # A tibble: 100 × 2
@@ -1663,9 +1663,9 @@ div.csl-indent {
 <blockquote>
 <p>What would you expect the center of the null distribution to be?</p>
 </blockquote>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="notes-on-hypothesis-testing.html#cb449-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb449-2"><a href="notes-on-hypothesis-testing.html#cb449-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
-<span id="cb449-3"><a href="notes-on-hypothesis-testing.html#cb449-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Null distribution&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="notes-on-hypothesis-testing.html#cb450-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb450-2"><a href="notes-on-hypothesis-testing.html#cb450-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
+<span id="cb450-3"><a href="notes-on-hypothesis-testing.html#cb450-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Null distribution&quot;</span>)</span></code></pre></div>
 <p><img src="1202_hypothesis_files/figure-html/unnamed-chunk-10-1.png" width="40%" /></p>
 </div>
 <div id="calculating-the-p-value-visually" class="section level3 hasAnchor" number="79.1.13">
@@ -1677,13 +1677,13 @@ div.csl-indent {
 </div>
 <div id="calculating-the-p-value-directly" class="section level3 hasAnchor" number="79.1.14">
 <h3><span class="header-section-number">79.1.14</span> Calculating the p-value, directly<a href="notes-on-hypothesis-testing.html#calculating-the-p-value-directly" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="notes-on-hypothesis-testing.html#cb450-1" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb450-2"><a href="notes-on-hypothesis-testing.html#cb450-2" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> (<span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb450-3"><a href="notes-on-hypothesis-testing.html#cb450-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
-<span id="cb450-4"><a href="notes-on-hypothesis-testing.html#cb450-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb450-5"><a href="notes-on-hypothesis-testing.html#cb450-5" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
-<span id="cb450-6"><a href="notes-on-hypothesis-testing.html#cb450-6" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
-<span id="cb450-7"><a href="notes-on-hypothesis-testing.html#cb450-7" tabindex="-1"></a><span class="co">#&gt; 1    0.12</span></span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="notes-on-hypothesis-testing.html#cb451-1" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb451-2"><a href="notes-on-hypothesis-testing.html#cb451-2" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> (<span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb451-3"><a href="notes-on-hypothesis-testing.html#cb451-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
+<span id="cb451-4"><a href="notes-on-hypothesis-testing.html#cb451-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb451-5"><a href="notes-on-hypothesis-testing.html#cb451-5" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
+<span id="cb451-6"><a href="notes-on-hypothesis-testing.html#cb451-6" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
+<span id="cb451-7"><a href="notes-on-hypothesis-testing.html#cb451-7" tabindex="-1"></a><span class="co">#&gt; 1    0.12</span></span></code></pre></div>
 </div>
 <div id="significance-level" class="section level3 hasAnchor" number="79.1.15">
 <h3><span class="header-section-number">79.1.15</span> Significance level<a href="notes-on-hypothesis-testing.html#significance-level" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1710,31 +1710,31 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 </div>
 <div id="run-the-test" class="section level3 hasAnchor" number="79.1.18">
 <h3><span class="header-section-number">79.1.18</span> Run the test<a href="notes-on-hypothesis-testing.html#run-the-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="notes-on-hypothesis-testing.html#cb451-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> organ_donor <span class="sc">%&gt;%</span></span>
-<span id="cb451-2"><a href="notes-on-hypothesis-testing.html#cb451-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome,</span>
-<span id="cb451-3"><a href="notes-on-hypothesis-testing.html#cb451-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;complication&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb451-4"><a href="notes-on-hypothesis-testing.html#cb451-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb451-5"><a href="notes-on-hypothesis-testing.html#cb451-5" tabindex="-1"></a>              <span class="at">p =</span> <span class="fu">c</span>(<span class="st">&quot;complication&quot;</span> <span class="ot">=</span> <span class="fl">0.10</span>,</span>
-<span id="cb451-6"><a href="notes-on-hypothesis-testing.html#cb451-6" tabindex="-1"></a>                    <span class="st">&quot;no complication&quot;</span> <span class="ot">=</span> <span class="fl">0.90</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb451-7"><a href="notes-on-hypothesis-testing.html#cb451-7" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>,</span>
-<span id="cb451-8"><a href="notes-on-hypothesis-testing.html#cb451-8" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">&quot;simulate&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb451-9"><a href="notes-on-hypothesis-testing.html#cb451-9" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
-<span id="cb451-10"><a href="notes-on-hypothesis-testing.html#cb451-10" tabindex="-1"></a><span class="co">#&gt; The `&quot;simulate&quot;` generation type has been renamed to `&quot;draw&quot;`. Use `type = &quot;draw&quot;` instead to quiet this message.</span></span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="notes-on-hypothesis-testing.html#cb452-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> organ_donor <span class="sc">%&gt;%</span></span>
+<span id="cb452-2"><a href="notes-on-hypothesis-testing.html#cb452-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome,</span>
+<span id="cb452-3"><a href="notes-on-hypothesis-testing.html#cb452-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;complication&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb452-4"><a href="notes-on-hypothesis-testing.html#cb452-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb452-5"><a href="notes-on-hypothesis-testing.html#cb452-5" tabindex="-1"></a>              <span class="at">p =</span> <span class="fu">c</span>(<span class="st">&quot;complication&quot;</span> <span class="ot">=</span> <span class="fl">0.10</span>,</span>
+<span id="cb452-6"><a href="notes-on-hypothesis-testing.html#cb452-6" tabindex="-1"></a>                    <span class="st">&quot;no complication&quot;</span> <span class="ot">=</span> <span class="fl">0.90</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb452-7"><a href="notes-on-hypothesis-testing.html#cb452-7" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>,</span>
+<span id="cb452-8"><a href="notes-on-hypothesis-testing.html#cb452-8" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">&quot;simulate&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb452-9"><a href="notes-on-hypothesis-testing.html#cb452-9" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
+<span id="cb452-10"><a href="notes-on-hypothesis-testing.html#cb452-10" tabindex="-1"></a><span class="co">#&gt; The `&quot;simulate&quot;` generation type has been renamed to `&quot;draw&quot;`. Use `type = &quot;draw&quot;` instead to quiet this message.</span></span></code></pre></div>
 </div>
 <div id="visualize-and-calculate" class="section level3 hasAnchor" number="79.1.19">
 <h3><span class="header-section-number">79.1.19</span> Visualize and calculate<a href="notes-on-hypothesis-testing.html#visualize-and-calculate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="notes-on-hypothesis-testing.html#cb452-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb452-2"><a href="notes-on-hypothesis-testing.html#cb452-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
-<span id="cb452-3"><a href="notes-on-hypothesis-testing.html#cb452-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="notes-on-hypothesis-testing.html#cb453-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb453-2"><a href="notes-on-hypothesis-testing.html#cb453-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
+<span id="cb453-3"><a href="notes-on-hypothesis-testing.html#cb453-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="1202_hypothesis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="notes-on-hypothesis-testing.html#cb453-1" tabindex="-1"></a></span>
-<span id="cb453-2"><a href="notes-on-hypothesis-testing.html#cb453-2" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb453-3"><a href="notes-on-hypothesis-testing.html#cb453-3" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb453-4"><a href="notes-on-hypothesis-testing.html#cb453-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
-<span id="cb453-5"><a href="notes-on-hypothesis-testing.html#cb453-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb453-6"><a href="notes-on-hypothesis-testing.html#cb453-6" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
-<span id="cb453-7"><a href="notes-on-hypothesis-testing.html#cb453-7" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
-<span id="cb453-8"><a href="notes-on-hypothesis-testing.html#cb453-8" tabindex="-1"></a><span class="co">#&gt; 1   0.124</span></span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="notes-on-hypothesis-testing.html#cb454-1" tabindex="-1"></a></span>
+<span id="cb454-2"><a href="notes-on-hypothesis-testing.html#cb454-2" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb454-3"><a href="notes-on-hypothesis-testing.html#cb454-3" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&lt;=</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">62</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb454-4"><a href="notes-on-hypothesis-testing.html#cb454-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
+<span id="cb454-5"><a href="notes-on-hypothesis-testing.html#cb454-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb454-6"><a href="notes-on-hypothesis-testing.html#cb454-6" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
+<span id="cb454-7"><a href="notes-on-hypothesis-testing.html#cb454-7" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
+<span id="cb454-8"><a href="notes-on-hypothesis-testing.html#cb454-8" tabindex="-1"></a><span class="co">#&gt; 1   0.124</span></span></code></pre></div>
 </div>
 </div>
 <div id="one-vs.-two-sided-hypothesis-tests" class="section level2 hasAnchor" number="79.2">
@@ -1772,30 +1772,30 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 <h3><span class="header-section-number">79.3.2</span> Study description<a href="notes-on-hypothesis-testing.html#study-description" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This study involved 50 participants who were randomly divided into two groups. 34 participants were in the treatment group where they saw someone near them yawn, while 16 participants were in the control group where they did not witness a yawn.</p>
 <p>The data are in the <strong>openintro</strong> package: <code>yawn</code></p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="notes-on-hypothesis-testing.html#cb454-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
-<span id="cb454-2"><a href="notes-on-hypothesis-testing.html#cb454-2" tabindex="-1"></a>  <span class="fu">count</span>(group, result)</span>
-<span id="cb454-3"><a href="notes-on-hypothesis-testing.html#cb454-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
-<span id="cb454-4"><a href="notes-on-hypothesis-testing.html#cb454-4" tabindex="-1"></a><span class="co">#&gt;   group result       n</span></span>
-<span id="cb454-5"><a href="notes-on-hypothesis-testing.html#cb454-5" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;int&gt;</span></span>
-<span id="cb454-6"><a href="notes-on-hypothesis-testing.html#cb454-6" tabindex="-1"></a><span class="co">#&gt; 1 ctrl  not yawn    12</span></span>
-<span id="cb454-7"><a href="notes-on-hypothesis-testing.html#cb454-7" tabindex="-1"></a><span class="co">#&gt; 2 ctrl  yawn         4</span></span>
-<span id="cb454-8"><a href="notes-on-hypothesis-testing.html#cb454-8" tabindex="-1"></a><span class="co">#&gt; 3 trmt  not yawn    24</span></span>
-<span id="cb454-9"><a href="notes-on-hypothesis-testing.html#cb454-9" tabindex="-1"></a><span class="co">#&gt; 4 trmt  yawn        10</span></span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="notes-on-hypothesis-testing.html#cb455-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
+<span id="cb455-2"><a href="notes-on-hypothesis-testing.html#cb455-2" tabindex="-1"></a>  <span class="fu">count</span>(group, result)</span>
+<span id="cb455-3"><a href="notes-on-hypothesis-testing.html#cb455-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span id="cb455-4"><a href="notes-on-hypothesis-testing.html#cb455-4" tabindex="-1"></a><span class="co">#&gt;   group result       n</span></span>
+<span id="cb455-5"><a href="notes-on-hypothesis-testing.html#cb455-5" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;int&gt;</span></span>
+<span id="cb455-6"><a href="notes-on-hypothesis-testing.html#cb455-6" tabindex="-1"></a><span class="co">#&gt; 1 ctrl  not yawn    12</span></span>
+<span id="cb455-7"><a href="notes-on-hypothesis-testing.html#cb455-7" tabindex="-1"></a><span class="co">#&gt; 2 ctrl  yawn         4</span></span>
+<span id="cb455-8"><a href="notes-on-hypothesis-testing.html#cb455-8" tabindex="-1"></a><span class="co">#&gt; 3 trmt  not yawn    24</span></span>
+<span id="cb455-9"><a href="notes-on-hypothesis-testing.html#cb455-9" tabindex="-1"></a><span class="co">#&gt; 4 trmt  yawn        10</span></span></code></pre></div>
 </div>
 <div id="proportion-of-yawners" class="section level3 hasAnchor" number="79.3.3">
 <h3><span class="header-section-number">79.3.3</span> Proportion of yawners<a href="notes-on-hypothesis-testing.html#proportion-of-yawners" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="notes-on-hypothesis-testing.html#cb455-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
-<span id="cb455-2"><a href="notes-on-hypothesis-testing.html#cb455-2" tabindex="-1"></a>  <span class="fu">count</span>(group, result) <span class="sc">%&gt;%</span></span>
-<span id="cb455-3"><a href="notes-on-hypothesis-testing.html#cb455-3" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span></span>
-<span id="cb455-4"><a href="notes-on-hypothesis-testing.html#cb455-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_hat =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
-<span id="cb455-5"><a href="notes-on-hypothesis-testing.html#cb455-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
-<span id="cb455-6"><a href="notes-on-hypothesis-testing.html#cb455-6" tabindex="-1"></a><span class="co">#&gt; # Groups:   group [2]</span></span>
-<span id="cb455-7"><a href="notes-on-hypothesis-testing.html#cb455-7" tabindex="-1"></a><span class="co">#&gt;   group result       n p_hat</span></span>
-<span id="cb455-8"><a href="notes-on-hypothesis-testing.html#cb455-8" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb455-9"><a href="notes-on-hypothesis-testing.html#cb455-9" tabindex="-1"></a><span class="co">#&gt; 1 ctrl  not yawn    12 0.75 </span></span>
-<span id="cb455-10"><a href="notes-on-hypothesis-testing.html#cb455-10" tabindex="-1"></a><span class="co">#&gt; 2 ctrl  yawn         4 0.25 </span></span>
-<span id="cb455-11"><a href="notes-on-hypothesis-testing.html#cb455-11" tabindex="-1"></a><span class="co">#&gt; 3 trmt  not yawn    24 0.706</span></span>
-<span id="cb455-12"><a href="notes-on-hypothesis-testing.html#cb455-12" tabindex="-1"></a><span class="co">#&gt; 4 trmt  yawn        10 0.294</span></span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="notes-on-hypothesis-testing.html#cb456-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
+<span id="cb456-2"><a href="notes-on-hypothesis-testing.html#cb456-2" tabindex="-1"></a>  <span class="fu">count</span>(group, result) <span class="sc">%&gt;%</span></span>
+<span id="cb456-3"><a href="notes-on-hypothesis-testing.html#cb456-3" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span></span>
+<span id="cb456-4"><a href="notes-on-hypothesis-testing.html#cb456-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_hat =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
+<span id="cb456-5"><a href="notes-on-hypothesis-testing.html#cb456-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb456-6"><a href="notes-on-hypothesis-testing.html#cb456-6" tabindex="-1"></a><span class="co">#&gt; # Groups:   group [2]</span></span>
+<span id="cb456-7"><a href="notes-on-hypothesis-testing.html#cb456-7" tabindex="-1"></a><span class="co">#&gt;   group result       n p_hat</span></span>
+<span id="cb456-8"><a href="notes-on-hypothesis-testing.html#cb456-8" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb456-9"><a href="notes-on-hypothesis-testing.html#cb456-9" tabindex="-1"></a><span class="co">#&gt; 1 ctrl  not yawn    12 0.75 </span></span>
+<span id="cb456-10"><a href="notes-on-hypothesis-testing.html#cb456-10" tabindex="-1"></a><span class="co">#&gt; 2 ctrl  yawn         4 0.25 </span></span>
+<span id="cb456-11"><a href="notes-on-hypothesis-testing.html#cb456-11" tabindex="-1"></a><span class="co">#&gt; 3 trmt  not yawn    24 0.706</span></span>
+<span id="cb456-12"><a href="notes-on-hypothesis-testing.html#cb456-12" tabindex="-1"></a><span class="co">#&gt; 4 trmt  yawn        10 0.294</span></span></code></pre></div>
 <ul>
 <li>Proportion of yawners in the treatment group: <span class="math inline">\(\frac{10}{34} = 0.2941\)</span></li>
 <li>Proportion of yawners in the control group: <span class="math inline">\(\frac{4}{16} = 0.25\)</span></li>
@@ -1871,14 +1871,14 @@ on the board.</p></li>
 </div>
 <div id="simulation-by-computation" class="section level3 hasAnchor" number="79.3.10">
 <h3><span class="header-section-number">79.3.10</span> Simulation by computation<a href="notes-on-hypothesis-testing.html#simulation-by-computation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="notes-on-hypothesis-testing.html#cb457-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> yawn <span class="sc">%&gt;%</span></span>
-<span id="cb457-2"><a href="notes-on-hypothesis-testing.html#cb457-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result,</span>
-<span id="cb457-3"><a href="notes-on-hypothesis-testing.html#cb457-3" tabindex="-1"></a>          <span class="at">explanatory =</span> group, </span>
-<span id="cb457-4"><a href="notes-on-hypothesis-testing.html#cb457-4" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb457-5"><a href="notes-on-hypothesis-testing.html#cb457-5" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb457-6"><a href="notes-on-hypothesis-testing.html#cb457-6" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb457-7"><a href="notes-on-hypothesis-testing.html#cb457-7" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
-<span id="cb457-8"><a href="notes-on-hypothesis-testing.html#cb457-8" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;trmt&quot;</span>, <span class="st">&quot;ctrl&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="notes-on-hypothesis-testing.html#cb458-1" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> yawn <span class="sc">%&gt;%</span></span>
+<span id="cb458-2"><a href="notes-on-hypothesis-testing.html#cb458-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result,</span>
+<span id="cb458-3"><a href="notes-on-hypothesis-testing.html#cb458-3" tabindex="-1"></a>          <span class="at">explanatory =</span> group, </span>
+<span id="cb458-4"><a href="notes-on-hypothesis-testing.html#cb458-4" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb458-5"><a href="notes-on-hypothesis-testing.html#cb458-5" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb458-6"><a href="notes-on-hypothesis-testing.html#cb458-6" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb458-7"><a href="notes-on-hypothesis-testing.html#cb458-7" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
+<span id="cb458-8"><a href="notes-on-hypothesis-testing.html#cb458-8" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;trmt&quot;</span>, <span class="st">&quot;ctrl&quot;</span>))</span></code></pre></div>
 <ul>
 <li>Start with the data frame</li>
 <li><strong>Specify the variables</strong>
@@ -1886,37 +1886,37 @@ on the board.</p></li>
 <li><strong>Since the response variable is categorical, specify the level which should be considered as “success”</strong></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="notes-on-hypothesis-testing.html#cb458-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
-<span id="cb458-2"><a href="notes-on-hypothesis-testing.html#cb458-2" tabindex="-1"></a>{{  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
-<span id="cb458-3"><a href="notes-on-hypothesis-testing.html#cb458-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) }}</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="notes-on-hypothesis-testing.html#cb459-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
+<span id="cb459-2"><a href="notes-on-hypothesis-testing.html#cb459-2" tabindex="-1"></a>{{  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
+<span id="cb459-3"><a href="notes-on-hypothesis-testing.html#cb459-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) }}</span></code></pre></div>
 <ul>
 <li><strong>State the null hypothesis (yawning and whether or not you see someone yawn are independent)</strong></li>
-</ul>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="notes-on-hypothesis-testing.html#cb459-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
-<span id="cb459-2"><a href="notes-on-hypothesis-testing.html#cb459-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
-<span id="cb459-3"><a href="notes-on-hypothesis-testing.html#cb459-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb459-4"><a href="notes-on-hypothesis-testing.html#cb459-4" tabindex="-1"></a>{{ <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) }}</span></code></pre></div>
-<ul>
-<li><strong>Generate simulated differences via permutation</strong></li>
 </ul>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="notes-on-hypothesis-testing.html#cb460-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
 <span id="cb460-2"><a href="notes-on-hypothesis-testing.html#cb460-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
 <span id="cb460-3"><a href="notes-on-hypothesis-testing.html#cb460-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb460-4"><a href="notes-on-hypothesis-testing.html#cb460-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb460-5"><a href="notes-on-hypothesis-testing.html#cb460-5" tabindex="-1"></a>{{ <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) }}</span></code></pre></div>
+<span id="cb460-4"><a href="notes-on-hypothesis-testing.html#cb460-4" tabindex="-1"></a>{{ <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) }}</span></code></pre></div>
+<ul>
+<li><strong>Generate simulated differences via permutation</strong></li>
+</ul>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="notes-on-hypothesis-testing.html#cb461-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
+<span id="cb461-2"><a href="notes-on-hypothesis-testing.html#cb461-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
+<span id="cb461-3"><a href="notes-on-hypothesis-testing.html#cb461-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb461-4"><a href="notes-on-hypothesis-testing.html#cb461-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb461-5"><a href="notes-on-hypothesis-testing.html#cb461-5" tabindex="-1"></a>{{ <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) }}</span></code></pre></div>
 <ul>
 <li><strong>Calculate the sample statistic of interest (difference in proportions)</strong>
 <ul>
 <li><strong>Since the explanatory variable is categorical, specify the order in which the subtraction should occur for the calculation of the sample statistic, <span class="math inline">\((\hat{p}_{treatment} - \hat{p}_{control})\)</span>.</strong></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="notes-on-hypothesis-testing.html#cb461-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
-<span id="cb461-2"><a href="notes-on-hypothesis-testing.html#cb461-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
-<span id="cb461-3"><a href="notes-on-hypothesis-testing.html#cb461-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb461-4"><a href="notes-on-hypothesis-testing.html#cb461-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb461-5"><a href="notes-on-hypothesis-testing.html#cb461-5" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb461-6"><a href="notes-on-hypothesis-testing.html#cb461-6" tabindex="-1"></a>{{ <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
-<span id="cb461-7"><a href="notes-on-hypothesis-testing.html#cb461-7" tabindex="-1"></a>           <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;trmt&quot;</span>, <span class="st">&quot;ctrl&quot;</span>)) }}</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="notes-on-hypothesis-testing.html#cb462-1" tabindex="-1"></a>yawn <span class="sc">%&gt;%</span></span>
+<span id="cb462-2"><a href="notes-on-hypothesis-testing.html#cb462-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> result, <span class="at">explanatory =</span> group, </span>
+<span id="cb462-3"><a href="notes-on-hypothesis-testing.html#cb462-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-4"><a href="notes-on-hypothesis-testing.html#cb462-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-5"><a href="notes-on-hypothesis-testing.html#cb462-5" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-6"><a href="notes-on-hypothesis-testing.html#cb462-6" tabindex="-1"></a>{{ <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
+<span id="cb462-7"><a href="notes-on-hypothesis-testing.html#cb462-7" tabindex="-1"></a>           <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;trmt&quot;</span>, <span class="st">&quot;ctrl&quot;</span>)) }}</span></code></pre></div>
 </div>
 <div id="recap-2" class="section level3 hasAnchor" number="79.3.11">
 <h3><span class="header-section-number">79.3.11</span> Recap<a href="notes-on-hypothesis-testing.html#recap-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1934,22 +1934,22 @@ on the board.</p></li>
 <li>Since the explanatory variable is categorical, specify the order in which the subtraction should occur for the calculation of the sample statistic, <span class="math inline">\((\hat{p}_{treatment} - \hat{p}_{control})\)</span>.</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="notes-on-hypothesis-testing.html#cb462-1" tabindex="-1"></a>{{null_dist <span class="ot">&lt;-</span> yawn <span class="sc">%&gt;%</span> }}</span>
-<span id="cb462-2"><a href="notes-on-hypothesis-testing.html#cb462-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome, <span class="at">explanatory =</span> group, </span>
-<span id="cb462-3"><a href="notes-on-hypothesis-testing.html#cb462-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb462-4"><a href="notes-on-hypothesis-testing.html#cb462-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb462-5"><a href="notes-on-hypothesis-testing.html#cb462-5" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb462-6"><a href="notes-on-hypothesis-testing.html#cb462-6" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
-<span id="cb462-7"><a href="notes-on-hypothesis-testing.html#cb462-7" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;treatment&quot;</span>, <span class="st">&quot;control&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="notes-on-hypothesis-testing.html#cb463-1" tabindex="-1"></a>{{null_dist <span class="ot">&lt;-</span> yawn <span class="sc">%&gt;%</span> }}</span>
+<span id="cb463-2"><a href="notes-on-hypothesis-testing.html#cb463-2" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> outcome, <span class="at">explanatory =</span> group, </span>
+<span id="cb463-3"><a href="notes-on-hypothesis-testing.html#cb463-3" tabindex="-1"></a>          <span class="at">success =</span> <span class="st">&quot;yawn&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb463-4"><a href="notes-on-hypothesis-testing.html#cb463-4" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb463-5"><a href="notes-on-hypothesis-testing.html#cb463-5" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="dv">100</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb463-6"><a href="notes-on-hypothesis-testing.html#cb463-6" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, </span>
+<span id="cb463-7"><a href="notes-on-hypothesis-testing.html#cb463-7" tabindex="-1"></a>            <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;treatment&quot;</span>, <span class="st">&quot;control&quot;</span>))</span></code></pre></div>
 </div>
 <div id="visualizing-the-null-distribution-1" class="section level3 hasAnchor" number="79.3.12">
 <h3><span class="header-section-number">79.3.12</span> Visualizing the null distribution<a href="notes-on-hypothesis-testing.html#visualizing-the-null-distribution-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <blockquote>
 <p>What would you expect the center of the null distribution to be?</p>
 </blockquote>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="notes-on-hypothesis-testing.html#cb463-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb463-2"><a href="notes-on-hypothesis-testing.html#cb463-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
-<span id="cb463-3"><a href="notes-on-hypothesis-testing.html#cb463-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Null distribution&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="notes-on-hypothesis-testing.html#cb464-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> null_dist, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb464-2"><a href="notes-on-hypothesis-testing.html#cb464-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span></span>
+<span id="cb464-3"><a href="notes-on-hypothesis-testing.html#cb464-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Null distribution&quot;</span>)</span></code></pre></div>
 <p><img src="1202_hypothesis_files/figure-html/unnamed-chunk-24-1.png" width="70%" /></p>
 </div>
 <div id="calculating-the-p-value-visually-1" class="section level3 hasAnchor" number="79.3.13">
@@ -1961,13 +1961,13 @@ on the board.</p></li>
 </div>
 <div id="calculating-the-p-value-directly-1" class="section level3 hasAnchor" number="79.3.14">
 <h3><span class="header-section-number">79.3.14</span> Calculating the p-value, directly<a href="notes-on-hypothesis-testing.html#calculating-the-p-value-directly-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="notes-on-hypothesis-testing.html#cb464-1" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
-<span id="cb464-2"><a href="notes-on-hypothesis-testing.html#cb464-2" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&gt;=</span> <span class="fl">0.0441</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb464-3"><a href="notes-on-hypothesis-testing.html#cb464-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
-<span id="cb464-4"><a href="notes-on-hypothesis-testing.html#cb464-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb464-5"><a href="notes-on-hypothesis-testing.html#cb464-5" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
-<span id="cb464-6"><a href="notes-on-hypothesis-testing.html#cb464-6" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
-<span id="cb464-7"><a href="notes-on-hypothesis-testing.html#cb464-7" tabindex="-1"></a><span class="co">#&gt; 1    0.53</span></span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="notes-on-hypothesis-testing.html#cb465-1" tabindex="-1"></a>null_dist <span class="sc">%&gt;%</span></span>
+<span id="cb465-2"><a href="notes-on-hypothesis-testing.html#cb465-2" tabindex="-1"></a>  <span class="fu">filter</span>(stat <span class="sc">&gt;=</span> <span class="fl">0.0441</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb465-3"><a href="notes-on-hypothesis-testing.html#cb465-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(null_dist))</span>
+<span id="cb465-4"><a href="notes-on-hypothesis-testing.html#cb465-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb465-5"><a href="notes-on-hypothesis-testing.html#cb465-5" tabindex="-1"></a><span class="co">#&gt;   p_value</span></span>
+<span id="cb465-6"><a href="notes-on-hypothesis-testing.html#cb465-6" tabindex="-1"></a><span class="co">#&gt;     &lt;dbl&gt;</span></span>
+<span id="cb465-7"><a href="notes-on-hypothesis-testing.html#cb465-7" tabindex="-1"></a><span class="co">#&gt; 1    0.53</span></span></code></pre></div>
 </div>
 <div id="conclusion-1" class="section level3 hasAnchor" number="79.3.15">
 <h3><span class="header-section-number">79.3.15</span> Conclusion<a href="notes-on-hypothesis-testing.html#conclusion-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>

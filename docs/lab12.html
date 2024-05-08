@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2024-05-07" />
+<meta name="date" content="2024-05-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1511,8 +1511,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="lab12" class="section level1 hasAnchor" number="84">
 <h1><span class="header-section-number">84</span> Lab: Simulating data<a href="lab12.html#lab12" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Welcome to the Mars Colony Simulation Lab! In this session, we embark on a journey not just to another world but into the realm of data science applied in space colonization. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R, preparing you for complex data manipulation and scenario analysis essential for real-world applications.</p>
-<p>In this lab, we will embark on a journey to Mars, simulating potential colonists’ data to plan our future Mars colony. We’ll learn how to create and manipulate datasets in R, simulating various attributes of our colonists, like their skills, health, and adaptability to the Martian environment.</p>
+<p>Welcome to the Mars Colony Simulation Lab! In this lab, we will embark on a journey to Mars, simulating potential colonists’ data to plan our future Mars colony. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R.</p>
 <div id="learning-goals-4" class="section level2 unnumbered hasAnchor">
 <h2>Learning goals<a href="lab12.html#learning-goals-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
@@ -1525,13 +1524,16 @@ div.csl-indent {
 <h2>Getting started and warming up<a href="lab12.html#getting-started-and-warming-up" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="packages-12" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab12.html#packages-12" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this lab, we will work with the <strong>tidyverse</strong>, <strong>ggplot2</strong>, and <strong>PACKAGE</strong> packages. We can install and load them with the following code:</p>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="lab12.html#cb521-1" tabindex="-1"></a><span class="co"># Install and load the tidyverse package</span></span>
-<span id="cb521-2"><a href="lab12.html#cb521-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb521-3"><a href="lab12.html#cb521-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb521-4"><a href="lab12.html#cb521-4" tabindex="-1"></a></span>
-<span id="cb521-5"><a href="lab12.html#cb521-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ggplot2&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb521-6"><a href="lab12.html#cb521-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>In this lab, we will work with the <strong>tidyverse</strong>, <strong>ggplot2</strong>, and <strong>MASS</strong> packages. We can install and load them with the following code:</p>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="lab12.html#cb522-1" tabindex="-1"></a><span class="co"># Install and load the tidyverse package</span></span>
+<span id="cb522-2"><a href="lab12.html#cb522-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb522-3"><a href="lab12.html#cb522-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb522-4"><a href="lab12.html#cb522-4" tabindex="-1"></a></span>
+<span id="cb522-5"><a href="lab12.html#cb522-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ggplot2&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb522-6"><a href="lab12.html#cb522-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb522-7"><a href="lab12.html#cb522-7" tabindex="-1"></a></span>
+<span id="cb522-8"><a href="lab12.html#cb522-8" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;MASS&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb522-9"><a href="lab12.html#cb522-9" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
 </div>
 </div>
 <div id="exercises-10" class="section level2 unnumbered hasAnchor">
@@ -1552,35 +1554,57 @@ div.csl-indent {
 <li>sd = 5: The standard deviation, representing age variability around the mean.</li>
 </ul>
 <p>Here’s code to generate an age distribution:</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="lab12.html#cb522-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb522-2"><a href="lab12.html#cb522-2" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="lab12.html#cb523-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb523-2"><a href="lab12.html#cb523-2" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p><strong>1.1.</strong> Create a dataframe to store your colonists’ attributes. I’ve already gotten you started, but you’ll need to add their ages.</p>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="lab12.html#cb523-1" tabindex="-1"></a>df_colonists <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="co"># this is our id column</span></span>
-<span id="cb523-2"><a href="lab12.html#cb523-2" tabindex="-1"></a>                                      ) <span class="co"># add the age column here</span></span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="lab12.html#cb524-1" tabindex="-1"></a>df_colonists <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="co"># this is our id column</span></span>
+<span id="cb524-2"><a href="lab12.html#cb524-2" tabindex="-1"></a>                                      ) <span class="co"># add the age column here</span></span></code></pre></div>
 <pre><code>## Error in data.frame(id = 1:100, ): argument is missing, with no default</code></pre>
 <p>Now, let’s visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.</p>
 <p><img src="1303_lab_mars_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p><strong>1.2.</strong> Consider the histograms of the age distribution that we’ve generated (as well as two more I added). What do you notice about the age distribution of our colonists? How does the seed affect the spread of the distribution?</p>
-<p>What roles would these colonists have? Let’s decide. We need engineers, scientists, and medics in equal numbers.
-We’ll create a variable, <code>role</code>, with three categories: engineer, scientist, and medic. We’ll use the <code>rep()</code> function to simulate this categorical variable.</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="lab12.html#cb525-1" tabindex="-1"></a>df_colonists<span class="sc">$</span>role <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;engineer&quot;</span>, <span class="st">&quot;scientist&quot;</span>, <span class="st">&quot;medic&quot;</span>), <span class="at">length.out =</span> <span class="dv">100</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="lab12.html#cb526-1" tabindex="-1"></a><span class="fu">ggplot</span>(df_colonists, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> role)) <span class="sc">+</span></span>
-<span id="cb526-2"><a href="lab12.html#cb526-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb526-3"><a href="lab12.html#cb526-3" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
-<span id="cb526-4"><a href="lab12.html#cb526-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pie Chart of Colonist Roles&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Role&quot;</span>) <span class="sc">+</span></span>
-<span id="cb526-5"><a href="lab12.html#cb526-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p>What roles would these colonists have? Let’s decide….. We need engineers, scientists, and medics in equal numbers.</p>
+<p>We’ll create a variable, <code>role</code>, with three categories: engineer, scientist, and medic. We’ll use the <code>rep()</code> function to simulate this categorical variable. I’ve demonstrated several ways you can use <code>rep()</code> to create the <code>role</code> variable. Try them out.</p>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="lab12.html#cb526-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb526-2"><a href="lab12.html#cb526-2" tabindex="-1"></a>role1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;engineer&quot;</span>, <span class="st">&quot;scientist&quot;</span>, <span class="st">&quot;medic&quot;</span>), </span>
+<span id="cb526-3"><a href="lab12.html#cb526-3" tabindex="-1"></a>             <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb526-4"><a href="lab12.html#cb526-4" tabindex="-1"></a><span class="co"># this works if we want to set a specific number of each role</span></span>
+<span id="cb526-5"><a href="lab12.html#cb526-5" tabindex="-1"></a>role2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;engineer&quot;</span>, <span class="st">&quot;scientist&quot;</span>, <span class="st">&quot;medic&quot;</span>), </span>
+<span id="cb526-6"><a href="lab12.html#cb526-6" tabindex="-1"></a>             <span class="at">each =</span> <span class="dv">34</span>, </span>
+<span id="cb526-7"><a href="lab12.html#cb526-7" tabindex="-1"></a>             <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb526-8"><a href="lab12.html#cb526-8" tabindex="-1"></a></span>
+<span id="cb526-9"><a href="lab12.html#cb526-9" tabindex="-1"></a>role3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;engineer&quot;</span>, <span class="st">&quot;scientist&quot;</span>, <span class="st">&quot;medic&quot;</span>), </span>
+<span id="cb526-10"><a href="lab12.html#cb526-10" tabindex="-1"></a>             <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">33</span>, <span class="dv">33</span>, <span class="dv">33</span>), </span>
+<span id="cb526-11"><a href="lab12.html#cb526-11" tabindex="-1"></a>             <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb526-12"><a href="lab12.html#cb526-12" tabindex="-1"></a>             </span>
+<span id="cb526-13"><a href="lab12.html#cb526-13" tabindex="-1"></a><span class="co"># if you want to use sampling weights</span></span>
+<span id="cb526-14"><a href="lab12.html#cb526-14" tabindex="-1"></a>role4 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;engineer&quot;</span>, <span class="st">&quot;scientist&quot;</span>, <span class="st">&quot;medic&quot;</span>), </span>
+<span id="cb526-15"><a href="lab12.html#cb526-15" tabindex="-1"></a>                <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb526-16"><a href="lab12.html#cb526-16" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">100</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="lab12.html#cb527-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">role =</span> <span class="fu">c</span>(role1, role2, role3,role4), </span>
+<span id="cb527-2"><a href="lab12.html#cb527-2" tabindex="-1"></a>                  <span class="at">method =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;Method A&quot;</span>, <span class="fu">length</span>(role1)),</span>
+<span id="cb527-3"><a href="lab12.html#cb527-3" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">&quot;Method B&quot;</span>, <span class="fu">length</span>(role2)),</span>
+<span id="cb527-4"><a href="lab12.html#cb527-4" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">&quot;Method C&quot;</span>, <span class="fu">length</span>(role3)),</span>
+<span id="cb527-5"><a href="lab12.html#cb527-5" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">&quot;Method D&quot;</span>, <span class="fu">length</span>(role4))))</span>
+<span id="cb527-6"><a href="lab12.html#cb527-6" tabindex="-1"></a></span>
+<span id="cb527-7"><a href="lab12.html#cb527-7" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> role, <span class="at">fill =</span> method)) <span class="sc">+</span></span>
+<span id="cb527-8"><a href="lab12.html#cb527-8" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
+<span id="cb527-9"><a href="lab12.html#cb527-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of Colonists by Method&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Role&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb527-10"><a href="lab12.html#cb527-10" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span>  <span class="co"># This adds a nice color gradient based on the &#39;method&#39;</span></span>
+<span id="cb527-11"><a href="lab12.html#cb527-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="1303_lab_mars_files/figure-html/pie-1.png" width="672" /></p>
+<p><strong>1.3.</strong> Create a role variable that suites the needs of your colony, and explain why you chose that method.</p>
 <p>Next, we’ll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.</p>
 <p><strong>Setting Up Your Simulation</strong>. We’ll use the <code>runif()</code> function to generate random numbers drawn from a uniform distribution. This distribution is ideal for simulating health and fitness levels, as it ensures equal probability across the range of values.</p>
 <p>Examine the arguments for <code>runif()</code>, using the <code>?runif</code> command in R. Notice that although some of the arguments are the same, such as n, and parameters for the distribution are different.</p>
 <p>On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Gauging Astronaut Readiness; Musk, 2025) scale, which ranges from 0 to 100. Like the suspiciously-similar Apgar score for newborns, a score of 0 indicates that a colonist has no signs of life: no heartbeat, no breathing, no response to stimulation, no muscle tone, and central cyanosis/pallor. A score of 100 indicates a colonist in perfect health. Take this scoring into consideration when you simulate the health of your colonists.</p>
-<p><strong>1.3.</strong> Add a uniformally-distributed MARSGAR variable to your colony.</p>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="lab12.html#cb527-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb527-2"><a href="lab12.html#cb527-2" tabindex="-1"></a></span>
-<span id="cb527-3"><a href="lab12.html#cb527-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>marsgar <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># &quot;replace this with your code&quot;</span></span></code></pre></div>
+<p><strong>1.4.</strong> Add a uniformally-distributed MARSGAR variable to your colony.</p>
 <div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="lab12.html#cb528-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb528-2"><a href="lab12.html#cb528-2" tabindex="-1"></a></span>
-<span id="cb528-3"><a href="lab12.html#cb528-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>marsgar <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="dv">50</span>, <span class="at">max =</span> <span class="dv">100</span>)</span></code></pre></div>
+<span id="cb528-3"><a href="lab12.html#cb528-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>marsgar <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># &quot;replace this with your code&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="lab12.html#cb529-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb529-2"><a href="lab12.html#cb529-2" tabindex="-1"></a></span>
+<span id="cb529-3"><a href="lab12.html#cb529-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>marsgar <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="dv">50</span>, <span class="at">max =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p>Now, let us examine our colonists. We will create a scatter plot to visualize the relationship between age and health. This will help us understand the health distribution of our potential Mars colony.</p>
 <pre><code>## Loading required package: viridisLite</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
@@ -1601,89 +1625,78 @@ We’ll create a variable, <code>role</code>, with three categories: engineer, s
 <h3><span class="header-section-number">84.0.1</span> Basic method<a href="lab12.html#basic-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To start, let’s illustrate a simpler method using <code>rnorm</code> to simulate how certain attributes like age could influence others such as technical skills—assuming that older colonists, with more experience, likely have higher technical skills.</p>
 <p>To model this, we define the variable <code>technical_skills</code> as a linear function of <code>age</code>, incorporating random noise for variability. Specifically, we use the regression equation <code>technical_skills = 2 * age + noise</code>, where <code>noise</code> is normally distributed with a mean of zero and a standard deviation of one. This implies that for each additional year of age, a colonist’s technical skills increase by two points, with some random noise added in.</p>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="lab12.html#cb531-1" tabindex="-1"></a><span class="co"># Simulate technical skills based on age</span></span>
-<span id="cb531-2"><a href="lab12.html#cb531-2" tabindex="-1"></a></span>
-<span id="cb531-3"><a href="lab12.html#cb531-3" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
-<span id="cb531-4"><a href="lab12.html#cb531-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
-<span id="cb531-5"><a href="lab12.html#cb531-5" tabindex="-1"></a></span>
-<span id="cb531-6"><a href="lab12.html#cb531-6" tabindex="-1"></a><span class="co"># Create a variable for technical skills</span></span>
-<span id="cb531-7"><a href="lab12.html#cb531-7" tabindex="-1"></a></span>
-<span id="cb531-8"><a href="lab12.html#cb531-8" tabindex="-1"></a>df_colonists<span class="sc">$</span>technical_skills <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> df_colonists<span class="sc">$</span>age <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="lab12.html#cb532-1" tabindex="-1"></a><span class="co"># Simulate technical skills based on age</span></span>
+<span id="cb532-2"><a href="lab12.html#cb532-2" tabindex="-1"></a></span>
+<span id="cb532-3"><a href="lab12.html#cb532-3" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb532-4"><a href="lab12.html#cb532-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
+<span id="cb532-5"><a href="lab12.html#cb532-5" tabindex="-1"></a></span>
+<span id="cb532-6"><a href="lab12.html#cb532-6" tabindex="-1"></a><span class="co"># Create a variable for technical skills</span></span>
+<span id="cb532-7"><a href="lab12.html#cb532-7" tabindex="-1"></a></span>
+<span id="cb532-8"><a href="lab12.html#cb532-8" tabindex="-1"></a>df_colonists<span class="sc">$</span>technical_skills <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> df_colonists<span class="sc">$</span>age <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Now, let’s visualize the relationship between age and technical skills using a scatter plot.</p>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="1303_lab_mars_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Now its your turn! Simulate problem-solving abilities based on their assigned role. Recall that the options are “engineer”, “scientist”, “medic”. First you need to think about the relationship between the role AND the variable being simulated. Then you can write up the equation that would create that relationship. And then you can write the code to simulate the variable.</p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="lab12.html#cb533-1" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># replace this with your code</span></span></code></pre></div>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="lab12.html#cb534-1" tabindex="-1"></a><span class="co">#We&#39;ll assume that engineers have the highest problem-solving abilities, followed by scientists and medics. We&#39;ll create a variable, `problem_solving`, as a function of role, with some random noise added in. </span></span>
-<span id="cb534-2"><a href="lab12.html#cb534-2" tabindex="-1"></a><span class="co"># Assign problem-solving scores simply</span></span>
-<span id="cb534-3"><a href="lab12.html#cb534-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;engineer&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;engineer&quot;</span>), <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
-<span id="cb534-4"><a href="lab12.html#cb534-4" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;scientist&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;scientist&quot;</span>), <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
-<span id="cb534-5"><a href="lab12.html#cb534-5" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;medic&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;medic&quot;</span>), <span class="at">mean =</span> <span class="dv">60</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="lab12.html#cb534-1" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># replace this with your code</span></span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="lab12.html#cb535-1" tabindex="-1"></a><span class="co">#We&#39;ll assume that engineers have the highest problem-solving abilities, followed by scientists and medics. We&#39;ll create a variable, `problem_solving`, as a function of role, with some random noise added in. </span></span>
+<span id="cb535-2"><a href="lab12.html#cb535-2" tabindex="-1"></a><span class="co"># Assign problem-solving scores simply</span></span>
+<span id="cb535-3"><a href="lab12.html#cb535-3" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;engineer&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;engineer&quot;</span>), <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
+<span id="cb535-4"><a href="lab12.html#cb535-4" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;scientist&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;scientist&quot;</span>), <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
+<span id="cb535-5"><a href="lab12.html#cb535-5" tabindex="-1"></a>df_colonists<span class="sc">$</span>problem_solving[df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;medic&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(df_colonists<span class="sc">$</span>role <span class="sc">==</span> <span class="st">&quot;medic&quot;</span>), <span class="at">mean =</span> <span class="dv">60</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code></pre></div>
 </div>
 <div id="exploring-correlations-with-mvrnorm" class="section level3 hasAnchor" number="84.0.2">
 <h3><span class="header-section-number">84.0.2</span> Exploring Correlations with mvrnorm<a href="lab12.html#exploring-correlations-with-mvrnorm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That’s when the <code>mvrnorm</code> function comes in handy from the <code>MASS</code> package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists’ skills.</p>
-<!--
-
-1. Task 2: Skill Correlations
-- Objective: Understand how to simulate variables with specific correlations.
-  - Create variables for technical skills and problem-solving abilities, ensuring a realistic correlation between them.
-
--->
+<p>Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That’s when the <code>mvrnorm</code> function comes in handy from the <code>MASS</code> package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists’ traits.</p>
 <!-- 
 1. Task 3: Advanced Attributes Simulation
 - Objective: Dive deeper into simulations by generating more complex relationships between variables.
   - Simulate a set of psychological resilience, teamwork, and adaptability scores with predefined correlations and partial correlations.
 -->
-<p>To simulate correlated variables, the MASS package’s mvrnorm() function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.</p>
+<p>To simulate correlated variables, the MASS package’s <code>mvrnorm()</code> function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.</p>
 <p>Parameters for Simulation:</p>
 <p>n = 100: We are simulating attributes for 100 colonists.
-mu = c( 70, 75, 80): Represents the average scores for technical skills and problem-solving abilities.
-Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the skills.</p>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="lab12.html#cb535-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;MASS&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     select</code></pre>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="lab12.html#cb538-1" tabindex="-1"></a><span class="co"># Define mean and covariance matrix</span></span>
-<span id="cb538-2"><a href="lab12.html#cb538-2" tabindex="-1"></a>mean_skills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">50</span>)</span>
-<span id="cb538-3"><a href="lab12.html#cb538-3" tabindex="-1"></a>cov_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb538-4"><a href="lab12.html#cb538-4" tabindex="-1"></a></span>
-<span id="cb538-5"><a href="lab12.html#cb538-5" tabindex="-1"></a><span class="co"># Generate correlated data</span></span>
-<span id="cb538-6"><a href="lab12.html#cb538-6" tabindex="-1"></a>skills_data <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> mean_skills, <span class="at">Sigma =</span> cov_matrix, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb538-7"><a href="lab12.html#cb538-7" tabindex="-1"></a><span class="fu">colnames</span>(skills_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;TechnicalSkills&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>)</span>
-<span id="cb538-8"><a href="lab12.html#cb538-8" tabindex="-1"></a></span>
-<span id="cb538-9"><a href="lab12.html#cb538-9" tabindex="-1"></a>df_colonists <span class="ot">&lt;-</span> <span class="fu">cbind</span>(df_colonists, skills_data)</span>
-<span id="cb538-10"><a href="lab12.html#cb538-10" tabindex="-1"></a></span>
-<span id="cb538-11"><a href="lab12.html#cb538-11" tabindex="-1"></a></span>
-<span id="cb538-12"><a href="lab12.html#cb538-12" tabindex="-1"></a></span>
-<span id="cb538-13"><a href="lab12.html#cb538-13" tabindex="-1"></a></span>
-<span id="cb538-14"><a href="lab12.html#cb538-14" tabindex="-1"></a><span class="co"># Fit a linear model</span></span>
-<span id="cb538-15"><a href="lab12.html#cb538-15" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(TechnicalSkills <span class="sc">~</span> ProblemSolving, <span class="at">data =</span> df_colonists)</span>
-<span id="cb538-16"><a href="lab12.html#cb538-16" tabindex="-1"></a></span>
-<span id="cb538-17"><a href="lab12.html#cb538-17" tabindex="-1"></a><span class="co"># Extract coefficients</span></span>
-<span id="cb538-18"><a href="lab12.html#cb538-18" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="dv">1</span>]</span>
-<span id="cb538-19"><a href="lab12.html#cb538-19" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="dv">2</span>]</span>
-<span id="cb538-20"><a href="lab12.html#cb538-20" tabindex="-1"></a></span>
-<span id="cb538-21"><a href="lab12.html#cb538-21" tabindex="-1"></a><span class="co"># Create equation string</span></span>
-<span id="cb538-22"><a href="lab12.html#cb538-22" tabindex="-1"></a><span class="co"># Ensure the plus sign is included for positive slopes and the minus is handled by the format</span></span>
-<span id="cb538-23"><a href="lab12.html#cb538-23" tabindex="-1"></a>equation <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f %+ .2f * x&quot;</span>, intercept, slope)</span>
-<span id="cb538-24"><a href="lab12.html#cb538-24" tabindex="-1"></a></span>
-<span id="cb538-25"><a href="lab12.html#cb538-25" tabindex="-1"></a><span class="co"># Adjusting the equation for positive/negative slope</span></span>
-<span id="cb538-26"><a href="lab12.html#cb538-26" tabindex="-1"></a>equation <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(slope <span class="sc">&gt;=</span> <span class="dv">0</span>,</span>
-<span id="cb538-27"><a href="lab12.html#cb538-27" tabindex="-1"></a>                   <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f + %.2f * x&quot;</span>, intercept, slope),  <span class="co"># for non-negative slope</span></span>
-<span id="cb538-28"><a href="lab12.html#cb538-28" tabindex="-1"></a>                   <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f %.2f * x&quot;</span>, intercept, slope))  <span class="co"># slope is negative, sprintf includes the minus</span></span>
-<span id="cb538-29"><a href="lab12.html#cb538-29" tabindex="-1"></a></span>
-<span id="cb538-30"><a href="lab12.html#cb538-30" tabindex="-1"></a><span class="co"># Visualizing the correlation</span></span>
-<span id="cb538-31"><a href="lab12.html#cb538-31" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb538-32"><a href="lab12.html#cb538-32" tabindex="-1"></a><span class="fu">ggplot</span>(df_colonists, <span class="fu">aes</span>(<span class="at">x =</span> ProblemSolving, <span class="at">y =</span> TechnicalSkills)) <span class="sc">+</span></span>
-<span id="cb538-33"><a href="lab12.html#cb538-33" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb538-34"><a href="lab12.html#cb538-34" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> viridis_color) <span class="sc">+</span> </span>
-<span id="cb538-35"><a href="lab12.html#cb538-35" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> equation, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="fl">1.1</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> viridis_color) <span class="sc">+</span>  </span>
-<span id="cb538-36"><a href="lab12.html#cb538-36" tabindex="-1"></a></span>
-<span id="cb538-37"><a href="lab12.html#cb538-37" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Scatter Plot of Colonist ProblemSolving and TechnicalSkills&quot;</span>, <span class="at">x =</span> <span class="st">&quot;ProblemSolving&quot;</span>, <span class="at">y =</span> <span class="st">&quot;TechnicalSkills&quot;</span>) <span class="sc">+</span></span>
-<span id="cb538-38"><a href="lab12.html#cb538-38" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+mu = c( 50, 50): Represents the average scores for Resilience and Agreeableness.
+Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the traits.</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="lab12.html#cb536-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb536-2"><a href="lab12.html#cb536-2" tabindex="-1"></a></span>
+<span id="cb536-3"><a href="lab12.html#cb536-3" tabindex="-1"></a><span class="co"># Define mean and covariance matrix</span></span>
+<span id="cb536-4"><a href="lab12.html#cb536-4" tabindex="-1"></a>mean_traits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">50</span>)</span>
+<span id="cb536-5"><a href="lab12.html#cb536-5" tabindex="-1"></a>cov_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb536-6"><a href="lab12.html#cb536-6" tabindex="-1"></a></span>
+<span id="cb536-7"><a href="lab12.html#cb536-7" tabindex="-1"></a><span class="co"># Generate correlated data</span></span>
+<span id="cb536-8"><a href="lab12.html#cb536-8" tabindex="-1"></a></span>
+<span id="cb536-9"><a href="lab12.html#cb536-9" tabindex="-1"></a>traits_data <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> mean_traits, <span class="at">Sigma =</span> cov_matrix, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb536-10"><a href="lab12.html#cb536-10" tabindex="-1"></a></span>
+<span id="cb536-11"><a href="lab12.html#cb536-11" tabindex="-1"></a><span class="fu">colnames</span>(traits_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;resilience&quot;</span>, <span class="st">&quot;agreeableness&quot;</span>)</span>
+<span id="cb536-12"><a href="lab12.html#cb536-12" tabindex="-1"></a></span>
+<span id="cb536-13"><a href="lab12.html#cb536-13" tabindex="-1"></a>df_colonists <span class="ot">&lt;-</span> <span class="fu">cbind</span>(df_colonists, traits_data)</span>
+<span id="cb536-14"><a href="lab12.html#cb536-14" tabindex="-1"></a></span>
+<span id="cb536-15"><a href="lab12.html#cb536-15" tabindex="-1"></a></span>
+<span id="cb536-16"><a href="lab12.html#cb536-16" tabindex="-1"></a><span class="co"># Fit a linear model</span></span>
+<span id="cb536-17"><a href="lab12.html#cb536-17" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(resilience <span class="sc">~</span> agreeableness, <span class="at">data =</span> df_colonists)</span>
+<span id="cb536-18"><a href="lab12.html#cb536-18" tabindex="-1"></a></span>
+<span id="cb536-19"><a href="lab12.html#cb536-19" tabindex="-1"></a><span class="co"># Extract coefficients</span></span>
+<span id="cb536-20"><a href="lab12.html#cb536-20" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="dv">1</span>]</span>
+<span id="cb536-21"><a href="lab12.html#cb536-21" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="dv">2</span>]</span>
+<span id="cb536-22"><a href="lab12.html#cb536-22" tabindex="-1"></a></span>
+<span id="cb536-23"><a href="lab12.html#cb536-23" tabindex="-1"></a><span class="co"># Create equation string</span></span>
+<span id="cb536-24"><a href="lab12.html#cb536-24" tabindex="-1"></a><span class="co"># Ensure the plus sign is included for positive slopes and the minus is handled by the format</span></span>
+<span id="cb536-25"><a href="lab12.html#cb536-25" tabindex="-1"></a>equation <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f %+ .2f * x&quot;</span>, intercept, slope)</span>
+<span id="cb536-26"><a href="lab12.html#cb536-26" tabindex="-1"></a></span>
+<span id="cb536-27"><a href="lab12.html#cb536-27" tabindex="-1"></a><span class="co"># Adjusting the equation for positive/negative slope</span></span>
+<span id="cb536-28"><a href="lab12.html#cb536-28" tabindex="-1"></a>equation <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(slope <span class="sc">&gt;=</span> <span class="dv">0</span>,</span>
+<span id="cb536-29"><a href="lab12.html#cb536-29" tabindex="-1"></a>                   <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f + %.2f * x&quot;</span>, intercept, slope),  <span class="co"># for non-negative slope</span></span>
+<span id="cb536-30"><a href="lab12.html#cb536-30" tabindex="-1"></a>                   <span class="fu">sprintf</span>(<span class="st">&quot;y == %.2f %.2f * x&quot;</span>, intercept, slope))  <span class="co"># slope is negative, sprintf includes the minus</span></span>
+<span id="cb536-31"><a href="lab12.html#cb536-31" tabindex="-1"></a></span>
+<span id="cb536-32"><a href="lab12.html#cb536-32" tabindex="-1"></a><span class="co"># Visualizing the correlation</span></span>
+<span id="cb536-33"><a href="lab12.html#cb536-33" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb536-34"><a href="lab12.html#cb536-34" tabindex="-1"></a><span class="fu">ggplot</span>(df_colonists, <span class="fu">aes</span>(<span class="at">x =</span> agreeableness, <span class="at">y =</span> resilience)) <span class="sc">+</span></span>
+<span id="cb536-35"><a href="lab12.html#cb536-35" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb536-36"><a href="lab12.html#cb536-36" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> viridis_color) <span class="sc">+</span> </span>
+<span id="cb536-37"><a href="lab12.html#cb536-37" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> equation, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="fl">1.1</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> viridis_color) <span class="sc">+</span>  </span>
+<span id="cb536-38"><a href="lab12.html#cb536-38" tabindex="-1"></a></span>
+<span id="cb536-39"><a href="lab12.html#cb536-39" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Scatter Plot of Colonist Resilience and agreeableness&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Resilience&quot;</span>, <span class="at">y =</span> <span class="st">&quot;agreeableness&quot;</span>) <span class="sc">+</span></span>
+<span id="cb536-40"><a href="lab12.html#cb536-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="1303_lab_mars_files/figure-html/exercise3.2-1.png" width="672" /></p>
 </div>
@@ -1694,58 +1707,58 @@ Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diag
 <div id="setting-up-the-simulation" class="section level3 hasAnchor" number="84.0.3">
 <h3><span class="header-section-number">84.0.3</span> Setting Up the Simulation<a href="lab12.html#setting-up-the-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this task, we will simulate interdependent skills using the mvrnorm function from the MASS package. This function allows us to generate data from a multivariate normal distribution, giving us control over the means, variances, and covariances of the simulated variables—ideal for modeling complex skill relationships among colonists.</p>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="lab12.html#cb540-1" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># Ensure the MASS package is loaded for mvrnorm</span></span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="lab12.html#cb538-1" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># Ensure the MASS package is loaded for mvrnorm</span></span></code></pre></div>
 <p>Parameters for Simulation</p>
 <p>Define the mean skills levels and a covariance matrix to simulate technical skills and problem-solving abilities with a realistic correlation:</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="lab12.html#cb541-1" tabindex="-1"></a>mean_skills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">50</span>)  <span class="co"># Mean technical skills and problem-solving abilities</span></span>
-<span id="cb541-2"><a href="lab12.html#cb541-2" tabindex="-1"></a>cov_skills <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">2</span>)  <span class="co"># Covariance matrix showing how these skills correlate</span></span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="lab12.html#cb539-1" tabindex="-1"></a>mean_skills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">50</span>)  <span class="co"># Mean technical skills and problem-solving abilities</span></span>
+<span id="cb539-2"><a href="lab12.html#cb539-2" tabindex="-1"></a>cov_skills <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">2</span>)  <span class="co"># Covariance matrix showing how these skills correlate</span></span></code></pre></div>
 </div>
 <div id="simulating-data" class="section level3 hasAnchor" number="84.0.4">
 <h3><span class="header-section-number">84.0.4</span> Simulating Data<a href="lab12.html#simulating-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Generate the skills for 100 colonists, repeating this process multiple times to analyze the consistency and resilience of skill distribution:</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="lab12.html#cb542-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124</span>)</span>
-<span id="cb542-2"><a href="lab12.html#cb542-2" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Number of times to simulate the colonist data</span></span>
-<span id="cb542-3"><a href="lab12.html#cb542-3" tabindex="-1"></a>all_simulations <span class="ot">&lt;-</span> <span class="fu">replicate</span>(num_simulations, <span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> mean_skills, <span class="at">Sigma =</span> cov_skills, <span class="at">empirical =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="lab12.html#cb543-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124</span>)</span>
-<span id="cb543-2"><a href="lab12.html#cb543-2" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">30</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">15</span>)  <span class="co"># Varying sample sizes</span></span>
-<span id="cb543-3"><a href="lab12.html#cb543-3" tabindex="-1"></a>repetitions_per_condition <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of repetitions for each sample size</span></span>
-<span id="cb543-4"><a href="lab12.html#cb543-4" tabindex="-1"></a></span>
-<span id="cb543-5"><a href="lab12.html#cb543-5" tabindex="-1"></a><span class="co"># Initialize a DataFrame to store results</span></span>
-<span id="cb543-6"><a href="lab12.html#cb543-6" tabindex="-1"></a>simulation_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb543-7"><a href="lab12.html#cb543-7" tabindex="-1"></a>  <span class="at">Condition =</span> <span class="fu">integer</span>(),</span>
-<span id="cb543-8"><a href="lab12.html#cb543-8" tabindex="-1"></a>  <span class="at">SampleSize =</span> <span class="fu">integer</span>(),</span>
-<span id="cb543-9"><a href="lab12.html#cb543-9" tabindex="-1"></a>  <span class="at">Repetition =</span> <span class="fu">integer</span>(),</span>
-<span id="cb543-10"><a href="lab12.html#cb543-10" tabindex="-1"></a>  <span class="at">Covariance =</span> <span class="fu">numeric</span>()</span>
-<span id="cb543-11"><a href="lab12.html#cb543-11" tabindex="-1"></a>)</span>
-<span id="cb543-12"><a href="lab12.html#cb543-12" tabindex="-1"></a></span>
-<span id="cb543-13"><a href="lab12.html#cb543-13" tabindex="-1"></a><span class="co"># Nested loop for simulations</span></span>
-<span id="cb543-14"><a href="lab12.html#cb543-14" tabindex="-1"></a><span class="cf">for</span> (size <span class="cf">in</span> sample_sizes) {</span>
-<span id="cb543-15"><a href="lab12.html#cb543-15" tabindex="-1"></a>  <span class="cf">for</span> (rep <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>repetitions_per_condition) {</span>
-<span id="cb543-16"><a href="lab12.html#cb543-16" tabindex="-1"></a>    skills_data <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> size, <span class="at">mu =</span> mean_skills, <span class="at">Sigma =</span> cov_skills, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb543-17"><a href="lab12.html#cb543-17" tabindex="-1"></a>    current_covariance <span class="ot">&lt;-</span> <span class="fu">cov</span>(skills_data[, <span class="dv">1</span>], skills_data[, <span class="dv">2</span>])</span>
-<span id="cb543-18"><a href="lab12.html#cb543-18" tabindex="-1"></a>  </span>
-<span id="cb543-19"><a href="lab12.html#cb543-19" tabindex="-1"></a>    <span class="co"># Append results</span></span>
-<span id="cb543-20"><a href="lab12.html#cb543-20" tabindex="-1"></a>    simulation_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(simulation_results, <span class="fu">data.frame</span>(</span>
-<span id="cb543-21"><a href="lab12.html#cb543-21" tabindex="-1"></a>      <span class="at">SampleSize =</span> size,</span>
-<span id="cb543-22"><a href="lab12.html#cb543-22" tabindex="-1"></a>      <span class="at">Repetition =</span> rep,</span>
-<span id="cb543-23"><a href="lab12.html#cb543-23" tabindex="-1"></a>      <span class="at">Covariance =</span> current_covariance</span>
-<span id="cb543-24"><a href="lab12.html#cb543-24" tabindex="-1"></a>    ))</span>
-<span id="cb543-25"><a href="lab12.html#cb543-25" tabindex="-1"></a>  }</span>
-<span id="cb543-26"><a href="lab12.html#cb543-26" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="lab12.html#cb544-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb544-2"><a href="lab12.html#cb544-2" tabindex="-1"></a></span>
-<span id="cb544-3"><a href="lab12.html#cb544-3" tabindex="-1"></a><span class="co"># Plotting the average covariance for each sample size</span></span>
-<span id="cb544-4"><a href="lab12.html#cb544-4" tabindex="-1"></a>average_covariances <span class="ot">&lt;-</span> simulation_results <span class="sc">%&gt;%</span></span>
-<span id="cb544-5"><a href="lab12.html#cb544-5" tabindex="-1"></a>  <span class="fu">group_by</span>(SampleSize) <span class="sc">%&gt;%</span></span>
-<span id="cb544-6"><a href="lab12.html#cb544-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">AverageCovariance =</span> <span class="fu">mean</span>(Covariance))</span>
-<span id="cb544-7"><a href="lab12.html#cb544-7" tabindex="-1"></a></span>
-<span id="cb544-8"><a href="lab12.html#cb544-8" tabindex="-1"></a><span class="fu">ggplot</span>(average_covariances, <span class="fu">aes</span>(<span class="at">x =</span> SampleSize, <span class="at">y =</span> AverageCovariance)) <span class="sc">+</span></span>
-<span id="cb544-9"><a href="lab12.html#cb544-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb544-10"><a href="lab12.html#cb544-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb544-11"><a href="lab12.html#cb544-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb544-12"><a href="lab12.html#cb544-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Average Covariance by Sample Size&quot;</span>) <span class="sc">+</span></span>
-<span id="cb544-13"><a href="lab12.html#cb544-13" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Sample Size&quot;</span>) <span class="sc">+</span></span>
-<span id="cb544-14"><a href="lab12.html#cb544-14" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Average Covariance&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="lab12.html#cb540-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124</span>)</span>
+<span id="cb540-2"><a href="lab12.html#cb540-2" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Number of times to simulate the colonist data</span></span>
+<span id="cb540-3"><a href="lab12.html#cb540-3" tabindex="-1"></a>all_simulations <span class="ot">&lt;-</span> <span class="fu">replicate</span>(num_simulations, <span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> mean_skills, <span class="at">Sigma =</span> cov_skills, <span class="at">empirical =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="lab12.html#cb541-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124</span>)</span>
+<span id="cb541-2"><a href="lab12.html#cb541-2" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">30</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">15</span>)  <span class="co"># Varying sample sizes</span></span>
+<span id="cb541-3"><a href="lab12.html#cb541-3" tabindex="-1"></a>repetitions_per_condition <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of repetitions for each sample size</span></span>
+<span id="cb541-4"><a href="lab12.html#cb541-4" tabindex="-1"></a></span>
+<span id="cb541-5"><a href="lab12.html#cb541-5" tabindex="-1"></a><span class="co"># Initialize a DataFrame to store results</span></span>
+<span id="cb541-6"><a href="lab12.html#cb541-6" tabindex="-1"></a>simulation_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb541-7"><a href="lab12.html#cb541-7" tabindex="-1"></a>  <span class="at">Condition =</span> <span class="fu">integer</span>(),</span>
+<span id="cb541-8"><a href="lab12.html#cb541-8" tabindex="-1"></a>  <span class="at">SampleSize =</span> <span class="fu">integer</span>(),</span>
+<span id="cb541-9"><a href="lab12.html#cb541-9" tabindex="-1"></a>  <span class="at">Repetition =</span> <span class="fu">integer</span>(),</span>
+<span id="cb541-10"><a href="lab12.html#cb541-10" tabindex="-1"></a>  <span class="at">Covariance =</span> <span class="fu">numeric</span>()</span>
+<span id="cb541-11"><a href="lab12.html#cb541-11" tabindex="-1"></a>)</span>
+<span id="cb541-12"><a href="lab12.html#cb541-12" tabindex="-1"></a></span>
+<span id="cb541-13"><a href="lab12.html#cb541-13" tabindex="-1"></a><span class="co"># Nested loop for simulations</span></span>
+<span id="cb541-14"><a href="lab12.html#cb541-14" tabindex="-1"></a><span class="cf">for</span> (size <span class="cf">in</span> sample_sizes) {</span>
+<span id="cb541-15"><a href="lab12.html#cb541-15" tabindex="-1"></a>  <span class="cf">for</span> (rep <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>repetitions_per_condition) {</span>
+<span id="cb541-16"><a href="lab12.html#cb541-16" tabindex="-1"></a>    skills_data <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> size, <span class="at">mu =</span> mean_skills, <span class="at">Sigma =</span> cov_skills, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb541-17"><a href="lab12.html#cb541-17" tabindex="-1"></a>    current_covariance <span class="ot">&lt;-</span> <span class="fu">cov</span>(skills_data[, <span class="dv">1</span>], skills_data[, <span class="dv">2</span>])</span>
+<span id="cb541-18"><a href="lab12.html#cb541-18" tabindex="-1"></a>  </span>
+<span id="cb541-19"><a href="lab12.html#cb541-19" tabindex="-1"></a>    <span class="co"># Append results</span></span>
+<span id="cb541-20"><a href="lab12.html#cb541-20" tabindex="-1"></a>    simulation_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(simulation_results, <span class="fu">data.frame</span>(</span>
+<span id="cb541-21"><a href="lab12.html#cb541-21" tabindex="-1"></a>      <span class="at">SampleSize =</span> size,</span>
+<span id="cb541-22"><a href="lab12.html#cb541-22" tabindex="-1"></a>      <span class="at">Repetition =</span> rep,</span>
+<span id="cb541-23"><a href="lab12.html#cb541-23" tabindex="-1"></a>      <span class="at">Covariance =</span> current_covariance</span>
+<span id="cb541-24"><a href="lab12.html#cb541-24" tabindex="-1"></a>    ))</span>
+<span id="cb541-25"><a href="lab12.html#cb541-25" tabindex="-1"></a>  }</span>
+<span id="cb541-26"><a href="lab12.html#cb541-26" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="lab12.html#cb542-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb542-2"><a href="lab12.html#cb542-2" tabindex="-1"></a></span>
+<span id="cb542-3"><a href="lab12.html#cb542-3" tabindex="-1"></a><span class="co"># Plotting the average covariance for each sample size</span></span>
+<span id="cb542-4"><a href="lab12.html#cb542-4" tabindex="-1"></a>average_covariances <span class="ot">&lt;-</span> simulation_results <span class="sc">%&gt;%</span></span>
+<span id="cb542-5"><a href="lab12.html#cb542-5" tabindex="-1"></a>  <span class="fu">group_by</span>(SampleSize) <span class="sc">%&gt;%</span></span>
+<span id="cb542-6"><a href="lab12.html#cb542-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">AverageCovariance =</span> <span class="fu">mean</span>(Covariance))</span>
+<span id="cb542-7"><a href="lab12.html#cb542-7" tabindex="-1"></a></span>
+<span id="cb542-8"><a href="lab12.html#cb542-8" tabindex="-1"></a><span class="fu">ggplot</span>(average_covariances, <span class="fu">aes</span>(<span class="at">x =</span> SampleSize, <span class="at">y =</span> AverageCovariance)) <span class="sc">+</span></span>
+<span id="cb542-9"><a href="lab12.html#cb542-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb542-10"><a href="lab12.html#cb542-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb542-11"><a href="lab12.html#cb542-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb542-12"><a href="lab12.html#cb542-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Average Covariance by Sample Size&quot;</span>) <span class="sc">+</span></span>
+<span id="cb542-13"><a href="lab12.html#cb542-13" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Sample Size&quot;</span>) <span class="sc">+</span></span>
+<span id="cb542-14"><a href="lab12.html#cb542-14" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Average Covariance&quot;</span>)</span></code></pre></div>
 <p><img src="1303_lab_mars_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 </div>
