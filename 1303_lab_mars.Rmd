@@ -1,8 +1,6 @@
 # Lab: Simulating data {#lab12}
 
-Welcome to the Mars Colony Simulation Lab! In this session, we embark on a journey not just to another world but into the realm of data science applied in space colonization. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R, preparing you for complex data manipulation and scenario analysis essential for real-world applications.
-
-In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. We'll learn how to create and manipulate datasets in R, simulating various attributes of our colonists, like their skills, health, and adaptability to the Martian environment.
+Welcome to the Mars Colony Simulation Lab! In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R.
 
 ## Learning goals {.unnumbered}
 
@@ -27,7 +25,7 @@ options(
 
 ### Packages {.unnumbered}
 
-In this lab, we will work with the **tidyverse**, **ggplot2**, and **PACKAGE** packages. We can install and load them with the following code:
+In this lab, we will work with the **tidyverse**, **ggplot2**, and **MASS** packages. We can install and load them with the following code:
 
 ```{r load-packages, message=FALSE}
 # Install and load the tidyverse package
@@ -37,6 +35,8 @@ library(tidyverse)
 if (!require("ggplot2")) install.packages("ggplot2")
 library(ggplot2)
 
+if (!require("MASS")) install.packages("MASS")
+library(MASS)
 ```
 
 
@@ -265,7 +265,6 @@ Now its your turn! Simulate problem-solving abilities based on their assigned ro
 
 
 ```{r exercise2.2, error=TRUE}
-
 df_colonists$problem_solving <- 1 # replace this with your code
 ```
 
@@ -276,22 +275,14 @@ df_colonists$problem_solving <- 1 # replace this with your code
 df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
+
+
 ```
-
-
 
 
 ### Exploring Correlations with mvrnorm
 
-Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' skills.
-
-<!--
-
-1. Task 2: Skill Correlations
-- Objective: Understand how to simulate variables with specific correlations.
-  - Create variables for technical skills and problem-solving abilities, ensuring a realistic correlation between them.
-
--->
+Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits.
 
 
 <!-- 
@@ -300,32 +291,32 @@ Now this approach works well if you already know what you want your model to loo
   - Simulate a set of psychological resilience, teamwork, and adaptability scores with predefined correlations and partial correlations.
 -->
 
-To simulate correlated variables, the MASS package's mvrnorm() function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.
+To simulate correlated variables, the MASS package's `mvrnorm()` function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.
 
 Parameters for Simulation:
 
 n = 100: We are simulating attributes for 100 colonists.
-mu = c( 70, 75, 80): Represents the average scores for technical skills and problem-solving abilities.
-Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the skills.
+mu = c( 50, 50): Represents the average scores for Resilience and Agreeableness.
+Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the traits.
 
 ```{r exercise3.2, error=TRUE} 
 library(MASS)
 
 # Define mean and covariance matrix
-mean_skills <- c(50, 50)
+mean_traits <- c(50, 50)
 cov_matrix <- matrix(c(100, 50, 50, 100), ncol = 2)
 
 # Generate correlated data
-skills_data <- mvrnorm(n = 100, mu = mean_skills, Sigma = cov_matrix, empirical = TRUE)
-colnames(skills_data) <- c("TechnicalSkills", "ProblemSolving")
 
-df_colonists <- cbind(df_colonists, skills_data)
+traits_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix, empirical = TRUE)
 
+colnames(traits_data) <- c("resilience", "agreeableness")
 
+df_colonists <- cbind(df_colonists, traits_data)
 
 
 # Fit a linear model
-model <- lm(TechnicalSkills ~ ProblemSolving, data = df_colonists)
+model <- lm(resilience ~ agreeableness, data = df_colonists)
 
 # Extract coefficients
 intercept <- coef(model)[1]
@@ -342,12 +333,12 @@ equation <- ifelse(slope >= 0,
 
 # Visualizing the correlation
 library(ggplot2)
-ggplot(df_colonists, aes(x = ProblemSolving, y = TechnicalSkills)) +
+ggplot(df_colonists, aes(x = agreeableness, y = resilience)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = viridis_color) + 
   geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
 
-  labs(title = "Scatter Plot of Colonist ProblemSolving and TechnicalSkills", x = "ProblemSolving", y = "TechnicalSkills") +
+  labs(title = "Scatter Plot of Colonist Resilience and agreeableness", x = "Resilience", y = "agreeableness") +
   theme_minimal()
 
 ```
