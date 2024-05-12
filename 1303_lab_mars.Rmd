@@ -28,15 +28,16 @@ options(
 In this lab, we will work with the **tidyverse**, **ggplot2**, and **MASS** packages. We can install and load them with the following code:
 
 ```{r load-packages, message=FALSE}
-# Install and load the tidyverse package
-if (!require("tidyverse")) install.packages("tidyverse")
-library(tidyverse)
-
 if (!require("ggplot2")) install.packages("ggplot2")
 library(ggplot2)
 
 if (!require("MASS")) install.packages("MASS")
 library(MASS)
+
+# Install and load the tidyverse package
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
 ```
 
 
@@ -138,7 +139,7 @@ role4 <- sample(c("engineer", "scientist", "medic"),
                 size = 100, prob = c(1,1,1))
 ```
 
-```{r, pie}
+```{r, pie,echo=FALSE}
 df <- data.frame( role = c(role1, role2, role3,role4), 
                   method = c(rep("Method A", length(role1)),
                            rep("Method B", length(role2)),
@@ -180,9 +181,8 @@ df_colonists$marsgar <- 1 # "replace this with your code"
 ```
 
 
-```{r exercise1.4solution, error=TRUE} 
+```{r exercise1.4solution, error=TRUE,echo=FALSE} 
 set.seed(123)
-
 df_colonists$marsgar <- runif(100, min = 50, max = 100)
 ```
 
@@ -251,7 +251,6 @@ To model this, we define the variable `technical_skills` as a linear function of
 set.seed(1235)
 
 # Create a variable for technical skills
-
 df_colonists$technical_skills <- 2 * df_colonists$age + rnorm(100, mean = 0, sd = 1)
 
 ```
@@ -299,39 +298,44 @@ Now its your turn! Simulate problem-solving abilities based on their assigned ro
 df_colonists$problem_solving <- 1 # replace this with your code
 ```
 
-
-```{r exercise2.2solution, error=TRUE}
+<details>
+  <summary>Click this to see a solution</summary>
+    ```{r, exercise2.2solution, error=TRUE, echo=FALSE}
 #We'll assume that engineers have the highest problem-solving abilities, followed by scientists and medics. We'll create a variable, `problem_solving`, as a function of role, with some random noise added in. 
 # Assign problem-solving scores simply
 df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
-
+    ```
+</details>
+    
+```{r, exercise2.2plot, error=TRUE, echo=FALSE}
+ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
+#  geom_histogram(position = position_dodge()) +
+    geom_density(position = position_dodge(), alpha=.6) +
+  labs(title = "Distribution of Problem Solving by Role", x = "Role", y = "Count") +
+  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
+  theme_minimal()
 
 ```
-
-
 ### Exploring Correlations with mvrnorm
 
-Now this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits, as well as considering the implications for selecting colonists with specific attributes.
+Now, this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits.
 
 
-<!-- 
-1. Task 3: Advanced Attributes Simulation
-- Objective: Dive deeper into simulations by generating more complex relationships between variables.
-  - Simulate a set of psychological resilience, teamwork, and adaptability scores with predefined correlations and partial correlations.
-  the goal is for students to move from a simple univariate simulation to a more complex multivariate simulation, where they can control the relationships between variables. This will help them understand how to simulate more realistic datasets with interdependent attributes. by simulating multiple variables with specific correlations, students can explore sample size calculations, power analysis, and the impact of different relationships on the data. work. the lab will have them see how different choices in the simulation process can affect the results and the implications for their analysis. including policies for selecting colonists with specific attributes.
--->
+__Setting Up Your Simulation__. As you've hopefully gathered, we'll use the ``mvrnorm` function to generate random numbers drawn from a multivariate distribution. I encourage you to examine the arguments for `mvrnorm()`, using the `?mvrnorm` command in R.
 
-To simulate correlated variables, the MASS package's `mvrnorm()` function from multivariate normal distribution is essential, allowing us to generate multiple interrelated variables at once.
+Examine the arguments for `mvrnorm()`, using the `?mvrnorm` command in R. Notice that the arguments are similar to `rnorm()`, but with the addition of the `Sigma` parameter, which represents the covariance matrix. This matrix allows us to specify the relationships between the variables we're simulating.
 
-Parameters for Simulation:
 
-n = 100: We are simulating attributes for 100 colonists.
-mu = c( 50, 50): Represents the average scores for Resilience and Agreeableness.
-Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the traits.
+__Parameters for Simulation:__
 
-```{r exercise3.2, error=TRUE} 
+- n = 100: We are simulating attributes for 100 colonists.
+- mu = c( 50, 50): Represents the average scores for Resilience and Agreeableness.
+- Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the traits.
+
+
+```{r exercise3.2, error=TRUE,echo=TRUE} 
 library(MASS)
 
 # Define mean and covariance matrix
@@ -341,13 +345,13 @@ cov_matrix <- matrix(c(100, 50,
 
 # Generate correlated data
 
-traits_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix, empirical = TRUE)
+traits_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix, empirical = FALSE)
 
 colnames(traits_data) <- c("resilience", "agreeableness")
 
 df_colonists <- cbind(df_colonists, traits_data)
-
-
+```
+```{r exercise3.2plot, error=TRUE,echo=FALSE}
 # Fit a linear model
 model <- lm(resilience ~ agreeableness, data = df_colonists)
 
@@ -376,42 +380,243 @@ ggplot(df_colonists, aes(x = agreeableness, y = resilience)) +
 
 ```
 
-## Exercise 3: Preparing for the Unexpected {.unnumbered}
+But, now, we need to simulate more attributes for our colonists that don't all have the same summary statistics. We need to simulate the big five personality traits: openness, conscientiousness, extraversion, agreeableness, and neuroticism. These traits are essential for understanding how colonists will interact with each other and cope with the challenges of living on Mars. Your task to simulate these traits using the `mvrnorm` function, using parameters that would make sense for these traits, and examine how closely your colonists match up with your population parameters.
 
-In space colonization, just like in any complex project management, it's essential to prepare for variability and uncertainty. To test the resilience of our simulated Mars colony, we'll generate multiple sets of potential colonists. By examining these various batches, we can assess how robust our colony's attributes are and whether they can adapt to different scenarios.
+__Population Parameters for Big Five Traits__.
+I've provided a correlation matrix from Park et al. (2020)^[[OSF repo](https://osf.io/qkjpa/)] ^[Park, H. H., Wiernik, B. M., Oh, I. S., Gonzalez-Mulé, E., Ones, D. S., & Lee, Y. (2020). Meta-analytic five-factor model personality intercorrelations: Eeny, meeny, miney, moe, how, which, why, and where to go. The Journal of applied psychology, 105(12), 1490–1529. https://doi.org/10.1037/apl0000476] that you can use to get you started on simulating these traits. 
+
+<details>
+  <summary>Click this to see the code that built the matrix</summary>
+    ```{r, echo=TRUE, eval=TRUE}
+    # Define the bigfive
+bigfive <- c("EX", "ES", "AG", "CO", "OP")
+
+# Create an empty matrix with dimensions equal to the number of bigfive
+cor_matrix <- matrix(0, ncol = length(bigfive), 
+                     nrow = length(bigfive), 
+                     dimnames = list(bigfive, bigfive))
 
 
+# Initialize the diagonal to 1
+diag(cor_matrix) <- 1
 
-### Setting Up the Simulation
+# Function to set correlation values ensuring symmetry
+set_correlation <- function(matrix, row, column, value) {
+  matrix <- as.matrix(matrix)
+  matrix[row, column] <- value
+  matrix[column, row] <- value
+  return(matrix)
+}
 
-In this task, we will simulate interdependent skills using the mvrnorm function from the MASS package. This function allows us to generate data from a multivariate normal distribution, giving us control over the means, variances, and covariances of the simulated variables—ideal for modeling complex skill relationships among colonists.
-```{r}
-library(MASS)  # Ensure the MASS package is loaded for mvrnorm
-```
+#for(i in 1:10) {
+#    print(paste0("set_correlation(cor_matrix, '",ma_res$construct_x[i],"' ,'", ma_res$construct_y[i],"',",round(ma_res[[6]][[i]][["barebones"]][["mean_r"]],4),")"))}
 
-Parameters for Simulation
+cor_matrix_bigfive <- cor_matrix <- cor_matrix %>% 
+  set_correlation("ES", "AG", 0.1576) %>% 
+  set_correlation("ES", "CO", 0.2306) %>% 
+  set_correlation("ES", "EX", 0.2599) %>% 
+  set_correlation("ES", "OP", 0.072) %>% 
+  set_correlation("AG", "CO", 0.2866) %>% 
+  set_correlation("AG", "EX", 0.1972) %>% 
+  set_correlation("AG", "OP", 0.1951) %>% 
+  set_correlation("CO", "EX", 0.186) %>% 
+  set_correlation("CO", "OP", 0.1574) %>% 
+  set_correlation("EX", "OP", 0.2949)
+print(cor_matrix_bigfive)
+    ```
+</details> 
+<details> 
+  <summary>Click this to get a matrix you can quickly paste</summary>
+    ```{r, echo=TRUE, eval=FALSE}
+cor_matrix_bigfive <- matrix(c(
+    1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
+    0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
+    0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
+    0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
+    0.2949, 0.0720, 0.1951, 0.1574, 1.0000
+), nrow=5, ncol=5, byrow=TRUE,
+dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
+              c("EX", "ES", "AG", "CO", "OP")))
+    ```
+</details>
 
-Define the mean skills levels and a covariance matrix to simulate technical skills and problem-solving abilities with a realistic correlation:
+Because this is a tad more complex than the previous simulation, I've created some optional scaffolding by structured hints. 
+<details>
+  <summary>Step 1 Hint</summary>
+1. Begin by defining the parameters for your simulation. This includes the number of colonists, the mean and standard deviation for each of the Big Five personality traits, and the correlation matrix that models the relationships between these traits.
+</details>
+<details>
+  <summary>Step 2 Hint</summary>
+2. Simulate the Big Five personality traits using the mvrnorm function. This function will use your defined means, standard deviations, and correlation matrix to generate a dataset that reflects the psychological profiles of your simulated colonists.
+</details>
+<details>
+  <summary>Step 3 Hint</summary>
+3. Calculate the means and standard deviations of the Big Five personality traits in your simulated dataset. This will allow you to compare the simulated data to the population parameters you defined earlier.
+</details>
 
-```{r}
-mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
-cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix showing how these skills correlate
+Great! We have successfully simulated a dataset of 100 colonists with interdependent skills. The summary statistics show that the mean and standard deviation of the simulated data match the population parameters. The correlation matrix also aligns (fairly well) with the specified values. But did we just get lucky? Let's run the simulation multiple times to ensure the results are consistent across different scenarios.
 
-```
+<details>
+  <summary>Click this text for a solution</summary>
+    ```{r exercise3.3solution, error=TRUE,include=FALSE}
+# Set seed for reproducibility
+seed <- 123
+set.seed(seed)
 
-### Simulating Data
-Generate the skills for 100 colonists, repeating this process multiple times to analyze the consistency and resilience of skill distribution:
+# Load the Mass, Matrix, and then tidyverse (otherwise have to use conflicted package to handle conflict
+## (note to self that MASS has a select function
 
-```{r}
+library(MASS); library(Matrix); library(tidyverse); library(conflicted)
+conflicts_prefer(dplyr::select())
+# Number of colonists
+n_colonists <- 100
+
+# Define mean and covariance matrix
+##            "EX", "ES", "AG", "CO", "OP"
+var_names <- c( "EX", "ES", "AG", "CO", "OP")
+
+mean_traits <- c(-.5, .5, .25, .5, 0) # Mean of each trait
+sd_traits <- c(1, .9, 1, 1, 1)  # Standard deviation of each trait
+
+
+# Get correlation matrix
+
+cor_matrix_bigfive <- matrix(c(
+    1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
+    0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
+    0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
+    0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
+    0.2949, 0.0720, 0.1951, 0.1574, 1.0000
+), nrow=5, ncol=5, byrow=TRUE,
+dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
+              c("EX", "ES", "AG", "CO", "OP")))
+
+# Check if correlation matrix is positive definite (if all eigenvalues are positive)
+ eigen_values <- eigen(cor_matrix_bigfive)$values
+ is_positive_definite <- all(eigen_values > 0)
+ print(is_positive_definite)
+ 
+ 
+# Convert correlation matrix to covariance matrix
+cov_matrix_bigfive <- cor_matrix_bigfive * (sd_traits %*% t(sd_traits))
+
+# Print the covariance matrix
+print(cov_matrix_bigfive)
+
+simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
+
+# Add colonist_id and seed
+simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
+                                    seed = seed, # add seed
+                                    simulated_data) # add simulated data
+
+# Print the first few rows of the simulated data
+
+print(head(simulated_data))
+
+summary_stats_mean <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  summarise(across(everything(), list(mean = mean))) %>%
+    rbind(mean_traits) # compare with population parameters from mean_traits
+
+summary_stats_sd <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  summarise(across(everything(), list(sd = sd))) %>%
+    rbind(sd_traits) # compare with population parameters from sd_traits
+
+
+# compare with population parameters from mean_traits and sd_traits
+summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
+
+#  
+summary_stats_cor <- simulated_data %>%
+  select(-colonist_id, -seed) %>% 
+  cor() # compare with population parameters from cor_matrix_bigfive
+
+summary_stats
+    ```
+</details>
+    
+ 
+
+
+## Exercise 4: Preparing for the Unexpected {.unnumbered}
+
+Generate the big five for 100 colonists, repeating this process multiple times to how much our colony might look if we settled on 100 different planets. We've already made the colonists for one planet, so we'll just need to replicate that process 99 more times. There are two major approaches to take here. You can either use replicate, which is easier, or a for loop, which is more flexible.
+
+Although you can get the summary statistic for each variable, let's focus on the mean and standard deviation for extraversion as well as its correlation with openness. Please plot the distribution of the correlation coefficients to see how consistent the relationship between extraversion and openness is across different planets. Consider how this distribution might differ across colonists. How large of a sample size would you need to get a stable estimate of the correlation between extraversion and openness?
+
+
+<details>
+  <summary>Click this text for a hint about implementing with a forloop</summary>
+    ```{r, echo=FALSE, eval=FALSE}
+    You can use a for loop to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
+    After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness. 
+    ```
+</details>
+
+
+<details>
+  <summary>Click this text for forloop based solution</summary>
+    ```{r, exercise4solution, error=TRUE,echo=TRUE}
 
 set.seed(124)
 num_simulations <- 100  # Number of times to simulate the colonist data
-all_simulations <- replicate(num_simulations, mvrnorm(n = 100, mu = mean_skills, Sigma = cov_skills, empirical = TRUE))
-```
+
+for (i in 1:num_simulations) {
+  # Simulate the big five personality traits
+  simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
+  
+
+  # Add colonist_id and seed
+  simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
+                                      rep = i, 
+                                      simulated_data) # add simulated data
+  
+  # Append the results
+  all_simulations <- rbind(all_simulations, simulated_data)
+}
+
+summary_stats <- simulated_data %>% group_by(rep) %>% 
+  select(-colonist_id, -seed) %>% 
+  summarise(across(everything(), list(n = count(), mean = mean, sd = sd))) 
+
+# compare with population parameters from mean_traits
+  select(-colonist_id, -seed) %>%
+  summarise(across(everything(), list(mean = mean))) %>%
+    rbind(mean_traits) # compare with population parameters from mean_traits
+
+summary_stats_sd <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  summarise(across(everything(), list(sd = sd))) %>%
+    rbind(sd_traits) # compare with population parameters from sd_traits
+
+
+# compare with population parameters from mean_traits and sd_traits
+summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
+
+# 
+summary_stats_cor <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  cor() # compare with population parameters from cor_matrix_bigfive
+
+    ```
+</details> 
+
+
+
+# Stretch Tasks (Optional) {.unnumbered}
+
+In space colonization, just like in any complex project management, it's essential to prepare for variability and uncertainty. To test the resilience of our simulated Mars colony, we'll generate multiple sets of potential colonists at different sample sizes. By examining these various batches, we can assess how many people we actually need in our colony and how that affects are summary statistics.
+
+
+
 ```{r}
 set.seed(124)
 sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
 repetitions_per_condition <- 20  # Number of repetitions for each sample size
+mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix for skills
 
 # Initialize a DataFrame to store results
 simulation_results <- data.frame(
@@ -424,7 +629,7 @@ simulation_results <- data.frame(
 # Nested loop for simulations
 for (size in sample_sizes) {
   for (rep in 1:repetitions_per_condition) {
-    skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = TRUE)
+    skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
     current_covariance <- cov(skills_data[, 1], skills_data[, 2])
   
     # Append results
@@ -437,101 +642,93 @@ for (size in sample_sizes) {
 }
 
 
-```
+num_simulations <- 100  # Number of times to simulate the colonist data
+all_simulations <- replicate(100, mvrnorm(n = 100, mu = mean_skills, Sigma = cov_skills, empirical = FALSE))
+
+# Initialize a DataFrame to store results
 
 
+set.seed(124)
+mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix for skills
+
+num_simulations <- 100  # Number of times to simulate the colonist data
+all_simulations <- replicate(num_simulations, 
+                             mvrnorm(n = 100, mu = mean_traits,
+                                     Sigma = cov_matrix_bigfive, 
+                                     empirical = FALSE), simplify = FALSE)
 
 
+sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
+repetitions_per_condition <- 20  # Number of repetitions for each sample size
 
-```{r}
-library(ggplot2)
+# Initialize a DataFrame to store results
+simulation_results_cov <- data.frame(
+  Condition = integer(),
+  SampleSize = integer(),
+  Repetition = integer(),
+  Covariance = numeric()
+)
+
+# Nested loop for simulations
+for (size in sample_sizes) {
+  for (rep in 1:repetitions_per_condition) {
+    skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
+    current_covariance <- cov(skills_data[, 1], skills_data[, 2])
+  
+    # Append results
+    simulation_results_cov <- rbind(simulation_results_cov, data.frame(
+      SampleSize = size,
+      Repetition = rep,
+      Covariance = current_covariance
+    ))
+  }
+}
 
 # Plotting the average covariance for each sample size
-average_covariances <- simulation_results %>%
+average_covariances <- simulation_results_cov %>%
   group_by(SampleSize) %>%
   summarize(AverageCovariance = mean(Covariance))
 
-ggplot(average_covariances, aes(x = SampleSize, y = AverageCovariance)) +
-  geom_line() + 
-  geom_point() +
-  theme_minimal() +
-  ggtitle("Average Covariance by Sample Size") +
-  xlab("Sample Size") +
-  ylab("Average Covariance")
+simulation_results_cov$SampleSize_factor <- as.factor(simulation_results_cov$SampleSize)
+
+```
+```{r}
+
+ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
+#  geom_histogram(position = position_dodge()) +
+    geom_density(position = position_dodge(), alpha=.6) +
+  labs(title = "Average Covariance by Sample Size", ) +
+  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
+  theme_minimal()
 ```
 
-
-
-
-
-
-
-
-
-
-
-# Simulate 5 different samples of 20 colonists each from our original pool
-samples <- replicate(5, sample_n(colonists, 20), simplify = FALSE)
-
-
-This code uses the replicate() function to draw five random samples from our colonist dataset. Each sample consists of 20 individuals, allowing us to see how smaller groups might vary from the full population.
-
-
-Repeated Sample Analysis
-Now, let's dive into these samples. We want to uncover any patterns or inconsistencies that emerge from repeatedly sampling our colonist pool. Are some combinations of skills and demographics more successful than others? Does the distribution of roles affect the group's overall health or technical capabilities?
-
-
-# Analyzing each sample by summarizing its main attributes
-sample_summaries <- lapply(samples, function(sample) {
-  summary_stats <- summarize(sample,
-    Average_Age = mean(Age),
-    SD_Age = sd(Age),
-    Average_Health = mean(Health),
-    SD_Health = sd(Health),
-    Average_TechnicalSkills = mean(TechnicalSkills),
-    SD_TechnicalSkills = sd(TechnicalSkills),
-    Average_ProblemSolving = mean(ProblemSolving),
-    SD_ProblemSolving = sd(ProblemSolving)
-  )
-  return(summary_stats)
-})
-
-
-
-
-
-## Stretch Tasks (Optional) {.unnumbered}
-
-This section offer additional optional activities for students who wish to deepen their understanding.
-
-```{r further-analysis}
-# Code for further analysis goes here
-```
-
-### Part 2: Analyzing Our Simulated Colonists
-
-1. Task 4: Descriptive Statistics
-- Objective: Learn to run descriptive statistics on our generated data and store the results.
-  - Calculate and display the mean, standard deviation, and correlations for our simulated attributes.
-1. Task 5: Visualization
-- Objective: Visualize our data to gain insights into the distribution of skills and attributes within our potential colonists.
-- Create histograms, scatter plots, and correlation plots for our simulated variables.
-
-### Part 3: Preparing for the Unexpected
-
-1. Task 6: Sampling and Replication
-- Objective: Master the art of repeated sampling and simulation to prepare for various scenarios.
-  - Simulate drawing random samples from our dataset to understand variability and ensure resilience in our colony's population.
-1. Task 7: Analysis of Repeated Samples
-- Objective: Analyze repeated samples to identify patterns and potential challenges.
-  - Store and summarize the results of repeated sampling in a comprehensive dataframe, analyzing the resilience of our population across simulations.
 
 ## Conclusion {.unnumbered}
 
-Summarize what has been learned in this lab and why it matters. Include any challenges faced and how they were overcome.
+Congratulations on completing the Mars Colony Simulation Lab! Today, you've applied your skills in R to simulate and analyze potential attributes of Mars colonists, preparing you for complex data analysis tasks in both theoretical and practical scenarios. Through various exercises, you practiced using R to create distributions, generate categorical variables, and explore relationships between simulated traits.
+
+### Final Checklist:
+
+- Ensure that you have executed all the codes and documented your findings in this lab.
+- Review the simulations you have created and confirm that all data frames and plots are correctly generated and annotated.
+
+### Reflect on Your Learning:
+
+- What insights have you gained about the potential challenges and needs of a Mars colony?
+- How can the simulation techniques you practiced today be applied to other areas of research or data science?
+
+### Next Steps:
+
+- Commit all your changes to your project repository. Use a comprehensive commit message that reflects the completion of this lab.
+- Push your changes to ensure everything is updated in your remote repository.
+<!-- 
+I encourage you to explore further with the stretch tasks provided and utilize the resources listed to deepen your understanding of statistical simulations. 
 
 ### Additional Resources {.unnumbered}
+- [Comprehensive Guide to the Normal Distribution in R](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/Normal)
+- [Advanced Simulation Techniques Using R](https://advancedsimR.com)
+- [Case Study: Using Data Simulation for Space Exploration Planning](https://spacecase.org/simulation)
 
-- [Link to resource 1](http://example.com)
-- [Following is another useful resource](http://example.com)
 
+-->
