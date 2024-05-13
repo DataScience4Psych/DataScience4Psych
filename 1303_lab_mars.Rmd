@@ -20,7 +20,7 @@ options(
   show.signif.stars = FALSE, # for regression output
   digits = 2
 )
-# You can add other libraries as needed
+
 ```
 
 ### Packages {.unnumbered}
@@ -37,7 +37,6 @@ library(MASS)
 # Install and load the tidyverse package
 if (!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
-
 ```
 
 
@@ -73,7 +72,7 @@ age <- rnorm(100, mean = 30, sd = 5)
 **1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
 
 
-```{r exercise1.1,error=TRUE,warning=FALSE}
+```{r exercise1.1,error=TRUE,warning=FALSE,message=FALSE}
 
 df_colonists <- data.frame(id = 1:100, # this is our id column
                                       ) # add the age column here
@@ -299,16 +298,17 @@ Now its your turn! Simulate problem-solving abilities based on their assigned ro
 df_colonists$problem_solving <- 1 # replace this with your code
 ```
 
-<details>
-  <summary>Click this to see a solution</summary>
-    ```{r, exercise2.2solution, error=TRUE, echo=TRUE}
+    ```{r, exercise2.2solution, error=TRUE, echo=FALSE,include=FALSE}
     df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
     df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
     df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
     ```
-</details>
 
-.
+<details>
+  <summary>Click this to see a solution</summary>
+```{r ref.label = "exercise2.2solution", echo = TRUE, warning = FALSE}
+```
+</details>
 
 ```{r, exercise2.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
 ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
@@ -391,9 +391,8 @@ But, now, we need to simulate more attributes for our colonists that don't all h
 __Population Parameters for Big Five Traits__
 I've provided a correlation matrix from Park et al. (2020)^[[OSF repo](https://osf.io/qkjpa/)] ^[Park, H. H., Wiernik, B. M., Oh, I. S., Gonzalez-Mulé, E., Ones, D. S., & Lee, Y. (2020). Meta-analytic five-factor model personality intercorrelations: Eeny, meeny, miney, moe, how, which, why, and where to go. The Journal of applied psychology, 105(12), 1490–1529. https://doi.org/10.1037/apl0000476] that you can use to get you started on simulating these traits. 
 
-<details>
-  <summary>Click this to see the code that built the matrix</summary>
-    ```{r, echo=TRUE, eval=TRUE}
+
+    ```{r, matrixbigfive, error=TRUE, echo=FALSE,include=FALSE}
     # Define the bigfive
     bigfive <- c("EX", "ES", "AG", "CO", "OP")
 
@@ -430,21 +429,28 @@ cor_matrix_bigfive <- cor_matrix <- cor_matrix %>%
   set_correlation("EX", "OP", 0.2949)
 print(cor_matrix_bigfive)
     ```
-</details> 
-.
+
+<details>
+  <summary>Click this to see the code that built the matrix</summary>
+```{r ref.label = "matrixbigfive", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+    ```{r, quickmatrix, error=TRUE, echo=FALSE,include=FALSE}
+  cor_matrix_bigfive <- matrix(c(
+      1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
+      0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
+      0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
+      0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
+      0.2949, 0.0720, 0.1951, 0.1574, 1.0000
+  ), nrow=5, ncol=5, byrow=TRUE,
+  dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
+            c("EX", "ES", "AG", "CO", "OP")))
+    ```
 <details> 
   <summary>Click this to get a matrix you can quickly paste</summary>
-    ```
-    cor_matrix_bigfive <- matrix(c(
-        1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
-        0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
-        0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
-        0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
-        0.2949, 0.0720, 0.1951, 0.1574, 1.0000
-    ), nrow=5, ncol=5, byrow=TRUE,
-    dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
-              c("EX", "ES", "AG", "CO", "OP")))
-    ```
+```{r ref.label = "quickmatrix", echo = TRUE, warning = FALSE, message=FALSE}
+```
 </details>
 
 
@@ -467,10 +473,13 @@ Because this is a tad more complex than the previous simulation, I've created so
 </details>
 
 Great! We have successfully simulated a dataset of 100 colonists with interdependent skills. The summary statistics show that the mean and standard deviation of the simulated data match the population parameters. The correlation matrix also aligns (fairly well) with the specified values. But did we just get lucky? Let's run the simulation multiple times to ensure the results are consistent across different scenarios.
-
-<details>
+<details> 
   <summary>Click this text for a solution</summary>
-    ```{r exercise3.3solution, error=TRUE,include=FALSE}
+```{r ref.label = "exercise3.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+    ```{r exercise3.3solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
   # Set seed for reproducibility
     seed <- 123
     set.seed(seed)
@@ -547,7 +556,7 @@ Great! We have successfully simulated a dataset of 100 colonists with interdepen
     
     summary_stats
     ```
-</details>
+
 
  
 
@@ -575,14 +584,18 @@ Please plot the distribution of the correlation coefficients to see how consiste
 </details>
 
 .
-
-<details>
+<details> 
   <summary>Click this text for forloop based solution</summary>
-    ```{r, exercise4solution, error=TRUE,echo=TRUE}
+```{r ref.label = "exercise4solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
 
-set.seed(124)
+    ```{r exercise4solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+    library(dplyr)
+    conflicts_prefer(dplyr::select())
+    set.seed(124)
 num_simulations <- 100  # Number of times to simulate the colonist data
-
+all_simulations <- data.frame()  # Create an empty data frame to store the results
 for (i in 1:num_simulations) {
   # Simulate the big five personality traits
   simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
@@ -597,17 +610,18 @@ for (i in 1:num_simulations) {
   all_simulations <- rbind(all_simulations, simulated_data)
 }
 
-summary_stats <- simulated_data %>% group_by(rep) %>% 
-  select(-colonist_id, -seed) %>% 
-  summarise(across(everything(), list(n = count(), mean = mean, sd = sd))) 
+summary_stats <- all_simulations %>% group_by(rep) %>% 
+  select(-colonist_id) %>% 
+  summarise(across(everything(), list(mean = mean, sd = sd))) 
 
 # compare with population parameters from mean_traits
-  select(-colonist_id, -seed) %>%
+summary_stats_mean <- all_simulations %>%
+  select(-colonist_id) %>%
   summarise(across(everything(), list(mean = mean))) %>%
     rbind(mean_traits) # compare with population parameters from mean_traits
 
-summary_stats_sd <- simulated_data %>%
-  select(-colonist_id, -seed) %>%
+summary_stats_sd <- all_simulations %>%
+  select(-colonist_id) %>%
   summarise(across(everything(), list(sd = sd))) %>%
     rbind(sd_traits) # compare with population parameters from sd_traits
 
@@ -617,11 +631,11 @@ summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
 
 # 
 summary_stats_cor <- simulated_data %>%
-  select(-colonist_id, -seed) %>%
+  select(-colonist_id) %>%
   cor() # compare with population parameters from cor_matrix_bigfive
 
     ```
-</details> 
+
 
 
 
@@ -630,9 +644,14 @@ summary_stats_cor <- simulated_data %>%
 In space colonization, just like in any complex project management, it's essential to prepare for variability and uncertainty. To test the resilience of our simulated Mars colony, we'll generate multiple sets of potential colonists at different sample sizes. By examining these various batches, we can assess how many people we actually need in our colony and how that affects are summary statistics.
 
 
-<details>
-  <summary>Click this text for the solution</summary>
-    ```{r,echo=TRUE,warning=FALSE, message=FALSE}
+<details> 
+  <summary>Click this text for forloop based solution</summary>
+```{r ref.label = "exercise5solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+    ```{r exercise5solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+    library(dplyr)
 set.seed(124)
 sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
 repetitions_per_condition <- 20  # Number of repetitions for each sample size
@@ -721,7 +740,7 @@ ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
   scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
   theme_minimal()
     ```
-</details>
+
 
 ## Conclusion {.unnumbered}
 
