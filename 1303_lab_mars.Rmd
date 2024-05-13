@@ -73,7 +73,7 @@ age <- rnorm(100, mean = 30, sd = 5)
 **1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
 
 
-```{r exercise1.1,error=TRUE,}
+```{r exercise1.1,error=TRUE,warning=FALSE}
 
 df_colonists <- data.frame(id = 1:100, # this is our id column
                                       ) # add the age column here
@@ -159,7 +159,6 @@ ggplot(df, aes(x = role, fill = method)) +
 
 ```{r exercise1.3solution, error=TRUE,include=FALSE}
 df_colonists$role <- role1 
-
 ```
 
 
@@ -303,13 +302,13 @@ df_colonists$problem_solving <- 1 # replace this with your code
 <details>
   <summary>Click this to see a solution</summary>
     ```{r, exercise2.2solution, error=TRUE, echo=TRUE}
-
-df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
-df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
-df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
+    df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
+    df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
+    df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
     ```
 </details>
 
+.
 
 ```{r, exercise2.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
 ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
@@ -472,81 +471,81 @@ Great! We have successfully simulated a dataset of 100 colonists with interdepen
 <details>
   <summary>Click this text for a solution</summary>
     ```{r exercise3.3solution, error=TRUE,include=FALSE}
-# Set seed for reproducibility
-seed <- 123
-set.seed(seed)
-
-# Load the Mass, Matrix, and then tidyverse (otherwise have to use conflicted package to handle conflict
-## (note to self that MASS has a select function
-
-library(MASS); library(Matrix); library(tidyverse); library(conflicted)
-conflicts_prefer(dplyr::select())
-# Number of colonists
-n_colonists <- 100
-
-# Define mean and covariance matrix
-##            "EX", "ES", "AG", "CO", "OP"
-var_names <- c( "EX", "ES", "AG", "CO", "OP")
-
-mean_traits <- c(-.5, .5, .25, .5, 0) # Mean of each trait
-sd_traits <- c(1, .9, 1, 1, 1)  # Standard deviation of each trait
-
-
-# Get correlation matrix
-
-cor_matrix_bigfive <- matrix(c(
+  # Set seed for reproducibility
+    seed <- 123
+    set.seed(seed)
+    
+    # Load the Mass, Matrix, and then tidyverse (otherwise have to use conflicted package to handle conflict
+    ## (note to self that MASS has a select function
+    
+    library(MASS); library(Matrix); library(tidyverse); library(conflicted)
+    conflicts_prefer(dplyr::select())
+    # Number of colonists
+    n_colonists <- 100
+    
+    # Define mean and covariance matrix
+    ##            "EX", "ES", "AG", "CO", "OP"
+    var_names <- c( "EX", "ES", "AG", "CO", "OP")
+    
+    mean_traits <- c(-.5, .5, .25, .5, 0) # Mean of each trait
+    sd_traits <- c(1, .9, 1, 1, 1)  # Standard deviation of each trait
+    
+    
+    # Get correlation matrix
+    
+    cor_matrix_bigfive <- matrix(c(
     1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
     0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
     0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
     0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
     0.2949, 0.0720, 0.1951, 0.1574, 1.0000
-), nrow=5, ncol=5, byrow=TRUE,
-dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
-              c("EX", "ES", "AG", "CO", "OP")))
-
-# Check if correlation matrix is positive definite (if all eigenvalues are positive)
- eigen_values <- eigen(cor_matrix_bigfive)$values
- is_positive_definite <- all(eigen_values > 0)
- print(is_positive_definite)
- 
- 
-# Convert correlation matrix to covariance matrix
-cov_matrix_bigfive <- cor_matrix_bigfive * (sd_traits %*% t(sd_traits))
-
-# Print the covariance matrix
-print(cov_matrix_bigfive)
-
-simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
-
-# Add colonist_id and seed
-simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
-                                    seed = seed, # add seed
-                                    simulated_data) # add simulated data
-
-# Print the first few rows of the simulated data
-
-print(head(simulated_data))
-
-summary_stats_mean <- simulated_data %>%
-  select(-colonist_id, -seed) %>%
-  summarise(across(everything(), list(mean = mean))) %>%
+    ), nrow=5, ncol=5, byrow=TRUE,
+    dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
+    c("EX", "ES", "AG", "CO", "OP")))
+    
+    # Check if correlation matrix is positive definite (if all eigenvalues are positive)
+    eigen_values <- eigen(cor_matrix_bigfive)$values
+    is_positive_definite <- all(eigen_values > 0)
+    print(is_positive_definite)
+    
+    
+    # Convert correlation matrix to covariance matrix
+    cov_matrix_bigfive <- cor_matrix_bigfive * (sd_traits %*% t(sd_traits))
+    
+    # Print the covariance matrix
+    print(cov_matrix_bigfive)
+    
+    simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
+    
+    # Add colonist_id and seed
+    simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
+    seed = seed, # add seed
+    simulated_data) # add simulated data
+    
+    # Print the first few rows of the simulated data
+    
+    print(head(simulated_data))
+    
+    summary_stats_mean <- simulated_data %>%
+    select(-colonist_id, -seed) %>%
+    summarise(across(everything(), list(mean = mean))) %>%
     rbind(mean_traits) # compare with population parameters from mean_traits
-
-summary_stats_sd <- simulated_data %>%
-  select(-colonist_id, -seed) %>%
-  summarise(across(everything(), list(sd = sd))) %>%
+    
+    summary_stats_sd <- simulated_data %>%
+    select(-colonist_id, -seed) %>%
+    summarise(across(everything(), list(sd = sd))) %>%
     rbind(sd_traits) # compare with population parameters from sd_traits
-
-
-# compare with population parameters from mean_traits and sd_traits
-summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
-
-#  
-summary_stats_cor <- simulated_data %>%
-  select(-colonist_id, -seed) %>% 
-  cor() # compare with population parameters from cor_matrix_bigfive
-
-summary_stats
+    
+    
+    # compare with population parameters from mean_traits and sd_traits
+    summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
+    
+    #  
+    summary_stats_cor <- simulated_data %>%
+    select(-colonist_id, -seed) %>% 
+    cor() # compare with population parameters from cor_matrix_bigfive
+    
+    summary_stats
     ```
 </details>
 
@@ -728,7 +727,7 @@ ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
 
 Congratulations on completing the Mars Colony Simulation Lab! Today, you've applied your skills in R to simulate and analyze potential attributes of Mars colonists, preparing you for complex data analysis tasks in both theoretical and practical scenarios. Through various exercises, you practiced using R to create distributions, generate categorical variables, and explore relationships between simulated traits.
 
- __Final Checklist__
+__Final Checklist__
 
 - Ensure that you have executed all the codes and documented your findings in this lab.
 - Review the simulations you have created and confirm that all data frames and plots are correctly generated and annotated.
