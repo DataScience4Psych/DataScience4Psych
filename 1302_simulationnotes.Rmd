@@ -10,32 +10,29 @@ library(emo)
 library(openintro)
 ```
 
-This module introduces the basics of data simulation using R.  Although we won't cover every aspect of data simulation in this module, we'll delve into some of the core functions. Drawing inspiration from [Ariel Muldoon](https://github.com/aosmith16)'s [tutorial](https://github.com/aosmith16/simulation-helper-functions) on simulation helper functions, this module introduces practical methods for creating simulated datasets.
+This module introduces the basics of data simulation using R.  We won't cover every aspect of data simulation, but we'll delve into some core functions. Drawing inspiration from [Ariel Muldoon](https://github.com/aosmith16)'s [tutorial](https://github.com/aosmith16/simulation-helper-functions) on simulation helper functions, this module presents practical methods for creating simulated datasets.
 
 Our focus will be on functions from the base R package, which is included with every installation of R.  These functions are easy to use and are great for getting started with simulations. We will cover various approaches to generating both quantitative and categorical variables, enhancing your data science toolkit.
 
 
+## Learning Goals
 
-
-## Learning goals
-
-1. To generate quantitative variables using functions such as `rnorm()`, `runif()`, and `rpois()`.
-2. To generate categorical variables like group names using `rep()`, and explore various methods to replicate patterns.
-3. To integrate the creation of datasets that include both quantitative and categorical variables.
-4. To use `replicate()` to perform the data simulation process multiple times.
+1. Generate quantitative variables using functions such as `rnorm()`, `runif()`, and `rpois()`.
+2. Generate categorical variables like group names using `rep()`, and explore various methods to replicate patterns.
+3. Integrate the creation of datasets that include both quantitative and categorical variables.
+4. Use `replicate()` to perform the data simulation process multiple times.
 
 ## Generating Variables
 
 ### Generating Random Numbers
 
-One method for generating numeric data in R involves using the "random deviate" functions to pull random numbers from statistical distributions. These functions, which all begin with the letter 'r', are designed to generate random numbers from specific statistical distributions. The letter "r" to indicate that they generate random numbers (e.g., `rnorm()` for the normal distribution). Here are some of the most commonly used random deviate functions in R:
+One method for generating numeric data in R involves using the "random deviate" functions to pull random numbers from statistical distributions. These functions, which all begin with the letter 'r', are designed to generate random numbers from specific statistical distributions. Here are some commonly used random deviate functions in R:
+
 - **Normal Distribution** (`rnorm()`): Used for generating data that follows a Gaussian distribution.
 - **Uniform Distribution** (`runif()`): Ideal for creating evenly distributed numbers over a specified range.
 - **Poisson Distribution** (`rpois()`): Useful for modeling count-based data, such as the number of events happening within a fixed period.
 
-These functions are part of the core **stats** package, which also includes tools for generating data from binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages.
-
-The `r` functions for a chosen distribution all work similarly. The syntax for these functions typically requires specifying the number of random numbers to generate (`n`) and defining the parameters for the distribution you want to draw from. 
+These functions are part of the core **stats** package. The syntax for these functions typically requires specifying the number of random numbers to generate (`n`) and defining the parameters for the distribution you want to draw from. 
 
 For example, to generate random values from these distributions, you would use:
 
@@ -50,6 +47,10 @@ runif(5, min = 0, max = 1)
 rpois(5, lambda = 3)
 ```
 
+The `r` functions for a chosen distribution all work similarly. Other distributions from the `stats` package. binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages. 
+
+
+
 ### Deep Dive into the Normal Distribution (`rnorm()`)
 
 `rnorm()` is frequently used in statistical simulations to generate random numbers that follow a normal (Gaussian) distribution. The function `rnorm()` requires three main arguments:
@@ -58,21 +59,28 @@ rpois(5, lambda = 3)
 - `mean`: the mean of the normal distribution.
 - `sd`: the standard deviation of the distribution. (note that `sd` is the *standard deviation*, not the variance)
 
-Using these, generating five random numbers from a $Normal(0, 1)$ (aka the *standard* normal) standard distribution can be performed as follows:
+Generating five random numbers from a $Normal(0, 1)$ (aka the *standard* normal) distribution can be done as follows:
+
+
+```{r}
+
+rnorm(n = 5, mean = 0, sd = 1)
+
+```
+
+Notice how I have written out the arguments explicitly. If I were coding "lazily", I'd likely have written something like this...
 
 ```{r}
 rnorm(5) # This uses the default values for mean and sd
 ```
 
-### Writing Out Arguments Explicitly
+Lazy, concise, code can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from. When future me revisits this code, she will have to remember what the defaults are. Is that a realistic request? Maybe, but future me has to remember a lot of things, so as a kindness to her, its worthwhile to make those arguments explicit. That way future me does not have to remember what the defaults are and she can quickly work her way through the code. 
 
-Let's talk about this code and it's output. 
 
-First, the code gave me 5 numbers, which is what I wanted. (Yay!😸)  However, the code itself isn't particularly clean.  What I might refer to as lazy coding on my part can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for `mean` and `sd`, it's not clear exactly what distribution I drew the numbers from. When future me revisits this code, she will have to remember what the defaults are. Is that a realistic request? Maybe, but future me has to remember a lot of things, so as a kindness to her, its worthwhile to make those arguments explicit. That way future me does not have to remember what the defaults are and she can quickly work her way through the code. 
 
 In other words, specify the arguments explicitly, even if you are using default values. This practice makes your code self-documenting, meaning that anyone reading it can understand at a glance which distribution the data comes from, without needing to remember the default settings of the function.
 
-Here's a more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:
+Here's an even more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:
 
 ```{r}
 rnorm(n = 5, 
