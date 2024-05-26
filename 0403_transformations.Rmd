@@ -5,7 +5,7 @@ source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-This optional deep dive covers data transformations, with a special focus on Tukey's Ladder of Powers, an invaluable tool for reshaping data distributions and relationships between variables. Our journey through this topic is inspired by @fox2016applied (ch. 4, pp. 28 - 80)
+This optional deep dive explores data transformations, focusing on Tukey's Ladder of Powers—an groundbreaking approach for reshaping data distributions and relationships between variables. Our journey through this topic is inspired by @fox2016applied (ch. 4, pp. 28 - 80)
 
 ## Transforming Data: Tukey's Ladder of Powers
 
@@ -16,7 +16,12 @@ John Tukey introduced a methodological toolkit, likened to a set of drill bits o
 
 ### Dataset Preparation and Visualization
 
-We'll be using data from @fox2016applied. You may need to download the data manually and save it in the "data" directory within your current working directory. The dataset is available [here](http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt). You can use this r code `download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt"), "data/UnitedNations.txt")` to download the data.
+We'll be using data from @fox2016applied's book. You may need to download the data manually and save it in the "data" directory within your current working directory. The dataset is available [here](http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt). You can use this r code to download the data.
+
+```
+download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt", "data/UnitedNations.txt")
+```
+
 
 ```{r, echo=FALSE}
 # Manual dataset preparation steps:
@@ -43,8 +48,6 @@ un <- read.table("data/UnitedNations.txt", header = TRUE)%>%
 Let's visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You've likely used a log-transformation before, but we'll be exploring the more general family of transformations.
 
 ```{r,warning=FALSE,echo=FALSE , fig.width=6}
-
-
 # First plot
 p1 <- ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
   geom_point(color = "steelblue") +
@@ -69,11 +72,14 @@ p2 <- ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
 grid.arrange(p1, p2, ncol = 2)
 
 ```
+The log transformation has straightened out the data, allowing us to fit a more useful regression line. However, we're not limited to just a log transformation. We can use an entire family of transformations called Tukey's Ladder of Powers.
 
-It's clear that the log-transformation has straightened out the data, allowing us to fit a more useful regression line. However, we're not limited to just a log transformation. We can use an entire family of transformations to modify our data. This family of transformations is called Tukey's Ladder of Powers.
 
+## Introduction to Tukey's Ladder of Powers
 John Tukey suggested this simple toolkit, like a set drill bits of varying sizes, to modify the shape of distributions  and the shape of relationships between variables. 
-The basic idea stems from the fact that functions of the form $y' = y^p, \quad y > 0$ have a graph that is concave up if $p >1$, and concave down if $0<p<1$ (or $p < 0$).  
+The basic idea stems from the fact that functions of the form $y' = y^p, \quad y > 0$ have a graph that is concave up if $p >1$, and concave down if $0<p<1$ or $p<0$.  
+
+Here are some examples to illustrate these concepts:
 
 
 ```{r, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
@@ -98,19 +104,32 @@ Concave Up ($y= x^2$): This plot shows a parabolic curve opening upwards, illust
 Concave Down ($y= -x^2$): Conversely, this plot shows a parabolic curve opening downwards, illustrating a concave down graph where the slope of the tangent line decreases as $x$ increases.
 
 
-We can use this information to modify the shape of a distribution or the shape of a relationship between variables by using a power transformation ( $p$) on our data. This family of transformations is called Tukey's Ladder of Powers.
+We can use this information to modify the shape of a distribution or the shape of a relationship between variables by using a power transformation ($p$) on our data.
 
-Notably, $p < 0$, $y' = - y^p, \quad y > 0$, is also concave down.
 
-Now, this graph leaves out $p=0$ but we will see shortly that $y' = \ln y$ is the sensible transformation that corresponds to $p = 0$.
+## Mathematical Formulation of Tukey's Ladder of Powers
 
-Now, we standardize the family of power transformations so that they have the value 0 when $y = 1$ and so their derivative is equal to 1 when $y=1$.
+To understand Tukey's Ladder of Powers, let's start with the general form of the transformation:
 
-For $p \ne 0$, this yields $$y' = \frac{y^p - 1}{p}$$
+$$y' = \frac{y^p - 1}{p}$$
 
-Note that, by l’Hôpital’s rule:
+
+where $p$ is the power parameter. This formula helps us adjust the shape of the data distribution. When 
+$p$ is positive, the transformation can help reduce right skewness. When $p$ is negative, it can help reduce left skewness.
+
+### Special Case: $p = 0$
+
+When $p = 0$, the transformation simplifies to a logarithmic transformation. This is because as $p$ approaches 0, the formula $\frac{y^p - 1}{p}$ approaches $\ln y$. This can be understood using a concept from calculus called l’Hôpital’s rule, which is used to evaluate limits of indeterminate forms. For our purposes, we can state that:
 
 $$\lim_{p \to 0} \frac{y^p - 1}{p}= \lim_{p \to 0}\, e^{\, p \ln y} \ln  y = \ln  y$$
+
+To make this concept more intuitive, imagine $y^p$ as a function that gets closer and closer to 1 as $p$ gets closer to 0. The subtraction of 1 and division by $p$ in the formula adjust this function to reflect the logarithmic behavior.
+
+## Negative Powers
+  For negative values of $p$, the formula $y = -y^p$ is used. This formula is concave down. The negative power causes the transformation to be concave down. This helps transform the data in a way that handles extreme values more effectively.
+  
+## Defining the Transformation Function in R
+
 
 We define a function that produces this transformation. The easy way to define it is:
 
@@ -157,8 +176,7 @@ plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
 plot(function(x) pow(x, p = .5), xlim = c(0, 3))
 ```
-
-But this approach has the disadvantage that it works correctly only for a single value of $p$ because the statement `if(p == 0)` only tests the first element of `p`.
+However, this approach works correctly only for a single value of $p$ because the statement `if(p == 0)` only tests the first element of `p`.
 
 ## Vectorizing a function
 
