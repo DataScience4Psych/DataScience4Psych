@@ -295,9 +295,12 @@ There is mild right-skew when we draw a histogram of the values.
 
 ```{r}
 palette_OkabeIto <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
-df_demo <- data.frame(y)
-ggplot(df_demo, aes(x=y)) + geom_histogram(binwidth=1,color="black", fill="#E69F00") +
-  labs(title="Poisson distribution with a mean of 5",x= "Value", y = "Count") + theme_bw()
+
+data.frame(y) %>%
+ggplot(aes(x=y)) + 
+  geom_histogram(binwidth=1,color="black", fill="#E69F00") +
+  labs(title = "Poisson distribution with a mean of 5",
+       x = "Value", y = "Count") + theme_bw()
 
 ```
 Let's do the same for a Poisson distribution with a mean of 100. The range of values is still pretty narrow; there are no values even remotely close to 0.
@@ -311,26 +314,30 @@ summary(y)
 The distribution is more symmetric compared to the distribution with the smaller mean.
 
 ```{r}
-
-df_demo <- data.frame(y)
-ggplot(df_demo, aes(x=y)) + geom_histogram(binwidth=5,color="black",fill= "#CC79A7") +
-  labs(title="Poisson distribution with a mean of 100",x= "Value", y = "Count") + theme_bw()
+data.frame(y) %>%
+ggplot(aes(x=y)) + 
+  geom_histogram(binwidth=5, color="black", fill= "#CC79A7") +
+  labs(title="Poisson distribution with a mean of 100",x= "Value", y = "Count") + 
+  theme_bw()
 
 ```
+
 An alternative to the Poisson distribution for discrete integers is the negative binomial distribution. The **MASS** package has a function called `rnegbin()` for generating random numbers from the negative binomial distribution.
 
 
 ## Generate character vectors with `rep()`
 
-Quantitative variables are great, but in simulations we're often going to need categorical variables, as well. Categorical variables are useful for simulations that involve groups or treatments.
+Quantitative variables are great, but in simulations, we often need categorical variables, as well. Categorical variables are useful for simulations that involve groups or treatments.
 
-The `rep()` function in R simplifies the creation of these kinds of variables by *replicating elements of vectors or lists*. This functionality is particularly useful for avoiding having to write out an entire vector manually. This makes it easier to construct large datasets. 
+The `rep()` function in R simplifies creating these kinds of variables by *replicating elements of vectors or lists*. This functionality is particularly useful to avoid manually writing out an entire vector, making it easier to construct large datasets.
 
 ### Using `letters` and `LETTERS`
 
 The first argument of `rep()` is the vector to be repeated.  One option is to write out the character vector you want to repeat.  You can also get a simple character vector through the use of `letters` or `LETTERS`.  These are *built in constants* in R.  `letters` is the 26 lowercase letters of the Roman alphabet and `LETTERS` is the 26 uppercase letters.
 
-Letters can be pulled out via the extract brackets (`[`).  These built-in constants are convenient for when I need to make a basic categorical vector and it doesn't matter what form those categories take.  I find it more straightforward to type out the word and brackets than a vector of characters (complete with all those pesky quotes and such).
+
+You can extract letters using brackets (`[`). These built-in constants are convenient for making basic categorical vectors when the form of the categories doesn't matter. Typing out the word and brackets is often more straightforward than creating a vector of characters with quotes.
+
 
 Here are the first two `letters`.
 
@@ -346,13 +353,11 @@ LETTERS[10:26]
 
 ### Repeat each element of a vector with `each`
 
-There are three arguments that help us repeat the values in the vector in `rep()` with different patterns: `each`, `times`, and `length.out`.  These can be used individually or in combination.
+There are three arguments to repeat the values in a vector in `rep()` with different patterns: `each`, `times`, and `length.out`.  These approaches can be used individually or in combination.
 
-With `each` we repeat each unique character in the vector the defined number of times.  The replication is done "elementwise", so the repeats of each unique character are all in a row.  
+With `each`, we repeat each unique character in the vector the defined number of times.  The replication is done "elementwise", so the repeats of each unique character are all in a row.  
 
-Let's repeat two characters three times each.  The resulting vector is 6 observations long.  
-
-This is an example of how you can quickly make a grouping variable for simulating data to be used in a two-sample analysis.  
+Let's repeat two characters three times each.  The resulting vector is 6 observations long. This is an example of how you can quickly make a grouping variable for simulating data to be used in a two-sample analysis.  
 
 ```{r}
 rep(letters[1:2], each = 3)
@@ -556,7 +561,7 @@ data.frame(group = rep(LETTERS[3:4], each = 10),
 
 But if we get things wrong and the number we use goes into the number we need evenly, R will *recycle* the vector to the end of the `data.frame()`.  
 
-This is a hard mistake to catch.  If you look carefully through the output below you can see that the continuous variables start to repeat on line 10.
+This mistake is hard to catch.  If you look carefully through the output below, you can see that the continuous variables start to repeat on line 10.
 
 ```{r}
 data.frame(group = rep(LETTERS[3:4], each = 10),
