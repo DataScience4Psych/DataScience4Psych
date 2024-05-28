@@ -1,73 +1,3 @@
-# (PART) Module 10 {.unnumbered}
-
-```{r include = FALSE}
-source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
-```
-
-# Welcome to modeling the tidy way!
-
-This module introduces you to the ideas behind fitting and interpreting models within the framework of tidymodels. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_10]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides]. In the spirit of transparency, I have strong [non-positive][tidymodelthoughts] thoughts on tidymodels, but I also think that it is useful for you to learn them. I have similar feelings about the necessary evil that is ANOVA or SPSS.
-
-## Module Materials
-
-- Videos
-  - Located in the subchapters of this module
-- Slidedecks
-  - [Language of Models](https://datascience4psych.github.io/slides/d20_language/d20_language.html)
-  - [Fitting and interpreting models](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html)
-  - [Modeling non-linear relationships](https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html)
-  - [Models with multiple predictors](https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html)
-
-- Suggested Readings
-  - All subchapters of this module
-  - Articles
-    - [Rodgers, J. L. (2010). The epistemology of mathematical and statistical modeling: A quiet methodological revolution. American Psychologist, 65, 1-12.](https://core.ac.uk/reader/191832935)
-  - R4DS
-    - [Model Section](https://r4ds.had.co.nz/model-intro.html), including
-      - [Model Basics](https://r4ds.had.co.nz/model-basics.html)
-      - [Model Building](https://r4ds.had.co.nz/model-building.html)
-
-- Lab
-  - Lab 10
-
-# Language of Models
-
-You can follow along with the slides [here](https://datascience4psych.github.io/slides/d20_language/d20_language.html) if they do not appear below.
-
-## What is a model?
-
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
- embed_youtube_alt("XbyXxGDFmFQ")
-```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
-"https://www.youtube.com/watch?v=XbyXxGDFmFQ" %>%
-  embed_url() %>%
-  use_align("center")
-```
-
-```{r, echo=FALSE}
-"https://datascience4psych.github.io/slides/d20_language/d20_language.html#1" %>%
-  include_url(height = "400px")
-```
-
-## Modeling the relationship between variables
-
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
- embed_youtube_alt("Y0ehX5VI_Wo")
-```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
-"https://www.youtube.com/watch?v=Y0ehX5VI_Wo" %>%
-  embed_url() %>%
-  use_align("center")
-```
-
-```{r, echo=FALSE}
-"https://datascience4psych.github.io/slides/d20_language/d20_language.html#16" %>%
-  include_url(height = "400px")
-```
-
 # Fitting and interpreting models
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html) if they do not appear below.
@@ -140,9 +70,11 @@ fits <- singer %>%
 
 To assess whether the linear model is a good fit to the data, we need to know whether the errors look like they come from normal distributions with the same variance.
 
-The residuals are our estimates of the errors, and so we need to check both normality and homoscedasticity.
+The residuals are our estimates of the errors, and so we need to check both homoscedasticity and normality.
 
 ### Homoscedasticity
+
+Homoscedasticity, or homogeneity of variances, is a modeling assumption that we make that assummes we have equal or similar variances in different groups being compared. In other words, the variance of the residuals should be the same for all values of the predictor. We can check this by looking at the residuals for each voice part.
 
 There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:
 
@@ -162,7 +94,7 @@ From these plots, it seems like the residuals in each group have approximately t
 
 ### Normality
 
-We also want to examine normality of the residuals, broken up by voice part. We can do this by faceting:
+Normality of the residuals is another important assumption of the linear model. We can check this assumption by looking at normal QQ plots of the residuals for each voice part. We can do this by faceting, which will allow us to examine each voice part separately. We can use the `stat_qq()` function to create the QQ plots.:
 
 ```{r, fig.width = 6}
 ggplot(res_singer, aes(sample = residual)) +
@@ -170,13 +102,13 @@ ggplot(res_singer, aes(sample = residual)) +
   facet_wrap(~voice_part, ncol = 4)
 ```
 
-Not only do the lines look reasonably straight, the scales look similar for all eight voice parts. This suggests a model where all of the errors are normal with the *same* standard deviation. This is convenient because it is the form of a standard linear model:
+Not only do the lines look reasonably straight, the scales look similar for all eight voice parts. This similarity suggests a model where all of the errors are normal with the *same* standard deviation. This is convenient because it is the form of a standard linear model:
 
 Singer height = Average height for their voice part + Normal($0, \sigma^2$) error.
 
 ### Normality of pooled residuals
 
-If the linear model holds, then all the residuals come from the same normal distribution.
+If this assumption for our linear model holds, then all the residuals come from the same normal distribution.
 
 We've already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together.
 
@@ -209,7 +141,7 @@ sd(res_singer$residual)
 round(summary(lm_singer)$sigma, 3)
 ```
 
-However, the difference between this and the SD above is negligible.
+However, the difference between this adjustment and the SD above is negligible.
 
 Add the line:
 
@@ -219,9 +151,10 @@ ggplot(res_singer, aes(sample = residual)) +
   geom_abline(intercept = mean(res_singer$residual), slope = summary(lm_singer)$sigma)
 ```
 
-The straight line isn't absolutely perfect, but it's doing a pretty good job.
+The straight line isn't absolutely perfect, but it's doing a pretty good job. The residuals look like they come from a normal distribution with the same variance for each voice part.
 
 ### Our final model
+
 
 Since the errors seem to be pretty normal, our final model is:
 
