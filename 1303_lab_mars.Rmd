@@ -72,7 +72,7 @@ age <- rnorm(100, mean = 30, sd = 5)
 **1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
 
 
-```{r exercise1.1,error=TRUE,warning=FALSE,message=FALSE}
+```{r exercise1.1, error=TRUE, message=FALSE, warning=FALSE,echo=TRUE}
 
 df_colonists <- data.frame(id = 1:100, # this is our id column
                                       ) # add the age column here
@@ -136,22 +136,59 @@ role3 <- rep(c("engineer", "scientist", "medic"),
 role4 <- sample(c("engineer", "scientist", "medic"), 
                 replace = TRUE, 
                 size = 100, prob = c(1,1,1))
+
+# if you want to randomly shuffle
+
+role5 <- sample(role2, size = 100, replace = FALSE)
+
 ```
 
-```{r, pie,echo=FALSE}
-df <- data.frame( role = c(role1, role2, role3,role4), 
+```{r pie,echo=FALSE}
+df <- data.frame( role = c(role1, role2, role3,role4, role5), 
                   method = c(rep("Method A", length(role1)),
                            rep("Method B", length(role2)),
                            rep("Method C", length(role3)),
-                           rep("Method D", length(role4))))
+                           rep("Method D", length(role4)),
+                           rep("Method E", length(role5))))
 
 ggplot(df, aes(x = role, fill = method)) +
   geom_bar(position = position_dodge()) +
   labs(title = "Distribution of Colonists by Method", x = "Role", y = "Count") +
   scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
   theme_minimal()
-
 ```
+
+```{r reptables, error=TRUE, warning=FALSE, include=FALSE, message=FALSE,echo=FALSE}
+df <- data.frame(row = rep(1:100, 5),
+  role = c(role1, role2, role3, role4, role5), 
+                method = c(rep("Method A", length(role1)),
+                           rep("Method B", length(role2)),
+                           rep("Method C", length(role3)),
+                           rep("Method D", length(role4)),
+                           rep("Method E", length(role5))))
+                  
+
+df %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    filter = list(position = "top"),
+    options = list(
+      pageLength = nrow(df)/5,
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE
+    )
+  )
+```
+                  
+
+<details>
+  <summary>If you want to see the raw data as a table, click here</summary>
+```{r, ref.label = "reptables", echo = TRUE, warning = FALSE}
+```
+</details>
+
 
 
 **1.3.** Create a role variable that suits the needs of your colony, and explain why you chose that method.
@@ -303,17 +340,18 @@ df_colonists$problem_solving <- 1 # replace this with your code
     df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
     df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
     ```
+    
 <details>
   <summary>Click this to see a hint</summary>
   If you're stuck, you can check the source code for the solution by examining the following chuck in this corresponding rmd file exercise2.2solution.
 </details>
-<!--
+
 <details>
   <summary>Click this to see a solution</summary>
 ```{r ref.label = "exercise2.2solution", echo = TRUE, warning = FALSE}
 ```
 </details>
--->
+
 ```{r, exercise2.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
 ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
 #  geom_histogram(position = position_dodge()) +
