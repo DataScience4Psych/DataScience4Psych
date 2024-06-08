@@ -121,35 +121,35 @@ We'll create a variable, `role`, with three categories: engineer, scientist, and
 
 ```{r exercise1.3_examples, error=TRUE}
 set.seed(1)
-role1 <- rep(c("engineer", "scientist", "medic"), 
+roleA <- rep(c("engineer", "scientist", "medic"), 
              length.out = 100)
 # this works if we want to set a specific number of each role
-role2 <- rep(c("engineer", "scientist", "medic"), 
+roleB <- rep(c("engineer", "scientist", "medic"), 
              each = 34, 
              length.out = 100)
 
-role3 <- rep(c("engineer", "scientist", "medic"), 
+roleC <- rep(c("engineer", "scientist", "medic"), 
              times = c(33, 33, 33), 
              length.out = 100)
              
 # if you want to use sampling weights
-role4 <- sample(c("engineer", "scientist", "medic"), 
+roleD <- sample(c("engineer", "scientist", "medic"), 
                 replace = TRUE, 
                 size = 100, prob = c(1,1,1))
 
 # if you want to randomly shuffle
 
-role5 <- sample(role2, size = 100, replace = FALSE)
+roleE <- sample(roleB, size = 100, replace = FALSE)
 
 ```
 
 ```{r pie,echo=FALSE}
-df <- data.frame( role = c(role1, role2, role3,role4, role5), 
-                  method = c(rep("Method A", length(role1)),
-                           rep("Method B", length(role2)),
-                           rep("Method C", length(role3)),
-                           rep("Method D", length(role4)),
-                           rep("Method E", length(role5))))
+df <- data.frame( role = c(roleA, roleB, roleC,roleD, roleE), 
+                  method = c(rep("Method A", length(roleA)),
+                           rep("Method B", length(roleB)),
+                           rep("Method C", length(roleC)),
+                           rep("Method D", length(roleD)),
+                           rep("Method E", length(roleE))))
 
 ggplot(df, aes(x = role, fill = method)) +
   geom_bar(position = position_dodge()) +
@@ -160,12 +160,12 @@ ggplot(df, aes(x = role, fill = method)) +
 
 ```{r reptables, error=TRUE, warning=FALSE, include=FALSE, message=FALSE,echo=FALSE}
 df <- data.frame(row = rep(1:100, 5),
-  role = c(role1, role2, role3, role4, role5), 
-                method = c(rep("Method A", length(role1)),
-                           rep("Method B", length(role2)),
-                           rep("Method C", length(role3)),
-                           rep("Method D", length(role4)),
-                           rep("Method E", length(role5))))
+  role = c(roleA, roleB, roleC, roleD, roleE), 
+                method = c(rep("Method A", length(roleA)),
+                           rep("Method B", length(roleB)),
+                           rep("Method C", length(roleC)),
+                           rep("Method D", length(roleD)),
+                           rep("Method E", length(roleE))))
                   
 
 df %>%
@@ -194,7 +194,7 @@ df %>%
 **1.3.** Create a role variable that suits the needs of your colony, and explain why you chose that method.
 
 ```{r exercise1.3solution, error=TRUE,include=FALSE}
-df_colonists$role <- role1 
+df_colonists$role <- roleA 
 ```
 
 
