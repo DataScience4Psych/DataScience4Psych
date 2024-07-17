@@ -253,8 +253,6 @@ ggplot(df_colonists, aes(x = age, y = marsgar)) +
   labs(title = "Scatter Plot of Colonist Age and Health", x = "Age", y = "MARSGAR") +
   theme_minimal()
 
-
-
 ```
 
 What a contrived plot! It seems that there's no relationship between age and health in the data. How odd! (Or is it?) 
@@ -368,7 +366,9 @@ Now, this approach works well if you already know what you want your model to lo
 
 __Setting Up Your Simulation__. As you've hopefully gathered, we'll use the ``mvrnorm` function to generate random numbers drawn from a multivariate distribution. I encourage you to examine the arguments for `mvrnorm()`, using the `?mvrnorm` command in R.
 
-Examine the arguments for `mvrnorm()`, using the `?mvrnorm` command in R. Notice that the arguments are similar to `rnorm()`, but with the addition of the `Sigma` parameter, which represents the covariance matrix. This matrix allows us to specify the relationships between the variables we're simulating.
+Examine the arguments for `mvrnorm()`, using the `?mvrnorm` command in R. Notice that the arguments are similar to `rnorm()`, but with the addition of the `Sigma` parameter, which represents the covariance matrix. This matrix allows us to specify the relationships between the variables we're simulating. 
+
+(Remember, the covariance matrix is a square matrix that shows the variances of each variable on the diagonal and the covariances between variables on the off-diagonals. A helpful trick is that the correlation matrix is just a standardized covariance matrix, where the diagonals are all 1s, and the off-diagonals are the correlations between variables. You can convert between the two using the `cov2cor()` and `cor2cov()` functions in R.)
 
 
 __Parameters for Simulation:__
@@ -376,6 +376,8 @@ __Parameters for Simulation:__
 - n = 100: We are simulating attributes for 100 colonists.
 - mu = c( 50, 50): Represents the average scores for Resilience and Agreeableness.
 - Sigma = matrix(c(100, 50, 50, 100), ncol = 2): The covariance matrix, where diagonals represent variances and the off-diagonals represent the covariance between the traits.
+
+
 
 **3.2.** Simulate Resilience and Agreeableness
 
@@ -497,7 +499,7 @@ print(cor_matrix_bigfive)
 
 
 
-Because this task is a tad more complex than the previous simulation, I've created some optional scaffolding by structured hints. 
+Because this task is a tad more complex than the previous simulation, I've created some optional scaffolding by structured hints.
 
 <details>
   <summary>Click here to see the hints</summary>
