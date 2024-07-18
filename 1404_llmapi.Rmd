@@ -22,24 +22,36 @@ library(jsonlite)
 
 # openai_api_key <- "YOUR_API_KEY"
 openai_api_key <- readLines("admin/secrets/openai_api_key.txt")
-
 generate_text <- function(prompt) {
   response <- POST(
-    url = "https://api.openai.com/v1/engines/davinci-codex/completions",
-    add_headers(Authorization = paste("Bearer", openai_api_key)),
-    content_type_json(),
-    encode = "json",
-    body = list(
-      prompt = prompt,
-      max_tokens = 100
-    )
+  # curl https://api.openai.com/v1/chat/completions 
+  url = "https://api.openai.com/v1/chat/completions", 
+  # -H "Authorization: Bearer $OPENAI_API_KEY"
+  add_headers(Authorization = paste("Bearer", openai_api_key)),
+  # -H "Content-Type: application/json"
+  content_type_json(),
+  # -d '{
+  #   "model": "gpt-3.5-turbo",
+  #   "messages": [{"role": "user", "content": "What is a banana?"}] 
+  # }'
+  encode = "json",
+  body = list(
+    model = "gpt-3.5-turbo",
+    messages = list(list(role = "user", content = prompt))
   )
+)
   
   str_content <- content(response, "text", encoding = "UTF-8")
   parsed <- fromJSON(str_content)
   
-  return(parsed$choices[[1]]$text)
+  #return(parsed$choices[[1]]$text)
+  return(parsed)
 }
+
+
+
+
+
 
 prompt <- "Summarize the key steps in a data science workflow:"
 generated_text <- generate_text(prompt)
