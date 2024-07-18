@@ -1,0 +1,48 @@
+# Hands-on with OpenAI's API
+
+```{r include = FALSE}
+source("common.R")
+
+ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
+ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+
+# install.packages("devtools")
+
+if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd) #... embedding tweets
+library(vembedr)  #... embedding youtube videos
+library(knitr)
+library(tidyverse)
+```
+
+```{r, echo=FALSE}
+# Hands-on with OpenAI's API
+library(httr)
+library(jsonlite)
+
+# openai_api_key <- "YOUR_API_KEY"
+openai_api_key <- readLines("admin/secrets/openai_api_key.txt")
+
+generate_text <- function(prompt) {
+  response <- POST(
+    url = "https://api.openai.com/v1/engines/davinci-codex/completions",
+    add_headers(Authorization = paste("Bearer", openai_api_key)),
+    content_type_json(),
+    encode = "json",
+    body = list(
+      prompt = prompt,
+      max_tokens = 100
+    )
+  )
+  
+  str_content <- content(response, "text", encoding = "UTF-8")
+  parsed <- fromJSON(str_content)
+  
+  return(parsed$choices[[1]]$text)
+}
+
+prompt <- "Summarize the key steps in a data science workflow:"
+generated_text <- generate_text(prompt)
+print(generated_text)
+
+```
