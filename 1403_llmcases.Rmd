@@ -1,3 +1,4 @@
+
 # Lecture: Applications of Large Language Models in Data Science
 
 ```{r include = FALSE}
@@ -25,7 +26,7 @@ You can follow along with the slides [here][d32_llmapplications] if they do not 
 #  use_align("center")
 #
 
-video_url=sample_no_surprises(ds4p_funyoutube$funyoutube)
+video_url<- sample_no_surprises(ds4p_funyoutube$funyoutube)
  embed_url(video_url) %>%
   use_align("center")
 
@@ -38,5 +39,99 @@ slide_url(ds4p_urls, "d32_llmapplications") %>%
 
 ## Use Cases in Data Science
 
-[Content on text generation, summarization, classification, etc.]
+### R Example: Text Classification (Sentiment Analysis)
 
+
+```{r}
+library(tidytext)
+library(dplyr)
+library(ggplot2)
+
+# Sample text data
+texts <- c(
+  "I love this product! It's amazing.",
+  "This is terrible. I hate it.",
+  "It's okay, nothing special.",
+  "Wow, absolutely fantastic experience!",
+  "Disappointed with the quality."
+)
+
+# Create a tibble
+df <- tibble(text = texts)
+
+
+# show the data
+
+df %>%
+  unnest_tokens(word, text) %>%
+  inner_join(get_sentiments("bing"))
+
+## Tokenize and Perform Sentiment Analysis
+sentiment_scores <- df %>%
+  unnest_tokens(word, text) %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment_score = positive - negative)
+
+sentiment_scores
+
+## Visualize Sentiment Analysis Results
+df %>%
+  unnest_tokens(word, text) %>%
+  inner_join(get_sentiments("bing")) %>%
+ggplot(aes(x = sentiment)) +
+  geom_bar()+
+  coord_flip() + theme_classic()+
+  labs(title = "Overall Vibes", x = "", y = "Count")
+```
+
+
+###  Text Generation (Simple Markov Chain)
+
+```{r}
+library(tidytext)
+library(dplyr)
+library(stringr)
+
+# Sample text
+text <- "The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly."
+
+# Tokenize and create word pairs
+word_pairs <- tibble(text = text) %>%
+  unnest_tokens(word, text) %>%
+  mutate(next_word = lead(word)) %>%
+  na.omit()
+
+# Create a simple Markov chain
+markov_chain <- word_pairs %>%
+  group_by(word) %>%
+  summarise(next_words = list(next_word))
+
+# Generate text
+generate_text <- function(start_word, length = 10) {
+  result <- start_word
+  current_word <- start_word
+  
+  for (i in 1:length) {
+    next_word_options <- markov_chain %>%
+      filter(word == current_word) %>%
+      pull(next_words) %>%
+      unlist()
+    
+    if (length(next_word_options) == 0) break
+    
+    next_word <- sample(next_word_options, 1)
+    result <- c(result, next_word)
+    current_word <- next_word
+  }
+  
+  str_c(result, collapse = " ")
+}
+
+# Generate a sentence
+generate_text("the")
+```
+
+```{r links, child="admin/md/courselinks.md"}
+```

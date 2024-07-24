@@ -46,6 +46,7 @@
 [lab09]: https://github.com/DataScience4Psych/lab-09-slr-course-evals
 [lab10]: https://github.com/DataScience4Psych/lab-10-mlr-course-evals
 [lab11]: https://github.com/DataScience4Psych/lab-11-inference-smoking
+[lab12]: https://github.com/DataScience4Psych/lab-12-simulating-mars
 
 <!--Slides-->
 [d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
@@ -68,7 +69,19 @@
 [d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
 [d18_ethics]: https://datascience4psych.github.io/slides/d18_ethics/d18_ethics.html
 [d19_bias]: https://datascience4psych.github.io/slides/d19_bias/d19_bias.html
-
+[d20_language]: https://datascience4psych.github.io/slides/d20_language/d20_language.html
+[d21_fitting]: https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html
+[d22_nonlinear]: https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html
+[d23_multiple]: https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html
+[d24_overfitting]: https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html
+[d25_crossvalidation]: https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html
+[d26_quantify]: https://datascience4psych.github.io/slides/d26_quantify/d26_quantify.html
+[d27_bootstrap]: https://datascience4psych.github.io/slides/d27_bootstrap/d27_bootstrap.html
+[d28_interactive]: https://datascience4psych.github.io/slides/d28_interactive/d28_interactive.html
+[d29_machine]: https://datascience4psych.github.io/slides/d29_machinelearning/d29_machine.html
+[d30_simulations]: https://datascience4psych.github.io/slides/d30_simulations/d30_simulations.html
+[d31_llmintro]: https://datascience4psych.github.io/slides/d31_llmintro/d31_llmintro.html
+[d32_llmapplications]: https://datascience4psych.github.io/slides/d32_llmapplications/d32_llmapplications.html
 
 <!--externals-->
 
