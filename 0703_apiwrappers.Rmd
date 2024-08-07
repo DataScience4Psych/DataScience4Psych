@@ -6,26 +6,29 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 # Use API-wrapping packages {#api-wrappers}
 
-These readings are adapted from Jenny Bryan's stat545 and were originally written by Andrew MacDonald. I've added bits and pieces.
+This section explores how to use R packages that wrap APIs, allowing easy access to web data. We'll cover various approaches from simple downloads to more complex API interactions. This content builds on Jenny Bryan's stat545 materials, with significant updates and additions to reflect current best practices. For a more in-depth look at APIs, check out the [API chapter](https://r4ds.had.co.nz/apis.html) in the R for Data Science book. For a huge list of free apis to play with, check out [this list](https://free-apis.github.io/#/)
+
+
 
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/rfunctionaday/status/1381848183928729600")
 ```
 
-## Introduction
+## The Data Acquisition Spectrum
 
-**All this and more is described at the [rOpenSci repository of R tools for interacting with the internet]( https://github.com/ropensci/webservices).**
+When it comes to obtaining data from the internet, we can categorize methods into four main type
+* *Direct Download*: Grabbing readily available flat files (CSV, XLS, etc.)
+* *Wrapped API Access*: Using R packages designed for specific APIs
+* *Raw API Interaction*: Crafting custom queries for APIs
+* *Web Scraping*: Extracting data embedded in HTML structures
 
-There are many ways to obtain data from the internet; let's consider four categories:
+We'll focus primarily on the second method, but now you know about the full spectrum of options at your disposal.
+For a comprehensive list of R tools for interacting with the internet, check out the [rOpenSci repository]( https://github.com/ropensci/webservices). These tools include packages for APIs, scraping, and more.
 
-* *Click-and-download* - on the internet as a "flat" file, such as CSV, XLS.
-* *Install-and-play* - an API for which someone has written a handy R package.
-* *API-query* - published with an unwrapped API.
-* *Scraping* - implicit in an HTML website.
 
-## Click-and-Download
+## Direct Download
 
-In the simplest case, the data you need is already on the internet in a tabular format. There are a couple of strategies here:
+In the simplest case, the data you need is already on the internet in a tabular format. Effectively, you just need to click and download whatever data you need. There are a couple of strategies here:
 
 * Use `read.csv` or `readr::read_csv` to read the data straight into R.
 * Use the command line program `curl` to do that work, and place it in a `Makefile` or shell script (see the [section on `make`](#automation-overview) for more on this).
@@ -49,32 +52,25 @@ Many times, the data that you want is not already organized into one or a few ta
 
 Many sources of data -- databases, websites, services -- have made all (or part) of their data available via APIs over the internet. Computer programs ("clients") can make requests of the server, and the server will respond by sending data (or an error message). This client can be many kinds of other programs or websites, including R running from your laptop.
 
-## Install-and-play
+## Streamlined Data Retrieval with API Wrappers
 
-Many common web services and APIs have been "wrapped", i.e. R functions have been written around them which send your query to the server and format the response.
+Many common web services and APIs have been "wrapped", i.e. R functions have been written around them which send your query to the server and format the response. This is a great way to get started with APIs, as you don't need to worry about the details of the API itself. You can just focus on the data you want to get.
 
-Why would we want this?
+API-wrapping packages act as intermediaries between your R environment and web services. They handle the nitty-gritty of API calls, authentication, and data parsing, allowing you to focus on analysis rather than data acquisition logistics. These packages are especially useful for beginners, as they abstract away the complexities of web service interaction. For added bonuses, they often ensure that the data you receive is actually from the API you intended to query, and they provide a structured reproducible way to access the data. 
 
-* Provenance
-* Reproducible
-* Updating
-* Ease
-* Scaling
 
-### Load the tidyverse
+
+### Case Study: Ornithological Data with rebird
+
+Let's dive into a practical example using the [rebird](https://github.com/ropensci/rebird) package, which interfaces with the [eBird](http://ebird.org/content/ebird/) database. eBird lets birders upload sightings of birds, and allows everyone access to those data. 
 
 ```{r message = FALSE, warning = FALSE,error=TRUE}
 library(tidyverse)
-```
-
-### Sightings of birds: rebird
-
-[rebird](https://github.com/ropensci/rebird) is an R interface for the [eBird](http://ebird.org/content/ebird/) database. eBird lets birders upload sightings of birds, and allows everyone access to those data. rebird is on CRAN.
-
-```{r message = FALSE,error=TRUE}
-# install.packages("rebird")
 library(rebird)
 ```
+
+First, let's fetch recent bird sightings from a specific location:
+
 
 #### Search birds by geography
 
@@ -301,3 +297,6 @@ gender("Kelsey", years = 1940)
 
 ```{r links2, child="admin/md/links.md"}
 ```
+## Conclusion
+
+API-wrapping packages in R provide powerful tools for accessing diverse data sources. As you progress in your data science journey, mastering these tools will greatly expand the range of data available for your analyses. Remember to always check the terms of service for any API you use, and be mindful of rate limits and data usage policies.
