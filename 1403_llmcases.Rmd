@@ -133,5 +133,42 @@ generate_text <- function(start_word, length = 10) {
 generate_text("the")
 ```
 
+
+
+```{r}
+library(tidytext)
+library(dplyr)
+
+context <- "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. 
+It is named after the engineer Gustave Eiffel, whose company designed and built the Tower."
+
+question <- "Who designed the Eiffel Tower?"
+
+# Tokenize context and question
+context_tokens <- tibble(text = context) %>%
+  unnest_tokens(word, text)
+
+question_tokens <- tibble(text = question) %>%
+  unnest_tokens(word, text)
+
+# Simple word overlap for demonstration
+matching_words <- intersect(context_tokens$word, question_tokens$word)
+
+# Find sentence with most matching words
+sentences <- tibble(text = context) %>%
+  unnest_tokens(sentence, text, token = "sentences")
+
+best_sentence <- sentences %>%
+  mutate(matches = sapply(sentence, function(s) {
+    sum(matching_words %in% unlist(strsplit(s, " ")))
+  })) %>%
+  arrange(desc(matches)) %>%
+  slice(1)
+
+print(best_sentence$sentence)
+```
+
+
+
 ```{r links, child="admin/md/courselinks.md"}
 ```
