@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-01-07" />
+<meta name="date" content="2025-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1554,15 +1554,15 @@ div.csl-indent {
 <p>For example, to generate random values from these distributions, you would use:</p>
 <div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="data_simulations.html#cb468-1" tabindex="-1"></a><span class="co"># Generating five random normal values</span></span>
 <span id="cb468-2"><a href="data_simulations.html#cb468-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb468-3"><a href="data_simulations.html#cb468-3" tabindex="-1"></a><span class="co">#&gt; [1] -1.2695  0.9980  0.3539  0.0409 -0.6022</span></span>
+<span id="cb468-3"><a href="data_simulations.html#cb468-3" tabindex="-1"></a><span class="co">#&gt; [1]  1.6045 -0.4424 -0.8034 -0.4205  0.0896</span></span>
 <span id="cb468-4"><a href="data_simulations.html#cb468-4" tabindex="-1"></a></span>
 <span id="cb468-5"><a href="data_simulations.html#cb468-5" tabindex="-1"></a><span class="co"># Generating five uniform values between 0 and 1</span></span>
 <span id="cb468-6"><a href="data_simulations.html#cb468-6" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
-<span id="cb468-7"><a href="data_simulations.html#cb468-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.320 0.573 0.951 0.121 0.473</span></span>
+<span id="cb468-7"><a href="data_simulations.html#cb468-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.151 0.674 0.249 0.599 0.442</span></span>
 <span id="cb468-8"><a href="data_simulations.html#cb468-8" tabindex="-1"></a></span>
 <span id="cb468-9"><a href="data_simulations.html#cb468-9" tabindex="-1"></a><span class="co"># Generating five Poisson-distributed values with a mean of 3</span></span>
 <span id="cb468-10"><a href="data_simulations.html#cb468-10" tabindex="-1"></a><span class="fu">rpois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">3</span>)</span>
-<span id="cb468-11"><a href="data_simulations.html#cb468-11" tabindex="-1"></a><span class="co">#&gt; [1] 2 1 4 7 1</span></span></code></pre></div>
+<span id="cb468-11"><a href="data_simulations.html#cb468-11" tabindex="-1"></a><span class="co">#&gt; [1] 3 2 3 1 1</span></span></code></pre></div>
 <p>The <code>r</code> functions for a chosen distribution all work similarly. Other distributions from the <code>stats</code> package. binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages.</p>
 </div>
 <div id="deep-dive-into-the-normal-distribution-rnorm" class="section level3 hasAnchor" number="85.2.2">
@@ -1575,17 +1575,17 @@ div.csl-indent {
 </ul>
 <p>Generating five random numbers from a <span class="math inline">\(Normal(0, 1)\)</span> (aka the <em>standard</em> normal) distribution can be done as follows:</p>
 <div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="data_simulations.html#cb469-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb469-2"><a href="data_simulations.html#cb469-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.318 0.151 0.501 0.971 0.593</span></span></code></pre></div>
+<span id="cb469-2"><a href="data_simulations.html#cb469-2" tabindex="-1"></a><span class="co">#&gt; [1]  1.2903  1.2767 -0.1787 -0.0362 -0.1308</span></span></code></pre></div>
 <p>Notice how I have written out the arguments explicitly. If I were coding “lazily”, I’d likely have written something like this…</p>
 <div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="data_simulations.html#cb470-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>) <span class="co"># This uses the default values for mean and sd</span></span>
-<span id="cb470-2"><a href="data_simulations.html#cb470-2" tabindex="-1"></a><span class="co">#&gt; [1] -1.760  1.129  0.969 -0.967  0.415</span></span></code></pre></div>
+<span id="cb470-2"><a href="data_simulations.html#cb470-2" tabindex="-1"></a><span class="co">#&gt; [1] -1.6491  0.9997  2.8976 -0.0972 -0.5012</span></span></code></pre></div>
 <p>Lazy, concise, code can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for <code>mean</code> and <code>sd</code>, it’s not clear exactly what distribution I drew the numbers from. When future me revisits this code, she will have to remember what the defaults are. Is that a realistic request? Maybe, but future me has to remember a lot of things, so as a kindness to her, its worthwhile to make those arguments explicit. That way future me does not have to remember what the defaults are and she can quickly work her way through the code.</p>
 <p>In other words, specify the arguments explicitly, even if you are using default values. This practice makes your code self-documenting, meaning that anyone reading it can understand at a glance which distribution the data comes from, without needing to remember the default settings of the function.</p>
 <p>Here’s an even more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:</p>
 <div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="data_simulations.html#cb471-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, </span>
 <span id="cb471-2"><a href="data_simulations.html#cb471-2" tabindex="-1"></a>      <span class="at">mean =</span> <span class="dv">0</span>, </span>
 <span id="cb471-3"><a href="data_simulations.html#cb471-3" tabindex="-1"></a>      <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb471-4"><a href="data_simulations.html#cb471-4" tabindex="-1"></a><span class="co">#&gt; [1]  1.5177 -0.6642  0.9353  0.0318 -0.5635</span></span></code></pre></div>
+<span id="cb471-4"><a href="data_simulations.html#cb471-4" tabindex="-1"></a><span class="co">#&gt; [1] -0.829 -1.196 -1.314 -1.479  0.556</span></span></code></pre></div>
 <p>When I’m writing code for a project that I know will be shared with others, I always (try to) write out the arguments. When I’m writing code for myself, I’m more likely to use the defaults. It’s a balance between being kind to future me and being efficient in the moment.</p>
 <div id="setting-the-random-seed-for-reproducible-random-numbers" class="section level4 hasAnchor" number="85.2.2.1">
 <h4><span class="header-section-number">85.2.2.1</span> Setting the random seed for reproducible random numbers<a href="data_simulations.html#setting-the-random-seed-for-reproducible-random-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h4>
