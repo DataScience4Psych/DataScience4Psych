@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>20 Lab: Global plastic waste | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="20 Lab: Global plastic waste | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-01-19" />
+<meta name="date" content="2025-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -64,11 +64,11 @@
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
-<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -1550,12 +1550,12 @@ div.csl-indent {
 <div id="packages-1" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab02.html#packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Like always, we’ll use the <strong>tidyverse</strong> package for this analysis. Run the following code in the Console to load this package.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="lab02.html#cb61-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="lab02.html#cb62-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="data-1" class="section level3 unnumbered hasAnchor">
 <h3>Data<a href="lab02.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The dataset for this assignment can be found as a csv file in the <code>data</code> folder of your repository. You can read it in using the following.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="lab02.html#cb62-1" tabindex="-1"></a>plastic_waste <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/plastic-waste.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="lab02.html#cb63-1" tabindex="-1"></a>plastic_waste <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/plastic-waste.csv&quot;</span>)</span></code></pre></div>
 <p>The variable descriptions are as follows:</p>
 <ul>
 <li><code>code</code>: 3 Letter country code</li>
@@ -1587,14 +1587,14 @@ div.csl-indent {
 <div id="exercises-1" class="section level2 unnumbered hasAnchor">
 <h2>Exercises<a href="lab02.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s start by taking a look at the distribution of plastic waste per capita in 2010.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="lab02.html#cb63-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)) <span class="sc">+</span></span>
-<span id="cb63-2"><a href="lab02.html#cb63-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="lab02.html#cb64-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plastic_waste, <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)) <span class="sc">+</span></span>
+<span id="cb64-2"><a href="lab02.html#cb64-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 51 rows containing non-finite outside the scale range
 ## (`stat_bin()`).</code></pre>
 <p><img src="0204_lab_plasticwaste_files/figure-html/plastic_waste_per_cap-hist-1.png" width="672" /></p>
 <p>One country stands out as an unusual observation at the top of the distribution. One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="lab02.html#cb65-1" tabindex="-1"></a>plastic_waste <span class="sc">%&gt;%</span></span>
-<span id="cb65-2"><a href="lab02.html#cb65-2" tabindex="-1"></a>  <span class="fu">filter</span>(plastic_waste_per_cap <span class="sc">&gt;</span> <span class="fl">3.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="lab02.html#cb66-1" tabindex="-1"></a>plastic_waste <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="lab02.html#cb66-2" tabindex="-1"></a>  <span class="fu">filter</span>(plastic_waste_per_cap <span class="sc">&gt;</span> <span class="fl">3.5</span>)</span></code></pre></div>
 <pre><code>##   code              entity     continent year gdp_per_cap plastic_waste_per_cap
 ## 1  TTO Trinidad and Tobago North America 2010    31260.91                   3.6
 ##   mismanaged_plastic_waste_per_cap mismanaged_plastic_waste coastal_pop
@@ -1607,33 +1607,21 @@ div.csl-indent {
 <p><strong>NOTE:</strong> From this point onwards, the plots and the output of the code are not displayed in the lab instructions, but you can and should run the code and view the results yourself.</p>
 </blockquote>
 <p>Another way of visualizing numerical data is using density plots.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="lab02.html#cb67-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb67-2"><a href="lab02.html#cb67-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
-<span id="cb67-3"><a href="lab02.html#cb67-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)</span>
-<span id="cb67-4"><a href="lab02.html#cb67-4" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb67-5"><a href="lab02.html#cb67-5" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>And compare distributions across continents by coloring density curves by continent.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="lab02.html#cb68-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb68-2"><a href="lab02.html#cb68-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
-<span id="cb68-3"><a href="lab02.html#cb68-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb68-4"><a href="lab02.html#cb68-4" tabindex="-1"></a>    <span class="at">x =</span> plastic_waste_per_cap,</span>
-<span id="cb68-5"><a href="lab02.html#cb68-5" tabindex="-1"></a>    <span class="at">color =</span> continent</span>
-<span id="cb68-6"><a href="lab02.html#cb68-6" tabindex="-1"></a>  )</span>
-<span id="cb68-7"><a href="lab02.html#cb68-7" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb68-8"><a href="lab02.html#cb68-8" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>The resulting plot may be a little difficult to read, so let’s also fill the curves in with colors as well.</p>
+<span id="cb68-3"><a href="lab02.html#cb68-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> plastic_waste_per_cap)</span>
+<span id="cb68-4"><a href="lab02.html#cb68-4" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb68-5"><a href="lab02.html#cb68-5" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p>And compare distributions across continents by coloring density curves by continent.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="lab02.html#cb69-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb69-2"><a href="lab02.html#cb69-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
 <span id="cb69-3"><a href="lab02.html#cb69-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
 <span id="cb69-4"><a href="lab02.html#cb69-4" tabindex="-1"></a>    <span class="at">x =</span> plastic_waste_per_cap,</span>
-<span id="cb69-5"><a href="lab02.html#cb69-5" tabindex="-1"></a>    <span class="at">color =</span> continent,</span>
-<span id="cb69-6"><a href="lab02.html#cb69-6" tabindex="-1"></a>    <span class="at">fill =</span> continent</span>
-<span id="cb69-7"><a href="lab02.html#cb69-7" tabindex="-1"></a>  )</span>
-<span id="cb69-8"><a href="lab02.html#cb69-8" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb69-9"><a href="lab02.html#cb69-9" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p>The overlapping colors make it difficult to tell what’s happening with the distributions. The first plotted in continents get covered by continents plotted over them.</p>
-<p>We can change the transparency level of the fill color to help with this problem.</p>
-<p>The <code>alpha</code> argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque. There is no way to tell what value will work best, so you just need to try a few.</p>
+<span id="cb69-5"><a href="lab02.html#cb69-5" tabindex="-1"></a>    <span class="at">color =</span> continent</span>
+<span id="cb69-6"><a href="lab02.html#cb69-6" tabindex="-1"></a>  )</span>
+<span id="cb69-7"><a href="lab02.html#cb69-7" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb69-8"><a href="lab02.html#cb69-8" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p>The resulting plot may be a little difficult to read, so let’s also fill the curves in with colors as well.</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="lab02.html#cb70-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb70-2"><a href="lab02.html#cb70-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
 <span id="cb70-3"><a href="lab02.html#cb70-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
@@ -1642,20 +1630,32 @@ div.csl-indent {
 <span id="cb70-6"><a href="lab02.html#cb70-6" tabindex="-1"></a>    <span class="at">fill =</span> continent</span>
 <span id="cb70-7"><a href="lab02.html#cb70-7" tabindex="-1"></a>  )</span>
 <span id="cb70-8"><a href="lab02.html#cb70-8" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb70-9"><a href="lab02.html#cb70-9" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<span id="cb70-9"><a href="lab02.html#cb70-9" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<p>The overlapping colors make it difficult to tell what’s happening with the distributions. The first plotted in continents get covered by continents plotted over them.</p>
+<p>We can change the transparency level of the fill color to help with this problem.</p>
+<p>The <code>alpha</code> argument takes values between 0 and 1: 0 is completely transparent and 1 is completely opaque. There is no way to tell what value will work best, so you just need to try a few.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="lab02.html#cb71-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb71-2"><a href="lab02.html#cb71-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
+<span id="cb71-3"><a href="lab02.html#cb71-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb71-4"><a href="lab02.html#cb71-4" tabindex="-1"></a>    <span class="at">x =</span> plastic_waste_per_cap,</span>
+<span id="cb71-5"><a href="lab02.html#cb71-5" tabindex="-1"></a>    <span class="at">color =</span> continent,</span>
+<span id="cb71-6"><a href="lab02.html#cb71-6" tabindex="-1"></a>    <span class="at">fill =</span> continent</span>
+<span id="cb71-7"><a href="lab02.html#cb71-7" tabindex="-1"></a>  )</span>
+<span id="cb71-8"><a href="lab02.html#cb71-8" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb71-9"><a href="lab02.html#cb71-9" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
 <p>This plot still doesn’t look great…</p>
 <p>2.1. Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.</p>
 <p>2.2. Explain why we defined the <code>color</code> and <code>fill</code> of the curves by mapping aesthetics of the plot but we defined the <code>alpha</code> level as a characteristic of the plotting geom.</p>
 <p>🧶 ✅ ⬆️ <em>Now is a good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.</em></p>
 <p>And yet another way to visualize this relationship is using side-by-side box plots.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="lab02.html#cb71-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb71-2"><a href="lab02.html#cb71-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
-<span id="cb71-3"><a href="lab02.html#cb71-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb71-4"><a href="lab02.html#cb71-4" tabindex="-1"></a>    <span class="at">x =</span> continent,</span>
-<span id="cb71-5"><a href="lab02.html#cb71-5" tabindex="-1"></a>    <span class="at">y =</span> plastic_waste_per_cap</span>
-<span id="cb71-6"><a href="lab02.html#cb71-6" tabindex="-1"></a>  )</span>
-<span id="cb71-7"><a href="lab02.html#cb71-7" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb71-8"><a href="lab02.html#cb71-8" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="lab02.html#cb72-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb72-2"><a href="lab02.html#cb72-2" tabindex="-1"></a>  <span class="at">data =</span> plastic_waste,</span>
+<span id="cb72-3"><a href="lab02.html#cb72-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb72-4"><a href="lab02.html#cb72-4" tabindex="-1"></a>    <span class="at">x =</span> continent,</span>
+<span id="cb72-5"><a href="lab02.html#cb72-5" tabindex="-1"></a>    <span class="at">y =</span> plastic_waste_per_cap</span>
+<span id="cb72-6"><a href="lab02.html#cb72-6" tabindex="-1"></a>  )</span>
+<span id="cb72-7"><a href="lab02.html#cb72-7" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb72-8"><a href="lab02.html#cb72-8" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p>3.1. Convert your side-by-side box plots from the previous task to <a href="http://ggplot2.tidyverse.org/reference/geom_violin.html">violin plots</a>. What do the violin plots reveal that box plots do not? What features are apparent in the box plots but not in the violin plots?</p>
 <blockquote>
 <p><strong>Remember:</strong> We use <code>geom_point()</code> to make scatterplots.</p>

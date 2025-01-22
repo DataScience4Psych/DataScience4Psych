@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>33 ODD: Data Transformations and Tukey’s Ladder of Powers | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="33 ODD: Data Transformations and Tukey’s Ladder of Powers | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-01-19" />
+<meta name="date" content="2025-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -64,11 +64,11 @@
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
-<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -1540,14 +1540,14 @@ div.csl-indent {
 <h3><span class="header-section-number">33.1.1</span> Dataset Preparation and Visualization<a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#dataset-preparation-and-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll be using data from <span class="citation">Fox (<a href="references.html#ref-fox2016applied">2016</a>)</span>’s book. You may need to download the data manually and save it in the “data” directory within your current working directory. The dataset is available <a href="http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt">here</a>. You can use this r code to download the data.</p>
 <pre><code>download.file(&quot;http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/UnitedNations.txt&quot;, &quot;data/UnitedNations.txt&quot;)</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-1" tabindex="-1"></a><span class="co">#if (!require(&quot;p3d&quot;)) install.packages(&quot;p3d&quot;, repos = &quot;http://R-Forge.R-project.org&quot;)</span></span>
-<span id="cb138-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-2" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
-<span id="cb138-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-3" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb138-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-4" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb138-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-5" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb138-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-6" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb138-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-7" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/UnitedNations.txt&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb138-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb138-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">rownames</span>(.)) <span class="co"># Assigning country names</span></span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-1" tabindex="-1"></a><span class="co">#if (!require(&quot;p3d&quot;)) install.packages(&quot;p3d&quot;, repos = &quot;http://R-Forge.R-project.org&quot;)</span></span>
+<span id="cb139-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-2" tabindex="-1"></a><span class="fu">library</span>(p3d)</span>
+<span id="cb139-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-3" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb139-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-4" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
+<span id="cb139-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-5" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb139-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-6" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb139-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-7" tabindex="-1"></a>un <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data/UnitedNations.txt&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb139-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">rownames</span>(.)) <span class="co"># Assigning country names</span></span></code></pre></div>
 <p>Let’s visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You’ve likely used a log-transformation before, but we’ll be exploring the more general family of transformations.</p>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-4-1.png" width="576" />
 The log transformation has straightened out the data, allowing us to fit a more useful regression line. However, we’re not limited to just a log transformation. We can use an entire family of transformations called Tukey’s Ladder of Powers.</p>
@@ -1582,57 +1582,57 @@ The basic idea stems from the fact that functions of the form <span class="math 
 <div id="defining-the-transformation-function-in-r" class="section level3 hasAnchor" number="33.2.2">
 <h3><span class="header-section-number">33.2.2</span> Defining the Transformation Function in R<a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#defining-the-transformation-function-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We define a function that produces this transformation. The easy way to define it is:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-1" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
-<span id="cb139-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-2" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb139-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-3" tabindex="-1"></a>    <span class="fu">log</span>(y)</span>
-<span id="cb139-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-4" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb139-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-5" tabindex="-1"></a>    (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p</span>
-<span id="cb139-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-6" tabindex="-1"></a>  }</span>
-<span id="cb139-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-7" tabindex="-1"></a>}</span>
-<span id="cb139-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-8" tabindex="-1"></a></span>
-<span id="cb139-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-9" tabindex="-1"></a><span class="co"># Testing the transformation with a sequence of x values</span></span>
-<span id="cb139-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-10" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="at">by =</span> .<span class="dv">5</span>)</span>
-<span id="cb139-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-11" tabindex="-1"></a></span>
-<span id="cb139-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-12" tabindex="-1"></a><span class="co"># Applying the transformation for different powers of p</span></span>
-<span id="cb139-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-13" tabindex="-1"></a>x_transformed <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb139-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-14" tabindex="-1"></a>  <span class="at">x =</span> x,</span>
-<span id="cb139-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-15" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="dv">2</span>),</span>
-<span id="cb139-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-16" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=0</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="dv">0</span>),</span>
-<span id="cb139-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-17" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=-1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb139-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-18" tabindex="-1"></a>)</span>
-<span id="cb139-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-19" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
-<span id="cb139-20"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-20" tabindex="-1"></a></span>
-<span id="cb139-21"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-21" tabindex="-1"></a></span>
-<span id="cb139-22"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-22" tabindex="-1"></a><span class="co"># Visualizing the transformed data</span></span>
-<span id="cb139-23"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-23" tabindex="-1"></a>x_transformed_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(x_transformed, <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;p&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Power&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Transformed&quot;</span>)</span>
-<span id="cb139-24"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-24" tabindex="-1"></a></span>
-<span id="cb139-25"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-25" tabindex="-1"></a><span class="fu">ggplot</span>(x_transformed_long, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> Transformed, <span class="at">color =</span> Power)) <span class="sc">+</span></span>
-<span id="cb139-26"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-26" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb139-27"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Visualization of Power Transformations&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Original x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Transformed x&quot;</span>) <span class="sc">+</span></span>
-<span id="cb139-28"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-28" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb139-29"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-29" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span id="cb139-30"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb139-30" tabindex="-1"></a><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-1" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
+<span id="cb140-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-2" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb140-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-3" tabindex="-1"></a>    <span class="fu">log</span>(y)</span>
+<span id="cb140-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-4" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb140-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-5" tabindex="-1"></a>    (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p</span>
+<span id="cb140-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-6" tabindex="-1"></a>  }</span>
+<span id="cb140-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-7" tabindex="-1"></a>}</span>
+<span id="cb140-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-8" tabindex="-1"></a></span>
+<span id="cb140-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-9" tabindex="-1"></a><span class="co"># Testing the transformation with a sequence of x values</span></span>
+<span id="cb140-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-10" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="at">by =</span> .<span class="dv">5</span>)</span>
+<span id="cb140-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-11" tabindex="-1"></a></span>
+<span id="cb140-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-12" tabindex="-1"></a><span class="co"># Applying the transformation for different powers of p</span></span>
+<span id="cb140-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-13" tabindex="-1"></a>x_transformed <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb140-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-14" tabindex="-1"></a>  <span class="at">x =</span> x,</span>
+<span id="cb140-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-15" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="dv">2</span>),</span>
+<span id="cb140-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-16" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=0</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="dv">0</span>),</span>
+<span id="cb140-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-17" tabindex="-1"></a>  <span class="st">`</span><span class="at">p=-1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pow</span>(x, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb140-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-18" tabindex="-1"></a>)</span>
+<span id="cb140-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-19" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
+<span id="cb140-20"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-20" tabindex="-1"></a></span>
+<span id="cb140-21"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-21" tabindex="-1"></a></span>
+<span id="cb140-22"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-22" tabindex="-1"></a><span class="co"># Visualizing the transformed data</span></span>
+<span id="cb140-23"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-23" tabindex="-1"></a>x_transformed_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(x_transformed, <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;p&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Power&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Transformed&quot;</span>)</span>
+<span id="cb140-24"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-24" tabindex="-1"></a></span>
+<span id="cb140-25"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-25" tabindex="-1"></a><span class="fu">ggplot</span>(x_transformed_long, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> Transformed, <span class="at">color =</span> Power)) <span class="sc">+</span></span>
+<span id="cb140-26"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-26" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb140-27"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Visualization of Power Transformations&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Original x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Transformed x&quot;</span>) <span class="sc">+</span></span>
+<span id="cb140-28"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-28" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb140-29"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-29" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
+<span id="cb140-30"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-30" tabindex="-1"></a><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-1" tabindex="-1"></a></span>
-<span id="cb140-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-2" tabindex="-1"></a></span>
-<span id="cb140-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-3" tabindex="-1"></a><span class="co"># test:</span></span>
-<span id="cb140-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>,<span class="at">by =</span>  .<span class="dv">5</span>)</span>
-<span id="cb140-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-5" tabindex="-1"></a>x <span class="co"># note that these transformations are really intended for y &gt; 0</span></span>
-<span id="cb140-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-6" tabindex="-1"></a><span class="co">#&gt; [1] -1.0 -0.5  0.0  0.5  1.0  1.5  2.0  2.5  3.0</span></span>
-<span id="cb140-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-7" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">2</span>)</span>
-<span id="cb140-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-8" tabindex="-1"></a><span class="co">#&gt; [1]  0.000 -0.375 -0.500 -0.375  0.000  0.625  1.500  2.625  4.000</span></span>
-<span id="cb140-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-9" tabindex="-1"></a><span class="co">#pow(x, 0) %&gt;%</span></span>
-<span id="cb140-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-10" tabindex="-1"></a><span class="co">#  name(x)</span></span>
-<span id="cb140-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-11" tabindex="-1"></a><span class="co">#pow(x, -1) %&gt;%</span></span>
-<span id="cb140-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-12" tabindex="-1"></a><span class="co">#  name(x) %&gt;%</span></span>
-<span id="cb140-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-13" tabindex="-1"></a><span class="co">#  cbind()</span></span>
-<span id="cb140-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-14" tabindex="-1"></a></span>
-<span id="cb140-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-15" tabindex="-1"></a></span>
-<span id="cb140-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb140-16" tabindex="-1"></a><span class="fu">plot</span>(exp) <span class="co"># easy plotting of a function</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-1" tabindex="-1"></a></span>
+<span id="cb141-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-2" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-3" tabindex="-1"></a><span class="co"># test:</span></span>
+<span id="cb141-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>,<span class="at">by =</span>  .<span class="dv">5</span>)</span>
+<span id="cb141-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-5" tabindex="-1"></a>x <span class="co"># note that these transformations are really intended for y &gt; 0</span></span>
+<span id="cb141-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-6" tabindex="-1"></a><span class="co">#&gt; [1] -1.0 -0.5  0.0  0.5  1.0  1.5  2.0  2.5  3.0</span></span>
+<span id="cb141-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-7" tabindex="-1"></a><span class="fu">pow</span>(x, <span class="dv">2</span>)</span>
+<span id="cb141-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-8" tabindex="-1"></a><span class="co">#&gt; [1]  0.000 -0.375 -0.500 -0.375  0.000  0.625  1.500  2.625  4.000</span></span>
+<span id="cb141-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-9" tabindex="-1"></a><span class="co">#pow(x, 0) %&gt;%</span></span>
+<span id="cb141-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-10" tabindex="-1"></a><span class="co">#  name(x)</span></span>
+<span id="cb141-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-11" tabindex="-1"></a><span class="co">#pow(x, -1) %&gt;%</span></span>
+<span id="cb141-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-12" tabindex="-1"></a><span class="co">#  name(x) %&gt;%</span></span>
+<span id="cb141-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-13" tabindex="-1"></a><span class="co">#  cbind()</span></span>
+<span id="cb141-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-14" tabindex="-1"></a></span>
+<span id="cb141-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-15" tabindex="-1"></a></span>
+<span id="cb141-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-16" tabindex="-1"></a><span class="fu">plot</span>(exp) <span class="co"># easy plotting of a function</span></span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb141-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p =</span> <span class="dv">2</span>)) <span class="co"># anonymous function or &#39;lambda&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb142-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p =</span> <span class="dv">2</span>)) <span class="co"># anonymous function or &#39;lambda&#39;</span></span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb142-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p =</span> .<span class="dv">5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(x) <span class="fu">pow</span>(x, <span class="at">p =</span> .<span class="dv">5</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-6-4.png" width="672" />
 However, this approach works correctly only for a single value of <span class="math inline">\(p\)</span> because the statement <code>if(p == 0)</code> only tests the first element of <code>p</code>.</p>
 </div>
@@ -1640,145 +1640,145 @@ However, this approach works correctly only for a single value of <span class="m
 <div id="vectorizing-a-function" class="section level2 hasAnchor" number="33.3">
 <h2><span class="header-section-number">33.3</span> Vectorizing a function<a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#vectorizing-a-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Most operators in R are <strong>vectorized</strong> so they work element-wise when their arguments are vectors. When the arguments have incompatible lengths, the shorter argument is <strong>recycled</strong> to have the same length as the longer one. That is why the following produces sensible results:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-1" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span>
-<span id="cb143-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-2" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb143-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-3" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
-<span id="cb143-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-4" tabindex="-1"></a>z <span class="sc">+</span> <span class="dv">1</span> <span class="co"># 1 is recycled so the result is equivalent to the previous line</span></span>
-<span id="cb143-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-5" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
-<span id="cb143-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-6" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb143-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-7" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 12</span></span>
-<span id="cb143-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-8" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># recycles but gives a warning</span></span>
-<span id="cb143-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-9" tabindex="-1"></a><span class="co">#&gt; Warning in z + c(1, 2): longer object length is not a multiple of shorter</span></span>
-<span id="cb143-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-10" tabindex="-1"></a><span class="co">#&gt; object length</span></span>
-<span id="cb143-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-11" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 10</span></span>
-<span id="cb143-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-12" tabindex="-1"></a>z <span class="sc">+</span> z</span>
-<span id="cb143-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-13" tabindex="-1"></a><span class="co">#&gt; [1]  6 10 18</span></span>
-<span id="cb143-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-14" tabindex="-1"></a>z<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-15" tabindex="-1"></a><span class="co">#&gt; [1]  9 25 81</span></span>
-<span id="cb143-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-16" tabindex="-1"></a>z<span class="sc">^</span>z</span>
-<span id="cb143-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb143-17" tabindex="-1"></a><span class="co">#&gt; [1] 2.70e+01 3.12e+03 3.87e+08</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-1" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span>
+<span id="cb144-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-2" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb144-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-3" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
+<span id="cb144-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-4" tabindex="-1"></a>z <span class="sc">+</span> <span class="dv">1</span> <span class="co"># 1 is recycled so the result is equivalent to the previous line</span></span>
+<span id="cb144-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-5" tabindex="-1"></a><span class="co">#&gt; [1]  4  6 10</span></span>
+<span id="cb144-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-6" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb144-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-7" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 12</span></span>
+<span id="cb144-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-8" tabindex="-1"></a>z <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># recycles but gives a warning</span></span>
+<span id="cb144-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-9" tabindex="-1"></a><span class="co">#&gt; Warning in z + c(1, 2): longer object length is not a multiple of shorter</span></span>
+<span id="cb144-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-10" tabindex="-1"></a><span class="co">#&gt; object length</span></span>
+<span id="cb144-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-11" tabindex="-1"></a><span class="co">#&gt; [1]  4  7 10</span></span>
+<span id="cb144-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-12" tabindex="-1"></a>z <span class="sc">+</span> z</span>
+<span id="cb144-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-13" tabindex="-1"></a><span class="co">#&gt; [1]  6 10 18</span></span>
+<span id="cb144-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-14" tabindex="-1"></a>z<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb144-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-15" tabindex="-1"></a><span class="co">#&gt; [1]  9 25 81</span></span>
+<span id="cb144-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-16" tabindex="-1"></a>z<span class="sc">^</span>z</span>
+<span id="cb144-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-17" tabindex="-1"></a><span class="co">#&gt; [1] 2.70e+01 3.12e+03 3.87e+08</span></span></code></pre></div>
 <p>We can use <code>ifelse</code> which works on a vector instead of a single value.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-1" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
-<span id="cb144-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
-<span id="cb144-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-3" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
-<span id="cb144-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-4" tabindex="-1"></a>  <span class="fu">ifelse</span>(p <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">log</span>(y), (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p)</span>
-<span id="cb144-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-5" tabindex="-1"></a>}</span>
-<span id="cb144-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-6" tabindex="-1"></a></span>
-<span id="cb144-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-7" tabindex="-1"></a><span class="co"># To apply the function over vectors of y and p, ensuring vectorized operations:</span></span>
-<span id="cb144-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-8" tabindex="-1"></a>vectorized_pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
-<span id="cb144-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-9" tabindex="-1"></a>  <span class="fu">map2</span>(y, p, pow)</span>
-<span id="cb144-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-10" tabindex="-1"></a>}</span>
-<span id="cb144-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-11" tabindex="-1"></a><span class="co"># test:</span></span>
-<span id="cb144-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-12" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb144-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-13" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
-<span id="cb144-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-14" tabindex="-1"></a><span class="co">#&gt; [1] 0.00 -Inf 0.00 1.00 8.67 7.50</span></span>
-<span id="cb144-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-15" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb144-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb144-16" tabindex="-1"></a><span class="co">#&gt; [1]  0.0 -0.5  0.0  1.5  4.0  7.5</span></span></code></pre></div>
-<p>With a bit more work, we can avoid unnecessary evaluations:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-1" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
 <span id="cb145-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
 <span id="cb145-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-3" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
-<span id="cb145-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-4" tabindex="-1"></a>  y[p <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="fu">log</span>(y[p <span class="sc">==</span> <span class="dv">0</span>])</span>
-<span id="cb145-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-5" tabindex="-1"></a>  y[p <span class="sc">!=</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> (y[p <span class="sc">!=</span> <span class="dv">0</span>]<span class="sc">^</span>p[p <span class="sc">!=</span> <span class="dv">0</span>] <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p[p <span class="sc">!=</span> <span class="dv">0</span>]</span>
-<span id="cb145-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-6" tabindex="-1"></a>  y</span>
-<span id="cb145-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-7" tabindex="-1"></a>}</span>
-<span id="cb145-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-8" tabindex="-1"></a></span>
-<span id="cb145-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-9" tabindex="-1"></a><span class="co"># Test:</span></span>
-<span id="cb145-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-10" tabindex="-1"></a></span>
-<span id="cb145-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-11" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">0</span>) <span class="sc">==</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb145-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-12" tabindex="-1"></a><span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
-<span id="cb145-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-13" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb145-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-14" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.500 0.667 0.750 0.800 0.833 0.857 0.875 0.889 0.900</span></span>
-<span id="cb145-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-15" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, .<span class="dv">5</span>)</span>
-<span id="cb145-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-16" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.828 1.464 2.000 2.472 2.899 3.292 3.657 4.000 4.325</span></span>
-<span id="cb145-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-17" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span>
-<span id="cb145-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-18" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00e+00 6.93e-01 2.00e+00 7.50e+00 4.13e+01 3.24e+02 3.36e+03 4.37e+04</span></span>
-<span id="cb145-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-19" tabindex="-1"></a><span class="co">#&gt;  [9] 6.83e+05 1.25e+07</span></span></code></pre></div>
-<p>Let’s plot this transformation for a range of values of <span class="math inline">\(p\)</span>. The value of <code>expand.grid</code> is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-1" tabindex="-1"></a><span class="fu">expand.grid</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb146-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-2" tabindex="-1"></a><span class="co">#&gt;   a x</span></span>
-<span id="cb146-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-3" tabindex="-1"></a><span class="co">#&gt; 1 A 1</span></span>
-<span id="cb146-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-4" tabindex="-1"></a><span class="co">#&gt; 2 B 1</span></span>
-<span id="cb146-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-5" tabindex="-1"></a><span class="co">#&gt; 3 A 2</span></span>
-<span id="cb146-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-6" tabindex="-1"></a><span class="co">#&gt; 4 B 2</span></span>
-<span id="cb146-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-7" tabindex="-1"></a><span class="co">#&gt; 5 A 3</span></span>
-<span id="cb146-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-8" tabindex="-1"></a><span class="co">#&gt; 6 B 3</span></span>
-<span id="cb146-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-9" tabindex="-1"></a></span>
+<span id="cb145-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-4" tabindex="-1"></a>  <span class="fu">ifelse</span>(p <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">log</span>(y), (y<span class="sc">^</span>p <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p)</span>
+<span id="cb145-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-5" tabindex="-1"></a>}</span>
+<span id="cb145-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-6" tabindex="-1"></a></span>
+<span id="cb145-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-7" tabindex="-1"></a><span class="co"># To apply the function over vectors of y and p, ensuring vectorized operations:</span></span>
+<span id="cb145-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-8" tabindex="-1"></a>vectorized_pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
+<span id="cb145-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-9" tabindex="-1"></a>  <span class="fu">map2</span>(y, p, pow)</span>
+<span id="cb145-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-10" tabindex="-1"></a>}</span>
+<span id="cb145-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-11" tabindex="-1"></a><span class="co"># test:</span></span>
+<span id="cb145-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-12" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb145-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-13" tabindex="-1"></a><span class="co">#&gt; Warning in log(y): NaNs produced</span></span>
+<span id="cb145-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-14" tabindex="-1"></a><span class="co">#&gt; [1] 0.00 -Inf 0.00 1.00 8.67 7.50</span></span>
+<span id="cb145-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-15" tabindex="-1"></a><span class="fu">pow</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb145-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb145-16" tabindex="-1"></a><span class="co">#&gt; [1]  0.0 -0.5  0.0  1.5  4.0  7.5</span></span></code></pre></div>
+<p>With a bit more work, we can avoid unnecessary evaluations:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-1" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(y, p) {</span>
+<span id="cb146-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">rep</span>(p, <span class="at">length.out =</span> <span class="fu">length</span>(y))</span>
+<span id="cb146-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-3" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">rep</span>(y, <span class="at">length.out =</span> <span class="fu">length</span>(p))</span>
+<span id="cb146-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-4" tabindex="-1"></a>  y[p <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="fu">log</span>(y[p <span class="sc">==</span> <span class="dv">0</span>])</span>
+<span id="cb146-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-5" tabindex="-1"></a>  y[p <span class="sc">!=</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> (y[p <span class="sc">!=</span> <span class="dv">0</span>]<span class="sc">^</span>p[p <span class="sc">!=</span> <span class="dv">0</span>] <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> p[p <span class="sc">!=</span> <span class="dv">0</span>]</span>
+<span id="cb146-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-6" tabindex="-1"></a>  y</span>
+<span id="cb146-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-7" tabindex="-1"></a>}</span>
+<span id="cb146-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-8" tabindex="-1"></a></span>
+<span id="cb146-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-9" tabindex="-1"></a><span class="co"># Test:</span></span>
 <span id="cb146-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-10" tabindex="-1"></a></span>
-<span id="cb146-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-11" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>, <span class="dv">3</span>, .<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb146-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-12" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
-<span id="cb146-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-13" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
-<span id="cb146-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-14" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
-<span id="cb146-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-15" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
-<span id="cb146-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-16" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
-<span id="cb146-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-17" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
-<span id="cb146-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-18" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
-<span id="cb146-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-19" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
-<span id="cb146-20"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-20" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
-<span id="cb146-21"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-21" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
-<span id="cb146-22"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-22" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
-<span id="cb146-23"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-23" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
-<span id="cb146-24"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-24" tabindex="-1"></a><span class="co">#&gt; 80   0.80 -2.0</span></span>
-<span id="cb146-25"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-25" tabindex="-1"></a><span class="co">#&gt; 137  1.37 -2.0</span></span>
-<span id="cb146-26"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-26" tabindex="-1"></a><span class="co">#&gt; 181  1.81 -2.0</span></span>
-<span id="cb146-27"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-27" tabindex="-1"></a><span class="co">#&gt; 281  2.81 -2.0</span></span>
-<span id="cb146-28"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-28" tabindex="-1"></a><span class="co">#&gt; 615  0.15 -0.5</span></span>
-<span id="cb146-29"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-29" tabindex="-1"></a><span class="co">#&gt; 974  0.74  0.0</span></span>
-<span id="cb146-30"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-30" tabindex="-1"></a><span class="co">#&gt; 1200 3.00  0.0</span></span>
-<span id="cb146-31"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-31" tabindex="-1"></a><span class="co">#&gt; 2130 0.30  3.0</span></span>
-<span id="cb146-32"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-32" tabindex="-1"></a><span class="co">#&gt; 2136 0.36  3.0</span></span>
-<span id="cb146-33"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-33" tabindex="-1"></a><span class="co">#&gt; 2325 2.25  3.0</span></span>
-<span id="cb146-34"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-34" tabindex="-1"></a></span>
-<span id="cb146-35"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-35" tabindex="-1"></a></span>
-<span id="cb146-36"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-36" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y, p))</span>
-<span id="cb146-37"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-37" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y <span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<span id="cb146-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-11" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">0</span>) <span class="sc">==</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb146-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-12" tabindex="-1"></a><span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span id="cb146-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-13" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb146-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-14" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.500 0.667 0.750 0.800 0.833 0.857 0.875 0.889 0.900</span></span>
+<span id="cb146-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-15" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, .<span class="dv">5</span>)</span>
+<span id="cb146-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-16" tabindex="-1"></a><span class="co">#&gt;  [1] 0.000 0.828 1.464 2.000 2.472 2.899 3.292 3.657 4.000 4.325</span></span>
+<span id="cb146-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-17" tabindex="-1"></a><span class="fu">pow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span>
+<span id="cb146-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-18" tabindex="-1"></a><span class="co">#&gt;  [1] 0.00e+00 6.93e-01 2.00e+00 7.50e+00 4.13e+01 3.24e+02 3.36e+03 4.37e+04</span></span>
+<span id="cb146-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb146-19" tabindex="-1"></a><span class="co">#&gt;  [9] 6.83e+05 1.25e+07</span></span></code></pre></div>
+<p>Let’s plot this transformation for a range of values of <span class="math inline">\(p\)</span>. The value of <code>expand.grid</code> is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-1" tabindex="-1"></a><span class="fu">expand.grid</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb147-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-2" tabindex="-1"></a><span class="co">#&gt;   a x</span></span>
+<span id="cb147-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-3" tabindex="-1"></a><span class="co">#&gt; 1 A 1</span></span>
+<span id="cb147-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-4" tabindex="-1"></a><span class="co">#&gt; 2 B 1</span></span>
+<span id="cb147-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-5" tabindex="-1"></a><span class="co">#&gt; 3 A 2</span></span>
+<span id="cb147-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-6" tabindex="-1"></a><span class="co">#&gt; 4 B 2</span></span>
+<span id="cb147-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-7" tabindex="-1"></a><span class="co">#&gt; 5 A 3</span></span>
+<span id="cb147-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-8" tabindex="-1"></a><span class="co">#&gt; 6 B 3</span></span>
+<span id="cb147-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-9" tabindex="-1"></a></span>
+<span id="cb147-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-10" tabindex="-1"></a></span>
+<span id="cb147-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-11" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="fu">seq</span>(.<span class="dv">01</span>, <span class="dv">3</span>, .<span class="dv">01</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">0</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb147-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-12" tabindex="-1"></a><span class="fu">dim</span>(dd)</span>
+<span id="cb147-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-13" tabindex="-1"></a><span class="co">#&gt; [1] 2400    2</span></span>
+<span id="cb147-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-14" tabindex="-1"></a><span class="fu">head</span>(dd)</span>
+<span id="cb147-15"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-15" tabindex="-1"></a><span class="co">#&gt;      y  p</span></span>
+<span id="cb147-16"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-16" tabindex="-1"></a><span class="co">#&gt; 1 0.01 -2</span></span>
+<span id="cb147-17"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-17" tabindex="-1"></a><span class="co">#&gt; 2 0.02 -2</span></span>
+<span id="cb147-18"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-18" tabindex="-1"></a><span class="co">#&gt; 3 0.03 -2</span></span>
+<span id="cb147-19"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-19" tabindex="-1"></a><span class="co">#&gt; 4 0.04 -2</span></span>
+<span id="cb147-20"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-20" tabindex="-1"></a><span class="co">#&gt; 5 0.05 -2</span></span>
+<span id="cb147-21"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-21" tabindex="-1"></a><span class="co">#&gt; 6 0.06 -2</span></span>
+<span id="cb147-22"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-22" tabindex="-1"></a><span class="fu">some</span>(dd) <span class="co"># 10 rows at random</span></span>
+<span id="cb147-23"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-23" tabindex="-1"></a><span class="co">#&gt;         y    p</span></span>
+<span id="cb147-24"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-24" tabindex="-1"></a><span class="co">#&gt; 497  1.97 -1.0</span></span>
+<span id="cb147-25"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-25" tabindex="-1"></a><span class="co">#&gt; 1080 1.80  0.0</span></span>
+<span id="cb147-26"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-26" tabindex="-1"></a><span class="co">#&gt; 1327 1.27  0.5</span></span>
+<span id="cb147-27"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-27" tabindex="-1"></a><span class="co">#&gt; 1523 0.23  1.0</span></span>
+<span id="cb147-28"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-28" tabindex="-1"></a><span class="co">#&gt; 1685 1.85  1.0</span></span>
+<span id="cb147-29"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-29" tabindex="-1"></a><span class="co">#&gt; 1747 2.47  1.0</span></span>
+<span id="cb147-30"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-30" tabindex="-1"></a><span class="co">#&gt; 2121 0.21  3.0</span></span>
+<span id="cb147-31"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-31" tabindex="-1"></a><span class="co">#&gt; 2139 0.39  3.0</span></span>
+<span id="cb147-32"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-32" tabindex="-1"></a><span class="co">#&gt; 2183 0.83  3.0</span></span>
+<span id="cb147-33"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-33" tabindex="-1"></a><span class="co">#&gt; 2390 2.90  3.0</span></span>
+<span id="cb147-34"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-34" tabindex="-1"></a></span>
+<span id="cb147-35"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-35" tabindex="-1"></a></span>
+<span id="cb147-36"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-36" tabindex="-1"></a>dd<span class="sc">$</span>yval <span class="ot">&lt;-</span> <span class="fu">with</span>(dd, <span class="fu">pow</span>(y, p))</span>
+<span id="cb147-37"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-37" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y <span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb147-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y <span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb148-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y <span class="sc">|</span> <span class="fu">factor</span>(p), dd, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb148-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd, <span class="at">groups =</span> p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd, <span class="at">groups =</span> p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval)))</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
-<span id="cb149-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-2" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
-<span id="cb149-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb149-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-4" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
-<span id="cb149-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-5" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
-<span id="cb149-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb149-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
+<span id="cb150-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-2" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
+<span id="cb150-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb150-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-4" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb150-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-5" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
+<span id="cb150-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-6" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-4.png" width="672" /></p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-1" tabindex="-1"></a><span class="fu">gd</span>(<span class="dv">8</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># number of colours needed</span></span>
-<span id="cb150-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-2" tabindex="-1"></a><span class="co">#&gt; Error in gd(8, lwd = 2): could not find function &quot;gd&quot;</span></span>
-<span id="cb150-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-3" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
-<span id="cb150-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-4" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
-<span id="cb150-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-5" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb150-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-6" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
-<span id="cb150-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-7" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
-<span id="cb150-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb150-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-1" tabindex="-1"></a><span class="fu">gd</span>(<span class="dv">8</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># number of colours needed</span></span>
+<span id="cb151-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-2" tabindex="-1"></a><span class="co">#&gt; Error in gd(8, lwd = 2): could not find function &quot;gd&quot;</span></span>
+<span id="cb151-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-3" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
+<span id="cb151-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-4" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
+<span id="cb151-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-5" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb151-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-6" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb151-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-7" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
+<span id="cb151-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-8" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-5.png" width="672" /></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
-<span id="cb151-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-2" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
-<span id="cb151-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb151-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-4" tabindex="-1"></a>  <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&quot;right&quot;</span>, <span class="at">lines =</span> T, <span class="at">points =</span> F),</span>
-<span id="cb151-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-5" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
-<span id="cb151-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-6" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
-<span id="cb151-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb151-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-1" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
+<span id="cb152-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-2" tabindex="-1"></a>  <span class="at">groups =</span> p,</span>
+<span id="cb152-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb152-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-4" tabindex="-1"></a>  <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&quot;right&quot;</span>, <span class="at">lines =</span> T, <span class="at">points =</span> F),</span>
+<span id="cb152-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-5" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb152-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-6" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
+<span id="cb152-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-7" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-10-6.png" width="672" /></p>
 <p>It’s much better to have the legend in the same order as the lines in the graph. We can turn <code>p</code> into a factor and reverse its order.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-1" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">factor</span>(dd<span class="sc">$</span>p)</span>
-<span id="cb152-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-2" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">reorder</span>(dd<span class="sc">$</span>po, <span class="sc">-</span>dd<span class="sc">$</span>p)</span>
-<span id="cb152-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-3" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
-<span id="cb152-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-4" tabindex="-1"></a>  <span class="at">groups =</span> po,</span>
-<span id="cb152-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-5" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb152-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-6" tabindex="-1"></a>  <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&quot;right&quot;</span>, <span class="at">lines =</span> T, <span class="at">points =</span> F, <span class="at">title =</span> <span class="st">&quot;power&quot;</span>),</span>
-<span id="cb152-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-7" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
-<span id="cb152-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-8" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
-<span id="cb152-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb152-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-1" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">factor</span>(dd<span class="sc">$</span>p)</span>
+<span id="cb153-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-2" tabindex="-1"></a>dd<span class="sc">$</span>po <span class="ot">&lt;-</span> <span class="fu">reorder</span>(dd<span class="sc">$</span>po, <span class="sc">-</span>dd<span class="sc">$</span>p)</span>
+<span id="cb153-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-3" tabindex="-1"></a><span class="fu">xyplot</span>(yval <span class="sc">~</span> y, dd,</span>
+<span id="cb153-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-4" tabindex="-1"></a>  <span class="at">groups =</span> po,</span>
+<span id="cb153-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-5" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb153-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-6" tabindex="-1"></a>  <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">space =</span> <span class="st">&quot;right&quot;</span>, <span class="at">lines =</span> T, <span class="at">points =</span> F, <span class="at">title =</span> <span class="st">&quot;power&quot;</span>),</span>
+<span id="cb153-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-7" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
+<span id="cb153-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-8" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="fu">max</span>(dd<span class="sc">$</span>yval))</span>
+<span id="cb153-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-9" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="0403_transformations_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>From quantile plots:</p>
 <p>Uniform quantiles…</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-1" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span>
-<span id="cb153-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb153-2" tabindex="-1"></a><span class="co">#&gt; Error in xqplot(un): could not find function &quot;xqplot&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb154-1" tabindex="-1"></a><span class="fu">xqplot</span>(un)</span>
+<span id="cb154-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb154-2" tabindex="-1"></a><span class="co">#&gt; Error in xqplot(un): could not find function &quot;xqplot&quot;</span></span></code></pre></div>
 <p>Normal quantiles</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb154-1" tabindex="-1"></a><span class="fu">xqplot</span>(un, <span class="at">ptype =</span> <span class="st">&quot;normal&quot;</span>)</span>
-<span id="cb154-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb154-2" tabindex="-1"></a><span class="co">#&gt; Error in xqplot(un, ptype = &quot;normal&quot;): could not find function &quot;xqplot&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-1" tabindex="-1"></a><span class="fu">xqplot</span>(un, <span class="at">ptype =</span> <span class="st">&quot;normal&quot;</span>)</span>
+<span id="cb155-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-2" tabindex="-1"></a><span class="co">#&gt; Error in xqplot(un, ptype = &quot;normal&quot;): could not find function &quot;xqplot&quot;</span></span></code></pre></div>
 <p>We see that none of the numeric variables have normal distributions.</p>
 <ul>
 <li>‘age’ is somewhat platykurtic compared with a normal</li>
@@ -1789,52 +1789,52 @@ However, this approach works correctly only for a single value of <span class="m
 </ul>
 <p>Note that the fact that <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> variables are not normal does not mean that the conditional distribution of <span class="math inline">\(y\)</span> given <span class="math inline">\(x\)</span> is not normal.</p>
 <p>Let’s explore wages of working women as a function of education.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-1" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb155-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-2" tabindex="-1"></a>un <span class="sc">%&gt;%</span></span>
-<span id="cb155-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-3" tabindex="-1"></a>  <span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, .) <span class="sc">+</span></span>
-<span id="cb155-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-4" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span>
-<span id="cb155-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-5" tabindex="-1"></a></span>
-<span id="cb155-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-6" tabindex="-1"></a></span>
-<span id="cb155-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-7" tabindex="-1"></a><span class="co"># Scatterplot showing curvature in relationship</span></span>
-<span id="cb155-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-8" tabindex="-1"></a></span>
-<span id="cb155-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-9" tabindex="-1"></a><span class="fu">trellis.focus</span>()</span>
-<span id="cb155-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-10" tabindex="-1"></a><span class="fu">panel.identify</span>(<span class="at">labels =</span> <span class="fu">rownames</span>(un))</span>
-<span id="cb155-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-11" tabindex="-1"></a><span class="co">#&gt; integer(0)</span></span>
-<span id="cb155-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb155-12" tabindex="-1"></a><span class="fu">trellis.unfocus</span>()</span></code></pre></div>
-<p><img src="0403_transformations_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-1" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-1" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
 <span id="cb156-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-2" tabindex="-1"></a>un <span class="sc">%&gt;%</span></span>
-<span id="cb156-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-3" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
-<span id="cb156-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-4" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="0403_transformations_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<span id="cb156-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-3" tabindex="-1"></a>  <span class="fu">xyplot</span>(infantMortality <span class="sc">~</span> GDPperCapita, .) <span class="sc">+</span></span>
+<span id="cb156-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-4" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span>
+<span id="cb156-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-5" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-6" tabindex="-1"></a></span>
+<span id="cb156-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-7" tabindex="-1"></a><span class="co"># Scatterplot showing curvature in relationship</span></span>
+<span id="cb156-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-8" tabindex="-1"></a></span>
+<span id="cb156-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-9" tabindex="-1"></a><span class="fu">trellis.focus</span>()</span>
+<span id="cb156-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-10" tabindex="-1"></a><span class="fu">panel.identify</span>(<span class="at">labels =</span> <span class="fu">rownames</span>(un))</span>
+<span id="cb156-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-11" tabindex="-1"></a><span class="co">#&gt; integer(0)</span></span>
+<span id="cb156-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb156-12" tabindex="-1"></a><span class="fu">trellis.unfocus</span>()</span></code></pre></div>
+<p><img src="0403_transformations_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-1" tabindex="-1"></a></span>
-<span id="cb157-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-2" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;United.States&quot;</span>, <span class="st">&quot;Canada&quot;</span>))</span>
-<span id="cb157-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-3" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
-<span id="cb157-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-4" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
-<span id="cb157-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-5" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
-<span id="cb157-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-6" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
-<span id="cb157-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-7" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
-<span id="cb157-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-8" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
-<span id="cb157-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-9" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
-<span id="cb157-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-10" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
-<span id="cb157-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-11" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
-<span id="cb157-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-12" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
-<span id="cb157-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-13" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
-<span id="cb157-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-14" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
+<span id="cb157-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-2" tabindex="-1"></a>un <span class="sc">%&gt;%</span></span>
+<span id="cb157-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-3" tabindex="-1"></a>  <span class="fu">xyplot</span>(<span class="fu">log</span>(infantMortality) <span class="sc">~</span> GDPperCapita <span class="sc">|</span> region, .) <span class="sc">+</span></span>
+<span id="cb157-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb157-4" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="fu">panel.loess</span>(..., <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="0403_transformations_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-1" tabindex="-1"></a></span>
+<span id="cb158-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-2" tabindex="-1"></a>un <span class="sc">%&gt;%</span> <span class="fu">subset</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;United.States&quot;</span>, <span class="st">&quot;Canada&quot;</span>))</span>
+<span id="cb158-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-3" tabindex="-1"></a><span class="co">#&gt;                region  tfr contraception educationMale educationFemale lifeMale</span></span>
+<span id="cb158-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-4" tabindex="-1"></a><span class="co">#&gt; Canada        America 1.61            66          17.2            17.8     76.1</span></span>
+<span id="cb158-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-5" tabindex="-1"></a><span class="co">#&gt; United.States America 1.96            71          15.4            16.2     73.4</span></span>
+<span id="cb158-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-6" tabindex="-1"></a><span class="co">#&gt;               lifeFemale infantMortality GDPperCapita economicActivityMale</span></span>
+<span id="cb158-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-7" tabindex="-1"></a><span class="co">#&gt; Canada              81.8               6        18943                 72.4</span></span>
+<span id="cb158-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-8" tabindex="-1"></a><span class="co">#&gt; United.States       80.1               7        26037                 74.9</span></span>
+<span id="cb158-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-9" tabindex="-1"></a><span class="co">#&gt;               economicActivityFemale illiteracyMale illiteracyFemale</span></span>
+<span id="cb158-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-10" tabindex="-1"></a><span class="co">#&gt; Canada                          57.6             NA               NA</span></span>
+<span id="cb158-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-11" tabindex="-1"></a><span class="co">#&gt; United.States                   59.3           2.24             2.23</span></span>
+<span id="cb158-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-12" tabindex="-1"></a><span class="co">#&gt;                     country</span></span>
+<span id="cb158-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-13" tabindex="-1"></a><span class="co">#&gt; Canada               Canada</span></span>
+<span id="cb158-14"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-14" tabindex="-1"></a><span class="co">#&gt; United.States United.States</span></span></code></pre></div>
 <p>between wage and education, and heteroskedasticity in wage as a function of education.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-1" tabindex="-1"></a><span class="co"># library(p3d)</span></span>
-<span id="cb158-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-2" tabindex="-1"></a></span>
-<span id="cb158-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-3" tabindex="-1"></a><span class="co"># slid %&gt;%</span></span>
-<span id="cb158-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-4" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) +</span></span>
-<span id="cb158-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-5" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
-<span id="cb158-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-6" tabindex="-1"></a></span>
-<span id="cb158-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-7" tabindex="-1"></a><span class="co"># Init3d()</span></span>
-<span id="cb158-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-8" tabindex="-1"></a><span class="co"># Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
-<span id="cb158-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-9" tabindex="-1"></a><span class="co"># Id3d()</span></span>
-<span id="cb158-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-10" tabindex="-1"></a><span class="co"># Id3d(&#39;United.States&#39;)</span></span>
-<span id="cb158-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-11" tabindex="-1"></a><span class="co"># Id3d(&#39;Canada&#39;)</span></span>
-<span id="cb158-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-12" tabindex="-1"></a><span class="co"># rownames(un)</span></span>
-<span id="cb158-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb158-13" tabindex="-1"></a><span class="co"># names(un)</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-1" tabindex="-1"></a><span class="co"># library(p3d)</span></span>
+<span id="cb159-2"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-2" tabindex="-1"></a></span>
+<span id="cb159-3"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-3" tabindex="-1"></a><span class="co"># slid %&gt;%</span></span>
+<span id="cb159-4"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-4" tabindex="-1"></a><span class="co">#  xyplot(sqrt(wage) ~ education, .) +</span></span>
+<span id="cb159-5"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-5" tabindex="-1"></a><span class="co">#  layer(panel.loess(...))</span></span>
+<span id="cb159-6"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-6" tabindex="-1"></a></span>
+<span id="cb159-7"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-7" tabindex="-1"></a><span class="co"># Init3d()</span></span>
+<span id="cb159-8"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-8" tabindex="-1"></a><span class="co"># Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)</span></span>
+<span id="cb159-9"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-9" tabindex="-1"></a><span class="co"># Id3d()</span></span>
+<span id="cb159-10"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-10" tabindex="-1"></a><span class="co"># Id3d(&#39;United.States&#39;)</span></span>
+<span id="cb159-11"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-11" tabindex="-1"></a><span class="co"># Id3d(&#39;Canada&#39;)</span></span>
+<span id="cb159-12"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-12" tabindex="-1"></a><span class="co"># rownames(un)</span></span>
+<span id="cb159-13"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#cb159-13" tabindex="-1"></a><span class="co"># names(un)</span></span></code></pre></div>
 </div>
 <div id="box-cox-transformation" class="section level2 hasAnchor" number="33.4">
 <h2><span class="header-section-number">33.4</span> Box Cox Transformation<a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#box-cox-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
