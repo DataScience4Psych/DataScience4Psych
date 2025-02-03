@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>42 Lab: Wrangling spatial data | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="42 Lab: Wrangling spatial data | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-01-27" />
+<meta name="date" content="2025-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 <link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -665,7 +665,7 @@ div.csl-indent {
 <li class="chapter" data-level="38.1.3" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#show-the-scatterplot"><i class="fa fa-check"></i><b>38.1.3</b> Show the scatterplot</a></li>
 </ul></li>
 <li class="chapter" data-level="38.2" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#high-correlation-does-not-imply-replication"><i class="fa fa-check"></i><b>38.2</b> High correlation does not imply replication</a></li>
-<li class="chapter" data-level="38.3" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#barpots-for-paired-data"><i class="fa fa-check"></i><b>38.3</b> Barpots for paired data</a></li>
+<li class="chapter" data-level="38.3" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#barplots-for-paired-data"><i class="fa fa-check"></i><b>38.3</b> Barplots for paired data</a></li>
 <li class="chapter" data-level="38.4" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#gratuitous-3d"><i class="fa fa-check"></i><b>38.4</b> Gratuitous 3D</a></li>
 <li class="chapter" data-level="38.5" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#ignoring-important-factors"><i class="fa fa-check"></i><b>38.5</b> Ignoring important factors</a></li>
 <li class="chapter" data-level="38.6" data-path="plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="plots-behaving-badly-lessons-in-data-misrepresentation.html#too-many-significant-digits"><i class="fa fa-check"></i><b>38.6</b> Too many significant digits</a></li>
@@ -1547,8 +1547,9 @@ div.csl-indent {
 <p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The *dsbox** package is not on CRAN yet; instead it is hosted on github. You will have to download and <a href="https://github.com/rstudio-education/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
 <pre><code># install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;rstudio-education/dsbox&quot;)</code></pre>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="lab05.html#cb213-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb213-2"><a href="lab05.html#cb213-2" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="lab05.html#cb218-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## Warning: package &#39;lubridate&#39; was built under R version 4.4.2</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="lab05.html#cb220-1" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
 <p>If you cannot get dsbox to install, you can also download the two datasets we will be using manually <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda">here</a> and <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda">here</a>.</p>
 <pre><code>githubURL_1 &lt;- &quot;https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda&quot;
 
@@ -1562,7 +1563,7 @@ load(url(githubURL_2))</code></pre>
 <div id="password-caching" class="section level4 unnumbered hasAnchor">
 <h4>Password caching<a href="lab05.html#password-caching" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If you would like your git password cached for a week for this project, type the following in the Terminal:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb215-1"><a href="lab05.html#cb215-1" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper <span class="st">&#39;cache --timeout 604800&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb222-1"><a href="lab05.html#cb222-1" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper <span class="st">&#39;cache --timeout 604800&#39;</span></span></code></pre></div>
 </div>
 <div id="project-name-1" class="section level4 unnumbered hasAnchor">
 <h4>Project name<a href="lab05.html#project-name-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1596,9 +1597,9 @@ load(url(githubURL_2))</code></pre>
 <ol style="list-style-type: decimal">
 <li>Filter the Denny’s data frame for Alaska (AK) and save the result as <code>dn_ak</code>. How many Denny’s locations are there in Alaska?</li>
 </ol>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="lab05.html#cb216-1" tabindex="-1"></a>dn_ak <span class="ot">&lt;-</span> dn <span class="sc">%&gt;%</span></span>
-<span id="cb216-2"><a href="lab05.html#cb216-2" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">&quot;AK&quot;</span>)</span>
-<span id="cb216-3"><a href="lab05.html#cb216-3" tabindex="-1"></a><span class="fu">nrow</span>(dn_ak)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="lab05.html#cb223-1" tabindex="-1"></a>dn_ak <span class="ot">&lt;-</span> dn <span class="sc">%&gt;%</span></span>
+<span id="cb223-2"><a href="lab05.html#cb223-2" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">&quot;AK&quot;</span>)</span>
+<span id="cb223-3"><a href="lab05.html#cb223-3" tabindex="-1"></a><span class="fu">nrow</span>(dn_ak)</span></code></pre></div>
 <p>Now, do the same for La Quinta data frame for Alaska (AK) and save the result as <code>lq_ak</code>. How many La Quinta locations are there in Alaska?</p>
 <pre><code>lq_ak &lt;- YOUR CODE GOES HERE
 
@@ -1644,9 +1645,9 @@ Figure 42.1: Full join of Denny’s and La Quinta locations in AK
 </p>
 </div>
 <p>Let’s join the data on Denny’s and La Quinta locations in Alaska, and take a look at what it looks like:</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="lab05.html#cb219-1" tabindex="-1"></a>dn_lq_ak <span class="ot">&lt;-</span> <span class="fu">full_join</span>(dn_ak, lq_ak, </span>
-<span id="cb219-2"><a href="lab05.html#cb219-2" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">&quot;state&quot;</span>)</span>
-<span id="cb219-3"><a href="lab05.html#cb219-3" tabindex="-1"></a>dn_lq_ak</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="lab05.html#cb226-1" tabindex="-1"></a>dn_lq_ak <span class="ot">&lt;-</span> <span class="fu">full_join</span>(dn_ak, lq_ak, </span>
+<span id="cb226-2"><a href="lab05.html#cb226-2" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">&quot;state&quot;</span>)</span>
+<span id="cb226-3"><a href="lab05.html#cb226-3" tabindex="-1"></a>dn_lq_ak</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>How many observations are in the joined <code>dn_lq_ak</code> data frame? What are the names of the variables in this data frame.</li>
 </ol>
@@ -1663,20 +1664,20 @@ Figure 42.2: <a href="https://commons.wikimedia.org/wiki/File:Law-of-haversines.
 </p>
 </div>
 <p>This function is not available in R, but we can save the following function to a file called <code>haversine.R</code> that we can load and then use:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="lab05.html#cb220-1" tabindex="-1"></a>haversine <span class="ot">&lt;-</span> <span class="cf">function</span>(long1, lat1, long2, lat2, <span class="at">round =</span> <span class="dv">3</span>) {</span>
-<span id="cb220-2"><a href="lab05.html#cb220-2" tabindex="-1"></a>  <span class="co"># convert to radians</span></span>
-<span id="cb220-3"><a href="lab05.html#cb220-3" tabindex="-1"></a>  long1 <span class="ot">&lt;-</span> long1 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
-<span id="cb220-4"><a href="lab05.html#cb220-4" tabindex="-1"></a>  lat1 <span class="ot">&lt;-</span> lat1 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
-<span id="cb220-5"><a href="lab05.html#cb220-5" tabindex="-1"></a>  long2 <span class="ot">&lt;-</span> long2 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
-<span id="cb220-6"><a href="lab05.html#cb220-6" tabindex="-1"></a>  lat2 <span class="ot">&lt;-</span> lat2 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
-<span id="cb220-7"><a href="lab05.html#cb220-7" tabindex="-1"></a></span>
-<span id="cb220-8"><a href="lab05.html#cb220-8" tabindex="-1"></a>  R <span class="ot">&lt;-</span> <span class="dv">6371</span> <span class="co"># Earth mean radius in km</span></span>
-<span id="cb220-9"><a href="lab05.html#cb220-9" tabindex="-1"></a></span>
-<span id="cb220-10"><a href="lab05.html#cb220-10" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">sin</span>((lat2 <span class="sc">-</span> lat1) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">cos</span>(lat1) <span class="sc">*</span> <span class="fu">cos</span>(lat2) <span class="sc">*</span> <span class="fu">sin</span>((long2 <span class="sc">-</span> long1) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb220-11"><a href="lab05.html#cb220-11" tabindex="-1"></a>  d <span class="ot">&lt;-</span> R <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(a))</span>
-<span id="cb220-12"><a href="lab05.html#cb220-12" tabindex="-1"></a></span>
-<span id="cb220-13"><a href="lab05.html#cb220-13" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(d, round)) <span class="co"># distance in km</span></span>
-<span id="cb220-14"><a href="lab05.html#cb220-14" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="lab05.html#cb227-1" tabindex="-1"></a>haversine <span class="ot">&lt;-</span> <span class="cf">function</span>(long1, lat1, long2, lat2, <span class="at">round =</span> <span class="dv">3</span>) {</span>
+<span id="cb227-2"><a href="lab05.html#cb227-2" tabindex="-1"></a>  <span class="co"># convert to radians</span></span>
+<span id="cb227-3"><a href="lab05.html#cb227-3" tabindex="-1"></a>  long1 <span class="ot">&lt;-</span> long1 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
+<span id="cb227-4"><a href="lab05.html#cb227-4" tabindex="-1"></a>  lat1 <span class="ot">&lt;-</span> lat1 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
+<span id="cb227-5"><a href="lab05.html#cb227-5" tabindex="-1"></a>  long2 <span class="ot">&lt;-</span> long2 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
+<span id="cb227-6"><a href="lab05.html#cb227-6" tabindex="-1"></a>  lat2 <span class="ot">&lt;-</span> lat2 <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span></span>
+<span id="cb227-7"><a href="lab05.html#cb227-7" tabindex="-1"></a></span>
+<span id="cb227-8"><a href="lab05.html#cb227-8" tabindex="-1"></a>  R <span class="ot">&lt;-</span> <span class="dv">6371</span> <span class="co"># Earth mean radius in km</span></span>
+<span id="cb227-9"><a href="lab05.html#cb227-9" tabindex="-1"></a></span>
+<span id="cb227-10"><a href="lab05.html#cb227-10" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">sin</span>((lat2 <span class="sc">-</span> lat1) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">cos</span>(lat1) <span class="sc">*</span> <span class="fu">cos</span>(lat2) <span class="sc">*</span> <span class="fu">sin</span>((long2 <span class="sc">-</span> long1) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb227-11"><a href="lab05.html#cb227-11" tabindex="-1"></a>  d <span class="ot">&lt;-</span> R <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(a))</span>
+<span id="cb227-12"><a href="lab05.html#cb227-12" tabindex="-1"></a></span>
+<span id="cb227-13"><a href="lab05.html#cb227-13" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(d, round)) <span class="co"># distance in km</span></span>
+<span id="cb227-14"><a href="lab05.html#cb227-14" tabindex="-1"></a>}</span></code></pre></div>
 <p>This function takes five arguments:</p>
 <ul>
 <li>Longitude and latitude of the first location</li>
@@ -1687,9 +1688,9 @@ Figure 42.2: <a href="https://commons.wikimedia.org/wiki/File:Law-of-haversines.
 <li><p>Calculate the distances between all pairs of Denny’s and La Quinta locations and save this variable as <code>distance</code>. Make sure to save this variable in THE <code>dn_lq_ak</code> data frame, so that you can use it later.</p></li>
 <li><p>Calculate the minimum distance between a Denny’s and La Quinta for each Denny’s location. To do so we group by Denny’s locations and calculate a new variable that stores the information for the minimum distance.</p></li>
 </ol>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="lab05.html#cb221-1" tabindex="-1"></a>dn_lq_ak_mindist <span class="ot">&lt;-</span> dn_lq_ak <span class="sc">%&gt;%</span></span>
-<span id="cb221-2"><a href="lab05.html#cb221-2" tabindex="-1"></a>  <span class="fu">group_by</span>(address.x) <span class="sc">%&gt;%</span></span>
-<span id="cb221-3"><a href="lab05.html#cb221-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">closest =</span> <span class="fu">min</span>(distance))</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="lab05.html#cb228-1" tabindex="-1"></a>dn_lq_ak_mindist <span class="ot">&lt;-</span> dn_lq_ak <span class="sc">%&gt;%</span></span>
+<span id="cb228-2"><a href="lab05.html#cb228-2" tabindex="-1"></a>  <span class="fu">group_by</span>(address.x) <span class="sc">%&gt;%</span></span>
+<span id="cb228-3"><a href="lab05.html#cb228-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">closest =</span> <span class="fu">min</span>(distance))</span></code></pre></div>
 <ol start="8" style="list-style-type: decimal">
 <li><p>Describe the distribution of the distances Denny’s and the nearest La Quinta locations in Alaska. Also include an <strong>appropriate</strong> visualization and relevant summary statistics.</p></li>
 <li><p>Repeat the same analysis for North Carolina: (i) filter Denny’s and La Quinta Data Frames for NC, (ii) join these data frames to get a complete list of all possible pairings, (iii) calculate the distances between all possible pairings of Denny’s and La Quinta in NC, (iv) find the minimum distance between each Denny’s and La Quinta location, (v) visualize and describe the distribution of these shortest distances using appropriate summary statistics.</p></li>
