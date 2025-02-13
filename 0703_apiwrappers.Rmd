@@ -62,10 +62,11 @@ API-wrapping packages act as intermediaries between your R environment and web s
 
 ### Case Study: Ornithological Data with rebird
 
-Let's dive into a practical example using the [rebird](https://github.com/ropensci/rebird) package, which interfaces with the [eBird](http://ebird.org/content/ebird/) database. eBird lets birders upload sightings of birds, and allows everyone access to those data. 
+Let's dive into a practical example using the [rebird](https://github.com/ropensci/rebird) package, which interfaces with the [eBird](http://ebird.org/content/ebird/) database. eBird lets birders upload sightings of birds, and allows everyone access to those data. rebird makes it easy to access this data from R (as long as you request an API key)
 
 ```{r message = FALSE, warning = FALSE,error=TRUE}
 library(tidyverse)
+library(kableExtra)
 library(rebird)
 ```
 
@@ -82,19 +83,26 @@ At that link, you will see a page like this:
 knitr::include_graphics("img/Iona_island.png")
 ```
 
-The data already looks to be organized in a data frame! rebird allows us to read these data directly into R (the ID code for Iona Island is **"L261851"**).
+The data already looks to be organized in a data frame! rebird allows us to read these data directly into R (the ID code for Iona Island is **"L261851"**). Note that this requires an API key which you have to request from ebird via this [link](https://ebird.org/api/request) . I have set my key as an environment variable. However you can set it as a global variable in your R session. Like this:
 
 <!--TODO: The following chunks are broken; ebird now requires an API key.-->
-```{r eval = FALSE,error=TRUE}
-ebirdhotspot(locID = "L261851") %>%
+```{r eval = FALSE,error=TRUE,include=TRUE}
+ebirdkey <- "SECRET API KEY"
+```
+```{r message=FALSE, warning=FALSE, include=FALSE}
+ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote="\"", comment.char="")[1,1]
+```
+
+```{r eval = TRUE,error=TRUE}
+ebirdregion(loc = "L261851", key = ebirdkey) %>%
   head() %>%
   kable()
 ```
 
 We can use the function `ebirdgeo()` to get a list for an area (note that South and West are negative):
 
-```{r results = 'asis', eval = FALSE,error=TRUE}
-vanbirds <- ebirdgeo(lat = 49.2500, lng = -123.1000)
+```{r results = 'asis', eval = TRUE,error=TRUE}
+vanbirds <- ebirdgeo(lat = 49.2500, lng = -123.1000, key = ebirdkey)
 vanbirds %>%
   head() %>%
   kable()
@@ -104,8 +112,8 @@ vanbirds %>%
 
 We can also search by "region", which refers to short codes which serve as common shorthands for different political units. For example, France is represented by the letters **FR**.
 
-```{r eval = FALSE,error=TRUE}
-frenchbirds <- ebirdregion("FR")
+```{r eval = TRUE,error=TRUE}
+frenchbirds <- ebirdregion("FR", key = ebirdkey)
 frenchbirds %>%
   head() %>%
   kable()
@@ -113,8 +121,8 @@ frenchbirds %>%
 
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
-```{r eval = FALSE}
-eagle <- ebirdgeo(species = "Haliaeetus leucocephalus", lat = 42, lng = -76)
+```{r eval = TRUE}
+eagle <- ebirdgeo(species = "Haliaeetus leucocephalus", lat = 42, lng = -76, key = ebirdkey)
 eagle %>%
   head() %>%
   kable()
@@ -122,7 +130,7 @@ eagle %>%
 
 rebird **knows where you are**:
 
-```{r eval = FALSE,error=TRUE}
+```{r eval = TRUE,error=TRUE}
 ebirdgeo(species = "Buteo lagopus")
 ```
 
@@ -139,20 +147,21 @@ The [geonames package website](https://docs.ropensci.org/geonames/) tells us tha
 
 1. Go to [the GeoNames site](https://www.geonames.org/login) and create a new user account.
 1. Check your email and follow the instructions to activate your account.
-1. Click [here] to enable the free web services for your account (Note! You must be logged into your GeoNames account already for the link to work).
+1. You have to manually enable the free web services for your account (Note! You must be logged into your GeoNames account).
 1. Tell R your GeoNames username.
 
 To do the last step, we could run this line in R...
 
 ```r
 options(geonamesUsername="my_user_name")
+
 ```
 
 ...but this is insecure. We don't want to risk committing this line and pushing it to our public GitHub page!
 
 Instead, we can add this line to our `.Rprofile` so it will be hidden. One way to edit your `.Rprofile` is with the helper function `edit_r_profile()` from the [usethis][usethis-web] package. Install/load the usethis package and run `edit_r_profile()` in the R Console:
 
-```{r message = FALSE, warning = FALSE, eval = FALSE,error=TRUE}
+```{r message = FALSE, warning = FALSE, eval = TRUE,error=TRUE}
 # install.packages("usethis")
 library(usethis)
 edit_r_profile()
@@ -170,26 +179,26 @@ Save the file, close it, and restart R. Now we're ready to start using geonames 
 
 What can we do? We can get access to lots of geographical information via the various [GeoNames WebServices](http://www.geonames.org/export/ws-overview.html).
 
-```{r, eval = FALSE,error=TRUE}
+```{r, eval = TRUE,error=TRUE}
 countryInfo <- GNcountryInfo()
 ```
 
-```{r eval = FALSE,error=TRUE}
+```{r eval = TRUE,error=TRUE}
 glimpse(countryInfo)
 ```
 
 This `countryInfo` dataset is very helpful for accessing the rest of the data because it gives us the standardized codes for country and language.
 
-#### Remixing geonames and rebird
+#### Remixing geonames
 
 What are the cities of France?
 
-```{r eval = FALSE,error=TRUE}
+```{r eval = TRUE,error=TRUE}
 francedata <- countryInfo %>%
   filter(countryName == "France")
 ```
 
-```{r eval = FALSE,error=TRUE}
+```{r eval = TRUE,error=TRUE}
 frenchcities <- with(francedata, GNcities(
   north = north, east = east,
   south = south, west = west,
@@ -197,7 +206,7 @@ frenchcities <- with(francedata, GNcities(
 ))
 ```
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 glimpse(frenchcities)
 ```
 
@@ -205,7 +214,7 @@ glimpse(frenchcities)
 
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
 
-```{r, eval = FALSE,error=TRUE}
+```{r, eval = TRUE,error=TRUE}
 rio_english <- GNfindNearbyWikipedia(
   lat = -22.9083, lng = -43.1964,
   radius = 20, lang = "en", maxRows = 500
@@ -216,63 +225,11 @@ rio_portuguese <- GNfindNearbyWikipedia(
 )
 ```
 
-```{r eval = FALSE,error=TRUE}
+```{r eval = TRUE,error=TRUE}
 nrow(rio_english)
 nrow(rio_portuguese)
 ```
 
-### Searching the Public Library of Science: rplos {#plos-one}
-
-[PLOS ONE](https://journals.plos.org/plosone/) is an open-access journal. They allow access to an impressive range of search tools, and allow you to obtain the full text of their articles. rOpenSci has a package called rplos that we can use to interact with the [PLOS API](http://api.plos.org). They have a nice tutorial on the rOpenSci website that you can see [here](https://ropensci.org/tutorials/rplos_tutorial.html). First, install/load the rplos package from CRAN.
-
-```{r message = FALSE, warning = FALSE,error=TRUE}
-# install.packages("rplos")
-library(rplos)
-```
-
-#### Searching PLOS ONE
-
-Let's follow along with the [`rOpenSci` tutorial](https://ropensci.org/tutorials/rplos_tutorial.html) and do some searches:
-
-```{r,error=TRUE}
-searchplos(q = "Helianthus", fl = "id", limit = 5)
-```
-
-```{r,error=TRUE}
-searchplos("materials_and_methods:France", fl = "title, materials_and_methods")
-```
-
-```{r,error=TRUE}
-searchplos("materials_and_methods:study site", fl = "title, materials_and_methods")
-```
-
-```{r,error=TRUE}
-searchplos("*:*", fl = "id")
-```
-
-Here is a list of [options for the search](http://api.plos.org/solr/search-fields/) or you can run `data(plosfields)` followed by `plosfields` in the R Console.
-
-#### Take a highbrow look
-
-The `highplos()` function does "highlighted searches on PLOS Journals full-text content".
-
-```{r,error=TRUE}
-highlighted <- highplos(q = "alcohol", hl.fl = "abstract", rows = 10)
-```
-
-We can then pass this output to `highbrow()`, which will open up our default browser where we can browse the highlighted fragments. When we run `highbrow(highlighted)` in our R Console this is what we see in our browser:
-
-```{r echo = FALSE, fig.cap = "Example rplos highlights", out.width = "100%",error=TRUE}
-knitr::include_graphics("img/rplos-highbrow.png")
-```
-
-#### Plots over time
-
-We can use the `plot_throughtime()` function to visualize the results of a search over time.
-
-```{r,error=TRUE}
-plot_throughtime(terms = "phylogeny", limit = 200)
-```
 
 ### Is it a boy or a girl? gender-associated names throughout US history
 
@@ -282,6 +239,7 @@ First, install/load the gender package from CRAN. You may be prompted to also in
 
 ```{r,error=TRUE}
 # install.packages("gender")
+#remotes::install_github("lmullen/genderdata")
 library(gender)
 ```
 
@@ -292,11 +250,75 @@ gender("Kelsey")
 gender("Kelsey", years = 1940)
 ```
 
+As you can see, the probability of a name belonging to a specific gender can change over time.
+
+```{r plot}
+df <- gender("Kelsey")
+
+years <- c(df$year_min:df$year_max)
+
+for(i in 1:length(years)){
+  
+df <-rbind(df,gender("Kelsey", years = years[i]))
+
+}
+df %>% filter(year_min==year_max) %>% 
+ggplot( aes(year_min, proportion_male)) +
+  geom_smooth(span = 0.1) +
+  labs(title = "Proportion of men named Kelsey over time",
+       x = "Year",
+       y = "Proporiton Male") + ggthemes::theme_excel()
+```
+
+
+In contrast, the name Mason has been more consistently male.
+
+```{r,error=TRUE}
+gender("Mason")
+gender("Mason", years = 1940)
+```
+
+```{r plotMason}
+mason <- gender("Mason")
+years <- c(mason$year_min:mason$year_max)
+
+df <- rbind(df,gender("Mason"))
+
+for(i in 1:length(years)){
+  
+df <-rbind(df,gender("Mason", years = years[i]))
+
+}
+df %>% filter(year_min==year_max&name=="Mason") %>% 
+ggplot( aes(year_min, proportion_male)) +
+  geom_point() +
+  geom_smooth(span = 0.1) +
+  labs(title = "Proportion of men named Mason over time",
+       x = "Year",
+       y = "Proporiton Male") + ggthemes::theme_excel()
+```
+
+
+And when we compare the two names, we see that Kelsey has changed a lot more over time than Mason.
+
+```{r plotCompare}
+df %>% filter(year_min==year_max) %>% 
+ggplot( aes(year_min, proportion_male)) +
+  geom_point() +
+  geom_smooth(span = 0.1) +
+  labs(title = "Proportion of men over time",
+       x = "Year",
+       y = "Proporiton Male")  + ggthemes::theme_excel() + facet_wrap(~name)
+
+```
+
 ```{r links1, child="admin/md/courselinks.md"}
 ```
 
 ```{r links2, child="admin/md/links.md"}
 ```
+
+
 ## Conclusion
 
 API-wrapping packages in R provide powerful tools for accessing diverse data sources. As you progress in your data science journey, mastering these tools will greatly expand the range of data available for your analyses. Remember to always check the terms of service for any API you use, and be mindful of rate limits and data usage policies.

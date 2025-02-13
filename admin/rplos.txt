@@ -1,0 +1,52 @@
+### Searching the Public Library of Science: rplos {#plos-one}
+
+[PLOS ONE](https://journals.plos.org/plosone/) is an open-access journal. They allow access to an impressive range of search tools, and allow you to obtain the full text of their articles. rOpenSci has a package called rplos that we can use to interact with the [PLOS API](http://api.plos.org). They have a nice tutorial on the rOpenSci website that you can see [here](https://ropensci.org/tutorials/rplos_tutorial.html). First, install/load the rplos package from CRAN.
+
+```{r message = FALSE, warning = FALSE,error=TRUE}
+# install.packages("rplos")
+library(rplos)
+```
+
+#### Searching PLOS ONE
+
+Let's follow along with the [`rOpenSci` tutorial](https://ropensci.org/tutorials/rplos_tutorial.html) and do some searches:
+
+```{r,error=TRUE}
+searchplos(q = "Helianthus", fl = "id", limit = 5)
+```
+
+```{r,error=TRUE}
+searchplos("materials_and_methods:France", fl = "title, materials_and_methods")
+```
+
+```{r,error=TRUE}
+searchplos("materials_and_methods:study site", fl = "title, materials_and_methods")
+```
+
+```{r,error=TRUE}
+searchplos("*:*", fl = "id")
+```
+
+Here is a list of [options for the search](http://api.plos.org/solr/search-fields/) or you can run `data(plosfields)` followed by `plosfields` in the R Console.
+
+#### Take a highbrow look
+
+The `highplos()` function does "highlighted searches on PLOS Journals full-text content".
+
+```{r,error=TRUE}
+highlighted <- highplos(q = "alcohol", hl.fl = "abstract", rows = 10)
+```
+
+We can then pass this output to `highbrow()`, which will open up our default browser where we can browse the highlighted fragments. When we run `highbrow(highlighted)` in our R Console this is what we see in our browser:
+
+```{r echo = FALSE, fig.cap = "Example rplos highlights", out.width = "100%",error=TRUE}
+knitr::include_graphics("img/rplos-highbrow.png")
+```
+
+#### Plots over time
+
+We can use the `plot_throughtime()` function to visualize the results of a search over time.
+
+```{r,error=TRUE}
+plot_throughtime(terms = "phylogeny", limit = 200)
+```
