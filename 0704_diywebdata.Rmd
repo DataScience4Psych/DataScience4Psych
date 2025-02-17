@@ -1,6 +1,12 @@
 # DIY web data {#diy-web-data}
 
-These notes are adapted from Jenny Bryan's stat545 and were originally written by Andrew MacDonald.
+In earlier sections, we explored R packages that simplify working with web data by "wrapping" APIs—handling request creation and output formatting. But what happens behind the scenes? How do these functions actually interact with web-based data sources?
+
+This section builds on that foundation by taking a closer look at the mechanics of API requests and responses. Instead of relying on pre-built wrappers, we’ll construct API requests manually, interpret structured data formats like JSON and XML, and explore best practices for handling web-based data.
+
+By the end, you’ll have a deeper understanding of how R interacts with APIs, allowing you to retrieve, parse, and integrate online data into your analysis.
+
+These notes, adapted from Jenny Bryan’s stat545 and originally written by Andrew MacDonald, provide a hands-on guide to these concepts with practical examples.
 
 ```{r include = FALSE}
 source("common.R")
@@ -8,18 +14,17 @@ can_render <- Sys.getenv("OMDB_API_KEY", unset = "") != ""
 knitr::opts_chunk$set(eval = can_render)
 ```
 
+
 ```{r eval = !can_render, echo = FALSE, comment = NA}
 message("No OMDb key available. Code chunks will not be evaluated.")
 ```
 
-<!--Original content: https://stat545.com/webdata03_activity.html-->
-<!--Original author: Andrew MacDonald-->
 
 ## Interacting with an API
 
 Earlier, we experimented with several packages that "wrapped" APIs.  They handle request creation and output formatting. In this section, we're going to look at (part of) what these functions were doing.
 
-### Load the tidyverse
+### Loading Required Packages
 
 We will be using the functions from the [tidyverse](https://www.tidyverse.org) throughout this chapter, so go ahead and load tidyverse package now.
 
@@ -27,7 +32,8 @@ We will be using the functions from the [tidyverse](https://www.tidyverse.org) t
 library(tidyverse)
 ```
 
-### Examine the structure of API requests using the Open Movie Database
+### Understanding API Requests with the Open Movie Database
+
 
 First, we're going to examine the structure of API requests using the [Open Movie Database](http://www.omdbapi.com/) (OMDb). OMDb is similar to IMDb but has a simpler API.  We can go to the website, input some search parameters, and obtain both the XML query and the response from it.
 
