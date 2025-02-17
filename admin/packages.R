@@ -38,7 +38,7 @@ cran_packages <- c(
   "manipulateWidget", "shiny", "rgl", "BGmisc", "leaflet",
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
-  "tidymodels", "pacman", "gapminder"
+  "tidymodels", "pacman", "gapminder", "nycflights13"
 )
 
 # Install CRAN packages if missing
