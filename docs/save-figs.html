@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-02-17" />
+<meta name="date" content="2025-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1579,36 +1579,36 @@ div.csl-indent {
 <h2><span class="header-section-number">42.4</span> Write figures to file with <code>ggsave()</code><a href="save-figs.html#write-figures-to-file-with-ggsave" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you are using ggplot2, write figures to file with <a href="https://rdrr.io/cran/ggplot2/man/ggsave.html"><code>ggsave()</code></a>.</p>
 <p>If you are staring at a plot you just made on your screen, you can call <code>ggsave()</code>, specifying only a filename:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="save-figs.html#cb202-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;my-awesome-graph.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="save-figs.html#cb198-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;my-awesome-graph.png&quot;</span>)</span></code></pre></div>
 <p>It makes a sensible decision about everything else. In particular, as long as you use a conventional extension, it will guess what type of graphics file you want. If you need control over, e.g., width, height, or dpi, roll up your sleeves and <a href="https://rdrr.io/cran/ggplot2/man/ggsave.html">use the arguments</a>.</p>
 <div id="passing-a-plot-object-to-ggsave" class="section level3 hasAnchor" number="42.4.1">
 <h3><span class="header-section-number">42.4.1</span> Passing a plot object to <code>ggsave()</code><a href="save-figs.html#passing-a-plot-object-to-ggsave" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>After the filename, the most common argument you will provide is <code>plot =</code>, which is the second argument by position. If you’ve been building up a plot with the typical ggplot2 workflow, you will pass the resulting object to <code>ggsave()</code>. <strong>Example:</strong></p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="save-figs.html#cb203-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb203-2"><a href="save-figs.html#cb203-2" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span>
-<span id="cb203-3"><a href="save-figs.html#cb203-3" tabindex="-1"></a><span class="co"># during development, you will uncomment next line to print p to screen</span></span>
-<span id="cb203-4"><a href="save-figs.html#cb203-4" tabindex="-1"></a><span class="co"># p</span></span>
-<span id="cb203-5"><a href="save-figs.html#cb203-5" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;fig-io-practice.png&quot;</span>, p)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="save-figs.html#cb199-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb199-2"><a href="save-figs.html#cb199-2" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span>
+<span id="cb199-3"><a href="save-figs.html#cb199-3" tabindex="-1"></a><span class="co"># during development, you will uncomment next line to print p to screen</span></span>
+<span id="cb199-4"><a href="save-figs.html#cb199-4" tabindex="-1"></a><span class="co"># p</span></span>
+<span id="cb199-5"><a href="save-figs.html#cb199-5" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;fig-io-practice.png&quot;</span>, p)</span></code></pre></div>
 <p>See below for gotchas and FAQs when making figures in a non-interactive setting!</p>
 </div>
 <div id="scaling" class="section level3 hasAnchor" number="42.4.2">
 <h3><span class="header-section-number">42.4.2</span> Scaling<a href="save-figs.html#scaling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Figures need to be prepared differently for a presentation versus a poster versus a manuscript. You need to fiddle with the size of text, such as the title and axis labels, relative to the entire plot area. There are at least two ways to do this, with slightly different effects and workflows.</p>
 <p><strong>Via the <code>scale =</code> argument to <code>ggsave()</code></strong>: This actually changes the physical size of the plot, but as an interesting side effect, it changes the relative size of the title and axis labels. Therefore, tweaking this can be a quick-and-dirty way to get different versions of a figure appropriate for a presentation versus a poster versus a manuscript. You can still insert the figure downstream with a different physical size, though you may need to adjust the dpi accordingly on the front end. When <code>scale &lt; 1</code>, various plot elements will be bigger relative to the plotting area; when <code>scale &gt; 1</code>, these elements will be smaller. YMMV but <code>scale = 0.8</code> often works well for posters and slides. Figure <a href="save-figs.html#fig:exaggerated-scale">42.1</a> shows two versions of a figure, with exaggerated values of <code>scale</code>, to illustrate its effect.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="save-figs.html#cb204-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb204-2"><a href="save-figs.html#cb204-2" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb204-3"><a href="save-figs.html#cb204-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(</span>
-<span id="cb204-4"><a href="save-figs.html#cb204-4" tabindex="-1"></a>  <span class="at">x =</span> year,</span>
-<span id="cb204-5"><a href="save-figs.html#cb204-5" tabindex="-1"></a>  <span class="at">y =</span> lifeExp</span>
-<span id="cb204-6"><a href="save-figs.html#cb204-6" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb204-7"><a href="save-figs.html#cb204-7" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="save-figs.html#cb205-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;scale = 0.6&quot;</span>)</span>
-<span id="cb205-2"><a href="save-figs.html#cb205-2" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;scale = 2&quot;</span>)</span>
-<span id="cb205-3"><a href="save-figs.html#cb205-3" tabindex="-1"></a></span>
-<span id="cb205-4"><a href="save-figs.html#cb205-4" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-scale-0.6.png&quot;</span>, p1, <span class="at">scale =</span> <span class="fl">0.6</span>)</span>
-<span id="cb205-5"><a href="save-figs.html#cb205-5" tabindex="-1"></a><span class="co">#&gt; Saving 4.2 x 3 in image</span></span>
-<span id="cb205-6"><a href="save-figs.html#cb205-6" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-scale-2.png&quot;</span>, p2, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb205-7"><a href="save-figs.html#cb205-7" tabindex="-1"></a><span class="co">#&gt; Saving 14 x 10 in image</span></span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="save-figs.html#cb200-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb200-2"><a href="save-figs.html#cb200-2" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb200-3"><a href="save-figs.html#cb200-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(</span>
+<span id="cb200-4"><a href="save-figs.html#cb200-4" tabindex="-1"></a>  <span class="at">x =</span> year,</span>
+<span id="cb200-5"><a href="save-figs.html#cb200-5" tabindex="-1"></a>  <span class="at">y =</span> lifeExp</span>
+<span id="cb200-6"><a href="save-figs.html#cb200-6" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb200-7"><a href="save-figs.html#cb200-7" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="save-figs.html#cb201-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;scale = 0.6&quot;</span>)</span>
+<span id="cb201-2"><a href="save-figs.html#cb201-2" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;scale = 2&quot;</span>)</span>
+<span id="cb201-3"><a href="save-figs.html#cb201-3" tabindex="-1"></a></span>
+<span id="cb201-4"><a href="save-figs.html#cb201-4" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-scale-0.6.png&quot;</span>, p1, <span class="at">scale =</span> <span class="fl">0.6</span>)</span>
+<span id="cb201-5"><a href="save-figs.html#cb201-5" tabindex="-1"></a><span class="co">#&gt; Saving 4.2 x 3 in image</span></span>
+<span id="cb201-6"><a href="save-figs.html#cb201-6" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-scale-2.png&quot;</span>, p2, <span class="at">scale =</span> <span class="dv">2</span>)</span>
+<span id="cb201-7"><a href="save-figs.html#cb201-7" tabindex="-1"></a><span class="co">#&gt; Saving 14 x 10 in image</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:exaggerated-scale"></span>
 <img src="img/figures-io-p1.png" alt="Two versions of a figure with exaggerated values of `scale`" width="50%" /><img src="img/figures-io-p2.png" alt="Two versions of a figure with exaggerated values of `scale`" width="50%" />
 <p class="caption">
@@ -1616,13 +1616,13 @@ Figure 42.1: Two versions of a figure with exaggerated values of <code>scale</co
 </p>
 </div>
 <p><strong>Via the <code>base_size</code> of the active theme</strong>: The <code>base_size</code> of the <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html#arguments">theme</a> refers to the base font size. This is NOT a theme element that can be modified via <code>ggplot(...) + theme(...)</code>. Rather, it’s an argument to various functions that set theme elements. Therefore, to get the desired effect you need to create a complete theme, specifying the desired <code>base_size</code>. By setting <code>base size &lt; 12</code>, the default value, you shrink text elements and by setting <code>base_size &gt; 12</code>, you make them larger. Figure <a href="save-figs.html#fig:exaggerated-base-size">42.2</a> shows two versions of a figure, with exaggerated values of <code>base_size</code>, to illustrate its effect.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="save-figs.html#cb206-1" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;base_size = 20&quot;</span>) <span class="sc">+</span> <span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span>
-<span id="cb206-2"><a href="save-figs.html#cb206-2" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;base_size = 3&quot;</span>) <span class="sc">+</span> <span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">3</span>)</span>
-<span id="cb206-3"><a href="save-figs.html#cb206-3" tabindex="-1"></a></span>
-<span id="cb206-4"><a href="save-figs.html#cb206-4" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-base-size-20.png&quot;</span>, p3)</span>
-<span id="cb206-5"><a href="save-figs.html#cb206-5" tabindex="-1"></a><span class="co">#&gt; Saving 7 x 5 in image</span></span>
-<span id="cb206-6"><a href="save-figs.html#cb206-6" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-base-size-3.png&quot;</span>, p4)</span>
-<span id="cb206-7"><a href="save-figs.html#cb206-7" tabindex="-1"></a><span class="co">#&gt; Saving 7 x 5 in image</span></span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="save-figs.html#cb202-1" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;base_size = 20&quot;</span>) <span class="sc">+</span> <span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span>
+<span id="cb202-2"><a href="save-figs.html#cb202-2" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;base_size = 3&quot;</span>) <span class="sc">+</span> <span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">3</span>)</span>
+<span id="cb202-3"><a href="save-figs.html#cb202-3" tabindex="-1"></a></span>
+<span id="cb202-4"><a href="save-figs.html#cb202-4" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-base-size-20.png&quot;</span>, p3)</span>
+<span id="cb202-5"><a href="save-figs.html#cb202-5" tabindex="-1"></a><span class="co">#&gt; Saving 7 x 5 in image</span></span>
+<span id="cb202-6"><a href="save-figs.html#cb202-6" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;img/fig-io-practice-base-size-3.png&quot;</span>, p4)</span>
+<span id="cb202-7"><a href="save-figs.html#cb202-7" tabindex="-1"></a><span class="co">#&gt; Saving 7 x 5 in image</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:exaggerated-base-size"></span>
 <img src="img/figures-io-p3.png" alt="Two versions of a figure with exaggerated values of `base_size`" width="50%" /><img src="img/figures-io-p4.png" alt="Two versions of a figure with exaggerated values of `base_size`" width="50%" />
 <p class="caption">
@@ -1636,25 +1636,25 @@ Figure 42.2: Two versions of a figure with exaggerated values of <code>base_size
 <h2><span class="header-section-number">42.5</span> Write non-ggplot2 figures to file<a href="save-figs.html#write-non-ggplot2-figures-to-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall that <code>ggsave()</code> is recommended if you’re using ggplot2. But if you’re using base graphics or lattice, here’s generic advice for writing figures to file. To be clear, this <em>also</em> works for ggplot2 graphs, but I can’t think of any good reasons to NOT use <code>ggsave()</code>.</p>
 <p>Edit your source code in the following way: precede the figure-making code by opening a graphics device and follow it with a command that closes the device. Here’s an example:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="save-figs.html#cb207-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;test-fig-proper.pdf&quot;</span>) <span class="co"># starts writing a PDF to file</span></span>
-<span id="cb207-2"><a href="save-figs.html#cb207-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="co"># makes the actual plot</span></span>
-<span id="cb207-3"><a href="save-figs.html#cb207-3" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co"># closes the PDF file</span></span>
-<span id="cb207-4"><a href="save-figs.html#cb207-4" tabindex="-1"></a><span class="co">#&gt; png </span></span>
-<span id="cb207-5"><a href="save-figs.html#cb207-5" tabindex="-1"></a><span class="co">#&gt;   2</span></span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="save-figs.html#cb203-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;test-fig-proper.pdf&quot;</span>) <span class="co"># starts writing a PDF to file</span></span>
+<span id="cb203-2"><a href="save-figs.html#cb203-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="co"># makes the actual plot</span></span>
+<span id="cb203-3"><a href="save-figs.html#cb203-3" tabindex="-1"></a><span class="fu">dev.off</span>() <span class="co"># closes the PDF file</span></span>
+<span id="cb203-4"><a href="save-figs.html#cb203-4" tabindex="-1"></a><span class="co">#&gt; png </span></span>
+<span id="cb203-5"><a href="save-figs.html#cb203-5" tabindex="-1"></a><span class="co">#&gt;   2</span></span></code></pre></div>
 <p>You will see that there’s a new file in the working directory:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="save-figs.html#cb208-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;^test-fig*&quot;</span>)</span>
-<span id="cb208-2"><a href="save-figs.html#cb208-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;test-fig-proper.pdf&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="save-figs.html#cb204-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;^test-fig*&quot;</span>)</span>
+<span id="cb204-2"><a href="save-figs.html#cb204-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;test-fig-proper.pdf&quot;</span></span></code></pre></div>
 <p>If you run this code interactively, don’t be surprised when you don’t see the figure appear in your screen device. While you’re sending graphics output to, e.g. the <code>pdf()</code> device, you’ll be “flying blind”, which is why it’s important to work out the graphics commands in advance. This is like using <code>sink()</code>, which diverts the output you’d normally see in R Console.</p>
 <p>Read the <a href="https://rdrr.io/r/grDevices/Devices.html">R help for <code>Devices</code></a> to learn about graphics devices in general and which are available on your system (<em>obviously requires that you read your local help</em>). If you need control over, e.g., width, height, or dpi, roll up your sleeves and use the arguments to the graphics device function you are using. There are many.</p>
 <p>If you are staring at a plot you just made on your screen, here’s a handy short cut for writing a figure to file:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="save-figs.html#cb209-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="co"># makes the actual plot</span></span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="save-figs.html#cb205-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="co"># makes the actual plot</span></span></code></pre></div>
 <p><img src="0503_secrets_happy_graphics_files/figure-html/dev-print-demo-1.png" width="672" /></p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="save-figs.html#cb210-1" tabindex="-1"></a><span class="fu">dev.print</span>(pdf, <span class="st">&quot;test-fig-quick-dirty.pdf&quot;</span>) <span class="co"># copies the plot to a the PDF file</span></span>
-<span id="cb210-2"><a href="save-figs.html#cb210-2" tabindex="-1"></a><span class="co">#&gt; png </span></span>
-<span id="cb210-3"><a href="save-figs.html#cb210-3" tabindex="-1"></a><span class="co">#&gt;   2</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="save-figs.html#cb206-1" tabindex="-1"></a><span class="fu">dev.print</span>(pdf, <span class="st">&quot;test-fig-quick-dirty.pdf&quot;</span>) <span class="co"># copies the plot to a the PDF file</span></span>
+<span id="cb206-2"><a href="save-figs.html#cb206-2" tabindex="-1"></a><span class="co">#&gt; png </span></span>
+<span id="cb206-3"><a href="save-figs.html#cb206-3" tabindex="-1"></a><span class="co">#&gt;   2</span></span></code></pre></div>
 <p>You will see there’s now another new file in the working directory:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="save-figs.html#cb211-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;^test-fig*&quot;</span>)</span>
-<span id="cb211-2"><a href="save-figs.html#cb211-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;test-fig-proper.pdf&quot;      &quot;test-fig-quick-dirty.pdf&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="save-figs.html#cb207-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;^test-fig*&quot;</span>)</span>
+<span id="cb207-2"><a href="save-figs.html#cb207-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;test-fig-proper.pdf&quot;      &quot;test-fig-quick-dirty.pdf&quot;</span></span></code></pre></div>
 <p>The appeal of this method is that you will literally copy the figure in front of your eyeballs to file, which is pleasingly immediate. There’s also less code to repeatedly (de-)comment as you run and re-run the script during development.</p>
 <p>Why is this method improper? Various aspects of a figure – such as font size – are determined by the target graphics device and its physical size. Therefore, it is best practice to open your desired graphics device explicitly, using any necessary arguments to control height, width, fonts, etc. Make your plot. And close the device. But for lots of everyday plots the <code>dev.print()</code> method works just fine.</p>
 <p>If you call up the help file for [<code>dev.off()</code>, <code>dev.print()</code>, and friends][rdocs-dev], you can learn about many other functions for controlling graphics devices.</p>
@@ -1673,27 +1673,27 @@ Figure 42.2: Two versions of a figure with exaggerated values of <code>base_size
 <table>
 <tr>
 <td valign="top">
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="save-figs.html#cb212-1" tabindex="-1"></a><span class="do">## implicit print --&gt; no PNG</span></span>
-<span id="cb212-2"><a href="save-figs.html#cb212-2" tabindex="-1"></a>f_despair <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb212-3"><a href="save-figs.html#cb212-3" tabindex="-1"></a>  <span class="fu">png</span>(<span class="st">&quot;test-fig-despair.png&quot;</span>)</span>
-<span id="cb212-4"><a href="save-figs.html#cb212-4" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
-<span id="cb212-5"><a href="save-figs.html#cb212-5" tabindex="-1"></a>     <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
-<span id="cb212-6"><a href="save-figs.html#cb212-6" tabindex="-1"></a>  p <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span>
-<span id="cb212-7"><a href="save-figs.html#cb212-7" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
-<span id="cb212-8"><a href="save-figs.html#cb212-8" tabindex="-1"></a>}</span>
-<span id="cb212-9"><a href="save-figs.html#cb212-9" tabindex="-1"></a><span class="fu">f_despair</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="save-figs.html#cb208-1" tabindex="-1"></a><span class="do">## implicit print --&gt; no PNG</span></span>
+<span id="cb208-2"><a href="save-figs.html#cb208-2" tabindex="-1"></a>f_despair <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb208-3"><a href="save-figs.html#cb208-3" tabindex="-1"></a>  <span class="fu">png</span>(<span class="st">&quot;test-fig-despair.png&quot;</span>)</span>
+<span id="cb208-4"><a href="save-figs.html#cb208-4" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
+<span id="cb208-5"><a href="save-figs.html#cb208-5" tabindex="-1"></a>     <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
+<span id="cb208-6"><a href="save-figs.html#cb208-6" tabindex="-1"></a>  p <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span>
+<span id="cb208-7"><a href="save-figs.html#cb208-7" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="cb208-8"><a href="save-figs.html#cb208-8" tabindex="-1"></a>}</span>
+<span id="cb208-9"><a href="save-figs.html#cb208-9" tabindex="-1"></a><span class="fu">f_despair</span>()</span></code></pre></div>
 </td>
 <td valign="top">
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="save-figs.html#cb213-1" tabindex="-1"></a><span class="do">## explicit print --&gt; good PNG</span></span>
-<span id="cb213-2"><a href="save-figs.html#cb213-2" tabindex="-1"></a>f_joy <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb213-3"><a href="save-figs.html#cb213-3" tabindex="-1"></a>  <span class="fu">png</span>(<span class="st">&quot;test-fig-joy.png&quot;</span>)</span>
-<span id="cb213-4"><a href="save-figs.html#cb213-4" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
-<span id="cb213-5"><a href="save-figs.html#cb213-5" tabindex="-1"></a>     <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
-<span id="cb213-6"><a href="save-figs.html#cb213-6" tabindex="-1"></a>  p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span>
-<span id="cb213-7"><a href="save-figs.html#cb213-7" tabindex="-1"></a>  <span class="fu">print</span>(p) <span class="do">## &lt;-- VERY IMPORTANT!!!</span></span>
-<span id="cb213-8"><a href="save-figs.html#cb213-8" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
-<span id="cb213-9"><a href="save-figs.html#cb213-9" tabindex="-1"></a>}</span>
-<span id="cb213-10"><a href="save-figs.html#cb213-10" tabindex="-1"></a><span class="fu">f_joy</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="save-figs.html#cb209-1" tabindex="-1"></a><span class="do">## explicit print --&gt; good PNG</span></span>
+<span id="cb209-2"><a href="save-figs.html#cb209-2" tabindex="-1"></a>f_joy <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb209-3"><a href="save-figs.html#cb209-3" tabindex="-1"></a>  <span class="fu">png</span>(<span class="st">&quot;test-fig-joy.png&quot;</span>)</span>
+<span id="cb209-4"><a href="save-figs.html#cb209-4" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder,</span>
+<span id="cb209-5"><a href="save-figs.html#cb209-5" tabindex="-1"></a>     <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp))</span>
+<span id="cb209-6"><a href="save-figs.html#cb209-6" tabindex="-1"></a>  p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span>
+<span id="cb209-7"><a href="save-figs.html#cb209-7" tabindex="-1"></a>  <span class="fu">print</span>(p) <span class="do">## &lt;-- VERY IMPORTANT!!!</span></span>
+<span id="cb209-8"><a href="save-figs.html#cb209-8" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="cb209-9"><a href="save-figs.html#cb209-9" tabindex="-1"></a>}</span>
+<span id="cb209-10"><a href="save-figs.html#cb209-10" tabindex="-1"></a><span class="fu">f_joy</span>()</span></code></pre></div>
 </td>
 </tr>
 </table>
@@ -1727,16 +1727,16 @@ p &lt;- ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_jitter()
 p
 ```</code></pre>
 <p>And it will lead to the creation of a suitably named figure file (you may see other figures produced in the document as well):</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="save-figs.html#cb215-1" tabindex="-1"></a>book_figs <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">path</span>(<span class="st">&quot;_bookdown_files&quot;</span>, <span class="st">&quot;stat545_files&quot;</span>, <span class="st">&quot;figure-html&quot;</span>)</span>
-<span id="cb215-2"><a href="save-figs.html#cb215-2" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(book_figs, <span class="at">regexp =</span> <span class="st">&quot;scatterplot-lifeExp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="save-figs.html#cb211-1" tabindex="-1"></a>book_figs <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">path</span>(<span class="st">&quot;_bookdown_files&quot;</span>, <span class="st">&quot;stat545_files&quot;</span>, <span class="st">&quot;figure-html&quot;</span>)</span>
+<span id="cb211-2"><a href="save-figs.html#cb211-2" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(book_figs, <span class="at">regexp =</span> <span class="st">&quot;scatterplot-lifeExp&quot;</span>)</span></code></pre></div>
 <p>If you have concrete plans to use a figure elsewhere, you should probably write it to file using an explicit method described above. But the chunk-naming trick is a nice way to avoid that work, while maintaining flexibility for the future.</p>
 </div>
 <div id="clean-up-1" class="section level2 hasAnchor" number="42.8">
 <h2><span class="header-section-number">42.8</span> Clean up<a href="save-figs.html#clean-up-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s delete the temp files we’ve created.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="save-figs.html#cb216-1" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
-<span id="cb216-2"><a href="save-figs.html#cb216-2" tabindex="-1"></a><span class="fu">file_delete</span>(<span class="fu">dir_ls</span>(<span class="fu">path</span>(<span class="st">&quot;img&quot;</span>), <span class="at">regexp =</span> <span class="st">&quot;fig-io-practice&quot;</span>))</span>
-<span id="cb216-3"><a href="save-figs.html#cb216-3" tabindex="-1"></a><span class="fu">file_delete</span>(<span class="fu">dir_ls</span>(<span class="st">&quot;.&quot;</span>, <span class="at">regexp =</span> <span class="st">&quot;test-fig&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="save-figs.html#cb212-1" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
+<span id="cb212-2"><a href="save-figs.html#cb212-2" tabindex="-1"></a><span class="fu">file_delete</span>(<span class="fu">dir_ls</span>(<span class="fu">path</span>(<span class="st">&quot;img&quot;</span>), <span class="at">regexp =</span> <span class="st">&quot;fig-io-practice&quot;</span>))</span>
+<span id="cb212-3"><a href="save-figs.html#cb212-3" tabindex="-1"></a><span class="fu">file_delete</span>(<span class="fu">dir_ls</span>(<span class="st">&quot;.&quot;</span>, <span class="at">regexp =</span> <span class="st">&quot;test-fig&quot;</span>))</span></code></pre></div>
 
 </div>
 </div>

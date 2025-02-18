@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-02-17" />
+<meta name="date" content="2025-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1535,7 +1535,7 @@ div.csl-indent {
 <p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d32_llmapplications/d32_llmapplications.html">here</a> if they do not appear below.</p>
 <div class="vembedr" align="center">
 <div>
-<iframe src="https://www.youtube.com/embed/L2Bv3J96KE4" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+<iframe src="https://www.youtube.com/embed/TeFiIjMIlRw" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
 </div>
 </div>
 <iframe src="https://datascience4psych.github.io/slides/d32_llmapplications/d32_llmapplications.html" width="672" height="400px" data-external="1">
@@ -1544,142 +1544,141 @@ div.csl-indent {
 <h2><span class="header-section-number">91.1</span> Use Cases in Data Science<a href="lecture-applications-of-large-language-models-in-data-science.html#use-cases-in-data-science" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="r-example-text-classification-sentiment-analysis" class="section level3 hasAnchor" number="91.1.1">
 <h3><span class="header-section-number">91.1.1</span> R Example: Text Classification (Sentiment Analysis)<a href="lecture-applications-of-large-language-models-in-data-science.html#r-example-text-classification-sentiment-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb555-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-2" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;tidytext&#39; was built under R version 4.4.2</span></span>
-<span id="cb555-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb555-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb555-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-5" tabindex="-1"></a></span>
-<span id="cb555-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-6" tabindex="-1"></a><span class="co"># Sample text data</span></span>
-<span id="cb555-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-7" tabindex="-1"></a>texts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb555-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-8" tabindex="-1"></a>  <span class="st">&quot;I love this product! It&#39;s amazing.&quot;</span>,</span>
-<span id="cb555-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-9" tabindex="-1"></a>  <span class="st">&quot;This is terrible. I hate it.&quot;</span>,</span>
-<span id="cb555-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-10" tabindex="-1"></a>  <span class="st">&quot;It&#39;s okay, nothing special.&quot;</span>,</span>
-<span id="cb555-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-11" tabindex="-1"></a>  <span class="st">&quot;Wow, absolutely fantastic experience!&quot;</span>,</span>
-<span id="cb555-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-12" tabindex="-1"></a>  <span class="st">&quot;Disappointed with the quality.&quot;</span></span>
-<span id="cb555-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-13" tabindex="-1"></a>)</span>
-<span id="cb555-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-14" tabindex="-1"></a></span>
-<span id="cb555-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-15" tabindex="-1"></a><span class="co"># Create a tibble</span></span>
-<span id="cb555-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-16" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> texts)</span>
-<span id="cb555-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-17" tabindex="-1"></a></span>
-<span id="cb555-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-18" tabindex="-1"></a></span>
-<span id="cb555-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-19" tabindex="-1"></a><span class="co"># show the data</span></span>
-<span id="cb555-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-20" tabindex="-1"></a></span>
-<span id="cb555-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-21" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb555-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-22" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
-<span id="cb555-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-23" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>))</span>
-<span id="cb555-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-24" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span>
-<span id="cb555-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-25" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 2</span></span>
-<span id="cb555-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-26" tabindex="-1"></a><span class="co">#&gt;   word         sentiment</span></span>
-<span id="cb555-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-27" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;    </span></span>
-<span id="cb555-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-28" tabindex="-1"></a><span class="co">#&gt; 1 love         positive </span></span>
-<span id="cb555-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-29" tabindex="-1"></a><span class="co">#&gt; 2 amazing      positive </span></span>
-<span id="cb555-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-30" tabindex="-1"></a><span class="co">#&gt; 3 terrible     negative </span></span>
-<span id="cb555-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-31" tabindex="-1"></a><span class="co">#&gt; 4 hate         negative </span></span>
-<span id="cb555-32"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-32" tabindex="-1"></a><span class="co">#&gt; 5 wow          positive </span></span>
-<span id="cb555-33"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-33" tabindex="-1"></a><span class="co">#&gt; 6 fantastic    positive </span></span>
-<span id="cb555-34"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-34" tabindex="-1"></a><span class="co">#&gt; 7 disappointed negative</span></span>
-<span id="cb555-35"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-35" tabindex="-1"></a></span>
-<span id="cb555-36"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-36" tabindex="-1"></a><span class="do">## Tokenize and Perform Sentiment Analysis</span></span>
-<span id="cb555-37"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-37" tabindex="-1"></a>sentiment_scores <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb555-38"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-38" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
-<span id="cb555-39"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-39" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb555-40"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-40" tabindex="-1"></a>  <span class="fu">count</span>(sentiment) <span class="sc">%&gt;%</span></span>
-<span id="cb555-41"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-41" tabindex="-1"></a>  <span class="fu">spread</span>(sentiment, n, <span class="at">fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb555-42"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-42" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sentiment_score =</span> positive <span class="sc">-</span> negative)</span>
-<span id="cb555-43"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-43" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span>
-<span id="cb555-44"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-44" tabindex="-1"></a></span>
-<span id="cb555-45"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-45" tabindex="-1"></a>sentiment_scores</span>
-<span id="cb555-46"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-46" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
-<span id="cb555-47"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-47" tabindex="-1"></a><span class="co">#&gt;   negative positive sentiment_score</span></span>
-<span id="cb555-48"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-48" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span id="cb555-49"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-49" tabindex="-1"></a><span class="co">#&gt; 1        3        4               1</span></span>
-<span id="cb555-50"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-50" tabindex="-1"></a></span>
-<span id="cb555-51"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-51" tabindex="-1"></a><span class="do">## Visualize Sentiment Analysis Results</span></span>
-<span id="cb555-52"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-52" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb555-53"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-53" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
-<span id="cb555-54"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-54" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb555-55"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-55" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sentiment)) <span class="sc">+</span></span>
-<span id="cb555-56"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-56" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
-<span id="cb555-57"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-57" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb555-58"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-58" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Overall Vibes&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span>
-<span id="cb555-59"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb555-59" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb541-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb541-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb541-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-4" tabindex="-1"></a></span>
+<span id="cb541-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-5" tabindex="-1"></a><span class="co"># Sample text data</span></span>
+<span id="cb541-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-6" tabindex="-1"></a>texts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb541-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-7" tabindex="-1"></a>  <span class="st">&quot;I love this product! It&#39;s amazing.&quot;</span>,</span>
+<span id="cb541-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-8" tabindex="-1"></a>  <span class="st">&quot;This is terrible. I hate it.&quot;</span>,</span>
+<span id="cb541-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-9" tabindex="-1"></a>  <span class="st">&quot;It&#39;s okay, nothing special.&quot;</span>,</span>
+<span id="cb541-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-10" tabindex="-1"></a>  <span class="st">&quot;Wow, absolutely fantastic experience!&quot;</span>,</span>
+<span id="cb541-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-11" tabindex="-1"></a>  <span class="st">&quot;Disappointed with the quality.&quot;</span></span>
+<span id="cb541-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-12" tabindex="-1"></a>)</span>
+<span id="cb541-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-13" tabindex="-1"></a></span>
+<span id="cb541-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-14" tabindex="-1"></a><span class="co"># Create a tibble</span></span>
+<span id="cb541-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-15" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> texts)</span>
+<span id="cb541-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-16" tabindex="-1"></a></span>
+<span id="cb541-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-17" tabindex="-1"></a></span>
+<span id="cb541-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-18" tabindex="-1"></a><span class="co"># show the data</span></span>
+<span id="cb541-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-19" tabindex="-1"></a></span>
+<span id="cb541-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-20" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb541-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-21" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
+<span id="cb541-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-22" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>))</span>
+<span id="cb541-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-23" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span>
+<span id="cb541-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-24" tabindex="-1"></a><span class="co">#&gt; # A tibble: 7 × 2</span></span>
+<span id="cb541-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-25" tabindex="-1"></a><span class="co">#&gt;   word         sentiment</span></span>
+<span id="cb541-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-26" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;    </span></span>
+<span id="cb541-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-27" tabindex="-1"></a><span class="co">#&gt; 1 love         positive </span></span>
+<span id="cb541-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-28" tabindex="-1"></a><span class="co">#&gt; 2 amazing      positive </span></span>
+<span id="cb541-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-29" tabindex="-1"></a><span class="co">#&gt; 3 terrible     negative </span></span>
+<span id="cb541-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-30" tabindex="-1"></a><span class="co">#&gt; 4 hate         negative </span></span>
+<span id="cb541-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-31" tabindex="-1"></a><span class="co">#&gt; 5 wow          positive </span></span>
+<span id="cb541-32"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-32" tabindex="-1"></a><span class="co">#&gt; 6 fantastic    positive </span></span>
+<span id="cb541-33"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-33" tabindex="-1"></a><span class="co">#&gt; 7 disappointed negative</span></span>
+<span id="cb541-34"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-34" tabindex="-1"></a></span>
+<span id="cb541-35"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-35" tabindex="-1"></a><span class="do">## Tokenize and Perform Sentiment Analysis</span></span>
+<span id="cb541-36"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-36" tabindex="-1"></a>sentiment_scores <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb541-37"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-37" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
+<span id="cb541-38"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-38" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb541-39"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-39" tabindex="-1"></a>  <span class="fu">count</span>(sentiment) <span class="sc">%&gt;%</span></span>
+<span id="cb541-40"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-40" tabindex="-1"></a>  <span class="fu">spread</span>(sentiment, n, <span class="at">fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb541-41"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-41" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sentiment_score =</span> positive <span class="sc">-</span> negative)</span>
+<span id="cb541-42"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-42" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span>
+<span id="cb541-43"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-43" tabindex="-1"></a></span>
+<span id="cb541-44"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-44" tabindex="-1"></a>sentiment_scores</span>
+<span id="cb541-45"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-45" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span id="cb541-46"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-46" tabindex="-1"></a><span class="co">#&gt;   negative positive sentiment_score</span></span>
+<span id="cb541-47"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-47" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span id="cb541-48"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-48" tabindex="-1"></a><span class="co">#&gt; 1        3        4               1</span></span>
+<span id="cb541-49"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-49" tabindex="-1"></a></span>
+<span id="cb541-50"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-50" tabindex="-1"></a><span class="do">## Visualize Sentiment Analysis Results</span></span>
+<span id="cb541-51"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-51" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb541-52"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-52" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
+<span id="cb541-53"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-53" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb541-54"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-54" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sentiment)) <span class="sc">+</span></span>
+<span id="cb541-55"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-55" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb541-56"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-56" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb541-57"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-57" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Overall Vibes&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span>
+<span id="cb541-58"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb541-58" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(word)`</span></span></code></pre></div>
 <p><img src="1403_llmcases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="text-generation-simple-markov-chain" class="section level3 hasAnchor" number="91.1.2">
 <h3><span class="header-section-number">91.1.2</span> Text Generation (Simple Markov Chain)<a href="lecture-applications-of-large-language-models-in-data-science.html#text-generation-simple-markov-chain" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb556-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb556-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-3" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb556-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-4" tabindex="-1"></a></span>
-<span id="cb556-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-5" tabindex="-1"></a><span class="co"># Sample text</span></span>
-<span id="cb556-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-6" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="st">&quot;The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly.&quot;</span></span>
-<span id="cb556-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-7" tabindex="-1"></a></span>
-<span id="cb556-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-8" tabindex="-1"></a><span class="co"># Tokenize and create word pairs</span></span>
-<span id="cb556-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-9" tabindex="-1"></a>word_pairs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> text) <span class="sc">%&gt;%</span></span>
-<span id="cb556-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-10" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
-<span id="cb556-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">next_word =</span> <span class="fu">lead</span>(word)) <span class="sc">%&gt;%</span></span>
-<span id="cb556-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-12" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb556-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-13" tabindex="-1"></a></span>
-<span id="cb556-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-14" tabindex="-1"></a><span class="co"># Create a simple Markov chain</span></span>
-<span id="cb556-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-15" tabindex="-1"></a>markov_chain <span class="ot">&lt;-</span> word_pairs <span class="sc">%&gt;%</span></span>
-<span id="cb556-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-16" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
-<span id="cb556-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">next_words =</span> <span class="fu">list</span>(next_word))</span>
-<span id="cb556-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-18" tabindex="-1"></a></span>
-<span id="cb556-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-19" tabindex="-1"></a><span class="co"># Generate text</span></span>
-<span id="cb556-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-20" tabindex="-1"></a>generate_text <span class="ot">&lt;-</span> <span class="cf">function</span>(start_word, <span class="at">length =</span> <span class="dv">10</span>) {</span>
-<span id="cb556-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-21" tabindex="-1"></a>  result <span class="ot">&lt;-</span> start_word</span>
-<span id="cb556-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-22" tabindex="-1"></a>  current_word <span class="ot">&lt;-</span> start_word</span>
-<span id="cb556-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-23" tabindex="-1"></a>  </span>
-<span id="cb556-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-24" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>length) {</span>
-<span id="cb556-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-25" tabindex="-1"></a>    next_word_options <span class="ot">&lt;-</span> markov_chain <span class="sc">%&gt;%</span></span>
-<span id="cb556-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-26" tabindex="-1"></a>      <span class="fu">filter</span>(word <span class="sc">==</span> current_word) <span class="sc">%&gt;%</span></span>
-<span id="cb556-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-27" tabindex="-1"></a>      <span class="fu">pull</span>(next_words) <span class="sc">%&gt;%</span></span>
-<span id="cb556-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-28" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
-<span id="cb556-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-29" tabindex="-1"></a>    </span>
-<span id="cb556-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-30" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(next_word_options) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">break</span></span>
-<span id="cb556-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-31" tabindex="-1"></a>    </span>
-<span id="cb556-32"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-32" tabindex="-1"></a>    next_word <span class="ot">&lt;-</span> <span class="fu">sample</span>(next_word_options, <span class="dv">1</span>)</span>
-<span id="cb556-33"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-33" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">c</span>(result, next_word)</span>
-<span id="cb556-34"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-34" tabindex="-1"></a>    current_word <span class="ot">&lt;-</span> next_word</span>
-<span id="cb556-35"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-35" tabindex="-1"></a>  }</span>
-<span id="cb556-36"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-36" tabindex="-1"></a>  </span>
-<span id="cb556-37"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-37" tabindex="-1"></a>  <span class="fu">str_c</span>(result, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb556-38"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-38" tabindex="-1"></a>}</span>
-<span id="cb556-39"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-39" tabindex="-1"></a></span>
-<span id="cb556-40"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-40" tabindex="-1"></a><span class="co"># Generate a sentence</span></span>
-<span id="cb556-41"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-41" tabindex="-1"></a><span class="fu">generate_text</span>(<span class="st">&quot;the&quot;</span>)</span>
-<span id="cb556-42"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb556-42" tabindex="-1"></a><span class="co">#&gt; [1] &quot;the quick brown fox runs away quickly&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb557-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb557-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-3" tabindex="-1"></a></span>
-<span id="cb557-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-4" tabindex="-1"></a>context <span class="ot">&lt;-</span> <span class="st">&quot;The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. </span></span>
-<span id="cb557-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-5" tabindex="-1"></a><span class="st">It is named after the engineer Gustave Eiffel, whose company designed and built the Tower.&quot;</span></span>
-<span id="cb557-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-6" tabindex="-1"></a></span>
-<span id="cb557-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-7" tabindex="-1"></a>question <span class="ot">&lt;-</span> <span class="st">&quot;Who designed the Eiffel Tower?&quot;</span></span>
-<span id="cb557-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-8" tabindex="-1"></a></span>
-<span id="cb557-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-9" tabindex="-1"></a><span class="co"># Tokenize context and question</span></span>
-<span id="cb557-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-10" tabindex="-1"></a>context_tokens <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> context) <span class="sc">%&gt;%</span></span>
-<span id="cb557-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-11" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
-<span id="cb557-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-12" tabindex="-1"></a></span>
-<span id="cb557-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-13" tabindex="-1"></a>question_tokens <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> question) <span class="sc">%&gt;%</span></span>
-<span id="cb557-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-14" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
-<span id="cb557-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-15" tabindex="-1"></a></span>
-<span id="cb557-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-16" tabindex="-1"></a><span class="co"># Simple word overlap for demonstration</span></span>
-<span id="cb557-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-17" tabindex="-1"></a>matching_words <span class="ot">&lt;-</span> <span class="fu">intersect</span>(context_tokens<span class="sc">$</span>word, question_tokens<span class="sc">$</span>word)</span>
-<span id="cb557-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-18" tabindex="-1"></a></span>
-<span id="cb557-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-19" tabindex="-1"></a><span class="co"># Find sentence with most matching words</span></span>
-<span id="cb557-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-20" tabindex="-1"></a>sentences <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> context) <span class="sc">%&gt;%</span></span>
-<span id="cb557-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-21" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(sentence, text, <span class="at">token =</span> <span class="st">&quot;sentences&quot;</span>)</span>
-<span id="cb557-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-22" tabindex="-1"></a></span>
-<span id="cb557-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-23" tabindex="-1"></a>best_sentence <span class="ot">&lt;-</span> sentences <span class="sc">%&gt;%</span></span>
-<span id="cb557-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-24" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">matches =</span> <span class="fu">sapply</span>(sentence, <span class="cf">function</span>(s) {</span>
-<span id="cb557-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-25" tabindex="-1"></a>    <span class="fu">sum</span>(matching_words <span class="sc">%in%</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(s, <span class="st">&quot; &quot;</span>)))</span>
-<span id="cb557-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-26" tabindex="-1"></a>  })) <span class="sc">%&gt;%</span></span>
-<span id="cb557-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-27" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(matches)) <span class="sc">%&gt;%</span></span>
-<span id="cb557-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-28" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span>
-<span id="cb557-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-29" tabindex="-1"></a></span>
-<span id="cb557-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-30" tabindex="-1"></a><span class="fu">print</span>(best_sentence<span class="sc">$</span>sentence)</span>
-<span id="cb557-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb557-31" tabindex="-1"></a><span class="co">#&gt; [1] &quot;the eiffel tower is a wrought-iron lattice tower on the champ de mars in paris, france.&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb542-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb542-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-3" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb542-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-4" tabindex="-1"></a></span>
+<span id="cb542-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-5" tabindex="-1"></a><span class="co"># Sample text</span></span>
+<span id="cb542-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-6" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="st">&quot;The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly.&quot;</span></span>
+<span id="cb542-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-7" tabindex="-1"></a></span>
+<span id="cb542-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-8" tabindex="-1"></a><span class="co"># Tokenize and create word pairs</span></span>
+<span id="cb542-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-9" tabindex="-1"></a>word_pairs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> text) <span class="sc">%&gt;%</span></span>
+<span id="cb542-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-10" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">%&gt;%</span></span>
+<span id="cb542-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">next_word =</span> <span class="fu">lead</span>(word)) <span class="sc">%&gt;%</span></span>
+<span id="cb542-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-12" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb542-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-13" tabindex="-1"></a></span>
+<span id="cb542-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-14" tabindex="-1"></a><span class="co"># Create a simple Markov chain</span></span>
+<span id="cb542-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-15" tabindex="-1"></a>markov_chain <span class="ot">&lt;-</span> word_pairs <span class="sc">%&gt;%</span></span>
+<span id="cb542-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-16" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb542-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">next_words =</span> <span class="fu">list</span>(next_word))</span>
+<span id="cb542-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-18" tabindex="-1"></a></span>
+<span id="cb542-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-19" tabindex="-1"></a><span class="co"># Generate text</span></span>
+<span id="cb542-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-20" tabindex="-1"></a>generate_text <span class="ot">&lt;-</span> <span class="cf">function</span>(start_word, <span class="at">length =</span> <span class="dv">10</span>) {</span>
+<span id="cb542-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-21" tabindex="-1"></a>  result <span class="ot">&lt;-</span> start_word</span>
+<span id="cb542-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-22" tabindex="-1"></a>  current_word <span class="ot">&lt;-</span> start_word</span>
+<span id="cb542-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-23" tabindex="-1"></a>  </span>
+<span id="cb542-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-24" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>length) {</span>
+<span id="cb542-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-25" tabindex="-1"></a>    next_word_options <span class="ot">&lt;-</span> markov_chain <span class="sc">%&gt;%</span></span>
+<span id="cb542-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-26" tabindex="-1"></a>      <span class="fu">filter</span>(word <span class="sc">==</span> current_word) <span class="sc">%&gt;%</span></span>
+<span id="cb542-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-27" tabindex="-1"></a>      <span class="fu">pull</span>(next_words) <span class="sc">%&gt;%</span></span>
+<span id="cb542-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-28" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
+<span id="cb542-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-29" tabindex="-1"></a>    </span>
+<span id="cb542-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-30" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(next_word_options) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">break</span></span>
+<span id="cb542-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-31" tabindex="-1"></a>    </span>
+<span id="cb542-32"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-32" tabindex="-1"></a>    next_word <span class="ot">&lt;-</span> <span class="fu">sample</span>(next_word_options, <span class="dv">1</span>)</span>
+<span id="cb542-33"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-33" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">c</span>(result, next_word)</span>
+<span id="cb542-34"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-34" tabindex="-1"></a>    current_word <span class="ot">&lt;-</span> next_word</span>
+<span id="cb542-35"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-35" tabindex="-1"></a>  }</span>
+<span id="cb542-36"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-36" tabindex="-1"></a>  </span>
+<span id="cb542-37"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-37" tabindex="-1"></a>  <span class="fu">str_c</span>(result, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb542-38"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-38" tabindex="-1"></a>}</span>
+<span id="cb542-39"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-39" tabindex="-1"></a></span>
+<span id="cb542-40"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-40" tabindex="-1"></a><span class="co"># Generate a sentence</span></span>
+<span id="cb542-41"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-41" tabindex="-1"></a><span class="fu">generate_text</span>(<span class="st">&quot;the&quot;</span>)</span>
+<span id="cb542-42"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb542-42" tabindex="-1"></a><span class="co">#&gt; [1] &quot;the quick brown fox jumps over the lazy dog barks at&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-1" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb543-2"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb543-3"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-3" tabindex="-1"></a></span>
+<span id="cb543-4"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-4" tabindex="-1"></a>context <span class="ot">&lt;-</span> <span class="st">&quot;The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. </span></span>
+<span id="cb543-5"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-5" tabindex="-1"></a><span class="st">It is named after the engineer Gustave Eiffel, whose company designed and built the Tower.&quot;</span></span>
+<span id="cb543-6"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-6" tabindex="-1"></a></span>
+<span id="cb543-7"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-7" tabindex="-1"></a>question <span class="ot">&lt;-</span> <span class="st">&quot;Who designed the Eiffel Tower?&quot;</span></span>
+<span id="cb543-8"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-8" tabindex="-1"></a></span>
+<span id="cb543-9"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-9" tabindex="-1"></a><span class="co"># Tokenize context and question</span></span>
+<span id="cb543-10"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-10" tabindex="-1"></a>context_tokens <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> context) <span class="sc">%&gt;%</span></span>
+<span id="cb543-11"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-11" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
+<span id="cb543-12"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-12" tabindex="-1"></a></span>
+<span id="cb543-13"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-13" tabindex="-1"></a>question_tokens <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> question) <span class="sc">%&gt;%</span></span>
+<span id="cb543-14"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-14" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
+<span id="cb543-15"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-15" tabindex="-1"></a></span>
+<span id="cb543-16"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-16" tabindex="-1"></a><span class="co"># Simple word overlap for demonstration</span></span>
+<span id="cb543-17"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-17" tabindex="-1"></a>matching_words <span class="ot">&lt;-</span> <span class="fu">intersect</span>(context_tokens<span class="sc">$</span>word, question_tokens<span class="sc">$</span>word)</span>
+<span id="cb543-18"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-18" tabindex="-1"></a></span>
+<span id="cb543-19"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-19" tabindex="-1"></a><span class="co"># Find sentence with most matching words</span></span>
+<span id="cb543-20"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-20" tabindex="-1"></a>sentences <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> context) <span class="sc">%&gt;%</span></span>
+<span id="cb543-21"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-21" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(sentence, text, <span class="at">token =</span> <span class="st">&quot;sentences&quot;</span>)</span>
+<span id="cb543-22"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-22" tabindex="-1"></a></span>
+<span id="cb543-23"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-23" tabindex="-1"></a>best_sentence <span class="ot">&lt;-</span> sentences <span class="sc">%&gt;%</span></span>
+<span id="cb543-24"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-24" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">matches =</span> <span class="fu">sapply</span>(sentence, <span class="cf">function</span>(s) {</span>
+<span id="cb543-25"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-25" tabindex="-1"></a>    <span class="fu">sum</span>(matching_words <span class="sc">%in%</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(s, <span class="st">&quot; &quot;</span>)))</span>
+<span id="cb543-26"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-26" tabindex="-1"></a>  })) <span class="sc">%&gt;%</span></span>
+<span id="cb543-27"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-27" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(matches)) <span class="sc">%&gt;%</span></span>
+<span id="cb543-28"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-28" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span>
+<span id="cb543-29"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-29" tabindex="-1"></a></span>
+<span id="cb543-30"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-30" tabindex="-1"></a><span class="fu">print</span>(best_sentence<span class="sc">$</span>sentence)</span>
+<span id="cb543-31"><a href="lecture-applications-of-large-language-models-in-data-science.html#cb543-31" tabindex="-1"></a><span class="co">#&gt; [1] &quot;the eiffel tower is a wrought-iron lattice tower on the champ de mars in paris, france.&quot;</span></span></code></pre></div>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->
 <!--AE Links-->
