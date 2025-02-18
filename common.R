@@ -9,7 +9,7 @@ library(htmlwidgets)
 ## Options for knitr chunks
 knitr::opts_chunk$set(
   comment = "#>",
-  error = TRUE,
+#  error = TRUE,
   collapse = TRUE
 # Additional options can be included as needed
 )
