@@ -38,7 +38,8 @@ cran_packages <- c(
   "manipulateWidget", "shiny", "rgl", "BGmisc", "leaflet",
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
-  "tidymodels", "pacman", "gapminder", "nycflights13"
+  "tidymodels", "pacman", "gapminder", "nycflights13",
+  "gender", "geonames", "rebird"
 )
 
 # Install CRAN packages if missing
@@ -50,7 +51,8 @@ github_packages <- c(
   "gmonette/spida2",
   "rstudio-education/dsbox",
   "crsh/citr",
-  "hadley/emo"
+  "hadley/emo",
+  "lmullen/genderdata"
 )
 
 # Install GitHub packages if missing
