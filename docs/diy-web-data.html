@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-02-13" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -816,8 +816,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="52.1" data-path="diy-web-data.html"><a href="diy-web-data.html#interacting-with-an-api"><i class="fa fa-check"></i><b>52.1</b> Interacting with an API</a>
 <ul>
-<li class="chapter" data-level="52.1.1" data-path="diy-web-data.html"><a href="diy-web-data.html#load-the-tidyverse-1"><i class="fa fa-check"></i><b>52.1.1</b> Load the tidyverse</a></li>
-<li class="chapter" data-level="52.1.2" data-path="diy-web-data.html"><a href="diy-web-data.html#examine-the-structure-of-api-requests-using-the-open-movie-database"><i class="fa fa-check"></i><b>52.1.2</b> Examine the structure of API requests using the Open Movie Database</a></li>
+<li class="chapter" data-level="52.1.1" data-path="diy-web-data.html"><a href="diy-web-data.html#loading-required-packages"><i class="fa fa-check"></i><b>52.1.1</b> Loading Required Packages</a></li>
+<li class="chapter" data-level="52.1.2" data-path="diy-web-data.html"><a href="diy-web-data.html#understanding-api-requests-with-the-open-movie-database"><i class="fa fa-check"></i><b>52.1.2</b> Understanding API Requests with the Open Movie Database</a></li>
 <li class="chapter" data-level="52.1.3" data-path="diy-web-data.html"><a href="diy-web-data.html#create-an-omdb-api-key"><i class="fa fa-check"></i><b>52.1.3</b> Create an OMDb API Key</a></li>
 <li class="chapter" data-level="52.1.4" data-path="diy-web-data.html"><a href="diy-web-data.html#recreate-the-request-url-in-r"><i class="fa fa-check"></i><b>52.1.4</b> Recreate the request URL in R</a></li>
 <li class="chapter" data-level="52.1.5" data-path="diy-web-data.html"><a href="diy-web-data.html#get-data-using-the-curl-package"><i class="fa fa-check"></i><b>52.1.5</b> Get data using the curl package</a></li>
@@ -1532,20 +1532,21 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="diy-web-data" class="section level1 hasAnchor" number="52">
 <h1><span class="header-section-number">52</span> DIY web data<a href="diy-web-data.html#diy-web-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>These notes are adapted from Jenny Bryan’s stat545 and were originally written by Andrew MacDonald.</p>
+<p>In earlier sections, we explored R packages that simplify working with web data by “wrapping” APIs—handling request creation and output formatting. But what happens behind the scenes? How do these functions actually interact with web-based data sources?</p>
+<p>This section builds on that foundation by taking a closer look at the mechanics of API requests and responses. Instead of relying on pre-built wrappers, we’ll construct API requests manually, interpret structured data formats like JSON and XML, and explore best practices for handling web-based data.</p>
+<p>By the end, you’ll have a deeper understanding of how R interacts with APIs, allowing you to retrieve, parse, and integrate online data into your analysis.</p>
+<p>These notes, adapted from Jenny Bryan’s stat545 and originally written by Andrew MacDonald, provide a hands-on guide to these concepts with practical examples.</p>
 <pre><code>No OMDb key available. Code chunks will not be evaluated.</code></pre>
-<!--Original content: https://stat545.com/webdata03_activity.html-->
-<!--Original author: Andrew MacDonald-->
 <div id="interacting-with-an-api" class="section level2 hasAnchor" number="52.1">
 <h2><span class="header-section-number">52.1</span> Interacting with an API<a href="diy-web-data.html#interacting-with-an-api" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Earlier, we experimented with several packages that “wrapped” APIs. They handle request creation and output formatting. In this section, we’re going to look at (part of) what these functions were doing.</p>
-<div id="load-the-tidyverse-1" class="section level3 hasAnchor" number="52.1.1">
-<h3><span class="header-section-number">52.1.1</span> Load the tidyverse<a href="diy-web-data.html#load-the-tidyverse-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="loading-required-packages" class="section level3 hasAnchor" number="52.1.1">
+<h3><span class="header-section-number">52.1.1</span> Loading Required Packages<a href="diy-web-data.html#loading-required-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will be using the functions from the <a href="https://www.tidyverse.org">tidyverse</a> throughout this chapter, so go ahead and load tidyverse package now.</p>
 <div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="diy-web-data.html#cb271-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
-<div id="examine-the-structure-of-api-requests-using-the-open-movie-database" class="section level3 hasAnchor" number="52.1.2">
-<h3><span class="header-section-number">52.1.2</span> Examine the structure of API requests using the Open Movie Database<a href="diy-web-data.html#examine-the-structure-of-api-requests-using-the-open-movie-database" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="understanding-api-requests-with-the-open-movie-database" class="section level3 hasAnchor" number="52.1.2">
+<h3><span class="header-section-number">52.1.2</span> Understanding API Requests with the Open Movie Database<a href="diy-web-data.html#understanding-api-requests-with-the-open-movie-database" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, we’re going to examine the structure of API requests using the <a href="http://www.omdbapi.com/">Open Movie Database</a> (OMDb). OMDb is similar to IMDb but has a simpler API. We can go to the website, input some search parameters, and obtain both the XML query and the response from it.</p>
 <!--TODO: Will frequently get an "Error: Daily request limit reached" message when using the demo. Seems to be an issue on their end: https://github.com/omdbapi/OMDb-API/issues/124 Maybe remove this exercise from the chapter to avoid problems?-->
 <p><strong>Exercise:</strong> determine the shape of an API request. Scroll down to the <a href="http://www.omdbapi.com/#examples">“Examples” section</a> on the OMDb site and play around with the parameters. Take a look at the resulting API call and the query you get back.</p>

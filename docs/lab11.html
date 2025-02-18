@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-02-13" />
+<meta name="date" content="2025-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -816,8 +816,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="52.1" data-path="diy-web-data.html"><a href="diy-web-data.html#interacting-with-an-api"><i class="fa fa-check"></i><b>52.1</b> Interacting with an API</a>
 <ul>
-<li class="chapter" data-level="52.1.1" data-path="diy-web-data.html"><a href="diy-web-data.html#load-the-tidyverse-1"><i class="fa fa-check"></i><b>52.1.1</b> Load the tidyverse</a></li>
-<li class="chapter" data-level="52.1.2" data-path="diy-web-data.html"><a href="diy-web-data.html#examine-the-structure-of-api-requests-using-the-open-movie-database"><i class="fa fa-check"></i><b>52.1.2</b> Examine the structure of API requests using the Open Movie Database</a></li>
+<li class="chapter" data-level="52.1.1" data-path="diy-web-data.html"><a href="diy-web-data.html#loading-required-packages"><i class="fa fa-check"></i><b>52.1.1</b> Loading Required Packages</a></li>
+<li class="chapter" data-level="52.1.2" data-path="diy-web-data.html"><a href="diy-web-data.html#understanding-api-requests-with-the-open-movie-database"><i class="fa fa-check"></i><b>52.1.2</b> Understanding API Requests with the Open Movie Database</a></li>
 <li class="chapter" data-level="52.1.3" data-path="diy-web-data.html"><a href="diy-web-data.html#create-an-omdb-api-key"><i class="fa fa-check"></i><b>52.1.3</b> Create an OMDb API Key</a></li>
 <li class="chapter" data-level="52.1.4" data-path="diy-web-data.html"><a href="diy-web-data.html#recreate-the-request-url-in-r"><i class="fa fa-check"></i><b>52.1.4</b> Recreate the request URL in R</a></li>
 <li class="chapter" data-level="52.1.5" data-path="diy-web-data.html"><a href="diy-web-data.html#get-data-using-the-curl-package"><i class="fa fa-check"></i><b>52.1.5</b> Get data using the curl package</a></li>
@@ -1541,10 +1541,10 @@ div.csl-indent {
 <div id="packages-11" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab11.html#packages-11" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this lab, we will work with the <strong>tidyverse</strong>, <strong>infer</strong>, and <strong>openintro</strong> packages. We can install and load them with the following code:</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="lab11.html#cb468-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="lab11.html#cb467-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## Warning: package &#39;lubridate&#39; was built under R version 4.4.2</code></pre>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="lab11.html#cb470-1" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb470-2"><a href="lab11.html#cb470-2" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="lab11.html#cb469-1" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb469-2"><a href="lab11.html#cb469-2" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
 </div>
 <div id="housekeeping-3" class="section level3 unnumbered hasAnchor">
 <h3>Housekeeping<a href="lab11.html#housekeeping-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1582,7 +1582,7 @@ div.csl-indent {
 <div id="the-data-5" class="section level2 hasAnchor" number="84.1">
 <h2><span class="header-section-number">84.1</span> The data<a href="lab11.html#the-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the <code>ncbirths</code> data from the <code>openintro</code> package:</p>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="lab11.html#cb471-1" tabindex="-1"></a><span class="fu">data</span>(ncbirths)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="lab11.html#cb470-1" tabindex="-1"></a><span class="fu">data</span>(ncbirths)</span></code></pre></div>
 <p>We have observations on 13 different variables, some categorical and some numerical. The meaning of each variable is provided in the following table.</p>
 <table>
 <colgroup>
@@ -1693,9 +1693,9 @@ div.csl-indent {
 <li><p>Before continuing, create a cleaned version of the dataset by removing any rows with missing values for <code>habit</code> or <code>weight</code>. Name this version <code>ncbirths_clean</code>.</p></li>
 <li><p>Calculate the observed difference in means between the baby weights of smoking and non-smoking mothers.</p></li>
 </ol>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="lab11.html#cb472-1" tabindex="-1"></a>ncbirths_clean <span class="sc">%&gt;%</span></span>
-<span id="cb472-2"><a href="lab11.html#cb472-2" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
-<span id="cb472-3"><a href="lab11.html#cb472-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="lab11.html#cb471-1" tabindex="-1"></a>ncbirths_clean <span class="sc">%&gt;%</span></span>
+<span id="cb471-2"><a href="lab11.html#cb471-2" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
+<span id="cb471-3"><a href="lab11.html#cb471-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
 <p>We can see that there’s an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.</p>
 <ol start="8" style="list-style-type: decimal">
 <li>Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.</li>
