@@ -56,7 +56,7 @@ filter(.data = flights, carrier == "AA")
 flights %>%
   na.omit() %>%
   group_by(carrier) %>%
-  summarise(Mean_Dep_Delay = mean(dep_delay, na.rm = TRUE)) %>%
+  summarize(Mean_Dep_Delay = mean(dep_delay, na.rm = TRUE)) %>%
   kable(col.names = c("Carrier", "Average Departure Delay"))
 ```
 
@@ -68,7 +68,7 @@ This solution employs the dplyr package to filter flights by the airline code an
 ```{r}
 flights %>%
   filter(carrier == "AA") %>%
-  summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+  summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
 ### Using Base R with Subsetting
@@ -113,7 +113,7 @@ When crafting your own functions in R, it's beneficial to start with a straightf
 average_delay_by_airline <- function(airline_code) {
   flights %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+    summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 }
 
 ```
@@ -155,7 +155,7 @@ Back to the real world now. So typically, the next step is to check to see if yo
 average_delay_by_airline <- function(data = flights, airline_code) {
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+    summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 }
 ```
 
@@ -181,7 +181,7 @@ Let's add the capability to choose between departure (dep_delay) and arrival (ar
 average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 
@@ -226,7 +226,7 @@ average_delay_by_airline <- function(data = flights, airline_code, delay_type = 
 
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 ```
@@ -256,7 +256,7 @@ mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
 
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 mmm("eggplants are purple")

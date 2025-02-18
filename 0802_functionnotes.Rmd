@@ -39,7 +39,7 @@ Consider we want to compute the average delay experienced by each airline. This 
 
 First, develop some working code for interactive use, using a representative input. I'll use flights operated by a specific airline as an example.
 
-R functions that will be useful: mean() and filter() from the `dplyr` package.
+R functions that will be useful: `mean()` and `filter()` from the `dplyr` package.
 ```{r}
 
 ## Investigate the structure of the flights dataset
@@ -56,7 +56,7 @@ filter(.data = flights, carrier == "AA")
 flights %>%
   na.omit() %>%
   group_by(carrier) %>%
-  summarise(Mean_Dep_Delay = mean(dep_delay, na.rm = TRUE)) %>%
+  summarize(Mean_Dep_Delay = mean(dep_delay, na.rm = TRUE)) %>%
   kable(col.names = c("Carrier", "Average Departure Delay"))
 ```
 
@@ -65,18 +65,21 @@ Now lets go through some natural solutions to get the average delay for the airl
 ### Using `dplyr` for Data Filtering and Summary
 
 This solution employs the dplyr package to filter flights by the airline code and then calculate the average departure delay.
+
 ```{r}
 flights %>%
   filter(carrier == "AA") %>%
-  summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+  summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 ```
 
 ### Using Base R with Subsetting
 
 Here, we use base R to achieve the same task without the `dplyr` package, directly subsetting the dataframe.
+
 ```{r}
 
 mean(flights$dep_delay[flights$carrier=="AA"], na.rm = TRUE)
+
 ```
 
 ### Using `with()` Function
@@ -89,7 +92,7 @@ with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
 
 ### Using `aggregate()` Function
 
-The aggregate() function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
+The `aggregate()` function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
 
 ```{r}
 aggregate(dep_delay ~ carrier, data = flights[flights$carrier == "AA", ], FUN = mean, na.rm = TRUE)$dep_delay
@@ -113,12 +116,13 @@ When crafting your own functions in R, it's beneficial to start with a straightf
 average_delay_by_airline <- function(airline_code) {
   flights %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+    summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 }
 
 ```
 
 Check that you're getting the same answer as you did with your interactive code.
+
 ```{r}
 # Test the function with American Airlines (AA)
 average_delay_by_airline("AA")
@@ -154,7 +158,7 @@ Back to the real world now. So typically, the next step is to check to see if yo
 average_delay_by_airline <- function(data = flights, airline_code) {
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(dep_delay, na.rm = TRUE))
+    summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 }
 ```
 
@@ -180,7 +184,7 @@ Let's add the capability to choose between departure (dep_delay) and arrival (ar
 average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 
@@ -225,7 +229,7 @@ average_delay_by_airline <- function(data = flights, airline_code, delay_type = 
 
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 ```
@@ -255,7 +259,7 @@ mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
 
   data %>%
     filter(carrier == airline_code) %>%
-    summarise(average_delay = mean(get(delay_type), na.rm = TRUE))
+    summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
 
 mmm("eggplants are purple")
