@@ -253,7 +253,7 @@ gender("Kelsey", years = 1940)
 
 As you can see, the probability of a name belonging to a specific gender can change over time.
 
-```{r plot}
+```{r plot, cache=TRUE}
 df <- gender("Kelsey")
 
 years <- c(df$year_min:df$year_max)
@@ -274,12 +274,12 @@ ggplot( aes(year_min, proportion_male)) +
 
 In contrast, the name Mason has been more consistently male.
 
-```{r,error=TRUE}
+```{r,error=TRUE, cache=TRUE}
 gender("Mason")
 gender("Mason", years = 1940)
 ```
 
-```{r plotMason}
+```{r plotMason, cache=TRUE}
 mason <- gender("Mason")
 years <- c(mason$year_min:mason$year_max)
 
@@ -290,6 +290,7 @@ for(i in 1:length(years)){
 df <-rbind(df,gender("Mason", years = years[i]))
 
 }
+
 df %>% filter(year_min==year_max&name=="Mason") %>% 
 ggplot( aes(year_min, proportion_male)) +
   geom_point() +
@@ -302,7 +303,7 @@ ggplot( aes(year_min, proportion_male)) +
 
 And when we compare the two names, we see that Kelsey has changed a lot more over time than Mason.
 
-```{r plotCompare}
+```{r plotCompare, cache=TRUE}
 df %>% filter(year_min==year_max) %>% 
 ggplot( aes(year_min, proportion_male)) +
   geom_point() +
@@ -313,13 +314,15 @@ ggplot( aes(year_min, proportion_male)) +
 
 ```
 
-```{r links1, child="admin/md/courselinks.md"}
-```
-
-```{r links2, child="admin/md/links.md"}
-```
 
 
 ## Conclusion
 
 API-wrapping packages in R provide powerful tools for accessing diverse data sources. As you progress in your data science journey, mastering these tools will greatly expand the range of data available for your analyses. Remember to always check the terms of service for any API you use, and be mindful of rate limits and data usage policies.
+
+
+```{r links1, child="admin/md/courselinks.md"}
+```
+
+```{r links2, child="admin/md/links.md"}
+```
