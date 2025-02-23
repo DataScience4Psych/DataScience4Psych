@@ -22,7 +22,7 @@ library(tidyverse)
 
 First, we need to load the required packages:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 library(httr)       # For making API requests 
 library(jsonlite)   # For handling JSON responses
 library(tidyverse)  # For data wrangling
@@ -54,7 +54,7 @@ Next, we define a function to generate text using OpenAI's API. The function tak
 Here's a basic function for text generation:
 
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 generate_text <- function(prompt) {
   response <- POST(
   # curl https://api.openai.com/v1/chat/completions 
@@ -122,8 +122,15 @@ ai_response <- generated_text$choices$message$content
 Now, let's print the AI-generated text:
 
 ```{r cache=TRUE}
-
 print(ai_response)
+```
+
+Ok, so that wasn't really readable. Let's try to format it a bit better:
+
+
+```{r cache=TRUE, results='asis'}
+
+cat(ai_response)
 
 ```
 
@@ -148,7 +155,7 @@ print(generated_text$usage$prompt_tokens)  # Tokens used for input
 
 Like we've seen with other APIs, it's important to handle errors gracefully. As with any API call, errors can occur due to network issues, invalid requests, or rate limits. To ensure our script doesn’t crash, we can wrap API calls in `tryCatch()`:
 
-```{r}
+```{r echo=TRUE}
 generate_text_safe <- function(prompt) {
   tryCatch({
     generate_text(prompt)

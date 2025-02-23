@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>95 Practical Advice from the Data Professor | Data Science for Psychologists</title>
+  <title>92 Working with OpenAI’s API | Data Science for Psychologists</title>
   <meta name="description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="95 Practical Advice from the Data Professor | Data Science for Psychologists" />
+  <meta property="og:title" content="92 Working with OpenAI’s API | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
   <meta property="og:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="95 Practical Advice from the Data Professor | Data Science for Psychologists" />
+  <meta name="twitter:title" content="92 Working with OpenAI’s API | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="PSY 703: Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="rshiny-overview.html"/>
-<link rel="next" href="shiny-overview.html"/>
+<link rel="prev" href="lecture-applications-of-large-language-models-in-data-science.html"/>
+<link rel="next" href="rshiny.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -1538,71 +1538,190 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="practical-advice-from-the-data-professor" class="section level1 hasAnchor" number="95">
-<h1><span class="header-section-number">95</span> Practical Advice from the Data Professor<a href="practical-advice-from-the-data-professor.html#practical-advice-from-the-data-professor" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>I’ve outsourced the practical videos because, frankly, I’m a novice when it comes to rshiny. I know enough to be dangerous, but not enough to wield that power for teaching. However, my good twitter friend, <a href="https://twitter.com/thedataprof">the Data Professor</a> has that power. You should check out his <a href="https://www.youtube.com/channel/UCV8e2g4IWQqK71bbzGDEI4Q">youtube channel</a></p>
-<div id="web-apps-in-r-building-your-first-web-application-in-r" class="section level2 hasAnchor" number="95.1">
-<h2><span class="header-section-number">95.1</span> Web Apps in R: Building your First Web Application in R<a href="practical-advice-from-the-data-professor.html#web-apps-in-r-building-your-first-web-application-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/tfN10IUX9Lo" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+<div id="working-with-openais-api" class="section level1 hasAnchor" number="92">
+<h1><span class="header-section-number">92</span> Working with OpenAI’s API<a href="working-with-openais-api.html#working-with-openais-api" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This module introduces the basics of interacting with OpenAI’s API from R. We’ll explore how to make API calls, handle responses, and integrate AI capabilities into data science workflows.</p>
+<div id="getting-started-11" class="section level2 hasAnchor" number="92.1">
+<h2><span class="header-section-number">92.1</span> Getting Started<a href="working-with-openais-api.html#getting-started-11" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First, we need to load the required packages:</p>
+<pre><code>#&gt; 
+#&gt; Attaching package: &#39;jsonlite&#39;
+#&gt; The following object is masked from &#39;package:purrr&#39;:
+#&gt; 
+#&gt;     flatten</code></pre>
+<div id="api-authentication" class="section level3 hasAnchor" number="92.1.1">
+<h3><span class="header-section-number">92.1.1</span> API Authentication<a href="working-with-openais-api.html#api-authentication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To use OpenAI’s API, you’ll need an API key. Like we learned with other APIs, it’s important to keep this secure:</p>
+<pre><code># Store API key securely (NEVER commit to Git!)
+openai_api_key &lt;- readLines(&quot;path/to/api_key.txt&quot;)</code></pre>
+</div>
+<div id="making-api-requests" class="section level3 hasAnchor" number="92.1.2">
+<h3><span class="header-section-number">92.1.2</span> Making API Requests<a href="working-with-openais-api.html#making-api-requests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The core workflow involves:</p>
+<ul>
+<li>Constructing the API request</li>
+<li>Sending it to OpenAI’s endpoint</li>
+<li>Processing the response</li>
+</ul>
+<p>Next, we define a function to generate text using OpenAI’s API. The function takes a prompt as input and returns the generated text.</p>
+<p>Here’s a basic function for text generation:</p>
 </div>
 </div>
+<div id="example-usage-and-handling-the-response" class="section level2 hasAnchor" number="92.2">
+<h2><span class="header-section-number">92.2</span> Example Usage and Handling the Response<a href="working-with-openais-api.html#example-usage-and-handling-the-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we’ve defined our generate_text() function, let’s test it by sending a request to OpenAI’s API and working with the response.</p>
+<div id="step-1-send-a-request" class="section level3 hasAnchor" number="92.2.1">
+<h3><span class="header-section-number">92.2.1</span> Step 1: Send a Request<a href="working-with-openais-api.html#step-1-send-a-request" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="working-with-openais-api.html#cb546-1" tabindex="-1"></a>prompt <span class="ot">&lt;-</span> <span class="st">&quot;Summarize the key steps in a data science workflow:&quot;</span></span>
+<span id="cb546-2"><a href="working-with-openais-api.html#cb546-2" tabindex="-1"></a>generated_text <span class="ot">&lt;-</span> <span class="fu">generate_text</span>(prompt)</span></code></pre></div>
 </div>
-<div id="web-apps-in-r-build-interactive-histogram-web-application-in-r" class="section level2 hasAnchor" number="95.2">
-<h2><span class="header-section-number">95.2</span> Web Apps in R: Build Interactive Histogram Web Application in R<a href="practical-advice-from-the-data-professor.html#web-apps-in-r-build-interactive-histogram-web-application-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/lC1Dk6gUbe0" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+<div id="step-2-examine-the-raw-api-response" class="section level3 hasAnchor" number="92.2.2">
+<h3><span class="header-section-number">92.2.2</span> Step 2: Examine the Raw API Response<a href="working-with-openais-api.html#step-2-examine-the-raw-api-response" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When we call the <code>generate_text(prompt)</code> function, OpenAI’s API returns a structured response in JSON format, which R reads as a list. This response contains multiple components, but the most important part is the generated text.</p>
+<p>Let’s print the raw response to see its structure.</p>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="working-with-openais-api.html#cb547-1" tabindex="-1"></a></span>
+<span id="cb547-2"><a href="working-with-openais-api.html#cb547-2" tabindex="-1"></a><span class="fu">print</span>(generated_text)</span>
+<span id="cb547-3"><a href="working-with-openais-api.html#cb547-3" tabindex="-1"></a><span class="co">#&gt; $id</span></span>
+<span id="cb547-4"><a href="working-with-openais-api.html#cb547-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chatcmpl-B4CBXmLrA4uHUJR7Rdl94BxVjoQcI&quot;</span></span>
+<span id="cb547-5"><a href="working-with-openais-api.html#cb547-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-6"><a href="working-with-openais-api.html#cb547-6" tabindex="-1"></a><span class="co">#&gt; $object</span></span>
+<span id="cb547-7"><a href="working-with-openais-api.html#cb547-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chat.completion&quot;</span></span>
+<span id="cb547-8"><a href="working-with-openais-api.html#cb547-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-9"><a href="working-with-openais-api.html#cb547-9" tabindex="-1"></a><span class="co">#&gt; $created</span></span>
+<span id="cb547-10"><a href="working-with-openais-api.html#cb547-10" tabindex="-1"></a><span class="co">#&gt; [1] 1740339851</span></span>
+<span id="cb547-11"><a href="working-with-openais-api.html#cb547-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-12"><a href="working-with-openais-api.html#cb547-12" tabindex="-1"></a><span class="co">#&gt; $model</span></span>
+<span id="cb547-13"><a href="working-with-openais-api.html#cb547-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;gpt-3.5-turbo-0125&quot;</span></span>
+<span id="cb547-14"><a href="working-with-openais-api.html#cb547-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-15"><a href="working-with-openais-api.html#cb547-15" tabindex="-1"></a><span class="co">#&gt; $choices</span></span>
+<span id="cb547-16"><a href="working-with-openais-api.html#cb547-16" tabindex="-1"></a><span class="co">#&gt;   index message.role</span></span>
+<span id="cb547-17"><a href="working-with-openais-api.html#cb547-17" tabindex="-1"></a><span class="co">#&gt; 1     0    assistant</span></span>
+<span id="cb547-18"><a href="working-with-openais-api.html#cb547-18" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        message.content</span></span>
+<span id="cb547-19"><a href="working-with-openais-api.html#cb547-19" tabindex="-1"></a><span class="co">#&gt; 1 1. Define the problem: clearly identify the business problem or question that needs to be addressed with data analysis.\n\n2. Collect and prepare data: gather relevant data sources and clean, preprocess, and transform the data to make it usable for analysis.\n\n3. Explore and analyze data: conduct exploratory data analysis to understand patterns and relationships in the data, and use statistical and visualization techniques to gain insights.\n\n4. Model development: develop predictive models using machine learning algorithms to make predictions or find patterns in the data.\n\n5. Model evaluation: evaluate the performance of the models using metrics such as accuracy, precision, and recall to assess their effectiveness.\n\n6. Deployment: deploy the model in production to make predictions or recommendations for decision-making.\n\n7. Monitor and iterate: continuously monitor the model&#39;s performance and make improvements or updates as needed based on new data or changing requirements.</span></span>
+<span id="cb547-20"><a href="working-with-openais-api.html#cb547-20" tabindex="-1"></a><span class="co">#&gt;   message.refusal logprobs finish_reason</span></span>
+<span id="cb547-21"><a href="working-with-openais-api.html#cb547-21" tabindex="-1"></a><span class="co">#&gt; 1              NA       NA          stop</span></span>
+<span id="cb547-22"><a href="working-with-openais-api.html#cb547-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-23"><a href="working-with-openais-api.html#cb547-23" tabindex="-1"></a><span class="co">#&gt; $usage</span></span>
+<span id="cb547-24"><a href="working-with-openais-api.html#cb547-24" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens</span></span>
+<span id="cb547-25"><a href="working-with-openais-api.html#cb547-25" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span>
+<span id="cb547-26"><a href="working-with-openais-api.html#cb547-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-27"><a href="working-with-openais-api.html#cb547-27" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens</span></span>
+<span id="cb547-28"><a href="working-with-openais-api.html#cb547-28" tabindex="-1"></a><span class="co">#&gt; [1] 174</span></span>
+<span id="cb547-29"><a href="working-with-openais-api.html#cb547-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-30"><a href="working-with-openais-api.html#cb547-30" tabindex="-1"></a><span class="co">#&gt; $usage$total_tokens</span></span>
+<span id="cb547-31"><a href="working-with-openais-api.html#cb547-31" tabindex="-1"></a><span class="co">#&gt; [1] 193</span></span>
+<span id="cb547-32"><a href="working-with-openais-api.html#cb547-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-33"><a href="working-with-openais-api.html#cb547-33" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details</span></span>
+<span id="cb547-34"><a href="working-with-openais-api.html#cb547-34" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$cached_tokens</span></span>
+<span id="cb547-35"><a href="working-with-openais-api.html#cb547-35" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-36"><a href="working-with-openais-api.html#cb547-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-37"><a href="working-with-openais-api.html#cb547-37" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$audio_tokens</span></span>
+<span id="cb547-38"><a href="working-with-openais-api.html#cb547-38" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-39"><a href="working-with-openais-api.html#cb547-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-40"><a href="working-with-openais-api.html#cb547-40" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-41"><a href="working-with-openais-api.html#cb547-41" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details</span></span>
+<span id="cb547-42"><a href="working-with-openais-api.html#cb547-42" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$reasoning_tokens</span></span>
+<span id="cb547-43"><a href="working-with-openais-api.html#cb547-43" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-44"><a href="working-with-openais-api.html#cb547-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-45"><a href="working-with-openais-api.html#cb547-45" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$audio_tokens</span></span>
+<span id="cb547-46"><a href="working-with-openais-api.html#cb547-46" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-47"><a href="working-with-openais-api.html#cb547-47" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-48"><a href="working-with-openais-api.html#cb547-48" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$accepted_prediction_tokens</span></span>
+<span id="cb547-49"><a href="working-with-openais-api.html#cb547-49" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-50"><a href="working-with-openais-api.html#cb547-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-51"><a href="working-with-openais-api.html#cb547-51" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$rejected_prediction_tokens</span></span>
+<span id="cb547-52"><a href="working-with-openais-api.html#cb547-52" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb547-53"><a href="working-with-openais-api.html#cb547-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-54"><a href="working-with-openais-api.html#cb547-54" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-55"><a href="working-with-openais-api.html#cb547-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-56"><a href="working-with-openais-api.html#cb547-56" tabindex="-1"></a><span class="co">#&gt; $service_tier</span></span>
+<span id="cb547-57"><a href="working-with-openais-api.html#cb547-57" tabindex="-1"></a><span class="co">#&gt; [1] &quot;default&quot;</span></span>
+<span id="cb547-58"><a href="working-with-openais-api.html#cb547-58" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb547-59"><a href="working-with-openais-api.html#cb547-59" tabindex="-1"></a><span class="co">#&gt; $system_fingerprint</span></span>
+<span id="cb547-60"><a href="working-with-openais-api.html#cb547-60" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>As you can see, the response is a nested list containing various metadata (e.g., request ID, model name, creation time), the AI-generated response (inside <code>$choices[[1]]$message$content</code>), token usage information (inside <span class="math inline">\(usage\)</span>total_tokens), and more.</p>
+</div>
+<div id="step-3-extract-the-ai-generated-text" class="section level3 hasAnchor" number="92.2.3">
+<h3><span class="header-section-number">92.2.3</span> Step 3: Extract the AI-Generated Text<a href="working-with-openais-api.html#step-3-extract-the-ai-generated-text" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since the response contains both metadata and content, we need to extract only the generated text. The key part of the response is stored in:</p>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="working-with-openais-api.html#cb548-1" tabindex="-1"></a></span>
+<span id="cb548-2"><a href="working-with-openais-api.html#cb548-2" tabindex="-1"></a>ai_response <span class="ot">&lt;-</span> generated_text<span class="sc">$</span>choices<span class="sc">$</span>message<span class="sc">$</span>content</span></code></pre></div>
+<p>Now, let’s print the AI-generated text:</p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="working-with-openais-api.html#cb549-1" tabindex="-1"></a></span>
+<span id="cb549-2"><a href="working-with-openais-api.html#cb549-2" tabindex="-1"></a><span class="fu">print</span>(ai_response)</span>
+<span id="cb549-3"><a href="working-with-openais-api.html#cb549-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1. Define the problem: clearly identify the business problem or question that needs to be addressed with data analysis.\n\n2. Collect and prepare data: gather relevant data sources and clean, preprocess, and transform the data to make it usable for analysis.\n\n3. Explore and analyze data: conduct exploratory data analysis to understand patterns and relationships in the data, and use statistical and visualization techniques to gain insights.\n\n4. Model development: develop predictive models using machine learning algorithms to make predictions or find patterns in the data.\n\n5. Model evaluation: evaluate the performance of the models using metrics such as accuracy, precision, and recall to assess their effectiveness.\n\n6. Deployment: deploy the model in production to make predictions or recommendations for decision-making.\n\n7. Monitor and iterate: continuously monitor the model&#39;s performance and make improvements or updates as needed based on new data or changing requirements.&quot;</span></span></code></pre></div>
+</div>
+<div id="step-4-understanding-token-usage" class="section level3 hasAnchor" number="92.2.4">
+<h3><span class="header-section-number">92.2.4</span> Step 4: Understanding Token Usage<a href="working-with-openais-api.html#step-4-understanding-token-usage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since OpenAI charges based on token usage, it’s useful to monitor how many tokens are used per request. The API response includes:</p>
+<ul>
+<li>usage$prompt_tokens → Tokens in the input prompt</li>
+<li>usage$completion_tokens → Tokens generated by the model</li>
+<li>usage$total_tokens → The total token count for billing</li>
+</ul>
+<p>To check token usage:</p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="working-with-openais-api.html#cb550-1" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>total_tokens)  <span class="co"># Total tokens used</span></span>
+<span id="cb550-2"><a href="working-with-openais-api.html#cb550-2" tabindex="-1"></a><span class="co">#&gt; [1] 193</span></span>
+<span id="cb550-3"><a href="working-with-openais-api.html#cb550-3" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>completion_tokens)  <span class="co"># Tokens used for output</span></span>
+<span id="cb550-4"><a href="working-with-openais-api.html#cb550-4" tabindex="-1"></a><span class="co">#&gt; [1] 174</span></span>
+<span id="cb550-5"><a href="working-with-openais-api.html#cb550-5" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>prompt_tokens)  <span class="co"># Tokens used for input</span></span>
+<span id="cb550-6"><a href="working-with-openais-api.html#cb550-6" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span></code></pre></div>
 </div>
 </div>
+<div id="error-handling-1" class="section level2 hasAnchor" number="92.3">
+<h2><span class="header-section-number">92.3</span> Error Handling<a href="working-with-openais-api.html#error-handling-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Like we’ve seen with other APIs, it’s important to handle errors gracefully. As with any API call, errors can occur due to network issues, invalid requests, or rate limits. To ensure our script doesn’t crash, we can wrap API calls in <code>tryCatch()</code>:</p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="working-with-openais-api.html#cb551-1" tabindex="-1"></a>generate_text_safe <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
+<span id="cb551-2"><a href="working-with-openais-api.html#cb551-2" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb551-3"><a href="working-with-openais-api.html#cb551-3" tabindex="-1"></a>    <span class="fu">generate_text</span>(prompt)</span>
+<span id="cb551-4"><a href="working-with-openais-api.html#cb551-4" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb551-5"><a href="working-with-openais-api.html#cb551-5" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;API call failed: &quot;</span>, e<span class="sc">$</span>message)</span>
+<span id="cb551-6"><a href="working-with-openais-api.html#cb551-6" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb551-7"><a href="working-with-openais-api.html#cb551-7" tabindex="-1"></a>  })</span>
+<span id="cb551-8"><a href="working-with-openais-api.html#cb551-8" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, we can use <code>generate_text_safe()</code> to handle errors. If an error occurs, the function will return <code>NULL</code> and print a warning message.</p>
 </div>
-<div id="web-apps-in-r-building-data-driven-web-application-in-r" class="section level2 hasAnchor" number="95.3">
-<h2><span class="header-section-number">95.3</span> Web Apps in R: Building Data-Driven Web Application in R<a href="practical-advice-from-the-data-professor.html#web-apps-in-r-building-data-driven-web-application-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/CYXvVuklWRM" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+<div id="processing-multiple-requests" class="section level2 hasAnchor" number="92.4">
+<h2><span class="header-section-number">92.4</span> Processing Multiple Requests<a href="working-with-openais-api.html#processing-multiple-requests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When working with multiple prompts, we can use <code>purrr::map_chr()</code> to process them efficiently:</p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="working-with-openais-api.html#cb552-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb552-2"><a href="working-with-openais-api.html#cb552-2" tabindex="-1"></a>prompts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb552-3"><a href="working-with-openais-api.html#cb552-3" tabindex="-1"></a>  <span class="st">&quot;Define p-value&quot;</span>,</span>
+<span id="cb552-4"><a href="working-with-openais-api.html#cb552-4" tabindex="-1"></a>  <span class="st">&quot;Explain Type I error&quot;</span>,</span>
+<span id="cb552-5"><a href="working-with-openais-api.html#cb552-5" tabindex="-1"></a>  <span class="st">&quot;What is statistical power?&quot;</span></span>
+<span id="cb552-6"><a href="working-with-openais-api.html#cb552-6" tabindex="-1"></a>)</span>
+<span id="cb552-7"><a href="working-with-openais-api.html#cb552-7" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb552-8"><a href="working-with-openais-api.html#cb552-8" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">map</span>(prompts, generate_text_safe)</span></code></pre></div>
+<p>This code generates text for each prompt in the <code>prompts</code> vector. If an error occurs, the response will be <code>NULL</code>. After running this code, we can examine the responses and handle any errors. I’ve included a table below to display the responses.</p>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b83d27869a4a6078d8a9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b83d27869a4a6078d8a9">{"x":{"filter":"none","vertical":false,"data":[["Define p-value","Explain Type I error","What is statistical power?"],["The p-value is a statistical measure that helps determine the significance of results in a hypothesis test. It represents the probability of obtaining results as extreme as the ones observed, assuming that the null hypothesis (no effect or relationship) is true. A small p-value indicates strong evidence against the null hypothesis, while a larger p-value suggests weak evidence against the null hypothesis. Typically, a p-value of less than 0.05 is considered statistically significant.","Type I error, also known as a false positive error, occurs when a null hypothesis that is actually true is incorrectly rejected. In other words, it is the incorrect rejection of a true positive result. This type of error is considered to be more serious as it can lead to false conclusions and decisions based on incorrect data. The probability of making a Type I error is denoted by the symbol α, and is typically set at a level of 0.05 in statistical testing.","Statistical power is the probability that a statistical test will correctly reject a false null hypothesis. In other words, it is the likelihood that a study will detect an effect if there is indeed an effect present in the population being studied. A study with high statistical power is more likely to detect true effects and accurately reject false null hypotheses. It is influenced by factors such as sample size, effect size, and the level of significance chosen for the test."],[100,109,102],["gpt-3.5-turbo-0125","gpt-3.5-turbo-0125","gpt-3.5-turbo-0125"],["2025-02-23T19:44:13Z","2025-02-23T19:44:14Z","2025-02-23T19:44:15Z"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>prompt<\/th>\n      <th>ai_response<\/th>\n      <th>tokens_used<\/th>\n      <th>model<\/th>\n      <th>completion_time<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":2},{"name":"prompt","targets":0},{"name":"ai_response","targets":1},{"name":"tokens_used","targets":2},{"name":"model","targets":3},{"name":"completion_time","targets":4}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<p>As you can see, the table displays the prompts, AI-generated responses, token usage, model name, and completion time for each request. This information can help us monitor the API usage and response quality.</p>
+<div id="rate-limiting" class="section level3 hasAnchor" number="92.4.1">
+<h3><span class="header-section-number">92.4.1</span> Rate Limiting<a href="working-with-openais-api.html#rate-limiting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>OpenAI has rate limits we need to respect. We can add delays between requests to avoid exceeding these limits. Here’s a throttled version of the <code>generate_text()</code> function:</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="working-with-openais-api.html#cb553-1" tabindex="-1"></a>generate_text_throttled <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
+<span id="cb553-2"><a href="working-with-openais-api.html#cb553-2" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">1</span>) <span class="co"># Wait 1 second between requests</span></span>
+<span id="cb553-3"><a href="working-with-openais-api.html#cb553-3" tabindex="-1"></a>  <span class="fu">generate_text_safe</span>(prompt)</span>
+<span id="cb553-4"><a href="working-with-openais-api.html#cb553-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>This function adds a 1-second delay between requests to avoid exceeding OpenAI’s rate limits. You can adjust the delay as needed based on the API’s rate limits.</p>
 </div>
 </div>
-</div>
-<div id="web-apps-in-r-building-the-machine-learning-web-application-in-r" class="section level2 hasAnchor" number="95.4">
-<h2><span class="header-section-number">95.4</span> Web Apps in R: Building the Machine Learning Web Application in R<a href="practical-advice-from-the-data-professor.html#web-apps-in-r-building-the-machine-learning-web-application-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/ceg7MMQNln8" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
-</div>
-</div>
-</div>
-<div id="web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring" class="section level2 hasAnchor" number="95.5">
-<h2><span class="header-section-number">95.5</span> Web Apps in R: Build BMI Calculator web application in R for health monitoring<a href="practical-advice-from-the-data-professor.html#web-apps-in-r-build-bmi-calculator-web-application-in-r-for-health-monitoring" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="vembedr" align="center">
-<div>
-<iframe src="https://www.youtube.com/embed/9EQ6cwBQpvo" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
-</div>
-</div>
-<!--DS4P Links-->
-<!-- https://smasongarrison.github.io/syllabi/data-science.html -->
-<!--AE Links-->
-<!-- Lab Links-->
-<!--Slides-->
-<!--externals-->
-<!--HappyGitWithR Links-->
-<!--Package Links-->
-<!--Shiny links-->
-<!--Publications-->
-<!--R Documentation-->
-<!--Wikipedia Links-->
-<!--Misc. Links-->
+<div id="conclusion-4" class="section level2 hasAnchor" number="92.5">
+<h2><span class="header-section-number">92.5</span> Conclusion<a href="working-with-openais-api.html#conclusion-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this guide, we’ve covered how to generate text using OpenAI’s GPT-3 API in R. We’ve defined a function to interact with the API, handled responses, extracted generated text, monitored token usage, and processed multiple requests. We’ve also discussed error handling, rate limiting, and best practices for working with the API. By following these steps, you can effectively use OpenAI’s GPT-3 API to generate text in R for various applications. For the curious, yes, these prompts and responses are generated using the OpenAI API every time you render this notebook.</p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="rshiny-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="shiny-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lecture-applications-of-large-language-models-in-data-science.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rshiny.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1633,18 +1752,18 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1501_rshiny.Rmd",
+    "link": "https://github.com/DataScience4Psych/DataScience4Psych/edit/main/1404_llmapi.Rmd",
     "text": "Edit"
   },
   "history": {
-    "link": "https://github.com/DataScience4Psych/DataScience4Psych/commits/main/1501_rshiny.Rmd",
+    "link": "https://github.com/DataScience4Psych/DataScience4Psych/commits/main/1404_llmapi.Rmd",
     "text": null
   },
   "view": {
-    "link": "https://github.com/DataScience4Psych/DataScience4Psych/blob/main/1501_rshiny.Rmd",
+    "link": "https://github.com/DataScience4Psych/DataScience4Psych/blob/main/1404_llmapi.Rmd",
     "text": null
   },
-  "download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1501_rshiny.Rmd"],
+  "download": ["https://github.com/DataScience4Psych/DataScience4Psych/raw/main/1404_llmapi.Rmd"],
   "search": {
     "engine": "fuse",
     "options": null
