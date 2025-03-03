@@ -5,6 +5,7 @@ library(knitr)
 library(webshot)
 library(tidyverse)
 library(htmlwidgets)
+library(stringr)
 
 ## Options for knitr chunks
 knitr::opts_chunk$set(
@@ -83,7 +84,6 @@ try_include_tweet <- function(tweet_url, plain = FALSE, ...) {
 }
 
 
-library(stringr)
 embed_youtube_alt <- function(youtube_id) {
   if (knitr::is_html_output(excludes = "epub")) {
     url <- str_c("https://www.youtube.com/embed/", youtube_id)
