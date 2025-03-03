@@ -22,31 +22,37 @@ num_pieces <- read_html(first_url) %>%
 
 The University of Edinburgh Art Collection _"supports the world-leading research and teaching that happens within the University. Comprised of an astonishing range of objects and ideas spanning two millennia and a multitude of artistic forms, the collection reflects not only the long and rich trajectory of the University, but also major national and international shifts in art history."_^[Source: https://collections.ed.ac.uk/art/about].
 
-> Note: See the sidebar [here](https://collections.ed.ac.uk/art) and note that there are `r num_pieces` pieces in the art collection we're collecting data on.
 
-In this lab, we'll scrape data on all art pieces in the [Edinburgh College of Art collection](https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22).
+> **Note:** The collection contains `r num_pieces` pieces. You can explore them in the sidebar [here](https://collections.ed.ac.uk/art).
 
-The learning goals of this lab are:
 
-- Web scraping from a single page
-- Writing functions
-- Iteration
-- Writing data
+In this lab, you'll scrape data on all art pieces in the [Edinburgh College of Art collection](https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22).
 
-Before getting started, let's check that a bot has permissions to access pages on this domain.
+
+### Learning Goals {.unnumbered}
+By the end of this lab, you will:
+- Scrape data from a webpage  
+- Write functions to automate repetitive tasks  
+- Use iteration to handle multiple pages  
+- Save and analyze scraped data  
+
+
+## Getting started {.unnumbered}
+
+Before we begin, let's check whether bots are allowed to access pages on this domain.
+
 
 ```{r paths-allowed, warning=FALSE}
 paths_allowed("https://collections.ed.ac.uk/art)")
 ```
 
-## Getting started {.unnumbered}
 
-Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Grab the URL of the repo, and make a template for your own copy.
+Go to the course GitHub organization and locate your lab repo, which should be named `lab-08-uoe-art`. Clone the repository and set up your workspace.
 
 
 ## R scripts vs. R Markdown documents {.unnumbered}
 
-Today we will be using both R scripts and R Markdown documents:
+This lab uses both **R scripts** and **R Markdown documents**:
 
 - `.R`: R scripts are plain text files containing **only** code and brief comments,
   - We'll use R scripts in the web scraping stage and ultimately save the scraped data as a csv.
@@ -102,7 +108,7 @@ page <- read_html(first_url)
 
 For the ten pieces on this page, we will extract `title`, `artist`, and `link` information, and put these three variables in a data frame.
 
-### Titles
+### Titles  {.unnumbered}
 
 Let's start with titles. We make use of the SelectorGadget to identify the tags for the relevant nodes:
 
@@ -252,15 +258,16 @@ scrape_page(second_url)
 Work in `scripts/03-scrape-page-many.R`.
 </div>
 
-We went from manually scraping individual pages to writing a function to do the same. Next, we will work on making our workflow a little more efficient by using R to iterate over all pages that contain information on the art collection.
+We went from manually scraping individual pages to writing a function to do the same. Next, we will make our workflow a little more efficient by using R to iterate over all pages that contain information on the art collection.
 
 > **Reminder:** The collection has `r num_pieces` pieces in total, as of the last time this page was compiled.
 
-That means we develop a list of URLs (of pages that each have 10 art pieces), and write some code that applies the `scrape_page()` function to each page, and combines the resulting data frames from each page into a single data frame with `r num_pieces` rows and 3 columns.
+That means we will develop a list of URLs, each corresponding to a page with 10 art pieces. Then, we will write some code that applies the `scrape_page()` function to each page and combines the resulting data frames into a single data frame with `r num_pieces` rows and 3 columns.
+
 
 ### List of URLs {.unnumbered}
 
-Click through the first few of the pages in the art collection and observe their URLs to confirm the following pattern:
+Click through the first few pages of the art collection and observe their URLs to confirm the following pattern:
 
 ```
 [sometext]offset=0     # Pieces 1-10
@@ -271,29 +278,40 @@ Click through the first few of the pages in the art collection and observe their
 [sometext]offset=2900  # Pieces 2900-2909
 ```
 
-We can construct these URLs in R by pasting together two pieces: (1) a common (`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to 2900. Two new functions are helpful for accomplishing this: `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
+We can construct these URLs in R by pasting together two pieces: (1) a common (`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to 2900. Two useful functions for accomplishing this task are `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
+
+
 
 7. Fill in the blanks to construct the list of URLs.
 
 ### Mapping {.unnumbered}
 
-Finally, we're ready to iterate over the list of URLs we constructed. We will do this by **map**ping the function we developed over the list of URLs. There are a series of mapping functions in R (more details on that soon!), and they each take the following form:
+Finally, we are ready to iterate over the list of URLs we constructed. We will do this by **map**ping the function we developed over the list of URLs. Mapping functions in R apply a function to each element of a list. These functions each take the following form:
+
 
 ```
 map([x], [function to apply to each element of x])
 ```
 
-In our case, `x` is the list of URLs we constructed and the function to apply to each element of `x` is the function we developed earlier, `scrape_page`. Now, we want a data frame, so we use `map_dfr` function:
+In our case:
+- `x` is the list of URLs we just constructed
+- The function to apply is **`scrape_page()`**, which we developed earlier.
+- Since we want a **data frame**, we use **`map_dfr()`** to return a combined tibble.
+
+
 
 ```{r eval=FALSE}
 map_dfr(urls, scrape_page)
 ```
 
-8. Fill in the blanks to scrape all pages, and to create a new data frame called `uoe_art`.
+
+8. Fill in the blanks to scrape all pages and create a data frame called `uoe_art`.
 
 ### Write out data {.unnumbered}
 
-9. Finally write out the data frame you constructed into the `data` folder so that you can use it in the analysis section.
+9. **Save the final data frame** so that you can use it in the analysis section. Write it to the `data` folder.  
+
+
 
 ## Analysis {.unnumbered}
 
@@ -301,13 +319,15 @@ map_dfr(urls, scrape_page)
 Work in `lab-08-uoe-art.Rmd` for the rest of the lab.
 </div>
 
-Now that we have a tidy dataset that we can analyze, let's do that!
+Now that you have a **tidy dataset**, you'll analyze it. Follow the steps below.
 
-We'll start with some data cleaning, to clean up the dates that appear at the end of some title text in parentheses. Some of these are years, others are more specific dates, some art pieces have no date information whatsoever, and others have some non-date information in parentheses. This should be interesting to clean up!
+### Step 1: Cleaning Up the Titles and Dates  
 
-First thing we'll try is to separate the `title` column into two: one for the actual `title` and the other for the `date` if it exists. In human speak, we need to
+Some titles contain date information in parentheses. Some of these are years, others are more specific dates, some art pieces have no date information whatsoever, and others have some non-date information in parentheses. 
 
-> "separate the `title` column at the first occurence of `(` and put the contents on one side of the `(` into a column called `title` and the contents on the other side into a column called `date`"
+First thing, we'll try is to separate the `title` column into two: one for the actual `title` and the other for the `date` if it exists. In human speak, we need to
+
+> separate the `title` column at the first occurence of `(` and put the contents on one side of the `(` into a column called `title` and the contents on the other side into a column called `date`
 
 Luckily, there's a function that does just this: `separate()`!
 
@@ -331,7 +351,7 @@ implement the correction.
 
 15. Final question! How many art pieces have the word "child" in their title? See if you can figure it out, and ask for help if not.
 
-> **Hint:** yOU can use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
+> **Hint:** You can use a combination of `filter()` and `str_detect()`. You will want to read the help for `str_detect()` at a minimum, and consider how you might capture titles where the word appears as "child" and "Child".
 
 
 
