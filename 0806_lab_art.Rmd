@@ -43,6 +43,7 @@ Before we begin, let's check whether bots are allowed to access pages on this do
 
 
 ```{r paths-allowed, warning=FALSE}
+library(robotstxt)
 paths_allowed("https://collections.ed.ac.uk/art)")
 ```
 
@@ -190,7 +191,7 @@ page %>%
 ```
 Now, print the first few results:
 
-```{r}
+```
 head(links)
 ```
 You should see output similar to this:
@@ -297,10 +298,10 @@ Click through the first few pages of the art collection and observe their URLs t
 [sometext]offset=20    # Pieces 21-30
 [sometext]offset=30    # Pieces 31-40
 ...
-[sometext]offset=2900  # Pieces 2900-2909
+[sometext]offset=3310  # Pieces 3310-3319
 ```
 
-We can construct these URLs in R by pasting together two pieces: (1) a common (`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to 2900. Two useful functions for accomplishing this task are `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
+We can construct these URLs in R by pasting together two pieces: (1) a common (`root`) text for the beginning of the URL, and (2) numbers starting at 0, increasing by 10, all the way up to `r trunc(as.numeric(num_pieces)/10)*10`. Two useful functions for accomplishing this task are `paste0()` for pasting two pieces of text and `seq()` for generating a sequence of numbers.
 
 
 
@@ -316,6 +317,7 @@ map([x], [function to apply to each element of x])
 ```
 
 In our case:
+
 - `x` is the list of URLs we just constructed
 - The function to apply is **`scrape_page()`**, which we developed earlier.
 - Since we want a **data frame**, we use **`map_dfr()`** to return a combined tibble.
@@ -328,6 +330,14 @@ map_dfr(urls, scrape_page)
 
 
 8. Fill in the blanks to scrape all pages and create a data frame called `uoe_art`.
+
+Be patient, this will take a few minutes to run. It's literally scraping `r trunc(as.numeric(num_pieces)/10)` pages of data.
+If its still running you'll see a stop sign in the corner of the console. 
+
+```{r, echo=FALSE}
+# screenshot of the console
+knitr::include_graphics("img/lab8_screenshot.png")
+```
 
 ### Write out data {.unnumbered}
 
