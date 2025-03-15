@@ -7,6 +7,8 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 ## Special Values
 
+You can follow along with the slides [here][d11_types] if they do not appear below.
+
 ```{r, echo=FALSE}
 # Special values
 "https://www.youtube.com/watch?v=3YoFhEKvieA" %>%
@@ -19,7 +21,55 @@ slide_url(ds4p_urls, "d11_types", "#26") %>%
   include_url(height = "400px")
 ```
 
+R has a few special values you'll bump into when your calculations don't work as expected.
+
+
+Try dividing by zero in R and you'll get `Inf` (infinity) - unlike other languages that might crash or throw an error. R is pretty chill about it (to an annoying degree):
+
+```{r}
+
+pi / 0  # Returns Inf
+
+```
+
+But if you try something truly undefined like dividing zero by zero, you'll get `NaN` (Not a Number):
+
+```{r}
+0 / 0  # Returns NaN
+```
+
+These special values appear when dealing with unusual or undefined operations in R:
+
+- When dividing by zero: `pi / 0` gives `Inf`
+- When performing undefined math: `0 / 0` gives `NaN`
+- With contradictory operations: `1/0 - 1/0` gives `NaN`
+- With consistent operations: `1/0` + `1/0` gives `Inf`
+
+
+The most common special value you'll encounter is `NA` - missing data. `NA`s are sneaky because they're "contagious" - almost any calculation involving an `NA` will give you `NA` as the result:
+
+```{r}
+
+mean(c(1, 2, NA, 4))  # Returns NA
+
+```
+
+
+
+
+
+The cool thing about `NA`s is that they're logically consistent. When you work with them in logical operations:
+
+- `TRUE | NA` is `TRUE` (because "true or anything" is always true)
+- `FALSE | NA` is `NA` (because we need to know what `NA` is to determine the result)
+
+It's like `NA` is saying "I don't know what I am, but I'll follow the rules of logic!"
+
+
+
 ## Data classes
+
+You can follow along with the slides [here][d11_types] if they do not appear below.
 
 ```{r, echo=FALSE}
 # Data classes
@@ -33,7 +83,50 @@ slide_url(ds4p_urls, "d11_types", "#35") %>%
   include_url(height = "400px")
 ```
 
+Think of R's data classes as Lego sets built from basic building blocks. The basic types (`logical`, `character`, `numeric`) are the individual Lego pieces, but classes are the cool structures you build with them.
+
+
+Take factors - they look like character strings when you print them, but under the hood they're actually integers with labels:
+
+
+```{r}
+x <- factor(c("BS", "MS", "PhD", "MS"))
+x  # Looks like text
+typeof(x)  # But it's stored as integers!
+as.integer(x)  # See the numbers behind the scenes
+```
+
+Or dates - they look like calendar dates when you print them:
+```{r}
+Y2kday <- as.Date("2000-01-01")
+Y2kday  # Shows as "2000-01-01"
+```
+
+But they're actually just counting days since January 1, 1970:
+
+```{r}
+
+as.integer(Y2kday)  # Days since 1970-01-01
+```
+
+Because you're just counting time since a fixed date. This explains why you can do math with dates, like finding out what date is 30 days from now:
+```{r}
+Y2kday + 30  # Adds 30 days
+```
+
+Even data frames are secretly just lists where all the elements have the same length:
+```{r}
+df <- data.frame(x = 1:2, y = 3:4)
+typeof(df)  # "list"
+
+```
+
+Understanding these "secret identities" helps you avoid common pitfalls and work more effectively with your data.
+
+
 ## Working with factors
+
+You can follow along with the slides [here][d11_types] if they do not appear below.
 
 ```{r, echo=FALSE}
 # Data factors
@@ -47,6 +140,41 @@ slide_url(ds4p_urls, "d11_types", "#45") %>%
   include_url(height = "400px")
 ```
 
+Ever made a bar chart where the categories were in a weird order? That's where factors come to the rescue!
+
+When you make a simple plot like this:
+
+```{r include=FALSE}
+cat_lovers <- read.csv("./data/cat-lovers.csv")
+library(ggplot2)
+library(viridis)
+```
+```{r}
+ggplot(cat_lovers, mapping = aes(x = handedness,fill = handedness)) + geom_bar() + labs(title = "Cat lovers by handedness") + theme_minimal() + scale_fill_viridis_d(option = "plasma")
+```
+R automatically converts your text variable to a factor, but it uses alphabetical order by default. That's rarely what you want!
+The `forcats` package (part of the tidyverse) gives you superpowers for controlling factor order. Want categories ordered by frequency? Just use `fct_infreq`():
+
+```{r}
+cat_lovers %>%
+  mutate(handedness = fct_infreq(handedness)) %>%
+  ggplot(mapping = aes(x = handedness, fill = handedness)) +
+  geom_bar() +
+  labs(title = "Cat lovers by handedness") + theme_minimal() +
+  scale_fill_viridis_d(option = "plasma")
+
+```
+
+
+Now your most common category appears first - much more informative!
+The slides show an example with months, which is a classic problem. If you don't use factors, your months end up in alphabetical order (April, August, December...) instead of calendar order. Using `fct_relevel`() with `month.name` fixes this:
+
+```r
+hotels %>%
+  mutate(FOO = fct_relevel(BAR, month.name))
+```
+
+So next time your plot looks oddly ordered, remember: there's probably a forcats function that can fix it in one line!
 
 ```{r links, child="admin/md/courselinks.md"}
 ```

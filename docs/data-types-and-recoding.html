@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-03-03" />
+<meta name="date" content="2025-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1596,6 +1596,7 @@ div.csl-indent {
 </div>
 <div id="special-values" class="section level2 hasAnchor" number="31.3">
 <h2><span class="header-section-number">31.3</span> Special Values<a href="data-types-and-recoding.html#special-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
 <div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/3YoFhEKvieA" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
@@ -1603,9 +1604,35 @@ div.csl-indent {
 </div>
 <iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#26" width="672" height="400px" data-external="1">
 </iframe>
+<p>R has a few special values you’ll bump into when your calculations don’t work as expected.</p>
+<p>Try dividing by zero in R and you’ll get <code>Inf</code> (infinity) - unlike other languages that might crash or throw an error. R is pretty chill about it (to an annoying degree):</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="data-types-and-recoding.html#cb122-1" tabindex="-1"></a></span>
+<span id="cb122-2"><a href="data-types-and-recoding.html#cb122-2" tabindex="-1"></a>pi <span class="sc">/</span> <span class="dv">0</span>  <span class="co"># Returns Inf</span></span>
+<span id="cb122-3"><a href="data-types-and-recoding.html#cb122-3" tabindex="-1"></a><span class="co">#&gt; [1] Inf</span></span></code></pre></div>
+<p>But if you try something truly undefined like dividing zero by zero, you’ll get <code>NaN</code> (Not a Number):</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-types-and-recoding.html#cb123-1" tabindex="-1"></a><span class="dv">0</span> <span class="sc">/</span> <span class="dv">0</span>  <span class="co"># Returns NaN</span></span>
+<span id="cb123-2"><a href="data-types-and-recoding.html#cb123-2" tabindex="-1"></a><span class="co">#&gt; [1] NaN</span></span></code></pre></div>
+<p>These special values appear when dealing with unusual or undefined operations in R:</p>
+<ul>
+<li>When dividing by zero: <code>pi / 0</code> gives <code>Inf</code></li>
+<li>When performing undefined math: <code>0 / 0</code> gives <code>NaN</code></li>
+<li>With contradictory operations: <code>1/0 - 1/0</code> gives <code>NaN</code></li>
+<li>With consistent operations: <code>1/0</code> + <code>1/0</code> gives <code>Inf</code></li>
+</ul>
+<p>The most common special value you’ll encounter is <code>NA</code> - missing data. <code>NA</code>s are sneaky because they’re “contagious” - almost any calculation involving an <code>NA</code> will give you <code>NA</code> as the result:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="data-types-and-recoding.html#cb124-1" tabindex="-1"></a></span>
+<span id="cb124-2"><a href="data-types-and-recoding.html#cb124-2" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>))  <span class="co"># Returns NA</span></span>
+<span id="cb124-3"><a href="data-types-and-recoding.html#cb124-3" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<p>The cool thing about <code>NA</code>s is that they’re logically consistent. When you work with them in logical operations:</p>
+<ul>
+<li><code>TRUE | NA</code> is <code>TRUE</code> (because “true or anything” is always true)</li>
+<li><code>FALSE | NA</code> is <code>NA</code> (because we need to know what <code>NA</code> is to determine the result)</li>
+</ul>
+<p>It’s like <code>NA</code> is saying “I don’t know what I am, but I’ll follow the rules of logic!”</p>
 </div>
 <div id="data-classes" class="section level2 hasAnchor" number="31.4">
 <h2><span class="header-section-number">31.4</span> Data classes<a href="data-types-and-recoding.html#data-classes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
 <div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/9yNpsBKyXRE" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
@@ -1613,9 +1640,36 @@ div.csl-indent {
 </div>
 <iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#35" width="672" height="400px" data-external="1">
 </iframe>
+<p>Think of R’s data classes as Lego sets built from basic building blocks. The basic types (<code>logical</code>, <code>character</code>, <code>numeric</code>) are the individual Lego pieces, but classes are the cool structures you build with them.</p>
+<p>Take factors - they look like character strings when you print them, but under the hood they’re actually integers with labels:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="data-types-and-recoding.html#cb125-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;BS&quot;</span>, <span class="st">&quot;MS&quot;</span>, <span class="st">&quot;PhD&quot;</span>, <span class="st">&quot;MS&quot;</span>))</span>
+<span id="cb125-2"><a href="data-types-and-recoding.html#cb125-2" tabindex="-1"></a>x  <span class="co"># Looks like text</span></span>
+<span id="cb125-3"><a href="data-types-and-recoding.html#cb125-3" tabindex="-1"></a><span class="co">#&gt; [1] BS  MS  PhD MS </span></span>
+<span id="cb125-4"><a href="data-types-and-recoding.html#cb125-4" tabindex="-1"></a><span class="co">#&gt; Levels: BS MS PhD</span></span>
+<span id="cb125-5"><a href="data-types-and-recoding.html#cb125-5" tabindex="-1"></a><span class="fu">typeof</span>(x)  <span class="co"># But it&#39;s stored as integers!</span></span>
+<span id="cb125-6"><a href="data-types-and-recoding.html#cb125-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;integer&quot;</span></span>
+<span id="cb125-7"><a href="data-types-and-recoding.html#cb125-7" tabindex="-1"></a><span class="fu">as.integer</span>(x)  <span class="co"># See the numbers behind the scenes</span></span>
+<span id="cb125-8"><a href="data-types-and-recoding.html#cb125-8" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3 2</span></span></code></pre></div>
+<p>Or dates - they look like calendar dates when you print them:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="data-types-and-recoding.html#cb126-1" tabindex="-1"></a>Y2kday <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&quot;2000-01-01&quot;</span>)</span>
+<span id="cb126-2"><a href="data-types-and-recoding.html#cb126-2" tabindex="-1"></a>Y2kday  <span class="co"># Shows as &quot;2000-01-01&quot;</span></span>
+<span id="cb126-3"><a href="data-types-and-recoding.html#cb126-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2000-01-01&quot;</span></span></code></pre></div>
+<p>But they’re actually just counting days since January 1, 1970:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-types-and-recoding.html#cb127-1" tabindex="-1"></a></span>
+<span id="cb127-2"><a href="data-types-and-recoding.html#cb127-2" tabindex="-1"></a><span class="fu">as.integer</span>(Y2kday)  <span class="co"># Days since 1970-01-01</span></span>
+<span id="cb127-3"><a href="data-types-and-recoding.html#cb127-3" tabindex="-1"></a><span class="co">#&gt; [1] 10957</span></span></code></pre></div>
+<p>Because you’re just counting time since a fixed date. This explains why you can do math with dates, like finding out what date is 30 days from now:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="data-types-and-recoding.html#cb128-1" tabindex="-1"></a>Y2kday <span class="sc">+</span> <span class="dv">30</span>  <span class="co"># Adds 30 days</span></span>
+<span id="cb128-2"><a href="data-types-and-recoding.html#cb128-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2000-01-31&quot;</span></span></code></pre></div>
+<p>Even data frames are secretly just lists where all the elements have the same length:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-types-and-recoding.html#cb129-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">y =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb129-2"><a href="data-types-and-recoding.html#cb129-2" tabindex="-1"></a><span class="fu">typeof</span>(df)  <span class="co"># &quot;list&quot;</span></span>
+<span id="cb129-3"><a href="data-types-and-recoding.html#cb129-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;list&quot;</span></span></code></pre></div>
+<p>Understanding these “secret identities” helps you avoid common pitfalls and work more effectively with your data.</p>
 </div>
 <div id="working-with-factors" class="section level2 hasAnchor" number="31.5">
 <h2><span class="header-section-number">31.5</span> Working with factors<a href="data-types-and-recoding.html#working-with-factors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
 <div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/yeEnw9rMJe4" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
@@ -1623,6 +1677,24 @@ div.csl-indent {
 </div>
 <iframe src="https://datascience4psych.github.io/slides/d11_types/d11_types.html#45" width="672" height="400px" data-external="1">
 </iframe>
+<p>Ever made a bar chart where the categories were in a weird order? That’s where factors come to the rescue!</p>
+<p>When you make a simple plot like this:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="data-types-and-recoding.html#cb130-1" tabindex="-1"></a><span class="fu">ggplot</span>(cat_lovers, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> handedness,<span class="at">fill =</span> handedness)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cat lovers by handedness&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;plasma&quot;</span>)</span></code></pre></div>
+<p><img src="0403_types_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+R automatically converts your text variable to a factor, but it uses alphabetical order by default. That’s rarely what you want!
+The <code>forcats</code> package (part of the tidyverse) gives you superpowers for controlling factor order. Want categories ordered by frequency? Just use <code>fct_infreq</code>():</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-types-and-recoding.html#cb131-1" tabindex="-1"></a>cat_lovers <span class="sc">%&gt;%</span></span>
+<span id="cb131-2"><a href="data-types-and-recoding.html#cb131-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">handedness =</span> <span class="fu">fct_infreq</span>(handedness)) <span class="sc">%&gt;%</span></span>
+<span id="cb131-3"><a href="data-types-and-recoding.html#cb131-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> handedness, <span class="at">fill =</span> handedness)) <span class="sc">+</span></span>
+<span id="cb131-4"><a href="data-types-and-recoding.html#cb131-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb131-5"><a href="data-types-and-recoding.html#cb131-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cat lovers by handedness&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb131-6"><a href="data-types-and-recoding.html#cb131-6" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;plasma&quot;</span>)</span></code></pre></div>
+<p><img src="0403_types_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Now your most common category appears first - much more informative!
+The slides show an example with months, which is a classic problem. If you don’t use factors, your months end up in alphabetical order (April, August, December…) instead of calendar order. Using <code>fct_relevel</code>() with <code>month.name</code> fixes this:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="data-types-and-recoding.html#cb132-1" tabindex="-1"></a>hotels <span class="sc">%&gt;%</span></span>
+<span id="cb132-2"><a href="data-types-and-recoding.html#cb132-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FOO =</span> <span class="fu">fct_relevel</span>(BAR, month.name))</span></code></pre></div>
+<p>So next time your plot looks oddly ordered, remember: there’s probably a forcats function that can fix it in one line!</p>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->
 <!--AE Links-->
@@ -1664,6 +1736,7 @@ div.csl-indent {
 </div>
 <div id="working-with-dates-1" class="section level2 hasAnchor" number="31.7">
 <h2><span class="header-section-number">31.7</span> Working with Dates<a href="data-types-and-recoding.html#working-with-dates-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can follow along with the slides <a href="https://datascience4psych.github.io/slides/d11_types/d11_types.html">here</a> if they do not appear below.</p>
 <div class="vembedr" align="center">
 <div>
 <iframe src="https://www.youtube.com/embed/R6cEDlzCBfQ" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>

@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-03-03" />
+<meta name="date" content="2025-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1562,10 +1562,10 @@ div.csl-indent {
 <div id="packages-3" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab04.html#packages-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The *dsbox** package is not on CRAN yet; instead it is hosted on github. You will have to download and <a href="https://github.com/rstudio-education/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="lab04.html#cb159-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb159-2"><a href="lab04.html#cb159-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;rstudio-education/dsbox&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="lab04.html#cb160-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb160-2"><a href="lab04.html#cb160-2" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="lab04.html#cb170-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb170-2"><a href="lab04.html#cb170-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;rstudio-education/dsbox&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="lab04.html#cb171-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb171-2"><a href="lab04.html#cb171-2" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
 <p>If you cannot get <code>dsbox</code> to install, you can instead download the two datasets we will be using manually <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda">here</a> and <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda">here</a>.</p>
 <pre><code>githubURL_1 &lt;- &quot;https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda&quot;
 
@@ -1602,7 +1602,7 @@ load(url(githubURL_2))
 <p>The datasets we’ll use are called <code>dennys</code> and <code>laquinta</code> from the <strong>dsbox</strong> package.
 Note that these data were scraped from <a href="https://locations.dennys.com/">here</a> and <a href="https://www.lq.com/en/findandbook/hotel-listings.html">here</a>, respectively.</p>
 <p>To help with our analysis we will also use a dataset on US states:</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="lab04.html#cb162-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/states.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="lab04.html#cb173-1" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/states.csv&quot;</span>)</span></code></pre></div>
 <p>Each observation in this dataset represents a state, including DC. Along with the name of the state we have the two-letter abbreviation and we have the geographic area of the state (in square miles).</p>
 </div>
 <div id="exercises-3" class="section level2 unnumbered hasAnchor">
@@ -1626,56 +1626,56 @@ Note that these data were scraped from <a href="https://locations.dennys.com/">h
 <blockquote>
 <p>“Filter for <code>state</code>s that are not in <code>states$abbreviation</code>.”</p>
 </blockquote>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="lab04.html#cb163-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
-<span id="cb163-2"><a href="lab04.html#cb163-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(state <span class="sc">%in%</span> states<span class="sc">$</span>abbreviation))</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="lab04.html#cb174-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb174-2"><a href="lab04.html#cb174-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(state <span class="sc">%in%</span> states<span class="sc">$</span>abbreviation))</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>Add a country variable to the Denny’s dataset and set all observations equal to <code>"United States"</code>. Remember, you can use the <code>mutate</code> function for adding a variable. Make sure to save the result of this as <code>dn</code> again so that the stored data frame contains the new variable going forward.</li>
 </ol>
 <blockquote>
 <p>Comment: We don’t need to tell R how many times to repeat the character string “United States” to fill in the data for all observations, R takes care of that automatically.</p>
 </blockquote>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="lab04.html#cb164-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
-<span id="cb164-2"><a href="lab04.html#cb164-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="lab04.html#cb175-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb175-2"><a href="lab04.html#cb175-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
 <ol start="7" style="list-style-type: decimal">
 <li><p>Find the La Quinta locations that are outside the US, and figure out which country they are in. This might require some googling. Take notes, you will need to use this information in the next exercise.</p></li>
 <li><p>Add a country variable to the La Quinta dataset. Use the <code>case_when</code> function to populate this variable. You’ll need to refer to your notes from Exercise 7 about which country the non-US locations are in. Here is some starter code to get you going:</p></li>
 </ol>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="lab04.html#cb165-1" tabindex="-1"></a>lq <span class="sc">%&gt;%</span></span>
-<span id="cb165-2"><a href="lab04.html#cb165-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">case_when</span>(</span>
-<span id="cb165-3"><a href="lab04.html#cb165-3" tabindex="-1"></a>    state <span class="sc">%in%</span> state.abb <span class="sc">~</span> <span class="st">&quot;United States&quot;</span>,</span>
-<span id="cb165-4"><a href="lab04.html#cb165-4" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;ON&quot;</span>, <span class="st">&quot;BC&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Canada&quot;</span>,</span>
-<span id="cb165-5"><a href="lab04.html#cb165-5" tabindex="-1"></a>    state <span class="sc">==</span> <span class="st">&quot;ANT&quot;</span> <span class="sc">~</span> <span class="st">&quot;Colombia&quot;</span>,</span>
-<span id="cb165-6"><a href="lab04.html#cb165-6" tabindex="-1"></a>    ... <span class="co"># fill in the rest</span></span>
-<span id="cb165-7"><a href="lab04.html#cb165-7" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="lab04.html#cb176-1" tabindex="-1"></a>lq <span class="sc">%&gt;%</span></span>
+<span id="cb176-2"><a href="lab04.html#cb176-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">case_when</span>(</span>
+<span id="cb176-3"><a href="lab04.html#cb176-3" tabindex="-1"></a>    state <span class="sc">%in%</span> state.abb <span class="sc">~</span> <span class="st">&quot;United States&quot;</span>,</span>
+<span id="cb176-4"><a href="lab04.html#cb176-4" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;ON&quot;</span>, <span class="st">&quot;BC&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Canada&quot;</span>,</span>
+<span id="cb176-5"><a href="lab04.html#cb176-5" tabindex="-1"></a>    state <span class="sc">==</span> <span class="st">&quot;ANT&quot;</span> <span class="sc">~</span> <span class="st">&quot;Colombia&quot;</span>,</span>
+<span id="cb176-6"><a href="lab04.html#cb176-6" tabindex="-1"></a>    ... <span class="co"># fill in the rest</span></span>
+<span id="cb176-7"><a href="lab04.html#cb176-7" tabindex="-1"></a>  ))</span></code></pre></div>
 <p><span class="newthought">Going forward</span> we will work with the data from the United States only. All Denny’s locations are in the United States, so we don’t need to worry about them. However we do need to filter the La Quinta dataset for locations in United States.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="lab04.html#cb166-1" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
-<span id="cb166-2"><a href="lab04.html#cb166-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="lab04.html#cb177-1" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
+<span id="cb177-2"><a href="lab04.html#cb177-2" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United States&quot;</span>)</span></code></pre></div>
 <ol start="9" style="list-style-type: decimal">
 <li>Which states have the most and fewest Denny’s locations? What about La Quinta? Is this surprising? Why or why not?</li>
 </ol>
 <p>Next, let’s calculate which states have the most Denny’s locations <em>per thousand square miles</em>. This requires <em>join</em>ining information from the frequency tables you created in the previous set with information from the <code>states</code> data frame.</p>
 <p>First, we count how many observations are in each state, which will give us a data frame with two variables: <code>state</code> and <code>n</code>. Then, we join this data frame with the <code>states</code> data frame. However note that the variables in the <code>states</code> data frame that has the two-letter abbreviations is called <code>abbreviation</code>. So when we’re joining the two data frames we specify that the <code>state</code> variable from the Denny’s data should be matched <code>by</code> the <code>abbreviation</code> variable from the <code>states</code> data:</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="lab04.html#cb167-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
-<span id="cb167-2"><a href="lab04.html#cb167-2" tabindex="-1"></a>  <span class="fu">count</span>(state) <span class="sc">%&gt;%</span></span>
-<span id="cb167-3"><a href="lab04.html#cb167-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(states, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;state&quot;</span> <span class="ot">=</span> <span class="st">&quot;abbreviation&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="lab04.html#cb178-1" tabindex="-1"></a>dn <span class="sc">%&gt;%</span></span>
+<span id="cb178-2"><a href="lab04.html#cb178-2" tabindex="-1"></a>  <span class="fu">count</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb178-3"><a href="lab04.html#cb178-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(states, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;state&quot;</span> <span class="ot">=</span> <span class="st">&quot;abbreviation&quot;</span>))</span></code></pre></div>
 <p>Before you move on the the next question, run the code above and take a look at the output. In the next exercise, you will need to build on this pipe.</p>
 <ol start="10" style="list-style-type: decimal">
 <li>Which states have the most Denny’s locations per thousand square miles? What about La Quinta?</li>
 </ol>
 <p>Next, we put the two datasets together into a single data frame. However before we do so, we need to add an identifier variable. We’ll call this <code>establishment</code> and set the value to <code>"Denny's"</code> and <code>"La Quinta"</code> for the <code>dn</code> and <code>lq</code> data frames, respectively.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="lab04.html#cb168-1" tabindex="-1"></a>dn <span class="ot">&lt;-</span> dn <span class="sc">%&gt;%</span></span>
-<span id="cb168-2"><a href="lab04.html#cb168-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;Denny&#39;s&quot;</span>)</span>
-<span id="cb168-3"><a href="lab04.html#cb168-3" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
-<span id="cb168-4"><a href="lab04.html#cb168-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;La Quinta&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="lab04.html#cb179-1" tabindex="-1"></a>dn <span class="ot">&lt;-</span> dn <span class="sc">%&gt;%</span></span>
+<span id="cb179-2"><a href="lab04.html#cb179-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;Denny&#39;s&quot;</span>)</span>
+<span id="cb179-3"><a href="lab04.html#cb179-3" tabindex="-1"></a>lq <span class="ot">&lt;-</span> lq <span class="sc">%&gt;%</span></span>
+<span id="cb179-4"><a href="lab04.html#cb179-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">establishment =</span> <span class="st">&quot;La Quinta&quot;</span>)</span></code></pre></div>
 <p>Because the two data frames have the same columns, we can easily bind them with the <code>bind_rows</code> function:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="lab04.html#cb169-1" tabindex="-1"></a>dn_lq <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dn, lq)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="lab04.html#cb180-1" tabindex="-1"></a>dn_lq <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dn, lq)</span></code></pre></div>
 <p>We can plot the locations of the two establishments using a scatter plot, and color the points by the establishment type. Note that the latitude is plotted on the x-axis and the longitude on the y-axis.</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="lab04.html#cb170-1" tabindex="-1"></a><span class="fu">ggplot</span>(dn_lq, <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb170-2"><a href="lab04.html#cb170-2" tabindex="-1"></a>  <span class="at">x =</span> longitude,</span>
-<span id="cb170-3"><a href="lab04.html#cb170-3" tabindex="-1"></a>  <span class="at">y =</span> latitude,</span>
-<span id="cb170-4"><a href="lab04.html#cb170-4" tabindex="-1"></a>  <span class="at">color =</span> establishment</span>
-<span id="cb170-5"><a href="lab04.html#cb170-5" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb170-6"><a href="lab04.html#cb170-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="lab04.html#cb181-1" tabindex="-1"></a><span class="fu">ggplot</span>(dn_lq, <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb181-2"><a href="lab04.html#cb181-2" tabindex="-1"></a>  <span class="at">x =</span> longitude,</span>
+<span id="cb181-3"><a href="lab04.html#cb181-3" tabindex="-1"></a>  <span class="at">y =</span> latitude,</span>
+<span id="cb181-4"><a href="lab04.html#cb181-4" tabindex="-1"></a>  <span class="at">color =</span> establishment</span>
+<span id="cb181-5"><a href="lab04.html#cb181-5" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb181-6"><a href="lab04.html#cb181-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p>The following two questions ask you to create visualizations. These visualizations should follow best practices you learned in class, such as informative titles, axis labels, etc. See <a href="http://ggplot2.tidyverse.org/reference/labs.html" class="uri">http://ggplot2.tidyverse.org/reference/labs.html</a> for help with the syntax. You can also choose different themes to change the overall look of your plots, see <a href="http://ggplot2.tidyverse.org/reference/ggtheme.html" class="uri">http://ggplot2.tidyverse.org/reference/ggtheme.html</a> for help with these.</p>
 <ol start="11" style="list-style-type: decimal">
 <li><p>Filter the data for observations in North Carolina only, and recreate the plot. You should also adjust the transparency of the points, by setting the <code>alpha</code> level, so that it’s easier to see the overplotted ones. Visually, does Mitch Hedberg’s joke appear to hold here?</p></li>
