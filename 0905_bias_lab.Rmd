@@ -1,4 +1,4 @@
-# Lab: Ethics in Data Science {#lab09}
+# Lab: Ethics in Data Science {#lab09alt}
 
 ## "With great power comes great responsibility": Exploring Algorithmic Bias {.unnumbered}
 
@@ -38,17 +38,19 @@ devtools::install_github("kozodoi/fairness")
 ```{r eval = TRUE, message = FALSE}
 library(tidyverse)
 library(fairness)
+library(janitor)
 ```
 
 If you cannot get the fairness package to install, don't worry - we'll implement the fairness metrics ourselves.
 
 ### The data {.unnumbered}
 
-For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been preprocessed and cleaned for you.
+For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been  preprocessed and mostly cleaned for you. I recommend using the `janitor` package to clean the column names.
 
 ```{r}
 # Load the COMPAS data
-compas <- read_csv("data/compas-scores-two-years.csv")
+compas <- read_csv("data/compas-scores-two-years.csv") %>% clean_names() %>% rename(decile_score = decile_score_12,
+                         priors_count = priors_count_15)
 
 # Take a look at the data
 glimpse(compas)
@@ -138,6 +140,13 @@ ggplot(compas, aes(fill = age_cat, x=sex)) +
 
 
 4. Create a visualization of the COMPAS risk scores (`decile_score`) distribution. What do you observe about the shape of this distribution?
+
+
+```{r eval=FALSE, include=FALSE}
+ggplot(compas, aes(x = decile_score)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "skyblue") +
+  labs(title = "Distribution of COMPAS Risk Scores")
+```
 
 ### Part 2: Risk scores and recidivism {.unnumbered}
 
