@@ -1,7 +1,10 @@
 # Lab: Modeling professor attractiveness and course evaluations {#lab10}
 
-```{r include=FALSE}
-library(tufte)
+```{r setup, include=FALSE}
+source("common.R")
+
+knitr::opts_chunk$set(eval = TRUE)
+library(tidyverse)
 library(knitr)
 library(tweetrmd) # ... embedding tweets
 options(
@@ -9,16 +12,21 @@ options(
   show.signif.stars = FALSE, # for regression output
   digits = 2
 )
-knitr::opts_chunk$set(eval = FALSE)
+
 ```
 
-## Getting started {.unnumbered}
+## Why are hot professors “better” teachers? {.unnumbered}
 
-Many college courses conclude by giving students the opportunity to evaluate the course and the instructor anonymously. However, the use of these student evaluations as an indicator of course quality and teaching effectiveness is often criticized because these measures may reflect the influence of non-teaching related characteristics, such as the physical appearance of the instructor. The article titled, "Beauty in the classroom: instructors' pulchritude and putative pedagogical productivity" (Hamermesh and Parker, 2005) found that instructors who are viewed to be better looking receive higher instructional ratings. (Daniel S. Hamermesh, Amy Parker, Beauty in the classroom: instructors pulchritude and putative pedagogical productivity, Economics of Education Review, Volume 24, Issue 4, August 2005, Pages 369-376, ISSN 0272-7757, 10.1016/j.econedurev.2004.07.013. <http://www.sciencedirect.com/science/article/pii/S0272775704001165>.)
 
-For this assignment, you will analyze the data from this study in order to learn what goes into a positive professor evaluation.
+At the end of most college courses, students are asked to evaluate the class and the instructor—usually anonymously, often hastily, sometimes with one hand already on the doorknob. These are often used to assess instructor effectiveness, allocate merit raises, and sometimes even decide whether people keep their jobs.
 
-The data were gathered from end of semester student evaluations for a large sample of professors from the University of Texas at Austin. In addition, six students rated the professors' physical appearance. (This is a slightly modified version of the original data set that was released as part of the replication data for Data Analysis Using Regression and Multilevel/Hierarchical Models (Gelman and Hill, 2007).) The result is a data frame where each row contains a different course and columns represent variables about the courses and professors.
+But are course evaluations actually measuring teaching quality? Or are they picking up on other things—like a professor’s appearance?
+
+
+In a now-classic economics paper, Daniel Hamermesh and Amy Parker looked at whether professors who are considered more physically attractive get higher evaluation scores. The short answer? Yeah, they do. You can read their study [here](http://www.sciencedirect.com/science/article/pii/S0272775704001165).^[ Daniel S. Hamermesh, Amy Parker, Beauty in the classroom: instructors pulchritude and putative pedagogical productivity, Economics of Education Review, Volume 24, Issue 4, August 2005, Pages 369-376, ISSN 0272-7757, 10.1016/j.econedurev.2004.07.013.] The dataset we’ll use comes from a slightly modified version of the replication data included with [*Data Analysis Using Regression and Multilevel/Hierarchical Models*](https://www.cambridge.org/core/books/data-analysis-using-regression-and-multilevelhierarchical-models/2379C12C0ACB1E29B2DABF65E6EF1DC5) by Gelman and Hill.
+
+In this lab, you'll explore that dataset—focusing on one predictor at a time—to get a feel for how linear models behave, how to interpret them, and how to visualize their results. Along the way, you’ll also get a preview of just how messy “evaluation” can be when the outcome depends on variables that have nothing to do with teaching.
+
 
 ```{r, echo=FALSE}
 try_include_tweet("https://twitter.com/CaseyFrid/status/1382737134776385536")
@@ -26,9 +34,11 @@ try_include_tweet("https://twitter.com/CaseyFrid/status/1382737134776385536")
 
 ### Packages {.unnumbered}
 
-In this lab, we will work with the **tidyverse**, **openintro**, and **broom** packages.
 
-```{r eval = FALSE}
+We'll use  **tidyverse**, **openintro**, and **broom** to wrangle, model, and tidy up our regression output.
+
+
+```{r eval = TRUE, message = FALSE}
 library(tidyverse)
 library(broom)
 library(openintro)
@@ -45,11 +55,12 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 1. Visualize the distribution of `score`. Is the distribution skewed? What does that tell you about how students rate courses? Is this what you expected to see? Why, or why not? Include any summary statistics and visualizations you use in your response.
 
-2. Visualize and describe the relationship between `score` and the variable `bty_avg`, a professor's average beauty rating.
+2. Create a scatterplot of `score` versus `bty_avg` (a professor's average beauty rating). Describe any pattern you observe—does there appear to be a trend, clustering, or wide variation? Don’t overthink it; just describe what you see.
 
 > **Hint:** See the help page for the function at <http://ggplot2.tidyverse.org/reference/index.html>.
 
-3. Replot the scatterplot from Exercise 2, but this time use `geom_jitter()`? What does "jitter" mean? What was misleading about the initial scatterplot?
+3. Recreate your scatterplot from Exercise 2, but use `geom_jitter()` instead of `geom_point()`. What does jittering do, and why might it improve the plot? Was anything misleading or hidden in the original version?
+
 
 ### Part 2: Linear regression with a numerical predictor {.unnumbered}
 
@@ -57,17 +68,27 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 4. Let's see if the apparent trend in the plot is something more than natural variation. Fit a linear model called `m_bty` to predict average professor evaluation `score` by average beauty rating (`bty_avg`). Based on the regression output, write the linear model.
 
-5. Replot your visualization from Exercise 3, and add the regression line to this plot in orange color. Turn off the shading for the uncertainty of the line.
+5. Replot your visualization from Exercise 3, this time add a regression line in orange.  Turn off the default shading around the line. By default, the plot includes shading around the line—what does that shading represent? And speculate why I'm asking you to turn it off.
 
-6. Interpret the slope of the linear model in context of the data.
+6. What does the slope of the model tell you? Interpret it in the context of this data—what does it say about how evaluation scores change with beauty ratings?
 
-7. Interpret the intercept of the linear model in context of the data. Comment on whether or not the intercept makes sense in this context.
+7. What does the intercept represent in this model? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.
 
-8. Determine the $R^2$ of the model and interpret it in context of the data.
+8. What is the $R^2$ value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?
 
 ### Part 3: Linear regression with a categorical predictor {.unnumbered}
 
-9. Fit a new linear model called `m_gen` to predict average professor evaluation `score` based on `gender` of the professor. Based on the regression output, write the linear model and interpret the slope and intercept in context of the data.
+Let’s switch gears from numeric predictors to categorical ones. Beauty scores might be (somewhat) continuous, but characteristics like `gender` and `rank` are categorical, meaning they fall into distinct groups.
+
+We’ll start by seeing whether evaluation scores differ by `gender`.
+
+
+```{r}
+m_gen <- lm(score ~ gender, data = evals)
+tidy(m_gen)
+```
+
+9. Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors?
 
 10. What is the equation of the line corresponding to male professors? What is it for female professors?
 
@@ -75,7 +96,7 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 12. Create a new variable called `rank_relevel` where `"tenure track"` is the baseline level.
 
-13. Fit a new linear model called `m_rank_relevel` to predict average professor evaluation `score` based on `rank_relevel` of the professor. This is the new (releveled) variable you created in Exercise 13. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+13. Fit a new linear model called `m_rank_relevel` to predict average professor evaluation `score` based on `rank_relevel` of the professor. This is the new (releveled) variable you created in the previous exercise. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
 
 14. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as
     `"no"` and labels `"tenure track"` and `"tenured"` faculty as `"yes"`.

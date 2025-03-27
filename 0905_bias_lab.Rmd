@@ -15,11 +15,12 @@ knitr::opts_chunk$set(eval = FALSE)
 
 > Note: This lab is in beta testing...
 
-Data scientists wield considerable power in today's algorithmic society. The models we build can determine who gets a loan, who gets hired, and even who goes to jail. As the famous quote (often attributed to Spider-Man) goes: "With great power comes great responsibility."  In this lab, we'll explore what that responsibility looks like by analyzing algorithmic bias in the COMPAS recidivism risk score used in the U.S. criminal justice system.
+Data scientists wield considerable power in today's algorithmic society. The models we build can determine who gets a loan, who gets hired, and even who goes to jail. As the famous quote (often attributed to Spider-Man) goes: "With great power comes great responsibility."  In this lab, we take up that challenge by analyzing algorithmic bias in a widely used criminal justice tool: the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) recidivism risk score.
 
-In 2016, ProPublica published an investigative report titled "[Machine Bias](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)" that examined how the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm was being used to inform judicial decisions across the United States—from bail to sentencing to parole. The algorithm assigns risk scores that predicts a defendant's likelihood of reoffending.
+The COMPAS case has become central in both public reporting and academic study, particularly following a 2016 investigative report by ProPublica titled "[Machine Bias](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)". Analyzing the outcomes of over 7,000 people arrested in Broward County, Florida, ProPublica found that Black defendants were more likely to be misclassified as high risk, even when they did not go on to reoffend. The dataset, methods, and fairness concerns raised in that analysis are now commonly used as a teaching example in data science ethics.
 
-ProPublica analyzed the COMPAS algorithm by looking at the outcomes of more than 7,000 people arrested in Broward County, Florida. They found that the algorithm was biased against Black defendants, who were more likely to be incorrectly classified as high risk compared to White defendants. In this lab, we'll work with the same dataset that ProPublica used and conduct our own investigation into algorithmic bias.
+In this lab, we'll work with the same dataset ProPublica used and replicate parts of their [analysis]("https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm") to evaluate how the algorithm behaves. We'll also explore the sources of bias in the COMPAS algorithm and consider what changes could be made to create a fairer risk assessment tool.
+
 
 ## Getting started {.unnumbered}
 
@@ -27,9 +28,9 @@ Go to the course GitHub organization and locate the lab repo, which should be na
 
 ### Packages {.unnumbered}
 
-In this lab, we will use the **tidyverse** package for data manipulation and visualization. We'll also use the **fairness** package, which provides tools for measuring algorithmic fairness.
+In this lab, we will use  **tidyverse** and **janitor** to clean and explore the data.
 
-```{r eval=FALSE}
+```{r eval=FALSE,include=FALSE}
 # Install the fairness package from GitHub
 install.packages("devtools")
 devtools::install_github("kozodoi/fairness")
@@ -37,20 +38,20 @@ devtools::install_github("kozodoi/fairness")
 
 ```{r eval = TRUE, message = FALSE}
 library(tidyverse)
-library(fairness)
 library(janitor)
 ```
 
-If you cannot get the fairness package to install, don't worry - we'll implement the fairness metrics ourselves.
 
 ### The data {.unnumbered}
 
-For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been  preprocessed and mostly cleaned for you. I recommend using the `janitor` package to clean the column names.
+For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been preprocessed and mostly cleaned for you. I recommend using the `janitor` package to clean the column names.
 
 ```{r}
 # Load the COMPAS data
-compas <- read_csv("data/compas-scores-two-years.csv") %>% clean_names() %>% rename(decile_score = decile_score_12,
-                         priors_count = priors_count_15)
+compas <- read_csv("data/compas-scores-two-years.csv") %>%
+  clean_names() %>% 
+  rename(decile_score = decile_score_12,
+         priors_count = priors_count_15)
 
 # Take a look at the data
 glimpse(compas)
@@ -99,22 +100,29 @@ names(compas)
 n_distinct(compas$id)
 ```
 
-3. Let's examine the demographic distribution in our dataset. Create visualizations to show:
+3. Let's examine the  distribution of the COMPAS risk scores (`decile_score`)! What do you observe about the shape of this distribution?
+
+
+```{r eval=FALSE, include=FALSE}
+ggplot(compas, aes(x = decile_score)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "skyblue") +
+  labs(title = "Distribution of COMPAS Risk Scores")
+```
+
+4. Let's examine the demographic distribution in our dataset. Create visualizations to show:
    - The distribution of defendants by race
    - The distribution of defendants by sex
    - The distribution of defendants by age category
 
-For an extra challenge, try to create a single visualization that shows all three distributions side by side. 
+For an extra challenge, try to create a single visualization that shows all three distributions side by side. You can use facets or color to differentiate between the different demographic groups.
 
 ```{r eval=FALSE, include=FALSE}
 # Distribution by race
 compas <- compas %>% mutate( #refactor age_cat to factor
-  age_cat = factor(age_cat, levels = c("Less than 25", "25 - 45", "Greater than 45"))
-)# %>% # rename the levels
-#  mutate(age_cat = fct_recode(age_cat,
- #                            "<25"= "Less than 25" ,
- #                             "25 - 45" = "25 - 45",
- #                             ">45" = "Greater than 45" ))
+  age_cat = factor(age_cat, 
+                   levels = c("Less than 25",
+                              "25 - 45",
+                              "Greater than 45")))
 
 
 
@@ -139,22 +147,15 @@ ggplot(compas, aes(fill = age_cat, x=sex)) +
 ```
 
 
-4. Create a visualization of the COMPAS risk scores (`decile_score`) distribution. What do you observe about the shape of this distribution?
 
-
-```{r eval=FALSE, include=FALSE}
-ggplot(compas, aes(x = decile_score)) +
-  geom_histogram(binwidth = 1, color = "black", fill = "skyblue") +
-  labs(title = "Distribution of COMPAS Risk Scores")
-```
 
 ### Part 2: Risk scores and recidivism {.unnumbered}
 
 5. Create a visualization showing the relationship between risk scores (`decile_score`) and actual recidivism (`two_year_recid`). Do higher risk scores actually correspond to higher rates of recidivism? 
 
 6. Calculate the overall accuracy of the COMPAS algorithm. For this exercise, consider a prediction "correct" if:
-   - A defendant with a high risk score (decile_score >= 7) did recidivate (two_year_recid = 1)
-   - A defendant with a low risk score (decile_score <= 4) did not recidivate (two_year_recid = 0)
+   - A defendant with a high risk score (`decile_score` >= 7) did recidivate (`two_year_recid` = 1)
+   - A defendant with a low risk score (`decile_score` <= 4) did not recidivate (`two_year_recid` = 0)
 
 
 7. How well does the COMPAS algorithm perform overall? What percentage of its predictions are correct based on your calculation above?
