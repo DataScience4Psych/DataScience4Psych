@@ -93,7 +93,7 @@ ebirdkey <- "SECRET API KEY"
 ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote="\"", comment.char="")[1,1]
 ```
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,error=TRUE, cache=TRUE}
 ebirdregion(loc = "L261851", key = ebirdkey) %>%
   head() %>%
   kable()
@@ -101,7 +101,7 @@ ebirdregion(loc = "L261851", key = ebirdkey) %>%
 
 We can use the function `ebirdgeo()` to get a list for an area (note that South and West are negative):
 
-```{r results = 'asis', eval = TRUE,error=TRUE}
+```{r results = 'asis', eval = TRUE,error=TRUE,cache=TRUE}
 vanbirds <- ebirdgeo(lat = 49.2500, lng = -123.1000, key = ebirdkey)
 vanbirds %>%
   head() %>%
@@ -112,7 +112,7 @@ vanbirds %>%
 
 We can also search by "region", which refers to short codes which serve as common shorthands for different political units. For example, France is represented by the letters **FR**.
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,error=TRUE,cache=TRUE}
 frenchbirds <- ebirdregion("FR", key = ebirdkey)
 frenchbirds %>%
   head() %>%
@@ -121,7 +121,7 @@ frenchbirds %>%
 
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
-```{r eval = TRUE}
+```{r eval = TRUE,cache=TRUE}
 eagle <- ebirdgeo(species = "baleag", 
                   lat = 42, lng = -76, key = ebirdkey)
 eagle %>%
@@ -131,7 +131,7 @@ eagle %>%
 
 rebird **knows where you are**:
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,error=TRUE,cache=TRUE}
 ebirdgeo(species = "rolhaw", key = ebirdkey)
 ```
 
@@ -181,10 +181,10 @@ Save the file, close it, and restart R. Now we're ready to start using geonames 
 What can we do? We can get access to lots of geographical information via the various [GeoNames WebServices](http://www.geonames.org/export/ws-overview.html).
 
 ```{r, eval = TRUE,error=TRUE}
-countryInfo <- GNcountryInfo()
+countryInfo <- geonames::GNcountryInfo()
 ```
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,error=TRUE,cache=TRUE}
 glimpse(countryInfo)
 ```
 
@@ -194,12 +194,12 @@ This `countryInfo` dataset is very helpful for accessing the rest of the data be
 
 What are the cities of France?
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,cache=TRUE}
 francedata <- countryInfo %>%
   filter(countryName == "France")
 ```
 
-```{r eval = TRUE,error=TRUE}
+```{r eval = TRUE,error=TRUE,cache=TRUE}
 frenchcities <- with(francedata, GNcities(
   north = north, east = east,
   south = south, west = west,
@@ -207,7 +207,7 @@ frenchcities <- with(francedata, GNcities(
 ))
 ```
 
-```{r eval = TRUE}
+```{r eval = TRUE, cache=TRUE, error=TRUE}
 glimpse(frenchcities)
 ```
 
@@ -216,11 +216,11 @@ glimpse(frenchcities)
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
 
 ```{r, eval = TRUE,error=TRUE}
-rio_english <- GNfindNearbyWikipedia(
+rio_english <- geonames::GNfindNearbyWikipedia(
   lat = -22.9083, lng = -43.1964,
   radius = 20, lang = "en", maxRows = 500
 )
-rio_portuguese <- GNfindNearbyWikipedia(
+rio_portuguese <- geonames::GNfindNearbyWikipedia(
   lat = -22.9083, lng = -43.1964,
   radius = 20, lang = "pt", maxRows = 500
 )
