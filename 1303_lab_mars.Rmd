@@ -27,7 +27,7 @@ options(
 
 In this lab, we will work with the **tidyverse**, **ggplot2**, and **MASS** packages. We can install and load them with the following code:
 
-```{r load-packages, message=FALSE}
+```{r load-packages, message=FALSE, warning=FALSE}
 if (!require("ggplot2")) install.packages("ggplot2")
 library(ggplot2)
 
@@ -116,8 +116,19 @@ ggplot(df, aes(x = age, fill = seed)) +
 What roles would these colonists have? Let's decide..... We need engineers, scientists, and medics in equal numbers.
 
 
-We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to simulate this categorical variable. I've demonstrated several ways you can use `rep()` to create the `role` variable. Try them out. 
+We'll create a variable, `role`, with three categories: engineer, scientist, and medic. We'll use the `rep()` function to simulate this categorical variable.  There are several different ways to assign these roles, depending on the structure you want — for example:
 
+- a repeating sequence (e.g., engineer → scientist → medic → ...),
+
+- long blocks of repeated roles (e.g., engineer → engineer → engineer → … → scientist → scientist → …)
+
+- repeated sets in a fixed pattern (e.g., engineer → engineer → … → scientist → scientist → … → medic → medic → … → engineer),
+
+- randomly drawn roles with equal probability (e.g., scientist → medic → scientist → engineer → medic → …),
+
+- or a shuffled version of an existing list (e.g., scientist → medic → engineer → engineer → medic → …).
+
+Below, we show several ways to construct this variable. Try to figure out how they differ — and which one might best suit your colony’s needs.
 
 ```{r exercise1.3_examples, error=TRUE}
 set.seed(1)
@@ -142,6 +153,8 @@ roleD <- sample(c("engineer", "scientist", "medic"),
 roleE <- sample(roleB, size = 100, replace = FALSE)
 
 ```
+
+There are different ways to assign these roles, depending on the **pattern of assignment** we want.
 
 ```{r pie,echo=FALSE}
 df <- data.frame( role = c(roleA, roleB, roleC,roleD, roleE), 
@@ -190,13 +203,11 @@ df %>%
 </details>
 
 
-
-**1.3.** Create a role variable that suits the needs of your colony, and explain why you chose that method.
+**1.3.** Create a role variable using one of the methods above, or design your own. Explain how the method you chose reflects your goals: do you want equal distribution, randomness, or a specific pattern? Be specific about what your colony needs.
 
 ```{r exercise1.3solution, error=TRUE,include=FALSE}
 df_colonists$role <- roleA 
 ```
-
 
 Next, we'll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.
 
