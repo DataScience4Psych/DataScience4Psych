@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-04-02" />
+<meta name="date" content="2025-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1634,61 +1634,61 @@ L(\hat \beta_\theta, (y_i, X_i)) = (y_i - X_i^T \hat \beta_\theta)^2
 </div>
 <div id="example" class="section level2 hasAnchor" number="78.4">
 <h2><span class="header-section-number">78.4</span> Example<a href="odd-notes-on-cross-validation.html#example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="odd-notes-on-cross-validation.html#cb445-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb445-2"><a href="odd-notes-on-cross-validation.html#cb445-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb445-3"><a href="odd-notes-on-cross-validation.html#cb445-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), <span class="at">nrow =</span> n)</span>
-<span id="cb445-4"><a href="odd-notes-on-cross-validation.html#cb445-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb445-5"><a href="odd-notes-on-cross-validation.html#cb445-5" tabindex="-1"></a>get_rss_submodels <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors, y, X) {</span>
-<span id="cb445-6"><a href="odd-notes-on-cross-validation.html#cb445-6" tabindex="-1"></a>  <span class="cf">if</span> (n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb445-7"><a href="odd-notes-on-cross-validation.html#cb445-7" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span>)</span>
-<span id="cb445-8"><a href="odd-notes-on-cross-validation.html#cb445-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb445-9"><a href="odd-notes-on-cross-validation.html#cb445-9" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X[, <span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
-<span id="cb445-10"><a href="odd-notes-on-cross-validation.html#cb445-10" tabindex="-1"></a>  }</span>
-<span id="cb445-11"><a href="odd-notes-on-cross-validation.html#cb445-11" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(lm_submodel)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb445-12"><a href="odd-notes-on-cross-validation.html#cb445-12" tabindex="-1"></a>}</span>
-<span id="cb445-13"><a href="odd-notes-on-cross-validation.html#cb445-13" tabindex="-1"></a>p_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>p</span>
-<span id="cb445-14"><a href="odd-notes-on-cross-validation.html#cb445-14" tabindex="-1"></a>rss <span class="ot">&lt;-</span> <span class="fu">sapply</span>(p_vec, get_rss_submodels, y, X)</span>
-<span id="cb445-15"><a href="odd-notes-on-cross-validation.html#cb445-15" tabindex="-1"></a><span class="fu">plot</span>(rss <span class="sc">~</span> p_vec)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="odd-notes-on-cross-validation.html#cb444-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb444-2"><a href="odd-notes-on-cross-validation.html#cb444-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb444-3"><a href="odd-notes-on-cross-validation.html#cb444-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), <span class="at">nrow =</span> n)</span>
+<span id="cb444-4"><a href="odd-notes-on-cross-validation.html#cb444-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb444-5"><a href="odd-notes-on-cross-validation.html#cb444-5" tabindex="-1"></a>get_rss_submodels <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors, y, X) {</span>
+<span id="cb444-6"><a href="odd-notes-on-cross-validation.html#cb444-6" tabindex="-1"></a>  <span class="cf">if</span> (n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb444-7"><a href="odd-notes-on-cross-validation.html#cb444-7" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span>)</span>
+<span id="cb444-8"><a href="odd-notes-on-cross-validation.html#cb444-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb444-9"><a href="odd-notes-on-cross-validation.html#cb444-9" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X[, <span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb444-10"><a href="odd-notes-on-cross-validation.html#cb444-10" tabindex="-1"></a>  }</span>
+<span id="cb444-11"><a href="odd-notes-on-cross-validation.html#cb444-11" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">residuals</span>(lm_submodel)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb444-12"><a href="odd-notes-on-cross-validation.html#cb444-12" tabindex="-1"></a>}</span>
+<span id="cb444-13"><a href="odd-notes-on-cross-validation.html#cb444-13" tabindex="-1"></a>p_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>p</span>
+<span id="cb444-14"><a href="odd-notes-on-cross-validation.html#cb444-14" tabindex="-1"></a>rss <span class="ot">&lt;-</span> <span class="fu">sapply</span>(p_vec, get_rss_submodels, y, X)</span>
+<span id="cb444-15"><a href="odd-notes-on-cross-validation.html#cb444-15" tabindex="-1"></a><span class="fu">plot</span>(rss <span class="sc">~</span> p_vec)</span></code></pre></div>
 <p><img src="1103_cvnotes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="odd-notes-on-cross-validation.html#cb446-1" tabindex="-1"></a>get_cv_error <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors,</span>
-<span id="cb446-2"><a href="odd-notes-on-cross-validation.html#cb446-2" tabindex="-1"></a>                         y,</span>
-<span id="cb446-3"><a href="odd-notes-on-cross-validation.html#cb446-3" tabindex="-1"></a>                         X,</span>
-<span id="cb446-4"><a href="odd-notes-on-cross-validation.html#cb446-4" tabindex="-1"></a>                         folds) {</span>
-<span id="cb446-5"><a href="odd-notes-on-cross-validation.html#cb446-5" tabindex="-1"></a>  cv_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(<span class="fu">unique</span>(folds)))</span>
-<span id="cb446-6"><a href="odd-notes-on-cross-validation.html#cb446-6" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">unique</span>(folds)) {</span>
-<span id="cb446-7"><a href="odd-notes-on-cross-validation.html#cb446-7" tabindex="-1"></a>    cv_vec[f] <span class="ot">&lt;-</span> <span class="fu">rss_on_held_out</span>(</span>
-<span id="cb446-8"><a href="odd-notes-on-cross-validation.html#cb446-8" tabindex="-1"></a>      n_predictors,</span>
-<span id="cb446-9"><a href="odd-notes-on-cross-validation.html#cb446-9" tabindex="-1"></a>      <span class="at">y_train =</span> y[folds <span class="sc">!=</span> f],</span>
-<span id="cb446-10"><a href="odd-notes-on-cross-validation.html#cb446-10" tabindex="-1"></a>      <span class="at">X_train =</span> X[folds <span class="sc">!=</span> f, ],</span>
-<span id="cb446-11"><a href="odd-notes-on-cross-validation.html#cb446-11" tabindex="-1"></a>      <span class="at">y_test =</span> y[folds <span class="sc">==</span> f],</span>
-<span id="cb446-12"><a href="odd-notes-on-cross-validation.html#cb446-12" tabindex="-1"></a>      <span class="at">X_test =</span> X[folds <span class="sc">==</span> f, ]</span>
-<span id="cb446-13"><a href="odd-notes-on-cross-validation.html#cb446-13" tabindex="-1"></a>    )</span>
-<span id="cb446-14"><a href="odd-notes-on-cross-validation.html#cb446-14" tabindex="-1"></a>  }</span>
-<span id="cb446-15"><a href="odd-notes-on-cross-validation.html#cb446-15" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(cv_vec))</span>
-<span id="cb446-16"><a href="odd-notes-on-cross-validation.html#cb446-16" tabindex="-1"></a>}</span>
-<span id="cb446-17"><a href="odd-notes-on-cross-validation.html#cb446-17" tabindex="-1"></a></span>
-<span id="cb446-18"><a href="odd-notes-on-cross-validation.html#cb446-18" tabindex="-1"></a>rss_on_held_out <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors,</span>
-<span id="cb446-19"><a href="odd-notes-on-cross-validation.html#cb446-19" tabindex="-1"></a>                            y_train,</span>
-<span id="cb446-20"><a href="odd-notes-on-cross-validation.html#cb446-20" tabindex="-1"></a>                            X_train,</span>
-<span id="cb446-21"><a href="odd-notes-on-cross-validation.html#cb446-21" tabindex="-1"></a>                            y_test,</span>
-<span id="cb446-22"><a href="odd-notes-on-cross-validation.html#cb446-22" tabindex="-1"></a>                            X_test) {</span>
-<span id="cb446-23"><a href="odd-notes-on-cross-validation.html#cb446-23" tabindex="-1"></a>  <span class="cf">if</span> (n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb446-24"><a href="odd-notes-on-cross-validation.html#cb446-24" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span>)</span>
-<span id="cb446-25"><a href="odd-notes-on-cross-validation.html#cb446-25" tabindex="-1"></a>    preds_on_test <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y_test))</span>
-<span id="cb446-26"><a href="odd-notes-on-cross-validation.html#cb446-26" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb446-27"><a href="odd-notes-on-cross-validation.html#cb446-27" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X_train[, <span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
-<span id="cb446-28"><a href="odd-notes-on-cross-validation.html#cb446-28" tabindex="-1"></a>    preds_on_test <span class="ot">&lt;-</span> X_test[, <span class="dv">1</span><span class="sc">:</span>n_predictors, drop <span class="ot">=</span> <span class="cn">FALSE</span>] <span class="sc">%*%</span> <span class="fu">coef</span>(lm_submodel)</span>
-<span id="cb446-29"><a href="odd-notes-on-cross-validation.html#cb446-29" tabindex="-1"></a>  }</span>
-<span id="cb446-30"><a href="odd-notes-on-cross-validation.html#cb446-30" tabindex="-1"></a></span>
-<span id="cb446-31"><a href="odd-notes-on-cross-validation.html#cb446-31" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>((y_test <span class="sc">-</span> preds_on_test)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb446-32"><a href="odd-notes-on-cross-validation.html#cb446-32" tabindex="-1"></a>}</span>
-<span id="cb446-33"><a href="odd-notes-on-cross-validation.html#cb446-33" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb446-34"><a href="odd-notes-on-cross-validation.html#cb446-34" tabindex="-1"></a></span>
-<span id="cb446-35"><a href="odd-notes-on-cross-validation.html#cb446-35" tabindex="-1"></a><span class="do">## normally you would do this at random</span></span>
-<span id="cb446-36"><a href="odd-notes-on-cross-validation.html#cb446-36" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">each =</span> n <span class="sc">/</span> K)</span>
-<span id="cb446-37"><a href="odd-notes-on-cross-validation.html#cb446-37" tabindex="-1"></a>p_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>p</span>
-<span id="cb446-38"><a href="odd-notes-on-cross-validation.html#cb446-38" tabindex="-1"></a>cv_errors <span class="ot">&lt;-</span> <span class="fu">sapply</span>(p_vec, get_cv_error, y, X, folds)</span>
-<span id="cb446-39"><a href="odd-notes-on-cross-validation.html#cb446-39" tabindex="-1"></a><span class="fu">plot</span>(cv_errors <span class="sc">~</span> p_vec)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="odd-notes-on-cross-validation.html#cb445-1" tabindex="-1"></a>get_cv_error <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors,</span>
+<span id="cb445-2"><a href="odd-notes-on-cross-validation.html#cb445-2" tabindex="-1"></a>                         y,</span>
+<span id="cb445-3"><a href="odd-notes-on-cross-validation.html#cb445-3" tabindex="-1"></a>                         X,</span>
+<span id="cb445-4"><a href="odd-notes-on-cross-validation.html#cb445-4" tabindex="-1"></a>                         folds) {</span>
+<span id="cb445-5"><a href="odd-notes-on-cross-validation.html#cb445-5" tabindex="-1"></a>  cv_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(<span class="fu">unique</span>(folds)))</span>
+<span id="cb445-6"><a href="odd-notes-on-cross-validation.html#cb445-6" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">unique</span>(folds)) {</span>
+<span id="cb445-7"><a href="odd-notes-on-cross-validation.html#cb445-7" tabindex="-1"></a>    cv_vec[f] <span class="ot">&lt;-</span> <span class="fu">rss_on_held_out</span>(</span>
+<span id="cb445-8"><a href="odd-notes-on-cross-validation.html#cb445-8" tabindex="-1"></a>      n_predictors,</span>
+<span id="cb445-9"><a href="odd-notes-on-cross-validation.html#cb445-9" tabindex="-1"></a>      <span class="at">y_train =</span> y[folds <span class="sc">!=</span> f],</span>
+<span id="cb445-10"><a href="odd-notes-on-cross-validation.html#cb445-10" tabindex="-1"></a>      <span class="at">X_train =</span> X[folds <span class="sc">!=</span> f, ],</span>
+<span id="cb445-11"><a href="odd-notes-on-cross-validation.html#cb445-11" tabindex="-1"></a>      <span class="at">y_test =</span> y[folds <span class="sc">==</span> f],</span>
+<span id="cb445-12"><a href="odd-notes-on-cross-validation.html#cb445-12" tabindex="-1"></a>      <span class="at">X_test =</span> X[folds <span class="sc">==</span> f, ]</span>
+<span id="cb445-13"><a href="odd-notes-on-cross-validation.html#cb445-13" tabindex="-1"></a>    )</span>
+<span id="cb445-14"><a href="odd-notes-on-cross-validation.html#cb445-14" tabindex="-1"></a>  }</span>
+<span id="cb445-15"><a href="odd-notes-on-cross-validation.html#cb445-15" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(cv_vec))</span>
+<span id="cb445-16"><a href="odd-notes-on-cross-validation.html#cb445-16" tabindex="-1"></a>}</span>
+<span id="cb445-17"><a href="odd-notes-on-cross-validation.html#cb445-17" tabindex="-1"></a></span>
+<span id="cb445-18"><a href="odd-notes-on-cross-validation.html#cb445-18" tabindex="-1"></a>rss_on_held_out <span class="ot">&lt;-</span> <span class="cf">function</span>(n_predictors,</span>
+<span id="cb445-19"><a href="odd-notes-on-cross-validation.html#cb445-19" tabindex="-1"></a>                            y_train,</span>
+<span id="cb445-20"><a href="odd-notes-on-cross-validation.html#cb445-20" tabindex="-1"></a>                            X_train,</span>
+<span id="cb445-21"><a href="odd-notes-on-cross-validation.html#cb445-21" tabindex="-1"></a>                            y_test,</span>
+<span id="cb445-22"><a href="odd-notes-on-cross-validation.html#cb445-22" tabindex="-1"></a>                            X_test) {</span>
+<span id="cb445-23"><a href="odd-notes-on-cross-validation.html#cb445-23" tabindex="-1"></a>  <span class="cf">if</span> (n_predictors <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb445-24"><a href="odd-notes-on-cross-validation.html#cb445-24" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span>)</span>
+<span id="cb445-25"><a href="odd-notes-on-cross-validation.html#cb445-25" tabindex="-1"></a>    preds_on_test <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y_test))</span>
+<span id="cb445-26"><a href="odd-notes-on-cross-validation.html#cb445-26" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb445-27"><a href="odd-notes-on-cross-validation.html#cb445-27" tabindex="-1"></a>    lm_submodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_train <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> X_train[, <span class="dv">1</span><span class="sc">:</span>n_predictors, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb445-28"><a href="odd-notes-on-cross-validation.html#cb445-28" tabindex="-1"></a>    preds_on_test <span class="ot">&lt;-</span> X_test[, <span class="dv">1</span><span class="sc">:</span>n_predictors, drop <span class="ot">=</span> <span class="cn">FALSE</span>] <span class="sc">%*%</span> <span class="fu">coef</span>(lm_submodel)</span>
+<span id="cb445-29"><a href="odd-notes-on-cross-validation.html#cb445-29" tabindex="-1"></a>  }</span>
+<span id="cb445-30"><a href="odd-notes-on-cross-validation.html#cb445-30" tabindex="-1"></a></span>
+<span id="cb445-31"><a href="odd-notes-on-cross-validation.html#cb445-31" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>((y_test <span class="sc">-</span> preds_on_test)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb445-32"><a href="odd-notes-on-cross-validation.html#cb445-32" tabindex="-1"></a>}</span>
+<span id="cb445-33"><a href="odd-notes-on-cross-validation.html#cb445-33" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb445-34"><a href="odd-notes-on-cross-validation.html#cb445-34" tabindex="-1"></a></span>
+<span id="cb445-35"><a href="odd-notes-on-cross-validation.html#cb445-35" tabindex="-1"></a><span class="do">## normally you would do this at random</span></span>
+<span id="cb445-36"><a href="odd-notes-on-cross-validation.html#cb445-36" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">each =</span> n <span class="sc">/</span> K)</span>
+<span id="cb445-37"><a href="odd-notes-on-cross-validation.html#cb445-37" tabindex="-1"></a>p_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>p</span>
+<span id="cb445-38"><a href="odd-notes-on-cross-validation.html#cb445-38" tabindex="-1"></a>cv_errors <span class="ot">&lt;-</span> <span class="fu">sapply</span>(p_vec, get_cv_error, y, X, folds)</span>
+<span id="cb445-39"><a href="odd-notes-on-cross-validation.html#cb445-39" tabindex="-1"></a><span class="fu">plot</span>(cv_errors <span class="sc">~</span> p_vec)</span></code></pre></div>
 <p><img src="1103_cvnotes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 <div id="choice-of-k" class="section level2 hasAnchor" number="78.5">

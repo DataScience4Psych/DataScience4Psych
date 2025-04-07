@@ -1,6 +1,6 @@
 # Lab: Simulating data {#lab13}
 
-Welcome to the Mars Colony Simulation Lab! In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. As potential planners of a future Mars settlement, it is crucial to understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R.
+Welcome to the Mars Colony Simulation Lab! In this lab, we will embark on a journey to Mars, simulating potential colonists' data to plan our future Mars colony. As planners of a future Mars settlement, we must  understand the demographic and professional attributes that will help sustain a human presence on Mars. This lab teaches you to simulate these attributes using R.
 
 ## Learning goals {.unnumbered}
 
@@ -50,7 +50,7 @@ Instead of analyzing other people's data, we'll be generating our own!  You will
 1. Task 1: Generating Basic Attributes
 - Objective: Learn to create a dataset of n observations with specific characteristics.
 -->
-Imagine you're choosing the first 100 colonists for Mars. Let’s simulate their ages assuming a mean age of 30 and a standard deviation of 5—aiming for youth but with sufficient experience.
+Imagine you're choosing the first 100 colonists for Mars. Let's simulate their ages assuming a mean age of 30 and a standard deviation of 5—balancing youth with sufficient experience.
 
 
 __Setting Up Your Simulation__. We'll use the `rnorm()` function, which is perfect for this task because it generates normally distributed random numbers. Let's examine the arguments for `rnorm()` using the `?rnorm` command in R.
@@ -370,7 +370,7 @@ ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
   theme_minimal()
 ```
 
-### Exploring Correlations with mvrnorm {.unnumbered}
+### Exercise 3: Exploring Correlations with mvrnorm {.unnumbered}
 
 Now, this approach works well if you already know what you want your model to look like. But what if you want to simulate multiple variables with specific correlations? That's when the `mvrnorm` function comes in handy from the `MASS` package. This function generates data from a multivariate normal distribution, where we can specify means, standard deviations, and the correlation between variables. This is ideal for simulating more complex interdependencies that might exist among colonists' traits.
 
@@ -390,9 +390,26 @@ __Parameters for Simulation:__
 
 
 
-**3.2.** Simulate Resilience and Agreeableness
+**3.2.** Simulate Resilience and Agreeableness using the `mvrnorm` function. 
 
-```{r exercise3.2, error=TRUE,echo=TRUE} 
+I've provided the code below, but you'll need to fill in the blanks.
+```
+
+# Simulate resilience and agreeableness using mvrnorm
+
+# Define mean and covariance matrix
+mean_traits <- c(____, ____)
+cov_matrix <- matrix(c(_____, _____, 
+                       ______, _________), ncol = 2)
+
+# Generate correlated data
+
+traits_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix, empirical = FALSE)
+
+```
+
+
+```{r exercise3.2solution, error=TRUE,echo=FALSE, include=FALSE} 
 library(MASS)
 
 # Define mean and covariance matrix
@@ -439,19 +456,36 @@ ggplot(df_colonists, aes(x = agreeableness, y = resilience)) +
 
 ```
 
-So far, we've simulated colonist attributes like age, health, and technical skills — sometimes assuming they're unrelated, and other times creating relationships by explicitly defining them. But now, we need to simulate more complex attributes for our colonists, where the relationships among variables are themselves part of what we want to model.
+Building a sustainable Mars colony requires more than just technical skills and physical health. The psychological composition of our colonist team could determine whether humanity's first extraterrestrial settlement thrives or collapses under pressure. Until now, we've modeled colonist attributes as either independent variables or used explicit formulas to create relationships between them.
 
-In this task, you’ll simulate the Big Five personality traits: openness, conscientiousness, extraversion, agreeableness, and neuroticism.  These traits are essential for understanding how colonists will interact with each other and cope with the challenges of living on Mars. Unlike earlier variables, these traits are known to be intercorrelated — meaning we can’t just simulate each one independently.
+For a psychologically realistic simulation, we need to model the complex interplay of personality traits that will shape how colonists respond to the extreme conditions of Mars. The Big Five personality traits—openness, conscientiousness, extraversion, agreeableness, and neuroticism—will influence every aspect of colony life. When life support systems malfunction, conscientious colonists will follow repair protocols meticulously. During extended isolation, extraverts may struggle more than introverts. When conflicts arise in confined habitats, agreeable team members will help mediate solutions. 
 
-Your task to simulate these traits using the `mvrnorm` function, using parameters that would make sense for each trait, and then examine how closely your simulated colonists match those population characteristics.
+Unlike our previous attributes, we can't model these personality traits independently of each other. Psychological research shows they naturally correlate in specific patterns—someone high in conscientiousness often tends toward lower neuroticism, while openness and extraversion frequently cluster together. These natural groupings create distinct personality clusters that will respond differently to Mars' unique stressors. Using the `mvrnorm` function, you'll simulate these interdependent traits and analyze whether your colony has the psychological resilience needed for Mars.
 
-To support this, I've provided a correlation matrix estimated from a large meta-analysis that reflects realistic trait relationships in the general population. You’ll use that structure to guide your simulation in the next step.
+To ensure your simulation reflects actual human psychology, I've provided a correlation matrix from meta-analytic research showing how these traits relate to each other in Earth's population. You’ll use that structure to guide your simulation in the next step.
 
 **3.3.** Simulate Big Five Traits using the Correlation Matrix provided and examine how closely your colonists match up with your parameters.
 
 __Population Parameters for Big Five Traits__
 To help you simulate realistic trait relationships, I’ve provided a correlation matrix from  Park et al. (2020)^[[OSF repo](https://osf.io/qkjpa/)] ^[Park, H. H., Wiernik, B. M., Oh, I. S., Gonzalez-Mulé, E., Ones, D. S., & Lee, Y. (2020). Meta-analytic five-factor model personality intercorrelations: Eeny, meeny, miney, moe, how, which, why, and where to go. The Journal of applied psychology, 105(12), 1490–1529. https://doi.org/10.1037/apl0000476].
 
+
+    ```{r, quickmatrix, error=TRUE, echo=FALSE,include=FALSE}
+  cor_matrix_bigfive <- matrix(c(
+      1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
+      0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
+      0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
+      0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
+      0.2949, 0.0720, 0.1951, 0.1574, 1.0000
+  ), nrow=5, ncol=5, byrow=TRUE,
+  dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
+            c("EX", "ES", "AG", "CO", "OP")))
+    ```
+<details> 
+  <summary>Click this to get a matrix you can quickly paste</summary>
+```{r ref.label = "quickmatrix", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
 
     ```{r, matrixbigfive, error=TRUE, echo=FALSE,include=FALSE}
     # Define the bigfive
@@ -492,25 +526,8 @@ print(cor_matrix_bigfive)
     ```
 
 <details>
-  <summary>Click this to see the code that built the matrix</summary>
+  <summary>Click this to see some bonus code that built the matrix above</summary>
 ```{r ref.label = "matrixbigfive", echo = TRUE, warning = FALSE, message=FALSE}
-```
-</details>
-
-    ```{r, quickmatrix, error=TRUE, echo=FALSE,include=FALSE}
-  cor_matrix_bigfive <- matrix(c(
-      1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
-      0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
-      0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
-      0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
-      0.2949, 0.0720, 0.1951, 0.1574, 1.0000
-  ), nrow=5, ncol=5, byrow=TRUE,
-  dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
-            c("EX", "ES", "AG", "CO", "OP")))
-    ```
-<details> 
-  <summary>Click this to get a matrix you can quickly paste</summary>
-```{r ref.label = "quickmatrix", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
@@ -519,6 +536,12 @@ Because this task is a tad more complex than the previous simulation, I've added
 
 <details>
   <summary>Click here to see the hints</summary>
+
+<details>
+  <summary>Big Picture Hint</summary>
+Start by defining the parameters for your simulation...
+</details>
+.
 <details>
   <summary>Step 1 Hint</summary>
 1. Begin by defining the parameters for your simulation. This includes the number of colonists, the mean and standard deviation for each of the Big Five personality traits, and the correlation matrix that models the relationships between these traits.
@@ -526,16 +549,17 @@ Because this task is a tad more complex than the previous simulation, I've added
 .
 <details>
   <summary>Step 2 Hint</summary>
-2. Simulate the Big Five personality traits using the mvrnorm function. This function will use your defined means, standard deviations, and correlation matrix to generate a dataset that reflects the psychological profiles of your simulated colonists.
+2. Simulate the Big Five personality traits using the mvrnorm function. This function will use your defined means and correlation matrix to generate a dataset that reflects the personality profiles of your simulated colonists.
 </details>
 .
 <details>
   <summary>Step 3 Hint</summary>
-3. Calculate the means and standard deviations of the Big Five personality traits in your simulated dataset. This will allow you to compare the simulated data to the population parameters you defined earlier.
+3. Calculate the means and standard deviations of the Big Five personality traits in your simulated dataset. This will allow you to examine how closely your colonists match up with your population parameters.
 </details>
 </details>
 
 Great! We have successfully simulated a dataset of 100 colonists with interdependent skills. The summary statistics show that the mean and standard deviation of the simulated data match the population parameters. The correlation matrix also aligns (fairly well) with the specified values. But did we just get lucky? Let's run the simulation multiple times to ensure the results are consistent across different scenarios.
+
 <details> 
   <summary>Click this text for a solution</summary>
 ```{r ref.label = "exercise3.3solution", echo = TRUE, warning = FALSE, message=FALSE}
@@ -630,10 +654,14 @@ Generate the big five for 100 colonies of 100 colonists, repeating this process 
 **4.1.** Generate 100 colonies and extract the mean and standard deviation for extraversion.
 
 Although you can get the summary statistic for each variable, let's focus on the mean and standard deviation for extraversion as well as its correlation with openness. 
+
 Please plot the distribution of the correlation coefficients to see how consistent the relationship between extraversion and openness is across different planets. Consider how this distribution might differ across colonists. How large of a sample size would you need to get a stable estimate of the correlation between extraversion and openness?
 
 **4.2.** Plot the distributions of those statistics from your new empire of colonies, and include an annotation in the plot to show the population parameters.
 
+<details>
+  <summary>Big Picture Hints</summary>
+    You can either use the `replicate` function or a for loop to repeat the simulation process multiple times.
 <details>
   <summary>Click this text for a hint about implementing with replicate</summary>
     You can use the `replicate` function to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
@@ -644,13 +672,12 @@ Please plot the distribution of the correlation coefficients to see how consiste
   <summary>Click this text for a hint about implementing with a forloop</summary>
     You can use a for loop to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
     After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness. 
-</details>
-
-.
 <details> 
   <summary>Click this text for forloop based solution</summary>
 ```{r ref.label = "exercise4solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
+</details>
+</details>
 </details>
 
     ```{r exercise4solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
@@ -704,13 +731,20 @@ summary_stats_cor <- simulated_data %>%
 
 ## Stretch Tasks (Optional) {.unnumbered}
 
-In space colonization, just like in any complex project management, it's essential to prepare for variability and uncertainty. To test the resilience of our simulated Mars colony, we'll generate multiple sets of potential colonists at different sample sizes. By examining these various batches, we can assess how many people we actually need in our colony and how that affects are summary statistics.
+In space colonization, just like in any complex project management, we must prepare for variability and uncertainty. To test the resilience of our simulated Mars colony against the chaotic nature of space travel, we'll generate multiple batches of potential colonists at different sample sizes. By examining these various crews, we can determine our optimal colony size (too few humans and one meteor strike could doom us; too many and our life support systems might collapse under the strain!) and analyze how population size affects the summary statistics of our brave Martian pioneers.
 
+**5.1.** Simulate the colonists using a for loop and plot the average covariance for each sample size.
+
+<details>
+  <summary>Click this text for a hint about implementing with a forloop</summary>
+    You can use a for loop to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
+    After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness.
 
 <details> 
   <summary>Click this text for forloop based solution</summary>
 ```{r ref.label = "exercise5solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
+</details>
 </details>
 
     ```{r exercise5solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
@@ -803,6 +837,9 @@ ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
   scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
   theme_minimal()
     ```
+
+
+
 
 
 ## Conclusion {.unnumbered}
