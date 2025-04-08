@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Data Science for Psychologists (DS4P): A Modular, Open-Source Learning Module for Transparent and Reproducible Data Analysis in Psychology</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Data Science for Psychologists (DS4P): A
+Modular, Open-Source Learning Module for Transparent and Reproducible
+Data Analysis in Psychology</h1>
+<h4 class="date">08 April, 2025</h4>
+
+
+
+<!--Guidance 
+JOSS welcomes submissions from broadly diverse research areas. For this reason, we require that authors include in the paper some sentences that explain the software functionality and domain of use to a non-specialist reader. We also require that authors explain the research applications of the software. The paper should be between 250-1000 words. Authors submitting papers significantly longer than 1000 words may be asked to reduce the length of their paper.
+Your paper should include:
+
+A list of the authors of the software and their affiliations, using the correct format (see the example below).
+A summary describing the high-level functionality and purpose of the software for a diverse, non-specialist audience.
+A Statement of need section that clearly illustrates the research purpose of the software and places it in the context of related work.
+A list of key references, including to other software addressing related needs. Note that the references should include full names of venues, e.g., journals and conferences, not abbreviations only understood in the context of a specific discipline.
+Mention (if applicable) a representative set of past or ongoing research projects using the software and recent scholarly publications enabled by it.
+Acknowledgment of any financial support.
+-->
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<!--  A summary describing the high-level functionality and purpose of the software for a diverse, non-specialist audience. -->
+<p><strong>Data Science for Psychologists (DS4P)</strong> is an open,
+GitHub-hosted computational learning module developed to support data
+science instruction within psychology. Initially launched as a graduate
+course during the COVID-19 pandemic, DS4P will expand to include
+undergraduate instruction beginning in Spring 2026 at Wake Forest
+University.</p>
+<p>This multimedia module serves as a flipped textbook, combining
+embedded video lectures, annotated code examples, readings, slide decks,
+and hands-on labs. Its instructional approach emphasizes reproducibility
+and transparency in psychological research. No prior programming or
+advanced mathematical background is assumed.</p>
+<p>DS4P makes extensive use of the R ecosystem—including R, R Markdown,
+Git, and GitHub—and incorporates open educational resources from the
+broader data science community, including <em>STAT 545</em> <span class="citation">(<strong>bryan_stat545?</strong>)</span>, <em>Happy Git
+with R</em> <span class="citation">(<strong>bryan_git?</strong>)</span>,
+and <em>Data Science in a Box</em> <span class="citation">(<strong>cetinkaya2020datascience?</strong>)</span>. It
+is designed to build student capacity for real-world, open science
+workflows in the behavioral sciences.</p>
+</div>
+<div id="statement-of-need" class="section level1">
+<h1>Statement of need</h1>
+<!-- Include a “Statement of Need” section, explaining how the submitted artifacts contribute to computationally enabled teaching and learning, and describing how they might be adopted by others.
+
+A key component of the JOSE paper is a statement by the authors, explaining the contribution made by the submitted artifacts to computationally enabled teaching and learning, and describing how they might be used by others. The criterion is less one of novelty, than need: submissions targeting subjects or applications already addressed by other resources are eligible, if the authors make a case for why they might be adopted by learners or other instructors.
+ -->
+<p>Despite increasing attention to data literacy in psychology, most
+students receive limited exposure to tools and practices that support
+reproducible workflows. DS4P addresses this need by offering an
+accessible, semester-length learning module that introduces data science
+through domain-relevant applications in psychology. Unlike generic
+“learn-to-code” resources, DS4P’s materials are embedded in the context
+of psychological inquiry, allowing students to “code to learn.”</p>
+<p>The course’s availability as an open, Creative Commons–licensed
+resource enables reuse, remixing, and adoption by instructors across
+institutions. By integrating essential computing tools with
+discipline-specific training, DS4P contributes to closing the gap
+between data science and psychological science education.</p>
+</div>
+<div id="module-description" class="section level1">
+<h1>Module Description</h1>
+<p>DS4P is organized into modular units that together span an entire
+semester (15+ weeks). Each week’s unit includes:</p>
+<ul>
+<li>Readable narrative content with embedded R code and live output</li>
+<li>R Markdown files modeling reproducible research documents</li>
+<li>Interactive activities and labs with real datasets</li>
+<li>Pre-recorded lectures and annotated slide decks</li>
+<li>GitHub repositories for collaborative exercises and version
+control</li>
+</ul>
+<p>The content scaffolds from introductory topics (e.g., data wrangling,
+visualization) to more advanced material (e.g., modeling,
+reproducibility workflows), culminating in independent data analysis
+projects. All materials are openly licensed and regularly
+maintained.</p>
+</div>
+<div id="instructional-design" class="section level1">
+<h1>Instructional Design</h1>
+<p>The instructional design reflects research-based pedagogical
+practices:</p>
+<ul>
+<li><strong>Worked-example effect</strong>: Code and output are
+presented alongside explanatory narrative, guiding students through
+reasoning processes step by step.</li>
+<li><strong>Literate programming</strong>: R Markdown is used
+throughout, teaching students to produce integrated code-and-narrative
+documents.</li>
+<li><strong>Cognitive load management</strong>: Multimedia content
+supports dual-channel learning, and lessons are segmented by
+concept.</li>
+<li><strong>Authentic practice</strong>: Students interact with real
+psychological datasets and research questions using the same tools as
+professionals.</li>
+</ul>
+<p>The course also trains students in <em>version control</em>,
+<em>collaborative development</em>, and <em>open science norms</em>
+using Git and GitHub—tools not commonly integrated into undergraduate
+psychology instruction.</p>
+</div>
+<div id="experience-of-use" class="section level1">
+<h1>Experience of Use</h1>
+<p>DS4P has been taught to multiple cohorts of graduate students since
+2020, with positive reception and successful student projects applying
+reproducible workflows. Beginning in Spring 2026, the course will also
+be implemented for undergraduates. The modular structure facilitates
+instructor customization and reuse.</p>
+</div>
+<div id="availability" class="section level1">
+<h1>Availability</h1>
+<p>The <code>DS4P</code> module is hosted at: <a href="https://github.com/mason-garrison/DS4P" class="uri">https://github.com/mason-garrison/DS4P</a><br />
+It is available under a Creative Commons Attribution-ShareAlike 4.0
+International License for all narrative, instructional, and non-video
+content. Video content is licensed under a Standard YouTube License, and
+is available on the <a href="https://www.youtube.com/@smasongarrison">S.
+Mason Garrison YouTube channel</a>.</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>corresponding author<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
