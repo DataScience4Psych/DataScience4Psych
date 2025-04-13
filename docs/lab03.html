@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-04-11" />
+<meta name="date" content="2025-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1627,13 +1627,14 @@ Visit your GitHub repository to confirm that your changes appear correctly in bo
 <p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling.
 This package is already installed for you.
 You can load them by running the following in your Console:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="lab03.html#cb118-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="lab03.html#cb119-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.4.3</code></pre>
 </div>
 <div id="data-2" class="section level3 unnumbered hasAnchor">
 <h3>Data<a href="lab03.html#data-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The dataset for this assignment can be found as a csv (comma separated values) file in the <code>data</code> folder of your repository.
 You can read it in using the following.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="lab03.html#cb119-1" tabindex="-1"></a>nobel <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nobel.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lab03.html#cb121-1" tabindex="-1"></a>nobel <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nobel.csv&quot;</span>)</span></code></pre></div>
 <p>The variable descriptions are as follows:</p>
 <ul>
 <li><code>id</code>: ID number</li>
@@ -1702,16 +1703,16 @@ If not, we set the <code>country_us</code> to <code>"Other"</code>.</p>
 <blockquote>
 <p>Note: We can achieve the same result using the <code>fct_other()</code> function we’ve seen before (i.e. with <code>country_us = fct_other(country, "USA")</code>). We decided to use the <code>if_else()</code> here to show you one example of an if statement in R.</p>
 </blockquote>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="lab03.html#cb120-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb120-2"><a href="lab03.html#cb120-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb120-3"><a href="lab03.html#cb120-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
-<span id="cb120-4"><a href="lab03.html#cb120-4" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab03.html#cb122-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb122-2"><a href="lab03.html#cb122-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb122-3"><a href="lab03.html#cb122-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb122-4"><a href="lab03.html#cb122-4" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Next, we will limit our analysis to only the following categories: Physics, Medicine, Chemistry, and Economics.</p>
 <blockquote>
 <p>Note: Technically, the Nobel Prize in Economics is a memorial prize. It was established in 1968. If you want to annoy an economist, point that distinction out to them… More info <a href="https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences">here</a> if you want to learn some more.</p>
 </blockquote>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lab03.html#cb121-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb121-2"><a href="lab03.html#cb121-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lab03.html#cb123-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb123-2"><a href="lab03.html#cb123-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
 <p>For the next exercise, work with the <code>nobel_living_science</code> data frame you created above.
 You’ll need to define this data frame in your R Markdown document, even though the next exercise doesn’t explicitly ask you to do so.</p>
 <ol start="3" style="list-style-type: decimal">
