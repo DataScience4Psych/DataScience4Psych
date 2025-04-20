@@ -151,23 +151,46 @@ ggplot(compas, aes(fill = age_cat, x=sex)) +
 
 ### Part 2: Risk scores and recidivism {.unnumbered}
 
-5. Create a visualization showing the relationship between risk scores (`decile_score`) and actual recidivism (`two_year_recid`). Do higher risk scores actually correspond to higher rates of recidivism? 
+The COMPAS score is meant to predict whether someone will reoffend. Higher scores indicate higher risk. But how well does it work?
+Each individual in the dataset has both:
+- a prediction: their COMPAS risk score (decile_score)
+- an outcome: whether they actually recidivated within two years (two_year_recid)
 
-6. Calculate the overall accuracy of the COMPAS algorithm. For this exercise, consider a prediction "correct" if:
+5. Create a visualization showing the relationship between risk scores (`decile_score`) and actual recidivism (`two_year_recid`). Do higher risk scores actually correspond to higher rates of recidivism?
+
+6. Calculate the overall accuracy of the COMPAS algorithm. 
+
+To evaluate whether the algorithm made the right prediction, we need to start thinking about the classifiction. 
+
+True Positive (TP): The person was classified as high risk and did recidivate
+
+True Negative (TN): The person was classified as low risk and did not recidivate 
+
+False Positive (FP): The person was classified as high risk but did not recidivate
+
+False Negative (FN): The person was classified as low risk but did recidivate
+
+For this exercise, consider a prediction "correct" if:
    - A defendant with a high risk score (`decile_score` >= 7) did recidivate (`two_year_recid` = 1)
    - A defendant with a low risk score (`decile_score` <= 4) did not recidivate (`two_year_recid` = 0)
 
+Use this classification to evaluate whether the COMPAS algorithm made the right prediction for each case.
+
+```
+# You may want to use case_when() to create a new variable like:
+# "compas_classification" with values: "TP", "TN", "FP", "FN"
+# Based on decile_score thresholds and the recidivism outcome
+```
 
 7. How well does the COMPAS algorithm perform overall? What percentage of its predictions are correct based on your calculation above?
 
 
 ### Part 3: Investigating disparities {.unnumbered}
 
-Now let's assess the predictive accuracy of the COMPAS algorithm across different demographic groups. For this exercise, we'll focus on race, but you can also explore other demographic variables.
+Now let’s assess how well the COMPAS algorithm performs across different demographic groups. Like ProPublica, we'll focus on race, but you can explore others.
 
 
 8. Create visualizations comparing the distribution of risk scores (`decile_score`) between Black and white defendants. Do you observe any differences?
-
 
 
 9. Calculate the percentage of Black defendants and white defendants who were classified as high risk (decile_score >= 7). Is there a disparity?
