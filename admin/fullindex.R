@@ -29,7 +29,8 @@ df <- tibble(
     str_replace_all("[-.]", ""),
   link = make_full(df_docs, myrepo = domain)
 ) %>%
-  mutate(title = if_else(link == "https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html",
+  mutate(title =
+           if_else(link == "https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html",
                          "d13b_moreggplot", title))
 
 # Save to CSV
