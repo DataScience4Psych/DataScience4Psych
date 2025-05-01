@@ -10,9 +10,9 @@ library(stringr)
 ## Options for knitr chunks
 knitr::opts_chunk$set(
   comment = "#>",
-#  error = TRUE,
+  #  error = TRUE,
   collapse = TRUE
-# Additional options can be included as needed
+  # Additional options can be included as needed
 )
 
 ## Global options
@@ -80,7 +80,8 @@ slide_url <- function(df_url, title, slide = NULL) {
 # Function to try including a tweet
 try_include_tweet <- function(tweet_url, plain = FALSE, ...) {
   return(try(tweetrmd::include_tweet(tweet_url = tweet_url, plain = plain, ...),
-             silent = TRUE))
+    silent = TRUE
+  ))
 }
 
 
@@ -90,10 +91,10 @@ embed_youtube_alt <- function(youtube_id) {
     return(knitr::include_url(url))
   } else {
     # Download thumbnail and use that
-    dir_path <- 'img/youtube'
+    dir_path <- "img/youtube"
     if (!dir.exists(dir_path)) dir.create(dir_path)
-    file_path <- str_c(dir_path, '/', youtube_id, '.jpg')
-    if (!file.exists(file_path)) webshot(str_c("https://img.youtube.com/vi/", youtube_id, "/mqdefault.jpg"),vwidth = 320,vheight=180, file = file_path)
+    file_path <- str_c(dir_path, "/", youtube_id, ".jpg")
+    if (!file.exists(file_path)) webshot(str_c("https://img.youtube.com/vi/", youtube_id, "/mqdefault.jpg"), vwidth = 320, vheight = 180, file = file_path)
     return(knitr::include_graphics(str_c(file_path)))
   }
 }

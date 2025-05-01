@@ -1,4 +1,4 @@
-# Lab: Ethics in Data Science {#lab09alt}
+# Lab: Ethics in Data Science {#lab09}
 
 ## "With great power comes great responsibility": Exploring Algorithmic Bias {.unnumbered}
 
@@ -49,9 +49,11 @@ For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has 
 ```{r}
 # Load the COMPAS data
 compas <- read_csv("data/compas-scores-two-years.csv") %>%
-  clean_names() %>% 
-  rename(decile_score = decile_score_12,
-         priors_count = priors_count_15)
+  clean_names() %>%
+  rename(
+    decile_score = decile_score_12,
+    priors_count = priors_count_15
+  )
 
 # Take a look at the data
 glimpse(compas)
@@ -118,31 +120,40 @@ For an extra challenge, try to create a single visualization that shows all thre
 
 ```{r eval=FALSE, include=FALSE}
 # Distribution by race
-compas <- compas %>% mutate( #refactor age_cat to factor
-  age_cat = factor(age_cat, 
-                   levels = c("Less than 25",
-                              "25 - 45",
-                              "Greater than 45")))
+compas <- compas %>% mutate( # refactor age_cat to factor
+  age_cat = factor(age_cat,
+    levels = c(
+      "Less than 25",
+      "25 - 45",
+      "Greater than 45"
+    )
+  )
+)
 
 
 
-ggplot(compas, aes(x = race, fill=sex)) + geom_bar() + theme_minimal()
+ggplot(compas, aes(x = race, fill = sex)) +
+  geom_bar() +
+  theme_minimal()
 
 # Distribution by sex
-ggplot(compas, aes(x = sex)) + geom_bar() + theme_minimal()
+ggplot(compas, aes(x = sex)) +
+  geom_bar() +
+  theme_minimal()
 
 # Distribution by age category
-ggplot(compas, aes(x = age_cat)) + geom_bar() + theme_minimal()
+ggplot(compas, aes(x = age_cat)) +
+  geom_bar() +
+  theme_minimal()
 
 # Combined using facets
-ggplot(compas, aes(fill = age_cat, x=sex)) +
-  geom_bar(position="dodge") +
- #facet_wrap(race~sex) + 
+ggplot(compas, aes(fill = age_cat, x = sex)) +
+  geom_bar(position = "dodge") +
+  # facet_wrap(race~sex) +
   facet_grid(~race) +
-  
   theme_minimal() + # 45 degree theme
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # relable x axis age_cat
-  labs(x = "Sex", y = "Count") +# relable x and y axis
+  labs(x = "Sex", y = "Count") + # relable x and y axis
   scale_fill_brewer(type = "seq", palette = "Oranges") # color pallete
 ```
 

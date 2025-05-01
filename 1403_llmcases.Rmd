@@ -8,9 +8,9 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 # install.packages("devtools")
 
-if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
-library(tweetrmd) #... embedding tweets
-library(vembedr)  #... embedding youtube videos
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd) # ... embedding tweets
+library(vembedr) # ... embedding youtube videos
 library(knitr)
 library(tidyverse)
 ```
@@ -19,12 +19,9 @@ library(tidyverse)
 You can follow along with the slides [here][d32_llmapplications] if they do not appear below.
 
 ```{r, echo=FALSE, include = FALSE}
-
-
-video_url<- sample_no_surprises(ds4p_funyoutube$funyoutube)
- embed_url(video_url) %>%
+video_url <- sample_no_surprises(ds4p_funyoutube$funyoutube)
+embed_url(video_url) %>%
   use_align("center")
-
 ```
 
 ```{r, echo=FALSE}
@@ -77,9 +74,10 @@ sentiment_scores
 df %>%
   unnest_tokens(word, text) %>%
   inner_join(get_sentiments("bing")) %>%
-ggplot(aes(x = sentiment)) +
-  geom_bar()+
-  coord_flip() + theme_classic()+
+  ggplot(aes(x = sentiment)) +
+  geom_bar() +
+  coord_flip() +
+  theme_classic() +
   labs(title = "Overall Vibes", x = "", y = "Count")
 ```
 
@@ -109,20 +107,20 @@ markov_chain <- word_pairs %>%
 generate_text <- function(start_word, length = 10) {
   result <- start_word
   current_word <- start_word
-  
+
   for (i in 1:length) {
     next_word_options <- markov_chain %>%
       filter(word == current_word) %>%
       pull(next_words) %>%
       unlist()
-    
+
     if (length(next_word_options) == 0) break
-    
+
     next_word <- sample(next_word_options, 1)
     result <- c(result, next_word)
     current_word <- next_word
   }
-  
+
   str_c(result, collapse = " ")
 }
 
@@ -136,7 +134,7 @@ generate_text("the")
 library(tidytext)
 library(dplyr)
 
-context <- "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. 
+context <- "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France.
 It is named after the engineer Gustave Eiffel, whose company designed and built the Tower."
 
 question <- "Who designed the Eiffel Tower?"

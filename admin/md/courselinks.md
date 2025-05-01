@@ -43,10 +43,11 @@
 [lab06]: https://github.com/DataScience4Psych/lab_06_sad_plots
 [lab07]: https://github.com/DataScience4Psych/lab_07_betterviz
 [lab08]: https://github.com/DataScience4Psych/lab-08-uoe-art
-[lab09]: https://github.com/DataScience4Psych/lab-09-slr-course-evals
-[lab10]: https://github.com/DataScience4Psych/lab-10-mlr-course-evals
-[lab11]: https://github.com/DataScience4Psych/lab-11-inference-smoking
-[lab12]: https://github.com/DataScience4Psych/lab-12-simulating-mars
+[lab09]: https://github.com/DataScience4Psych/lab-09-ethics-algorithmic-bias
+[lab10]: https://github.com/DataScience4Psych/lab-10-slr-course-evals
+[lab11]: https://github.com/DataScience4Psych/lab-11-mlr-course-evals
+[lab12]: https://github.com/DataScience4Psych/lab-12-inference-smoking
+[lab13]: https://github.com/DataScience4Psych/lab-13-simulating-mars
 
 <!--Slides-->
 [d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html

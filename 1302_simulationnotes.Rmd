@@ -83,9 +83,11 @@ In other words, specify the arguments explicitly, even if you are using default 
 Here's an even more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:
 
 ```{r}
-rnorm(n = 5, 
-      mean = 0, 
-      sd = 1)
+rnorm(
+  n = 5,
+  mean = 0,
+  sd = 1
+)
 ```
 
 When I'm writing code for a project that I know will be shared with others, I always (try to) write out the arguments. When I'm writing code for myself, I'm more likely to use the defaults. It's a balance between being kind to future me and being efficient in the moment.
@@ -101,18 +103,22 @@ By setting the seed before running `rnorm()`, we can reproduce the values we gen
 
 ```{r}
 set.seed(16)
-rnorm(n = 5, 
-      mean = 0, 
-      sd = 1)
+rnorm(
+  n = 5,
+  mean = 0,
+  sd = 1
+)
 ```
 
 If we reset the seed to the same number and run the code again, we get the same values.
 
 ```{r}
 set.seed(16)
-rnorm(n = 5, 
-      mean = 0, 
-      sd = 1)
+rnorm(
+  n = 5,
+  mean = 0,
+  sd = 1
+)
 ```
 
 #### Change parameters in `rnorm()`
@@ -122,18 +128,22 @@ To get a quick set of numbers, it's easy to use the default parameter values in 
 The `sd` argument specifies the *standard deviation* of the normal distribution. So drawing from a $Normal(0, 4)$ can be done by setting `sd` to 2.
 
 ```{r}
-rnorm(n = 5,
-      mean = 0, 
-      sd = 2)
+rnorm(
+  n = 5,
+  mean = 0,
+  sd = 2
+)
 ```
 
 I've seen other people make changes the mean and standard deviation to create variables that are within a specific range. For example, if the mean is large and the standard deviation is small in relation to the mean, we can generate strictly positive numbers. (I usually use runif() for this, which we'll see below.)
 
 
 ```{r}
-rnorm(n = 5, 
-      mean = 50, 
-      sd = 20)
+rnorm(
+  n = 5,
+  mean = 50,
+  sd = 20
+)
 ```
 
 #### Using vectors of values for the parameter arguments
@@ -146,17 +156,21 @@ I'll keep the standard deviation at 1 but will draw data from three distribution
 Observe the repeating pattern: the function iteratively draws one value from each distribution until the total number requested is reached. This approach can lead to an imbalance in the sample size per distribution.
 
 ```{r}
-rnorm(n = 10, 
-      mean = c(0, 5, 20), 
-      sd = 1)
+rnorm(
+  n = 10,
+  mean = c(0, 5, 20),
+  sd = 1
+)
 ```
 
 We can also pass a vector to `sd`, allowing both the means and standard deviations to vary among the three distributions.
 
 ```{r}
-rnorm(n = 10, 
-      mean = c(0, 5, 20), 
-      sd = c(1, 5, 20) )
+rnorm(
+  n = 10,
+  mean = c(0, 5, 20),
+  sd = c(1, 5, 20)
+)
 ```
 
 Things are different for the `n` argument. If a vector is passed to `n`, the *length* of that vector is taken to be the number required (see the `Arguments` section of the documentation for details).
@@ -165,10 +179,11 @@ Things are different for the `n` argument. If a vector is passed to `n`, the *le
 In the example below, we only get 3 values because the vector for `n` is length 3.
 
 ```{r}
-
-rnorm(n = c(2, 10, 10), 
-      mean = c(0, 5, 20), 
-      sd = c(1, 5, 20) )
+rnorm(
+  n = c(2, 10, 10),
+  mean = c(0, 5, 20),
+  sd = c(1, 5, 20)
+)
 ```
 
 ### Example of using the simulated numbers from `rnorm()`
@@ -180,13 +195,17 @@ For example, we might simulate two unrelated variables to see how correlated the
 Let's generate two quantitative vectors of length 10, named `x` and `y`, and plot the results. I'm using the default `mean` and `sd`.
 
 ```{r}
-x <- rnorm(n = 10, 
-          mean = 0, 
-          sd = 1)
+x <- rnorm(
+  n = 10,
+  mean = 0,
+  sd = 1
+)
 
-y <- rnorm(n = 10, 
-          mean = 0, 
-          sd = 1)
+y <- rnorm(
+  n = 10,
+  mean = 0,
+  sd = 1
+)
 
 data.frame(var1 = x, var2 = y) %>%
   ggplot(
@@ -198,7 +217,6 @@ data.frame(var1 = x, var2 = y) %>%
   geom_point(color = "#56B4E9", size = 7) +
   theme_bw() +
   labs(title = "Scatterplot of Two Random Variables")
-
 ```
 
 ### `runif()` pulls from the uniform distribution
@@ -214,16 +232,20 @@ By default, `runif()` pulls random numbers between 0 and 1. The first argument,l
 Let's generate 5 numbers between 0 and 1.
 
 ```{r}
-runif(n = 5,
-      min = 0,
-      max = 1)
+runif(
+  n = 5,
+  min = 0,
+  max = 1
+)
 ```
 
 What if we want to generate 5 numbers between 50 and 100?  We change the parameter values.
 
 ```{r}
-runif(n = 5,
-      min = 50, max = 100)
+runif(
+  n = 5,
+  min = 50, max = 100
+)
 ```
 
 ### Example of using the simulated numbers from `runif()`
@@ -272,8 +294,10 @@ The single parameter, `lambda`, is the mean. It has no default setting, so it mu
 Let's generate five values from a Poisson distribution with a mean of 2.5. Note that the *mean* of the Poisson distribution can be any non-negative value (i.e., it doesn't have to be an integer) even though the observed values will be discrete integers.
 
 ```{r}
-rpois(n = 5,
-      lambda = 2.5)
+rpois(
+  n = 5,
+  lambda = 2.5
+)
 ```
 
 ### Example of using the simulated numbers from `rpois()`
@@ -297,11 +321,13 @@ There is a mild right skew when we draw a histogram of the values.
 palette_OkabeIto <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
 
 data.frame(y) %>%
-ggplot(aes(x=y)) + 
-  geom_histogram(binwidth=1,color="black", fill="#E69F00") +
-  labs(title = "Poisson distribution with a mean of 5",
-       x = "Value", y = "Count") + theme_bw()
-
+  ggplot(aes(x = y)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "#E69F00") +
+  labs(
+    title = "Poisson distribution with a mean of 5",
+    x = "Value", y = "Count"
+  ) +
+  theme_bw()
 ```
 
 Let's do the same for a Poisson distribution with a mean of 100. The range of values is still pretty narrow; there are no values even remotely close to 0.
@@ -316,9 +342,9 @@ The distribution is more symmetric compared to the distribution with the smaller
 
 ```{r}
 data.frame(y) %>%
-ggplot(aes(x=y)) + 
-  geom_histogram(binwidth=5, color="black", fill= "#CC79A7") +
-  labs(title="Poisson distribution with a mean of 100",x= "Value", y = "Count") + 
+  ggplot(aes(x = y)) +
+  geom_histogram(binwidth = 5, color = "black", fill = "#CC79A7") +
+  labs(title = "Poisson distribution with a mean of 100", x = "Value", y = "Count") +
   theme_bw()
 ```
 
@@ -393,7 +419,7 @@ Unlike `each` and `length.out`, we can use `times` with a vector of values.  Thi
 Let's repeat the first element twice and the second four times.
 
 ```{r}
-rep(letters[1:2], times = c(2, 4) )
+rep(letters[1:2], times = c(2, 4))
 ```
 
 ### Combining `each` with `times`
@@ -439,15 +465,19 @@ Notice there is no need to use `cbind()` here, which is commonly done by R begin
 ```{r}
 group <- rep(letters[1:2], each = 3)
 response <- rnorm(n = 6, mean = 0, sd = 1)
-data.frame(group,
-           response)
+data.frame(
+  group,
+  response
+)
 ```
 
 Some people like to define the vectors and the data frame simultaneously to minimize clutter in the R environment. Here is how you can do it all at once:
 
 ```{r}
-data.frame(group = rep(letters[1:2], each = 3),
-           response = rnorm(n = 6, mean = 0, sd = 1) )
+data.frame(
+  group = rep(letters[1:2], each = 3),
+  response = rnorm(n = 6, mean = 0, sd = 1)
+)
 ```
 
 (Personally, I like having longer code that is easier for future Mason to read.  But it's up to you!)
@@ -471,7 +501,7 @@ rep(letters[1:2], each = 3)
 
 We need to repeat the three values twice.  But what argument do we use in `rep()` to do so?
 
-```{r, eval = FALSE}
+```r
 rep(LETTERS[3:5], ?)
 ```
 
@@ -488,9 +518,11 @@ This is a job for the `times` or `length.out` arguments, so the whole vector is 
 In the result below we can see every combination of the two factors is present once.
 
 ```{r}
-data.frame(group = rep(letters[1:2], each = 3),
-           factor = rep(LETTERS[3:5], times = 2),
-           response = rnorm(n = 6, mean = 0, sd = 1) )
+data.frame(
+  group = rep(letters[1:2], each = 3),
+  factor = rep(LETTERS[3:5], times = 2),
+  response = rnorm(n = 6, mean = 0, sd = 1)
+)
 ```
 
 ### Simulate data with a difference among groups
@@ -506,7 +538,7 @@ response
 
 How do we get the `group` pattern correct?
 
-```{r, eval = FALSE}
+```r
 group <- rep(letters[1:2], ?)
 ```
 
@@ -522,8 +554,10 @@ group
 These can then be combined into a data.frame.  Working out this process is another reason why sometimes we build each vector separately prior to combining together.
 
 ```{r}
-data.frame(group,
-            response)
+data.frame(
+  group,
+  response
+)
 ```
 
 ### Multiple quantitative variables with groups
@@ -538,7 +572,7 @@ Let's make a dataset that has two quantitative variables, unrelated to both each
 
 How many observations should we draw from each uniform distribution?
 
-```{r, eval = FALSE}
+```r
 runif(n = ?, min = 10, max = 15)
 ```
 
@@ -547,17 +581,21 @@ We had 2 groups with 10 observations each and 2*10 = 20.  So we need to use `n =
 Here is the dataset made in a single step.
 
 ```{r}
-data.frame(group = rep(LETTERS[3:4], each = 10),
-           x = runif(n = 20, min = 10, max = 15),
-           y = runif(n = 20, min = 100, max = 150))
+data.frame(
+  group = rep(LETTERS[3:4], each = 10),
+  x = runif(n = 20, min = 10, max = 15),
+  y = runif(n = 20, min = 100, max = 150)
+)
 ```
 
 What happens if we get this wrong?  If we're lucky we get an error.
 
 ```{r, error = TRUE}
-data.frame(group = rep(LETTERS[3:4], each = 10),
-           x = runif(n = 15, min = 10, max = 15),
-           y = runif(n = 15, min = 100, max = 150))
+data.frame(
+  group = rep(LETTERS[3:4], each = 10),
+  x = runif(n = 15, min = 10, max = 15),
+  y = runif(n = 15, min = 100, max = 150)
+)
 ```
 
 But if we get things wrong and the number we use goes into the number we need evenly, R will *recycle* the vector to the end of the `data.frame()`.  
@@ -565,9 +603,11 @@ But if we get things wrong and the number we use goes into the number we need ev
 This mistake is hard to catch.  If you look carefully through the output below, you can see that the continuous variables start to repeat on line 10.
 
 ```{r}
-data.frame(group = rep(LETTERS[3:4], each = 10),
-           x = runif(n = 10, min = 10, max = 15),
-           y = runif(n = 10, min = 100, max = 150))
+data.frame(
+  group = rep(LETTERS[3:4], each = 10),
+  x = runif(n = 10, min = 10, max = 15),
+  y = runif(n = 10, min = 100, max = 150)
+)
 ```
 
 ## Repeatedly simulate data with `replicate()`
@@ -594,9 +634,11 @@ The output below is a list of three vectors.  Each vector is from a unique run o
 
 ```{r}
 set.seed(16)
-replicate(n = 3, 
-          expr = rnorm(n = 5, mean = 0, sd = 1), 
-          simplify = FALSE )
+replicate(
+  n = 3,
+  expr = rnorm(n = 5, mean = 0, sd = 1),
+  simplify = FALSE
+)
 ```
 
 Note if I don't use `simplify = FALSE` I will get a matrix of values instead of a list.  Each column in the matrix is the output from one run of the function.  
@@ -605,8 +647,10 @@ In this case there will be three columns in the output, one for each run, and 5 
 
 ```{r}
 set.seed(16)
-replicate(n = 3, 
-          expr = rnorm(n = 5, mean = 0, sd = 1) )
+replicate(
+  n = 3,
+  expr = rnorm(n = 5, mean = 0, sd = 1)
+)
 ```
 
 ### An equivalent `for()` loop example
@@ -621,7 +665,7 @@ The result is identical to my `replicate()` code above.  It took a little more c
 set.seed(16)
 list1 <- list() # Make an empty list to save output in
 for (i in 1:3) { # Indicate number of iterations with "i"
-    list1[[i]] <- rnorm(n = 5, mean = 0, sd = 1) # Save output in list for each iteration
+  list1[[i]] <- rnorm(n = 5, mean = 0, sd = 1) # Save output in list for each iteration
 }
 list1
 ```
@@ -631,8 +675,10 @@ list1
 Earlier we were making datasets with random numbers and some grouping variables.  Our code looked like
 
 ```{r}
-data.frame(group = rep(letters[1:2], each = 3),
-           response = rnorm(n = 6, mean = 0, sd = 1) )
+data.frame(
+  group = rep(letters[1:2], each = 3),
+  response = rnorm(n = 6, mean = 0, sd = 1)
+)
 ```
 
 We could put this process as the `expr` argument in `replicate()` to get many simulated datasets.  I would do something like this if I wanted to compare the long-run performance of two different statistical tools using the exact same random datasets.  
@@ -640,10 +686,14 @@ We could put this process as the `expr` argument in `replicate()` to get many si
 I'll replicate things 3 times again to easily see the output.  I still use `simplify = FALSE` to get things into a list.
 
 ```{r}
-simlist <- replicate(n = 3, 
-          expr = data.frame(group = rep(letters[1:2], each = 3),
-                            response = rnorm(n = 6, mean = 0, sd = 1) ),
-          simplify = FALSE)
+simlist <- replicate(
+  n = 3,
+  expr = data.frame(
+    group = rep(letters[1:2], each = 3),
+    response = rnorm(n = 6, mean = 0, sd = 1)
+  ),
+  simplify = FALSE
+)
 ```
 
 We can see this result is a list of three data.frames.

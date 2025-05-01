@@ -19,8 +19,10 @@ df_slides <- list.files(path = "E:\\Dropbox\\Lab\\Teaching\\DS4P\\slides\\slides
 
 # Combine and label data
 df_docs <- c(df_web, df_slides)
-domain <- c(rep("DataScience4Psych", length(df_web)),
-            rep("slides", length(df_slides)))
+domain <- c(
+  rep("DataScience4Psych", length(df_web)),
+  rep("slides", length(df_slides))
+)
 
 # Data frame creation with vectorized operations
 df <- tibble(
@@ -29,9 +31,12 @@ df <- tibble(
     str_replace_all("[-.]", ""),
   link = make_full(df_docs, myrepo = domain)
 ) %>%
-  mutate(title =
-           if_else(link == "https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html",
-                         "d13b_moreggplot", title))
+  mutate(
+    title =
+      if_else(link == "https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html",
+        "d13b_moreggplot", title
+      )
+  )
 
 # Save to CSV
 write_csv(df, "admin/csv/ds4p_urls.csv")

@@ -90,7 +90,7 @@ The data already looks to be organized in a data frame! rebird allows us to read
 ebirdkey <- "SECRET API KEY"
 ```
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote="\"", comment.char="")[1,1]
+ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
 ```
 
 ```{r eval = TRUE,error=TRUE, cache=TRUE}
@@ -122,8 +122,10 @@ frenchbirds %>%
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
 ```{r eval = TRUE,cache=TRUE}
-eagle <- ebirdgeo(species = "baleag", 
-                  lat = 42, lng = -76, key = ebirdkey)
+eagle <- ebirdgeo(
+  species = "baleag",
+  lat = 42, lng = -76, key = ebirdkey
+)
 eagle %>%
   head() %>%
   kable()
@@ -240,7 +242,7 @@ First, install/load the gender package from CRAN. You may be prompted to also in
 
 ```{r,error=TRUE}
 # install.packages("gender")
-#remotes::install_github("lmullen/genderdata")
+# remotes::install_github("lmullen/genderdata")
 library(gender)
 ```
 
@@ -258,17 +260,19 @@ df <- gender("Kelsey")
 
 years <- c(df$year_min:df$year_max)
 
-for(i in 1:length(years)){
-  
-df <-rbind(df,gender("Kelsey", years = years[i]))
-
+for (i in 1:length(years)) {
+  df <- rbind(df, gender("Kelsey", years = years[i]))
 }
-df %>% filter(year_min==year_max) %>% 
-ggplot( aes(year_min, proportion_male)) +
+df %>%
+  filter(year_min == year_max) %>%
+  ggplot(aes(year_min, proportion_male)) +
   geom_smooth(span = 0.1) +
-  labs(title = "Proportion of men named Kelsey over time",
-       x = "Year",
-       y = "Proporiton Male") + ggthemes::theme_excel()
+  labs(
+    title = "Proportion of men named Kelsey over time",
+    x = "Year",
+    y = "Proporiton Male"
+  ) +
+  ggthemes::theme_excel()
 ```
 
 
@@ -283,35 +287,41 @@ gender("Mason", years = 1940)
 mason <- gender("Mason")
 years <- c(mason$year_min:mason$year_max)
 
-df <- rbind(df,gender("Mason"))
+df <- rbind(df, gender("Mason"))
 
-for(i in 1:length(years)){
-  
-df <-rbind(df,gender("Mason", years = years[i]))
-
+for (i in 1:length(years)) {
+  df <- rbind(df, gender("Mason", years = years[i]))
 }
 
-df %>% filter(year_min==year_max&name=="Mason") %>% 
-ggplot( aes(year_min, proportion_male)) +
+df %>%
+  filter(year_min == year_max & name == "Mason") %>%
+  ggplot(aes(year_min, proportion_male)) +
   geom_point() +
   geom_smooth(span = 0.1) +
-  labs(title = "Proportion of men named Mason over time",
-       x = "Year",
-       y = "Proporiton Male") + ggthemes::theme_excel()
+  labs(
+    title = "Proportion of men named Mason over time",
+    x = "Year",
+    y = "Proporiton Male"
+  ) +
+  ggthemes::theme_excel()
 ```
 
 
 And when we compare the two names, we see that Kelsey has changed a lot more over time than Mason.
 
 ```{r plotCompare, cache=TRUE}
-df %>% filter(year_min==year_max) %>% 
-ggplot( aes(year_min, proportion_male)) +
+df %>%
+  filter(year_min == year_max) %>%
+  ggplot(aes(year_min, proportion_male)) +
   geom_point() +
   geom_smooth(span = 0.1) +
-  labs(title = "Proportion of men over time",
-       x = "Year",
-       y = "Proporiton Male")  + ggthemes::theme_excel() + facet_wrap(~name)
-
+  labs(
+    title = "Proportion of men over time",
+    x = "Year",
+    y = "Proporiton Male"
+  ) +
+  ggthemes::theme_excel() +
+  facet_wrap(~name)
 ```
 
 

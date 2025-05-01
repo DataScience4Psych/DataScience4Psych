@@ -20,7 +20,6 @@ options(
   show.signif.stars = FALSE, # for regression output
   digits = 2
 )
-
 ```
 
 ### Packages {.unnumbered}
@@ -73,15 +72,16 @@ age <- rnorm(100, mean = 30, sd = 5)
 
 
 ```{r exercise1.1, error=TRUE, message=FALSE, warning=FALSE,echo=TRUE}
-
-df_colonists <- data.frame(id = 1:100, # this is our id column
-                                      ) # add the age column here
+df_colonists <- data.frame(
+  id = 1:100, # this is our id column
+) # add the age column here
 ```
 
 ```{r exercise1.1solution, error=TRUE,include=FALSE}
-
-df_colonists <- data.frame(id = 1:100,  # this is our id column
-                              age ) # add the age column here
+df_colonists <- data.frame(
+  id = 1:100, # this is our id column
+  age
+) # add the age column here
 ```
 
 Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.
@@ -93,19 +93,25 @@ age2 <- rnorm(100, mean = 30, sd = 5)
 set.seed(1000)
 age3 <- rnorm(100, mean = 30, sd = 5)
 
-df <- data.frame( age = c(age, age2, age3), 
-                  seed = c(rep("Seed 123", length(age)),
-                           rep("Seed 100", length(age2)),
-                           rep("Seed 1000", length(age3))))
+df <- data.frame(
+  age = c(age, age2, age3),
+  seed = c(
+    rep("Seed 123", length(age)),
+    rep("Seed 100", length(age2)),
+    rep("Seed 1000", length(age3))
+  )
+)
 
 library(ggplot2)
 
 # Create a histogram to visualize the age distributions separately
 ggplot(df, aes(x = age, fill = seed)) +
-    geom_histogram(position = "dodge", 
-                   breaks = seq(from = 5 * floor(min(age) / 5), to = 5 * ceiling(max(age) / 5), by = 5), 
-                   color = "black") +
-  scale_fill_viridis_d()+
+  geom_histogram(
+    position = "dodge",
+    breaks = seq(from = 5 * floor(min(age) / 5), to = 5 * ceiling(max(age) / 5), by = 5),
+    color = "black"
+  ) +
+  scale_fill_viridis_d() +
   labs(title = "Histogram of Colonist Ages by Seed", x = "Age", y = "Frequency") +
   theme_minimal()
 ```
@@ -132,54 +138,65 @@ Below, we show several ways to construct this variable. Try to figure out how th
 
 ```{r exercise1.3_examples, error=TRUE}
 set.seed(1)
-roleA <- rep(c("engineer", "scientist", "medic"), 
-             length.out = 100)
+roleA <- rep(c("engineer", "scientist", "medic"),
+  length.out = 100
+)
 # this works if we want to set a specific number of each role
-roleB <- rep(c("engineer", "scientist", "medic"), 
-             each = 34, 
-             length.out = 100)
+roleB <- rep(c("engineer", "scientist", "medic"),
+  each = 34,
+  length.out = 100
+)
 
-roleC <- rep(c("engineer", "scientist", "medic"), 
-             times = c(33, 33, 33), 
-             length.out = 100)
-             
+roleC <- rep(c("engineer", "scientist", "medic"),
+  times = c(33, 33, 33),
+  length.out = 100
+)
+
 # if you want to use sampling weights
-roleD <- sample(c("engineer", "scientist", "medic"), 
-                replace = TRUE, 
-                size = 100, prob = c(1,1,1))
+roleD <- sample(c("engineer", "scientist", "medic"),
+  replace = TRUE,
+  size = 100, prob = c(1, 1, 1)
+)
 
 # if you want to randomly shuffle
 
 roleE <- sample(roleB, size = 100, replace = FALSE)
-
 ```
 
 There are different ways to assign these roles, depending on the **pattern of assignment** we want.
 
 ```{r pie,echo=FALSE}
-df <- data.frame( role = c(roleA, roleB, roleC,roleD, roleE), 
-                  method = c(rep("Method A", length(roleA)),
-                           rep("Method B", length(roleB)),
-                           rep("Method C", length(roleC)),
-                           rep("Method D", length(roleD)),
-                           rep("Method E", length(roleE))))
+df <- data.frame(
+  role = c(roleA, roleB, roleC, roleD, roleE),
+  method = c(
+    rep("Method A", length(roleA)),
+    rep("Method B", length(roleB)),
+    rep("Method C", length(roleC)),
+    rep("Method D", length(roleD)),
+    rep("Method E", length(roleE))
+  )
+)
 
 ggplot(df, aes(x = role, fill = method)) +
   geom_bar(position = position_dodge()) +
   labs(title = "Distribution of Colonists by Method", x = "Role", y = "Count") +
-  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
+  scale_fill_viridis_d() + # This adds a nice color gradient based on the 'method'
   theme_minimal()
 ```
 
 ```{r reptables, error=TRUE, warning=FALSE, include=FALSE, message=FALSE,echo=FALSE}
-df <- data.frame(row = rep(1:100, 5),
-  role = c(roleA, roleB, roleC, roleD, roleE), 
-                method = c(rep("Method A", length(roleA)),
-                           rep("Method B", length(roleB)),
-                           rep("Method C", length(roleC)),
-                           rep("Method D", length(roleD)),
-                           rep("Method E", length(roleE))))
-                  
+df <- data.frame(
+  row = rep(1:100, 5),
+  role = c(roleA, roleB, roleC, roleD, roleE),
+  method = c(
+    rep("Method A", length(roleA)),
+    rep("Method B", length(roleB)),
+    rep("Method C", length(roleC)),
+    rep("Method D", length(roleD)),
+    rep("Method E", length(roleE))
+  )
+)
+
 
 df %>%
   DT::datatable(
@@ -187,7 +204,7 @@ df %>%
     class = "cell-border stripe",
     filter = list(position = "top"),
     options = list(
-      pageLength = nrow(df)/5,
+      pageLength = nrow(df) / 5,
       autoWidth = TRUE,
       bInfo = FALSE,
       paging = FALSE
@@ -206,7 +223,7 @@ df %>%
 **1.3.** Create a role variable using one of the methods above, or design your own. Explain how the method you chose reflects your goals: do you want equal distribution, randomness, or a specific pattern? Be specific about what your colony needs.
 
 ```{r exercise1.3solution, error=TRUE,include=FALSE}
-df_colonists$role <- roleA 
+df_colonists$role <- roleA
 ```
 
 Next, we'll simulate the health and fitness levels of our colonists. Health and fitness are essential for the physical and mental well-being of our colonists, ensuring they can adapt to the harsh Martian environment.
@@ -223,7 +240,6 @@ On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Ga
 set.seed(123)
 
 df_colonists$marsgar <- 1 # "replace this with your code"
-
 ```
 
 
@@ -249,8 +265,9 @@ equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
 
 # Adjusting the equation for positive/negative slope
 equation <- ifelse(slope >= 0,
-                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
-                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+  sprintf("y == %.2f + %.2f * x", intercept, slope), # for non-negative slope
+  sprintf("y == %.2f %.2f * x", intercept, slope)
+) # slope is negative, sprintf includes the minus
 
 # Viridis color for both line and text
 viridis_color <- viridis(1, option = "D")[1]
@@ -258,12 +275,10 @@ viridis_color <- viridis(1, option = "D")[1]
 
 ggplot(df_colonists, aes(x = age, y = marsgar)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = viridis_color,formula = 'y ~ x') + 
-  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
-
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color, formula = "y ~ x") +
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +
   labs(title = "Scatter Plot of Colonist Age and Health", x = "Age", y = "MARSGAR") +
   theme_minimal()
-
 ```
 
 What a contrived plot! It seems that there's no relationship between age and health in the data. How odd! (Or is it?) 
@@ -289,7 +304,6 @@ To model this, we define the variable `technical_skills` as a linear function of
 
 
 ```{r exercise2.1, error=TRUE}
-
 # Simulate technical skills based on age
 
 # Set the seed for reproducibility
@@ -297,13 +311,11 @@ set.seed(1235)
 
 # Create a variable for technical skills
 df_colonists$technical_skills <- 2 * df_colonists$age + rnorm(100, mean = 0, sd = 1)
-
 ```
 
 Now, let's visualize the relationship between age and technical skills using a scatter plot.
 
 ```{r,echo=FALSE,message=FALSE, warnings=FALSE}
-
 # Fit a linear model
 model <- lm(technical_skills ~ age, data = df_colonists)
 
@@ -317,8 +329,9 @@ equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
 
 # Adjusting the equation for positive/negative slope
 equation <- ifelse(slope >= 0,
-                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
-                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+  sprintf("y == %.2f + %.2f * x", intercept, slope), # for non-negative slope
+  sprintf("y == %.2f %.2f * x", intercept, slope)
+) # slope is negative, sprintf includes the minus
 
 # Viridis color for both line and text
 viridis_color <- viridis(1, option = "D")[1]
@@ -326,12 +339,10 @@ viridis_color <- viridis(1, option = "D")[1]
 
 ggplot(df_colonists, aes(x = age, y = technical_skills)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = viridis_color,formula = 'y ~ x') + 
-  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
-
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color, formula = "y ~ x") +
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +
   labs(title = "Scatter Plot of Colonist Age and technical skills", x = "Age", y = "technical_skills") +
   theme_minimal()
-
 ```
 
 **2.2.**  Simulate problem-solving abilities based on their assigned role
@@ -345,9 +356,9 @@ df_colonists$problem_solving <- 1 # replace this with your code
 ```
 
     ```{r, exercise2.2solution, error=TRUE, echo=FALSE,include=FALSE}
-    df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
-    df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
-    df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
+df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
+df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
+df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
     ```
     
 <details>
@@ -363,10 +374,10 @@ df_colonists$problem_solving <- 1 # replace this with your code
 
 ```{r, exercise2.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
 ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
-#  geom_histogram(position = position_dodge()) +
-    geom_density( alpha=.6) +
+  #  geom_histogram(position = position_dodge()) +
+  geom_density(alpha = .6) +
   labs(title = "Distribution of Problem Solving by Role", x = "Role", y = "Count") +
-  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
+  scale_fill_viridis_d() + # This adds a nice color gradient based on the 'method'
   theme_minimal()
 ```
 
@@ -414,8 +425,10 @@ library(MASS)
 
 # Define mean and covariance matrix
 mean_traits <- c(50, 50)
-cov_matrix <- matrix(c(100, 50, 
-                       50, 100), ncol = 2)
+cov_matrix <- matrix(c(
+  100, 50,
+  50, 100
+), ncol = 2)
 
 # Generate correlated data
 
@@ -441,19 +454,18 @@ equation <- sprintf("y == %.2f %+ .2f * x", intercept, slope)
 
 # Adjusting the equation for positive/negative slope
 equation <- ifelse(slope >= 0,
-                   sprintf("y == %.2f + %.2f * x", intercept, slope),  # for non-negative slope
-                   sprintf("y == %.2f %.2f * x", intercept, slope))  # slope is negative, sprintf includes the minus
+  sprintf("y == %.2f + %.2f * x", intercept, slope), # for non-negative slope
+  sprintf("y == %.2f %.2f * x", intercept, slope)
+) # slope is negative, sprintf includes the minus
 
 # Visualizing the correlation
 library(ggplot2)
 ggplot(df_colonists, aes(x = agreeableness, y = resilience)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = viridis_color,formula = 'y ~ x') + 
-  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +  
-
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color, formula = "y ~ x") +
+  geom_label(x = Inf, y = Inf, label = equation, hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color) +
   labs(title = "Scatter Plot of Colonist Resilience and agreeableness", x = "Resilience", y = "agreeableness") +
   theme_minimal()
-
 ```
 
 Building a sustainable Mars colony requires more than just technical skills and physical health. The psychological composition of our colonist team could determine whether humanity's first extraterrestrial settlement thrives or collapses under pressure. Until now, we've modeled colonist attributes as either independent variables or used explicit formulas to create relationships between them.
@@ -471,15 +483,20 @@ To help you simulate realistic trait relationships, I’ve provided a correlatio
 
 
     ```{r, quickmatrix, error=TRUE, echo=FALSE,include=FALSE}
-  cor_matrix_bigfive <- matrix(c(
-      1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
-      0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
-      0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
-      0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
-      0.2949, 0.0720, 0.1951, 0.1574, 1.0000
-  ), nrow=5, ncol=5, byrow=TRUE,
-  dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
-            c("EX", "ES", "AG", "CO", "OP")))
+cor_matrix_bigfive <- matrix(
+  c(
+    1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
+    0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
+    0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
+    0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
+    0.2949, 0.0720, 0.1951, 0.1574, 1.0000
+  ),
+  nrow = 5, ncol = 5, byrow = TRUE,
+  dimnames = list(
+    c("EX", "ES", "AG", "CO", "OP"),
+    c("EX", "ES", "AG", "CO", "OP")
+  )
+)
     ```
 <details> 
   <summary>Click this to get a matrix you can quickly paste</summary>
@@ -488,13 +505,15 @@ To help you simulate realistic trait relationships, I’ve provided a correlatio
 </details>
 
     ```{r, matrixbigfive, error=TRUE, echo=FALSE,include=FALSE}
-    # Define the bigfive
-    bigfive <- c("EX", "ES", "AG", "CO", "OP")
+# Define the bigfive
+bigfive <- c("EX", "ES", "AG", "CO", "OP")
 
 # Create an empty matrix with dimensions equal to the number of bigfive
-cor_matrix <- matrix(0, ncol = length(bigfive), 
-                     nrow = length(bigfive), 
-                     dimnames = list(bigfive, bigfive))
+cor_matrix <- matrix(0,
+  ncol = length(bigfive),
+  nrow = length(bigfive),
+  dimnames = list(bigfive, bigfive)
+)
 
 
 # Initialize the diagonal to 1
@@ -508,19 +527,19 @@ set_correlation <- function(matrix, row, column, value) {
   return(matrix)
 }
 
-#for(i in 1:10) {
+# for(i in 1:10) {
 #    print(paste0("set_correlation(cor_matrix, '",ma_res$construct_x[i],"' ,'", ma_res$construct_y[i],"',",round(ma_res[[6]][[i]][["barebones"]][["mean_r"]],4),")"))}
 
-cor_matrix_bigfive <- cor_matrix <- cor_matrix %>% 
-  set_correlation("ES", "AG", 0.1576) %>% 
-  set_correlation("ES", "CO", 0.2306) %>% 
-  set_correlation("ES", "EX", 0.2599) %>% 
-  set_correlation("ES", "OP", 0.072) %>% 
-  set_correlation("AG", "CO", 0.2866) %>% 
-  set_correlation("AG", "EX", 0.1972) %>% 
-  set_correlation("AG", "OP", 0.1951) %>% 
-  set_correlation("CO", "EX", 0.186) %>% 
-  set_correlation("CO", "OP", 0.1574) %>% 
+cor_matrix_bigfive <- cor_matrix <- cor_matrix %>%
+  set_correlation("ES", "AG", 0.1576) %>%
+  set_correlation("ES", "CO", 0.2306) %>%
+  set_correlation("ES", "EX", 0.2599) %>%
+  set_correlation("ES", "OP", 0.072) %>%
+  set_correlation("AG", "CO", 0.2866) %>%
+  set_correlation("AG", "EX", 0.1972) %>%
+  set_correlation("AG", "OP", 0.1951) %>%
+  set_correlation("CO", "EX", 0.186) %>%
+  set_correlation("CO", "OP", 0.1574) %>%
   set_correlation("EX", "OP", 0.2949)
 print(cor_matrix_bigfive)
     ```
@@ -567,81 +586,91 @@ Great! We have successfully simulated a dataset of 100 colonists with interdepen
 </details>
 
     ```{r exercise3.3solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
-  # Set seed for reproducibility
-    seed <- 123
-    set.seed(seed)
-    
-    # Load the Mass, Matrix, and then tidyverse (otherwise have to use conflicted package to handle conflict
-    ## (note to self that MASS has a select function
-    
-    library(MASS); library(Matrix); library(tidyverse); library(conflicted)
-    conflicts_prefer(dplyr::select())
-    # Number of colonists
-    n_colonists <- 100
-    
-    # Define mean and covariance matrix
-    ##            "EX", "ES", "AG", "CO", "OP"
-    var_names <- c( "EX", "ES", "AG", "CO", "OP")
-    
-    mean_traits <- c(-.5, .5, .25, .5, 0) # Mean of each trait
-    sd_traits <- c(1, .9, 1, 1, 1)  # Standard deviation of each trait
-    
-    
-    # Get correlation matrix
-    
-    cor_matrix_bigfive <- matrix(c(
+# Set seed for reproducibility
+seed <- 123
+set.seed(seed)
+
+# Load the Mass, Matrix, and then tidyverse (otherwise have to use conflicted package to handle conflict
+## (note to self that MASS has a select function
+
+library(MASS)
+library(Matrix)
+library(tidyverse)
+library(conflicted)
+conflicts_prefer(dplyr::select())
+# Number of colonists
+n_colonists <- 100
+
+# Define mean and covariance matrix
+##            "EX", "ES", "AG", "CO", "OP"
+var_names <- c("EX", "ES", "AG", "CO", "OP")
+
+mean_traits <- c(-.5, .5, .25, .5, 0) # Mean of each trait
+sd_traits <- c(1, .9, 1, 1, 1) # Standard deviation of each trait
+
+
+# Get correlation matrix
+
+cor_matrix_bigfive <- matrix(
+  c(
     1.0000, 0.2599, 0.1972, 0.1860, 0.2949,
     0.2599, 1.0000, 0.1576, 0.2306, 0.0720,
     0.1972, 0.1576, 1.0000, 0.2866, 0.1951,
     0.1860, 0.2306, 0.2866, 1.0000, 0.1574,
     0.2949, 0.0720, 0.1951, 0.1574, 1.0000
-    ), nrow=5, ncol=5, byrow=TRUE,
-    dimnames=list(c("EX", "ES", "AG", "CO", "OP"), 
-    c("EX", "ES", "AG", "CO", "OP")))
-    
-    # Check if correlation matrix is positive definite (if all eigenvalues are positive)
-    eigen_values <- eigen(cor_matrix_bigfive)$values
-    is_positive_definite <- all(eigen_values > 0)
-    print(is_positive_definite)
-    
-    
-    # Convert correlation matrix to covariance matrix
-    cov_matrix_bigfive <- cor_matrix_bigfive * (sd_traits %*% t(sd_traits))
-    
-    # Print the covariance matrix
-    print(cov_matrix_bigfive)
-    
-    simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
-    
-    # Add colonist_id and seed
-    simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
-    seed = seed, # add seed
-    simulated_data) # add simulated data
-    
-    # Print the first few rows of the simulated data
-    
-    print(head(simulated_data))
-    
-    summary_stats_mean <- simulated_data %>%
-    select(-colonist_id, -seed) %>%
-    summarize(across(everything(), list(mean = mean))) %>%
-    rbind(mean_traits) # compare with population parameters from mean_traits
-    
-    summary_stats_sd <- simulated_data %>%
-    select(-colonist_id, -seed) %>%
-    summarize(across(everything(), list(sd = sd))) %>%
-    rbind(sd_traits) # compare with population parameters from sd_traits
-    
-    
-    # compare with population parameters from mean_traits and sd_traits
-    summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
-    
-    #  
-    summary_stats_cor <- simulated_data %>%
-    select(-colonist_id, -seed) %>% 
-    cor() # compare with population parameters from cor_matrix_bigfive
-    
-    summary_stats
+  ),
+  nrow = 5, ncol = 5, byrow = TRUE,
+  dimnames = list(
+    c("EX", "ES", "AG", "CO", "OP"),
+    c("EX", "ES", "AG", "CO", "OP")
+  )
+)
+
+# Check if correlation matrix is positive definite (if all eigenvalues are positive)
+eigen_values <- eigen(cor_matrix_bigfive)$values
+is_positive_definite <- all(eigen_values > 0)
+print(is_positive_definite)
+
+
+# Convert correlation matrix to covariance matrix
+cov_matrix_bigfive <- cor_matrix_bigfive * (sd_traits %*% t(sd_traits))
+
+# Print the covariance matrix
+print(cov_matrix_bigfive)
+
+simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
+
+# Add colonist_id and seed
+simulated_data <- cbind.data.frame(
+  colonist_id = 1:n_colonists, # add colonist_id
+  seed = seed, # add seed
+  simulated_data
+) # add simulated data
+
+# Print the first few rows of the simulated data
+
+print(head(simulated_data))
+
+summary_stats_mean <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  summarize(across(everything(), list(mean = mean))) %>%
+  rbind(mean_traits) # compare with population parameters from mean_traits
+
+summary_stats_sd <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  summarize(across(everything(), list(sd = sd))) %>%
+  rbind(sd_traits) # compare with population parameters from sd_traits
+
+
+# compare with population parameters from mean_traits and sd_traits
+summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
+
+#
+summary_stats_cor <- simulated_data %>%
+  select(-colonist_id, -seed) %>%
+  cor() # compare with population parameters from cor_matrix_bigfive
+
+summary_stats
     ```
 
 
@@ -681,49 +710,51 @@ Please plot the distribution of the correlation coefficients to see how consiste
 </details>
 
     ```{r exercise4solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
-    library(dplyr)
-    conflicts_prefer(dplyr::select())
-    set.seed(124)
-num_simulations <- 100  # Number of times to simulate the colonist data
-all_simulations <- data.frame()  # Create an empty data frame to store the results
+library(dplyr)
+conflicts_prefer(dplyr::select())
+set.seed(124)
+num_simulations <- 100 # Number of times to simulate the colonist data
+all_simulations <- data.frame() # Create an empty data frame to store the results
 for (i in 1:num_simulations) {
   # Simulate the big five personality traits
   simulated_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix_bigfive)
-  
+
 
   # Add colonist_id and seed
-  simulated_data <- cbind.data.frame(colonist_id = 1:n_colonists, # add colonist_id
-                                      rep = i, 
-                                      simulated_data) # add simulated data
-  
+  simulated_data <- cbind.data.frame(
+    colonist_id = 1:n_colonists, # add colonist_id
+    rep = i,
+    simulated_data
+  ) # add simulated data
+
   # Append the results
   all_simulations <- rbind(all_simulations, simulated_data)
 }
 
-summary_stats <- all_simulations %>% group_by(rep) %>% 
-  select(-colonist_id) %>% 
-  summarize(across(everything(), list(mean = mean, sd = sd))) 
+summary_stats <- all_simulations %>%
+  group_by(rep) %>%
+  select(-colonist_id) %>%
+  summarize(across(everything(), list(mean = mean, sd = sd)))
 
 # compare with population parameters from mean_traits
 summary_stats_mean <- all_simulations %>%
   select(-colonist_id) %>%
   summarize(across(everything(), list(mean = mean))) %>%
-    rbind(mean_traits) # compare with population parameters from mean_traits
+  rbind(mean_traits) # compare with population parameters from mean_traits
 
 summary_stats_sd <- all_simulations %>%
   select(-colonist_id) %>%
   summarize(across(everything(), list(sd = sd))) %>%
-    rbind(sd_traits) # compare with population parameters from sd_traits
+  rbind(sd_traits) # compare with population parameters from sd_traits
 
 
 # compare with population parameters from mean_traits and sd_traits
 summary_stats <- cbind(summary_stats_mean, summary_stats_sd)
 
-# 
+#
 summary_stats_cor <- simulated_data %>%
   select(-colonist_id) %>%
   cor() # compare with population parameters from cor_matrix_bigfive
-
     ```
 
 
@@ -753,12 +784,12 @@ Your plot might look something like this:
 </details>
 </details>
     ```{r exercise5solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
-    library(dplyr)
+library(dplyr)
 set.seed(124)
-sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
-repetitions_per_condition <- 20  # Number of repetitions for each sample size
-mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
-cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix for skills
+sample_sizes <- seq(30, 300, by = 15) # Varying sample sizes
+repetitions_per_condition <- 20 # Number of repetitions for each sample size
+mean_skills <- c(50, 50) # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2) # Covariance matrix for skills
 
 # Initialize a DataFrame to store results
 simulation_results <- data.frame(
@@ -773,7 +804,7 @@ for (size in sample_sizes) {
   for (rep in 1:repetitions_per_condition) {
     skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
     current_covariance <- cov(skills_data[, 1], skills_data[, 2])
-  
+
     # Append results
     simulation_results <- rbind(simulation_results, data.frame(
       SampleSize = size,
@@ -784,25 +815,29 @@ for (size in sample_sizes) {
 }
 
 
-num_simulations <- 100  # Number of times to simulate the colonist data
+num_simulations <- 100 # Number of times to simulate the colonist data
 all_simulations <- replicate(100, mvrnorm(n = 100, mu = mean_skills, Sigma = cov_skills, empirical = FALSE))
 
 # Initialize a DataFrame to store results
 
 
 set.seed(124)
-mean_skills <- c(50, 50)  # Mean technical skills and problem-solving abilities
-cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2)  # Covariance matrix for skills
+mean_skills <- c(50, 50) # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100), ncol = 2) # Covariance matrix for skills
 
-num_simulations <- 100  # Number of times to simulate the colonist data
-all_simulations <- replicate(num_simulations, 
-                             mvrnorm(n = 100, mu = mean_traits,
-                                     Sigma = cov_matrix_bigfive, 
-                                     empirical = FALSE), simplify = FALSE)
+num_simulations <- 100 # Number of times to simulate the colonist data
+all_simulations <- replicate(num_simulations,
+  mvrnorm(
+    n = 100, mu = mean_traits,
+    Sigma = cov_matrix_bigfive,
+    empirical = FALSE
+  ),
+  simplify = FALSE
+)
 
 
-sample_sizes <- seq(30, 300, by = 15)  # Varying sample sizes
-repetitions_per_condition <- 20  # Number of repetitions for each sample size
+sample_sizes <- seq(30, 300, by = 15) # Varying sample sizes
+repetitions_per_condition <- 20 # Number of repetitions for each sample size
 
 # Initialize a DataFrame to store results
 simulation_results_cov <- data.frame(
@@ -817,7 +852,7 @@ for (size in sample_sizes) {
   for (rep in 1:repetitions_per_condition) {
     skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
     current_covariance <- cov(skills_data[, 1], skills_data[, 2])
-  
+
     # Append results
     simulation_results_cov <- rbind(simulation_results_cov, data.frame(
       SampleSize = size,
@@ -836,10 +871,10 @@ simulation_results_cov$SampleSize_factor <- as.factor(simulation_results_cov$Sam
 
 
 ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
-#  geom_histogram(position = position_dodge()) +
-    geom_density(position = position_dodge(), alpha=.6) +
+  #  geom_histogram(position = position_dodge()) +
+  geom_density(position = position_dodge(), alpha = .6) +
   labs(title = "Average Covariance by Sample Size", ) +
-  scale_fill_viridis_d() +  # This adds a nice color gradient based on the 'method'
+  scale_fill_viridis_d() + # This adds a nice color gradient based on the 'method'
   theme_minimal()
     ```
 

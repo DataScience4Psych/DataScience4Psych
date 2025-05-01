@@ -1,7 +1,5 @@
 <!--HappyGitWithR Links-->
 
-
-
 [hg-github-account]: https://happygitwithr.com/github-acct.html
 [hg-install-r-rstudio]: https://happygitwithr.com/install-r-rstudio.html
 [hg-connect-intro]: https://happygitwithr.com/connect-intro.html
@@ -19,10 +17,6 @@
 
 [stringr-web]: https://stringr.tidyverse.org
 [stringr-cran]: https://CRAN.R-project.org/package=stringr
-
-
-
-
 
 [ggplot2-github]: https://github.com/tidyverse/ggplot2
 [ggplot2-theme-args]: https://ggplot2.tidyverse.org/reference/ggtheme.html#arguments

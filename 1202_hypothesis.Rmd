@@ -30,8 +30,10 @@ A consultant marketed her services by highlighting her exceptional track record.
 
 ```{r echo=FALSE}
 organ_donor <- tibble(
-  outcome = c(rep("complication", 3),
-              rep("no complication", 59))
+  outcome = c(
+    rep("complication", 3),
+    rep("no complication", 59)
+  )
 )
 ```
 
@@ -140,9 +142,10 @@ sim_dist <- data.frame(p_hat_sim = rep(NA, 3))
 sim_dist$p_hat_sim[1] <- p_hat_sim1
 
 # plot
-ggplot(sim_dist, aes(x = p_hat_sim)) + 
-  geom_dotplot() + 
-  xlim(0, 0.26) + ylim(0, 10)
+ggplot(sim_dist, aes(x = p_hat_sim)) +
+  geom_dotplot() +
+  xlim(0, 0.26) +
+  ylim(0, 10)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, out.width="50%"}
@@ -154,16 +157,18 @@ table(sim2)
 
 sim_dist$p_hat_sim[2] <- p_hat_sim2
 
-ggplot(sim_dist, aes(x = p_hat_sim)) + 
-  geom_dotplot() + 
-  xlim(0,0.26) + ylim(0,10)
+ggplot(sim_dist, aes(x = p_hat_sim)) +
+  geom_dotplot() +
+  xlim(0, 0.26) +
+  ylim(0, 10)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 sim3 <- sample(outcomes,
-               size = 62,
-               prob = c(0.1, 0.9),
-               replace = TRUE)
+  size = 62,
+  prob = c(0.1, 0.9),
+  replace = TRUE
+)
 
 table(sim3)
 
@@ -171,9 +176,10 @@ table(sim3)
 
 sim_dist$p_hat_sim[3] <- p_hat_sim3
 
-ggplot(sim_dist, aes(x = p_hat_sim)) + 
-  geom_dotplot() + 
-  xlim(0,0.26) + ylim(0,10)
+ggplot(sim_dist, aes(x = p_hat_sim)) +
+  geom_dotplot() +
+  xlim(0, 0.26) +
+  ylim(0, 10)
 ```
 
 This process is getting boring... We need a way to automate this process!
@@ -182,22 +188,30 @@ This process is getting boring... We need a way to automate this process!
 
 ```{r}
 null_dist <- organ_donor %>%
-  specify(response = outcome,
-          success = "complication") %>%
-  hypothesize(null = "point",
-              p = c("complication" = 0.10,
-                    "no complication" = 0.90)) %>% 
-  generate(reps = 100,
-           type = "simulate") %>% 
+  specify(
+    response = outcome,
+    success = "complication"
+  ) %>%
+  hypothesize(
+    null = "point",
+    p = c(
+      "complication" = 0.10,
+      "no complication" = 0.90
+    )
+  ) %>%
+  generate(
+    reps = 100,
+    type = "simulate"
+  ) %>%
   calculate(stat = "prop")
 ```
 
 ```{r echo=FALSE}
-null_dist %>% 
+null_dist %>%
   mutate(
     replicate = as.numeric(replicate),
     stat = round(stat, 3)
-    )
+  )
 ```
 
 ### Visualizing the null distribution
@@ -224,8 +238,8 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
 
 ```{r}
 null_dist %>%
-  filter(stat <= (3/62)) %>%
-  summarize(p_value = n()/nrow(null_dist))
+  filter(stat <= (3 / 62)) %>%
+  summarize(p_value = n() / nrow(null_dist))
 ```
 
 ### Significance level
@@ -253,13 +267,21 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 
 ```{r, cache=TRUE}
 null_dist <- organ_donor %>%
-  specify(response = outcome,
-          success = "complication") %>%
-  hypothesize(null = "point",
-              p = c("complication" = 0.10,
-                    "no complication" = 0.90)) %>% 
-  generate(reps = 1000,
-           type = "simulate") %>% 
+  specify(
+    response = outcome,
+    success = "complication"
+  ) %>%
+  hypothesize(
+    null = "point",
+    p = c(
+      "complication" = 0.10,
+      "no complication" = 0.90
+    )
+  ) %>%
+  generate(
+    reps = 1000,
+    type = "simulate"
+  ) %>%
   calculate(stat = "prop")
 ```
 
@@ -268,11 +290,11 @@ null_dist <- organ_donor %>%
 ```{r, cache=TRUE}
 ggplot(data = null_dist, mapping = aes(x = stat)) +
   geom_histogram(binwidth = 0.01) +
-  geom_vline(xintercept = 3/62, color = "red")
+  geom_vline(xintercept = 3 / 62, color = "red")
 
 null_dist %>%
-  filter(stat <= 3/62) %>%
-  summarize(p_value = n()/nrow(null_dist))
+  filter(stat <= 3 / 62) %>%
+  summarize(p_value = n() / nrow(null_dist))
 ```
 
 ## One vs. two sided hypothesis tests
@@ -390,20 +412,24 @@ on the board.
 
 ```{r}
 null_dist <- yawn %>%
-  specify(response = result,
-          explanatory = group, 
-          success = "yawn") %>%
+  specify(
+    response = result,
+    explanatory = group,
+    success = "yawn"
+  ) %>%
   hypothesize(null = "independence") %>%
   generate(100, type = "permute") %>%
-  calculate(stat = "diff in props", 
-            order = c("trmt", "ctrl"))
+  calculate(
+    stat = "diff in props",
+    order = c("trmt", "ctrl")
+  )
 ```
 
 - Start with the data frame
 - **Specify the variables**
   - **Since the response variable is categorical, specify the level which should be considered as "success"**
 
-```{r eval=FALSE}
+```r
 yawn %>%
 {{  specify(response = result, explanatory = group, 
           success = "yawn") }}
@@ -411,7 +437,7 @@ yawn %>%
 
 - **State the null hypothesis (yawning and whether or not you see someone yawn are independent)**
 
-```{r eval=FALSE}
+```r
 yawn %>%
   specify(response = result, explanatory = group, 
           success = "yawn") %>%
@@ -420,7 +446,7 @@ yawn %>%
 
 - **Generate simulated differences via permutation**
 
-```{r eval=FALSE}
+```r
 yawn %>%
   specify(response = result, explanatory = group, 
           success = "yawn") %>%
@@ -431,7 +457,7 @@ yawn %>%
 - **Calculate the sample statistic of interest (difference in proportions)**
   - **Since the explanatory variable is categorical, specify the order in which the subtraction should occur for the calculation of the sample statistic, $(\hat{p}_{treatment} - \hat{p}_{control})$.**
 
-```{r eval=FALSE}
+```r
 yawn %>%
   specify(response = result, explanatory = group, 
           success = "yawn") %>%
@@ -452,7 +478,7 @@ yawn %>%
 - Calculate the sample statistic of interest (difference in proportions)
   - Since the explanatory variable is categorical, specify the order in which the subtraction should occur for the calculation of the sample statistic, $(\hat{p}_{treatment} - \hat{p}_{control})$.
 
-```{r eval=FALSE}
+```r
 {{null_dist <- yawn %>% }}
   specify(response = outcome, explanatory = group, 
           success = "yawn") %>%
@@ -487,7 +513,7 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
 ```{r}
 null_dist %>%
   filter(stat >= 0.0441) %>%
-  summarize(p_value = n()/nrow(null_dist))
+  summarize(p_value = n() / nrow(null_dist))
 ```
 
 ### Conclusion

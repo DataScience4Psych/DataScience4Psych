@@ -27,15 +27,13 @@ R has a few special values you'll bump into when your calculations don't work as
 Try dividing by zero in R and you'll get `Inf` (infinity) - unlike other languages that might crash or throw an error. R is pretty chill about it (to an annoying degree):
 
 ```{r}
-
-pi / 0  # Returns Inf
-
+pi / 0 # Returns Inf
 ```
 
 But if you try something truly undefined like dividing zero by zero, you'll get `NaN` (Not a Number):
 
 ```{r}
-0 / 0  # Returns NaN
+0 / 0 # Returns NaN
 ```
 
 These special values appear when dealing with unusual or undefined operations in R:
@@ -49,9 +47,7 @@ These special values appear when dealing with unusual or undefined operations in
 The most common special value you'll encounter is `NA` - missing data. `NA`s are sneaky because they're "contagious" - almost any calculation involving an `NA` will give you `NA` as the result:
 
 ```{r}
-
-mean(c(1, 2, NA, 4))  # Returns NA
-
+mean(c(1, 2, NA, 4)) # Returns NA
 ```
 
 
@@ -91,34 +87,32 @@ Take factors - they look like character strings when you print them, but under t
 
 ```{r}
 x <- factor(c("BS", "MS", "PhD", "MS"))
-x  # Looks like text
-typeof(x)  # But it's stored as integers!
-as.integer(x)  # See the numbers behind the scenes
+x # Looks like text
+typeof(x) # But it's stored as integers!
+as.integer(x) # See the numbers behind the scenes
 ```
 
 Or dates - they look like calendar dates when you print them:
 ```{r}
 Y2kday <- as.Date("2000-01-01")
-Y2kday  # Shows as "2000-01-01"
+Y2kday # Shows as "2000-01-01"
 ```
 
 But they're actually just counting days since January 1, 1970:
 
 ```{r}
-
-as.integer(Y2kday)  # Days since 1970-01-01
+as.integer(Y2kday) # Days since 1970-01-01
 ```
 
 Because you're just counting time since a fixed date. This explains why you can do math with dates, like finding out what date is 30 days from now:
 ```{r}
-Y2kday + 30  # Adds 30 days
+Y2kday + 30 # Adds 30 days
 ```
 
 Even data frames are secretly just lists where all the elements have the same length:
 ```{r}
 df <- data.frame(x = 1:2, y = 3:4)
-typeof(df)  # "list"
-
+typeof(df) # "list"
 ```
 
 Understanding these "secret identities" helps you avoid common pitfalls and work more effectively with your data.
@@ -150,7 +144,11 @@ library(ggplot2)
 library(viridis)
 ```
 ```{r}
-ggplot(cat_lovers, mapping = aes(x = handedness,fill = handedness)) + geom_bar() + labs(title = "Cat lovers by handedness") + theme_minimal() + scale_fill_viridis_d(option = "plasma")
+ggplot(cat_lovers, mapping = aes(x = handedness, fill = handedness)) +
+  geom_bar() +
+  labs(title = "Cat lovers by handedness") +
+  theme_minimal() +
+  scale_fill_viridis_d(option = "plasma")
 ```
 R automatically converts your text variable to a factor, but it uses alphabetical order by default. That's rarely what you want!
 The `forcats` package (part of the tidyverse) gives you superpowers for controlling factor order. Want categories ordered by frequency? Just use `fct_infreq`():
@@ -160,9 +158,9 @@ cat_lovers %>%
   mutate(handedness = fct_infreq(handedness)) %>%
   ggplot(mapping = aes(x = handedness, fill = handedness)) +
   geom_bar() +
-  labs(title = "Cat lovers by handedness") + theme_minimal() +
+  labs(title = "Cat lovers by handedness") +
+  theme_minimal() +
   scale_fill_viridis_d(option = "plasma")
-
 ```
 
 

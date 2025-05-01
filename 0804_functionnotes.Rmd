@@ -28,7 +28,7 @@ We'll begin by loading the `nycflights13` dataset, which contains information ab
 library(nycflights13)
 library(dplyr)
 data("flights")
-#str(flights)
+# str(flights)
 ```
 
 ## Example Analysis: Average Delay by Airline
@@ -41,7 +41,6 @@ First, develop some working code for interactive use, using a representative inp
 
 R functions that will be useful: `mean()` and `filter()` from the `dplyr` package.
 ```{r}
-
 ## Investigate the structure of the flights dataset
 str(flights)
 ## get to know the functions mentioned above
@@ -49,7 +48,6 @@ str(flights)
 mean(flights$dep_delay)
 
 filter(.data = flights, carrier == "AA")
-
 ```
 ```{r,echo=FALSE}
 # Assuming flights is a dataframe with dep_delay and carrier columns
@@ -77,9 +75,7 @@ flights %>%
 Here, we use base R to achieve the same task without the `dplyr` package, directly subsetting the dataframe.
 
 ```{r}
-
-mean(flights$dep_delay[flights$carrier=="AA"], na.rm = TRUE)
-
+mean(flights$dep_delay[flights$carrier == "AA"], na.rm = TRUE)
 ```
 
 ### Using `with()` Function
@@ -118,7 +114,6 @@ average_delay_by_airline <- function(airline_code) {
     filter(carrier == airline_code) %>%
     summarize(average_delay = mean(dep_delay, na.rm = TRUE))
 }
-
 ```
 
 Check that you're getting the same answer as you did with your interactive code.
@@ -145,7 +140,6 @@ Pick some new artificial inputs where you know (at least approximately) what you
 
 ```{r}
 average_delay_by_airline("UA")
-
 ```
 
 I know that UA had about 12 minutes of a delay.
@@ -189,7 +183,7 @@ average_delay_by_airline <- function(data = flights, airline_code, delay_type = 
 
 
 # Test the enhanced function
-average_delay_by_airline(airline_code = "AA",delay_type = "arr_delay")
+average_delay_by_airline(airline_code = "AA", delay_type = "arr_delay")
 ```
 
 In this version, the function now accepts an additional argument, `delay_type`, which allows the user to specify the type of delay they are interested in analyzing. The function checks if the provided delay_type is valid and uses dynamic column selection via `get(delay_type)` to compute the mean delay.
@@ -202,11 +196,9 @@ Now, let's try to break our function. Don't get truly diabolical (yet). Just mak
 ```{r error = TRUE}
 average_delay_by_airline(flights)
 
-average_delay_by_airline (airline_code="AB")
+average_delay_by_airline(airline_code = "AB")
 
 average_delay_by_airline(delay_type = "arr-delay")
-
-
 ```
 
 How happy are you with those error messages? You must imagine that some entire __script__ has failed and that you were hoping to just `source()` it without re-reading it. If a colleague or future you encountered these errors, do you run screaming from the room? How hard is it to pinpoint the usage problem?
@@ -223,7 +215,7 @@ average_delay_by_airline <- function(data = flights, airline_code, delay_type = 
   if (!any(airline_code %in% c(data$carrier, NA))) {
     stop("One or more airline codes not found in the dataset.")
   }
- if (!delay_type %in% c("dep_delay", "arr_delay")) {
+  if (!delay_type %in% c("dep_delay", "arr_delay")) {
     stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
   }
 
@@ -231,7 +223,6 @@ average_delay_by_airline <- function(data = flights, airline_code, delay_type = 
     filter(carrier == airline_code) %>%
     summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
-
 ```
 
 
@@ -253,7 +244,7 @@ mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
   if (!any(airline_code %in% c(data$carrier, NA))) {
     stop("One or more airline codes not found in the dataset.")
   }
- if (!delay_type %in% c("dep_delay", "arr_delay")) {
+  if (!delay_type %in% c("dep_delay", "arr_delay")) {
     stop("Invalid delay type specified. Choose either 'dep_delay' or 'arr_delay'.")
   }
 
@@ -263,7 +254,6 @@ mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
 }
 
 mmm("eggplants are purple")
-
 ```
 
 And we see that it catches all of the self-inflicted damage we would like to avoid.
@@ -670,7 +660,7 @@ I've extract the data for one country in order to develop some working code inte
 ```{r}
 j_country <- "France" # pick, but do not hard wire, an example
 (j_dat <- gapminder %>%
-   filter(country == j_country))
+  filter(country == j_country))
 ```
 
 Always always always plot the data. Yes, even now.

@@ -10,9 +10,9 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 # install.packages("devtools")
 
-if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
-library(tweetrmd) #... embedding tweets
-library(vembedr)  #... embedding youtube videos
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd) # ... embedding tweets
+library(vembedr) # ... embedding youtube videos
 library(knitr)
 library(tidyverse)
 ```
@@ -23,9 +23,9 @@ library(tidyverse)
 First, we need to load the required packages:
 
 ```{r, echo=FALSE, message=FALSE}
-library(httr)       # For making API requests 
-library(jsonlite)   # For handling JSON responses
-library(tidyverse)  # For data wrangling
+library(httr) # For making API requests
+library(jsonlite) # For handling JSON responses
+library(tidyverse) # For data wrangling
 ```
 
 ### API Authentication
@@ -57,27 +57,27 @@ Here's a basic function for text generation:
 ```{r, echo=TRUE}
 generate_text <- function(prompt) {
   response <- POST(
-  # curl https://api.openai.com/v1/chat/completions 
-  url = "https://api.openai.com/v1/chat/completions", 
-  # -H "Authorization: Bearer $OPENAI_API_KEY"
-  add_headers(Authorization = paste("Bearer", openai_api_key)),
-  # -H "Content-Type: application/json"
-  content_type_json(),
-  # -d '{
-  #   "model": "gpt-3.5-turbo",
-  #   "messages": [{"role": "user", "content": "What is a banana?"}] 
-  # }'
-  encode = "json",
-  body = list(
-    model = "gpt-3.5-turbo",
-    messages = list(list(role = "user", content = prompt))
+    # curl https://api.openai.com/v1/chat/completions
+    url = "https://api.openai.com/v1/chat/completions",
+    # -H "Authorization: Bearer $OPENAI_API_KEY"
+    add_headers(Authorization = paste("Bearer", openai_api_key)),
+    # -H "Content-Type: application/json"
+    content_type_json(),
+    # -d '{
+    #   "model": "gpt-3.5-turbo",
+    #   "messages": [{"role": "user", "content": "What is a banana?"}]
+    # }'
+    encode = "json",
+    body = list(
+      model = "gpt-3.5-turbo",
+      messages = list(list(role = "user", content = prompt))
+    )
   )
-)
-  
+
   str_content <- content(response, "text", encoding = "UTF-8")
   parsed <- fromJSON(str_content)
-  
-  #return(parsed$choices[[1]]$text)
+
+  # return(parsed$choices[[1]]$text)
   return(parsed)
 }
 ```
@@ -92,7 +92,6 @@ Now that we’ve defined our generate_text() function, let’s test it by sendin
 ```{r cache=TRUE}
 prompt <- "Summarize the key steps in a data science workflow:"
 generated_text <- generate_text(prompt)
-
 ```
 
 ### Step 2: Examine the Raw API Response
@@ -102,9 +101,7 @@ When we call the `generate_text(prompt)` function, OpenAI's API returns a struct
 
 Let's print the raw response to see its structure. 
 ```{r cache=TRUE}
-
 print(generated_text)
-
 ```
 
 As you can see, the response is a nested list containing various metadata (e.g., request ID, model name, creation time), the AI-generated response (inside `$choices[[1]]$message$content`), token usage information (inside $usage$total_tokens), and more.
@@ -114,9 +111,7 @@ As you can see, the response is a nested list containing various metadata (e.g.,
 Since the response contains both metadata and content, we need to extract only the generated text. The key part of the response is stored in:
 
 ```{r cache=TRUE}
-
 ai_response <- generated_text$choices$message$content
-
 ```
 
 Now, let's print the AI-generated text:
@@ -129,9 +124,7 @@ Ok, so that wasn't really readable. Let's try to format it a bit better:
 
 
 ```{r cache=TRUE, results='asis'}
-
 cat(ai_response)
-
 ```
 
 ### Step 4: Understanding Token Usage
@@ -145,9 +138,9 @@ Since OpenAI charges based on token usage, it's useful to monitor how many token
 To check token usage:
 
 ```{r cache=TRUE}
-print(generated_text$usage$total_tokens)  # Total tokens used
-print(generated_text$usage$completion_tokens)  # Tokens used for output
-print(generated_text$usage$prompt_tokens)  # Tokens used for input
+print(generated_text$usage$total_tokens) # Total tokens used
+print(generated_text$usage$completion_tokens) # Tokens used for output
+print(generated_text$usage$prompt_tokens) # Tokens used for input
 ```
 
 
@@ -157,12 +150,15 @@ Like we've seen with other APIs, it's important to handle errors gracefully. As 
 
 ```{r echo=TRUE}
 generate_text_safe <- function(prompt) {
-  tryCatch({
-    generate_text(prompt)
-  }, error = function(e) {
-    warning("API call failed: ", e$message)
-    return(NULL)
-  })
+  tryCatch(
+    {
+      generate_text(prompt)
+    },
+    error = function(e) {
+      warning("API call failed: ", e$message)
+      return(NULL)
+    }
+  )
 }
 ```
 
@@ -182,18 +178,19 @@ prompts <- c(
 )
 responses <- list()
 responses <- map(prompts, generate_text_safe)
-
 ```
 
 This code generates text for each prompt in the `prompts` vector. If an error occurs, the response will be `NULL`. After running this code, we can examine the responses and handle any errors. I've included a table below to display the responses.
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE, cache=TRUE}
 # can we make this table with the prompt and the response?
-responses_df <- tibble(prompt = prompts, 
-                         ai_response = map_chr(responses, ~ .x$choices$message$content),
-                         tokens_used = map_dbl(responses, ~ .x$usage$total_tokens),
-                         model = map_chr(responses, ~ .x$model),
-                         completion_time = map_dbl(responses, ~ .x$created))
+responses_df <- tibble(
+  prompt = prompts,
+  ai_response = map_chr(responses, ~ .x$choices$message$content),
+  tokens_used = map_dbl(responses, ~ .x$usage$total_tokens),
+  model = map_chr(responses, ~ .x$model),
+  completion_time = map_dbl(responses, ~ .x$created)
+)
 
 responses_df <- responses_df %>%
   mutate(completion_time = as.POSIXct(completion_time, tz = "UTC"))

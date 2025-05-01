@@ -33,7 +33,7 @@ install_bioc_if_missing <- function(package) {
 
 # CRAN Packages
 cran_packages <- c(
-  "devtools", "tidyverse", "rmarkdown", "bookdown", "discord","addinslist",
+  "devtools", "tidyverse", "rmarkdown", "bookdown", "discord", "addinslist",
   "vembedr", "datasauRus", "DT", "gt", "car", "latticeExtra",
   "manipulateWidget", "shiny", "rgl", "BGmisc", "leaflet",
   "mosaicData", "performance", "see", "plotly", "RefManageR",

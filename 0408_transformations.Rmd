@@ -31,18 +31,18 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 # fox_data <- "http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3E/datasets/"
 # download.file(paste0(fox_data, "UnitedNations.txt"), "data/UnitedNations.txt")
 #
-#if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
+# if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
 # devtools::install_github("gmonette/spida2")
 ```
 ```{r,message=FALSE}
-#if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
+# if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
 library(p3d)
 library(car)
 library(latticeExtra)
 library(gridExtra)
 library(spida2)
 # read data
-un <- read.table("data/UnitedNations.txt", header = TRUE)%>%
+un <- read.table("data/UnitedNations.txt", header = TRUE) %>%
   mutate(country = rownames(.)) # Assigning country names
 ```
 
@@ -52,26 +52,36 @@ Let's visualize an attempt to make our regression behave. Below are the original
 # First plot
 p1 <- ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
   geom_point(color = "steelblue") +
-  labs(title = "Infant Mortality",
-       subtitle ="vs. GDP per Capita",
-       x = "GDP per Capita", y = "Infant Mortality") +
-  geom_smooth(method = "lm",formula = 'y ~ x',
-            color = "red", se = FALSE) +
-  theme_bw() + coord_cartesian(ylim=c(0, 250) )
+  labs(
+    title = "Infant Mortality",
+    subtitle = "vs. GDP per Capita",
+    x = "GDP per Capita", y = "Infant Mortality"
+  ) +
+  geom_smooth(
+    method = "lm", formula = "y ~ x",
+    color = "red", se = FALSE
+  ) +
+  theme_bw() +
+  coord_cartesian(ylim = c(0, 250))
 
 # Second plot
 p2 <- ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
   geom_point(color = "steelblue") +
-  labs(title = "Log-Transformed Infant Mortality",
-       subtitle ="vs. GDP per Capita",
-       x = "Log(GDP per Capita)", y = "Log(Infant Mortality)") +
-  theme_bw()  + geom_smooth(method = "lm",formula = 'y ~ x',
-            color = "red", se = FALSE) +
-  theme_bw() + coord_cartesian(ylim=c(0, log(250)) )
+  labs(
+    title = "Log-Transformed Infant Mortality",
+    subtitle = "vs. GDP per Capita",
+    x = "Log(GDP per Capita)", y = "Log(Infant Mortality)"
+  ) +
+  theme_bw() +
+  geom_smooth(
+    method = "lm", formula = "y ~ x",
+    color = "red", se = FALSE
+  ) +
+  theme_bw() +
+  coord_cartesian(ylim = c(0, log(250)))
 
 # Arrange the plots side by side
 grid.arrange(p1, p2, ncol = 2)
-
 ```
 The log transformation has straightened out the data, allowing us to fit a more useful regression line. However, we're not limited to just a log transformation. We can use an entire family of transformations called Tukey's Ladder of Powers.
 
@@ -88,16 +98,19 @@ Here are some examples to illustrate these concepts:
 # Create a data frame for plotting
 x_vals <- seq(-2, 2, by = 0.1)
 df <- expand.grid(x = x_vals, type = c("Concave Up", "Concave Down"))
-df$y <- with(df, ifelse(type == "Concave Up", x^2, -x^2+4))
+df$y <- with(df, ifelse(type == "Concave Up", x^2, -x^2 + 4))
 
 # Plot
 ggplot(df, aes(x = x, y = y, col = type)) +
   geom_line() +
-  labs(title = "Illustration of Concave Up and Down",
-       x = "x", y = "y") +
+  labs(
+    title = "Illustration of Concave Up and Down",
+    x = "x", y = "y"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("Concave Up" = "blue", "Concave Down" = "red")) +
-  facet_wrap(~type, scales = "free_y") +theme_bw() +
+  facet_wrap(~type, scales = "free_y") +
+  theme_bw() +
   theme(legend.position = "none")
 ```
 
@@ -166,12 +179,12 @@ ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
 
 
 # test:
-x <- seq(-1, 3,by =  .5)
+x <- seq(-1, 3, by = .5)
 x # note that these transformations are really intended for y > 0
 pow(x, 2)
-#pow(x, 0) %>%
+# pow(x, 0) %>%
 #  name(x)
-#pow(x, -1) %>%
+# pow(x, -1) %>%
 #  name(x) %>%
 #  cbind()
 

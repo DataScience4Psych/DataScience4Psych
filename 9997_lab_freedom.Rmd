@@ -26,7 +26,6 @@ options(
   show.signif.stars = FALSE, # for regression output
   digits = 3
 )
-
 ```
 
 ### Packages {.unnumbered}
@@ -35,7 +34,7 @@ options(
 We’ll be using **vdemdata** to access the Academic Freedom Index, as well as the **tidyverse** and **ggradar** packages for data manipulation and visualization. Install and load them with:
 
 ```{r load-packages, message=FALSE}
-if(!require("devtools")) install.packages("devtools")
+if (!require("devtools")) install.packages("devtools")
 if (!require("vdemdata")) devtools::install_github("vdeminstitute/vdemdata")
 if (!require("tidyverse")) install.packages("tidyverse")
 if (!require("remotes")) install.packages("remotes")
@@ -54,27 +53,25 @@ Let’s begin by examining how academic freedom has changed in the U.S. across f
 ```{r exercise1.1, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 vdem <- vdemdata::vdem %>%
   select(country_name, year, v2cafres, v2cafexch, v2cainsaut, v2casurv, v2clacfree)
-
-
-
 ```
 
 **1.2.** Normalize these values so that they fall between 0 and 1, which is the format expected by `ggradar()`.
 
 ```{r exercise1.2, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 vdem_scaled <- vdem %>%
-  mutate(across(-c(year,country_name), scales::rescale))
+  mutate(across(-c(year, country_name), scales::rescale))
 
 
-u_data_scaled <- vdem  %>% #vdem_scaled  %>%
+u_data_scaled <- vdem %>% # vdem_scaled  %>%
   filter(country_name %in% c("United States of America"), year %in% c(1954, 2014, 2024)) %>%
-  select(year, 
-         country_name,
-         research_teach = v2cafres,
-         exchange = v2cafexch,
-         autonomy = v2cainsaut,
-         integrity = v2casurv,
-         expression = v2clacfree) %>%
+  select(year,
+    country_name,
+    research_teach = v2cafres,
+    exchange = v2cafexch,
+    autonomy = v2cainsaut,
+    integrity = v2casurv,
+    expression = v2clacfree
+  ) %>%
   mutate(year = as.factor(year)) %>%
   rename(group = year)
 ```
@@ -87,21 +84,27 @@ u_data_scaled <- vdem  %>% #vdem_scaled  %>%
 **2.1.** Now create a radar plot to compare the United States in 2014 and 2024 across the five indicators.
 
 ```{r exercise2.1, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
-u_data_scaled %>% filter(country_name == "United States of America") %>% select(-country_name) %>%
-ggradar(
-        grid.min = 0, grid.mid =.5, grid.max = 1,
-        group.line.width = 1.2,
-        group.point.size = 3,
-        legend.position = "bottom") + 
-    scale_color_viridis_d()
+u_data_scaled %>%
+  filter(country_name == "United States of America") %>%
+  select(-country_name) %>%
+  ggradar(
+    grid.min = 0, grid.mid = .5, grid.max = 1,
+    group.line.width = 1.2,
+    group.point.size = 3,
+    legend.position = "bottom"
+  ) +
+  scale_color_viridis_d()
 
-u_data_scaled %>% filter(country_name == "United Kingdom") %>% select(-country_name) %>%
-ggradar(
-        grid.min = 0, grid.mid =.5, grid.max = 1,
-        group.line.width = 1.2,
-        group.point.size = 3,
-        legend.position = "bottom") + 
-    scale_color_viridis_d()
+u_data_scaled %>%
+  filter(country_name == "United Kingdom") %>%
+  select(-country_name) %>%
+  ggradar(
+    grid.min = 0, grid.mid = .5, grid.max = 1,
+    group.line.width = 1.2,
+    group.point.size = 3,
+    legend.position = "bottom"
+  ) +
+  scale_color_viridis_d()
 ```
 
 **2.2.** Interpret the shape of the plot. Which dimensions remained relatively high? Which appear to be collapsing?
@@ -130,21 +133,23 @@ chosen_country <- "Hungary" # Replace this with your selected country
 
 country_data <- vdem %>%
   filter(country_name == chosen_country, year %in% c(2014, 2024)) %>%
-  select(year, 
-         research_teach = v2cafres,
-         exchange = v2cafexch,
-         autonomy = v2cainsaut,
-         integrity = v2casurv,
-         expression = v2clacfree) %>%
-#  mutate(across(-year, scales::rescale)) %>%
+  select(year,
+    research_teach = v2cafres,
+    exchange = v2cafexch,
+    autonomy = v2cainsaut,
+    integrity = v2casurv,
+    expression = v2clacfree
+  ) %>%
+  #  mutate(across(-year, scales::rescale)) %>%
   mutate(year = as.factor(year)) %>%
-  rename(group = year) 
+  rename(group = year)
 
 ggradar(country_data,
-        grid.min = -3, grid.mid = 0, grid.max = 3,
-        group.line.width = 1.2,
-        group.point.size = 3,
-        legend.position = "bottom")
+  grid.min = -3, grid.mid = 0, grid.max = 3,
+  group.line.width = 1.2,
+  group.point.size = 3,
+  legend.position = "bottom"
+)
 ```
 
 **3.3.** In what ways does this country’s trajectory resemble or diverge from the U.S. case?
