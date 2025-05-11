@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-04-30" />
+<meta name="date" content="2025-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,11 +64,11 @@
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -254,6 +254,7 @@ div.csl-indent {
 <li class="chapter" data-level="0.7" data-path="guidance.html"><a href="guidance.html#assignment-instructions"><i class="fa fa-check"></i><b>0.7</b> Assignment Instructions</a>
 <ul>
 <li class="chapter" data-level="0.7.1" data-path="guidance.html"><a href="guidance.html#portfolio"><i class="fa fa-check"></i><b>0.7.1</b> Portfolio</a></li>
+<li class="chapter" data-level="0.7.2" data-path="guidance.html"><a href="guidance.html#additional-ground-rules"><i class="fa fa-check"></i><b>0.7.2</b> Additional Ground Rules</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Module 01</b></span></li>
@@ -1576,20 +1577,20 @@ div.csl-indent {
 <h1><span class="header-section-number">58</span> Enhancing the Function: Towards the ‘Perfectly Formed Rear-View Mirror’<a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Once you have a basic function that works, you can incrementally add features to make it more robust and versatile. This could include error handling (to gracefully deal with unexpected inputs), parameters for selecting between departure and arrival delays, or options for filtering by specific airports or dates.</p>
 <p>Let’s add the capability to choose between departure (dep_delay) and arrival (arr_delay) delays.</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-1" tabindex="-1"></a><span class="co"># Enhanced function to calculate average delay, with options for delay type and error handling</span></span>
-<span id="cb332-2"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-2" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> flights, airline_code, <span class="at">delay_type =</span> <span class="st">&quot;dep_delay&quot;</span>) {</span>
-<span id="cb332-3"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-3" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
-<span id="cb332-4"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-4" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
-<span id="cb332-5"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-5" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(<span class="fu">get</span>(delay_type), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb332-6"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-6" tabindex="-1"></a>}</span>
-<span id="cb332-7"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-7" tabindex="-1"></a></span>
-<span id="cb332-8"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-8" tabindex="-1"></a></span>
-<span id="cb332-9"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-9" tabindex="-1"></a><span class="co"># Test the enhanced function</span></span>
-<span id="cb332-10"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-10" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="at">airline_code =</span> <span class="st">&quot;AA&quot;</span>, <span class="at">delay_type =</span> <span class="st">&quot;arr_delay&quot;</span>)</span>
-<span id="cb332-11"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb332-12"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-12" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
-<span id="cb332-13"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-13" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
-<span id="cb332-14"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb332-14" tabindex="-1"></a><span class="co">#&gt; 1         0.364</span></span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-1" tabindex="-1"></a><span class="co"># Enhanced function to calculate average delay, with options for delay type and error handling</span></span>
+<span id="cb331-2"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-2" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> flights, airline_code, <span class="at">delay_type =</span> <span class="st">&quot;dep_delay&quot;</span>) {</span>
+<span id="cb331-3"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-3" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb331-4"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-4" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
+<span id="cb331-5"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-5" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(<span class="fu">get</span>(delay_type), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb331-6"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-6" tabindex="-1"></a>}</span>
+<span id="cb331-7"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-7" tabindex="-1"></a></span>
+<span id="cb331-8"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-8" tabindex="-1"></a></span>
+<span id="cb331-9"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-9" tabindex="-1"></a><span class="co"># Test the enhanced function</span></span>
+<span id="cb331-10"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-10" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="at">airline_code =</span> <span class="st">&quot;AA&quot;</span>, <span class="at">delay_type =</span> <span class="st">&quot;arr_delay&quot;</span>)</span>
+<span id="cb331-11"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb331-12"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-12" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
+<span id="cb331-13"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-13" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
+<span id="cb331-14"><a href="enhancing-the-function-towards-the-perfectly-formed-rear-view-mirror.html#cb331-14" tabindex="-1"></a><span class="co">#&gt; 1         0.364</span></span></code></pre></div>
 <p>In this version, the function now accepts an additional argument, <code>delay_type</code>, which allows the user to specify the type of delay they are interested in analyzing. The function checks if the provided delay_type is valid and uses dynamic column selection via <code>get(delay_type)</code> to compute the mean delay.</p>
 </div>
             </section>

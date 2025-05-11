@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2025-04-30" />
+<meta name="date" content="2025-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,11 +64,11 @@
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -254,6 +254,7 @@ div.csl-indent {
 <li class="chapter" data-level="0.7" data-path="guidance.html"><a href="guidance.html#assignment-instructions"><i class="fa fa-check"></i><b>0.7</b> Assignment Instructions</a>
 <ul>
 <li class="chapter" data-level="0.7.1" data-path="guidance.html"><a href="guidance.html#portfolio"><i class="fa fa-check"></i><b>0.7.1</b> Portfolio</a></li>
+<li class="chapter" data-level="0.7.2" data-path="guidance.html"><a href="guidance.html#additional-ground-rules"><i class="fa fa-check"></i><b>0.7.2</b> Additional Ground Rules</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Module 01</b></span></li>
@@ -1576,16 +1577,17 @@ div.csl-indent {
 <h1><span class="header-section-number">84</span> Lab: So what if you smoke when pregnant?<a href="lab12.html#lab12" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="non-parametric-based-inference" class="section level2 unnumbered hasAnchor">
 <h2>Non-parametric-based inference<a href="lab12.html#non-parametric-based-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers’ habits and practices and their child’s birth. In this lab, we’ll be exploring a randomly selected subset of the data. You’ll learn how to use non-parametric-based inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You will also explore the relationships between other variables, such as the mother’s age and the baby’s birth weight. Through the exercises, you will practice data manipulation, visualization, hypothesis testing, and calculating confidence intervals. You can find the lab <a href="https://github.com/DataScience4Psych/lab-11-inference-smoking">here</a></p>
+<p>In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers’ habits and practices and their child’s birth. In this lab, we’ll be exploring a randomly selected subset of that data to evaluate whether maternal smoking influences infant birthweight, and how other factors (like maternal age) relate to birth outcomes.</p>
+<p>You’ll practice non-parametric inference techniques such as bootstrapping and permutation testing. These methods allow you to test hypotheses and estimate uncertainty without assuming normally distributed populations. You’ll also practice key data science skills: cleaning, filtering, visualizing, and interpreting real-world health data. You can find the lab <a href="https://github.com/DataScience4Psych/lab-12-inference-smoking">here</a></p>
 </div>
 <div id="getting-started-10" class="section level2 unnumbered hasAnchor">
 <h2>Getting started<a href="lab12.html#getting-started-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="packages-11" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab12.html#packages-11" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this lab, we will work with the <strong>tidyverse</strong>, <strong>infer</strong>, and <strong>openintro</strong> packages. We can install and load them with the following code:</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="lab12.html#cb472-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb472-2"><a href="lab12.html#cb472-2" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb472-3"><a href="lab12.html#cb472-3" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="lab12.html#cb471-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb471-2"><a href="lab12.html#cb471-2" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb471-3"><a href="lab12.html#cb471-3" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
 </div>
 <div id="housekeeping-2" class="section level3 unnumbered hasAnchor">
 <h3>Housekeeping<a href="lab12.html#housekeeping-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1617,13 +1619,13 @@ div.csl-indent {
 </div>
 <div id="set-a-seed" class="section level3 unnumbered hasAnchor">
 <h3>Set a seed!<a href="lab12.html#set-a-seed" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this lab, we’ll be generating random samples. To make sure our results stay consistent, make sure to set a seed before you dive into the sampling process. Otherwise, the data will change each time you knit your lab. To set your seed, simply find the designated R chunk in your R Markdown file and insert the seed value there.</p>
+<p>In this lab, we’ll be generating random samples. To make sure our results stay consistent, make sure to set a seed before you dive into the sampling process. Otherwise, the data will change each time you knit your lab. Set your seed in the chunk labeled “setup” so that your sampling and bootstrapping results stay consistent across runs and when knitting.</p>
 </div>
 </div>
 <div id="the-data-6" class="section level2 hasAnchor" number="84.1">
 <h2><span class="header-section-number">84.1</span> The data<a href="lab12.html#the-data-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the <code>ncbirths</code> data from the <code>openintro</code> package:</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="lab12.html#cb473-1" tabindex="-1"></a><span class="fu">data</span>(ncbirths)</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="lab12.html#cb472-1" tabindex="-1"></a><span class="fu">data</span>(ncbirths)</span></code></pre></div>
 <p>We have observations on 13 different variables, some categorical and some numerical. The meaning of each variable is provided in the following table.</p>
 <table>
 <colgroup>
@@ -1687,17 +1689,18 @@ div.csl-indent {
 </tr>
 <tr class="odd">
 <td><code>whitemom</code></td>
-<td>whether mom is <code>white</code> or <code>not white</code>.</td>
+<td>whether mom is <code>White</code> or <code>not White</code>.</td>
 </tr>
 </tbody>
 </table>
-<p>Before analyzing any new dataset, it’s important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren’t sure or want to take a closer look at the data, create a graph.</p>
+<p>Before analyzing any new dataset, it’s important to get to know your data…</p>
 </div>
 <div id="exercises-10" class="section level2 hasAnchor" number="84.2">
 <h2><span class="header-section-number">84.2</span> Exercises<a href="lab12.html#exercises-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
-<li>What are the cases in this data set? How many cases are there in our sample?</li>
+<li>Which variables in this dataset are numeric, and what do their distributions look like? Are there any outliers or extreme values that might affect your analysis?</li>
 </ol>
+<p>Support your answers with both summary statistics and visualizations. You can use tools such as summary(), map_dfr(), or skim() for numerical summaries, and faceted boxplots or histograms to visualize distributions. If you’re not sure how to check efficiently, consider transforming the data into long format and using faceted boxplots.</p>
 <div id="baby-weights" class="section level3 hasAnchor" number="84.2.1">
 <h3><span class="header-section-number">84.2.1</span> Baby weights<a href="lab12.html#baby-weights" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <blockquote>
@@ -1709,68 +1712,139 @@ div.csl-indent {
 <p>Our null hypothesis should state “there is nothing going on”, i.e. no change since 1995: <span class="math inline">\(H_0: \mu = 7.43~pounds\)</span>.</p>
 <p>Our alternative hypothesis should reflect the research question, i.e., some change since 1995. Since the research question doesn’t state a direction for the change, we use a two-sided alternative hypothesis: <span class="math inline">\(H_A: \mu \ne 7.43~pounds\)</span>.</p>
 <ol start="2" style="list-style-type: decimal">
-<li>Create a filtered data frame called <code>ncbirths_white</code> that contains data only from White mothers. Then, calculate the mean of the weights of their babies.</li>
+<li>To test whether the average birth weight of White babies has changed since 1995, we first need to isolate that group in our data. Create a filtered data frame called <code>ncbirths_white</code> that contains data only from White mothers. Then, calculate the mean of the weights of their babies.</li>
 </ol>
+<blockquote>
+<p>This sample mean will serve as your observed statistic when we build a null distribution in the next exercise.</p>
+</blockquote>
 <!-- Mason make this clearer to what this means -->
 <ol start="3" style="list-style-type: decimal">
-<li>Are the criteria necessary for conducting simulation-based inference satisfied? Explain your reasoning.</li>
+<li>Are the criteria necessary for conducting simulation-based inference satisfied? Briefly consider whether simulation-based inference (e.g., bootstrapping) is appropriate in this context by addressing the following:</li>
 </ol>
-<p>Let’s discuss how this test would work. Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds. In order to do so, we:
-<!-- Mason make this clearer to why we need to actually do this -->
-- take a bootstrap sample of from the original sample,
-- calculate this bootstrap sample’s mean,
-- repeat these two steps a large number of times to create a bootstrap distribution of means centered at the observed sample mean,
-- shift this distribution to be centered at the null value by subtracting / adding X to all bootstrap mean (X = difference between mean of bootstrap distribution and null value), and
-- calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.</p>
+<ul>
+<li>Are observations in the sample independent of each other?</li>
+<li>Is the sample size reasonably large?</li>
+<li>Does the shape of the distribution pose any concerns (e.g., extreme skew or clustering)?</li>
+</ul>
+<p>Use graphical summaries (histogram, boxplot) and/or numerical summaries to support your answer. Refer back to your plots or output from Exercise 1.</p>
+<p>Let’s discuss how this test would work. Our goal is to simulate what the distribution of sample means might look like if the true population mean were 7.43 pounds. To do that, we’ll use bootstrapping and then shift the resulting distribution to be centered under the null hypothesis.</p>
+<p>You saw this process in the bootstrapping lecture (the “Rent in Edinburgh” example)—where we estimated a sampling distribution from a real dataset, then aligned it with a hypothetical population value in order to test whether the data were consistent with that value. The same logic applies here.</p>
+<p>Here’s the general procedure:
+- Take a bootstrap sample (with replacement) from ncbirths_white.
+- Calculate the mean of this bootstrapped resample.
+- Repeat these two steps many times (e.g., 1,000 or more) to create a bootstrap distribution of sample means.
+- This distribution will be centered at the observed sample mean.
+- To simulate the null hypothesis, shift the entire distribution so that its mean equals 7.43. You can do this by subtracting the bootstrap distribution’s mean from each value, and then adding 7.43 back.
+- Once shifted, compare the observed mean to this distribution: calculate the proportion of simulated means that are at least as extreme as the observed mean (i.e., the p-value).</p>
+<blockquote>
+<p>📌 If this logic feels abstract, go back and review the Lecture on Bootstrapping. The same shifting strategy was used there to simulate a null centered at a hypothesized rent value.</p>
+</blockquote>
 <ol start="4" style="list-style-type: decimal">
-<li>Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in the context of the data and the hypothesis test.</li>
+<li>Run a hypothesis test using simulation-based inference. Your goal is to simulate a null distribution of sample means assuming a population mean of 7.43 pounds, and then assess how unusual the observed sample mean is within that distribution.</li>
 </ol>
+<p>To structure your analysis, work through the following steps:</p>
+<p>4a. Use bootstrapping to simulate a distribution of sample means from ncbirths_white.</p>
+<p>4b. Shift the distribution so that its center aligns with the null hypothesis value (7.43 pounds).</p>
+<p>4c. Create a histogram of your shifted null distribution. Overlay a dashed vertical line to show your observed sample mean.</p>
+<p>4d. Calculate the two-tailed p-value: what proportion of simulated means are at least as extreme (in both directions) as your observed value?</p>
+<p>4e. Interpret your results. Based on the p-value and your visualization, what do you conclude about whether birth weight has changed since 1995?</p>
 </div>
 <div id="baby-weight-vs.-smoking" class="section level3 hasAnchor" number="84.2.2">
 <h3><span class="header-section-number">84.2.2</span> Baby weight vs. smoking<a href="lab12.html#baby-weight-vs.-smoking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider the relationship between a mother’s smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.</p>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Make side-by-side box plots displaying the relationship between <code>habit</code> and <code>weight</code>. What does the plot highlight about the relationship between these two variables?</p></li>
-<li><p>Before continuing, create a cleaned version of the dataset by removing any rows with missing values for <code>habit</code> or <code>weight</code>. Name this version <code>ncbirths_clean</code>.</p></li>
-<li><p>Calculate the observed difference in means between the baby weights of smoking and non-smoking mothers.</p></li>
+<li>Make side-by-side box plots displaying the relationship between <code>habit</code> and <code>weight</code>. What do you notice about the shape, center, and spread of the two groups? Are there any clear differences?</li>
 </ol>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="lab12.html#cb474-1" tabindex="-1"></a>ncbirths_clean <span class="sc">%&gt;%</span></span>
-<span id="cb474-2"><a href="lab12.html#cb474-2" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
-<span id="cb474-3"><a href="lab12.html#cb474-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
+<blockquote>
+<p>Use this visualization to inform the question you’ll test in the next few exercises.</p>
+</blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Before comparing the two groups, remove any rows with missing values in either habit or weight. Name this version <code>ncbirths_clean</code>. Why is it important to do this before calculating group summaries?</p></li>
+<li><p>What is the observed difference in mean birth weight between babies born to smoking and non-smoking mothers?</p></li>
+</ol>
+<p>Use the cleaned dataset to calculate the average birth weight for each group. Then compute the difference in means (non-smokers minus smokers).</p>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="lab12.html#cb473-1" tabindex="-1"></a>ncbirths_clean <span class="sc">%&gt;%</span></span>
+<span id="cb473-2"><a href="lab12.html#cb473-2" tabindex="-1"></a>  <span class="fu">group_by</span>(habit) <span class="sc">%&gt;%</span></span>
+<span id="cb473-3"><a href="lab12.html#cb473-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_weight =</span> <span class="fu">mean</span>(weight))</span></code></pre></div>
+<blockquote>
+<p>This observed difference is the statistic you’ll use to anchor your inference in the next step.</p>
+</blockquote>
 <p>We can see that there’s an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.
-<!-- better scaffolding here to prep students -->
-8. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.</p>
-<p><span class="math inline">\(H_0\)</span>: _________ (<span class="math inline">\(\mu_1 = \mu_2\)</span>)</p>
-<p><span class="math inline">\(H_A\)</span>: _________ (<span class="math inline">\(\mu_1 \ne \mu_2\)</span>)</p>
-<ol start="9" style="list-style-type: decimal">
-<li><p>Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.</p></li>
-<li><p>Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.</p></li>
+<!-- better scaffolding here to prep students --></p>
+<ol start="8" style="list-style-type: decimal">
+<li>What are the hypotheses for testing whether smoking is associated with a difference in birth weight?</li>
 </ol>
+<p>Formulate your hypotheses in both words and symbols.</p>
+<ul>
+<li><p>What does the null hypothesis say about the difference in average weights?</p></li>
+<li><p>What does the alternative hypothesis suggest?</p></li>
+</ul>
+<p>Write your hypotheses clearly using:</p>
+<ul>
+<li><p>A contextual statement (in words)</p></li>
+<li><p>A symbolic version using <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>, where each symbol refers to one of the two groups</p></li>
+</ul>
+<blockquote>
+<p>Optional: Sketch or describe what the null distribution might look like if the null hypothesis were true.</p>
+</blockquote>
+<ol start="9" style="list-style-type: decimal">
+<li>How can we use simulation-based inference to test whether maternal smoking is associated with a difference in birth weight?</li>
+</ol>
+<p>Run the appropriate hypothesis test using either a bootstrap or permutation method. Use your cleaned dataset (<code>ncbirths_clean</code>) and compare the average birth weight between smokers and non-smokers.</p>
+<p>To organize your analysis, consider the following:</p>
+<ul>
+<li><p>What kind of inference method is most appropriate here—bootstrap or permutation?</p></li>
+<li><p>What is your observed test statistic?</p></li>
+<li><p>How can you generate the sampling distribution under the null?</p></li>
+<li><p>What is the resulting p-value?</p></li>
+</ul>
+<blockquote>
+<p>You saw a similar structure when testing whether the average birth weight of White babies had changed. This time, you’re comparing two groups, so consider how the structure of the null distribution and test statistic changes.</p>
+</blockquote>
+<ol start="10" style="list-style-type: decimal">
+<li>How large could the difference in average birth weights plausibly be, based on your data?</li>
+</ol>
+<p>Construct a 95% confidence interval for the difference in means between babies born to smoking and non-smoking mothers. Use a non-parametric method (e.g., bootstrapped difference in means) and report your results.</p>
 </div>
 <div id="mothers-age-vs.-baby-weight" class="section level3 hasAnchor" number="84.2.3">
 <h3><span class="header-section-number">84.2.3</span> Mother’s age vs. baby weight<a href="lab12.html#mothers-age-vs.-baby-weight" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this portion of the analysis, we focus on two variables. The first one is <code>maturemom</code>.</p>
+<p>In this portion of the analysis, we focus on two variables. The first one is <code>maturemom</code>, which classifies mothers as either “younger” or “mature.”</p>
+<p>The second variable is <code>lowbirthweight</code>, a binary indicator of whether the baby’s birth weight was classified as “low.”</p>
+<p>In the following exercises, you’ll determine how <code>maturemom</code> is constructed and then test whether the rate of low birth weight differs between the two age groups.</p>
 <ol start="11" style="list-style-type: decimal">
-<li>First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.</li>
+<li>First, a non-inference task: Determine the age cutoff for younger and mature mothers.</li>
 </ol>
-<p>The other variable of interest is <code>lowbirthweight</code>.</p>
+<p>Use a method of your choice to determine where the cutoff lies between “younger” and “mature” mothers, based on the mature variable. How does this variable appear to be coded, and what is the minimum age that qualifies as a “mature” mother?</p>
 <ol start="12" style="list-style-type: decimal">
-<li>Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. Use <span class="math inline">\(\alpha = 0.05\)</span>.</li>
+<li>Is the proportion of low birth weight babies higher for mature mothers than for younger mothers?</li>
 </ol>
+<p>Conduct a hypothesis test to evaluate whether the proportion of low birth weight babies differs between younger and mature mothers. Use a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>Work through the following steps:</p>
 <ul>
-<li>State the hypotheses</li>
-<li>Verify the conditions</li>
-<li>Run the test and calculate the p-value</li>
-<li>State your conclusion within context of the research question</li>
+<li><p>Clearly state your null and alternative hypotheses (in words and in symbols).</p></li>
+<li><p>Consider the conditions for simulation-based inference. Are they met here?</p></li>
+<li><p>Choose an appropriate test (e.g., bootstrapped or permuted difference in proportions).</p></li>
+<li><p>Calculate the p-value and interpret the result in the context of the research question.</p></li>
 </ul>
 <ol start="13" style="list-style-type: decimal">
-<li>Calculate a confidence interval for the difference between the proportions of low birth weight babies between mature and younger mothers. Interpret the interval in the context of the data and explain what it means.</li>
+<li>What is a plausible range for the difference in proportions of low birth weight babies between mature and younger mothers?</li>
 </ol>
+<p>Construct a 95% confidence interval for the difference in proportions of low birth weight babies between the two groups. Then interpret the interval: what do the bounds tell you?</p>
 </div>
 </div>
 <div id="wrap-up" class="section level2 hasAnchor" number="84.3">
 <h2><span class="header-section-number">84.3</span> Wrap up<a href="lab12.html#wrap-up" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this lab, you practiced using non-parametric inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You also explored the relationships between other variables, such as the mother’s age and the baby’s birth weight. You’ve gained experience with data manipulation, visualization, hypothesis testing, and calculating confidence intervals.</p>
+<p>In this lab, you practiced using non-parametric inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. Specifically, you used bootstrapping and permutation testing to analyze real-world health data from North Carolina birth records. You tested whether:
+- The average birth weight of White babies has changed since 1995
+- Maternal smoking is associated with lower average birth weight
+- Mature mothers are more likely to have babies with low birth weight</p>
+<p>Along the way, you also:
+- Cleaned and filtered messy real-world data</p>
+<ul>
+<li><p>Explored variable distributions and checked model assumptions</p></li>
+<li><p>Interpreted p-values and confidence intervals in context</p></li>
+<li><p>Applied core concepts from earlier lectures, including simulation-based inference.</p></li>
+</ul>
 <p>Remember to save your work, commit your changes, and push them to your Git repository!</p>
 <!--DS4P Links-->
 <!-- https://smasongarrison.github.io/syllabi/data-science.html -->
