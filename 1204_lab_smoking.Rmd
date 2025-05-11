@@ -13,7 +13,10 @@ options(
 knitr::opts_chunk$set(eval = TRUE)
 ```
 
-In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers' habits and practices and their child's birth. In this lab, we'll be exploring a randomly selected subset of the data. You'll learn how to use non-parametric-based inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You will also explore the relationships between other variables, such as the mother's age and the baby's birth weight. Through the exercises, you will practice data manipulation, visualization, hypothesis testing, and calculating confidence intervals. You can find the lab [here](https://github.com/DataScience4Psych/lab-11-inference-smoking)
+In 2004, North Carolina released a comprehensive birth record dataset that holds valuable insights for researchers examining the connection between expectant mothers' habits and practices and their child's birth. In this lab, we'll be exploring a randomly selected subset of that data to evaluate whether maternal smoking influences infant birthweight, and how other factors (like maternal age) relate to birth outcomes.
+
+You'll practice non-parametric inference techniques such as bootstrapping and permutation testing. These methods allow you to test hypotheses and estimate uncertainty without assuming normally distributed populations. You'll also practice key data science skills: cleaning, filtering, visualizing, and interpreting real-world health data. You can find the lab [here](https://github.com/DataScience4Psych/lab-12-inference-smoking)
+
 
 ## Getting started {.unnumbered}
 
@@ -54,7 +57,7 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ### Set a seed! {.unnumbered}
 
-In this lab, we'll be generating random samples. To make sure our results stay consistent, make sure to set a seed before you dive into the sampling process. Otherwise, the data will change each time you knit your lab. To set your seed, simply find the designated R chunk in your R Markdown file and insert the seed value there.
+In this lab, we'll be generating random samples. To make sure our results stay consistent, make sure to set a seed before you dive into the sampling process. Otherwise, the data will change each time you knit your lab. Set your seed in the chunk labeled "setup" so that your sampling and bootstrapping results stay consistent across runs and when knitting.
 
 ## The data
 
@@ -80,13 +83,17 @@ variable         | description
 `lowbirthweight` | whether baby was classified as low birthweight (`low`) or not (`not low`).
 `gender`         | gender of the baby, `female` or `male`.
 `habit`          | status of the mother as a `nonsmoker` or a `smoker`.
-`whitemom`       | whether mom is `white` or `not white`.
+`whitemom`       | whether mom is `White` or `not White`.
 
-Before analyzing any new dataset, it's important to get to know your data. Start by summarizing the variables and determining if their data type. Are they categorical? Are they numerical? For numerical variables, check for outliers. If you aren't sure or want to take a closer look at the data, create a graph.
+Before analyzing any new dataset, it's important to get to know your data...
 
 ## Exercises
 
-1. What are the cases in this data set? How many cases are there in our sample?
+1. Which variables in this dataset are numeric, and what do their distributions look like? Are there any outliers or extreme values that might affect your analysis?
+
+Support your answers with both summary statistics and visualizations. You can use tools such as summary(), map_dfr(), or skim() for numerical summaries, and faceted boxplots or histograms to visualize distributions.  If you're not sure how to check efficiently, consider transforming the data into long format and using faceted boxplots.
+
+
 
 ### Baby weights
 
@@ -102,70 +109,159 @@ Our null hypothesis should state "there is nothing going on", i.e. no change sin
 
 Our alternative hypothesis should reflect the research question, i.e., some change since 1995. Since the research question doesn't state a direction for the change, we use a two-sided alternative hypothesis: $H_A: \mu \ne 7.43~pounds$.
 
-2. Create a filtered data frame called `ncbirths_white` that contains data only from White mothers. Then, calculate the mean of the weights of their babies.
+2. To test whether the average birth weight of White babies has changed since 1995, we first need to isolate that group in our data. Create a filtered data frame called `ncbirths_white` that contains data only from White mothers. Then, calculate the mean of the weights of their babies.
+
+> This sample mean will serve as your observed statistic when we build a null distribution in the next exercise.
 
 <!-- Mason make this clearer to what this means -->
 
-3. Are the criteria necessary for conducting simulation-based inference satisfied? Explain your reasoning.
+3. Are the criteria necessary for conducting simulation-based inference satisfied? Briefly consider whether simulation-based inference (e.g., bootstrapping) is appropriate in this context by addressing the following:
+- Are observations in the sample independent of each other?
+- Is the sample size reasonably large?
+- Does the shape of the distribution pose any concerns (e.g., extreme skew or clustering)?
 
-Let's discuss how this test would work. Our goal is to simulate a null distribution of sample means that is centered at the null value of 7.43 pounds. In order to do so, we:
-<!-- Mason make this clearer to why we need to actually do this -->
-- take a bootstrap sample of from the original sample,
-- calculate this bootstrap sample's mean,
-- repeat these two steps a large number of times to create a bootstrap distribution of means centered at the observed sample mean,
-- shift this distribution to be centered at the null value by subtracting / adding X to all bootstrap mean (X = difference between mean of bootstrap distribution and null value), and
-- calculate the p-value as the proportion of bootstrap samples that yielded a sample mean at least as extreme as the observed sample mean.
+Use graphical summaries (histogram, boxplot) and/or numerical summaries to support your answer. Refer back to your plots or output from Exercise 1.
 
-4. Run the appropriate hypothesis test, visualize the null distribution, calculate the p-value, and interpret the results in the context of the data and the hypothesis test.
+
+Let's discuss how this test would work. Our goal is to simulate what the distribution of sample means might look like if the true population mean were 7.43 pounds. To do that, we’ll use bootstrapping and then shift the resulting distribution to be centered under the null hypothesis.
+
+You saw this process in the bootstrapping lecture (the "Rent in Edinburgh" example)—where we estimated a sampling distribution from a real dataset, then aligned it with a hypothetical population value in order to test whether the data were consistent with that value. The same logic applies here.
+
+Here’s the general procedure:
+- Take a bootstrap sample (with replacement) from ncbirths_white.
+- Calculate the mean of this bootstrapped resample.
+- Repeat these two steps many times (e.g., 1,000 or more) to create a bootstrap distribution of sample means.
+- This distribution will be centered at the observed sample mean.
+- To simulate the null hypothesis, shift the entire distribution so that its mean equals 7.43. You can do this by subtracting the bootstrap distribution’s mean from each value, and then adding 7.43 back.
+- Once shifted, compare the observed mean to this distribution: calculate the proportion of simulated means that are at least as extreme as the observed mean (i.e., the p-value).
+
+> 📌 If this logic feels abstract, go back and review the Lecture on Bootstrapping. The same shifting strategy was used there to simulate a null centered at a hypothesized rent value. 
+
+4. Run a hypothesis test using simulation-based inference. Your goal is to simulate a null distribution of sample means assuming a population mean of 7.43 pounds, and then assess how unusual the observed sample mean is within that distribution.
+
+To structure your analysis, work through the following steps:
+
+4a. Use bootstrapping to simulate a distribution of sample means from ncbirths_white.
+
+4b. Shift the distribution so that its center aligns with the null hypothesis value (7.43 pounds).
+
+4c. Create a histogram of your shifted null distribution. Overlay a dashed vertical line to show your observed sample mean.
+
+4d. Calculate the two-tailed p-value: what proportion of simulated means are at least as extreme (in both directions) as your observed value?
+
+4e. Interpret your results. Based on the p-value and your visualization, what do you conclude about whether birth weight has changed since 1995?
 
 ### Baby weight vs. smoking
 
 Consider the relationship between a mother's smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.
 
-5. Make side-by-side box plots displaying the relationship between `habit` and `weight`. What does the plot highlight about the relationship between these two variables?
+5. Make side-by-side box plots displaying the relationship between `habit` and `weight`. What do you notice about the shape, center, and spread of the two groups? Are there any clear differences?
 
-6. Before continuing, create a cleaned version of the dataset by removing any rows with missing values for `habit` or `weight`. Name this version `ncbirths_clean`.
+> Use this visualization to inform the question you’ll test in the next few exercises.
 
-7. Calculate the observed difference in means between the baby weights of smoking and non-smoking mothers.
+
+6. Before comparing the two groups, remove any rows with missing values in either habit or weight. Name this version `ncbirths_clean`. Why is it important to do this before calculating group summaries?
+
+
+
+7. What is the observed difference in mean birth weight between babies born to smoking and non-smoking mothers?
+
+Use the cleaned dataset to calculate the average birth weight for each group. Then compute the difference in means (non-smokers minus smokers).
 
 ```{r habit-means, eval=FALSE}
 ncbirths_clean %>%
   group_by(habit) %>%
   summarize(mean_weight = mean(weight))
 ```
+> This observed difference is the statistic you’ll use to anchor your inference in the next step.
 
 We can see that there's an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.
 <!-- better scaffolding here to prep students -->
-8. Write the hypotheses for testing if the average weights of babies born to smoking and non-smoking mothers are different.
 
-$H_0$: _________ ($\mu_1 = \mu_2$)
+8. What are the hypotheses for testing whether smoking is associated with a difference in birth weight?
 
-$H_A$: _________ ($\mu_1 \ne \mu_2$)
+Formulate your hypotheses in both words and symbols.
 
-9. Run the appropriate hypothesis test, calculate the p-value, and interpret the results in context of the data and the hypothesis test.
+- What does the null hypothesis say about the difference in average weights?
 
-10. Construct a 95% confidence interval for the difference between the average weights of babies born to smoking and non-smoking mothers.
+- What does the alternative hypothesis suggest?
+
+Write your hypotheses clearly using:
+
+- A contextual statement (in words)
+
+- A symbolic version using $\mu_1$ and $\mu_2$, where each symbol refers to one of the two groups
+
+> Optional: Sketch or describe what the null distribution might look like if the null hypothesis were true.
+
+
+9. How can we use simulation-based inference to test whether maternal smoking is associated with a difference in birth weight?
+
+Run the appropriate hypothesis test using either a bootstrap or permutation method. Use your cleaned dataset (`ncbirths_clean`) and compare the average birth weight between smokers and non-smokers.
+
+To organize your analysis, consider the following:
+
+- What kind of inference method is most appropriate here—bootstrap or permutation?
+
+- What is your observed test statistic?
+
+- How can you generate the sampling distribution under the null?
+
+- What is the resulting p-value?
+
+> You saw a similar structure when testing whether the average birth weight of White babies had changed. This time, you’re comparing two groups, so consider how the structure of the null distribution and test statistic changes.
+
+10. How large could the difference in average birth weights plausibly be, based on your data?
+
+Construct a 95% confidence interval for the difference in means between babies born to smoking and non-smoking mothers. Use a non-parametric method (e.g., bootstrapped difference in means) and report your results.
+
 
 ### Mother's age vs. baby weight
 
-In this portion of the analysis, we focus on two variables. The first one is `maturemom`.
+In this portion of the analysis, we focus on two variables. The first one is `maturemom`, which classifies mothers as either "younger" or "mature."
 
-11. First, a non-inference task: Determine the age cutoff for younger and mature mothers. Use a method of your choice, and explain how your method works.
+The second variable is `lowbirthweight`, a binary indicator of whether the baby’s birth weight was classified as "low."
 
-The other variable of interest is `lowbirthweight`.
+In the following exercises, you’ll determine how `maturemom` is constructed and then test whether the rate of low birth weight differs between the two age groups.
 
-12. Conduct a hypothesis test evaluating whether the proportion of low birth weight babies is higher for mature mothers. Use $\alpha = 0.05$.
+11. First, a non-inference task: Determine the age cutoff for younger and mature mothers.
 
-- State the hypotheses
-- Verify the conditions
-- Run the test and calculate the p-value
-- State your conclusion within context of the research question
+Use a method of your choice to determine where the cutoff lies between "younger" and "mature" mothers, based on the mature variable. How does this variable appear to be coded, and what is the minimum age that qualifies as a "mature" mother?
 
-13. Calculate a confidence interval for the difference between the proportions of low birth weight babies between mature and younger mothers. Interpret the interval in the context of the data and explain what it means.
+12. Is the proportion of low birth weight babies higher for mature mothers than for younger mothers?
+
+Conduct a hypothesis test to evaluate whether the proportion of low birth weight babies differs between younger and mature mothers. Use a significance level of $\alpha = 0.05$.
+
+Work through the following steps:
+
+- Clearly state your null and alternative hypotheses (in words and in symbols).
+
+- Consider the conditions for simulation-based inference. Are they met here?
+
+- Choose an appropriate test (e.g., bootstrapped or permuted difference in proportions).
+
+- Calculate the p-value and interpret the result in the context of the research question.
+
+13. What is a plausible range for the difference in proportions of low birth weight babies between mature and younger mothers?
+
+Construct a 95% confidence interval for the difference in proportions of low birth weight babies between the two groups. Then interpret the interval: what do the bounds tell you?
+
 
 ## Wrap up
 
-In this lab, you practiced using non-parametric inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. You also explored the relationships between other variables, such as the mother's age and the baby's birth weight. You've gained experience with data manipulation, visualization, hypothesis testing, and calculating confidence intervals.
+In this lab, you practiced using non-parametric inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. Specifically, you used bootstrapping and permutation testing to analyze real-world health data from North Carolina birth records. You tested whether:
+- The average birth weight of White babies has changed since 1995
+- Maternal smoking is associated with lower average birth weight
+- Mature mothers are more likely to have babies with low birth weight
+
+Along the way, you also:
+- Cleaned and filtered messy real-world data
+
+- Explored variable distributions and checked model assumptions
+
+- Interpreted p-values and confidence intervals in context
+
+- Applied core concepts from earlier lectures, including simulation-based inference.
 
 Remember to save your work, commit your changes, and push them to your Git repository!
 
