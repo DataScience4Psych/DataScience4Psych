@@ -112,8 +112,8 @@ While there's no formal test suite for content, you should:
 
 ## Continuous Integration
 
-- GitHub Actions workflow builds PDF drafts when `.md` files change
-- The main book is built and deployed via GitHub Pages
+- GitHub Actions workflow builds PDF drafts for academic papers (JOSS/JOSE) when `.md` files in `admin/jose/` change
+- The main bookdown project is built and deployed via GitHub Pages
 - Check workflow status in the Actions tab
 
 ## Documentation
