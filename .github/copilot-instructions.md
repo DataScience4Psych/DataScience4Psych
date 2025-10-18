@@ -121,7 +121,7 @@ While there's no formal test suite for content, you should:
 - Course website: https://datascience4psych.github.io/DataScience4Psych
 - Course materials emphasize R for Data Science (Wickham & Grolemund)
 - Attribution page provides detailed credits
-
+- Syllabus: https://smasongarrison.github.io/syllabi/data-science.html
 ## Important Notes
 
 - This is a living document - some sections are still under construction
