@@ -30,7 +30,6 @@ install_bioc_if_missing <- function(package) {
 }
 
 
-
 # CRAN Packages
 cran_packages <- c(
   "devtools", "tidyverse", "rmarkdown", "bookdown", "discord", "addinslist",
@@ -39,7 +38,7 @@ cran_packages <- c(
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
   "tidymodels", "pacman", "gapminder", "nycflights13",
-  "gender", "geonames", "rebird","rstan","ggthemes","tidytext"
+  "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext"
 )
 
 # Install CRAN packages if missing
@@ -63,7 +62,6 @@ lapply(github_packages, install_github_if_missing)
 r_forge_packages <- c("p3d")
 
 lapply(r_forge_packages, install_rforge_if_missing)
-
 
 
 # Bioconductor Packages
