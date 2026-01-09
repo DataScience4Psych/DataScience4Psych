@@ -5,10 +5,10 @@ Howdy :wave:! The guidelines below outline how to propose a change to DataScienc
 
 You can fix typos, spelling mistakes, or grammatical errors in the documentation directly using the GitHub web interface, as long as the changes are made in the *source* file. This generally means you'll need to edit .Rmd files.
 
-**Automated Spellchecking**: This repository includes automated spellchecking via GitHub Actions. When you submit a pull request that modifies `.Rmd` or `.md` files, the spellchecker will automatically run. If you encounter spellcheck errors:
+**Automated Spellchecking**: This repository includes automated spellchecking via GitHub Actions. When you submit a pull request that modifies `.Rmd` files, the spellchecker will automatically run. If you encounter spellcheck errors:
 - Fix genuine typos in the source files
 - For valid domain-specific terms (R packages, technical jargon, proper nouns), add them to `_typos.toml` configuration file
-- See [SPELLCHECK.md](../SPELLCHECK.md) for detailed instructions on using the spellchecker locally
+- See [SPELLCHECK.md](../SPELLCHECK.md) for detailed instructions
 
 ## Bigger changes
 

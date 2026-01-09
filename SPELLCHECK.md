@@ -4,18 +4,19 @@ This repository uses automated spellchecking to maintain high-quality documentat
 
 ## How it Works
 
-The spellchecker uses the `typos` tool to check all `.Rmd` (RMarkdown) and `.md` (Markdown) files in the repository. `typos` is a fast, Rust-based spell checker that's designed for source code.
+The spellchecker uses the `typos` tool to check all `.Rmd` (RMarkdown) files in the repository. `typos` is a fast, Rust-based spell checker that's designed for source code.
 
 ### Automated Checks
 
 A GitHub Actions workflow (`.github/workflows/spellcheck.yml`) automatically runs on:
-- Every push that modifies `.Rmd` or `.md` files
-- Every pull request that modifies `.Rmd` or `.md` files
+- Every push that modifies `.Rmd` files
+- Every pull request that modifies `.Rmd` files
 - Changes to the configuration file (`_typos.toml`)
 
 ### Configuration
 
 The file `_typos.toml` contains:
+- **File filtering** to check only `.Rmd` files
 - **Custom dictionary entries** for domain-specific terms like:
   - R package names (tidyverse, ggplot, dplyr, etc.)
   - Data science terminology
@@ -26,6 +27,7 @@ The file `_typos.toml` contains:
   - R code chunks
   - URLs and email addresses
   - Binary files (images, PDFs, etc.)
+  - Data files (CSV, RData, etc.)
   - Build artifacts and dependencies
 
 ## Running Spellcheck Locally

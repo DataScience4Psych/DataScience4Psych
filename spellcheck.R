@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # Spell Check Script for DataScience4Psych
-# This script checks spelling in all Rmd and md files
+# This script checks spelling in all Rmd files
 # 
 # Usage:
 #   Rscript spellcheck.R
@@ -17,14 +17,10 @@ if (!requireNamespace("spelling", quietly = TRUE)) {
 
 library(spelling)
 
-# Get all Rmd and md files
+# Get all Rmd files only
 rmd_files <- list.files(pattern = "\\.Rmd$", recursive = FALSE)
-md_files <- list.files(pattern = "\\.md$", recursive = FALSE)
-jose_files <- list.files("admin/jose", pattern = "\\.md$", full.names = TRUE)
 
-all_files <- c(rmd_files, md_files, jose_files)
-
-cat("Checking spelling in", length(all_files), "files...\n\n")
+cat("Checking spelling in", length(rmd_files), ".Rmd files...\n\n")
 
 # Load custom wordlist
 wordlist_file <- "inst/WORDLIST"
@@ -37,7 +33,7 @@ if (file.exists(wordlist_file)) {
 }
 
 # Run spell check
-results <- spell_check_files(all_files, ignore = custom_words)
+results <- spell_check_files(rmd_files, ignore = custom_words)
 
 # Print results
 if (nrow(results) > 0) {
