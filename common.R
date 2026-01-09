@@ -99,15 +99,23 @@ embed_youtube_alt <- function(youtube_id) {
   }
 }
 
+# Constants for reading time calculation
+BYTES_PER_WORD <- 10
+WORDS_PER_MINUTE <- 200
+
 # Function to calculate reading time from file path
-calculate_reading_time <- function(file_path) {
+calculate_reading_time <- function(file_path, bytes_per_word = BYTES_PER_WORD, wpm = WORDS_PER_MINUTE) {
   if (!file.exists(file_path)) {
     warning(paste("File not found:", file_path))
     return(NA)
   }
   bytes <- file.size(file_path)
-  words <- bytes / 10
-  minutes <- words / 200
+  if (is.na(bytes)) {
+    warning(paste("Unable to determine file size:", file_path))
+    return(NA)
+  }
+  words <- bytes / bytes_per_word
+  minutes <- words / wpm
   return(round(minutes))
 }
 
