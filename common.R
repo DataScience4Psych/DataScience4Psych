@@ -98,3 +98,24 @@ embed_youtube_alt <- function(youtube_id) {
     return(knitr::include_graphics(str_c(file_path)))
   }
 }
+
+# Function to calculate reading time from file path
+calculate_reading_time <- function(file_path) {
+  if (!file.exists(file_path)) {
+    warning(paste("File not found:", file_path))
+    return(NA)
+  }
+  bytes <- file.size(file_path)
+  words <- bytes / 10
+  minutes <- words / 200
+  return(round(minutes))
+}
+
+# Function to get formatted reading time message
+get_reading_time <- function(file_path) {
+  minutes <- calculate_reading_time(file_path)
+  if (is.na(minutes)) {
+    return("")
+  }
+  return(paste("Reading time:", minutes, "minute(s) @ 200 WPM"))
+}
