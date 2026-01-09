@@ -1,0 +1,27 @@
+name: Spellcheck
+
+on:
+  push:
+    paths:
+      - '**.Rmd'
+      - '_typos.toml'
+      - '.github/workflows/spellcheck.yml'
+  pull_request:
+    paths:
+      - '**.Rmd'
+      - '_typos.toml'
+      - '.github/workflows/spellcheck.yml'
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    name: Check Spelling with typos
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Check spelling with typos
+        uses: crate-ci/typos@master
+        with:
+          config: ./_typos.toml
+          files: '*.Rmd'
