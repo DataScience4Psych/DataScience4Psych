@@ -125,5 +125,5 @@ get_reading_time <- function(file_path) {
   if (is.na(minutes)) {
     return("")
   }
-  return(paste("Reading time:", minutes, "minute(s) @ 200 WPM"))
+  return(paste("Reading time:", minutes, "minute(s) @", WORDS_PER_MINUTE, "WPM"))
 }
