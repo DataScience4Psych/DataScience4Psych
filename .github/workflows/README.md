@@ -45,7 +45,4 @@ You can monitor workflow runs:
 - The workflow uses R package caching to speed up subsequent builds
 - If the build fails, check the workflow logs in the Actions tab
 - The deployed site is available at: https://datascience4psych.github.io/DataScience4Psych
-
-## draft-pdf.yml - JOSS/JOSE Paper PDF Generation
-
-This workflow generates a PDF of academic papers in the `admin/jose/` directory when `.md` files change.
+- The deployment uses the `gh-pages` branch which is automatically managed by the workflow
