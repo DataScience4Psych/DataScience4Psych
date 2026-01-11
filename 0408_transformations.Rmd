@@ -35,8 +35,9 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 # devtools::install_github("gmonette/spida2")
 ```
 ```{r,message=FALSE}
-# if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
-library(p3d)
+#if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
+#library(p3d)
+#library(extras)
 library(car)
 library(latticeExtra)
 library(gridExtra)
@@ -156,7 +157,11 @@ pow <- function(y, p) {
     (y^p - 1) / p
   }
 }
+```
 
+Let's test this function with a sequence of x values and visualize the transformations for different powers of p.
+
+```{r, message=FALSE, warning=FALSE}
 # Testing the transformation with a sequence of x values
 x <- seq(-1, 3, by = .5)
 
@@ -168,15 +173,24 @@ x_transformed <- tibble(
   `p=-1` = pow(x, -1)
 )
 
-
 # Visualizing the transformed data
 x_transformed_long <- pivot_longer(x_transformed, cols = starts_with("p"), names_to = "Power", values_to = "Transformed")
+
+```
+
+Let's visualize the transformed data for different powers of p using ggplot2.
+
+```{r, message=FALSE, warning=FALSE, fig.width=6}
 
 ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
   geom_line() +
   labs(title = "Visualization of Power Transformations", x = "Original x", y = "Transformed x") +
   theme_minimal()
+```
 
+Looking at the plot, we can see how different values of $p$ affect the transformation of the data. The transformation with $p=2$ shows a concave up shape, while $p=-1$ shows a concave down shape. The logarithmic transformation ($p=0$) provides a middle ground between these two extremes.
+
+```{r}
 
 # test:
 x <- seq(-1, 3, by = .5)
@@ -187,12 +201,17 @@ pow(x, 2)
 # pow(x, -1) %>%
 #  name(x) %>%
 #  cbind()
+```
 
+Because functions are first-class objects in R, we can also define the exponential function and plot it directly.
+
+```{r}
 
 plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
 plot(function(x) pow(x, p = .5), xlim = c(0, 3))
 ```
+
 However, this approach works correctly only for a single value of $p$ because the statement `if(p == 0)` only tests the first element of `p`.
 
 ## Vectorizing a function
@@ -299,15 +318,15 @@ xyplot(yval ~ y, dd,
 )
 ```
 
-From quantile plots:
+## Quantile plots
 
-Uniform quantiles...
+Uniform quantiles let's us see how far a distribution is from normal.
 
 ```{r}
 xqplot(un)
 ```
 
-Normal quantiles
+Normal quantiles let's us see how far a distribution is from normal.
 
 ```{r}
 xqplot(un, ptype = "normal")
@@ -344,8 +363,7 @@ un %>%
 
 un %>% subset(country %in% c("United.States", "Canada"))
 ```
-
-between wage and education, and heteroskedasticity in wage as a function of education.
+Below would be  a 3D plot showing curvature. However, we can't get the p3d package to install properly right now. The 3D plot would help visualize curvature between wage and education, and heteroskedasticity in wage as a function of education.
 
 ```{r}
 # library(p3d)
@@ -365,7 +383,22 @@ between wage and education, and heteroskedasticity in wage as a function of educ
 
 ## Box Cox Transformation
 
-```{r, echo=FALSE}
+This is another way to look at Tukey's Ladder of Powers. The Box-Cox transformation is defined as:
+
+$$
+y(\lambda) = \begin{cases}
+\frac{y^\lambda - 1}{\lambda}, & \text{if }\lambda \neq 0 \\
+\ln(y), & \text{if } \lambda = 0
+\end{cases}
+$$
+The Box-Cox transformation is similar to Tukey's Ladder of Powers, with the parameter $\lambda$ playing a role analogous to $p$. The transformation is used to stabilize variance and make the data more normally distributed. I won't go into more detail here since it's very similar to what we've already discussed. But I have published a paper that used the Box-Cox transformation: Garrison, S. M. \& Rodgers, J. L. (2019) Decomposing the causes of the socioeconomic status-health gradient with biometrical modeling. *Journal of Personality and Social Psychology, 116*(4), 616–634. https://doi.org/10.1037/pspp0000226
+
+### Video Explanation
+
+```{r, echo=FALSE,eval = knitr::is_latex_output()}
+embed_youtube_alt("vGOpEpjz2Ks")
+```
+```{r, echo=FALSE,eval = knitr::is_html_output()}
 # not mine, but still good
 "https://www.youtube.com/watch?v=vGOpEpjz2Ks" %>%
   embed_url() %>%
