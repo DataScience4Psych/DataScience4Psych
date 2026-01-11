@@ -41,6 +41,7 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 library(car)
 library(latticeExtra)
 library(gridExtra)
+#if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
 library(spida2)
 # read data
 un <- read.table("data/UnitedNations.txt", header = TRUE) %>%
@@ -363,22 +364,27 @@ un %>%
 
 un %>% subset(country %in% c("United.States", "Canada"))
 ```
-Below would be  a 3D plot showing curvature. However, we can't get the p3d package to install properly right now. The 3D plot would help visualize curvature between wage and education, and heteroskedasticity in wage as a function of education.
+Below would be a 3D plot showing curvature. However, we can't get the p3d package to install properly right now. The 3D plot would help visualize curvature between wage and education, and heteroskedasticity in wage as a function of education.
 
 ```{r}
-# library(p3d)
 
-# slid %>%
-#  xyplot(sqrt(wage) ~ education, .) +
-#  layer(panel.loess(...))
+if (require("p3d")) {
 
-# Init3d()
-# Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)
-# Id3d()
-# Id3d('United.States')
-# Id3d('Canada')
-# rownames(un)
-# names(un)
+ library(p3d)
+
+ slid %>%
+  xyplot(sqrt(wage) ~ education, .) +
+  layer(panel.loess(...))
+
+ Init3d()
+ Plot3d(log(infantMortality) ~ GDPperCapita + lifeFemale | region, un)
+ Id3d()
+ Id3d('United.States')
+ Id3d('Canada')
+ rownames(un)
+ names(un)
+ 
+}
 ```
 
 ## Box Cox Transformation
