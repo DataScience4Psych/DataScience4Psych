@@ -38,7 +38,11 @@ openai_api_key <- readLines("path/to/api_key.txt")
 ```
 
 ```{r, echo=FALSE, include=FALSE}
+if(file.exists("admin/secrets/openai_api_key.txt")){
 openai_api_key <- readLines("admin/secrets/openai_api_key.txt")
+} else {
+  openai_api_key <- Sys.getenv("OPENAI_API_KEY")
+}
 ```
 
 ### Making API Requests
