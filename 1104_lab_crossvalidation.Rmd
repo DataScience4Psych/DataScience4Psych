@@ -1,10 +1,18 @@
 # Lab: Cross Validation in Action {#lab11}
 
-## Snappy Name {.unnumbered}
+## Don’t Judge the Ship After It Sinks {.unnumbered}
+
+
+We have been hired by Lloyd's of London to assist in evaluating risk for maritime travel. Following the Titanic disaster in 1912 and the significant cost of the [claims that resulted](https://www.lloyds.com/titanic), Lloyd's is interested in building statistical models to better understand the factors that influenced survival rates among passengers. 
+
+
+As part of this effort, we have been contracted to analyze data from the Titanic disaster. Specifically, we will build models to predict passenger survival based on various features of the passengers. This lab will guide you through the process of data exploration, model building, and evaluation using cross-validation techniques.
+
 
 ```{r include=FALSE}
-library(tufte)
+
 library(knitr)
+library(titanic)
 options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE, # for regression output
@@ -19,12 +27,13 @@ knitr::opts_chunk$set(eval = FALSE)
 
 ### Packages {.unnumbered}
 
-In this lab we will work with the titanic dataset and use the following packages:
+
+
+
+In this lab, we will work with the titanic dataset and use the following packages:
 
 ```{r eval = FALSE}
 library(tidyverse)
-library(broom)
-library(openintro)
 library(titanic)
 ```
 
@@ -58,10 +67,154 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 
 ## The data {.unnumbered}
 
-We will use the titanic dataset.
+We will use three datasets from the `titanic` package: `titanic_train`, `titanic_test`, and `titanic3`. The `titanic_train` and `titanic_test` datasets are commonly used for building and evaluating predictive models, while `titanic3` contains additional information about the passengers. All three datasets are from Kaggle.
+
+Titanic3 is from https://www.kaggle.com/datasets/vinicius150987/titanic3
+
+
+```{r}
+
+
+library(readxl)
+titanic3 <- read_excel("data/titanic3.xls", 
+    col_types = c("numeric", "numeric", "text", 
+        "text", "numeric", "numeric", "numeric", 
+        "text", "numeric", "text", "text", 
+        "text", "text", "text")) 
+  
+
+library(titanic)
+data("titanic_train")
+data("titanic_test")
+
+titanic_df <- titanic_test %>% mutate(Survived = NA) %>%
+  bind_rows(titanic_train)
+
+names(titanic_df) <- names(titanic_df) %>%
+  tolower()
+```
+
+
+
 
 
 ## Exercises {.unnumbered}
+
+## Apparent accuracy {.unnumbered}
+
+Before we talk about cross validation, we need to see the problem it is designed to fix.
+
+Suppose we fit a model and then immediately ask: “How well does this model predict the data?”
+If we use the same data to fit the model and to evaluate it, we are letting the model see the answers ahead of time.
+
+Let’s do that on purpose.
+
+1. Fit a logistic regression predicting survival from passenger sex and class.
+Save the model as `m_apparent`.
+
+```{r}
+m_apparent <- glm(
+  survived ~ sex + pclass,
+  data = titanic3,
+  family = binomial
+)
+
+
+summary(m_apparent)
+
+```
+
+This model has access to every passenger and the final outcome. It is not being asked to predict the future. It is being asked to summarize the past.
+
+Now we use the model to generate predicted survival probabilities for every passenger.
+
+
+```{r}
+p_apparent <- predict(m_apparent, type = "response")
+
+
+```
+
+Each probability represents how confident the model is that a passenger survived.
+
+To turn probabilities into decisions, we need a rule. We’ll use a cutoff of 0.5.
+
+```{r}
+yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
+```
+
+
+Now we compute the model’s accuracy.
+
+```{r}
+
+acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
+
+acc_apparent
+```
+At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can.
+
+Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.
+
+
+## Holding passengers back {.unnumbered}
+
+To get a more honest answer, we need to pretend that some passengers are unknown.
+
+We’ll do this by splitting the data into two groups:
+   - a training set, used to fit the model
+   - a test set, used only for evaluation
+   
+Conveniently, the `titanic` package already provides such a split.
+
+```{r}
+
+titanic_train <- titanic_train %>%
+  mutate(survived = as.numeric(survived))
+
+titanic_test <- titanic_test %>% 
+  mutate(survived = as.numeric(survived))
+
+```
+
+
+Now we fit the same model as before, but only on the training data.
+
+```{r}
+m_split <- glm(
+  Survived ~ Sex + Pclass,
+  data = titanic_train,
+  family = binomial
+)
+
+summary(m_split)
+p_split <- predict(m_split, type = "response")
+
+
+yhat_split <- ifelse(p_split > 0.5, 1, 0)
+
+acc_split <- mean(yhat_split == titanic_train$Survived)
+acc_split
+```
+
+
+We evaluate this model on passengers it has never seen.
+
+```{r}
+
+p_test <- predict(m_split, newdata = titanic_test, type = "response")
+yhat_test <- ifelse(p_test > 0.5, 1, 0)
+
+
+```
+
+p_test <- predict(m_split, newdata = test_df, type = "response")
+yhat_test <- ifelse(p_test > 0.5, 1, 0)
+
+acc_split <- mean(yhat_test == test_df$Survived)
+acc_split
+
+
 
 
 
