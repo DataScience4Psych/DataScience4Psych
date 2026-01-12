@@ -480,38 +480,17 @@ You will build richer models, compare them using cross validation, and then stre
 - Evaluate classifiers beyond accuracy (confusion matrices, sensitivity/specificity).
 - Reason about performance vs stability when recommending a model.
 
----
 
-## The data {.unnumbered}
 
-We will use `titanic3` again.
 
-```{r load-data, error=TRUE}
-titanic3 <- readxl::read_excel(
-  "data/titanic3.xls",
-  col_types = c(
-    "numeric", "numeric", "text", "text",
-    "numeric", "numeric", "numeric",
-    "text", "numeric", "text", "text",
-    "text", "text", "text"
-  )
-)
-
-names(titanic3) <- names(titanic3) %>% tolower()
-
-titanic3 <- titanic3 %>%
-  mutate(survived = as.numeric(survived))
-```
-
----
 
 ## Exercises {.unnumbered}
 
-## Exercise 1: Candidate models {.unnumbered}
+## Exercise 6: Candidate models {.unnumbered}
 
 Lloyd’s will not price risk using only sex and class. Your job is to propose reasonable candidate models and compare them using the same evaluation method.
 
-### 1.1 Choose candidate predictors {.unnumbered}
+### 6.1 Choose candidate predictors {.unnumbered}
 
 Pick **two** additional predictors from this list:
 
@@ -522,7 +501,7 @@ Pick **two** additional predictors from this list:
 
 Write down, in 2 to 3 sentences, why you think each predictor should matter for survival.
 
-### 1.2 Define candidate formulas {.unnumbered}
+### 6.2 Define candidate formulas {.unnumbered}
 
 Create two model formulas:
 
@@ -531,12 +510,12 @@ Create two model formulas:
 
 Store them as `f_base` and `f_expanded`.
 
-```{r exercise1.2, error=TRUE}
+```{r exercise6.2, error=TRUE}
 f_base <- survived ~ ___ + ___
 f_expanded <- survived ~ ___ + ___ + ___ + ___
 ```
 
-```{r exercise1.2solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise6.2solution, include=FALSE, echo=FALSE, error=TRUE}
 f_base <- survived ~ sex + pclass
 f_expanded <- survived ~ sex + pclass + age + fare
 ```
@@ -547,9 +526,9 @@ f_expanded <- survived ~ sex + pclass + age + fare
 ```
 </details>
 
----
 
-## Exercise 2: Cross validation comparison (listwise deletion) {.unnumbered}
+
+## Exercise 7: Cross validation comparison (listwise deletion) {.unnumbered}
 
 We will start with the simplest missing-data strategy: **drop rows with missing values** in any variable used by the model.
 
@@ -559,7 +538,7 @@ This is not always the best approach, but it is transparent.
 
 Create `cv_df` that keeps only rows with non-missing values for all variables needed in `f_expanded`.
 
-```{r exercise2.1, error=TRUE}
+```{r exercise7.1, error=TRUE}
 cv_df <- titanic3 %>%
   filter(!is.na(survived)) %>%
   filter(!is.na(___)) %>%
@@ -568,7 +547,7 @@ cv_df <- titanic3 %>%
   filter(!is.na(___))
 ```
 
-```{r exercise2.1solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise7.1solution, include=FALSE, echo=FALSE, error=TRUE}
 cv_df <- titanic3 %>%
   filter(!is.na(survived)) %>%
   filter(!is.na(sex)) %>%
@@ -579,22 +558,22 @@ cv_df <- titanic3 %>%
 
 <details>
   <summary>Click for a solution example</summary>
-```{r ref.label = "exercise2.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise7.1solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
-### 2.2 Create folds {.unnumbered}
+### 7.2 Create folds {.unnumbered}
 
 Assign each row to one of 10 folds.
 
-```{r exercise2.2, error=TRUE}
+```{r exercise7.2, error=TRUE}
 set.seed(___)
 
 cv_df <- cv_df %>%
   mutate(fold = sample(rep(___, length.out = n())))
 ```
 
-```{r exercise2.2solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise7.2solution, include=FALSE, echo=FALSE, error=TRUE}
 set.seed(21)
 
 cv_df <- cv_df %>%
@@ -603,7 +582,7 @@ cv_df <- cv_df %>%
 
 <details>
   <summary>Click for a solution</summary>
-```{r ref.label = "exercise2.2solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise7.2solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
@@ -611,7 +590,7 @@ cv_df <- cv_df %>%
 
 Complete the function below so it returns a data frame with fold accuracies for a given formula.
 
-```{r exercise2.3, error=TRUE}
+```{r exercise7.3, error=TRUE}
 cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
   out <- data.frame(fold = sort(unique(df$fold)), accuracy = NA_real_)
@@ -637,7 +616,7 @@ cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 }
 ```
 
-```{r exercise2.3solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise7.3solution, include=FALSE, echo=FALSE, error=TRUE}
 cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
   out <- data.frame(fold = sort(unique(df$fold)), accuracy = NA_real_)
@@ -665,15 +644,15 @@ cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
 <details>
   <summary>Click for a solution</summary>
-```{r ref.label = "exercise2.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise7.3solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
-### 2.4 Compare models {.unnumbered}
+### 7.4 Compare models {.unnumbered}
 
 Use `cv_glm_accuracy()` to compute CV results for both formulas. Compute mean and SD of accuracy for each.
 
-```{r exercise2.4, error=TRUE}
+```{r exercise7.4, error=TRUE}
 cv_base <- cv_glm_accuracy(cv_df, formula = ___)
 cv_exp  <- cv_glm_accuracy(cv_df, formula = ___)
 
@@ -686,7 +665,7 @@ summary_table <- data.frame(
 summary_table
 ```
 
-```{r exercise2.4solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise7.4solution, include=FALSE, echo=FALSE, error=TRUE}
 cv_base <- cv_glm_accuracy(cv_df, formula = f_base)
 cv_exp  <- cv_glm_accuracy(cv_df, formula = f_expanded)
 
@@ -701,22 +680,22 @@ summary_table
 
 <details>
   <summary>Click for a solution</summary>
-```{r ref.label = "exercise2.4solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise7.4solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
-### 2.5 Reflection {.unnumbered}
+### 7.5 Reflection {.unnumbered}
 
 1. Which model has higher mean CV accuracy?
 2. Which model has higher variability across folds?
 3. If the accuracy improvement is small but the expanded model is more variable, how would you advise Lloyd’s?
 
 
-## Exercise 3: Missingness is a modeling decision {.unnumbered}
+## Exercise 8: Missingness is a modeling decision {.unnumbered}
 
 Listwise deletion changes your population: you are now modeling a subset of passengers with complete records on your chosen predictors.
 
-### 3.1 Quantify the missingness impact {.unnumbered}
+### 8.1 Quantify the missingness impact {.unnumbered}
 
 Compute the number of rows in:
 
@@ -725,7 +704,7 @@ Compute the number of rows in:
 
 Report the proportion retained.
 
-```{r exercise3.1, error=TRUE}
+```{r exercise8.1, error=TRUE}
 n_all <- sum(!is.na(titanic3$survived))
 n_kept <- nrow(cv_df)
 prop_kept <- n_kept / n_all
@@ -733,13 +712,13 @@ prop_kept <- n_kept / n_all
 c(n_all = n_all, n_kept = n_kept, prop_kept = prop_kept)
 ```
 
-### 3.2 Reflection {.unnumbered}
+### 8.2 Reflection {.unnumbered}
 
 - What kinds of passengers might be disproportionately removed by listwise deletion when you include `age`?
 - Why does this matter for Lloyd’s, even if accuracy improves?
 
 
-## Exercise 4: Simple imputation without leakage {.unnumbered}
+## Exercise 9: Simple imputation without leakage {.unnumbered}
 
 Now you will use a very simple imputation strategy for a numeric predictor:
 
@@ -747,7 +726,7 @@ Now you will use a very simple imputation strategy for a numeric predictor:
 
 This is the smallest step toward preventing leakage: the test fold should not influence how you fill in missing values.
 
-### 4.1 Implement within-fold mean imputation for one variable {.unnumbered}
+### 9.1 Implement within-fold mean imputation for one variable {.unnumbered}
 
 Choose one numeric predictor you used (for example, `age`). Complete the loop to:
 
@@ -757,7 +736,7 @@ Choose one numeric predictor you used (for example, `age`). Complete the loop to
 
 Store results in `cv_imp`.
 
-```{r exercise4.1, error=TRUE}
+```{r exercise9.1, error=TRUE}
 cv_imp <- data.frame(fold = sort(unique(cv_df$fold)), accuracy = NA_real_)
 
 for (j in cv_imp$fold) {
@@ -785,7 +764,7 @@ for (j in cv_imp$fold) {
 c(mean = mean(cv_imp$accuracy), sd = sd(cv_imp$accuracy))
 ```
 
-```{r exercise4.1solution, include=FALSE, echo=FALSE, error=TRUE}
+```{r exercise9.1solution, include=FALSE, echo=FALSE, error=TRUE}
 cv_imp <- data.frame(fold = sort(unique(cv_df$fold)), accuracy = NA_real_)
 
 for (j in cv_imp$fold) {
@@ -815,29 +794,29 @@ c(mean = mean(cv_imp$accuracy), sd = sd(cv_imp$accuracy))
 
 <details>
   <summary>Click for a solution example</summary>
-```{r ref.label = "exercise4.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise9.1solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
-### 4.2 Reflection {.unnumbered}
+### 9.2 Reflection {.unnumbered}
 
 1. Why is imputing using the overall mean (computed on the full dataset) a form of leakage?
 2. Did within-fold imputation change mean CV accuracy compared to listwise deletion? Why might it?
 
----
 
-## Exercise 5: Beyond accuracy (confusion matrix) {.unnumbered}
+
+## Exercise 10: Beyond accuracy (confusion matrix) {.unnumbered}
 
 Accuracy treats all mistakes as equally bad. Lloyd’s rarely agrees.
 
-### 5.1 Compute confusion matrix elements on one fold {.unnumbered}
+### 10.1 Compute confusion matrix elements on one fold {.unnumbered}
 
 Pick a single fold (for example, fold 1). Using your chosen model and cutoff 0.5:
 
 - compute TP, FP, TN, FN
 - compute sensitivity and specificity
 
-```{r exercise5.1, error=TRUE}
+```{r exercise10.1, error=TRUE}
 # Choose a fold
 j <- 1
 
@@ -860,9 +839,8 @@ specificity <- TN / (TN + FP)
 c(TP = TP, FP = FP, TN = TN, FN = FN, sensitivity = sensitivity, specificity = specificity)
 ```
 
-### 5.2 Reflection {.unnumbered}
+### 10.2 Reflection {.unnumbered}
 
-In 3 to 5 sentences:
 
 - Which error type (FP or FN) would you expect to be more costly for Lloyd’s in a real risk context?
 - How would that change how you choose a cutoff?
