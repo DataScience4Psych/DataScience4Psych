@@ -89,8 +89,18 @@ The data already looks to be organized in a data frame! rebird allows us to read
 ```{r eval = FALSE,error=TRUE,include=TRUE}
 ebirdkey <- "SECRET API KEY"
 ```
-```{r message=FALSE, warning=FALSE, include=FALSE}
-ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+```{r message=FALSE, warning=FALSE, include=FALSE, error=TRUE}
+
+
+if(exists("admin/secrets/ebird_api_key.txt")){
+  ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+} else {
+  ebirdkey <- Sys.getenv("EBIRD_API_KEY")
+}
+
+if (is.null(ebirdkey) || ebirdkey == "") {
+  warning("No eBird API key found. Please set your API key in 'admin/secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
+}
 ```
 
 ```{r eval = TRUE,error=TRUE, cache=TRUE}
@@ -121,7 +131,7 @@ frenchbirds %>%
 
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
-```{r eval = TRUE,cache=TRUE}
+```{r eval = TRUE,error=TRUE,cache=TRUE}
 eagle <- ebirdgeo(
   species = "baleag",
   lat = 42, lng = -76, key = ebirdkey
@@ -157,7 +167,11 @@ To do the last step, we could run this line in R...
 
 ```r
 options(geonamesUsername="my_user_name")
+```
 
+```{r include=FALSE,error=TRUE}
+geonamesUsername <- Sys.getenv("GEONAMES_USERNAME")
+options(geonamesUsername=geonamesUsername)
 ```
 
 ...but this is insecure. We don't want to risk committing this line and pushing it to our public GitHub page!
@@ -196,7 +210,7 @@ This `countryInfo` dataset is very helpful for accessing the rest of the data be
 
 What are the cities of France?
 
-```{r eval = TRUE,cache=TRUE}
+```{r eval = TRUE,cache=TRUE,error=TRUE}
 francedata <- countryInfo %>%
   filter(countryName == "France")
 ```
@@ -255,7 +269,7 @@ gender("Kelsey", years = 1940)
 
 As you can see, the probability of a name belonging to a specific gender can change over time.
 
-```{r plot, cache=TRUE}
+```{r plot, cache=TRUE, error=TRUE}
 df <- gender("Kelsey")
 
 years <- c(df$year_min:df$year_max)
@@ -278,12 +292,12 @@ df %>%
 
 In contrast, the name Mason has been more consistently male.
 
-```{r,error=TRUE, cache=TRUE}
+```{r,error=TRUE, cache=TRUE,error=TRUE}
 gender("Mason")
 gender("Mason", years = 1940)
 ```
 
-```{r plotMason, cache=TRUE}
+```{r plotMason, cache=TRUE,error=TRUE}
 mason <- gender("Mason")
 years <- c(mason$year_min:mason$year_max)
 
@@ -309,7 +323,7 @@ df %>%
 
 And when we compare the two names, we see that Kelsey has changed a lot more over time than Mason.
 
-```{r plotCompare, cache=TRUE}
+```{r plotCompare, cache=TRUE,error=TRUE}
 df %>%
   filter(year_min == year_max) %>%
   ggplot(aes(year_min, proportion_male)) +

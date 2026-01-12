@@ -1,0 +1,104 @@
+name: Build and Deploy Bookdown
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.Rmd'
+      - '**.yml'
+      - '**.yaml'
+      - 'DESCRIPTION'
+      - '.github/workflows/bookdown.yml'
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for pushing to gh-pages branch
+      pages: write     # Required for GitHub Pages deployment
+      id-token: write  # Required for GitHub Pages deployment
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install R dependencies
+        run: |
+          install.packages('remotes')  # Ensure the remotes package is installed
+          install.packages("bookdown")
+          remotes::install_github('gadenbuie/tweetrmd')  # Install tweetrmd from GitHub
+          install.packages("BiocManager")
+          BiocManager::install("Biobase")
+          BiocManager::install("SpikeInSubset")
+          install.packages("p3d", repos = "http://R-Forge.R-project.org")
+          remotes::install_github("smasongarrison/spida2",ref="patch-1")
+          remotes::install_github("rstudio-education/dsbox")
+          remotes::install_github("hadley/emo")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+
+      - name: Build book
+        env:
+          EBIRD_API_KEY: ${{ secrets.EBIRD_API_KEY }}
+          GEONAMES_USERNAME: ${{ secrets.GEONAMES_USERNAME}}
+          OMBD_API_KEY: ${{ secrets.OMBD_API_KEY}}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY}}
+        run: |
+          bookdown::render_book("index.Rmd", output_format = "bookdown::gitbook", clean = TRUE)
+          list.files("docs", recursive = TRUE)
+        # rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')
+        shell: Rscript {0}
+
+      - name: Prepare deployment
+        run: |
+          touch docs/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: website
+          force_orphan: true

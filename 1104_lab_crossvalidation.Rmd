@@ -1,0 +1,851 @@
+# Lab: Cross Validation in Action {#lab11}
+
+## Don’t Judge the Ship After It Sinks {.unnumbered}
+
+We’ve been hired by Lloyd’s of London to help quantify risk in maritime travel. After the Titanic disaster in 1912 and the [claims that followed]((https://www.lloyds.com/titanic)), Lloyd’s wants models that can predict survival outcomes using passenger information.
+
+
+In this lab, you will build classification models for Titanic survival and learn why apparent accuracy can be misleading. You’ll then evaluate performance more honestly using data splitting and cross validation.
+
+## Learning goals {.unnumbered}
+
+- Fit and interpret logistic regression classifiers for binary outcomes in R.
+- Compute predicted probabilities, convert them into class predictions, and calculate accuracy.
+- Explain why apparent (in-sample) accuracy is optimistic.
+- Evaluate models using held-out data and implement k-fold cross validation.
+
+```{r include=FALSE}
+
+library(knitr)
+library(titanic)
+library(readxl)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE, # for regression output
+  digits = 2
+)
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+
+## Getting started and warming up {.unnumbered}
+
+### Packages {.unnumbered}
+
+We will use tidyverse for data manipulation and titanic for data. You will also load readxl to import the Titanic3 file (provided in your project).
+
+```{r eval = FALSE}
+library(tidyverse)
+library(titanic)
+library(readxl)
+```
+
+<!-- 
+### Housekeeping
+
+#### Git configuration / password caching
+
+Configure your Git user name and email. If you cannot remember the instructions, refer to an earlier lab. Also remember that you can cache your password for a limited amount of time.
+
+#### Project name
+
+Update the name of your project to match the lab's title.
+
+-->
+
+## Warm up {.unnumbered}
+
+Before we introduce the data, let's warm up with some simple exercises.
+
+### YAML {.unnumbered}
+
+Open the R Markdown (Rmd) file in your project, change the author name to your name, and knit the document.
+
+### Commiting and pushing changes {.unnumbered}
+
+- Go to the **Git** pane in your RStudio.
+- View the **Diff** and confirm that you are happy with the changes.
+- Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
+- Click on **Push**. This will prompt a dialogue box where you first need to enter your user name, and then your password.
+
+## The data {.unnumbered}
+
+We will work with:
+
+- `titanic_train` and `titanic_test` from the `titanic` package (a convenient train/test split often used in Kaggle contexts).
+
+- `titanic3` loaded from data/titanic3.xls, which includes additional fields. Originally from [here](https://www.kaggle.com/datasets/vinicius150987/titanic3)
+
+
+
+```{r}
+
+titanic3 <- read_excel("data/titanic3.xls", 
+    col_types = c("numeric", "numeric", "text", 
+        "text", "numeric", "numeric", "numeric", 
+        "text", "numeric", "text", "text", 
+        "text", "text", "text")) 
+  
+
+data("titanic_train")
+data("titanic_test")
+```
+
+
+Before modeling, we will do one small cleanup: standardize column names to lowercase for titanic3, and ensure survived is numeric (0/1) where needed.
+
+```{r}
+names(titanic3) <- names(titanic3) %>% tolower()
+titanic3 <- titanic3 %>%
+mutate(survived = as.numeric(survived))
+```
+
+
+
+
+
+## Exercises {.unnumbered}
+
+### Apparent accuracy {.unnumbered}
+
+Before we talk about cross validation, we need to see the problem it is designed to fix.
+
+Suppose we fit a model and then immediately ask: “How well does this model predict the data?”
+If we use the same data to fit the model and to evaluate it, we are letting the model see the answers ahead of time.
+
+Let’s do that on purpose.
+
+1. Fit a logistic regression predicting survival from passenger sex and class.
+Save the model as `m_apparent`.
+
+```{r}
+m_apparent <- glm(
+  survived ~ sex + pclass,
+  data = titanic3,
+  family = binomial
+)
+
+
+summary(m_apparent)
+
+```
+
+This model has access to every passenger and the final outcome. It is not being asked to predict the future. It is being asked to summarize the past.
+
+Now we use the model to generate predicted survival probabilities for every passenger.
+
+
+```{r}
+p_apparent <- predict(m_apparent, type = "response")
+
+
+```
+
+Each probability represents how confident the model is that a passenger survived.
+
+To turn probabilities into decisions, we need a rule. We’ll use a cutoff of 0.5.
+
+```{r}
+yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
+```
+
+
+Now we compute the model’s accuracy.
+
+```{r}
+
+acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
+
+acc_apparent
+```
+At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can.
+
+Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.
+
+
+## Holding passengers back {.unnumbered}
+
+To get a more honest answer, we need to pretend that some passengers are unknown.
+
+We’ll do this by splitting the data into two groups:
+   - a training set, used to fit the model
+   - a test set, used only for evaluation
+   
+Conveniently, the `titanic` package already provides such a split.
+
+```{r}
+
+titanic_train <- titanic_train %>%
+  mutate(survived = as.numeric(survived))
+
+titanic_test <- titanic_test %>% 
+  mutate(survived = as.numeric(survived))
+
+```
+
+
+Now we fit the same model as before, but only on the training data.
+
+```{r exercise2.2, error=TRUE}
+m_split <- glm(
+  Survived ~ Sex + Pclass,
+  data = titanic_train,
+  family = binomial
+)
+
+summary(m_split)
+
+
+p_split <- predict(m_split, type = "response")
+
+
+yhat_split <- ifelse(p_split > 0.5, 1, 0)
+
+acc_split <- mean(yhat_split == titanic_train$Survived)
+acc_split
+```
+
+```{r exercise2.2solution, include=FALSE, echo=FALSE, error=TRUE}
+m_split <- glm(
+  Survived ~ Sex + Pclass,
+  data = titanic_train,
+  family = binomial
+)
+
+summary(m_split)
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise2.2solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 2.3 Training accuracy {.unnumbered}
+
+```{r exercise2.3, error=TRUE}
+p_train <- predict(___, type = ___)
+yhat_train <- ifelse(___ > ___, ___, ___)
+
+acc_train <- mean(___ == ___, na.rm = TRUE)
+acc_train
+```
+
+```{r exercise2.3solution, include=FALSE, echo=FALSE, error=TRUE}
+p_train <- predict(m_split, type = "response")
+yhat_train <- ifelse(p_train > 0.5, 1, 0)
+
+acc_train <- mean(yhat_train == titanic_train$Survived, na.rm = TRUE)
+acc_train
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise2.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+
+### 2.4 Test accuracy {.unnumbered}
+
+We evaluate this model on passengers it has never seen, using `titanic_test`.
+
+```{r exercise2.4, error=TRUE}
+p_test <- predict(___, newdata = ___, type = ___)
+yhat_test <- ifelse(___ > ___, ___, ___)
+
+acc_test <- mean(___ == ___, na.rm = TRUE)
+acc_test
+```
+
+```{r exercise2.4solution, include=FALSE, echo=FALSE, error=TRUE}
+p_test <- predict(m_split, newdata = titanic_test, type = "response")
+yhat_test <- ifelse(p_test > 0.5, 1, 0)
+
+acc_test <- mean(yhat_test == titanic_test$Survived, na.rm = TRUE)
+acc_test
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise2.4solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 2.5 Reflection {.unnumbered}
+
+Answer in complete sentences:
+
+1. Which is larger, `acc_train` or `acc_test`? Why is that the typical pattern?
+2. Which estimate is closer to what Lloyd’s actually needs?
+3. If `acc_test` happened to be higher than `acc_train`, would that invalidate the logic of holdout testing? Explain.
+
+## Exercise 3: Cross validation across timelines {.unnumbered}
+
+A single split is a single alternate timeline. Maybe your held-out passengers were unusually predictable, maybe unusually hard.
+
+Cross validation reduces dependence on one split by repeating the train/test game across multiple partitions.
+
+### 3.1 Create folds {.unnumbered}
+
+Create `titanic_cv` by:
+
+- filtering to complete cases on `survived`, `sex`, and `pclass`,
+- setting a seed,
+- adding a `fold` variable with values 1 through 10.
+
+```{r exercise3.1, error=TRUE}
+set.seed(___)
+
+titanic_cv <- titanic3 %>%
+  filter(!is.na(___), !is.na(___), !is.na(___)) %>%
+  mutate(fold = sample(rep(___, length.out = n())))
+```
+
+```{r exercise3.1solution, include=FALSE, echo=FALSE, error=TRUE}
+set.seed(11)
+
+titanic_cv <- titanic3 %>%
+  filter(!is.na(survived), !is.na(sex), !is.na(pclass)) %>%
+  mutate(fold = sample(rep(1:10, length.out = n())))
+```
+
+<details>
+  <summary>Click for a hint</summary>
+Use `rep(1:10, length.out = n())` so folds are roughly equal-sized.
+</details>
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise3.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 3.2 Fit and evaluate 10 models {.unnumbered}
+
+Complete the loop so each fold is used as test exactly once, and store fold accuracies in `cv_results`.
+
+### 3.3 Summarize cross validation {.unnumbered}
+
+Compute mean, SD, min, and max of fold accuracy.
+
+```{r exercise3.3, error=TRUE}
+cv_mean <- mean(___)
+cv_sd   <- sd(___)
+cv_min  <- min(___)
+cv_max  <- max(___)
+
+c(cv_mean = cv_mean, cv_sd = cv_sd, cv_min = cv_min, cv_max = cv_max)
+```
+
+```{r exercise3.3solution, include=FALSE, echo=FALSE, error=TRUE}
+cv_mean <- mean(cv_results$accuracy)
+cv_sd   <- sd(cv_results$accuracy)
+cv_min  <- min(cv_results$accuracy)
+cv_max  <- max(cv_results$accuracy)
+
+c(cv_mean = cv_mean, cv_sd = cv_sd, cv_min = cv_min, cv_max = cv_max)
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise3.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 3.4 Reflection {.unnumbered}
+
+
+1. Why is `cv_mean` usually lower than `acc_apparent`?
+2. What does `cv_sd` tell you that `cv_mean` does not?
+3. If Lloyd’s demanded a single performance estimate, would you report `acc_test` (Exercise 2) or `cv_mean` (Exercise 3)? Defend your choice.
+
+
+## Exercise 4: When the cutoff is a policy decision {.unnumbered}
+
+A probability cutoff is not a law of nature. It is a decision.
+
+Lloyd’s might treat “predict survival” as a proxy for “low risk,” but different cutoffs change what counts as low risk. In this exercise you will examine how accuracy changes as the cutoff changes.
+
+### 4.1 Evaluate multiple cutoffs on the test set {.unnumbered}
+
+Using p_test from Exercise 2, compute test accuracy for the following cutoffs: 0.3, 0.5, 0.7.
+
+Create a data frame called cutoff_results with columns cutoff and accuracy.
+
+```{r exercise4.1, error=TRUE}
+cutoffs <- c(0.3, 0.5, 0.7)
+
+cutoff_results <- data.frame(
+  cutoff = cutoffs,
+  accuracy = NA_real_
+)
+
+for (i in seq_along(cutoffs)) {
+
+  c0 <- cutoffs[i]
+
+  yhat_c <- ifelse(___ > ___, ___, ___)
+  cutoff_results$accuracy[i] <- mean(___ == ___, na.rm = TRUE)
+
+}
+
+cutoff_results
+```
+
+```{r exercise4.1solution, include=FALSE, echo=FALSE, error=TRUE}
+cutoffs <- c(0.3, 0.5, 0.7)
+
+cutoff_results <- data.frame(
+  cutoff = cutoffs,
+  accuracy = NA_real_
+)
+
+for (i in seq_along(cutoffs)) {
+
+  c0 <- cutoffs[i]
+
+  yhat_c <- ifelse(p_test > c0, 1, 0)
+  cutoff_results$accuracy[i] <- mean(yhat_c == titanic_test$Survived, na.rm = TRUE)
+
+}
+
+cutoff_results
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise4.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 4.2 Reflection {.unnumbered}
+
+1. Which cutoff maximized accuracy here?
+2. Why might accuracy be a poor criterion for selecting a cutoff in underwriting?
+3. Name one alternative metric you would want if false positives and false negatives had different costs.
+
+
+## Stretch tasks (optional) {.unnumbered}
+
+These are optional, but they bring the lab closer to how real modeling work looks.
+
+### 5.1 Add one more predictor and re-run CV {.unnumbered}
+
+Pick one additional predictor from `titanic3` that you think should matter (for example, `age` or `fare`).
+
+- Fit `survived ~ sex + pclass + <your variable>`.
+- Run 10-fold CV again.
+- Compare `cv_mean` and `cv_sd` to the baseline model.
+
+**Important:** decide how you will handle missing values for your added predictor (listwise deletion is allowed here; we will treat missingness more carefully in the follow-up lab).
+
+### 5.2 Competing models {.unnumbered}
+
+Fit and compare at least two models using CV:
+
+- Model A: `sex + pclass`
+- Model B: `sex + pclass + <two more predictors>`
+
+Report which model has higher `cv_mean`. If the difference is small, argue which one you would recommend to Lloyd’s, considering simplicity vs performance.
+
+### 5.3 Stability thought experiment {.unnumbered}
+
+Repeat 10-fold CV but change the seed (try three different seeds). Does `cv_mean` change much? Does `cv_sd` change much?
+
+Write 3 to 5 sentences interpreting what you see.
+
+# Super Stretch goals {.unnumbered}
+
+## Lloyd’s Actually Has to Use This Model {.unnumbered}
+
+In the previous lab, we evaluated a simple Titanic model using holdout testing and k-fold cross validation. That lab began with a deliberately constrained model (`sex` and `pclass`) so you could focus on **evaluation** without getting lost in feature engineering.
+
+Now we do the part Lloyd’s actually cares about: building a model that uses more information, and doing so in a way that does not quietly sabotage evaluation.
+
+This lab is about the uncomfortable truth that modeling choices are evaluation choices:
+
+- If you add predictors with missing data, you change the population your model is trained and tested on.
+- If you impute missing values using the full dataset, you leak information across folds.
+- If you select a cutoff to maximize accuracy, you are making a policy decision without naming it.
+
+You will build richer models, compare them using cross validation, and then stress-test the evaluation pipeline itself.
+
+## Learning goals {.unnumbered}
+
+- Compare multiple candidate models using k-fold cross validation.
+- Handle missing data with listwise deletion and simple imputation.
+- Avoid information leakage by imputing *within folds*.
+- Evaluate classifiers beyond accuracy (confusion matrices, sensitivity/specificity).
+- Reason about performance vs stability when recommending a model.
+
+
+
+
+
+## Exercises {.unnumbered}
+
+## Exercise 6: Candidate models {.unnumbered}
+
+Lloyd’s will not price risk using only sex and class. Your job is to propose reasonable candidate models and compare them using the same evaluation method.
+
+### 6.1 Choose candidate predictors {.unnumbered}
+
+Pick **two** additional predictors from this list:
+
+- `age`
+- `fare`
+- `sibsp`
+- `parch`
+
+Write down, in 2 to 3 sentences, why you think each predictor should matter for survival.
+
+### 6.2 Define candidate formulas {.unnumbered}
+
+Create two model formulas:
+
+- Baseline: `survived ~ sex + pclass`
+- Expanded: `survived ~ sex + pclass + <two predictors you chose>`
+
+Store them as `f_base` and `f_expanded`.
+
+```{r exercise6.2, error=TRUE}
+f_base <- survived ~ ___ + ___
+f_expanded <- survived ~ ___ + ___ + ___ + ___
+```
+
+```{r exercise6.2solution, include=FALSE, echo=FALSE, error=TRUE}
+f_base <- survived ~ sex + pclass
+f_expanded <- survived ~ sex + pclass + age + fare
+```
+
+<details>
+  <summary>Click for a solution example</summary>
+```{r ref.label = "exercise1.2solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+
+
+## Exercise 7: Cross validation comparison (listwise deletion) {.unnumbered}
+
+We will start with the simplest missing-data strategy: **drop rows with missing values** in any variable used by the model.
+
+This is not always the best approach, but it is transparent.
+
+### 2.1 Create a CV dataset for both models {.unnumbered}
+
+Create `cv_df` that keeps only rows with non-missing values for all variables needed in `f_expanded`.
+
+```{r exercise7.1, error=TRUE}
+cv_df <- titanic3 %>%
+  filter(!is.na(survived)) %>%
+  filter(!is.na(___)) %>%
+  filter(!is.na(___)) %>%
+  filter(!is.na(___)) %>%
+  filter(!is.na(___))
+```
+
+```{r exercise7.1solution, include=FALSE, echo=FALSE, error=TRUE}
+cv_df <- titanic3 %>%
+  filter(!is.na(survived)) %>%
+  filter(!is.na(sex)) %>%
+  filter(!is.na(pclass)) %>%
+  filter(!is.na(age)) %>%
+  filter(!is.na(fare))
+```
+
+<details>
+  <summary>Click for a solution example</summary>
+```{r ref.label = "exercise7.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 7.2 Create folds {.unnumbered}
+
+Assign each row to one of 10 folds.
+
+```{r exercise7.2, error=TRUE}
+set.seed(___)
+
+cv_df <- cv_df %>%
+  mutate(fold = sample(rep(___, length.out = n())))
+```
+
+```{r exercise7.2solution, include=FALSE, echo=FALSE, error=TRUE}
+set.seed(21)
+
+cv_df <- cv_df %>%
+  mutate(fold = sample(rep(1:10, length.out = n())))
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise7.2solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 2.3 Write a function to compute CV accuracy {.unnumbered}
+
+Complete the function below so it returns a data frame with fold accuracies for a given formula.
+
+```{r exercise7.3, error=TRUE}
+cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
+
+  out <- data.frame(fold = sort(unique(df$fold)), accuracy = NA_real_)
+
+  for (j in out$fold) {
+
+    train_j <- df %>% filter(fold != ___)
+    test_j  <- df %>% filter(fold == ___)
+
+    m_j <- glm(
+      formula = ___,
+      data = ___,
+      family = ___
+    )
+
+    p_j <- predict(m_j, newdata = ___, type = ___)
+    yhat_j <- ifelse(___ > ___, ___, ___)
+
+    out$accuracy[out$fold == j] <- mean(___ == ___, na.rm = TRUE)
+  }
+
+  out
+}
+```
+
+```{r exercise7.3solution, include=FALSE, echo=FALSE, error=TRUE}
+cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
+
+  out <- data.frame(fold = sort(unique(df$fold)), accuracy = NA_real_)
+
+  for (j in out$fold) {
+
+    train_j <- df %>% filter(fold != j)
+    test_j  <- df %>% filter(fold == j)
+
+    m_j <- glm(
+      formula = formula,
+      data = train_j,
+      family = binomial
+    )
+
+    p_j <- predict(m_j, newdata = test_j, type = "response")
+    yhat_j <- ifelse(p_j > cutoff, 1, 0)
+
+    out$accuracy[out$fold == j] <- mean(yhat_j == test_j$survived, na.rm = TRUE)
+  }
+
+  out
+}
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise7.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 7.4 Compare models {.unnumbered}
+
+Use `cv_glm_accuracy()` to compute CV results for both formulas. Compute mean and SD of accuracy for each.
+
+```{r exercise7.4, error=TRUE}
+cv_base <- cv_glm_accuracy(cv_df, formula = ___)
+cv_exp  <- cv_glm_accuracy(cv_df, formula = ___)
+
+summary_table <- data.frame(
+  model = c("base", "expanded"),
+  mean_acc = c(mean(___), mean(___)),
+  sd_acc   = c(sd(___), sd(___))
+)
+
+summary_table
+```
+
+```{r exercise7.4solution, include=FALSE, echo=FALSE, error=TRUE}
+cv_base <- cv_glm_accuracy(cv_df, formula = f_base)
+cv_exp  <- cv_glm_accuracy(cv_df, formula = f_expanded)
+
+summary_table <- data.frame(
+  model = c("base", "expanded"),
+  mean_acc = c(mean(cv_base$accuracy), mean(cv_exp$accuracy)),
+  sd_acc   = c(sd(cv_base$accuracy), sd(cv_exp$accuracy))
+)
+
+summary_table
+```
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise7.4solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 7.5 Reflection {.unnumbered}
+
+1. Which model has higher mean CV accuracy?
+2. Which model has higher variability across folds?
+3. If the accuracy improvement is small but the expanded model is more variable, how would you advise Lloyd’s?
+
+
+## Exercise 8: Missingness is a modeling decision {.unnumbered}
+
+Listwise deletion changes your population: you are now modeling a subset of passengers with complete records on your chosen predictors.
+
+### 8.1 Quantify the missingness impact {.unnumbered}
+
+Compute the number of rows in:
+
+- the original `titanic3` with non-missing `survived`
+- `cv_df`
+
+Report the proportion retained.
+
+```{r exercise8.1, error=TRUE}
+n_all <- sum(!is.na(titanic3$survived))
+n_kept <- nrow(cv_df)
+prop_kept <- n_kept / n_all
+
+c(n_all = n_all, n_kept = n_kept, prop_kept = prop_kept)
+```
+
+### 8.2 Reflection {.unnumbered}
+
+- What kinds of passengers might be disproportionately removed by listwise deletion when you include `age`?
+- Why does this matter for Lloyd’s, even if accuracy improves?
+
+
+## Exercise 9: Simple imputation without leakage {.unnumbered}
+
+Now you will use a very simple imputation strategy for a numeric predictor:
+
+- Replace missing values with the **training-fold mean** (not the overall mean).
+
+This is the smallest step toward preventing leakage: the test fold should not influence how you fill in missing values.
+
+### 9.1 Implement within-fold mean imputation for one variable {.unnumbered}
+
+Choose one numeric predictor you used (for example, `age`). Complete the loop to:
+
+- compute the mean of that variable in `train_j` (excluding NAs),
+- fill missing values in both `train_j` and `test_j` using **that training mean**,
+- fit the expanded model and compute fold accuracy.
+
+Store results in `cv_imp`.
+
+```{r exercise9.1, error=TRUE}
+cv_imp <- data.frame(fold = sort(unique(cv_df$fold)), accuracy = NA_real_)
+
+for (j in cv_imp$fold) {
+
+  train_j <- cv_df %>% filter(fold != ___)
+  test_j  <- cv_df %>% filter(fold == ___)
+
+  mu <- mean(train_j$___, na.rm = TRUE)
+
+  train_j$___[is.na(train_j$___)] <- ___
+  test_j$___[is.na(test_j$___)] <- ___
+
+  m_j <- glm(
+    formula = ___,
+    data = ___,
+    family = ___
+  )
+
+  p_j <- predict(m_j, newdata = ___, type = ___)
+  yhat_j <- ifelse(___ > ___, ___, ___)
+
+  cv_imp$accuracy[cv_imp$fold == j] <- mean(___ == ___, na.rm = TRUE)
+}
+
+c(mean = mean(cv_imp$accuracy), sd = sd(cv_imp$accuracy))
+```
+
+```{r exercise9.1solution, include=FALSE, echo=FALSE, error=TRUE}
+cv_imp <- data.frame(fold = sort(unique(cv_df$fold)), accuracy = NA_real_)
+
+for (j in cv_imp$fold) {
+
+  train_j <- cv_df %>% filter(fold != j)
+  test_j  <- cv_df %>% filter(fold == j)
+
+  mu <- mean(train_j$age, na.rm = TRUE)
+
+  train_j$age[is.na(train_j$age)] <- mu
+  test_j$age[is.na(test_j$age)] <- mu
+
+  m_j <- glm(
+    formula = f_expanded,
+    data = train_j,
+    family = binomial
+  )
+
+  p_j <- predict(m_j, newdata = test_j, type = "response")
+  yhat_j <- ifelse(p_j > 0.5, 1, 0)
+
+  cv_imp$accuracy[cv_imp$fold == j] <- mean(yhat_j == test_j$survived, na.rm = TRUE)
+}
+
+c(mean = mean(cv_imp$accuracy), sd = sd(cv_imp$accuracy))
+```
+
+<details>
+  <summary>Click for a solution example</summary>
+```{r ref.label = "exercise9.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
+
+### 9.2 Reflection {.unnumbered}
+
+1. Why is imputing using the overall mean (computed on the full dataset) a form of leakage?
+2. Did within-fold imputation change mean CV accuracy compared to listwise deletion? Why might it?
+
+
+
+## Exercise 10: Beyond accuracy (confusion matrix) {.unnumbered}
+
+Accuracy treats all mistakes as equally bad. Lloyd’s rarely agrees.
+
+### 10.1 Compute confusion matrix elements on one fold {.unnumbered}
+
+Pick a single fold (for example, fold 1). Using your chosen model and cutoff 0.5:
+
+- compute TP, FP, TN, FN
+- compute sensitivity and specificity
+
+```{r exercise10.1, error=TRUE}
+# Choose a fold
+j <- 1
+
+train_j <- cv_df %>% filter(fold != j)
+test_j  <- cv_df %>% filter(fold == j)
+
+m_j <- glm(formula = f_expanded, data = train_j, family = binomial)
+p_j <- predict(m_j, newdata = test_j, type = "response")
+yhat_j <- ifelse(p_j > 0.5, 1, 0)
+y_j <- test_j$survived
+
+TP <- sum(yhat_j == 1 & y_j == 1, na.rm = TRUE)
+FP <- sum(yhat_j == 1 & y_j == 0, na.rm = TRUE)
+TN <- sum(yhat_j == 0 & y_j == 0, na.rm = TRUE)
+FN <- sum(yhat_j == 0 & y_j == 1, na.rm = TRUE)
+
+sensitivity <- TP / (TP + FN)
+specificity <- TN / (TN + FP)
+
+c(TP = TP, FP = FP, TN = TN, FN = FN, sensitivity = sensitivity, specificity = specificity)
+```
+
+### 10.2 Reflection {.unnumbered}
+
+
+- Which error type (FP or FN) would you expect to be more costly for Lloyd’s in a real risk context?
+- How would that change how you choose a cutoff?
+
+
+
+```{r links, child="admin/md/courselinks.md"}
+```

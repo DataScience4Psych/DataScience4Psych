@@ -65,15 +65,15 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 > **Recall:** Linear model is in the form $\hat{y} = b_0 + b_1 x$.
 
-4. Let's see if the apparent trend in the plot is something more than natural variation. Fit a linear model called `m_bty` to predict average professor evaluation `score` by average beauty rating (`bty_avg`). Based on the regression output, write the linear model.
+1. Let's see if the apparent trend in the plot is something more than natural variation. Fit a linear model called `m_bty` to predict average professor evaluation `score` by average beauty rating (`bty_avg`). Based on the regression output, write the linear model.
 
-5. Replot your visualization from Exercise 3, this time add a regression line in orange.  Turn off the default shading around the line. By default, the plot includes shading around the line—what does that shading represent? And speculate why I'm asking you to turn it off.
+2. Replot your visualization from Exercise 3, this time add a regression line in orange.  Turn off the default shading around the line. By default, the plot includes shading around the line—what does that shading represent? And speculate why I'm asking you to turn it off.
 
-6. What does the slope of the model tell you? Interpret it in the context of this data—what does it say about how evaluation scores change with beauty ratings?
+3. What does the slope of the model tell you? Interpret it in the context of this data—what does it say about how evaluation scores change with beauty ratings?
 
-7. What does the intercept represent in this model? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.
+4. What does the intercept represent in this model? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.
 
-8. What is the $R^2$ value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?
+5. What is the $R^2$ value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?
 
 ### Part 3: Linear regression with a categorical predictor {.unnumbered}
 
@@ -87,20 +87,67 @@ m_gen <- lm(score ~ gender, data = evals)
 tidy(m_gen)
 ```
 
-9. Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors?
+1. Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors?
 
-10. What is the equation of the line corresponding to male professors? What is it for female professors?
+2. What is the equation of the line corresponding to male professors? What is it for female professors?
 
-11. Fit a new linear model called `m_rank` to predict average professor evaluation `score` based on `rank` of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.
+3. Fit a new linear model called `m_rank` to predict average professor evaluation `score` based on `rank` of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.
 
-12. Create a new variable called `rank_relevel` where `"tenure track"` is the baseline level.
+4. Create a new variable called `rank_relevel` where `"tenure track"` is the baseline level.
 
-13. Fit a new linear model called `m_rank_relevel` to predict average professor evaluation `score` based on `rank_relevel` of the professor. This is the new (releveled) variable you created in the previous exercise. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+5. Fit a new linear model called `m_rank_relevel` to predict average professor evaluation `score` based on `rank_relevel` of the professor. This is the new (releveled) variable you created in the previous exercise. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
 
-14. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as
+6. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as
     `"no"` and labels `"tenure track"` and `"tenured"` faculty as `"yes"`.
   
-15. Fit a new linear model called `m_tenure_eligible` to predict average professor evaluation `score` based on `tenure_eligible`ness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+7. Fit a new linear model called `m_tenure_eligible` to predict average professor evaluation `score` based on `tenure_eligible`ness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+
+
+### Part 4: Multiple linear regression {.unnumbered}
+
+1. Fit a linear model (one you have fit before): `m_bty`, predicting average
+   professor evaluation `score` based on average beauty rating (`bty_avg`) only. Write the
+   linear model, and note the $R^2$ and the adjusted $R^2$.
+
+2. Fit a linear model (one you have fit before): `m_bty_gen`, predicting average
+   professor evaluation `score` based on average beauty rating (`bty_avg`) and `gender`.
+   Write the linear model, and note the $R^2$ and the adjusted $R^2$.
+
+3. Interpret the slope and intercept of `m_bty_gen` in context of the data.
+
+4. What percent of the variability in `score` is explained by the model `m_bty_gen`.
+
+5. What is the equation of the line corresponding to *just* male professors?
+
+6. For two professors who received the same beauty rating, which gender tends to have the higher course evaluation score?
+
+7. How does the relationship between beauty and evaluation score vary between male and female professors?
+
+8. How do the adjusted $R^2$ values of `m_bty_gen` and `m_bty` compare? What does this tell us about how useful `gender` is in explaining the variability in evaluation scores when we already have information on the beauty score of the professor.
+
+9. Compare the slopes of `bty_avg` under the two models (`m_bty` and `m_bty_gen`). Has the addition of `gender` to the model changed the parameter estimate (slope) for `bty_avg`?
+
+10. Create a new model called `m_bty_rank` with `gender` removed and `rank`  added in. Write the equation of the linear model and interpret the slopes and intercept in context of the data.
+
+### Part 3: The search for the best model {.unnumbered}
+
+Going forward, only consider the following variables as potential predictors: `rank`, `ethnicity`, `gender`, `language`, `age`, `cls_perc_eval`, `cls_did_eval`, `cls_students`, `cls_level`, `cls_profs`, `cls_credits`, `bty_avg`.
+
+1. Which variable, on its own, would you expect to be the worst predictor of evaluation scores? Why? *Hint:* Think about which variable would you expect to not have any association with the professor's score.
+
+2. Check your suspicions from the previous exercise. Include the model output for that variable in your response.
+
+3. Suppose you wanted to fit a full model with the variables listed above. If you are already going to include `cls_perc_eval` and `cls_students`, which variable should you not include as an additional predictor? Why?
+
+4. Fit a full model with all predictors listed above (except for the one you decided to exclude) in the previous question.
+
+5. Using backward-selection with adjusted R-squared as the selection criterion, determine the *best* model. You do not need to show all steps in your answer, just the output for the final model. Also, write out the linear model for predicting score based on the final model you settle on.
+
+6. Interpret the slopes of one numerical and one categorical predictor based on your final model.
+
+7. Based on your final model, describe the characteristics of a professor and course at University of Texas at Austin that would be associated with a high evaluation score.
+
+8. Would you be comfortable generalizing your conclusions to apply to professors generally (at any university)? Why or why not?
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
