@@ -67,6 +67,7 @@ jobs:
       - name: Install R dependencies
         run: |
           install.packages('remotes')  # Ensure the remotes package is installed
+          install.packages("bookdown")
           remotes::install_github('gadenbuie/tweetrmd')  # Install tweetrmd from GitHub
           install.packages("BiocManager")
           BiocManager::install("Biobase")
@@ -85,7 +86,9 @@ jobs:
           OMBD_API_KEY: ${{ secrets.OMBD_API_KEY}}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY}}
         run: |
-         rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')
+          bookdown::render_book("index.Rmd", output_format = "bookdown::gitbook", clean = TRUE)
+          list.files("docs", recursive = TRUE)
+        # rmarkdown::render_site(output_format = 'bookdown::gitbook', encoding = 'UTF-8')
         shell: Rscript {0}
 
       - name: Prepare deployment
@@ -97,5 +100,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
-          publish_branch: main
+          publish_branch: gh-pages
           force_orphan: true
