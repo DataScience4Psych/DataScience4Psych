@@ -89,8 +89,18 @@ The data already looks to be organized in a data frame! rebird allows us to read
 ```{r eval = FALSE,error=TRUE,include=TRUE}
 ebirdkey <- "SECRET API KEY"
 ```
-```{r message=FALSE, warning=FALSE, include=FALSE}
-ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+```{r message=FALSE, warning=FALSE, include=FALSE, error=TRUE}
+
+
+if(exists("admin/secrets/ebird_api_key.txt")){
+  ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+} else {
+  ebirdkey <- Sys.getenv("EBIRD_API_KEY")
+}
+
+if (is.null(ebirdkey) || ebirdkey == "") {
+  warning("No eBird API key found. Please set your API key in 'admin/secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
+}
 ```
 
 ```{r eval = TRUE,error=TRUE, cache=TRUE}
