@@ -100,21 +100,27 @@ embed_youtube_alt <- function(youtube_id) {
 }
 
 # Constants for reading time calculation
-BYTES_PER_WORD <- 10
 WORDS_PER_MINUTE <- 200
 
-# Function to calculate reading time from file path
-calculate_reading_time <- function(file_path, bytes_per_word = BYTES_PER_WORD, wpm = WORDS_PER_MINUTE) {
+# Function to count words in a file using system wc command
+count_words <- function(file_path) {
   if (!file.exists(file_path)) {
     warning(paste("File not found:", file_path))
     return(NA)
   }
-  bytes <- file.size(file_path)
-  if (is.na(bytes)) {
-    warning(paste("Unable to determine file size:", file_path))
+  # Use wc -w to count words
+  wc_output <- system(paste("wc -w", shQuote(file_path)), intern = TRUE)
+  # Extract the number from the output
+  words <- as.numeric(sub("^\\s*(\\d+).*", "\\1", wc_output))
+  return(words)
+}
+
+# Function to calculate reading time from file path
+calculate_reading_time <- function(file_path, wpm = WORDS_PER_MINUTE) {
+  words <- count_words(file_path)
+  if (is.na(words)) {
     return(NA)
   }
-  words <- bytes / bytes_per_word
   minutes <- words / wpm
   return(round(minutes))
 }
