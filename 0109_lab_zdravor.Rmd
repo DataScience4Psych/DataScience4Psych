@@ -1,15 +1,18 @@
-z# Zdravo R! {#lab01execercise}
+# Zdravo R! {#lab01execercise}
 
 ```{r include = FALSE}
 source("common.R")
 ```
 
-The 2nd part of the lab is called **Zdravo R**. Zdravo is the Slovenian word for "hello". This is the second half of the Hellow R lab. You should have just finished the first part of the lab (**Aloha R**), which was focused on getting you set up with R and RStudio. This part of the lab is focused on actually using R to do some data analysis.
+The 2nd part of the lab is called **Zdravo R**. Zdravo is the Slovenian word for "hello".
+This is the second half of the Hello R lab.
+You should have just finished the first part of the lab (**Aloha R**), which was focused on getting you set up with R and RStudio.
+This part of the lab is focused on actually using R to do some data analysis.
 
+## Packages {.unnumbered}
 
-## Packages  {-}
-
-In this lab, we will work with two packages: **datasauRus** and **tidyverse**. **datasauRus** contains the dataset we'll be using; **tidyverse** is a collection of packages for doing data analysis in a "tidy" way.
+In this lab, we will work with two packages: **datasauRus** and **tidyverse**.
+**datasauRus** contains the dataset we'll be using; **tidyverse** is a collection of packages for doing data analysis in a "tidy" way.
 
 Install these packages by running the following commands in the console.
 
@@ -20,7 +23,8 @@ install.packages("datasauRus")
 
 Now that the necessary packages are installed, you should be able to Knit your document and see the results.
 
-If you'd like to run your code in the Console as well you'll also need to load the packages there. To do so, run the following in the console.
+If you'd like to run your code in the Console as well you'll also need to load the packages there.
+To do so, run the following in the console.
 
 ```{r message=FALSE}
 library(tidyverse)
@@ -29,9 +33,10 @@ library(datasauRus)
 
 Note that the packages are also loaded with the same commands in your R Markdown document.
 
-## Data  {-}
+## Data {.unnumbered}
 
-> Fun fact: If it's confusing that the data frame is called `datasaurus_dozen` when it contains 13 datasets, you're not alone! Have you heard of a [baker's dozen](https://en.wikipedia.org/wiki/Dozen#Baker's_dozen)?
+> Fun fact: If it's confusing that the data frame is called `datasaurus_dozen` when it contains 13 datasets, you're not alone!
+> Have you heard of a [baker's dozen](https://en.wikipedia.org/wiki/Dozen#Baker's_dozen)?
 
 The data frame we will be working with today is called `datasaurus_dozen` and it's in the `datasauRus` package.
 Actually, this single data frame contains 13 datasets, designed to show us why data visualization is important and how summary statistics alone can be misleading.
@@ -41,11 +46,12 @@ To find out more about the dataset, type the following in your Console: `?datasa
 A question mark (or two, depending on the version) before the name of an object will always bring up its help file.
 This command must be run in the Console.
 
-## Exercises  {-}
+## Exercises {.unnumbered}
 
-1. Based on the help file, how many rows and how many columns does the `datasaurus_dozen` file have? What are the variables included in the data frame? Add your responses to your lab report.
+1.  Based on the help file, how many rows and how many columns does the `datasaurus_dozen` file have? What are the variables included in the data frame? Add your responses to your lab report.
 
-Let's take a look at what these datasets are. To do so we can make a *frequency table* of the dataset variable:
+Let's take a look at what these datasets are.
+To do so we can make a *frequency table* of the dataset variable:
 
 ```{r}
 data("datasaurus_dozen")
@@ -55,7 +61,9 @@ datasaurus_dozen %>%
   print()
 ```
 
-> Fun fact: Matejka, Justin, and George Fitzmaurice. "Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing." Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems. ACM, 2017.
+> Fun fact: Matejka, Justin, and George Fitzmaurice.
+> "Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing." Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems.
+> ACM, 2017.
 
 The original Datasaurus (`dino`) was created by Alberto Cairo in [this great blog post](http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html).
 The other Dozen were generated using simulated annealing and the process is described in the paper *Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics* through Simulated Annealing by Justin Matejka and George Fitzmaurice.
@@ -63,13 +71,14 @@ In the paper, the authors simulate a variety of datasets that have the same summ
 
 🧶 ✅ ⬆️ *Knit, commit, and push your changes to GitHub with the commit message "Added answer for Ex 1". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-2. Plot `y` vs. `x` for the `dino` dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset.
+2.  Plot `y` vs. `x` for the `dino` dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset.
 
 Below is the code you will need to complete this exercise.
 
 Basically, the answer is already given, but you need to include relevant bits in your Rmd document and successfully knit it and view the results.
 
-Start with the `datasaurus_dozen` and pipe it into the `filter` function to filter for observations where `dataset == "dino"`. Store the resulting filtered data frame as a new data frame called `dino_data`.
+Start with the `datasaurus_dozen` and pipe it into the `filter` function to filter for observations where `dataset == "dino"`.
+Store the resulting filtered data frame as a new data frame called `dino_data`.
 
 ```{r}
 dino_data <- datasaurus_dozen %>%
@@ -84,7 +93,8 @@ So here, we're saying `filter` the `datasaurus_dozen` data frame for observation
 Second, the assignment operator: `<-`, assigns the name `dino_data` to the filtered data frame.
 
 Next, we need to visualize these data.
-We will use the `ggplot` function for this. Its first argument is the data you're visualizing.
+We will use the `ggplot` function for this.
+Its first argument is the data you're visualizing.
 Next we define the `aes`thetic mappings.
 In other words, the columns of the data that get mapped to certain aesthetic features of the plot, e.g. the `x` axis will represent the variable called `x` and the `y` axis will represent the variable called `y`.
 Then, we add another layer to this plot where we define which `geom`etric shapes we want to use to represent each observation in the data.
@@ -119,7 +129,7 @@ dino_data %>%
 
 🧶 ✅ ⬆️ *Knit, commit, and push your changes to GitHub with the commit message "Added answer for Ex 2". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-3. Plot `y` vs. `x` for the `star` dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset. How does this value compare to the `r` of `dino`?
+3.  Plot `y` vs. `x` for the `star` dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset. How does this value compare to the `r` of `dino`?
 
 ```{r, exercise3}
 # code goes here
@@ -127,11 +137,11 @@ dino_data %>%
 
 🧶 ✅ ⬆️ *This is another good place to pause, knit, commit changes with the commit message "Added answer for Ex 3", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-4. Plot `y` vs. `x` for the `circle` dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset. How does this value compare to the `r` of `dino`?
+4.  Plot `y` vs. `x` for the `circle` dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset. How does this value compare to the `r` of `dino`?
 
 🧶 ✅ ⬆️ *You should pause again, commit changes with the commit message "Added answer for Ex 4", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
-5. Finally, let's plot all datasets at once. In order to do this, we will make use of faceting.
+5.  Finally, let's plot all datasets at once. In order to do this, we will make use of faceting.
 
 > Hint: Facet by the dataset variable, placing the plots in a 3 column grid.
 
@@ -157,7 +167,7 @@ You're done with the data analysis exercises, but I'd like you to do two more th
 knitr::include_graphics("img/fig-resize-global.png")
 ```
 
-* **Resize your figures:**
+-   **Resize your figures:**
 
 Click on the gear icon near the top of the R Markdown document, and select "Output Options..." in the dropdown menu.
 In the pop up dialog box, go to the Figures tab and change the height and width of the figures, and hit OK when done.
@@ -178,32 +188,36 @@ You can change them by defining different values directly in your R Markdown doc
 knitr::include_graphics("img/theme-highlight.png")
 ```
 
-* **Change the look of your report:**
+-   **Change the look of your report:**
 
 Once again, click on the gear icon in on top of the R Markdown document, and select "Output Options..." in the dropdown menu.
 In the General tab of the pop up dialog box, try out different Syntax highlighting and theme options.
-Hit OK and knit your document to see how it looks. Play around with these until you're happy with the look.
+Hit OK and knit your document to see how it looks.
+Play around with these until you're happy with the look.
 
 <!-- markdownlint-disable -->
-<br>
-<!-- markdownlint-restore -->
 
-> Pro Tip: Not sure how to use emojis on your computer? Maybe a teammate can help?
+<br> <!-- markdownlint-restore -->
+
+> Pro Tip: Not sure how to use emojis on your computer?
+> Maybe a teammate can help?
 
 🧶 ✅ ⬆️ *Yay, you're done! Commit all remaining changes, use the commit message "Done with Lab 1!* 💪*", and push. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards. Before you wrap up the assignment, make sure all documents are updated on your GitHub repo.*
 
 ```{r links, child="admin/md/courselinks.md"}
 ```
 
+<details>
 
-<details> 
-  <summary>Click this text for Bonus Tips by Yoo Ri</summary>
-  Here are some helpful tips 😁
+<summary>Click this text for Bonus Tips by Yoo Ri</summary>
 
-  * filter() is for extracting rows
-  * group_by() is for grouping datasets by assigned column
-  * ungroup() cancels the grouping
-  * summarize()  is often used with group_by(). This function can print the output according to group_by().
-  * facet_grid(y~x,...) creates a grid with variable y as a row, variable x as a column  
-  * facet_wrap(x,... ) is useful when there is only one variable
-</details> 
+Here are some helpful tips 😁
+
+-   filter() is for extracting rows
+    -   group_by() is for grouping datasets by assigned column
+    -   ungroup() cancels the grouping
+    -   summarize() is often used with group_by(). This function can print the output according to group_by().
+    -   facet_grid(y\~x,...) creates a grid with variable y as a row, variable x as a column\
+    -   facet_wrap(x,... ) is useful when there is only one variable
+
+</details>
