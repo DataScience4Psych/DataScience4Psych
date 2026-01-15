@@ -1,5 +1,10 @@
 # Lab: Cross Validation in Action {#lab11}
 
+
+```{r include = FALSE}
+source("common.R")
+```
+
 ## Don’t Judge the Ship After It Sinks {.unnumbered}
 
 We’ve been hired by Lloyd’s of London to help quantify risk in maritime travel. After the Titanic disaster in 1912 and the [claims that followed]((https://www.lloyds.com/titanic)), Lloyd’s wants models that can predict survival outcomes using passenger information.
@@ -14,17 +19,20 @@ In this lab, you will build classification models for Titanic survival and learn
 - Explain why apparent (in-sample) accuracy is optimistic.
 - Evaluate models using held-out data and implement k-fold cross validation.
 
+
+
 ```{r include=FALSE}
 
 library(knitr)
 library(titanic)
 library(readxl)
 options(
-  htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE, # for regression output
   digits = 2
 )
-knitr::opts_chunk$set(eval = FALSE)
+#
+
+# knitr::opts_chunk$set(eval = FALSE)
 ```
 
 
@@ -93,15 +101,15 @@ data("titanic_test")
 ```
 
 
-Before modeling, we will do one small cleanup: standardize column names to lowercase for titanic3, and ensure survived is numeric (0/1) where needed.
+Before modeling, we will do one small cleanup: standardize column names to lowercase for titanic_test and titantic_train.
 
 ```{r}
 names(titanic3) <- names(titanic3) %>% tolower()
-titanic3 <- titanic3 %>%
-mutate(survived = as.numeric(survived))
+names(titanic_train) <- names(titanic_train) %>% tolower()
+names(titanic_test) <- names(titanic_test) %>% tolower()
+
+
 ```
-
-
 
 
 
@@ -139,7 +147,6 @@ Now we use the model to generate predicted survival probabilities for every pass
 ```{r}
 p_apparent <- predict(m_apparent, type = "response")
 
-
 ```
 
 Each probability represents how confident the model is that a passenger survived.
@@ -159,6 +166,7 @@ acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
 
 acc_apparent
 ```
+
 At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can.
 
 Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.
@@ -175,13 +183,7 @@ We’ll do this by splitting the data into two groups:
 Conveniently, the `titanic` package already provides such a split.
 
 ```{r}
-
-titanic_train <- titanic_train %>%
-  mutate(survived = as.numeric(survived))
-
-titanic_test <- titanic_test %>% 
-  mutate(survived = as.numeric(survived))
-
+titanic_test %>% glimpse()
 ```
 
 
@@ -224,7 +226,7 @@ summary(m_split)
 
 ### 2.3 Training accuracy {.unnumbered}
 
-```{r exercise2.3, error=TRUE}
+```{r exercise2.3, error=TRUE, eval=FALSE}
 p_train <- predict(___, type = ___)
 yhat_train <- ifelse(___ > ___, ___, ___)
 
@@ -251,7 +253,7 @@ acc_train
 
 We evaluate this model on passengers it has never seen, using `titanic_test`.
 
-```{r exercise2.4, error=TRUE}
+```{r exercise2.4, error=TRUE, eval=FALSE}
 p_test <- predict(___, newdata = ___, type = ___)
 yhat_test <- ifelse(___ > ___, ___, ___)
 
@@ -275,8 +277,6 @@ acc_test
 
 ### 2.5 Reflection {.unnumbered}
 
-Answer in complete sentences:
-
 1. Which is larger, `acc_train` or `acc_test`? Why is that the typical pattern?
 2. Which estimate is closer to what Lloyd’s actually needs?
 3. If `acc_test` happened to be higher than `acc_train`, would that invalidate the logic of holdout testing? Explain.
@@ -295,7 +295,7 @@ Create `titanic_cv` by:
 - setting a seed,
 - adding a `fold` variable with values 1 through 10.
 
-```{r exercise3.1, error=TRUE}
+```{r exercise3.1, error=TRUE, eval=FALSE}
 set.seed(___)
 
 titanic_cv <- titanic3 %>%
@@ -330,7 +330,7 @@ Complete the loop so each fold is used as test exactly once, and store fold accu
 
 Compute mean, SD, min, and max of fold accuracy.
 
-```{r exercise3.3, error=TRUE}
+```{r exercise3.3, error=TRUE, eval=FALSE}
 cv_mean <- mean(___)
 cv_sd   <- sd(___)
 cv_min  <- min(___)
@@ -370,11 +370,11 @@ Lloyd’s might treat “predict survival” as a proxy for “low risk,” but 
 
 ### 4.1 Evaluate multiple cutoffs on the test set {.unnumbered}
 
-Using p_test from Exercise 2, compute test accuracy for the following cutoffs: 0.3, 0.5, 0.7.
+Using p_test from an earlier step, compute test accuracy for the following cutoffs: 0.3, 0.5, 0.7.
 
 Create a data frame called cutoff_results with columns cutoff and accuracy.
 
-```{r exercise4.1, error=TRUE}
+```{r exercise4.1, error=TRUE, eval=FALSE}
 cutoffs <- c(0.3, 0.5, 0.7)
 
 cutoff_results <- data.frame(
@@ -492,14 +492,14 @@ Lloyd’s will not price risk using only sex and class. Your job is to propose r
 
 ### 6.1 Choose candidate predictors {.unnumbered}
 
-Pick **two** additional predictors from this list:
+Pick **two** additional predictors from the data set. (This can include a constructed variable that you create from existing variables.)
 
-- `age`
-- `fare`
-- `sibsp`
-- `parch`
+```{r}
+names(titanic3)
+```
 
-Write down, in 2 to 3 sentences, why you think each predictor should matter for survival.
+
+Why you think each predictor should matter for survival.
 
 ### 6.2 Define candidate formulas {.unnumbered}
 
@@ -510,7 +510,7 @@ Create two model formulas:
 
 Store them as `f_base` and `f_expanded`.
 
-```{r exercise6.2, error=TRUE}
+```{r exercise6.2, error=TRUE, eval=FALSE}
 f_base <- survived ~ ___ + ___
 f_expanded <- survived ~ ___ + ___ + ___ + ___
 ```
@@ -538,7 +538,7 @@ This is not always the best approach, but it is transparent.
 
 Create `cv_df` that keeps only rows with non-missing values for all variables needed in `f_expanded`.
 
-```{r exercise7.1, error=TRUE}
+```{r exercise7.1, error=TRUE, eval=FALSE}
 cv_df <- titanic3 %>%
   filter(!is.na(survived)) %>%
   filter(!is.na(___)) %>%
@@ -566,7 +566,7 @@ cv_df <- titanic3 %>%
 
 Assign each row to one of 10 folds.
 
-```{r exercise7.2, error=TRUE}
+```{r exercise7.2, error=TRUE, eval=FALSE}
 set.seed(___)
 
 cv_df <- cv_df %>%
