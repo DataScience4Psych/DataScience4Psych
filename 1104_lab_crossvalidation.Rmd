@@ -191,7 +191,7 @@ Now we fit the same model as before, but only on the training data.
 
 ```{r exercise2.2, error=TRUE}
 m_split <- glm(
-  Survived ~ Sex + Pclass,
+  survived ~ sex + pclass,
   data = titanic_train,
   family = binomial
 )
@@ -204,13 +204,13 @@ p_split <- predict(m_split, type = "response")
 
 yhat_split <- ifelse(p_split > 0.5, 1, 0)
 
-acc_split <- mean(yhat_split == titanic_train$Survived)
+acc_split <- mean(yhat_split == titanic_train$survived)
 acc_split
 ```
 
 ```{r exercise2.2solution, include=FALSE, echo=FALSE, error=TRUE}
 m_split <- glm(
-  Survived ~ Sex + Pclass,
+  survived ~ sex + pclass,
   data = titanic_train,
   family = binomial
 )
@@ -238,7 +238,7 @@ acc_train
 p_train <- predict(m_split, type = "response")
 yhat_train <- ifelse(p_train > 0.5, 1, 0)
 
-acc_train <- mean(yhat_train == titanic_train$Survived, na.rm = TRUE)
+acc_train <- mean(yhat_train == titanic_train$survived, na.rm = TRUE)
 acc_train
 ```
 
@@ -265,7 +265,7 @@ acc_test
 p_test <- predict(m_split, newdata = titanic_test, type = "response")
 yhat_test <- ifelse(p_test > 0.5, 1, 0)
 
-acc_test <- mean(yhat_test == titanic_test$Survived, na.rm = TRUE)
+acc_test <- mean(yhat_test == titanic_test$survived, na.rm = TRUE)
 acc_test
 ```
 
@@ -326,6 +326,26 @@ Use `rep(1:10, length.out = n())` so folds are roughly equal-sized.
 
 Complete the loop so each fold is used as test exactly once, and store fold accuracies in `cv_results`.
 
+```{r exercise3.2, error=TRUE, eval=FALSE}
+cv_results <- data.frame(fold = sort(unique(titanic_cv$fold)), accuracy = NA_real_)
+for (j in cv_results$fold) {
+
+  train_j <- titanic_cv %>% filter(fold != ___)
+  test_j  <- titanic_cv %>% filter(fold == ___)
+
+  m_j <- glm(
+    formula = ___,
+    data = ___,
+    family = ___
+  )
+
+  p_j <- predict(m_j, newdata = ___, type = ___)
+  yhat_j <- ifelse(___ > ___, ___, ___)
+
+  cv_results$accuracy[cv_results$fold == j] <- mean(___ == ___, na.rm = TRUE)
+}
+```
+
 ### 3.3 Summarize cross validation {.unnumbered}
 
 Compute mean, SD, min, and max of fold accuracy.
@@ -340,6 +360,9 @@ c(cv_mean = cv_mean, cv_sd = cv_sd, cv_min = cv_min, cv_max = cv_max)
 ```
 
 ```{r exercise3.3solution, include=FALSE, echo=FALSE, error=TRUE}
+
+cv_results <- data.frame(fold = sort(unique(titanic_cv$fold)), accuracy = NA_real_)
+
 cv_mean <- mean(cv_results$accuracy)
 cv_sd   <- sd(cv_results$accuracy)
 cv_min  <- min(cv_results$accuracy)
@@ -407,7 +430,7 @@ for (i in seq_along(cutoffs)) {
   c0 <- cutoffs[i]
 
   yhat_c <- ifelse(p_test > c0, 1, 0)
-  cutoff_results$accuracy[i] <- mean(yhat_c == titanic_test$Survived, na.rm = TRUE)
+  cutoff_results$accuracy[i] <- mean(yhat_c == titanic_test$survived, na.rm = TRUE)
 
 }
 
@@ -481,9 +504,6 @@ You will build richer models, compare them using cross validation, and then stre
 - Reason about performance vs stability when recommending a model.
 
 
-
-
-
 ## Exercises {.unnumbered}
 
 ## Exercise 6: Candidate models {.unnumbered}
@@ -499,7 +519,13 @@ names(titanic3)
 ```
 
 
-Why you think each predictor should matter for survival.
+Why do you think each predictor you selected should matter for survival?
+
+<
+```{r}
+titanic3 %>% mutate(title = str_extract(name, "(?<=, )[^.]+")) %>% count(title) %>% arrange(desc(n))
+
+```
 
 ### 6.2 Define candidate formulas {.unnumbered}
 
