@@ -7,6 +7,7 @@ source("common.R")
 <!--Original content: https://stat545.com/block009_dplyr-intro.html-->
 
 <!-- add me: https://allisonhorst.shinyapps.io/dplyr-learnr/ -->
+## What is dplyr?
 
 [dplyr](https://dplyr.tidyverse.org) is a package for data manipulation, developed by Hadley Wickham and Romain Francois. It is built to be fast, highly expressive, and open-minded about how your data is stored. It is installed as part of the [tidyverse](https://tidyverse.tidyverse.org) meta-package and, as a core package, it is among those loaded via `library(tidyverse)`.
 
@@ -99,12 +100,13 @@ Why is this approach a terrible idea?
 
 * It is not self-documenting. What is so special about rows 241 through 252?
 * It is fragile. This line of code will produce different results if someone changes the row order of `gapminder`, e.g. sorts the data earlier in the script.
+* It is hard to modify. What if you later decide you want data for Canada and the US? You have to rewrite the code.
   
 ```{r eval = FALSE}
 filter(gapminder, country == "Canada")
 ```
 
-This call explains itself and is fairly robust.
+This call explains itself and is fairly robust. Future you will thank present you.
 
 ## Meet the new pipe operator
 
@@ -165,6 +167,8 @@ and what a typical base R call would look like:
 ```{r end_dplyr}
 gapminder[gapminder$country == "Cambodia", c("year", "lifeExp")]
 ```
+
+One of these is clearly easier to read and write! And, with the pipe operator, you can write code in the order you think about the problem.
 
 ## Pure, predictable, pipeable
 
