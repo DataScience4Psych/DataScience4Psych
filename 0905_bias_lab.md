@@ -1,0 +1,250 @@
+# Lab: Ethics in Data Science {#lab09}
+
+## "With great power comes great responsibility": Exploring Algorithmic Bias {.unnumbered}
+
+
+
+> Note: This lab is in beta testing...
+
+Data scientists wield considerable power in today's algorithmic society. The models we build can determine who gets a loan, who gets hired, and even who goes to jail. As the famous quote (often attributed to Spider-Man) goes: "With great power comes great responsibility."  In this lab, we take up that challenge by analyzing algorithmic bias in a widely used criminal justice tool: the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) recidivism risk score.
+
+The COMPAS case has become central in both public reporting and academic study, particularly following a 2016 investigative report by ProPublica titled "[Machine Bias](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)". Analyzing the outcomes of over 7,000 people arrested in Broward County, Florida, ProPublica found that Black defendants were more likely to be misclassified as high risk, even when they did not go on to reoffend. The dataset, methods, and fairness concerns raised in that analysis are now commonly used as a teaching example in data science ethics.
+
+In this lab, we'll work with the same dataset ProPublica used and replicate parts of their [analysis]("https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm") to evaluate how the algorithm behaves. We'll also explore the sources of bias in the COMPAS algorithm and consider what changes could be made to create a fairer risk assessment tool.
+
+
+## Getting started {.unnumbered}
+
+Go to the course GitHub organization and locate the lab repo, which should be named something like `lab-09-ethics-algorithmic-bias`. Either Fork it or use the template. Then clone it in RStudio. First, open the R Markdown document `lab-09.Rmd` and Knit it. Make sure it compiles without errors. The output will be in the file markdown `.md` file with the same name.
+
+### Packages {.unnumbered}
+
+In this lab, we will use  **tidyverse** and **janitor** to clean and explore the data.
+
+
+
+
+``` r
+library(tidyverse)
+library(janitor)
+```
+
+
+### The data {.unnumbered}
+
+For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been preprocessed and mostly cleaned for you. I recommend using the `janitor` package to clean the column names.
+
+
+``` r
+# Load the COMPAS data
+compas <- read_csv("data/compas-scores-two-years.csv") %>%
+  clean_names() %>%
+  rename(
+    decile_score = decile_score_12,
+    priors_count = priors_count_15
+  )
+
+# Take a look at the data
+glimpse(compas)
+```
+
+Each observation in this dataset represents a defendant. Here are the key variables:
+
+- `id`: A unique identifier for each defendant
+- `name`: The defendant's name (anonymized)
+- `sex`: The defendant's sex (Female, Male)
+- `race`: The defendant's race (African-American, Caucasian, Hispanic, Other)
+- `age`: The defendant's age
+- `age_cat`: The defendant's age category (Less than 25, 25-45, Greater than 45)
+- `juv_fel_count`: Number of juvenile felonies
+- `juv_misd_count`: Number of juvenile misdemeanors
+- `juv_other_count`: Number of other juvenile offenses
+- `priors_count`: Number of prior offenses
+- `c_charge_degree`: Degree of the current charge (F = felony, M = misdemeanor)
+- `c_charge_desc`: Description of the current charge
+- `decile_score`: COMPAS risk score from 1-10 (higher = greater risk)
+- `score_text`: COMPAS score category (Low, Medium, High)
+- `v_decile_score`: COMPAS violent risk score from 1-10
+- `v_score_text`: COMPAS violent score category
+- `two_year_recid`: Whether the defendant recidivated within two years (1 = yes, 0 = no)
+- `is_recid`: Whether the defendant recidivated at all (1 = yes, 0 = no)
+
+
+## Exercises {.unnumbered}
+
+### Part 1: Exploring the data {.unnumbered}
+
+1. What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent? What are the variables?
+
+
+
+
+2. How many unique defendants are in the dataset? Is this the same as the number of rows? If not, why might there be a difference?
+
+
+
+3. Let's examine the  distribution of the COMPAS risk scores (`decile_score`)! What do you observe about the shape of this distribution?
+
+
+
+
+4. Let's examine the demographic distribution in our dataset. Create visualizations to show:
+   - The distribution of defendants by race
+   - The distribution of defendants by sex
+   - The distribution of defendants by age category
+
+For an extra challenge, try to create a single visualization that shows all three distributions side by side. You can use facets or color to differentiate between the different demographic groups.
+
+
+
+
+
+
+### Part 2: Risk scores and recidivism {.unnumbered}
+
+The COMPAS score is meant to predict whether someone will reoffend. Higher scores indicate higher risk. But how well does it work?
+Each individual in the dataset has both:
+- a prediction: their COMPAS risk score (decile_score)
+- an outcome: whether they actually recidivated within two years (two_year_recid)
+
+5. Create a visualization showing the relationship between risk scores (`decile_score`) and actual recidivism (`two_year_recid`). Do higher risk scores actually correspond to higher rates of recidivism?
+
+6. Calculate the overall accuracy of the COMPAS algorithm. 
+
+To evaluate whether the algorithm made the right prediction, we need to start thinking about the classifiction. 
+
+True Positive (TP): The person was classified as high risk and did recidivate
+
+True Negative (TN): The person was classified as low risk and did not recidivate 
+
+False Positive (FP): The person was classified as high risk but did not recidivate
+
+False Negative (FN): The person was classified as low risk but did recidivate
+
+For this exercise, consider a prediction "correct" if:
+   - A defendant with a high risk score (`decile_score` >= 7) did recidivate (`two_year_recid` = 1)
+   - A defendant with a low risk score (`decile_score` <= 4) did not recidivate (`two_year_recid` = 0)
+
+Use this classification to evaluate whether the COMPAS algorithm made the right prediction for each case.
+
+```
+# You may want to use case_when() to create a new variable like:
+# "compas_classification" with values: "TP", "TN", "FP", "FN"
+# Based on decile_score thresholds and the recidivism outcome
+```
+
+7. How well does the COMPAS algorithm perform overall? What percentage of its predictions are correct based on your calculation above?
+
+
+### Part 3: Investigating disparities {.unnumbered}
+
+Now let’s assess how well the COMPAS algorithm performs across different demographic groups. Like ProPublica, we'll focus on race, but you can explore others.
+
+
+8. Create visualizations comparing the distribution of risk scores (`decile_score`) between Black and white defendants. Do you observe any differences?
+
+
+9. Calculate the percentage of Black defendants and white defendants who were classified as high risk (decile_score >= 7). Is there a disparity?
+
+
+10. Now, let's look at the accuracy of predictions for different racial groups. Calculate the following metrics separately for Black defendants and white defendants:
+   - False Positive Rate: Proportion of non-recidivists (two_year_recid = 0) who were classified as high risk (decile_score >= 7)
+   - False Negative Rate: Proportion of recidivists (two_year_recid = 1) who were classified as low risk (decile_score <= 4)
+
+
+``` r
+# To filter for specific conditions:
+non_recidivists <- compas %>%
+  filter(two_year_recid == 0)
+
+# Now calculate false positive rates by race
+```
+
+11. Create a visualization comparing these metrics between Black and white defendants. What disparities do you observe?
+
+### Part 4: Understanding the sources of bias {.unnumbered}
+
+Note that their are many ways to measure bias in an algorithm. In this exercise, we'll focus on disparities in the false positive and false negative rates. You can also explore other measures of bias, including in the stretch goals.
+
+12. Let's investigate what factors might be contributing to the disparities we've observed. Create a visualization showing the relationship between prior convictions (`priors_count`) and risk score (`decile_score`), colored by race. Does the algorithm weigh prior convictions differently for different racial groups?
+
+13. In 2016, ProPublica and Northpointe (the company that created COMPAS) had a disagreement about how to measure fairness. ProPublica focused on error rates (false positives and false negatives), while Northpointe focused on calibration (whether the same score means the same probability of recidivism across groups).
+
+    Based on your analysis, do you see evidence supporting ProPublica's claim that the algorithm is biased? Explain your reasoning.
+
+
+``` r
+# To check calibration, you can calculate recidivism rates by score for each race
+# This is an advanced analysis - use what you've learned to approach this
+```
+
+### Part 5: Designing fairer algorithms {.unnumbered}
+
+14. If you were tasked with creating a fairer risk assessment algorithm, what changes would you make to address the disparities you've observed?
+
+15. Different definitions of fairness can sometimes be mathematically incompatible with each other. What trade-offs might be involved in designing a "fair" algorithm for criminal risk assessment?
+
+16. Beyond technical solutions, what policy changes might be needed to ensure that algorithmic risk assessments are used fairly in the criminal justice system?
+
+
+## Stretch goals {.unnumbered}
+###  Investigating the sources of bias {.unnumbered}
+
+Now let's investigate what factors might be contributing to the disparities we've observed. This stretch goal will involve more advanced calculations and visualizations, so you may need to refer to additional resources or documentation to complete these exercises.
+
+17. Look at the distribution of prior convictions (`priors_count`) by race. Are there differences in the distribution that might help explain the disparities in risk scores?
+
+18. Consider other variables in the dataset that might influence risk scores, such as age or type of charge (`c_charge_degree`). Do these variables show different distributions across racial groups? Might these differences contribute to disparities in risk scores?
+
+### Building a fairer algorithm {.unnumbered}
+
+19. Let's try to build our own recidivism prediction model using logistic regression. We'll use the following variables as predictors:
+    - `age`
+    - `priors_count`
+    - `c_charge_degree`
+
+
+``` r
+# Create a logistic regression model
+recid_model <- glm(
+  two_year_recid ~ age + priors_count + c_charge_degree,
+  data = compas,
+  family = binomial()
+)
+
+# Add predicted probabilities to the dataset
+compas <- compas %>%
+  mutate(
+    predicted_prob = predict(recid_model, type = "response"),
+    our_high_risk = predicted_prob >= 0.5
+  )
+```
+
+20. Evaluate the fairness of your model using the same metrics we calculated for the COMPAS algorithm. Does your model show less bias than the COMPAS algorithm? If so, why might that be the case?
+
+21. Now build a more complex model that includes race as a predictor:
+
+
+``` r
+# Create a logistic regression model with race
+recid_model_with_race <- glm(
+  two_year_recid ~ age + priors_count + c_charge_degree + race,
+  data = compas,
+  family = binomial()
+)
+
+# Add predicted probabilities to the dataset
+compas <- compas %>%
+  mutate(
+    predicted_prob_with_race = predict(recid_model_with_race, type = "response"),
+    race_high_risk = predicted_prob_with_race >= 0.5
+  )
+```
+
+22. Compare the fairness metrics for this model with your previous model. What happened to the disparities between racial groups? Does including race as a variable make the algorithm more or less fair?
+
+23. Based on your analysis, write a brief policy recommendation for how risk assessment algorithms should be used in the criminal justice system. Consider the following questions:
+    - Should algorithms like COMPAS be used in criminal justice decisions? Why or why not?
+    - If they are used, what safeguards should be put in place?
+    - How should the trade-off between accuracy and fairness be handled?
+    - What role should transparency play in algorithmic decision-making?
