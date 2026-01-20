@@ -98,3 +98,38 @@ embed_youtube_alt <- function(youtube_id) {
     return(knitr::include_graphics(str_c(file_path)))
   }
 }
+
+# Constants for reading time calculation
+WORDS_PER_MINUTE <- 200
+
+# Function to count words in a file using system wc command
+count_words <- function(file_path) {
+  if (!file.exists(file_path)) {
+    warning(paste("File not found:", file_path))
+    return(NA)
+  }
+  # Use wc -w to count words
+  wc_output <- system(paste("wc -w", shQuote(file_path)), intern = TRUE)
+  # Extract the number from the output
+  words <- as.numeric(sub("^\\s*(\\d+).*", "\\1", wc_output))
+  return(words)
+}
+
+# Function to calculate reading time from file path
+calculate_reading_time <- function(file_path, wpm = WORDS_PER_MINUTE) {
+  words <- count_words(file_path)
+  if (is.na(words)) {
+    return(NA)
+  }
+  minutes <- words / wpm
+  return(round(minutes))
+}
+
+# Function to get formatted reading time message
+get_reading_time <- function(file_path) {
+  minutes <- calculate_reading_time(file_path)
+  if (is.na(minutes)) {
+    return("")
+  }
+  return(paste("Reading time:", minutes, "minute(s) @", WORDS_PER_MINUTE, "WPM"))
+}
