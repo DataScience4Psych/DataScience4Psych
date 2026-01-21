@@ -101,14 +101,24 @@ data("titanic_test")
 ```
 
 
-Before modeling, we will do one small cleanup: standardize column names to lowercase for titanic_test and titantic_train.
+Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titantic_train as well as create an ordinal level variable for passenger class.
 
 ```{r}
+# Rename columns to lowercase
 names(titanic3) <- names(titanic3) %>% tolower()
 names(titanic_train) <- names(titanic_train) %>% tolower()
 names(titanic_test) <- names(titanic_test) %>% tolower()
 
+# Convert pclass to factor
 
+titanic_train <- titanic_train %>%
+  mutate(pclass_ord = factor(pclass, ordered = TRUE, levels = c(3, 2, 1)))
+
+titanic_test <- titanic_test %>%
+  mutate(pclass_ord = factor(pclass, ordered = TRUE, levels = c(3, 2, 1)))
+
+titanic3 <- titanic3 %>%
+  mutate(pclass_ord = factor(pclass, ordered = TRUE, levels = c(3, 2, 1)))
 ```
 
 
@@ -124,10 +134,27 @@ If we use the same data to fit the model and to evaluate it, we are letting the 
 
 Let’s do that on purpose.
 
-1. Fit a logistic regression predicting survival from passenger sex and class.
+1. Fit a logistic regression predicting survival from passenger sex and class as a numeric variable.
 Save the model as `m_apparent`.
 
-```{r}
+```{r, order.exercise2.1, error=TRUE, eval=FALSE}
+m_apparent <- glm(
+  survived ~ sex + pclass_ord,
+  data = titanic3,
+  family = binomial
+)
+
+
+
+summary(m_apparent)
+
+#  understand the variables with .L, .Q, and .C and ^4 are, respectively, the coefficients for the ordered factor coded with linear, quadratic, cubic, and quartic contrasts.
+
+# not really helpful for the lab to make the class ordinal
+
+```
+
+```{r, exercise2.1, error=TRUE, eval=FALSE}
 m_apparent <- glm(
   survived ~ sex + pclass,
   data = titanic3,
@@ -135,13 +162,16 @@ m_apparent <- glm(
 )
 
 
+
 summary(m_apparent)
+
 
 ```
 
+
 This model has access to every passenger and the final outcome. It is not being asked to predict the future. It is being asked to summarize the past.
 
-Now we use the model to generate predicted survival probabilities for every passenger.
+Now we can use the model to generate predicted survival probabilities for every passenger.
 
 
 ```{r}
@@ -149,16 +179,16 @@ p_apparent <- predict(m_apparent, type = "response")
 
 ```
 
-Each probability represents how confident the model is that a passenger survived.
+Each probability represents the expected survival chance for that passenger, according to the model. You can think about it like the chance of survival if you put that passenger on a large number of identical Titanic voyages. Out of 100 identical voyages, how many times would that passenger survive?
 
-To turn probabilities into decisions, we need a rule. We’ll use a cutoff of 0.5.
+To turn probabilities into decisions (we're working for an insurance agency after all), we need a decision rule. To keep things simple, we will use a cutoff of 0.5: if the predicted probability is greater than 0.5, we predict survival (1); otherwise, we predict non-survival (0). 
 
 ```{r}
 yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
 ```
 
 
-Now we compute the model’s accuracy.
+Now, we can compute the model’s accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
 
 ```{r}
 
@@ -167,7 +197,7 @@ acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
 acc_apparent
 ```
 
-At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can.
+At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can... Based on these data we correctly predict `r round(acc_apparent*100,digits=2)`% of the passengers. 
 
 Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.
 
@@ -262,7 +292,9 @@ acc_test
 ```
 
 ```{r exercise2.4solution, include=FALSE, echo=FALSE, error=TRUE}
-p_test <- predict(m_split, newdata = titanic_test, type = "response")
+p_test <- predict(m_split, 
+                  newdata = titanic_test, 
+                  type = "response")
 yhat_test <- ifelse(p_test > 0.5, 1, 0)
 
 acc_test <- mean(yhat_test == titanic_test$survived, na.rm = TRUE)
