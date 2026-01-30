@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-01-29" />
+<meta name="date" content="2026-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1069,8 +1069,8 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#the-data-4"><i class="fa fa-check"></i>The data</a></li>
 <li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#exercises-8"><i class="fa fa-check"></i>Exercises</a>
 <ul>
-<li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-1-exploratory-data-analysis"><i class="fa fa-check"></i>Part 1: Exploratory Data Analysis</a></li>
-<li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-2-linear-regression-with-a-numerical-predictor"><i class="fa fa-check"></i>Part 2: Linear regression with a numerical predictor</a></li>
+<li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-1-getting-to-know-the-outcome"><i class="fa fa-check"></i>Part 1: Getting to know the outcome</a></li>
+<li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-2-beauty-as-a-predictor"><i class="fa fa-check"></i>Part 2: Beauty as a predictor</a></li>
 <li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-3-linear-regression-with-a-categorical-predictor"><i class="fa fa-check"></i>Part 3: Linear regression with a categorical predictor</a></li>
 <li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-4-multiple-linear-regression"><i class="fa fa-check"></i>Part 4: Multiple linear regression</a></li>
 <li class="chapter" data-level="" data-path="lab10.html"><a href="lab10.html#part-3-the-search-for-the-best-model"><i class="fa fa-check"></i>Part 3: The search for the best model</a></li>
@@ -1674,31 +1674,40 @@ div.csl-indent {
 </div>
 <div id="exercises-8" class="section level2 unnumbered hasAnchor">
 <h2>Exercises<a href="lab10.html#exercises-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="part-1-exploratory-data-analysis" class="section level3 unnumbered hasAnchor">
-<h3>Part 1: Exploratory Data Analysis<a href="lab10.html#part-1-exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="part-1-getting-to-know-the-outcome" class="section level3 unnumbered hasAnchor">
+<h3>Part 1: Getting to know the outcome<a href="lab10.html#part-1-getting-to-know-the-outcome" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before we model anything, let’s look at what students actually do with the evaluation scale.</p>
 <ol style="list-style-type: decimal">
-<li><p>Visualize the distribution of <code>score</code>. Is the distribution skewed? What does that tell you about how students rate courses? Is this what you expected to see? Why, or why not? Include any summary statistics and visualizations you use in your response.</p></li>
-<li><p>Create a scatterplot of <code>score</code> versus <code>bty_avg</code> (a professor’s average beauty rating). Describe any pattern you observe—does there appear to be a trend, clustering, or wide variation? Don’t overthink it; just describe what you see.</p></li>
+<li>Visualize the distribution of <code>score</code>. Is the distribution skewed? Are students generous? Harsh? Do most scores pile up near the top? Include at least one plot and a couple of numerical summaries, and tell me what you notice.</li>
+</ol>
+<p>Now let’s introduce the main character in this dataset: <code>bty_avg</code>. This variable is a professor’s average beauty rating.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a scatterplot of <code>score</code> versus <code>bty_avg</code>. Describe what you see. Trend? Noise? Clusters? Total chaos? Don’t overthink it; just describe what you see.</li>
 </ol>
 <blockquote>
 <p><strong>Hint:</strong> See the help page for the function at <a href="http://ggplot2.tidyverse.org/reference/index.html" class="uri">http://ggplot2.tidyverse.org/reference/index.html</a>.</p>
 </blockquote>
 <ol start="3" style="list-style-type: decimal">
-<li>Recreate your scatterplot from Exercise 2, but use <code>geom_jitter()</code> instead of <code>geom_point()</code>. What does jittering do, and why might it improve the plot? Was anything misleading or hidden in the original version?</li>
+<li>Recreate your scatterplot, but use <code>geom_jitter()</code> instead of <code>geom_point()</code>. What does jittering fix here, and what would someone misunderstand if they only saw the non-jittered plot?</li>
 </ol>
 </div>
-<div id="part-2-linear-regression-with-a-numerical-predictor" class="section level3 unnumbered hasAnchor">
-<h3>Part 2: Linear regression with a numerical predictor<a href="lab10.html#part-2-linear-regression-with-a-numerical-predictor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="part-2-beauty-as-a-predictor" class="section level3 unnumbered hasAnchor">
+<h3>Part 2: Beauty as a predictor<a href="lab10.html#part-2-beauty-as-a-predictor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <blockquote>
 <p><strong>Recall:</strong> Linear model is in the form <span class="math inline">\(\hat{y} = b_0 + b_1 x\)</span>.</p>
 </blockquote>
+<p>Let’s see if the apparent trend in the plot is something more than natural variation.</p>
 <ol style="list-style-type: decimal">
-<li><p>Let’s see if the apparent trend in the plot is something more than natural variation. Fit a linear model called <code>m_bty</code> to predict average professor evaluation <code>score</code> by average beauty rating (<code>bty_avg</code>). Based on the regression output, write the linear model.</p></li>
-<li><p>Replot your visualization from Exercise 3, this time add a regression line in orange. Turn off the default shading around the line. By default, the plot includes shading around the line—what does that shading represent? And speculate why I’m asking you to turn it off.</p></li>
-<li><p>What does the slope of the model tell you? Interpret it in the context of this data—what does it say about how evaluation scores change with beauty ratings?</p></li>
-<li><p>What does the intercept represent in this model? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.</p></li>
-<li><p>What is the <span class="math inline">\(R^2\)</span> value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?</p></li>
+<li><p>Fit a linear model called <code>m_bty</code> to predict average professor evaluation <code>score</code> by average beauty rating (<code>bty_avg</code>). Write the fitted regression equation, and then interpret the slope in plain language: What does a one-point increase in beauty predict for evaluation scores?</p></li>
+<li><p>Replot your existing visualization, this time add a regression line in orange. Turn off the default shading around the line. (By default, the plot includes shading around the line.)</p></li>
+<li><p>Then, stepping back, interpret what this model is really saying:</p></li>
 </ol>
+<ul>
+<li>How much do evaluation scores change with beauty ratings (slope)?</li>
+<li>What does the intercept represent here? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.</li>
+<li>What is the <span class="math inline">\(R^2\)</span> value of this model? Interpret it in context. What does it tell you about whether beauty is a “big deal” or a pretty minor piece of the story?</li>
+<li>That shading you turned off represents uncertainty around the line—why might it be easy to read too much into it at this stage?</li>
+</ul>
 </div>
 <div id="part-3-linear-regression-with-a-categorical-predictor" class="section level3 unnumbered hasAnchor">
 <h3>Part 3: Linear regression with a categorical predictor<a href="lab10.html#part-3-linear-regression-with-a-categorical-predictor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1712,33 +1721,37 @@ div.csl-indent {
 <span id="cb422-6"><a href="lab10.html#cb422-6" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)    4.09     0.0387    106.   0      </span></span>
 <span id="cb422-7"><a href="lab10.html#cb422-7" tabindex="-1"></a><span class="co">#&gt; 2 gendermale     0.142    0.0508      2.78 0.00558</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
-<li><p>Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors?</p></li>
-<li><p>What is the equation of the line corresponding to male professors? What is it for female professors?</p></li>
-<li><p>Fit a new linear model called <code>m_rank</code> to predict average professor evaluation <code>score</code> based on <code>rank</code> of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.</p></li>
-<li><p>Create a new variable called <code>rank_relevel</code> where <code>"tenure track"</code> is the baseline level.</p></li>
-<li><p>Fit a new linear model called <code>m_rank_relevel</code> to predict average professor evaluation <code>score</code> based on <code>rank_relevel</code> of the professor. This is the new (releveled) variable you created in the previous exercise. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the <span class="math inline">\(R^2\)</span> of the model.</p></li>
-<li><p>Create another new variable called <code>tenure_eligible</code> that labels <code>"teaching"</code> faculty as
-<code>"no"</code> and labels <code>"tenure track"</code> and <code>"tenured"</code> faculty as <code>"yes"</code>.</p></li>
-<li><p>Fit a new linear model called <code>m_tenure_eligible</code> to predict average professor evaluation <code>score</code> based on <code>tenure_eligible</code>ness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the <span class="math inline">\(R^2\)</span> of the model.</p></li>
+<li>Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors? Write the predicted mean evaluation score for each gender.</li>
 </ol>
+<p>Now let’s do one more categorical predictor: <code>rank</code></p>
+<p>Actually, let’s do three slightly different versions of this model to see how changing the reference level or regrouping categories affects the output.</p>
+<p>Create a new variable from <code>rank</code> called <code>rank_relevel</code> where <code>"tenure track"</code> is the baseline level. Create another new variable called <code>tenure_eligible</code> that labels <code>"teaching"</code> faculty as <code>"no"</code> and labels <code>"tenure track"</code> and <code>"tenured"</code> faculty as <code>"yes"</code>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Fit three different linear models to explore how <code>rank</code> affects evaluation scores. Each of these models will use a different version of the <code>rank</code> variable to predict average professor evaluation <code>score</code></li>
+</ol>
+<ul>
+<li><p>Based on the regression outputs, interpret how teaching faculty and tenured faculty differ from that baseline. (Hint you should interpret the slopes and intercepts for all three models in context of the data.)</p></li>
+<li><p>Report the <span class="math inline">\(R^2\)</span>. Does rank explain much, or not really?</p></li>
+</ul>
 </div>
 <div id="part-4-multiple-linear-regression" class="section level3 unnumbered hasAnchor">
 <h3>Part 4: Multiple linear regression<a href="lab10.html#part-4-multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we’re going to ask a more interesting question:</p>
+<p>Is the “beauty effect” still there once we account for gender?</p>
+<p>Fit these two models:</p>
+<ul>
+<li><p><code>m_bty: score ~ bty_avg</code></p></li>
+<li><p><code>m_bty_gen: score ~ bty_avg + gender</code></p></li>
+</ul>
+<p>Then answer:</p>
 <ol style="list-style-type: decimal">
-<li><p>Fit a linear model (one you have fit before): <code>m_bty</code>, predicting average
-professor evaluation <code>score</code> based on average beauty rating (<code>bty_avg</code>) only. Write the
-linear model, and note the <span class="math inline">\(R^2\)</span> and the adjusted <span class="math inline">\(R^2\)</span>.</p></li>
-<li><p>Fit a linear model (one you have fit before): <code>m_bty_gen</code>, predicting average
-professor evaluation <code>score</code> based on average beauty rating (<code>bty_avg</code>) and <code>gender</code>.
-Write the linear model, and note the <span class="math inline">\(R^2\)</span> and the adjusted <span class="math inline">\(R^2\)</span>.</p></li>
-<li><p>Interpret the slope and intercept of <code>m_bty_gen</code> in context of the data.</p></li>
-<li><p>What percent of the variability in <code>score</code> is explained by the model <code>m_bty_gen</code>.</p></li>
-<li><p>What is the equation of the line corresponding to <em>just</em> male professors?</p></li>
-<li><p>For two professors who received the same beauty rating, which gender tends to have the higher course evaluation score?</p></li>
-<li><p>How does the relationship between beauty and evaluation score vary between male and female professors?</p></li>
-<li><p>How do the adjusted <span class="math inline">\(R^2\)</span> values of <code>m_bty_gen</code> and <code>m_bty</code> compare? What does this tell us about how useful <code>gender</code> is in explaining the variability in evaluation scores when we already have information on the beauty score of the professor.</p></li>
-<li><p>Compare the slopes of <code>bty_avg</code> under the two models (<code>m_bty</code> and <code>m_bty_gen</code>). Has the addition of <code>gender</code> to the model changed the parameter estimate (slope) for <code>bty_avg</code>?</p></li>
-<li><p>Create a new model called <code>m_bty_rank</code> with <code>gender</code> removed and <code>rank</code> added in. Write the equation of the linear model and interpret the slopes and intercept in context of the data.</p></li>
+<li><p>What changes in the beauty slope when gender is added?</p></li>
+<li><p>For two professors with the same beauty rating, does gender still shift the predicted score?</p></li>
+<li><p>Compare the adjusted <span class="math inline">\(R^2\)</span> values. Is gender actually helping much, or is beauty doing most of the work already?</p></li>
+</ol>
+<p>Finally, swap gender out and add rank instead.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Fit <code>m_bty_rank: score ~ bty_avg + rank</code> and then interpret one rank coefficient and the beauty slope in context.</li>
 </ol>
 </div>
 <div id="part-3-the-search-for-the-best-model" class="section level3 unnumbered hasAnchor">

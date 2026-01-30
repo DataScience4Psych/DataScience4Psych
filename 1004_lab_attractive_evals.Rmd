@@ -50,30 +50,38 @@ The dataset we'll be using is called `evals` from the **openintro** package. Tak
 
 ## Exercises {.unnumbered}
 
-### Part 1: Exploratory Data Analysis {.unnumbered}
+### Part 1: Getting to know the outcome {.unnumbered}
 
-1. Visualize the distribution of `score`. Is the distribution skewed? What does that tell you about how students rate courses? Is this what you expected to see? Why, or why not? Include any summary statistics and visualizations you use in your response.
+Before we model anything, let’s look at what students actually do with the evaluation scale.
 
-2. Create a scatterplot of `score` versus `bty_avg` (a professor's average beauty rating). Describe any pattern you observe—does there appear to be a trend, clustering, or wide variation? Don’t overthink it; just describe what you see.
+1. Visualize the distribution of `score`. Is the distribution skewed? Are students generous? Harsh? Do most scores pile up near the top? Include at least one plot and a couple of numerical summaries, and tell me what you notice.
+
+Now let's introduce the main character in this dataset: `bty_avg`. This variable is a professor's average beauty rating.
+
+2. Create a scatterplot of `score` versus `bty_avg`. Describe what you see. Trend? Noise? Clusters? Total chaos? Don’t overthink it; just describe what you see.
 
 > **Hint:** See the help page for the function at <http://ggplot2.tidyverse.org/reference/index.html>.
 
-3. Recreate your scatterplot from Exercise 2, but use `geom_jitter()` instead of `geom_point()`. What does jittering do, and why might it improve the plot? Was anything misleading or hidden in the original version?
+3. Recreate your scatterplot, but use `geom_jitter()` instead of `geom_point()`. What does jittering fix here, and what would someone misunderstand if they only saw the non-jittered plot?
 
 
-### Part 2: Linear regression with a numerical predictor {.unnumbered}
+### Part 2: Beauty as a predictor {.unnumbered}
 
 > **Recall:** Linear model is in the form $\hat{y} = b_0 + b_1 x$.
 
-1. Let's see if the apparent trend in the plot is something more than natural variation. Fit a linear model called `m_bty` to predict average professor evaluation `score` by average beauty rating (`bty_avg`). Based on the regression output, write the linear model.
+Let's see if the apparent trend in the plot is something more than natural variation. 
 
-2. Replot your visualization from Exercise 3, this time add a regression line in orange.  Turn off the default shading around the line. By default, the plot includes shading around the line—what does that shading represent? And speculate why I'm asking you to turn it off.
+1. Fit a linear model called `m_bty` to predict average professor evaluation `score` by average beauty rating (`bty_avg`). Write the fitted regression equation, and then interpret the slope in plain language: What does a one-point increase in beauty predict for evaluation scores?
 
-3. What does the slope of the model tell you? Interpret it in the context of this data—what does it say about how evaluation scores change with beauty ratings?
+2. Replot your existing visualization, this time add a regression line in orange. Turn off the default shading around the line. (By default, the plot includes shading around the line.)
 
-4. What does the intercept represent in this model? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.
+3. Then, stepping back, interpret what this model is really saying:
 
-5. What is the $R^2$ value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?
+- How much do evaluation scores change with beauty ratings (slope)?
+- What does the intercept represent here? Is it meaningful in this context, or just a mathematical artifact? Explain your reasoning.
+- What is the $R^2$ value of this model? Interpret it in context. What does it tell you about whether beauty is a “big deal” or a pretty minor piece of the story?
+- That shading you turned off represents uncertainty around the line—why might it be easy to read too much into it at this stage?
+
 
 ### Part 3: Linear regression with a categorical predictor {.unnumbered}
 
@@ -87,47 +95,45 @@ m_gen <- lm(score ~ gender, data = evals)
 tidy(m_gen)
 ```
 
-1. Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors?
+1. Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors? Write the predicted mean evaluation score for each gender.
 
-2. What is the equation of the line corresponding to male professors? What is it for female professors?
+Now let’s do one more categorical predictor: `rank`
 
-3. Fit a new linear model called `m_rank` to predict average professor evaluation `score` based on `rank` of the professor. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data.
+Actually, let's do three slightly different versions of this model to see how changing the reference level or regrouping categories affects the output. 
 
-4. Create a new variable called `rank_relevel` where `"tenure track"` is the baseline level.
+Create a new variable from `rank` called `rank_relevel` where `"tenure track"` is the baseline level. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as `"no"` and labels `"tenure track"` and `"tenured"` faculty as `"yes"`.
 
-5. Fit a new linear model called `m_rank_relevel` to predict average professor evaluation `score` based on `rank_relevel` of the professor. This is the new (releveled) variable you created in the previous exercise. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+2. Fit three different linear models to explore how `rank` affects evaluation scores. Each of these models will use a different version of the `rank` variable to predict average professor evaluation `score`
 
-6. Create another new variable called `tenure_eligible` that labels `"teaching"` faculty as
-    `"no"` and labels `"tenure track"` and `"tenured"` faculty as `"yes"`.
-  
-7. Fit a new linear model called `m_tenure_eligible` to predict average professor evaluation `score` based on `tenure_eligible`ness of the professor. This is the new (regrouped) variable you created in Exercise 15. Based on the regression output, write the linear model and interpret the slopes and intercept in context of the data. Also determine and interpret the $R^2$ of the model.
+3. Based on the regression outputs, interpret how teaching faculty and tenured faculty differ from that baseline. (Hint you should interpret the slopes and intercepts for all three models in context of the data.)
+
+4. Report the $R^2$. Does rank explain much, or not really?
 
 
 ### Part 4: Multiple linear regression {.unnumbered}
 
-1. Fit a linear model (one you have fit before): `m_bty`, predicting average
-   professor evaluation `score` based on average beauty rating (`bty_avg`) only. Write the
-   linear model, and note the $R^2$ and the adjusted $R^2$.
+Now we’re going to ask a more interesting question:
 
-2. Fit a linear model (one you have fit before): `m_bty_gen`, predicting average
-   professor evaluation `score` based on average beauty rating (`bty_avg`) and `gender`.
-   Write the linear model, and note the $R^2$ and the adjusted $R^2$.
+Is the “beauty effect” still there once we account for gender?
 
-3. Interpret the slope and intercept of `m_bty_gen` in context of the data.
+Fit these two models:
 
-4. What percent of the variability in `score` is explained by the model `m_bty_gen`.
+- `m_bty: score ~ bty_avg`
 
-5. What is the equation of the line corresponding to *just* male professors?
+- `m_bty_gen: score ~ bty_avg + gender`
 
-6. For two professors who received the same beauty rating, which gender tends to have the higher course evaluation score?
+Then answer:
 
-7. How does the relationship between beauty and evaluation score vary between male and female professors?
+1. What changes in the beauty slope when gender is added?
 
-8. How do the adjusted $R^2$ values of `m_bty_gen` and `m_bty` compare? What does this tell us about how useful `gender` is in explaining the variability in evaluation scores when we already have information on the beauty score of the professor.
+2. For two professors with the same beauty rating, does gender still shift the predicted score?
 
-9. Compare the slopes of `bty_avg` under the two models (`m_bty` and `m_bty_gen`). Has the addition of `gender` to the model changed the parameter estimate (slope) for `bty_avg`?
+3. Compare the adjusted $R^2$ values. Is gender actually helping much, or is beauty doing most of the work already?
 
-10. Create a new model called `m_bty_rank` with `gender` removed and `rank`  added in. Write the equation of the linear model and interpret the slopes and intercept in context of the data.
+Finally, swap gender out and add rank instead.
+
+4. Fit `m_bty_rank: score ~ bty_avg + rank`  and then interpret one rank coefficient and the beauty slope in context.
+
 
 ### Part 3: The search for the best model {.unnumbered}
 
