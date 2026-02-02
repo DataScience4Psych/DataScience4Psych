@@ -1,0 +1,191 @@
+
+
+
+
+
+# Data usually finds me
+
+> This document is based on my SAM talk on "I don't go looking for Data ... Data usually finds me," from 2020.Here is a [link to the slides of that talk](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/admin/pdf/sam_vfinal.pdf).
+
+
+## I don't go looking for Data ... Data usually finds me
+
+The most interesting aspects of my work (or at least to me) are the aspects related to finding data. However, this part is also the least documented. In my case, it primarily lives in footnotes, personal statements, and appendices. In the world of data science, finding interesting datasets is often more serendipitous than strategic. Let's explore the various ways data can find us or be found. Fundamentally, data can be discovered through two major approaches: exploratory and confirmatory. The exploratory approach is descriptive and is data-driven. Data scientists often apply this approach. In contrast, the confirmatory approach is question driven, and aimed at testing specific hypotheses. Research scientists often apply this approach, but not always. Both approaches have their merits and challenges, and the methods of data acquisition can vary widely. Let's delve into the adventure of data retrieval and discover the best places to look for datasets.
+
+
+## Two Major Approaches to Data Discovery
+
+Do you start with the question or with the data?
+
+### The Exploratory Approach
+This data-driven method is often favored by data scientists. It's descriptive in nature, allowing the data itself to guide the questions and analyses. Most of my early experiences fall into this category, and they're often the most interesting. In this approach, you start with the data and let it tell you what questions to ask. This can be a bit like a treasure hunt, where you're not sure what you'll find until you start digging. The data can be found in various ways, including referrals, reading, rumor, and random chance. We'll explore these methods in more detail later. 
+
+> But, how does data find you? Data can find you in numerous ways including referrals, reading, rumor, and random chance. A referral example would be when a speaker tells you about an intergenerational data set partially run by the BLS. You may also just stumble across it in your readings, such as when a historian using aspects of a marriage study. A rumor may inspire you, such as observing that a control group is mentioned in the original write-up of the Terman study (1921ish). Serendipity might lead you to fly to SPSP, talk to the person sitting next to you about a study you were in...
+
+
+### Confirmatory Approach to Archival Data
+
+In contrast, this question-driven approach is aimed at testing specific hypotheses. It's commonly used by research scientists, though not exclusively. Here, you start with specific questions that guide your data search. These could be related to theories, measures, subjects, models, replication, or external motivations.
+
+Theory-based questions include questions like "Do smart girls delay sex? Measurement based questions can ask things like"Is Coding Speed from the ASVAB a decent proxy for conscientiousness?". Questions about subjects include"Where can I find Twins Raised Apart?" Modeling questions can include things like How do I illustrate my dual mediated survival model? Replication: Can I replicate my finding in another sample? Externally-inspired questions can include things like Can I address reviewer two's concern about reliability of difference scores?
+
+These questions narrow your search... Otherwise the scope of data is overwhelming. The wonderful Kathy Shields helped me add a section to the WFU library website to get you started [guides.zsr.wfu.edu/psychology](https://guides.zsr.wfu.edu/psychology). This is a great place to start your search for data.
+
+Regardless of which approach you take, you'll need to acquire data. Let's look at the various ways this can happen.
+
+## The Data Acquisition Spectrum
+
+Data acquisition methods generally fall into five categories:
+
+- Direct Download: The simplest method, where data is available in ready-to-use formats like CSV or Excel files.
+- Wrapped API Access: Using specialized tools or packages to access data repositories.
+- Raw API Interaction: Crafting custom queries for more specific data needs.
+- Web Scraping: Extracting data embedded in web pages.
+- Physical Retrieval: Sometimes, data isn't digital and requires old-fashioned legwork.
+
+Now, let's explore how these methods play out in real-world scenarios.
+
+### How Data Finds You
+In the exploratory approach, data can appear in your life through various means:
+
+- Referrals: A conference speaker might mention an intriguing dataset, leading you to directly download it from a repository.
+- Reading: While reviewing literature, you might stumble upon a study with online supplementary data, requiring web scraping to access.
+- Rumors: Colleagues might discuss an old study with valuable data, prompting you to track down physical records.
+- Random chance: A conversation at a conference could lead you to a researcher with access to unique datasets.
+
+For the confirmatory approach, your specific questions guide your search through these acquisition methods. For example:
+- Investigating "Do smart girls delay sexual activity?" might lead you to directly download relevant datasets from the BLS.
+- Exploring ASVAB's Coding Speed as a proxy for conscientiousness could involve using a wrapped API to access specific datasets.
+- Finding data on twins raised apart might require raw API interactions with multiple sources.
+
+### The Adventure of Data Retrieval
+
+Sometimes, acquiring data involves multiple methods and unexpected challenges. Here's a real-world example that spans the acquisition spectrum:
+
+- Apply for access to a "digitized" dataset on Dataverse (Direct Download attempt) for an econometrics class
+- Discover the dataset isn't actually digitized, requiring physical retrieval and approval from the researchers.
+- Learn that the researchers who created it are hard to find.
+    - One researcher (E. Lowell Kelly) died in 1986 and the other (James Conley) is nowhere to be found.
+- Track down a researcher who changed their name in the 1990s by
+  - Teaming up with a 2nd-year assistant professor (Josh Jackson) to find Conley
+  - Tracking down James Connolly, who legally changed his name in 1992 (or so) from James Conley
+- Convince the researcher to share the data.
+- Determine the data's location and retrieve boxes from various archives and libraries:
+  - Henry A. Murray Research Archive (Part of Harvard's Dataverse)
+  - Jim Connolly's office
+  - Bentley Library (Part of Michigan's ICPSR)
+Retrieve boxes of data from various locations, including research archives and libraries.
+
+### Where to Look
+Great places to start your data search (or let it find you) include:
+
+- ICPSR (http://icpsr.org): ~15,000 datasets
+- Harvard Dataverse (http://dataverse.harvard.edu/): ~95,000 datasets
+- Data.gov (https://catalog.data.gov/dataset): ~250,000 datasets
+- Other resources: OSF(<http://osf.io/>), Figshare(<http://figshare.com/>), Dryad (<http://datadryad.org>) and field-specific repositories
+  - Nature has a great list of repositories: https://www.nature.com/sdata/policies/repositories
+  - Journal of Open Psychology Data also has beefy collection https://openpsychologydata.metajnl.com/
+  - [ZSR Guide](https://guides.zsr.wfu.edu/c.php?g=34362&p=7117614)
+
+Remember, the more hurdles between you and the data, the less likely you are to be scooped! Whether you're letting data find you or actively seeking it out, keep an open mind. The journey to finding the right dataset can be as illuminating as the analysis itself.
+
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">It&#39;s officially published and all!<br>&quot;Scan Once, Analyse Many: Using large open-access neuroimaging datasets to understand the brain&quot;<a href="https://t.co/Ubi4nBTqRx">https://t.co/Ubi4nBTqRx</a><br><br>It&#39;s written to be an introductory guide for those entering the world of neuroimaging using secondary data, <br>1/2</p>&mdash; Dr Christopher Madan 🐘🧠💻 (he/him) (@cMadan) <a href="https://twitter.com/cMadan/status/1392130356988547076?ref_src=twsrc%5Etfw">May 11, 2021</a></blockquote>
+
+```
+
+
+
+
+<!--DS4P Links-->
+[course_web]: https://datascience4psych.github.io/DataScience4Psych
+[course_git]: https://github.com/DataScience4Psych/DataScience4Psych
+[course_repo]: https://github.com/DataScience4Psych
+[course_slides]: https://github.com/DataScience4Psych/slides
+[course_syllabus]: https://smasongarrison.github.io/syllabi/ 
+<!-- https://smasongarrison.github.io/syllabi/data-science.html -->
+[syllabi]: https://smasongarrison.github.io/syllabi
+[pl_00]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaEAnJX20Ryy4OSie375rVY
+[pl_01]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup
+[pl_02]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZmr_T3PnuxjVIlj0C0kUNI
+[pl_03]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYaHmjzdRvfg0yhOIYQnfjwE
+[pl_04]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYWFcel6_vp8__RUKLxhX4y
+[pl_05]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYMIguiV1F8RagMYibTY4iW
+[pl_06]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYYV_KDod3Mk9-RmtFXii9Dv
+[pl_07]: https://www.youtube.com/watch?list=PLKrrdtYgOUYZxvEvQ8-PcWrOY_dwY_ETI
+[pl_08]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZgOzYB_dmauw55M7jXvsdo
+[pl_09]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbaiTmldRY2ddsLrHp3z6yO
+[pl_10]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbPw5iYzYEzoOKa7mJKNIhq
+[pl_11]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZ-u6LzBbanrNFoeLHKaLL6
+[pl_12]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbwRS-9Htmb80_t1NG-021e
+[pl_13]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_14]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYbWGmSnbLIYwdLOnGm6une6
+[pl_15]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYa5MoYrV8EsWQ5jIr5ZYMpM
+[pl_all]: https://www.youtube.com/playlist?list=PLKrrdtYgOUYZomNqf-1dtCDW94ySdLv-9
+
+
+<!--AE Links-->
+[ae01a_unvotes]: https://github.com/DataScience4Psych/ae01a_unvotes
+[ae01b_covid]: https://github.com/DataScience4Psych/ae01b_covid
+[ae02_bechdel]: https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown
+[ae03_starwars]: https://github.com/DataScience4Psych/ae-03-starwars-dataviz
+[ae08_imdb]: https://github.com/DataScience4Psych/ae-08-imdb-webscraping
+
+<!-- Lab Links-->
+
+[lab01_hello]: https://github.com/DataScience4Psych/lab-01-hello-r
+[lab02]: https://github.com/DataScience4Psych/lab-02-plastic-waste
+[lab03]: https://github.com/DataScience4Psych/lab-03-nobel-laureates
+[lab04]: https://github.com/DataScience4Psych/lab-04-viz-sp-data
+[lab05]: https://github.com/DataScience4Psych/lab-05-wrangle-sp-data
+[lab06]: https://github.com/DataScience4Psych/lab_06_sad_plots
+[lab07]: https://github.com/DataScience4Psych/lab_07_betterviz
+[lab08]: https://github.com/DataScience4Psych/lab-08-uoe-art
+[lab09]: https://github.com/DataScience4Psych/lab-09-ethics-algorithmic-bias
+[lab10]: https://github.com/DataScience4Psych/lab-10-slr-course-evals
+[lab11]: https://github.com/DataScience4Psych/lab-11-mlr-course-evals
+[lab12]: https://github.com/DataScience4Psych/lab-12-inference-smoking
+[lab13]: https://github.com/DataScience4Psych/lab-13-simulating-mars
+
+<!--Slides-->
+[d01_welcome]: https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html
+[d02_toolkit]: https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html
+[d03_dataviz]: https://datascience4psych.github.io/slides/d03_dataviz/d03_dataviz.html
+[d04_ggplot2]: https://datascience4psych.github.io/slides/d04_ggplot2/d04_ggplot2.html
+[d05_viznum]: https://datascience4psych.github.io/slides/d05_viznum/d05_viznum.html
+[d06_vizcat]: https://datascience4psych.github.io/slides/d06_vizcat/d06_vizcat.html
+[d07_tidy]: https://datascience4psych.github.io/slides/d07_tidy/d07_tidy.html
+[d08_grammar]: https://datascience4psych.github.io/slides/d08_grammar/d08_grammar.html
+[d09_wrangle]: https://datascience4psych.github.io/slides/d09_wrangle/d09_wrangle.html
+[d10_dfs]: https://datascience4psych.github.io/slides/d10_dfs/d10_dfs.html
+[d11_types]: https://datascience4psych.github.io/slides/d11_types/d11_types.html
+[d12_import]: https://datascience4psych.github.io/slides/d12_import/d12_import.html
+[d13_goodviz]: https://datascience4psych.github.io/slides/d13_goodviz/d13_goodviz.html
+[d13b_moreggplot]: https://datascience4psych.github.io/slides/d13_goodviz/d13b_moreggplot.html
+[d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
+[d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
+[d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
+[d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
+[d18_ethics]: https://datascience4psych.github.io/slides/d18_ethics/d18_ethics.html
+[d19_bias]: https://datascience4psych.github.io/slides/d19_bias/d19_bias.html
+[d20_language]: https://datascience4psych.github.io/slides/d20_language/d20_language.html
+[d21_fitting]: https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html
+[d22_nonlinear]: https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html
+[d23_multiple]: https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html
+[d24_overfitting]: https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html
+[d25_crossvalidation]: https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html
+[d26_quantify]: https://datascience4psych.github.io/slides/d26_quantify/d26_quantify.html
+[d27_bootstrap]: https://datascience4psych.github.io/slides/d27_bootstrap/d27_bootstrap.html
+[d28_interactive]: https://datascience4psych.github.io/slides/d28_interactive/d28_interactive.html
+[d29_machine]: https://datascience4psych.github.io/slides/d29_machinelearning/d29_machine.html
+[d30_simulations]: https://datascience4psych.github.io/slides/d30_simulations/d30_simulations.html
+[d31_llmintro]: https://datascience4psych.github.io/slides/d31_llmintro/d31_llmintro.html
+[d32_llmapplications]: https://datascience4psych.github.io/slides/d32_llmapplications/d32_llmapplications.html
+
+<!--externals-->
+
+[stat545]: https://stat545.com
+[r4ds]: https://r4ds.had.co.nz
+[cran]: https://cloud.r-project.org

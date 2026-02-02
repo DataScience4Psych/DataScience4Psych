@@ -1,0 +1,65 @@
+# (PART) Workshop {.unnumbered}
+
+
+
+# Workshop Links {.unnumbered}
+
+Below are all the relevant links and resources extracted from the course materials. Please use these links for accessing important resources, datasets, documentation, and further readings:
+
+
+## Course Resources
+
+- [Course Website](https://DataScience4Psych.github.io/DataScience4Psych/)
+- [Slides and Workshop Materials](https://datascience4psych.github.io/slides/)
+
+### Individual Slide Decks
+
+- [Welcome Toolkit](https://datascience4psych.github.io/slides/workshop/d01_02_welcome_toolkit.html)
+- [Data Visualization](https://datascience4psych.github.io/slides/workshop/d03_dataviz.html)
+- [ggplot2 Overview](https://datascience4psych.github.io/slides/workshop/d04_ggplot2.html)
+- [Visualizing Numeric and Categorical](https://datascience4psych.github.io/slides/workshop/d05_06_viznumcat.html)
+- [Tidy Data](https://datascience4psych.github.io/slides/workshop/d07_tidy.html)
+- [Grammar of Data Manipulation](https://datascience4psych.github.io/slides/workshop/d08_grammar.html)
+- [Wrangling Practice](https://datascience4psych.github.io/slides/workshop/d09_wrangle.html)
+- [More ggplot Customization](https://datascience4psych.github.io/slides/workshop/d13b_moreggplot.html)
+
+## Workshop Activities
+
+- **Bechdel + R Markdown Activity**: This is a hands-on activity designed to practice R Markdown and data storytelling. Please download the assignment from the GitHub repository:
+  - [ae-02-bechdel-rmarkdown](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown)
+  - [rmd file](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown/blob/main/bechdel.Rmd)
+
+## GitHub Repositories
+
+- [DataScience4Psych GitHub](https://github.com/DataScience4Psych)
+- [Bechdel RMarkdown Activity](https://github.com/DataScience4Psych/ae-02-bechdel-rmarkdown)
+- [Tidy Tuesday Dataset (Feb 11, 2020)](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-11/readme.md)
+
+## Documentation and Cheat Sheets
+
+- [ggplot2 Documentation](http://ggplot2.tidyverse.org/)
+- [RMarkdown Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+- [Viridis Color Package](https://cran.r-project.org/web/packages/viridis/index.html)
+- [Tibble Documentation](https://tibble.tidyverse.org/)
+
+## Data Sources
+
+- [US Census Data](https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_17_5YR_DP03)
+- [Gapminder Dataset](https://www.gapminder.org/data)
+
+## Further Reading and Tools
+
+- [Minard on Wikipedia](https://en.wikipedia.org/wiki/Charles_Joseph_Minard)
+- [Science Direct Article](https://www.sciencedirect.com/science/article/pii/S2352340918315191#bib5)
+- [ModernDive](https://moderndive.com/)
+- [Stat545 Course Material](https://stat545.com)
+- [DataScienceBox](https://datasciencebox.org/)
+- [Support Customizing RStudio](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio)
+
+## Miscellaneous and Additional Resources
+
+- [JFukuyama GitHub Pages](https://jfukuyama.github.io/)
+- [Hyperwar Statistical Digest](https://www.ibiblio.org/hyperwar/AAF/StatDigest/aafsd-3.html)
+- [Blog on Grammar of Graphics](http://bloggotype.blogspot.com/2016/08/holiday-notes2-grammar-of-graphics.html)
+
+This structured compilation provides easy access to all necessary resources and external documentation required for your engagement with the workshop content.
