@@ -537,7 +537,6 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#packages-2"><i class="fa fa-check"></i>Packages</a></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#data-2"><i class="fa fa-check"></i>Data</a></li>
-<li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#note-on-original-place-names"><i class="fa fa-check"></i>Note on original place names</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#exercises-2"><i class="fa fa-check"></i>Exercises</a>
 <ul>
@@ -1732,9 +1731,6 @@ You can load them by running the following in your Console:</p>
 <li><code>share</code>: Number of other winners award is shared with</li>
 <li><code>motivation</code>: Motivation for recognition</li>
 </ul>
-</div>
-<div id="note-on-original-place-names" class="section level3 unnumbered hasAnchor">
-<h3>Note on original place names<a href="lab03.html#note-on-original-place-names" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In a few cases, the name of the city/country changed after laureate was given (e.g., in 1975, Bosnia and Herzegovina was called the Socialist Federative Republic of Yugoslavia).
 In these cases the variables below reflect a different name than their counterparts without the suffix <code>_original</code>.</p>
 <ul>
@@ -1745,10 +1741,9 @@ In these cases the variables below reflect a different name than their counterpa
 <li><code>city_original</code>: Original city where laureate lived at the time of winning the award</li>
 <li><code>country_original</code>: Original country where laureate lived at the time of winning the award</li>
 </ul>
-<pre><code>## 82 codes from your data successfully matched countries in the map
-## 1 codes from your data failed to match with a country code in the map
-## 160 codes from the map weren&#39;t represented in your data</code></pre>
-<p><img src="0305_lab_nobellaureates_files/figure-html/map-1.png" alt="" width="672" /></p>
+<p>As a quick exploratory step, let’s create a world map that visualizes the number of Nobel laureates by their birth country.</p>
+<p><img src="0305_lab_nobellaureates_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" /></p>
+<p>This map provides a global overview of the distribution of Nobel laureates based on their birth countries. Countries with higher numbers of laureates are represented with darker shades, while those with fewer or no laureates are shown in lighter shades or white. These data have been log-transformed to ensure better visualization across countries with varying counts of laureates. To gain deeper insights, we will now proceed to analyze the data further through a series of exercises.</p>
 </div>
 </div>
 <div id="exercises-2" class="section level2 unnumbered hasAnchor">
@@ -1784,16 +1779,16 @@ If not, we set the <code>country_us</code> to <code>"Other"</code>.</p>
 <blockquote>
 <p>Note: We can achieve the same result using the <code>fct_other()</code> function we’ve seen before (i.e. with <code>country_us = fct_other(country, "USA")</code>). We decided to use the <code>if_else()</code> here to show you one example of an if statement in R.</p>
 </blockquote>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab03.html#cb122-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb122-2"><a href="lab03.html#cb122-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb122-3"><a href="lab03.html#cb122-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
-<span id="cb122-4"><a href="lab03.html#cb122-4" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lab03.html#cb121-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb121-2"><a href="lab03.html#cb121-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb121-3"><a href="lab03.html#cb121-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb121-4"><a href="lab03.html#cb121-4" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Next, we will limit our analysis to only the following categories: Physics, Medicine, Chemistry, and Economics.</p>
 <blockquote>
 <p>Note: Technically, the Nobel Prize in Economics is a memorial prize. It was established in 1968. If you want to annoy an economist, point that distinction out to them… More info <a href="https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences">here</a> if you want to learn some more.</p>
 </blockquote>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lab03.html#cb123-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb123-2"><a href="lab03.html#cb123-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab03.html#cb122-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb122-2"><a href="lab03.html#cb122-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
 <p>For the next exercise, work with the <code>nobel_living_science</code> data frame you created above.
 You’ll need to define this data frame in your R Markdown document, even though the next exercise doesn’t explicitly ask you to do so.</p>
 <ol start="3" style="list-style-type: decimal">

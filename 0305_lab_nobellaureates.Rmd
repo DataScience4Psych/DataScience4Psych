@@ -95,7 +95,7 @@ The variable descriptions are as follows:
 - `share`: Number of other winners award is shared with
 - `motivation`: Motivation for recognition
 
-### Note on original place names {.unnumbered}
+
 In a few cases, the name of the city/country changed after laureate was given (e.g., in 1975, Bosnia and Herzegovina was called the Socialist Federative Republic of Yugoslavia).
 In these cases the variables below reflect a different name than their counterparts without the suffix `_original`.
 
@@ -106,7 +106,9 @@ In these cases the variables below reflect a different name than their counterpa
 - `city_original`: Original city where laureate lived at the time of winning the award
 - `country_original`: Original country where laureate lived at the time of winning the award
 
-```{r map, message=FALSE, warning=FALSE,echo=FALSE}
+As a quick exploratory step, let's create a world map that visualizes the number of Nobel laureates by their birth country. 
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(maps)
 library(rworldmap)
 library(ggplot2)
@@ -117,9 +119,13 @@ country_counts <- nobel %>%
   count(born_country_code) %>%
   arrange(desc(n)) 
 country_counts$n_log <- log10(country_counts$n + 1)
-country_counts_map <- joinCountryData2Map(country_counts, joinCode="ISO2", nameJoinColumn="born_country_code") 
- colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
+country_counts_map <- joinCountryData2Map(country_counts, joinCode="ISO2", nameJoinColumn="born_country_code") %>% suppressMessages() 
 
+
+colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
  
 mapCountryData(country_counts_map, nameColumnToPlot="n_log",
                            addLegend=T,
@@ -129,12 +135,9 @@ mapCountryData(country_counts_map, nameColumnToPlot="n_log",
                            missingCountryCol='white',
                            colourPalette = colourPalette
                            ) 
-
-
-
-
 ```
 
+This map provides a global overview of the distribution of Nobel laureates based on their birth countries. Countries with higher numbers of laureates are represented with darker shades, while those with fewer or no laureates are shown in lighter shades or white. These data have been log-transformed to ensure better visualization across countries with varying counts of laureates. To gain deeper insights, we will now proceed to analyze the data further through a series of exercises.
 
 ## Exercises {.unnumbered}
 
