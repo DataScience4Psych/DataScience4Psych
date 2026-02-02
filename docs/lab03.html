@@ -537,6 +537,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#packages-2"><i class="fa fa-check"></i>Packages</a></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#data-2"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#note-on-original-place-names"><i class="fa fa-check"></i>Note on original place names</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#exercises-2"><i class="fa fa-check"></i>Exercises</a>
 <ul>
@@ -1655,7 +1656,7 @@ div.csl-indent {
 <div id="lab03" class="section level1 hasAnchor" number="29">
 <h1><span class="header-section-number">29</span> Lab: Nobel laureates<a href="lab03.html#lab03" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In January 2017, Buzzfeed published an article titled <a href="https://www.buzzfeednews.com/article/peteraldhous/immigration-and-science">“These Nobel Prize Winners Show Why Immigration Is So Important for American Science”</a>. The article highlighted that many U.S.-based Nobel laureates in the sciences were born outside the United States, emphasizing the role of immigration in scientific innovation. More recently, in December 2025, The New York Times published a related article <a href="https://www.nytimes.com/2025/12/10/science/nobel-prize-immigrants-science.html">“Nobel Prize Winners Show Why Immigration Is Vital to Science”</a> <span class="citation">(<a href="references.html#ref-gorman2025nobel">Gorman 2025</a>)</span>, further reinforcing this important relationship between immigration and scientific achievement.</p>
-<p>In this lab, you will analyze Nobel laureate data to update and extend some of the visualizations from the article.</p>
+<p>In this lab, you will analyze Nobel laureate data to update and extend some of the visualizations from the article. You’ll practice data wrangling and visualization using the <code>tidyverse</code> packages while exploring the relationship between immigration and scientific recognition. These data were pulled from the <a href="https://nobelprize.readme.io/docs">Nobel Prize API</a>.</p>
 <div id="learning-goals-1" class="section level2 unnumbered hasAnchor">
 <h2>Learning goals<a href="lab03.html#learning-goals-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>By completing this lab, you will:</p>
@@ -1706,8 +1707,7 @@ You can load them by running the following in your Console:</p>
 </div>
 <div id="data-2" class="section level3 unnumbered hasAnchor">
 <h3>Data<a href="lab03.html#data-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The dataset for this assignment can be found as a csv (comma separated values) file in the <code>data</code> folder of your repository.
-You can read it in using the following.</p>
+<p>The dataset for this assignment can be found as a csv (comma separated values) file in the <code>data</code> folder of your repository. You can read it in using the following. (You can also see how I created this data in the <code>data/update_data.R</code> script if you’re curious.)</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="lab03.html#cb120-1" tabindex="-1"></a>nobel <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/nobel.csv&quot;</span>)</span></code></pre></div>
 <p>The variable descriptions are as follows:</p>
 <ul>
@@ -1732,8 +1732,11 @@ You can read it in using the following.</p>
 <li><code>share</code>: Number of other winners award is shared with</li>
 <li><code>motivation</code>: Motivation for recognition</li>
 </ul>
+</div>
+<div id="note-on-original-place-names" class="section level3 unnumbered hasAnchor">
+<h3>Note on original place names<a href="lab03.html#note-on-original-place-names" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In a few cases, the name of the city/country changed after laureate was given (e.g., in 1975, Bosnia and Herzegovina was called the Socialist Federative Republic of Yugoslavia).
-In these cases the variables below reflect a different name than their counterparts without the suffix `_original`.</p>
+In these cases the variables below reflect a different name than their counterparts without the suffix <code>_original</code>.</p>
 <ul>
 <li><code>born_country_original</code>: Original country where laureate was born</li>
 <li><code>born_city_original</code>: Original city where laureate was born</li>
@@ -1742,6 +1745,10 @@ In these cases the variables below reflect a different name than their counterpa
 <li><code>city_original</code>: Original city where laureate lived at the time of winning the award</li>
 <li><code>country_original</code>: Original country where laureate lived at the time of winning the award</li>
 </ul>
+<pre><code>## 82 codes from your data successfully matched countries in the map
+## 1 codes from your data failed to match with a country code in the map
+## 160 codes from the map weren&#39;t represented in your data</code></pre>
+<p><img src="0305_lab_nobellaureates_files/figure-html/map-1.png" alt="" width="672" /></p>
 </div>
 </div>
 <div id="exercises-2" class="section level2 unnumbered hasAnchor">
@@ -1777,16 +1784,16 @@ If not, we set the <code>country_us</code> to <code>"Other"</code>.</p>
 <blockquote>
 <p>Note: We can achieve the same result using the <code>fct_other()</code> function we’ve seen before (i.e. with <code>country_us = fct_other(country, "USA")</code>). We decided to use the <code>if_else()</code> here to show you one example of an if statement in R.</p>
 </blockquote>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lab03.html#cb121-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb121-2"><a href="lab03.html#cb121-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb121-3"><a href="lab03.html#cb121-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
-<span id="cb121-4"><a href="lab03.html#cb121-4" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab03.html#cb122-1" tabindex="-1"></a>nobel_living <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb122-2"><a href="lab03.html#cb122-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb122-3"><a href="lab03.html#cb122-3" tabindex="-1"></a>    <span class="at">country_us =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;USA&quot;</span>, <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb122-4"><a href="lab03.html#cb122-4" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Next, we will limit our analysis to only the following categories: Physics, Medicine, Chemistry, and Economics.</p>
 <blockquote>
 <p>Note: Technically, the Nobel Prize in Economics is a memorial prize. It was established in 1968. If you want to annoy an economist, point that distinction out to them… More info <a href="https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences">here</a> if you want to learn some more.</p>
 </blockquote>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab03.html#cb122-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
-<span id="cb122-2"><a href="lab03.html#cb122-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lab03.html#cb123-1" tabindex="-1"></a>nobel_living_science <span class="ot">&lt;-</span> nobel_living <span class="sc">%&gt;%</span></span>
+<span id="cb123-2"><a href="lab03.html#cb123-2" tabindex="-1"></a>  <span class="fu">filter</span>(category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Physics&quot;</span>, <span class="st">&quot;Medicine&quot;</span>, <span class="st">&quot;Chemistry&quot;</span>, <span class="st">&quot;Economics&quot;</span>))</span></code></pre></div>
 <p>For the next exercise, work with the <code>nobel_living_science</code> data frame you created above.
 You’ll need to define this data frame in your R Markdown document, even though the next exercise doesn’t explicitly ask you to do so.</p>
 <ol start="3" style="list-style-type: decimal">
@@ -1822,7 +1829,7 @@ Explain your reasoning in 1-2 sentences.</p>
 <div id="heres-where-those-immigrant-nobelists-were-born" class="section level3 unnumbered hasAnchor">
 <h3>Here’s where those immigrant Nobelists were born<a href="lab03.html#heres-where-those-immigrant-nobelists-were-born" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <blockquote>
-<p>Note: Your bar plot won’t exactly match the one from the Buzzfeed article. This is likely because the data has been updated since the article was published.</p>
+<p>Note: Your bar plot won’t exactly match the one from the Buzzfeed article. We’re using data pulled directly from the Nobel Prize API, which is more up to date than the data used in the Buzzfeed article. So don’t worry if your plot looks a little different!</p>
 </blockquote>
 <ol start="6" style="list-style-type: decimal">
 <li>In a single pipeline, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the <code>count()</code> function) for their birth country (<code>born_country</code>) and arrange the resulting data frame in descending order of number of observations for each country. Which country is the most common?</li>

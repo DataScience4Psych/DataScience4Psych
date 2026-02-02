@@ -66,8 +66,7 @@ library(tidyverse)
 
 ### Data {.unnumbered}
 
-The dataset for this assignment can be found as a csv (comma separated values) file in the `data` folder of your repository.
-You can read it in using the following.
+The dataset for this assignment can be found as a csv (comma separated values) file in the `data` folder of your repository. You can read it in using the following. (You can also see how I created this data in the `data/update_data.R` script if you're curious.)
 
 ```{r load-data, message = FALSE}
 nobel <- read_csv("data/nobel.csv")
@@ -96,6 +95,7 @@ The variable descriptions are as follows:
 - `share`: Number of other winners award is shared with
 - `motivation`: Motivation for recognition
 
+### Note on original place names {.unnumbered}
 In a few cases, the name of the city/country changed after laureate was given (e.g., in 1975, Bosnia and Herzegovina was called the Socialist Federative Republic of Yugoslavia).
 In these cases the variables below reflect a different name than their counterparts without the suffix `_original`.
 
@@ -105,6 +105,36 @@ In these cases the variables below reflect a different name than their counterpa
 - `died_city_original`: Original city where laureate died
 - `city_original`: Original city where laureate lived at the time of winning the award
 - `country_original`: Original country where laureate lived at the time of winning the award
+
+```{r map, message=FALSE, warning=FALSE,echo=FALSE}
+library(maps)
+library(rworldmap)
+library(ggplot2)
+# A quick look at the data
+
+country_counts <- nobel %>%
+  filter(!is.na(born_country_code)) %>%
+  count(born_country_code) %>%
+  arrange(desc(n)) 
+country_counts$n_log <- log10(country_counts$n + 1)
+country_counts_map <- joinCountryData2Map(country_counts, joinCode="ISO2", nameJoinColumn="born_country_code") 
+ colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
+
+ 
+mapCountryData(country_counts_map, nameColumnToPlot="n_log",
+                           addLegend=T,
+                           mapTitle="Number of Nobel laureates by birth country",
+                           oceanCol='lightblue',
+                           catMethod = "fixedWidth",
+                           missingCountryCol='white',
+                           colourPalette = colourPalette
+                           ) 
+
+
+
+
+```
+
 
 ## Exercises {.unnumbered}
 

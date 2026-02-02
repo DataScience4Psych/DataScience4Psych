@@ -537,6 +537,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#packages-2"><i class="fa fa-check"></i>Packages</a></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#data-2"><i class="fa fa-check"></i>Data</a></li>
+<li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#note-on-original-place-names"><i class="fa fa-check"></i>Note on original place names</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="lab03.html"><a href="lab03.html#exercises-2"><i class="fa fa-check"></i>Exercises</a>
 <ul>
@@ -1674,31 +1675,31 @@ openai_api_key &lt;- readLines(&quot;path/to/api_key.txt&quot;)</code></pre>
 </ul>
 <p>Next, we define a function to generate text using OpenAI’s API. The function takes a prompt as input and returns the generated text.</p>
 <p>Here’s a basic function for text generation:</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="working-with-openais-api.html#cb596-1" tabindex="-1"></a>generate_text <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
-<span id="cb596-2"><a href="working-with-openais-api.html#cb596-2" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
-<span id="cb596-3"><a href="working-with-openais-api.html#cb596-3" tabindex="-1"></a>    <span class="co"># curl https://api.openai.com/v1/chat/completions</span></span>
-<span id="cb596-4"><a href="working-with-openais-api.html#cb596-4" tabindex="-1"></a>    <span class="at">url =</span> <span class="st">&quot;https://api.openai.com/v1/chat/completions&quot;</span>,</span>
-<span id="cb596-5"><a href="working-with-openais-api.html#cb596-5" tabindex="-1"></a>    <span class="co"># -H &quot;Authorization: Bearer $OPENAI_API_KEY&quot;</span></span>
-<span id="cb596-6"><a href="working-with-openais-api.html#cb596-6" tabindex="-1"></a>    <span class="fu">add_headers</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">&quot;Bearer&quot;</span>, openai_api_key)),</span>
-<span id="cb596-7"><a href="working-with-openais-api.html#cb596-7" tabindex="-1"></a>    <span class="co"># -H &quot;Content-Type: application/json&quot;</span></span>
-<span id="cb596-8"><a href="working-with-openais-api.html#cb596-8" tabindex="-1"></a>    <span class="fu">content_type_json</span>(),</span>
-<span id="cb596-9"><a href="working-with-openais-api.html#cb596-9" tabindex="-1"></a>    <span class="co"># -d &#39;{</span></span>
-<span id="cb596-10"><a href="working-with-openais-api.html#cb596-10" tabindex="-1"></a>    <span class="co">#   &quot;model&quot;: &quot;gpt-3.5-turbo&quot;,</span></span>
-<span id="cb596-11"><a href="working-with-openais-api.html#cb596-11" tabindex="-1"></a>    <span class="co">#   &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is a banana?&quot;}]</span></span>
-<span id="cb596-12"><a href="working-with-openais-api.html#cb596-12" tabindex="-1"></a>    <span class="co"># }&#39;</span></span>
-<span id="cb596-13"><a href="working-with-openais-api.html#cb596-13" tabindex="-1"></a>    <span class="at">encode =</span> <span class="st">&quot;json&quot;</span>,</span>
-<span id="cb596-14"><a href="working-with-openais-api.html#cb596-14" tabindex="-1"></a>    <span class="at">body =</span> <span class="fu">list</span>(</span>
-<span id="cb596-15"><a href="working-with-openais-api.html#cb596-15" tabindex="-1"></a>      <span class="at">model =</span> <span class="st">&quot;gpt-3.5-turbo&quot;</span>,</span>
-<span id="cb596-16"><a href="working-with-openais-api.html#cb596-16" tabindex="-1"></a>      <span class="at">messages =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">role =</span> <span class="st">&quot;user&quot;</span>, <span class="at">content =</span> prompt))</span>
-<span id="cb596-17"><a href="working-with-openais-api.html#cb596-17" tabindex="-1"></a>    )</span>
-<span id="cb596-18"><a href="working-with-openais-api.html#cb596-18" tabindex="-1"></a>  )</span>
-<span id="cb596-19"><a href="working-with-openais-api.html#cb596-19" tabindex="-1"></a></span>
-<span id="cb596-20"><a href="working-with-openais-api.html#cb596-20" tabindex="-1"></a>  str_content <span class="ot">&lt;-</span> <span class="fu">content</span>(response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb596-21"><a href="working-with-openais-api.html#cb596-21" tabindex="-1"></a>  parsed <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(str_content)</span>
-<span id="cb596-22"><a href="working-with-openais-api.html#cb596-22" tabindex="-1"></a></span>
-<span id="cb596-23"><a href="working-with-openais-api.html#cb596-23" tabindex="-1"></a>  <span class="co"># return(parsed$choices[[1]]$text)</span></span>
-<span id="cb596-24"><a href="working-with-openais-api.html#cb596-24" tabindex="-1"></a>  <span class="fu">return</span>(parsed)</span>
-<span id="cb596-25"><a href="working-with-openais-api.html#cb596-25" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="working-with-openais-api.html#cb597-1" tabindex="-1"></a>generate_text <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
+<span id="cb597-2"><a href="working-with-openais-api.html#cb597-2" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
+<span id="cb597-3"><a href="working-with-openais-api.html#cb597-3" tabindex="-1"></a>    <span class="co"># curl https://api.openai.com/v1/chat/completions</span></span>
+<span id="cb597-4"><a href="working-with-openais-api.html#cb597-4" tabindex="-1"></a>    <span class="at">url =</span> <span class="st">&quot;https://api.openai.com/v1/chat/completions&quot;</span>,</span>
+<span id="cb597-5"><a href="working-with-openais-api.html#cb597-5" tabindex="-1"></a>    <span class="co"># -H &quot;Authorization: Bearer $OPENAI_API_KEY&quot;</span></span>
+<span id="cb597-6"><a href="working-with-openais-api.html#cb597-6" tabindex="-1"></a>    <span class="fu">add_headers</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">&quot;Bearer&quot;</span>, openai_api_key)),</span>
+<span id="cb597-7"><a href="working-with-openais-api.html#cb597-7" tabindex="-1"></a>    <span class="co"># -H &quot;Content-Type: application/json&quot;</span></span>
+<span id="cb597-8"><a href="working-with-openais-api.html#cb597-8" tabindex="-1"></a>    <span class="fu">content_type_json</span>(),</span>
+<span id="cb597-9"><a href="working-with-openais-api.html#cb597-9" tabindex="-1"></a>    <span class="co"># -d &#39;{</span></span>
+<span id="cb597-10"><a href="working-with-openais-api.html#cb597-10" tabindex="-1"></a>    <span class="co">#   &quot;model&quot;: &quot;gpt-3.5-turbo&quot;,</span></span>
+<span id="cb597-11"><a href="working-with-openais-api.html#cb597-11" tabindex="-1"></a>    <span class="co">#   &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is a banana?&quot;}]</span></span>
+<span id="cb597-12"><a href="working-with-openais-api.html#cb597-12" tabindex="-1"></a>    <span class="co"># }&#39;</span></span>
+<span id="cb597-13"><a href="working-with-openais-api.html#cb597-13" tabindex="-1"></a>    <span class="at">encode =</span> <span class="st">&quot;json&quot;</span>,</span>
+<span id="cb597-14"><a href="working-with-openais-api.html#cb597-14" tabindex="-1"></a>    <span class="at">body =</span> <span class="fu">list</span>(</span>
+<span id="cb597-15"><a href="working-with-openais-api.html#cb597-15" tabindex="-1"></a>      <span class="at">model =</span> <span class="st">&quot;gpt-3.5-turbo&quot;</span>,</span>
+<span id="cb597-16"><a href="working-with-openais-api.html#cb597-16" tabindex="-1"></a>      <span class="at">messages =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">role =</span> <span class="st">&quot;user&quot;</span>, <span class="at">content =</span> prompt))</span>
+<span id="cb597-17"><a href="working-with-openais-api.html#cb597-17" tabindex="-1"></a>    )</span>
+<span id="cb597-18"><a href="working-with-openais-api.html#cb597-18" tabindex="-1"></a>  )</span>
+<span id="cb597-19"><a href="working-with-openais-api.html#cb597-19" tabindex="-1"></a></span>
+<span id="cb597-20"><a href="working-with-openais-api.html#cb597-20" tabindex="-1"></a>  str_content <span class="ot">&lt;-</span> <span class="fu">content</span>(response, <span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb597-21"><a href="working-with-openais-api.html#cb597-21" tabindex="-1"></a>  parsed <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(str_content)</span>
+<span id="cb597-22"><a href="working-with-openais-api.html#cb597-22" tabindex="-1"></a></span>
+<span id="cb597-23"><a href="working-with-openais-api.html#cb597-23" tabindex="-1"></a>  <span class="co"># return(parsed$choices[[1]]$text)</span></span>
+<span id="cb597-24"><a href="working-with-openais-api.html#cb597-24" tabindex="-1"></a>  <span class="fu">return</span>(parsed)</span>
+<span id="cb597-25"><a href="working-with-openais-api.html#cb597-25" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div id="example-usage-and-handling-the-response" class="section level2 hasAnchor" number="92.2">
@@ -1706,83 +1707,83 @@ openai_api_key &lt;- readLines(&quot;path/to/api_key.txt&quot;)</code></pre>
 <p>Now that we’ve defined our generate_text() function, let’s test it by sending a request to OpenAI’s API and working with the response.</p>
 <div id="step-1-send-a-request" class="section level3 hasAnchor" number="92.2.1">
 <h3><span class="header-section-number">92.2.1</span> Step 1: Send a Request<a href="working-with-openais-api.html#step-1-send-a-request" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="working-with-openais-api.html#cb597-1" tabindex="-1"></a>prompt <span class="ot">&lt;-</span> <span class="st">&quot;Summarize the key steps in a data science workflow:&quot;</span></span>
-<span id="cb597-2"><a href="working-with-openais-api.html#cb597-2" tabindex="-1"></a>generated_text <span class="ot">&lt;-</span> <span class="fu">generate_text</span>(prompt)</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="working-with-openais-api.html#cb598-1" tabindex="-1"></a>prompt <span class="ot">&lt;-</span> <span class="st">&quot;Summarize the key steps in a data science workflow:&quot;</span></span>
+<span id="cb598-2"><a href="working-with-openais-api.html#cb598-2" tabindex="-1"></a>generated_text <span class="ot">&lt;-</span> <span class="fu">generate_text</span>(prompt)</span></code></pre></div>
 </div>
 <div id="step-2-examine-the-raw-api-response" class="section level3 hasAnchor" number="92.2.2">
 <h3><span class="header-section-number">92.2.2</span> Step 2: Examine the Raw API Response<a href="working-with-openais-api.html#step-2-examine-the-raw-api-response" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When we call the <code>generate_text(prompt)</code> function, OpenAI’s API returns a structured response in JSON format, which R reads as a list. This response contains multiple components, but the most important part is the generated text.</p>
 <p>Let’s print the raw response to see its structure.</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="working-with-openais-api.html#cb598-1" tabindex="-1"></a><span class="fu">print</span>(generated_text)</span>
-<span id="cb598-2"><a href="working-with-openais-api.html#cb598-2" tabindex="-1"></a><span class="co">#&gt; $id</span></span>
-<span id="cb598-3"><a href="working-with-openais-api.html#cb598-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chatcmpl-BSCrtN3Y1U1afbmC1G3dnk1BqiiKD&quot;</span></span>
-<span id="cb598-4"><a href="working-with-openais-api.html#cb598-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-5"><a href="working-with-openais-api.html#cb598-5" tabindex="-1"></a><span class="co">#&gt; $object</span></span>
-<span id="cb598-6"><a href="working-with-openais-api.html#cb598-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chat.completion&quot;</span></span>
-<span id="cb598-7"><a href="working-with-openais-api.html#cb598-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-8"><a href="working-with-openais-api.html#cb598-8" tabindex="-1"></a><span class="co">#&gt; $created</span></span>
-<span id="cb598-9"><a href="working-with-openais-api.html#cb598-9" tabindex="-1"></a><span class="co">#&gt; [1] 1746062349</span></span>
-<span id="cb598-10"><a href="working-with-openais-api.html#cb598-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-11"><a href="working-with-openais-api.html#cb598-11" tabindex="-1"></a><span class="co">#&gt; $model</span></span>
-<span id="cb598-12"><a href="working-with-openais-api.html#cb598-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;gpt-3.5-turbo-0125&quot;</span></span>
-<span id="cb598-13"><a href="working-with-openais-api.html#cb598-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-14"><a href="working-with-openais-api.html#cb598-14" tabindex="-1"></a><span class="co">#&gt; $choices</span></span>
-<span id="cb598-15"><a href="working-with-openais-api.html#cb598-15" tabindex="-1"></a><span class="co">#&gt;   index message.role</span></span>
-<span id="cb598-16"><a href="working-with-openais-api.html#cb598-16" tabindex="-1"></a><span class="co">#&gt; 1     0    assistant</span></span>
-<span id="cb598-17"><a href="working-with-openais-api.html#cb598-17" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          message.content</span></span>
-<span id="cb598-18"><a href="working-with-openais-api.html#cb598-18" tabindex="-1"></a><span class="co">#&gt; 1 1. Define the problem: Clearly outline the objectives and goals of the project and determine what type of data is needed to solve the problem.\n\n2. Data collection: Gather the necessary data from various sources, which may include databases, surveys, APIs, etc.\n\n3. Data preparation: Clean, transform, and preprocess the data to make it suitable for analysis. This may involve dealing with missing values, outliers, and formatting issues.\n\n4. Exploratory data analysis (EDA): Explore the data to gain a better understanding of its characteristics, relationships, and patterns. This may involve visualization techniques and statistical analysis.\n\n5. Feature engineering: Create new features or transform existing features to improve the performance of the model.\n\n6. Model selection: Choose the appropriate machine learning algorithm(s) for the problem at hand based on the nature of the data and the objectives of the project.\n\n7. Model training: Split the data into training and testing sets, and train the selected model(s) on the training data.\n\n8. Model evaluation: Assess the performance of the model(s) using appropriate evaluation metrics and techniques, such as cross-validation or grid search.\n\n9. Model deployment: Deploy the trained model to production and make predictions on new data.\n\n10. Model monitoring and maintenance: Continuously monitor the model&#39;s performance in production, retraining and updating it as needed to ensure it remains accurate and relevant.</span></span>
-<span id="cb598-19"><a href="working-with-openais-api.html#cb598-19" tabindex="-1"></a><span class="co">#&gt;   message.refusal message.annotations logprobs finish_reason</span></span>
-<span id="cb598-20"><a href="working-with-openais-api.html#cb598-20" tabindex="-1"></a><span class="co">#&gt; 1              NA                NULL       NA          stop</span></span>
-<span id="cb598-21"><a href="working-with-openais-api.html#cb598-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-22"><a href="working-with-openais-api.html#cb598-22" tabindex="-1"></a><span class="co">#&gt; $usage</span></span>
-<span id="cb598-23"><a href="working-with-openais-api.html#cb598-23" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens</span></span>
-<span id="cb598-24"><a href="working-with-openais-api.html#cb598-24" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span>
-<span id="cb598-25"><a href="working-with-openais-api.html#cb598-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-26"><a href="working-with-openais-api.html#cb598-26" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens</span></span>
-<span id="cb598-27"><a href="working-with-openais-api.html#cb598-27" tabindex="-1"></a><span class="co">#&gt; [1] 279</span></span>
-<span id="cb598-28"><a href="working-with-openais-api.html#cb598-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-29"><a href="working-with-openais-api.html#cb598-29" tabindex="-1"></a><span class="co">#&gt; $usage$total_tokens</span></span>
-<span id="cb598-30"><a href="working-with-openais-api.html#cb598-30" tabindex="-1"></a><span class="co">#&gt; [1] 298</span></span>
-<span id="cb598-31"><a href="working-with-openais-api.html#cb598-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-32"><a href="working-with-openais-api.html#cb598-32" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details</span></span>
-<span id="cb598-33"><a href="working-with-openais-api.html#cb598-33" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$cached_tokens</span></span>
-<span id="cb598-34"><a href="working-with-openais-api.html#cb598-34" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-35"><a href="working-with-openais-api.html#cb598-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-36"><a href="working-with-openais-api.html#cb598-36" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$audio_tokens</span></span>
-<span id="cb598-37"><a href="working-with-openais-api.html#cb598-37" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-38"><a href="working-with-openais-api.html#cb598-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-39"><a href="working-with-openais-api.html#cb598-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-40"><a href="working-with-openais-api.html#cb598-40" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details</span></span>
-<span id="cb598-41"><a href="working-with-openais-api.html#cb598-41" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$reasoning_tokens</span></span>
-<span id="cb598-42"><a href="working-with-openais-api.html#cb598-42" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-43"><a href="working-with-openais-api.html#cb598-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-44"><a href="working-with-openais-api.html#cb598-44" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$audio_tokens</span></span>
-<span id="cb598-45"><a href="working-with-openais-api.html#cb598-45" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-46"><a href="working-with-openais-api.html#cb598-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-47"><a href="working-with-openais-api.html#cb598-47" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$accepted_prediction_tokens</span></span>
-<span id="cb598-48"><a href="working-with-openais-api.html#cb598-48" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-49"><a href="working-with-openais-api.html#cb598-49" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-50"><a href="working-with-openais-api.html#cb598-50" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$rejected_prediction_tokens</span></span>
-<span id="cb598-51"><a href="working-with-openais-api.html#cb598-51" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb598-52"><a href="working-with-openais-api.html#cb598-52" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-53"><a href="working-with-openais-api.html#cb598-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-54"><a href="working-with-openais-api.html#cb598-54" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-55"><a href="working-with-openais-api.html#cb598-55" tabindex="-1"></a><span class="co">#&gt; $service_tier</span></span>
-<span id="cb598-56"><a href="working-with-openais-api.html#cb598-56" tabindex="-1"></a><span class="co">#&gt; [1] &quot;default&quot;</span></span>
-<span id="cb598-57"><a href="working-with-openais-api.html#cb598-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb598-58"><a href="working-with-openais-api.html#cb598-58" tabindex="-1"></a><span class="co">#&gt; $system_fingerprint</span></span>
-<span id="cb598-59"><a href="working-with-openais-api.html#cb598-59" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="working-with-openais-api.html#cb599-1" tabindex="-1"></a><span class="fu">print</span>(generated_text)</span>
+<span id="cb599-2"><a href="working-with-openais-api.html#cb599-2" tabindex="-1"></a><span class="co">#&gt; $id</span></span>
+<span id="cb599-3"><a href="working-with-openais-api.html#cb599-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chatcmpl-BSCrtN3Y1U1afbmC1G3dnk1BqiiKD&quot;</span></span>
+<span id="cb599-4"><a href="working-with-openais-api.html#cb599-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-5"><a href="working-with-openais-api.html#cb599-5" tabindex="-1"></a><span class="co">#&gt; $object</span></span>
+<span id="cb599-6"><a href="working-with-openais-api.html#cb599-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;chat.completion&quot;</span></span>
+<span id="cb599-7"><a href="working-with-openais-api.html#cb599-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-8"><a href="working-with-openais-api.html#cb599-8" tabindex="-1"></a><span class="co">#&gt; $created</span></span>
+<span id="cb599-9"><a href="working-with-openais-api.html#cb599-9" tabindex="-1"></a><span class="co">#&gt; [1] 1746062349</span></span>
+<span id="cb599-10"><a href="working-with-openais-api.html#cb599-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-11"><a href="working-with-openais-api.html#cb599-11" tabindex="-1"></a><span class="co">#&gt; $model</span></span>
+<span id="cb599-12"><a href="working-with-openais-api.html#cb599-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;gpt-3.5-turbo-0125&quot;</span></span>
+<span id="cb599-13"><a href="working-with-openais-api.html#cb599-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-14"><a href="working-with-openais-api.html#cb599-14" tabindex="-1"></a><span class="co">#&gt; $choices</span></span>
+<span id="cb599-15"><a href="working-with-openais-api.html#cb599-15" tabindex="-1"></a><span class="co">#&gt;   index message.role</span></span>
+<span id="cb599-16"><a href="working-with-openais-api.html#cb599-16" tabindex="-1"></a><span class="co">#&gt; 1     0    assistant</span></span>
+<span id="cb599-17"><a href="working-with-openais-api.html#cb599-17" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          message.content</span></span>
+<span id="cb599-18"><a href="working-with-openais-api.html#cb599-18" tabindex="-1"></a><span class="co">#&gt; 1 1. Define the problem: Clearly outline the objectives and goals of the project and determine what type of data is needed to solve the problem.\n\n2. Data collection: Gather the necessary data from various sources, which may include databases, surveys, APIs, etc.\n\n3. Data preparation: Clean, transform, and preprocess the data to make it suitable for analysis. This may involve dealing with missing values, outliers, and formatting issues.\n\n4. Exploratory data analysis (EDA): Explore the data to gain a better understanding of its characteristics, relationships, and patterns. This may involve visualization techniques and statistical analysis.\n\n5. Feature engineering: Create new features or transform existing features to improve the performance of the model.\n\n6. Model selection: Choose the appropriate machine learning algorithm(s) for the problem at hand based on the nature of the data and the objectives of the project.\n\n7. Model training: Split the data into training and testing sets, and train the selected model(s) on the training data.\n\n8. Model evaluation: Assess the performance of the model(s) using appropriate evaluation metrics and techniques, such as cross-validation or grid search.\n\n9. Model deployment: Deploy the trained model to production and make predictions on new data.\n\n10. Model monitoring and maintenance: Continuously monitor the model&#39;s performance in production, retraining and updating it as needed to ensure it remains accurate and relevant.</span></span>
+<span id="cb599-19"><a href="working-with-openais-api.html#cb599-19" tabindex="-1"></a><span class="co">#&gt;   message.refusal message.annotations logprobs finish_reason</span></span>
+<span id="cb599-20"><a href="working-with-openais-api.html#cb599-20" tabindex="-1"></a><span class="co">#&gt; 1              NA                NULL       NA          stop</span></span>
+<span id="cb599-21"><a href="working-with-openais-api.html#cb599-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-22"><a href="working-with-openais-api.html#cb599-22" tabindex="-1"></a><span class="co">#&gt; $usage</span></span>
+<span id="cb599-23"><a href="working-with-openais-api.html#cb599-23" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens</span></span>
+<span id="cb599-24"><a href="working-with-openais-api.html#cb599-24" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span>
+<span id="cb599-25"><a href="working-with-openais-api.html#cb599-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-26"><a href="working-with-openais-api.html#cb599-26" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens</span></span>
+<span id="cb599-27"><a href="working-with-openais-api.html#cb599-27" tabindex="-1"></a><span class="co">#&gt; [1] 279</span></span>
+<span id="cb599-28"><a href="working-with-openais-api.html#cb599-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-29"><a href="working-with-openais-api.html#cb599-29" tabindex="-1"></a><span class="co">#&gt; $usage$total_tokens</span></span>
+<span id="cb599-30"><a href="working-with-openais-api.html#cb599-30" tabindex="-1"></a><span class="co">#&gt; [1] 298</span></span>
+<span id="cb599-31"><a href="working-with-openais-api.html#cb599-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-32"><a href="working-with-openais-api.html#cb599-32" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details</span></span>
+<span id="cb599-33"><a href="working-with-openais-api.html#cb599-33" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$cached_tokens</span></span>
+<span id="cb599-34"><a href="working-with-openais-api.html#cb599-34" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-35"><a href="working-with-openais-api.html#cb599-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-36"><a href="working-with-openais-api.html#cb599-36" tabindex="-1"></a><span class="co">#&gt; $usage$prompt_tokens_details$audio_tokens</span></span>
+<span id="cb599-37"><a href="working-with-openais-api.html#cb599-37" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-38"><a href="working-with-openais-api.html#cb599-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-39"><a href="working-with-openais-api.html#cb599-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-40"><a href="working-with-openais-api.html#cb599-40" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details</span></span>
+<span id="cb599-41"><a href="working-with-openais-api.html#cb599-41" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$reasoning_tokens</span></span>
+<span id="cb599-42"><a href="working-with-openais-api.html#cb599-42" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-43"><a href="working-with-openais-api.html#cb599-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-44"><a href="working-with-openais-api.html#cb599-44" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$audio_tokens</span></span>
+<span id="cb599-45"><a href="working-with-openais-api.html#cb599-45" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-46"><a href="working-with-openais-api.html#cb599-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-47"><a href="working-with-openais-api.html#cb599-47" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$accepted_prediction_tokens</span></span>
+<span id="cb599-48"><a href="working-with-openais-api.html#cb599-48" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-49"><a href="working-with-openais-api.html#cb599-49" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-50"><a href="working-with-openais-api.html#cb599-50" tabindex="-1"></a><span class="co">#&gt; $usage$completion_tokens_details$rejected_prediction_tokens</span></span>
+<span id="cb599-51"><a href="working-with-openais-api.html#cb599-51" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb599-52"><a href="working-with-openais-api.html#cb599-52" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-53"><a href="working-with-openais-api.html#cb599-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-54"><a href="working-with-openais-api.html#cb599-54" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-55"><a href="working-with-openais-api.html#cb599-55" tabindex="-1"></a><span class="co">#&gt; $service_tier</span></span>
+<span id="cb599-56"><a href="working-with-openais-api.html#cb599-56" tabindex="-1"></a><span class="co">#&gt; [1] &quot;default&quot;</span></span>
+<span id="cb599-57"><a href="working-with-openais-api.html#cb599-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb599-58"><a href="working-with-openais-api.html#cb599-58" tabindex="-1"></a><span class="co">#&gt; $system_fingerprint</span></span>
+<span id="cb599-59"><a href="working-with-openais-api.html#cb599-59" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>As you can see, the response is a nested list containing various metadata (e.g., request ID, model name, creation time), the AI-generated response (inside <code>$choices[[1]]$message$content</code>), token usage information (inside <span class="math inline">\(usage\)</span>total_tokens), and more.</p>
 </div>
 <div id="step-3-extract-the-ai-generated-text" class="section level3 hasAnchor" number="92.2.3">
 <h3><span class="header-section-number">92.2.3</span> Step 3: Extract the AI-Generated Text<a href="working-with-openais-api.html#step-3-extract-the-ai-generated-text" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Since the response contains both metadata and content, we need to extract only the generated text. The key part of the response is stored in:</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="working-with-openais-api.html#cb599-1" tabindex="-1"></a>ai_response <span class="ot">&lt;-</span> generated_text<span class="sc">$</span>choices<span class="sc">$</span>message<span class="sc">$</span>content</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="working-with-openais-api.html#cb600-1" tabindex="-1"></a>ai_response <span class="ot">&lt;-</span> generated_text<span class="sc">$</span>choices<span class="sc">$</span>message<span class="sc">$</span>content</span></code></pre></div>
 <p>Now, let’s print the AI-generated text:</p>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="working-with-openais-api.html#cb600-1" tabindex="-1"></a><span class="fu">print</span>(ai_response)</span>
-<span id="cb600-2"><a href="working-with-openais-api.html#cb600-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1. Defining the problem: Identify the business problem or question that needs to be answered.\n\n2. Data collection: Collect relevant data from various sources, including databases, APIs, and external sources.\n\n3. Data cleaning: Clean and preprocess the data to remove any inconsistencies, missing values, duplicates, or outliers.\n\n4. Exploratory data analysis: Explore and analyze the data to understand its key characteristics, patterns, and relationships.\n\n5. Feature engineering: Create new features or transform existing ones to improve model performance.\n\n6. Model selection: Choose the appropriate machine learning algorithm or model that best fits the problem and data.\n\n7. Model training: Train the selected model on the training data to learn the underlying patterns.\n\n8. Model evaluation: Evaluate the model&#39;s performance using metrics like accuracy, precision, recall, and F1 score.\n\n9. Model tuning: Fine-tune the model by adjusting hyperparameters to improve performance.\n\n10. Deployment: Deploy the model into production to make predictions on new data and monitor its performance over time.&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="working-with-openais-api.html#cb601-1" tabindex="-1"></a><span class="fu">print</span>(ai_response)</span>
+<span id="cb601-2"><a href="working-with-openais-api.html#cb601-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1. Defining the problem: Identify the business problem or question that needs to be answered.\n\n2. Data collection: Collect relevant data from various sources, including databases, APIs, and external sources.\n\n3. Data cleaning: Clean and preprocess the data to remove any inconsistencies, missing values, duplicates, or outliers.\n\n4. Exploratory data analysis: Explore and analyze the data to understand its key characteristics, patterns, and relationships.\n\n5. Feature engineering: Create new features or transform existing ones to improve model performance.\n\n6. Model selection: Choose the appropriate machine learning algorithm or model that best fits the problem and data.\n\n7. Model training: Train the selected model on the training data to learn the underlying patterns.\n\n8. Model evaluation: Evaluate the model&#39;s performance using metrics like accuracy, precision, recall, and F1 score.\n\n9. Model tuning: Fine-tune the model by adjusting hyperparameters to improve performance.\n\n10. Deployment: Deploy the model into production to make predictions on new data and monitor its performance over time.&quot;</span></span></code></pre></div>
 <p>Ok, so that wasn’t really readable. Let’s try to format it a bit better:</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="working-with-openais-api.html#cb601-1" tabindex="-1"></a><span class="fu">cat</span>(ai_response)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="working-with-openais-api.html#cb602-1" tabindex="-1"></a><span class="fu">cat</span>(ai_response)</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><p>Define the problem: Clearly outline the objectives and goals of the project and determine what type of data is needed to solve the problem.</p></li>
 <li><p>Data collection: Gather the necessary data from various sources, which may include databases, surveys, APIs, etc.</p></li>
@@ -1805,41 +1806,41 @@ openai_api_key &lt;- readLines(&quot;path/to/api_key.txt&quot;)</code></pre>
 <li>usage$total_tokens → The total token count for billing</li>
 </ul>
 <p>To check token usage:</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="working-with-openais-api.html#cb602-1" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>total_tokens) <span class="co"># Total tokens used</span></span>
-<span id="cb602-2"><a href="working-with-openais-api.html#cb602-2" tabindex="-1"></a><span class="co">#&gt; [1] 298</span></span>
-<span id="cb602-3"><a href="working-with-openais-api.html#cb602-3" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>completion_tokens) <span class="co"># Tokens used for output</span></span>
-<span id="cb602-4"><a href="working-with-openais-api.html#cb602-4" tabindex="-1"></a><span class="co">#&gt; [1] 279</span></span>
-<span id="cb602-5"><a href="working-with-openais-api.html#cb602-5" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>prompt_tokens) <span class="co"># Tokens used for input</span></span>
-<span id="cb602-6"><a href="working-with-openais-api.html#cb602-6" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="working-with-openais-api.html#cb603-1" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>total_tokens) <span class="co"># Total tokens used</span></span>
+<span id="cb603-2"><a href="working-with-openais-api.html#cb603-2" tabindex="-1"></a><span class="co">#&gt; [1] 298</span></span>
+<span id="cb603-3"><a href="working-with-openais-api.html#cb603-3" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>completion_tokens) <span class="co"># Tokens used for output</span></span>
+<span id="cb603-4"><a href="working-with-openais-api.html#cb603-4" tabindex="-1"></a><span class="co">#&gt; [1] 279</span></span>
+<span id="cb603-5"><a href="working-with-openais-api.html#cb603-5" tabindex="-1"></a><span class="fu">print</span>(generated_text<span class="sc">$</span>usage<span class="sc">$</span>prompt_tokens) <span class="co"># Tokens used for input</span></span>
+<span id="cb603-6"><a href="working-with-openais-api.html#cb603-6" tabindex="-1"></a><span class="co">#&gt; [1] 19</span></span></code></pre></div>
 </div>
 </div>
 <div id="error-handling-1" class="section level2 hasAnchor" number="92.3">
 <h2><span class="header-section-number">92.3</span> Error Handling<a href="working-with-openais-api.html#error-handling-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Like we’ve seen with other APIs, it’s important to handle errors gracefully. As with any API call, errors can occur due to network issues, invalid requests, or rate limits. To ensure our script doesn’t crash, we can wrap API calls in <code>tryCatch()</code>:</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="working-with-openais-api.html#cb603-1" tabindex="-1"></a>generate_text_safe <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
-<span id="cb603-2"><a href="working-with-openais-api.html#cb603-2" tabindex="-1"></a>  <span class="fu">tryCatch</span>(</span>
-<span id="cb603-3"><a href="working-with-openais-api.html#cb603-3" tabindex="-1"></a>    {</span>
-<span id="cb603-4"><a href="working-with-openais-api.html#cb603-4" tabindex="-1"></a>      <span class="fu">generate_text</span>(prompt)</span>
-<span id="cb603-5"><a href="working-with-openais-api.html#cb603-5" tabindex="-1"></a>    },</span>
-<span id="cb603-6"><a href="working-with-openais-api.html#cb603-6" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb603-7"><a href="working-with-openais-api.html#cb603-7" tabindex="-1"></a>      <span class="fu">warning</span>(<span class="st">&quot;API call failed: &quot;</span>, e<span class="sc">$</span>message)</span>
-<span id="cb603-8"><a href="working-with-openais-api.html#cb603-8" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb603-9"><a href="working-with-openais-api.html#cb603-9" tabindex="-1"></a>    }</span>
-<span id="cb603-10"><a href="working-with-openais-api.html#cb603-10" tabindex="-1"></a>  )</span>
-<span id="cb603-11"><a href="working-with-openais-api.html#cb603-11" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="working-with-openais-api.html#cb604-1" tabindex="-1"></a>generate_text_safe <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
+<span id="cb604-2"><a href="working-with-openais-api.html#cb604-2" tabindex="-1"></a>  <span class="fu">tryCatch</span>(</span>
+<span id="cb604-3"><a href="working-with-openais-api.html#cb604-3" tabindex="-1"></a>    {</span>
+<span id="cb604-4"><a href="working-with-openais-api.html#cb604-4" tabindex="-1"></a>      <span class="fu">generate_text</span>(prompt)</span>
+<span id="cb604-5"><a href="working-with-openais-api.html#cb604-5" tabindex="-1"></a>    },</span>
+<span id="cb604-6"><a href="working-with-openais-api.html#cb604-6" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb604-7"><a href="working-with-openais-api.html#cb604-7" tabindex="-1"></a>      <span class="fu">warning</span>(<span class="st">&quot;API call failed: &quot;</span>, e<span class="sc">$</span>message)</span>
+<span id="cb604-8"><a href="working-with-openais-api.html#cb604-8" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb604-9"><a href="working-with-openais-api.html#cb604-9" tabindex="-1"></a>    }</span>
+<span id="cb604-10"><a href="working-with-openais-api.html#cb604-10" tabindex="-1"></a>  )</span>
+<span id="cb604-11"><a href="working-with-openais-api.html#cb604-11" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now, we can use <code>generate_text_safe()</code> to handle errors. If an error occurs, the function will return <code>NULL</code> and print a warning message.</p>
 </div>
 <div id="processing-multiple-requests" class="section level2 hasAnchor" number="92.4">
 <h2><span class="header-section-number">92.4</span> Processing Multiple Requests<a href="working-with-openais-api.html#processing-multiple-requests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When working with multiple prompts, we can use <code>purrr::map_chr()</code> to process them efficiently:</p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="working-with-openais-api.html#cb604-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb604-2"><a href="working-with-openais-api.html#cb604-2" tabindex="-1"></a>prompts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb604-3"><a href="working-with-openais-api.html#cb604-3" tabindex="-1"></a>  <span class="st">&quot;Define p-value&quot;</span>,</span>
-<span id="cb604-4"><a href="working-with-openais-api.html#cb604-4" tabindex="-1"></a>  <span class="st">&quot;Explain Type I error&quot;</span>,</span>
-<span id="cb604-5"><a href="working-with-openais-api.html#cb604-5" tabindex="-1"></a>  <span class="st">&quot;What is statistical power?&quot;</span></span>
-<span id="cb604-6"><a href="working-with-openais-api.html#cb604-6" tabindex="-1"></a>)</span>
-<span id="cb604-7"><a href="working-with-openais-api.html#cb604-7" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb604-8"><a href="working-with-openais-api.html#cb604-8" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">map</span>(prompts, generate_text_safe)</span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="working-with-openais-api.html#cb605-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb605-2"><a href="working-with-openais-api.html#cb605-2" tabindex="-1"></a>prompts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb605-3"><a href="working-with-openais-api.html#cb605-3" tabindex="-1"></a>  <span class="st">&quot;Define p-value&quot;</span>,</span>
+<span id="cb605-4"><a href="working-with-openais-api.html#cb605-4" tabindex="-1"></a>  <span class="st">&quot;Explain Type I error&quot;</span>,</span>
+<span id="cb605-5"><a href="working-with-openais-api.html#cb605-5" tabindex="-1"></a>  <span class="st">&quot;What is statistical power?&quot;</span></span>
+<span id="cb605-6"><a href="working-with-openais-api.html#cb605-6" tabindex="-1"></a>)</span>
+<span id="cb605-7"><a href="working-with-openais-api.html#cb605-7" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb605-8"><a href="working-with-openais-api.html#cb605-8" tabindex="-1"></a>responses <span class="ot">&lt;-</span> <span class="fu">map</span>(prompts, generate_text_safe)</span></code></pre></div>
 <p>This code generates text for each prompt in the <code>prompts</code> vector. If an error occurs, the response will be <code>NULL</code>. After running this code, we can examine the responses and handle any errors. I’ve included a table below to display the responses.</p>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e86ddf0b8510411adfb8" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e86ddf0b8510411adfb8">{"x":{"filter":"none","vertical":false,"data":[["Define p-value","Explain Type I error","What is statistical power?"],["The p-value is a statistical measure that helps determine the significance of results in a hypothesis test. It represents the probability that the observed data or more extreme data would occur if the null hypothesis were true. A smaller p-value indicates stronger evidence against the null hypothesis, while a larger p-value suggests weaker evidence. Typically, a p-value of 0.05 or less is considered statistically significant.","Type I error, also known as a false positive, occurs when a statistical test incorrectly rejects a true null hypothesis. This means that the test concludes that there is a significant difference or effect when in reality there is no true difference or effect. \n\nIn simpler terms, a Type I error is when we mistakenly believe that there is an effect or relationship between variables when there isn't one. This error is typically associated with the p-value in hypothesis testing, where a small p-value (usually less than 0.05) leads to the rejection of the null hypothesis. However, this rejection may be incorrect and the result is a Type I error. \n\nType I errors are a concern because they can lead to incorrect conclusions and decisions based on faulty information. Researchers and analysts must be mindful of the possibility of Type I errors and take steps to minimize their occurrence, such as adjusting the significance level or conducting follow-up studies to verify results.","Statistical power is the probability that a statistical test will correctly reject a null hypothesis that is false. In other words, it is the likelihood that an experiment will detect an effect or relationship that truly exists in the population being studied. A study with high statistical power is more likely to produce accurate and reliable results, while a study with low statistical power is more likely to produce false negatives or inconclusive findings."],[89,199,94],["gpt-3.5-turbo-0125","gpt-3.5-turbo-0125","gpt-3.5-turbo-0125"],["2025-05-01T01:19:13Z","2025-05-01T01:19:14Z","2025-05-01T01:19:15Z"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>prompt<\/th>\n      <th>ai_response<\/th>\n      <th>tokens_used<\/th>\n      <th>model<\/th>\n      <th>completion_time<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"autoWidth":true,"bInfo":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":2},{"name":"prompt","targets":0},{"name":"ai_response","targets":1},{"name":"tokens_used","targets":2},{"name":"model","targets":3},{"name":"completion_time","targets":4}],"order":[],"orderClasses":false,"lengthMenu":[3,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
@@ -1847,10 +1848,10 @@ openai_api_key &lt;- readLines(&quot;path/to/api_key.txt&quot;)</code></pre>
 <div id="rate-limiting" class="section level3 hasAnchor" number="92.4.1">
 <h3><span class="header-section-number">92.4.1</span> Rate Limiting<a href="working-with-openais-api.html#rate-limiting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>OpenAI has rate limits we need to respect. We can add delays between requests to avoid exceeding these limits. Here’s a throttled version of the <code>generate_text()</code> function:</p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="working-with-openais-api.html#cb605-1" tabindex="-1"></a>generate_text_throttled <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
-<span id="cb605-2"><a href="working-with-openais-api.html#cb605-2" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">1</span>) <span class="co"># Wait 1 second between requests</span></span>
-<span id="cb605-3"><a href="working-with-openais-api.html#cb605-3" tabindex="-1"></a>  <span class="fu">generate_text_safe</span>(prompt)</span>
-<span id="cb605-4"><a href="working-with-openais-api.html#cb605-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="working-with-openais-api.html#cb606-1" tabindex="-1"></a>generate_text_throttled <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt) {</span>
+<span id="cb606-2"><a href="working-with-openais-api.html#cb606-2" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">1</span>) <span class="co"># Wait 1 second between requests</span></span>
+<span id="cb606-3"><a href="working-with-openais-api.html#cb606-3" tabindex="-1"></a>  <span class="fu">generate_text_safe</span>(prompt)</span>
+<span id="cb606-4"><a href="working-with-openais-api.html#cb606-4" tabindex="-1"></a>}</span></code></pre></div>
 <p>This function adds a 1-second delay between requests to avoid exceeding OpenAI’s rate limits. You can adjust the delay as needed based on the API’s rate limits.</p>
 </div>
 </div>
