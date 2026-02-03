@@ -21,7 +21,7 @@ start_day <- "Monday"
 
 ## Mason Notes {.unnumbered}
 
-```{r front-include-1, message = FALSE, warning = FALSE, echo = FALSE}
+```{r read-course-status, message = FALSE, warning = FALSE, echo = FALSE}
 ds4p_status <- read_csv("admin/csv/ds4p_status.csv") %>%
   mutate(Status = rowMeans(select(., -Module), na.rm = TRUE) %>%
     round(digits = 3))
@@ -42,7 +42,7 @@ Although these notes have some textbook-like features, they are neither comprehe
 
 In terms of timing, I will have each module completed by the start of the week. Given that the class meets on `r class_days`, the start of the "week" will be `r start_day` at `r start_time`. I may get ahead of this deadline. You can see the current status of the course below. Although you are welcome to work ahead, be aware that I will be making changes to modules that haven't officially started yet. In addition, I may add optional materials to previous modules that might be helpful.
 
-```{r front-include-8,echo=FALSE}
+```{r embed-gromit-video,echo=FALSE}
 # Gromit Placing Rail Tracks for 10 Hours
 if (knitr::is_html_output()) {
   "https://www.youtube.com/watch?v=fwJHNw9jU_U" %>%
@@ -53,20 +53,20 @@ if (knitr::is_html_output()) {
 }
 ```
 <!--
-```{r front-include-2,echo=FALSE, eval = knitr::is_html_output(),error=FALSE}
+```{r embed-gromit-video-html,echo=FALSE, eval = knitr::is_html_output(),error=FALSE}
 # Gromit Placing Rail Tracks for 10 Hours
 "https://www.youtube.com/watch?v=fwJHNw9jU_U" %>%
   embed_url() %>%
   use_align("center")
 ```
-```{r front-include-3,echo=FALSE, eval = knitr::is_latex_output()}
+```{r embed-gromit-video-latex,echo=FALSE, eval = knitr::is_latex_output()}
 # Gromit Placing Rail Tracks for 10 Hours
 embed_youtube_alt("fwJHNw9jU_U")
 ```
 -->
 The table below shows the current status of the course, listing proportions of specific components by module. Overall completion: `r round(mean(ds4p_status$Status,na.rm = TRUE),digits = 5)*100`%
 
-```{r front-include-4, message = FALSE, warning = FALSE, echo = FALSE}
+```{r display-status-table, message = FALSE, warning = FALSE, echo = FALSE}
 ds4p_status %>%
   DT::datatable(
     rownames = FALSE,
@@ -133,7 +133,7 @@ You do not have to comply with the license for elements of the material in the p
 
 No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
 
-```{r front-setup-2, include = FALSE}
+```{r generate-package-bib, include = FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(
   c(
@@ -148,7 +148,7 @@ knitr::write_bib(
 
 # Sitemap {.unnumbered}
 
-```{r front-include-5, message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
+```{r display-sitemap-table, message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
 ds4p_urls %>%
   mutate(
     title = str_to_title(str_replace_all(
@@ -168,7 +168,7 @@ The book style was designed by [Desirée De Leon](https://desiree.rbind.io/).
 
 This version of the notes was built with:
 
-```{r front-include-6, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
+```{r display-session-platform, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
 # needed because new_session is set to true in _bookdown.yml
 all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>%
   pull(Package)
@@ -180,7 +180,7 @@ session$platform
 
 Along with these packages:
 
-```{r front-include-7, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
+```{r display-session-packages, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
 session$packages %>%
   select(package, loadedversion, date, source) %>%
   DT::datatable(
