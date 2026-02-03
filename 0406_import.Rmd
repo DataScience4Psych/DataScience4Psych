@@ -1,6 +1,6 @@
 # Importing data
 
-```{r include = FALSE}
+```{r import-setup, include = FALSE}
 source("common.R")
 ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
@@ -171,7 +171,7 @@ write_csv(gap_life_exp, "gap_life_exp.csv")
 
 Let's look at the first few lines of `gap_life_exp.csv`. If you're following along, you should be able to open this file or, in a shell, use `head()` on it.
 
-```{r echo = FALSE, comment = NA}
+```{r import-include-9, echo = FALSE, comment = NA}
 "gap_life_exp.csv" %>%
   readLines(n = 6) %>%
   cat(sep = "\n")
@@ -227,7 +227,7 @@ saveRDS(gap_life_exp, "gap_life_exp.rds")
 
 The opposite of `saveRDS()` is `readRDS()`. You must assign the return value to an object. I highly recommend you assign back to the same name as before. Why confuse yourself?!?
 
-```{r error = TRUE}
+```{r import-code-8, error = TRUE}
 rm(gap_life_exp)
 gap_life_exp
 gap_life_exp <- readRDS("gap_life_exp.rds")
@@ -242,7 +242,7 @@ You will eventually hear about `save()` + `load()` and even `save.image()`. You 
 
 Here is a concrete demonstration of how non-alphabetical factor level order is lost with `write_delim()` / `read_delim()` workflows but maintained with `saveRDS()` / `readRDS()`.
 
-```{r error = TRUE}
+```{r import-code-9, error = TRUE}
 (country_levels <- tibble(original = head(levels(gap_life_exp$country))))
 write_csv(gap_life_exp, "gap_life_exp.csv")
 saveRDS(gap_life_exp, "gap_life_exp.rds")
@@ -273,7 +273,7 @@ dput(gap_life_exp, "gap_life_exp-dput.txt")
 
 Now let's look at the first few lines of the file `gap_life_exp-dput.txt`.
 
-```{r echo = FALSE, comment = NA}
+```{r import-include-10, echo = FALSE, comment = NA}
 "gap_life_exp-dput.txt" %>%
   readLines(n = 6) %>%
   cat(sep = "\n")

@@ -2,7 +2,7 @@
 
 This module introduces the basics of interacting with OpenAI's API from R. We'll explore how to make API calls, handle responses, and integrate AI capabilities into data science workflows.
 
-```{r include = FALSE}
+```{r llmapi-setup, include = FALSE}
 source("common.R")
 
 ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
@@ -93,7 +93,7 @@ Now that we’ve defined our generate_text() function, let’s test it by sendin
 
 ### Step 1: Send a Request
 
-```{r cache=TRUE}
+```{r llmapi-code-2, cache=TRUE}
 prompt <- "Summarize the key steps in a data science workflow:"
 generated_text <- generate_text(prompt)
 ```
@@ -104,7 +104,7 @@ generated_text <- generate_text(prompt)
 When we call the `generate_text(prompt)` function, OpenAI's API returns a structured response in JSON format, which R reads as a list. This response contains multiple components, but the most important part is the generated text.
 
 Let's print the raw response to see its structure. 
-```{r cache=TRUE}
+```{r llmapi-code-3, cache=TRUE}
 print(generated_text)
 ```
 
@@ -114,20 +114,20 @@ As you can see, the response is a nested list containing various metadata (e.g.,
 
 Since the response contains both metadata and content, we need to extract only the generated text. The key part of the response is stored in:
 
-```{r cache=TRUE}
+```{r llmapi-code-4, cache=TRUE}
 ai_response <- generated_text$choices$message$content
 ```
 
 Now, let's print the AI-generated text:
 
-```{r cache=TRUE}
+```{r llmapi-code-5, cache=TRUE}
 print(ai_response)
 ```
 
 Ok, so that wasn't really readable. Let's try to format it a bit better:
 
 
-```{r cache=TRUE, results='asis'}
+```{r llmapi-code-6, cache=TRUE, results='asis'}
 cat(ai_response)
 ```
 
@@ -141,7 +141,7 @@ Since OpenAI charges based on token usage, it's useful to monitor how many token
 
 To check token usage:
 
-```{r cache=TRUE}
+```{r llmapi-code-7, cache=TRUE}
 print(generated_text$usage$total_tokens) # Total tokens used
 print(generated_text$usage$completion_tokens) # Tokens used for output
 print(generated_text$usage$prompt_tokens) # Tokens used for input
@@ -152,7 +152,7 @@ print(generated_text$usage$prompt_tokens) # Tokens used for input
 
 Like we've seen with other APIs, it's important to handle errors gracefully. As with any API call, errors can occur due to network issues, invalid requests, or rate limits. To ensure our script doesn’t crash, we can wrap API calls in `tryCatch()`:
 
-```{r echo=TRUE}
+```{r llmapi-code-8, echo=TRUE}
 generate_text_safe <- function(prompt) {
   tryCatch(
     {
@@ -173,7 +173,7 @@ Now, we can use `generate_text_safe()` to handle errors. If an error occurs, the
 When working with multiple prompts, we can use `purrr::map_chr()` to process them efficiently:
 
 
-```{r cache=TRUE}
+```{r llmapi-code-9, cache=TRUE}
 library(purrr)
 prompts <- c(
   "Define p-value",
@@ -186,7 +186,7 @@ responses <- map(prompts, generate_text_safe)
 
 This code generates text for each prompt in the `prompts` vector. If an error occurs, the response will be `NULL`. After running this code, we can examine the responses and handle any errors. I've included a table below to display the responses.
 
-```{r message = FALSE, warning = FALSE, echo = FALSE, cache=TRUE}
+```{r llmapi-include-2, message = FALSE, warning = FALSE, echo = FALSE, cache=TRUE}
 # can we make this table with the prompt and the response?
 responses_df <- tibble(
   prompt = prompts,

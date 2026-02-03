@@ -1,6 +1,6 @@
 <!-- front page -->
 
-```{r include = FALSE}
+```{r front-setup, include = FALSE}
 source("common.R")
 library(tidyverse)
 library(devtools)
@@ -21,7 +21,7 @@ start_day <- "Monday"
 
 ## Mason Notes {.unnumbered}
 
-```{r message = FALSE, warning = FALSE, echo = FALSE}
+```{r front-include-1, message = FALSE, warning = FALSE, echo = FALSE}
 ds4p_status <- read_csv("admin/csv/ds4p_status.csv") %>%
   mutate(Status = rowMeans(select(., -Module), na.rm = TRUE) %>%
     round(digits = 3))
@@ -66,7 +66,7 @@ embed_youtube_alt("fwJHNw9jU_U")
 -->
 The table below shows the current status of the course, listing proportions of specific components by module. Overall completion: `r round(mean(ds4p_status$Status,na.rm = TRUE),digits = 5)*100`%
 
-```{r message = FALSE, warning = FALSE, echo = FALSE}
+```{r front-include-4, message = FALSE, warning = FALSE, echo = FALSE}
 ds4p_status %>%
   DT::datatable(
     rownames = FALSE,
@@ -133,7 +133,7 @@ You do not have to comply with the license for elements of the material in the p
 
 No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
 
-```{r include = FALSE}
+```{r front-setup-2, include = FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(
   c(
@@ -148,7 +148,7 @@ knitr::write_bib(
 
 # Sitemap {.unnumbered}
 
-```{r message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
+```{r front-include-5, message = FALSE, warning = FALSE, echo = FALSE,error=TRUE}
 ds4p_urls %>%
   mutate(
     title = str_to_title(str_replace_all(
@@ -168,7 +168,7 @@ The book style was designed by [Desirée De Leon](https://desiree.rbind.io/).
 
 This version of the notes was built with:
 
-```{r message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
+```{r front-include-6, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
 # needed because new_session is set to true in _bookdown.yml
 all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>%
   pull(Package)
@@ -180,7 +180,7 @@ session$platform
 
 Along with these packages:
 
-```{r message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
+```{r front-include-7, message = FALSE,error=TRUE, warning = FALSE, echo = FALSE}
 session$packages %>%
   select(package, loadedversion, date, source) %>%
   DT::datatable(
