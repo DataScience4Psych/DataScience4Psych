@@ -115,7 +115,7 @@ Sys.getenv("OMDB_API_KEY_FAKE")
 
 1. We can use this to easily add our API key to the request URL. Let's make this API key an object we can refer to as `movie_key`:
 
-```{r}
+```{r diywebdata-code-1, }
 # save it as an object
 movie_key <- Sys.getenv("OMDB_API_KEY")
 ```
@@ -173,14 +173,14 @@ Remember that using `.Rprofile` makes your code un-reproducible.  In this case, 
 
 How can we recreate the same request URLs in R? We could use the [`glue` package](https://glue.tidyverse.org/) to paste together the base URL, parameter labels, and parameter values:
 
-```{r}
+```{r diywebdata-code-2, }
 request <- glue::glue("http://www.omdbapi.com/?t=Interstellar&y=2014&plot=short&r=xml&apikey={movie_key}")
 request
 ```
 
 This code works, but it only works for a movie titled `Interstellar` from `2014` where we want the `short` plot in an `XML` format. Let's try to pull out more variables and paste them in with `glue`:
 
-```{r}
+```{r diywebdata-code-3, }
 glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&apikey={api_key}",
   title = "Interstellar",
   year = "2014",
@@ -192,7 +192,7 @@ glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&ap
 
 We could go even further and make this code into a function called `omdb()` that we can reuse more easily.
 
-```{r}
+```{r diywebdata-code-4, }
 omdb <- function(title, year, plot, format, api_key) {
   glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&apikey={api_key}")
 }
@@ -311,14 +311,14 @@ library(jsonlite)
 
 Parsing our JSON response with `fromJSON()`:
 
-```{r}
+```{r diywebdata-code-5, }
 answer_json %>%
   fromJSON()
 ```
 
 The output is a named list. A familiar and friendly R structure. Because data frames are lists and because this list has no nested lists-within-lists, we can coerce it very simply:
 
-```{r}
+```{r diywebdata-code-6, }
 answer_json %>%
   fromJSON() %>%
   as_tibble() %>%
@@ -336,7 +336,7 @@ library(xml2)
 
 Parsing our XML response with `read_xml()`:
 
-```{r}
+```{r diywebdata-code-7, }
 (xml_parsed <- read_xml(answer_xml))
 ```
 
@@ -347,19 +347,19 @@ Not exactly the result we were hoping for! However, this does tell us about the 
 
 The xml2 package has various functions to assist in navigating through XML. We can use the `xml_children()` function to extract all of the children nodes (i.e. the single child, `<movie>`):
 
-```{r}
+```{r diywebdata-code-8, }
 (contents <- xml_contents(xml_parsed))
 ```
 
 The `xml_attrs()` function "retrieves all attribute values as a named character vector". Let's use this to extract the information that we want from the `<movie>` node:
 
-```{r}
+```{r diywebdata-code-9, }
 (attrs <- xml_attrs(contents)[[1]])
 ```
 
 We can transform this named character vector into a data frame with the help of `dplyr::bind_rows()`:
 
-```{r}
+```{r diywebdata-code-10, }
 attrs %>%
   bind_rows() %>%
   glimpse()
@@ -435,13 +435,13 @@ content(response_xml, as = "parsed")
 
 httr also gives us access to lots of useful information about the quality of our response. For example, the header:
 
-```{r}
+```{r diywebdata-code-11, }
 headers(response_xml)
 ```
 
 And also a handy means to extract specifically the HTTP status code:
 
-```{r}
+```{r diywebdata-code-12, }
 status_code(response_xml)
 ```
 
@@ -534,7 +534,7 @@ knitr::include_graphics("img/pubs.png")
 
 We can try to get this data directly into R using `read_html()` and `html_table()`:
 
-```{r}
+```{r diywebdata-code-13, }
 research <- read_html("https://www.scimagojr.com/countryrank.php") %>%
   html_table(fill = TRUE)
 ```
@@ -543,7 +543,7 @@ If you look at the structure of `research` (i.e. via `str(research)`) you'll see
 
 Can we be more specific about what we obtain from this page? We can, by highlighting that table with CSS selectors:
 
-```{r}
+```{r diywebdata-code-14, }
 research <- read_html("http://www.scimagojr.com/countryrank.php") %>%
   html_node(".tabla_datos") %>%
   html_table()

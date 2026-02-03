@@ -8,7 +8,7 @@ library(tweetrmd) # ... embedding tweets
 
 ## Working with a single data frame
 
-```{r, echo=FALSE}
+```{r hands-include-1, echo=FALSE}
 # hands on wrangling
 "https://www.youtube.com/watch?v=eeKBSjv7K6E" %>%
   embed_url() %>%
@@ -17,7 +17,7 @@ library(tweetrmd) # ... embedding tweets
 
 You can follow along with the slides [here][d09_wrangle]) if you would like to open them full-screen.
 
-```{r, echo=FALSE}
+```{r hands-include-2, echo=FALSE}
 ds4p_urls %>%
   slide_url("d09_wrangle") %>%
   include_url(height = "400px")
@@ -25,7 +25,7 @@ ds4p_urls %>%
 
 ## Activity 04: Hotels
 
-```{r, echo=FALSE}
+```{r hands-include-3, echo=FALSE}
 ds4p_urls %>%
   slide_url("d09_wrangle", "#18") %>%
   include_url(height = "400px")
@@ -33,7 +33,7 @@ ds4p_urls %>%
 
 You can find the materials for the Hotels activity [here](https://github.com/DataScience4Psych/ae-04-hotels-datawrangling). The compiled version should look something like the following...
 
-```{r, echo=FALSE}
+```{r hands-include-4, echo=FALSE}
 "https://datascience4psych.github.io/ae-04-hotels-datawrangling/hotels-datawrangling.html" %>%
   include_url(height = "400px")
 ```
@@ -75,7 +75,7 @@ library(gapminder)
 
 We're going to make changes to the `gapminder` tibble. To eliminate any fear that you're damaging the data that comes with the package, we create an explicit copy of `gapminder` for our experiments.
 
-```{r}
+```{r hands-code-1, }
 (my_gap <- gapminder)
 ```
 
@@ -99,7 +99,7 @@ Imagine we wanted to recover each country's GDP. After all, the Gapminder data h
 
 `mutate()` is a function that defines and inserts new variables into a tibble. You can refer to existing variables by name.
 
-```{r}
+```{r hands-code-2, }
 my_gap %>%
   mutate(gdp = pop * gdpPercap)
 ```
@@ -121,7 +121,7 @@ How I achieve this:
 1. Divide raw `gdpPercap` by this Canadian figure.
 1. Discard the temporary variable of replicated Canadian `gdpPercap`.
 
-```{r}
+```{r hands-code-3, }
 ctib <- my_gap %>%
   filter(country == "Canada")
 ## this is a semi-dangerous way to add this variable
@@ -138,7 +138,7 @@ Note that, `mutate()` builds new variables sequentially so you can reference ear
 
 How could we sanity check that this worked? The Canadian values for `gdpPercapRel` better all be 1!
 
-```{r}
+```{r hands-code-4, }
 my_gap %>%
   filter(country == "Canada") %>%
   select(country, year, gdpPercapRel)
@@ -146,7 +146,7 @@ my_gap %>%
 
 I perceive Canada to be a "high GDP" country, so I predict that the distribution of `gdpPercapRel` is located below 1, possibly even well below. Check your intuition!
 
-```{r}
+```{r hands-code-5, }
 summary(my_gap$gdpPercapRel)
 ```
 
@@ -158,14 +158,14 @@ Remember: Trust No One. Including (especially?) yourself. Always try to find a w
 
 `arrange()` reorders the rows in a data frame. Imagine you wanted this data ordered by year then country, as opposed to by country then year.
 
-```{r}
+```{r hands-code-6, }
 my_gap %>%
   arrange(year, country)
 ```
 
 Or maybe you want just the data from 2007, sorted on life expectancy?
 
-```{r}
+```{r hands-code-7, }
 my_gap %>%
   filter(year == 2007) %>%
   arrange(lifeExp)
@@ -173,7 +173,7 @@ my_gap %>%
 
 Oh, you'd like to sort on life expectancy in **desc**ending order? Then use `desc()`.
 
-```{r}
+```{r hands-code-8, }
 my_gap %>%
   filter(year == 2007) %>%
   arrange(desc(lifeExp))
@@ -185,7 +185,7 @@ I advise that your analyses NEVER rely on rows or variables being in a specific 
 
 When I first cleaned this Gapminder excerpt, I was a [`camelCase`](https://en.wikipedia.org/wiki/Camel_case) person, but now I'm all about [`snake_case`](https://en.wikipedia.org/wiki/Snake_case). So I am vexed by the variable names I chose when I cleaned this data years ago. Let's rename some variables!
 
-```{r}
+```{r hands-code-9, }
 my_gap %>%
   rename(
     life_exp = lifeExp,
@@ -203,7 +203,7 @@ You've seen simple use of `select()`. There are two tricks you might enjoy:
 1. `select()` can rename the variables you request to keep.
 1. `select()` can be used with `everything()` to hoist a variable up to the front of the tibble.
   
-```{r}
+```{r hands-code-10, }
 my_gap %>%
   filter(country == "Burundi", year > 1996) %>%
   select(yr = year, lifeExp, gdpPercap) %>%
@@ -230,7 +230,7 @@ Combined with the verbs you already know, these new tools allow you to solve an 
 
 Let's start with simple counting.  How many observations do we have per continent?
 
-```{r}
+```{r hands-code-11, }
 my_gap %>%
   group_by(continent) %>%
   summarize(n = n())
@@ -238,7 +238,7 @@ my_gap %>%
 
 Let us pause here to think about the tidyverse. You could get these same frequencies using `table()` from base R.
 
-```{r}
+```{r hands-code-12, }
 table(gapminder$continent)
 str(table(gapminder$continent))
 ```
@@ -247,7 +247,7 @@ But the object of class `table` that is returned makes downstream computation a 
 
 The `tally()` function is a convenience function that knows to count rows. It honors groups.
 
-```{r}
+```{r hands-code-13, }
 my_gap %>%
   group_by(continent) %>%
   tally()
@@ -255,14 +255,14 @@ my_gap %>%
 
 The `count()` function is an even more convenient function that does both grouping and counting.
 
-```{r}
+```{r hands-code-14, }
 my_gap %>%
   count(continent)
 ```
 
 What if we wanted to add the number of unique countries for each continent? You can compute multiple summaries inside `summarize()`. Use the `n_distinct()` function to count the number of distinct countries within each continent.
 
-```{r}
+```{r hands-code-15, }
 my_gap %>%
   group_by(continent) %>%
   summarize(
@@ -277,7 +277,7 @@ The functions you'll apply within `summarize()` include classical statistical su
 
 Although this may be statistically ill-advised, let's compute the average life expectancy by continent.
 
-```{r}
+```{r hands-code-16, }
 my_gap %>%
   group_by(continent) %>%
   summarize(avg_lifeExp = mean(lifeExp))
@@ -286,7 +286,7 @@ my_gap %>%
 <!--TODO: summarize_at() is soft deprecated as of dplyr 0.8.0-->
 `summarize_at()` applies the same summary function(s) to multiple variables. Let's compute average and median life expectancy and GDP per capita by continent by year...but only for 1952 and 2007.
 
-```{r}
+```{r hands-code-17, }
 my_gap %>%
   filter(year %in% c(1952, 2007)) %>%
   group_by(continent, year) %>%
@@ -295,7 +295,7 @@ my_gap %>%
 
 Let's focus just on Asia. What are the minimum and maximum life expectancies seen by year?
 
-```{r}
+```{r hands-code-18, }
 my_gap %>%
   filter(continent == "Asia") %>%
   group_by(year) %>%
@@ -315,7 +315,7 @@ Sometimes you don't want to collapse the $n$ rows for each group into one row. Y
 
 Let's make a new variable that is the years of life expectancy gained (lost) relative to 1952, for each individual country. We group by country and use `mutate()` to make a new variable. The `first()` function extracts the first value from a vector. Notice that `first()` is operating on the vector of life expectancies *within each country group*.
 
-```{r}
+```{r hands-code-19, }
 my_gap %>%
   group_by(country) %>%
   select(country, year, lifeExp) %>%
@@ -331,7 +331,7 @@ Window functions take $n$ inputs and give back $n$ outputs. Furthermore, the out
 
 Let's revisit the worst and best life expectancies in Asia over time, but retaining info about *which* country contributes these extreme values.
 
-```{r}
+```{r hands-code-20, }
 my_gap %>%
   filter(continent == "Asia") %>%
   select(year, country, lifeExp) %>%
@@ -345,7 +345,7 @@ We see that (min = Afghanistan, max = Japan) is the most frequent result, but Ca
 
 How did that actually work? First, I store and view a partial that leaves off the `filter()` statement. All of these operations should be familiar.
 
-```{r}
+```{r hands-code-21, }
 asia <- my_gap %>%
   filter(continent == "Asia") %>%
   select(year, country, lifeExp) %>%
@@ -357,7 +357,7 @@ Now we apply a window function -- `min_rank()`. Since `asia` is grouped by year,
 
 For concreteness, I use `mutate()` to actually create these variables, even though I dropped this in the solution above. Let's look at a bit of that.
 
-```{r}
+```{r hands-code-22, }
 asia %>%
   mutate(
     le_rank = min_rank(lifeExp),
@@ -378,7 +378,7 @@ These two sets of ranks are formed on-the-fly, within year group, and `filter()`
 
 If we had wanted just the min OR the max, an alternative approach using `top_n()` would have worked.
 
-```{r}
+```{r hands-code-23, }
 my_gap %>%
   filter(continent == "Asia") %>%
   select(year, country, lifeExp) %>%

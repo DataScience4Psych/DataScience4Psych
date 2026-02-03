@@ -22,7 +22,7 @@ library(tidyverse)
 
 First, we need to load the required packages:
 
-```{r, echo=FALSE, message=FALSE}
+```{r llmapi-include-1, echo=FALSE, message=FALSE}
 library(httr) # For making API requests
 library(jsonlite) # For handling JSON responses
 library(tidyverse) # For data wrangling
@@ -37,7 +37,7 @@ To use OpenAI's API, you'll need an API key. Like we learned with other APIs, it
 openai_api_key <- readLines("path/to/api_key.txt")
 ```
 
-```{r, echo=FALSE, include=FALSE}
+```{r llmapi-setup, echo=FALSE, include=FALSE}
 if(file.exists("admin/secrets/openai_api_key.txt")){
 openai_api_key <- readLines("admin/secrets/openai_api_key.txt")
 } else {
@@ -58,7 +58,7 @@ Next, we define a function to generate text using OpenAI's API. The function tak
 Here's a basic function for text generation:
 
 
-```{r, echo=TRUE}
+```{r llmapi-code-1, echo=TRUE}
 generate_text <- function(prompt) {
   response <- POST(
     # curl https://api.openai.com/v1/chat/completions
@@ -219,7 +219,7 @@ As you can see, the table displays the prompts, AI-generated responses, token us
 
 OpenAI has rate limits we need to respect. We can add delays between requests to avoid exceeding these limits. Here's a throttled version of the `generate_text()` function:
 
-```{r}
+```{r llmapi-code-2, }
 generate_text_throttled <- function(prompt) {
   Sys.sleep(1) # Wait 1 second between requests
   generate_text_safe(prompt)

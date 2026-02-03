@@ -10,7 +10,7 @@ set.seed(4561)
 
 Feel free to ignore this extra scaffolding if you don't need this bonus support. However, I strongly encourage you to take a look, even if you think you know what you're doing.
 
-```{r, echo=FALSE}
+```{r datafeeding-include-1, echo=FALSE}
 try_include_tweet("https://twitter.com/ChelseaParlett/status/1439003000740085760")
 ```
 
@@ -50,7 +50,7 @@ install.packages("gapminder")
 
 Now load the package:
 
-```{r}
+```{r datafeeding-code-1, }
 library(gapminder)
 ```
 
@@ -76,13 +76,13 @@ install.packages("tidyverse")
 
 Now load it:
 
-```{r}
+```{r datafeeding-code-2, }
 library(tidyverse)
 ```
 
 Now we can boldly print `gapminder` to screen! It is a tibble (and also a regular data frame) and the tidyverse provides a nice print method that shows the most important stuff and doesn't fill up your Console.
 
-```{r}
+```{r datafeeding-code-3, }
 ## see? it's still a regular data frame, but also a tibble
 class(gapminder)
 gapminder
@@ -90,7 +90,7 @@ gapminder
 
 If you are dealing with plain vanilla data frames, you can rein in data frame printing explicitly with `head()` and `tail()`. Or turn it into a tibble with `as_tibble()`!
 
-```{r}
+```{r datafeeding-code-4, }
 head(gapminder)
 tail(gapminder)
 as_tibble(iris)
@@ -98,7 +98,7 @@ as_tibble(iris)
 
 More ways to query basic info on a data frame:
 
-```{r}
+```{r datafeeding-code-5, }
 names(gapminder)
 ncol(gapminder)
 length(gapminder)
@@ -108,7 +108,7 @@ nrow(gapminder)
 
 A statistical overview can be obtained with `summary()`:
 
-```{r}
+```{r datafeeding-code-6, }
 summary(gapminder)
 ```
 
@@ -122,7 +122,7 @@ plot(lifeExp ~ log(gdpPercap), gapminder)
 
 Let's go back to the result of `str()` to talk about what a data frame is.
 
-```{r}
+```{r datafeeding-code-7, }
 str(gapminder)
 ```
 
@@ -140,14 +140,14 @@ hist(gapminder$lifeExp)
 
 The year variable is an integer variable, but since there are so few unique values it also functions a bit like a categorical variable.
 
-```{r}
+```{r datafeeding-code-8, }
 summary(gapminder$year)
 table(gapminder$year)
 ```
 
 The variables for country and continent hold truly categorical information, which is stored as a *factor* in R.
 
-```{r}
+```{r datafeeding-code-9, }
 class(gapminder$continent)
 summary(gapminder$continent)
 levels(gapminder$continent)
@@ -156,7 +156,7 @@ nlevels(gapminder$continent)
 
 The __levels__ of the factor `continent` are "Africa", "Americas", etc. and this is what's usually presented to your eyeballs by R. In general, the levels are friendly human-readable character strings, like "male/female" and "control/treated". But *never ever ever* forget that, under the hood, R is really storing integer codes 1, 2, 3, etc. Look at the result from `str(gapminder$continent)` if you are skeptical.
 
-```{r}
+```{r datafeeding-code-10, }
 str(gapminder$continent)
 ```
 
@@ -192,7 +192,7 @@ How many rows?
 How many observations per continent?
 Scatterplot life expectancy against GDP per capita.
 Variants of that: indicate continent by color, do for just one continent, do for multiple continents at once but in separate plots
-```{r}
+```{r datafeeding-code-11, }
 hDat <- subset(gapminder, subset = year == 2007)
 str(hDat)
 table(hDat$continent)

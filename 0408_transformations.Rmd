@@ -23,7 +23,7 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 ```
 
 
-```{r, echo=FALSE}
+```{r transformations-include-1, echo=FALSE}
 # Manual dataset preparation steps:
 # 1. Download 'UnitedNations.txt' from the specified URL.
 # 2. Save it in the "data" directory within your current working directory.
@@ -34,7 +34,7 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 # if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
 # devtools::install_github("gmonette/spida2")
 ```
-```{r,message=FALSE}
+```{r transformations-code-1,message=FALSE}
 #if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
 #library(p3d)
 #library(extras)
@@ -50,7 +50,7 @@ un <- read.table("data/UnitedNations.txt", header = TRUE) %>%
 
 Let's visualize an attempt to make our regression behave. Below are the original and log-transformed relationships with ggplot2. You've likely used a log-transformation before, but we'll be exploring the more general family of transformations.
 
-```{r,warning=FALSE,echo=FALSE , fig.width=6,message=FALSE}
+```{r transformations-fig-1,warning=FALSE,echo=FALSE , fig.width=6,message=FALSE}
 # First plot
 p1 <- ggplot(un, aes(x = GDPperCapita, y = infantMortality)) +
   geom_point(color = "steelblue") +
@@ -96,7 +96,7 @@ The basic idea stems from the fact that functions of the form $y' = y^p, \quad y
 Here are some examples to illustrate these concepts:
 
 
-```{r, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
+```{r transformations-fig-2, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
 # Create a data frame for plotting
 x_vals <- seq(-2, 2, by = 0.1)
 df <- expand.grid(x = x_vals, type = c("Concave Up", "Concave Down"))
@@ -150,7 +150,7 @@ To make this concept more intuitive, imagine $y^p$ as a function that gets close
 
 We define a function that produces this transformation. The easy way to define it is:
 
-```{r}
+```{r transformations-code-2, }
 pow <- function(y, p) {
   if (p == 0) {
     log(y)
@@ -162,7 +162,7 @@ pow <- function(y, p) {
 
 Let's test this function with a sequence of x values and visualize the transformations for different powers of p.
 
-```{r, message=FALSE, warning=FALSE}
+```{r transformations-code-3, message=FALSE, warning=FALSE}
 # Testing the transformation with a sequence of x values
 x <- seq(-1, 3, by = .5)
 
@@ -181,7 +181,7 @@ x_transformed_long <- pivot_longer(x_transformed, cols = starts_with("p"), names
 
 Let's visualize the transformed data for different powers of p using ggplot2.
 
-```{r, message=FALSE, warning=FALSE, fig.width=6}
+```{r transformations-code-4, message=FALSE, warning=FALSE, fig.width=6}
 
 ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
   geom_line() +
@@ -191,7 +191,7 @@ ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
 
 Looking at the plot, we can see how different values of $p$ affect the transformation of the data. The transformation with $p=2$ shows a concave up shape, while $p=-1$ shows a concave down shape. The logarithmic transformation ($p=0$) provides a middle ground between these two extremes.
 
-```{r}
+```{r transformations-code-5, }
 
 # test:
 x <- seq(-1, 3, by = .5)
@@ -206,7 +206,7 @@ pow(x, 2)
 
 Because functions are first-class objects in R, we can also define the exponential function and plot it directly.
 
-```{r}
+```{r transformations-code-6, }
 
 plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
@@ -219,7 +219,7 @@ However, this approach works correctly only for a single value of $p$ because th
 
 Most operators in R are __vectorized__ so they work element-wise when their arguments are vectors. When the arguments have incompatible lengths, the shorter argument is __recycled__ to have the same length as the longer one. That is why the following produces sensible results:
 
-```{r}
+```{r transformations-code-7, }
 z <- c(3, 5, 9)
 z + c(1, 1, 1)
 z + 1 # 1 is recycled so the result is equivalent to the previous line
@@ -232,7 +232,7 @@ z^z
 
 We can use `ifelse` which works on a vector instead of a single value.
 
-```{r}
+```{r transformations-code-8, }
 pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
   y <- rep(y, length.out = length(p))
@@ -250,7 +250,7 @@ pow(-1:4, 2)
 
 With a bit more work, we can avoid unnecessary evaluations:
 
-```{r}
+```{r transformations-code-9, }
 pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
   y <- rep(y, length.out = length(p))
@@ -269,7 +269,7 @@ pow(1:10, -1:8)
 
 Let's plot this transformation for a range of values of $p$. The value of `expand.grid` is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.
 
-```{r}
+```{r transformations-code-10, }
 expand.grid(a = c("A", "B"), x = 1:3)
 
 
@@ -307,7 +307,7 @@ xyplot(yval ~ y, dd,
 
 It's much better to have the legend in the same order as the lines in the graph. We can turn `p` into a factor and reverse its order.
 
-```{r}
+```{r transformations-code-11, }
 dd$po <- factor(dd$p)
 dd$po <- reorder(dd$po, -dd$p)
 xyplot(yval ~ y, dd,
@@ -323,13 +323,13 @@ xyplot(yval ~ y, dd,
 
 Uniform quantiles let's us see how far a distribution is from normal.
 
-```{r}
+```{r transformations-code-12, }
 xqplot(un)
 ```
 
 Normal quantiles let's us see how far a distribution is from normal.
 
-```{r}
+```{r transformations-code-13, }
 xqplot(un, ptype = "normal")
 ```
 
@@ -345,7 +345,7 @@ Note that the fact that $x$ or $y$ variables are not normal does not mean that t
 
 Let's explore wages of working women as a function of education.
 
-```{r}
+```{r transformations-code-14, }
 library(latticeExtra)
 un %>%
   xyplot(infantMortality ~ GDPperCapita, .) +
@@ -367,7 +367,7 @@ un %>% subset(country %in% c("United.States", "Canada"))
 
 Below would be a 3D plot showing curvature. However, we can't get the p3d package to install properly right now. The 3D plot would help visualize curvature between wage and education, and heteroskedasticity in wage as a function of education.
 
-```{r}
+```{r transformations-code-15, }
 
 if (require("p3d")) {
 if(FALSE){
@@ -403,10 +403,10 @@ The Box-Cox transformation is similar to Tukey's Ladder of Powers, with the para
 
 ### Video Explanation
 
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
+```{r transformations-include-2, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("vGOpEpjz2Ks")
 ```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
+```{r transformations-include-3, echo=FALSE,eval = knitr::is_html_output()}
 # not mine, but still good
 "https://www.youtube.com/watch?v=vGOpEpjz2Ks" %>%
   embed_url() %>%

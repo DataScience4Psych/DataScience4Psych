@@ -49,7 +49,7 @@ To test this, try determining the exact market shares of the browsers from the p
 
 If we need to visualize this data more effectively, a bar chart is more appropriate:
 
-```{r, fig.align='center', fig.width=4.5}
+```{r plots_to_avoid-code-1, fig.align='center', fig.width=4.5}
 barplot(browsers, main = "Browser Usage (August 2013)")
 ```
 The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.)
@@ -76,7 +76,7 @@ knitr::include_graphics("img/fig1c.png")
 
 Much more informative is to summarizing with a boxplot. If the number of points is small enough, we might as well add them to the plot. When the number of points is too large for us to see them, just showing a boxplot is preferable.
 
-```{r, fig.align="center",fig.width=4,fig.height=4}
+```{r plots_to_avoid-code-2, fig.align="center",fig.width=4,fig.height=4}
 # library("downloader")
 # tmpfile <- tempfile()
 # download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig1.RData")
@@ -117,7 +117,7 @@ knitr::include_graphics("img/fig3c.png")
 
 A quick look at the data demonstrates that this difference is mostly driven by just two points. A version showing the data in the log-scale is much more informative.
 
-```{r, fig.align="center",fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-3, fig.align="center",fig.width=7,fig.height=4}
 df_fig3 <- read.csv("data/bromanfig3.csv")
 
 library(rafalib)
@@ -166,7 +166,7 @@ dat %>%
 
 The purpose of many statistical analyses is to determine relationships between two variables. Sample correlations are typically reported and sometimes plots are displayed to show this. However, showing just the regression line is one way to display your data baldy as it hides the scatter. Surprisingly plots such as the following are commonly seen:
 
-```{r,warning=FALSE}
+```{r plots_to_avoid-code-4,warning=FALSE}
 df_fig4 <- read.csv("data/bromanfig4.csv")
 
 fit <- lm(y ~ x,
@@ -205,7 +205,7 @@ ggplot(
 
 Showing the data is much more informative:
 
-```{r,warning=FALSE}
+```{r plots_to_avoid-code-5,warning=FALSE}
 ggplot(data = df_fig4, aes(x = x, y = y)) +
   geom_point() +
   geom_abline(
@@ -231,7 +231,7 @@ When new technologies or laboratory techniques are introduced, we are often show
 
 In the plot on the left we see the original data which shows very high correlation. But the data follows a distribution with very fat tails. Note that 95% of the data is below the green line. The plot on the right is in the log scale.
 
-```{r,message=FALSE}
+```{r plots_to_avoid-code-6,message=FALSE}
 # if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
 # BiocManager::install("Biobase")
 # BiocManager::install("SpikeInSubset")
@@ -240,7 +240,7 @@ library(Biobase)
 library(SpikeInSubset)
 ```
 
-```{r, fig.width=7.5 , fig.height=4, fig.align='center'}
+```{r plots_to_avoid-code-7, fig.width=7.5 , fig.height=4, fig.align='center'}
 data(mas95)
 mypar(1, 2)
 
@@ -306,7 +306,7 @@ ggplot(
 
 Although the correlation is reduced in the log-scale, it is still close to 1. Does this mean these data are reproduced? To examine how well the second vector reproduces the first, we need to study the differences. Therefore, we should instead plot the difference (in the log scale) versus the average:
 
-```{r,fig.align='center',fig.width=5,fig.height=5}
+```{r plots_to_avoid-code-8,fig.align='center',fig.width=5,fig.height=5}
 df_mas95 <- df_mas95 %>%
   mutate(
     x = (r + g) / 2,
@@ -336,7 +336,7 @@ knitr::include_graphics("img/fig6r_e.png")
 
 There are various better ways of showing these data to illustrate there is an increase after treatment. One is to simply make a scatterplot and which shows that most points are above the identity line. Another alternative is plot the differences against the before values.
 
-```{r,fig.align='center',fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-9,fig.align='center',fig.width=7,fig.height=4}
 set.seed(12201970)
 before <- runif(6, 5, 8)
 after <- rnorm(6, before * 1.05, 2)
@@ -368,7 +368,7 @@ abline(h = 0, lty = 2, col = 1)
 
 Line plots are not a bad choice, although I find them harder to follow than the previous two. Boxplots show you the increase, but lose the paired information.
 
-```{r,fig.align='center',fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-10,fig.align='center',fig.width=7,fig.height=4}
 z <- rep(c(0, 1), rep(6, 2))
 mypar(1, 2)
 plot(
@@ -399,7 +399,7 @@ knitr::include_graphics("img/fig8b.png")
 
 This plot can be made better by simply using color to distinguish the three lines:
 
-```{r,fig.align='center',fig.width=5}
+```{r plots_to_avoid-code-11,fig.align='center',fig.width=5}
 # download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig8dat.csv",tmpfile)
 x <- read.table("data//fig8dat.csv", sep = ",", header = TRUE)
 plot(
@@ -424,7 +424,7 @@ legend(1,
 
 ## Ignoring important factors
 
-```{r,echo=FALSE}
+```{r plots_to_avoid-include-1,echo=FALSE}
 ## simulate data
 set.seed(12201970)
 
@@ -454,7 +454,7 @@ knitr::include_graphics("img/fig9d.png")
 
 Instead we should show each curve. We can use color to distinguish treatment and control and dashed and solid lines to distinguish the original data from the mean of the three groups.
 
-```{r,fig.align='center',fig.width=5}
+```{r plots_to_avoid-code-12,fig.align='center',fig.width=5}
 plot(
   x,
   y1,
@@ -492,7 +492,7 @@ legend("bottomleft",
 
 By default, statistical software like R return many significant digits. This does not mean we should report them. Cutting and pasting directly from R is a bad idea as you might end up showing a table like this for, say, heights of basketball players:
 
-```{r}
+```{r plots_to_avoid-code-13, }
 heights <- cbind(
   rnorm(8, 73, 3),
   rnorm(8, 73, 3),
@@ -508,7 +508,7 @@ heights
 Note we are reporting precision up to 0.00001 inches. Do you know of a tape measure with that much
 precision? This can be easily remedied:
 
-```{r}
+```{r plots_to_avoid-code-14, }
 round(heights, 1)
 ```
 
@@ -545,10 +545,10 @@ I have curated this collection of external video sources on design choices in da
 
 When they're used well, graphs can help us intuitively grasp complex data. But as visual software has enabled more usage of graphs throughout all media, it has also made them easier to use in a careless or dishonest way — and as it turns out, there are plenty of ways graphs can mislead and outright manipulate. Lea Gaslowitz shares some things to look out for.
 
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
+```{r plots_to_avoid-include-2, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("E91bGT9BjYk")
 ```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
+```{r plots_to_avoid-include-3, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=E91bGT9BjYk" %>%
   embed_url() %>%
   use_align("center")
@@ -558,10 +558,10 @@ embed_youtube_alt("E91bGT9BjYk")
 
 This animation was produced by some of my colleagues at Brown.
 
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
+```{r plots_to_avoid-include-4, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("x-rDVXVwW9s")
 ```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
+```{r plots_to_avoid-include-5, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=x-rDVXVwW9s" %>%
   embed_url() %>%
   use_align("center")
@@ -569,10 +569,10 @@ embed_youtube_alt("x-rDVXVwW9s")
 
 ## Vox on How coronavirus charts can mislead us
 
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
+```{r plots_to_avoid-include-6, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("O-3Mlj3MQ_Q")
 ```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
+```{r plots_to_avoid-include-7, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=O-3Mlj3MQ_Q" %>%
   embed_url() %>%
   use_align("center")
@@ -580,23 +580,23 @@ embed_youtube_alt("O-3Mlj3MQ_Q")
 
 ## Vox on Shut up about the y-axis. It shouldn't always start at zero
 
-```{r, echo=FALSE,eval = knitr::is_latex_output()}
+```{r plots_to_avoid-include-8, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("14VYnFhBKcY")
 ```
-```{r, echo=FALSE,eval = knitr::is_html_output()}
+```{r plots_to_avoid-include-9, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=14VYnFhBKcY" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r, echo=FALSE}
+```{r plots_to_avoid-include-10, echo=FALSE}
 # appropriately choosing a y-axis window
 try_include_tweet("https://twitter.com/bmwiernik/status/1362437077820968960")
 ```
 
 ## Gloriously Terrible Plots
 
-```{r, echo=FALSE}
+```{r plots_to_avoid-include-11, echo=FALSE}
 try_include_tweet("https://twitter.com/latentchange/status/1380564902578913287")
 ```
 

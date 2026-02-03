@@ -46,7 +46,7 @@ library(janitor)
 
 For this lab, we'll use the COMPAS dataset compiled by ProPublica. The data has been preprocessed and mostly cleaned for you. I recommend using the `janitor` package to clean the column names.
 
-```{r}
+```{r bias_lab-code-1, }
 # Load the COMPAS data
 compas <- read_csv("data/compas-scores-two-years.csv") %>%
   clean_names() %>%
@@ -210,7 +210,7 @@ Now let’s assess how well the COMPAS algorithm performs across different demog
    - False Positive Rate: Proportion of non-recidivists (two_year_recid = 0) who were classified as high risk (decile_score >= 7)
    - False Negative Rate: Proportion of recidivists (two_year_recid = 1) who were classified as low risk (decile_score <= 4)
 
-```{r}
+```{r bias_lab-code-2, }
 # To filter for specific conditions:
 non_recidivists <- compas %>%
   filter(two_year_recid == 0)
@@ -230,7 +230,7 @@ Note that their are many ways to measure bias in an algorithm. In this exercise,
 
     Based on your analysis, do you see evidence supporting ProPublica's claim that the algorithm is biased? Explain your reasoning.
 
-```{r}
+```{r bias_lab-code-3, }
 # To check calibration, you can calculate recidivism rates by score for each race
 # This is an advanced analysis - use what you've learned to approach this
 ```
@@ -260,7 +260,7 @@ Now let's investigate what factors might be contributing to the disparities we'v
     - `priors_count`
     - `c_charge_degree`
 
-```{r}
+```{r bias_lab-code-4, }
 # Create a logistic regression model
 recid_model <- glm(
   two_year_recid ~ age + priors_count + c_charge_degree,
@@ -280,7 +280,7 @@ compas <- compas %>%
 
 21. Now build a more complex model that includes race as a predictor:
 
-```{r}
+```{r bias_lab-code-5, }
 # Create a logistic regression model with race
 recid_model_with_race <- glm(
   two_year_recid ~ age + priors_count + c_charge_degree + race,

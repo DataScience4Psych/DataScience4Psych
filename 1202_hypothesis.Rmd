@@ -186,7 +186,7 @@ This process is getting boring... We need a way to automate this process!
 
 ### Using tidymodels to generate the null distribution
 
-```{r}
+```{r hypothesis-code-1, }
 null_dist <- organ_donor %>%
   specify(
     response = outcome,
@@ -236,7 +236,7 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
 
 ### Calculating the p-value, directly
 
-```{r}
+```{r hypothesis-code-2, }
 null_dist %>%
   filter(stat <= (3 / 62)) %>%
   summarize(p_value = n() / nrow(null_dist))
@@ -265,7 +265,7 @@ These data do not provide convincing evidence that this consultant incurs a lowe
 
 ### Run the test
 
-```{r, cache=TRUE}
+```{r hypothesis-code-3, cache=TRUE}
 null_dist <- organ_donor %>%
   specify(
     response = outcome,
@@ -287,7 +287,7 @@ null_dist <- organ_donor %>%
 
 ### Visualize and calculate
 
-```{r, cache=TRUE}
+```{r hypothesis-code-4, cache=TRUE}
 ggplot(data = null_dist, mapping = aes(x = stat)) +
   geom_histogram(binwidth = 0.01) +
   geom_vline(xintercept = 3 / 62, color = "red")
@@ -329,14 +329,14 @@ This study involved 50 participants who were randomly divided into two groups. 3
 
 The data are in the **openintro** package: `yawn`
 
-```{r}
+```{r hypothesis-code-5, }
 yawn %>%
   count(group, result)
 ```
 
 ### Proportion of yawners
 
-```{r}
+```{r hypothesis-code-6, }
 yawn %>%
   count(group, result) %>%
   group_by(group) %>%
@@ -410,7 +410,7 @@ on the board.
 
 ### Simulation by computation
 
-```{r}
+```{r hypothesis-code-7, }
 null_dist <- yawn %>%
   specify(
     response = result,
@@ -510,7 +510,7 @@ ggplot(data = null_dist, mapping = aes(x = stat)) +
 
 ### Calculating the p-value, directly
 
-```{r}
+```{r hypothesis-code-8, }
 null_dist %>%
   filter(stat >= 0.0441) %>%
   summarize(p_value = n() / nrow(null_dist))

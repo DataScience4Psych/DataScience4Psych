@@ -21,7 +21,7 @@ set.seed(1234)
 - Outcome: whether the email is spam or not
 - Predictors: number of characters, whether the email had "Re:" in the subject, time at which email was sent, number of times the word "inherit" shows up in the email, etc.
 
-```{r}
+```{r logistic_notes-code-1, }
 library(openintro)
 data(email)
 glimpse(email)
@@ -150,7 +150,7 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 
 #### Logit function, visualized
 
-```{r}
+```{r logistic_notes-code-2, }
 d <- tibble(p = seq(0.001, 0.999,
   length.out = 1000
 )) %>%
@@ -194,7 +194,7 @@ In R, we fit a GLM in the same way as a linear model except we
 - use `"glm"` instead of `"lm"` as the engine
 - define `family = "binomial"` for the link function to be used in the model
 
-```{r}
+```{r logistic_notes-code-3, }
 spam_fit <- logistic_reg() %>%
   set_engine("glm") %>%
   fit(spam ~ num_char,
@@ -207,7 +207,7 @@ spam_fit <- logistic_reg() %>%
 
 #### Spam model
 
-```{r}
+```{r logistic_notes-code-4, }
 tidy(spam_fit)
 ```
 

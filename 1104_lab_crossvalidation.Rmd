@@ -87,7 +87,7 @@ We will work with:
 
 
 
-```{r}
+```{r lab_crossvalidation-code-1, }
 
 titanic3 <- read_excel("data/titanic3.xls", 
     col_types = c("numeric", "numeric", "text", 
@@ -103,7 +103,7 @@ data("titanic_test")
 
 Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titantic_train as well as create an ordinal level variable for passenger class.
 
-```{r}
+```{r lab_crossvalidation-code-2, }
 # Rename columns to lowercase
 names(titanic3) <- names(titanic3) %>% tolower()
 names(titanic_train) <- names(titanic_train) %>% tolower()
@@ -138,7 +138,7 @@ Let’s do that on purpose.
 
 Save the model as `m_apparent`.
 
-```{r, order.exercise2.1, error=TRUE, eval=FALSE}
+```{r lab_crossvalidation-example-1, order.exercise2.1, error=TRUE, eval=FALSE}
 m_apparent <- glm(
   survived ~ sex + pclass_ord,
   data = titanic3,
@@ -155,7 +155,7 @@ summary(m_apparent)
 
 ```
 
-```{r, exercise2.1, error=TRUE, eval=T}
+```{r lab_crossvalidation-code-3, exercise2.1, error=TRUE, eval=T}
 m_apparent <- glm(
   survived ~ sex + pclass,
   data = titanic3,
@@ -175,7 +175,7 @@ This model has access to every passenger and the final outcome. It is not being 
 Now we can use the model to generate predicted survival probabilities for every passenger.
 
 
-```{r}
+```{r lab_crossvalidation-code-4, }
 p_apparent <- predict(m_apparent, type = "response")
 
 ```
@@ -184,14 +184,14 @@ Each probability represents the expected survival chance for that passenger, acc
 
 To turn probabilities into decisions (we're working for an insurance agency after all), we need a decision rule. To keep things simple, we will use a cutoff of 0.5: if the predicted probability is greater than 0.5, we predict survival (1); otherwise, we predict non-survival (0). 
 
-```{r}
+```{r lab_crossvalidation-code-5, }
 yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
 ```
 
 
 Now, we can compute the model’s accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
 
-```{r}
+```{r lab_crossvalidation-code-6, }
 
 acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
 
@@ -213,7 +213,7 @@ We’ll do this by splitting the data into two groups:
    
 Conveniently, the `titanic` package already provides such a split.
 
-```{r}
+```{r lab_crossvalidation-code-7, }
 titanic_test %>% glimpse()
 ```
 
@@ -547,7 +547,7 @@ Lloyd’s will not price risk using only sex and class. Your job is to propose r
 
 Pick **two** additional predictors from the data set. (This can include a constructed variable that you create from existing variables.)
 
-```{r}
+```{r lab_crossvalidation-code-8, }
 names(titanic3)
 ```
 
@@ -555,7 +555,7 @@ names(titanic3)
 Why do you think each predictor you selected should matter for survival?
 
 <
-```{r}
+```{r lab_crossvalidation-code-9, }
 titanic3 %>% mutate(title = str_extract(name, "(?<=, )[^.]+")) %>% count(title) %>% arrange(desc(n))
 
 ```
