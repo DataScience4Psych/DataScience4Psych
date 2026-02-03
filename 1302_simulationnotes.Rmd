@@ -38,7 +38,7 @@ These functions are part of the core **stats** package. The syntax for these fun
 
 For example, to generate random values from these distributions, you would use:
 
-```{r simulationnotes-code-1, }
+```{r simulationnotes-code-demo, }
 # Generating five random normal values
 rnorm(5, mean = 0, sd = 1)
 
@@ -64,13 +64,13 @@ The `r` functions for a chosen distribution all work similarly. Other distributi
 Generating five random numbers from a $Normal(0, 1)$ (aka the *standard* normal) distribution can be done as follows:
 
 
-```{r simulationnotes-code-2, }
+```{r simulationnotes-code-data, }
 rnorm(n = 5, mean = 0, sd = 1)
 ```
 
 Notice how I have written out the arguments explicitly. If I were coding "lazily", I'd likely have written something like this...
 
-```{r simulationnotes-code-3, }
+```{r simulationnotes-code-data, }
 rnorm(5) # This uses the default values for mean and sd
 ```
 
@@ -82,7 +82,7 @@ In other words, specify the arguments explicitly, even if you are using default 
 
 Here's an even more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:
 
-```{r simulationnotes-code-4, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = 5,
   mean = 0,
@@ -101,7 +101,7 @@ Setting the seed will ensure that others can replicate your results. This abilit
 
 By setting the seed before running `rnorm()`, we can reproduce the values we generate.
 
-```{r simulationnotes-code-5, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 rnorm(
   n = 5,
@@ -112,7 +112,7 @@ rnorm(
 
 If we reset the seed to the same number and run the code again, we get the same values.
 
-```{r simulationnotes-code-6, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 rnorm(
   n = 5,
@@ -127,7 +127,7 @@ To get a quick set of numbers, it's easy to use the default parameter values in 
 
 The `sd` argument specifies the *standard deviation* of the normal distribution. So drawing from a $Normal(0, 4)$ can be done by setting `sd` to 2.
 
-```{r simulationnotes-code-7, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = 5,
   mean = 0,
@@ -138,7 +138,7 @@ rnorm(
 I've seen other people make changes the mean and standard deviation to create variables that are within a specific range. For example, if the mean is large and the standard deviation is small in relation to the mean, we can generate strictly positive numbers. (I usually use runif() for this, which we'll see below.)
 
 
-```{r simulationnotes-code-8, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = 5,
   mean = 50,
@@ -155,7 +155,7 @@ I'll keep the standard deviation at 1 but will draw data from three distribution
 
 Observe the repeating pattern: the function iteratively draws one value from each distribution until the total number requested is reached. This approach can lead to an imbalance in the sample size per distribution.
 
-```{r simulationnotes-code-9, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = 10,
   mean = c(0, 5, 20),
@@ -165,7 +165,7 @@ rnorm(
 
 We can also pass a vector to `sd`, allowing both the means and standard deviations to vary among the three distributions.
 
-```{r simulationnotes-code-10, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = 10,
   mean = c(0, 5, 20),
@@ -178,7 +178,7 @@ Things are different for the `n` argument. If a vector is passed to `n`, the *le
 
 In the example below, we only get 3 values because the vector for `n` is length 3.
 
-```{r simulationnotes-code-11, }
+```{r simulationnotes-code-demo, }
 rnorm(
   n = c(2, 10, 10),
   mean = c(0, 5, 20),
@@ -194,7 +194,7 @@ For example, we might simulate two unrelated variables to see how correlated the
 
 Let's generate two quantitative vectors of length 10, named `x` and `y`, and plot the results. I'm using the default `mean` and `sd`.
 
-```{r simulationnotes-code-12, }
+```{r simulationnotes-code-demo, }
 x <- rnorm(
   n = 10,
   mean = 0,
@@ -231,7 +231,7 @@ By default, `runif()` pulls random numbers between 0 and 1. The first argument,l
 
 Let's generate 5 numbers between 0 and 1.
 
-```{r simulationnotes-code-13, }
+```{r simulationnotes-code-demo, }
 runif(
   n = 5,
   min = 0,
@@ -241,7 +241,7 @@ runif(
 
 What if we want to generate 5 numbers between 50 and 100?  We change the parameter values.
 
-```{r simulationnotes-code-14, }
+```{r simulationnotes-code-demo, }
 runif(
   n = 5,
   min = 50, max = 100
@@ -257,7 +257,7 @@ Let's generate data with the response variable (`y`) from a standard normal dist
 
 Writing out argument names for clarity, we generate the data as follows:
 
-```{r simulationnotes-code-15, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 y <- rnorm(n = 100, mean = 0, sd = 1)
 x1 <- runif(n = 100, min = 1, max = 2)
@@ -267,14 +267,14 @@ head(x1)
 
 Now, simulate a second explanatory variable with values between 200 and 300. This variable is also unrelated to the other two.
 
-```{r simulationnotes-code-16, }
+```{r simulationnotes-code-demo, }
 x2 <- runif(n = 100, min = 200, max = 300)
 head(x2)
 ```
 
 We can fit a linear regression model via `lm()`. 
 
-```{r simulationnotes-code-17, }
+```{r simulationnotes-code-demo, }
 lm(y ~ x1 + x2)
 ```
 
@@ -293,7 +293,7 @@ The single parameter, `lambda`, is the mean. It has no default setting, so it mu
 
 Let's generate five values from a Poisson distribution with a mean of 2.5. Note that the *mean* of the Poisson distribution can be any non-negative value (i.e., it doesn't have to be an integer) even though the observed values will be discrete integers.
 
-```{r simulationnotes-code-18, }
+```{r simulationnotes-code-demo, }
 rpois(
   n = 5,
   lambda = 2.5
@@ -305,19 +305,19 @@ Let's explore the Poisson distribution a little more, seeing how the distributio
 
 We'll draw 100 values from a Poisson distribution with a mean of 5. We'll name this vector `y` and look at a summary of those values.
 
-```{r simulationnotes-code-19, }
+```{r simulationnotes-code-demo, }
 y <- rpois(100, lambda = 5)
 ```
 
 The values we simulated fall between 1 and 14.
 
-```{r simulationnotes-code-20, }
+```{r simulationnotes-code-plot, }
 summary(y)
 ```
 
 There is a mild right skew when we draw a histogram of the values.
 
-```{r simulationnotes-code-21, }
+```{r simulationnotes-code-plot, }
 palette_OkabeIto <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
 
 data.frame(y) %>%
@@ -333,14 +333,14 @@ data.frame(y) %>%
 Let's do the same for a Poisson distribution with a mean of 100. The range of values is still pretty narrow; there are no values even remotely close to 0.
 
 
-```{r simulationnotes-code-22, }
+```{r simulationnotes-code-plot, }
 y <- rpois(100, lambda = 100)
 summary(y)
 ```
 
 The distribution is more symmetric compared to the distribution with the smaller mean.
 
-```{r simulationnotes-code-23, }
+```{r simulationnotes-code-plot, }
 data.frame(y) %>%
   ggplot(aes(x = y)) +
   geom_histogram(binwidth = 5, color = "black", fill = "#CC79A7") +
@@ -368,13 +368,13 @@ You can extract letters using brackets (`[`). These built-in constants are conve
 
 Here are the first two `letters`.
 
-```{r simulationnotes-code-24, }
+```{r simulationnotes-code-demo, }
 letters[1:2]
 ```
 
 And the last 17 `LETTERS`.
 
-```{r simulationnotes-code-25, }
+```{r simulationnotes-code-demo, }
 LETTERS[10:26]
 ```
 
@@ -386,7 +386,7 @@ With `each`, we repeat each unique character in the vector the defined number of
 
 Let's repeat two characters three times each.  The resulting vector is 6 observations long. This is an example of how you can quickly make a grouping variable for simulating data to be used in a two-sample analysis.  
 
-```{r simulationnotes-code-26, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], each = 3)
 ```
 
@@ -396,7 +396,7 @@ The `times` argument can be used when we want to repeat the whole vector rather 
 
 We'll make a two-group variable again, but this time we'll change the repeating pattern of the values in the variable.
 
-```{r simulationnotes-code-27, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], times = 3)
 ```
 
@@ -408,7 +408,7 @@ Rather than defining the number of repeats like we did with `each` and `times` w
 
 Here we'll make a two-group variable of length 5.  This means the second group will have one less value than the first.
 
-```{r simulationnotes-code-28, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], length.out = 5)
 ```
 
@@ -418,7 +418,7 @@ Unlike `each` and `length.out`, we can use `times` with a vector of values.  Thi
 
 Let's repeat the first element twice and the second four times.
 
-```{r simulationnotes-code-29, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], times = c(2, 4))
 ```
 
@@ -430,7 +430,7 @@ When using `times` this way it will only take a single value and not a vector.
 
 Let's repeat each value twice, 3 times.
 
-```{r simulationnotes-code-30, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], each = 2, times = 3)
 ```
 
@@ -440,7 +440,7 @@ Similarly we can use `each` with `length.out`.  This can lead to some imbalance.
 
 Here we'll repeat the two values twice each but with a total final vector length of 7.
 
-```{r simulationnotes-code-31, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], each = 2, length.out = 7)
 ```
 
@@ -462,7 +462,7 @@ First, we'll make separate vectors for the continuous and categorical data and t
 
 Notice there is no need to use `cbind()` here, which is commonly done by R beginners (I know I did!).  Instead we can use `data.frame()` directly.
 
-```{r simulationnotes-code-32, }
+```{r simulationnotes-code-demo, }
 group <- rep(letters[1:2], each = 3)
 response <- rnorm(n = 6, mean = 0, sd = 1)
 data.frame(
@@ -473,7 +473,7 @@ data.frame(
 
 Some people like to define the vectors and the data frame simultaneously to minimize clutter in the R environment. Here is how you can do it all at once:
 
-```{r simulationnotes-code-33, }
+```{r simulationnotes-code-data, }
 data.frame(
   group = rep(letters[1:2], each = 3),
   response = rnorm(n = 6, mean = 0, sd = 1)
@@ -487,7 +487,7 @@ Now, let’s add another layer to our dataset by introducing a second categorica
 
 For the second factor, which we'll call `factor`, let's give it the values "C", "D", and "E":
 
-```{r simulationnotes-code-34, }
+```{r simulationnotes-code-demo, }
 LETTERS[3:5]
 ```
 
@@ -495,7 +495,7 @@ We need to repeat the values in a way that every combination of `group` and `fac
 
 Remember the `group` factor is repeated elementwise.
 
-```{r simulationnotes-code-35, }
+```{r simulationnotes-code-demo, }
 rep(letters[1:2], each = 3)
 ```
 
@@ -507,7 +507,7 @@ rep(LETTERS[3:5], ?)
 
 Does `each` work?
 
-```{r simulationnotes-code-36, }
+```{r simulationnotes-code-demo, }
 rep(LETTERS[3:5], each = 2)
 ```
 
@@ -517,7 +517,7 @@ This is a job for the `times` or `length.out` arguments, so the whole vector is 
 
 In the result below we can see every combination of the two factors is present once.
 
-```{r simulationnotes-code-37, }
+```{r simulationnotes-code-demo, }
 data.frame(
   group = rep(letters[1:2], each = 3),
   factor = rep(LETTERS[3:5], times = 2),
@@ -531,7 +531,7 @@ The dataset above is one with "no difference" among groups.  What if the means w
 
 Remembering how `rnorm()` works with a vector of means is key here.  The function draws iteratively from each distribution.  
 
-```{r simulationnotes-code-38, }
+```{r simulationnotes-code-demo, }
 response <- rnorm(n = 6, mean = c(5, 10), sd = 1)
 response
 ```
@@ -546,14 +546,14 @@ We need to repeat the whole vector three times instead of elementwise.
 
 To get the groups in the correct order we need to use `times` or `length.out` in `rep()`.  With `length.out` we define the output length of the vector, which is 6.  Alternatively we could use `times = 3` to repeat the whole vector 3 times.
 
-```{r simulationnotes-code-39, }
+```{r simulationnotes-code-demo, }
 group <- rep(letters[1:2], length.out = 6)
 group
 ```
 
 These can then be combined into a data.frame.  Working out this process is another reason why sometimes we build each vector separately prior to combining together.
 
-```{r simulationnotes-code-40, }
+```{r simulationnotes-code-demo, }
 data.frame(
   group,
   response
@@ -564,7 +564,7 @@ data.frame(
 
 For our last dataset we'll have two groups, with 10 observations per group.
 
-```{r simulationnotes-code-41, }
+```{r simulationnotes-code-demo, }
 rep(LETTERS[3:4], each = 10)
 ```
 
@@ -580,7 +580,7 @@ We had 2 groups with 10 observations each and 2*10 = 20.  So we need to use `n =
 
 Here is the dataset made in a single step.
 
-```{r simulationnotes-code-42, }
+```{r simulationnotes-code-demo, }
 data.frame(
   group = rep(LETTERS[3:4], each = 10),
   x = runif(n = 20, min = 10, max = 15),
@@ -590,7 +590,7 @@ data.frame(
 
 What happens if we get this wrong?  If we're lucky we get an error.
 
-```{r simulationnotes-code-43, error = TRUE}
+```{r simulationnotes-code-demo, error = TRUE}
 data.frame(
   group = rep(LETTERS[3:4], each = 10),
   x = runif(n = 15, min = 10, max = 15),
@@ -602,7 +602,7 @@ But if we get things wrong and the number we use goes into the number we need ev
 
 This mistake is hard to catch.  If you look carefully through the output below, you can see that the continuous variables start to repeat on line 10.
 
-```{r simulationnotes-code-44, }
+```{r simulationnotes-code-demo, }
 data.frame(
   group = rep(LETTERS[3:4], each = 10),
   x = runif(n = 10, min = 10, max = 15),
@@ -632,7 +632,7 @@ Here I'll generate 5 values from a standard normal distribution three times.  No
 
 The output below is a list of three vectors.  Each vector is from a unique run of the function, so contains  five random numbers drawn from the normal distribution with a mean of 0 and standard deviation of 1.
 
-```{r simulationnotes-code-45, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 replicate(
   n = 3,
@@ -645,7 +645,7 @@ Note if I don't use `simplify = FALSE` I will get a matrix of values instead of 
 
 In this case there will be three columns in the output, one for each run, and 5 rows.  This can be a useful output type for some simulations.  I focus on list output throughout the rest of this post only because that's what I have been using recently for simulations.
 
-```{r simulationnotes-code-46, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 replicate(
   n = 3,
@@ -661,7 +661,7 @@ In my example I'll save the output of each iteration of the loop into a list cal
 
 The result is identical to my `replicate()` code above.  It took a little more code to do it but the process is very clear since it is explicitly written out.
 
-```{r simulationnotes-code-47, }
+```{r simulationnotes-code-demo, }
 set.seed(16)
 list1 <- list() # Make an empty list to save output in
 for (i in 1:3) { # Indicate number of iterations with "i"
@@ -674,7 +674,7 @@ list1
 
 Earlier we were making datasets with random numbers and some grouping variables.  Our code looked like
 
-```{r simulationnotes-code-48, }
+```{r simulationnotes-code-demo, }
 data.frame(
   group = rep(letters[1:2], each = 3),
   response = rnorm(n = 6, mean = 0, sd = 1)
@@ -685,7 +685,7 @@ We could put this process as the `expr` argument in `replicate()` to get many si
 
 I'll replicate things 3 times again to easily see the output.  I still use `simplify = FALSE` to get things into a list.
 
-```{r simulationnotes-code-49, }
+```{r simulationnotes-code-demo, }
 simlist <- replicate(
   n = 3,
   expr = data.frame(
@@ -698,13 +698,13 @@ simlist <- replicate(
 
 We can see this result is a list of three data.frames.
 
-```{r simulationnotes-code-50, }
+```{r simulationnotes-code-demo, }
 str(simlist)
 ```
 
 Here is the first one.
 
-```{r simulationnotes-code-51, }
+```{r simulationnotes-code-demo, }
 simlist[[1]]
 ```
 

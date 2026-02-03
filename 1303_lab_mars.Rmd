@@ -62,7 +62,7 @@ Parameters:
 
 Here's code to generate an age distribution:
 
-```{r lab_mars-code-1, }
+```{r lab_mars-code-data, }
 set.seed(123)
 age <- rnorm(100, mean = 30, sd = 5)
 ```
@@ -71,13 +71,13 @@ age <- rnorm(100, mean = 30, sd = 5)
 **1.1.** Create a dataframe to store your colonists' attributes. I've already gotten you started, but you'll need to add their ages.
 
 
-```{r exercise1.1, error=TRUE, message=FALSE, warning=FALSE,echo=TRUE}
+```{r exercise-one-part-one, error=TRUE, message=FALSE, warning=FALSE,echo=TRUE}
 df_colonists <- data.frame(
   id = 1:100, # this is our id column
 ) # add the age column here
 ```
 
-```{r exercise1.1solution, error=TRUE,include=FALSE}
+```{r exercise-1-solution.1solution, error=TRUE,include=FALSE}
 df_colonists <- data.frame(
   id = 1:100, # this is our id column
   age
@@ -86,7 +86,7 @@ df_colonists <- data.frame(
 
 Now, let's visualize the age distribution of our colonists using a histogram. This will help us understand the diversity within our potential Mars colony.
 
-```{r lab_mars-include-1,echo=FALSE}
+```{r lab_mars-include-content,echo=FALSE}
 set.seed(100)
 age2 <- rnorm(100, mean = 30, sd = 5)
 
@@ -136,7 +136,7 @@ We'll create a variable, `role`, with three categories: engineer, scientist, and
 
 Below, we show several ways to construct this variable. Try to figure out how they differ — and which one might best suit your colony’s needs.
 
-```{r exercise1.3_examples, error=TRUE}
+```{r exercise-1-solution.3_examples, error=TRUE}
 set.seed(1)
 roleA <- rep(c("engineer", "scientist", "medic"),
   length.out = 100
@@ -215,14 +215,14 @@ df %>%
 
 <details>
   <summary>If you want to see the raw data as a table, click here</summary>
-```{r lab_mars-code-2, ref.label = "reptables", echo = TRUE, warning = FALSE}
+```{r lab_mars-code-demo, ref.label = "reptables", echo = TRUE, warning = FALSE}
 ```
 </details>
 
 
 **1.3.** Create a role variable using one of the methods above, or design your own. Explain how the method you chose reflects your goals: do you want equal distribution, randomness, or a specific pattern? Be specific about what your colony needs.
 
-```{r exercise1.3solution, error=TRUE,include=FALSE}
+```{r exercise-1-solution.3solution, error=TRUE,include=FALSE}
 df_colonists$role <- roleA
 ```
 
@@ -236,21 +236,21 @@ On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Ga
 
 **1.4.**  Add a uniformally-distributed MARSGAR variable to your colony.
 
-```{r exercise1.4, error=TRUE} 
+```{r exercise-four-part-four, error=TRUE} 
 set.seed(123)
 
 df_colonists$marsgar <- 1 # "replace this with your code"
 ```
 
 
-```{r exercise1.4solution, error=TRUE,echo=FALSE} 
+```{r exercise-1-solution.4solution, error=TRUE,echo=FALSE} 
 set.seed(123)
 df_colonists$marsgar <- runif(100, min = 50, max = 100)
 ```
 
 Now, let us examine our colonists. We will create a scatter plot to visualize the relationship between age and health. This will help us understand the health distribution of our potential Mars colony.
 
-```{r lab_mars-include-2,echo=FALSE,message=FALSE}
+```{r lab_mars-include-content,echo=FALSE,message=FALSE}
 library(viridis)
 # Fit a linear model
 model <- lm(marsgar ~ age, data = df_colonists)
@@ -303,7 +303,7 @@ To model this, we define the variable `technical_skills` as a linear function of
 **2.1.** Simulate technical skills based on age using the equation `technical_skills = 2 * age + noise`.
 
 
-```{r exercise2.1, error=TRUE}
+```{r exercise-one-part-one, error=TRUE}
 # Simulate technical skills based on age
 
 # Set the seed for reproducibility
@@ -315,7 +315,7 @@ df_colonists$technical_skills <- 2 * df_colonists$age + rnorm(100, mean = 0, sd 
 
 Now, let's visualize the relationship between age and technical skills using a scatter plot.
 
-```{r lab_mars-include-3,echo=FALSE,message=FALSE, warnings=FALSE}
+```{r lab_mars-include-content,echo=FALSE,message=FALSE, warnings=FALSE}
 # Fit a linear model
 model <- lm(technical_skills ~ age, data = df_colonists)
 
@@ -351,11 +351,11 @@ Now its your turn! Simulate problem-solving abilities based on their assigned ro
 
 <!-- not that this isn't behaving intuitively when you use case when with rnorm. it repeats the first value for the entire group -->
 
-```{r exercise2.2, error=TRUE}
+```{r exercise-two-part-two, error=TRUE}
 df_colonists$problem_solving <- 1 # replace this with your code
 ```
 
-    ```{r, exercise2.2solution, error=TRUE, echo=FALSE,include=FALSE}
+    ```{r, exercise-2-solution.2solution, error=TRUE, echo=FALSE,include=FALSE}
 df_colonists$problem_solving[df_colonists$role == "engineer"] <- rnorm(sum(df_colonists$role == "engineer"), mean = 100, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "scientist"] <- rnorm(sum(df_colonists$role == "scientist"), mean = 80, sd = 10)
 df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colonists$role == "medic"), mean = 60, sd = 10)
@@ -363,16 +363,16 @@ df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colon
     
 <details>
   <summary>Click this to see a hint</summary>
-  If you're stuck, you can check the source code for the solution by examining the following chuck in this corresponding rmd file exercise2.2solution.
+  If you're stuck, you can check the source code for the solution by examining the following chuck in this corresponding rmd file exercise-2-solution.2solution.
 </details>
 
 <details>
   <summary>Click this to see a solution</summary>
-```{r ref.label = "exercise2.2solution", echo = TRUE, warning = FALSE}
+```{r ref.label = "exercise-2-solution.2solution", echo = TRUE, warning = FALSE}
 ```
 </details>
 
-```{r lab_mars-include-4, exercise2.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
+```{r lab_mars-include-content, exercise-2-solution.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
 ggplot(df_colonists, aes(x = problem_solving, fill = role)) +
   #  geom_histogram(position = position_dodge()) +
   geom_density(alpha = .6) +
@@ -420,7 +420,7 @@ traits_data <- mvrnorm(n = 100, mu = mean_traits, Sigma = cov_matrix, empirical 
 ```
 
 
-```{r exercise3.2solution, error=TRUE,echo=FALSE, include=FALSE} 
+```{r exercise-3-solution.2solution, error=TRUE,echo=FALSE, include=FALSE} 
 library(MASS)
 
 # Define mean and covariance matrix
@@ -440,7 +440,7 @@ df_colonists <- cbind(df_colonists, traits_data)
 ```
 
 
-```{r exercise3.2plot, error=TRUE,echo=FALSE}
+```{r exercise-3-solution.2plot, error=TRUE,echo=FALSE}
 # Fit a linear model
 model <- lm(resilience ~ agreeableness, data = df_colonists)
 
@@ -581,11 +581,11 @@ Great! We have successfully simulated a dataset of 100 colonists with interdepen
 
 <details> 
   <summary>Click this text for a solution</summary>
-```{r ref.label = "exercise3.3solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise-3-solution.3solution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 
-    ```{r exercise3.3solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+    ```{r exercise-3-solution.3solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
 # Set seed for reproducibility
 seed <- 123
 set.seed(seed)
@@ -703,13 +703,13 @@ Please plot the distribution of the correlation coefficients to see how consiste
     After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness. 
 <details> 
   <summary>Click this text for forloop based solution</summary>
-```{r ref.label = "exercise4solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise-4-solutionsolution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 </details>
 </details>
 
-    ```{r exercise4solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+    ```{r exercise-4-solutionsolution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
 library(dplyr)
 conflicts_prefer(dplyr::select())
 set.seed(124)
@@ -768,7 +768,7 @@ In space colonization, just like in any complex project management, we must prep
 
 Your plot might look something like this:
 
-```{r ref.label = "exercise5solution", echo = FALSE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise-5-solutionsolution", echo = FALSE, warning = FALSE, message=FALSE}
 ```
 
 
@@ -779,11 +779,11 @@ Your plot might look something like this:
 
 <details> 
   <summary>Click this text for forloop based solution</summary>
-```{r ref.label = "exercise5solution", echo = TRUE, warning = FALSE, message=FALSE}
+```{r ref.label = "exercise-5-solutionsolution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
 </details>
-    ```{r exercise5solution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+    ```{r exercise-5-solutionsolution, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
 library(dplyr)
 set.seed(124)
 sample_sizes <- seq(30, 300, by = 15) # Varying sample sizes

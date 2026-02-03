@@ -14,16 +14,16 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 ## Models with numerical explanatory variables
 
-```{r fitting-include-1, echo=FALSE,eval = knitr::is_latex_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("BVtVIO08KKE")
 ```
-```{r fitting-include-2, echo=FALSE,eval = knitr::is_html_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=BVtVIO08KKE" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r fitting-include-3, echo=FALSE}
+```{r fitting-include-slides, echo=FALSE}
 slide_url(ds4p_urls, "d21_fitting") %>%
   include_url(height = "400px")
 ```
@@ -32,7 +32,7 @@ slide_url(ds4p_urls, "d21_fitting") %>%
 
 Let's load our standard libraries:
 
-```{r fitting-code-1, }
+```{r fitting-code-plot, }
 library(lattice)
 library(ggplot2)
 library(tidyverse)
@@ -48,7 +48,7 @@ Observed value = Fitted value + residual
 
 Let's get the fitted values and residuals for each voice part:
 
-```{r fitting-code-2, }
+```{r fitting-code-demo, }
 lm_singer <- lm(height ~ 0 + voice.part,
   data = singer
 )
@@ -58,7 +58,7 @@ We can extract the fitted values using `fitted.values(lm_singer)` and the residu
 
 For convenience, we create a data frame with two columns: the voice parts and the residuals.
 
-```{r fitting-code-3, }
+```{r fitting-code-demo, }
 res_singer <- data.frame(
   voice_part = singer$voice.part,
   residual = residuals(lm_singer)
@@ -67,7 +67,7 @@ res_singer <- data.frame(
 
 We can also do this with `group_by` and `mutate`:
 
-```{r fitting-code-4, }
+```{r fitting-code-demo, }
 fits <- singer %>%
   group_by(voice.part) %>%
   mutate(
@@ -88,14 +88,14 @@ Homoscedasticity, or homogeneity of variances, is a modeling assumption that we 
 
 There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:
 
-```{r fitting-code-5, }
+```{r fitting-code-plot, }
 ggplot(res_singer, aes(x = voice_part, y = residual)) +
   geom_boxplot()
 ```
 
 We can also look at the ecdfs of the residuals for each voice part.
 
-```{r fitting-code-6, }
+```{r fitting-code-plot, }
 ggplot(res_singer, aes(x = residual, color = voice_part)) +
   stat_ecdf()
 ```
@@ -106,7 +106,7 @@ From these plots, it seems like the residuals in each group have approximately t
 
 Normality of the residuals is another important assumption of the linear model. We can check this assumption by looking at normal QQ plots of the residuals for each voice part. We can do this by faceting, which will allow us to examine each voice part separately. We can use the `stat_qq()` function to create the QQ plots.:
 
-```{r fitting-code-7, fig.width = 6}
+```{r fitting-code-plot, fig.width = 6}
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq() +
   facet_wrap(~voice_part, ncol = 4)
@@ -122,7 +122,7 @@ If this assumption for our linear model holds, then all the residuals come from 
 
 We've already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together. This is a little more sensitive to non-normality than the separate QQ plots.
 
-```{r fitting-code-8, }
+```{r fitting-code-plot, }
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq()
 ```
@@ -133,7 +133,7 @@ In the linear model, we assume that the mean of the error terms is zero. We don'
 
 Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:
 
-```{r fitting-code-9, }
+```{r fitting-code-plot, }
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq() +
   geom_abline(aes(
@@ -146,7 +146,7 @@ ggplot(res_singer, aes(sample = residual)) +
 
 Pedantic note: We should use an $n-8$ denominator instead of $n-1$ in the SD calculation for degrees of freedom reasons. The $n-8$ part is necessary because there are 7 different variables associated with the model we fitted with lm_singer. We can get the SD directly from the linear model:
 
-```{r fitting-code-10, }
+```{r fitting-code-plot, }
 sd(res_singer$residual)
 round(summary(lm_singer)$sigma, 3)
 ```
@@ -155,7 +155,7 @@ However, the difference between this adjustment and the SD above is negligible.
 
 Add the line:
 
-```{r fitting-code-11, }
+```{r fitting-code-plot, }
 ggplot(res_singer, aes(sample = residual)) +
   stat_qq() +
   geom_abline(intercept = mean(res_singer$residual), slope = summary(lm_singer)$sigma)
@@ -190,7 +190,7 @@ About data analysis:
 
 ### Commentary on Model Performance
 
-```{r fitting-include-4, echo=FALSE}
+```{r fitting-include-tweet, echo=FALSE}
 try_include_tweet("https://twitter.com/JoshuaGrubbsPhD/status/1516592721468825607")
 
 try_include_tweet("https://twitter.com/bmwiernik/status/1516597519228317701")
@@ -198,7 +198,7 @@ try_include_tweet("https://twitter.com/bmwiernik/status/1516597519228317701")
 try_include_tweet("https://twitter.com/KMKing_Psych/status/1516598327478865923")
 ```
 
-```{r fitting-code-12, }
+```{r fitting-code-packages, }
 library(performance)
 check_model(lm_singer)
 # model_performance(lm_singer)
@@ -216,16 +216,16 @@ plot(check_normality(lm_singer), type = "pp")
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html) if you would like to open them full-screen.
 
 ##  Models with categorical explanatory variables
-```{r fitting-include-5, echo=FALSE,eval = knitr::is_latex_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("7056Lt3yUY4")
 ```
-```{r fitting-include-6, echo=FALSE,eval = knitr::is_html_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=7056Lt3yUY4" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r fitting-include-7, echo=FALSE}
+```{r fitting-include-video, echo=FALSE}
 "https://datascience4psych.github.io/slides/d21_fitting/d21_fitting.html#29" %>%
   include_url(height = "400px")
 ```
@@ -234,16 +234,16 @@ embed_youtube_alt("7056Lt3yUY4")
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html) if you would like to open them full-screen.
 
-```{r fitting-include-8, echo=FALSE,eval = knitr::is_latex_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("tSzwRyO7cNw")
 ```
-```{r fitting-include-9, echo=FALSE,eval = knitr::is_html_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=tSzwRyO7cNw" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r fitting-include-10, echo=FALSE}
+```{r fitting-include-slides, echo=FALSE}
 "https://datascience4psych.github.io/slides/d22_nonlinear/d22_nonlinear.html#1" %>%
   include_url(height = "400px")
 ```
@@ -254,39 +254,39 @@ You can follow along with the slides [here](https://datascience4psych.github.io/
 
 ## The linear model with multiple predictors
 
-```{r fitting-include-11, echo=FALSE,eval = knitr::is_latex_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("xTv1wqNKbHI")
 ```
-```{r fitting-include-12, echo=FALSE,eval = knitr::is_html_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=xTv1wqNKbHI" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r fitting-include-13, echo=FALSE}
+```{r fitting-include-video, echo=FALSE}
 "https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#2" %>%
   include_url(height = "400px")
 ```
 
 ## Two numerical predictors
 
-```{r fitting-include-14, echo=FALSE,eval = knitr::is_latex_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("SVoazCcAZ-s")
 ```
-```{r fitting-include-15, echo=FALSE,eval = knitr::is_html_output()}
+```{r fitting-include-video, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=SVoazCcAZ-s" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r fitting-include-16, echo=FALSE}
+```{r fitting-include-slides, echo=FALSE}
 "https://datascience4psych.github.io/slides/d23_multiple/d23_multiple.html#24" %>%
   include_url(height = "400px")
 ```
 
 ## My Thoughts on Tidy Modeling {tidymodelthoughts}
 
-```{r fitting-include-17, echo=FALSE}
+```{r fitting-include-content, echo=FALSE}
 tweet_embed("https://twitter.com/SMasonGarrison/status/1387230798332506114")
 
 
