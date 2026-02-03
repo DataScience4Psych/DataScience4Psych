@@ -33,7 +33,7 @@ Go to the course GitHub organization and locate the lab repo, which should be na
 
 ### Packages {.unnumbered}
 
-In this lab, we will use the **tidyverse** and **dsbox** packages. The *dsbox** package is not on CRAN yet; instead it is hosted on github. You will have to download and [install it yourself](https://github.com/rstudio-education/dsbox#installation). This piece of code should help get you started.
+In this lab, we will use the **tidyverse** and **dsbox** packages. The *dsbox** package is on CRAN; but the most current version is hosted on GitHub. You may have to download and [install it yourself](https://github.com/rstudio-education/dsbox#installation). This piece of code should help get you started.
 
 ```{r lab_dennys-example-1,eval=FALSE}
 install.packages("devtools")
@@ -83,7 +83,8 @@ Note that these data were scraped from [here](https://locations.dennys.com/) and
 
 To help with our analysis we will also use a dataset on US states:
 
-```{r lab_dennys-code-1-dup2, }
+
+```{r lab_dennys-code-1-dup2, eval=TRUE}
 states <- read_csv("data/states.csv")
 ```
 
@@ -92,6 +93,12 @@ Each observation in this dataset represents a state, including DC. Along with th
 ## Exercises  {.unnumbered}
 
 1. What are the dimensions of the Denny's dataset? (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent? What are the variables?
+
+```{r, include=FALSE,eval=TRUE}
+dn <- dennys
+lq <- laquinta
+```
+
 
 2. What are the dimensions of the La Quinta's dataset? What does each row in the dataset represent? What are the variables?
 
@@ -109,7 +116,8 @@ We will determine whether or not the establishment has a location outside the US
 
 > "Filter for `state`s that are not in `states$abbreviation`."
 
-```{r lab_dennys-code-2, }
+
+```{r lab_dennys-code-2, eval=FALSE}
 dn %>%
   filter(!(state %in% states$abbreviation))
 ```
@@ -125,6 +133,11 @@ dn %>%
 
 7. Find the La Quinta locations that are outside the US, and figure out which country they are in. This might require some googling. Take notes, you will need to use this information in the next exercise.
 
+```{r include=FALSE, eval=TRUE}
+lq %>%
+  filter(!(state %in% states$abbreviation))
+```
+
 8. Add a country variable to the La Quinta dataset. Use the `case_when` function to populate this variable. You'll need to refer to your notes from Exercise 7 about which country the non-US locations are in. Here is some starter code to get you going:
 
 ```{r lab_dennys-example-2, eval=FALSE}
@@ -136,6 +149,24 @@ lq %>%
     ... # fill in the rest
   ))
 ```
+
+```{r include=FALSE, eval=TRUE}
+
+lq <- lq %>%
+  mutate(country = case_when(
+    state %in% state.abb ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT" ~ "Colombia",
+    state == "JAL" ~ "Mexico",
+    state %in% c("NLE","NL","AG", "BCS","SIN","YUC", "QR", "CH","PU", "VE", "SL", "FM")
+                ~ "Mexico"
+  ))
+lq_all <- lq
+#lq %>% filter(is.na(country))
+  
+```
+
+Make sure to save the result of this as `lq` again so that the stored data frame contains the new variable going forward.
 
 `r newthought('Going forward')` we will work with the data from the United States only. All Denny's locations are in the United States, so we don't need to worry about them. However we do need to filter the La Quinta dataset for locations in United States.
 
@@ -169,11 +200,14 @@ lq <- lq %>%
   mutate(establishment = "La Quinta")
 ```
 
+
 Because the two data frames have the same columns, we can easily bind them with the `bind_rows` function:
 
 ```{r lab_dennys-code-7, }
 dn_lq <- bind_rows(dn, lq)
 ```
+
+
 
 We can plot the locations of the two establishments using a scatter plot, and color the points by the establishment type. Note that the latitude is plotted on the x-axis and the longitude on the y-axis.
 
@@ -193,3 +227,46 @@ The following two questions ask you to create visualizations. These visualizatio
 12. Now filter the data for observations in Texas only, and recreate the plot, with an appropriate `alpha` level. Visually, does Mitch Hedberg's joke appear to hold here?
 
 That's it for now! In the next lab, we will take a more quantitative approach to answering these questions.
+
+## Wrapping up {.unnumbered}
+
+If you still have some time left, move on to the remaining exercises below. These are optional stretch goals. They are designed to challenge you and hone your skills.
+
+
+13. Recreate the following plot, and interpret what you see in context of the data.
+
+```{r echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(dsbox)
+
+lq_all <- lq_all %>%
+  mutate(establishment = "La Quinta")
+dn_lq_all <- bind_rows(dn, lq_all)
+
+
+dn_lq_all %>%
+  mutate(establishment_state = paste0(establishment, "-", state),
+    establishment = factor(establishment, levels = c("Denny's", "La Quinta")) ) %>%
+#  filter(!state %in% c("AK", "HI")) %>%
+  ggplot(aes(x = longitude, y = latitude)) +
+  annotation_borders("world", fill = "grey90", color = "white")+
+  geom_path(aes(group = establishment_state, color=establishment), alpha = 0.2) +
+  geom_point(aes(color = establishment), alpha = 0.5, size = 0.7) +
+  labs(
+    title = "Denny's and La Quinta Locations in the Western Hemisphere",
+    x = "Longitude",
+    y = "Latitude",
+    color = "Establishment"
+  ) + # trim x and y axis to focus on US
+  theme_minimal() + coord_map("ortho", orientation = c(36, -95, 10), clip = "on",
+                        xlim = c(-170, -50), ylim = c(-10, 60)      
+                              )+
+   scale_color_manual(values=c("#E69F00", "#56B4E9")) +
+scale_size_area()
+
+```
+
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
+
