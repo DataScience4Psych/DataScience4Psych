@@ -209,7 +209,7 @@ How happy are you with those error messages? You must imagine that some entire _
 We'll add some simple checks to ensure that the airline code provided to the function is valid. If it's not, we'll return an informative error message. We'll also add a check to ensure that the delay type provided is valid.
 
 
-```{r functionnotes-code-13,error=TRUE}
+```{r functionnotes-code-13-dup2,error=TRUE}
 average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   # Check if any of the provided airline codes are not in the dataset
   if (!any(airline_code %in% c(data$carrier, NA))) {
@@ -322,7 +322,7 @@ library(gapminder)
 
 Let's keep our previous function around as a baseline.
 
-```{r functionnotes-code-14, }
+```{r functionnotes-code-14-dup2, }
 mmm <- function(x) {
   stopifnot(is.numeric(x))
   max(x) - min(x)
@@ -349,7 +349,7 @@ The eventual inputs to our new function will be the data `x` and two probabiliti
 
 First, play around with the `quantile()` function. Convince yourself you know how to use it, for example, by cross-checking your results with other built-in functions.
 
-```{r functionnotes-code-15, }
+```{r functionnotes-code-15-dup2, }
 quantile(gapminder$lifeExp)
 quantile(gapminder$lifeExp,
   probs = 0.5
@@ -436,7 +436,7 @@ Oops! At the moment, this causes a fatal error. It can be nice to provide some r
 
 We started by focusing on the max and the min, so I think those make reasonable defaults. Here's how to specify that in a function definition.
 
-```{r functionnotes-code-20, }
+```{r functionnotes-code-20-dup2, }
 qdiff3 <- function(x, probs = c(0, 1)) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs)
@@ -520,7 +520,7 @@ So `quantile()` simply will not operate in the presence of `NA`s unless `na.rm =
 
 If we wanted to hardwire `na.rm = TRUE`, we could. Focus on our call to `quantile()` inside our function definition.
 
-```{r functionnotes-code-24, }
+```{r functionnotes-code-24-dup2, }
 qdiff4 <- function(x, probs = c(0, 1)) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs, na.rm = TRUE)
@@ -553,7 +553,7 @@ You probably could have lived a long and happy life without knowing there are at
 
 Let's say we want to give the user of our function the ability to specify how the quantiles are computed, but we want to accomplish with as little fuss as possible. In fact, we don't even want to clutter our function's interface with this! This calls for the very special `...` argument. In English, this set of three dots is frequently called an "ellipsis".
 
-```{r functionnotes-code-25, }
+```{r functionnotes-code-25-dup2, }
 qdiff6 <- function(x, probs = c(0, 1), na.rm = TRUE, ...) {
   the_quantiles <- quantile(x = x, probs = probs, na.rm = na.rm, ...)
   max(the_quantiles) - min(the_quantiles)
@@ -657,7 +657,7 @@ library(dplyr)
 
 I've extract the data for one country in order to develop some working code interactively.
 
-```{r functionnotes-code-28, }
+```{r functionnotes-code-28-dup2, }
 j_country <- "France" # pick, but do not hard wire, an example
 (j_dat <- gapminder %>%
   filter(country == j_country))
@@ -773,5 +773,5 @@ Packages for runtime assertions (the last 3 seem to be under more active develop
   * [Testing chapter](https://r-pkgs.org/tests.html)
 * Wickham's [testthat: Get Started with Testing](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf) article in The R Journal [-@wickham2011b]. Maybe this is completely superseded by the newer chapter above? Be aware that parts could be out of date, but I recall it was a helpful read.
 
-```{r links, child="admin/md/courselinks.md"}
+```{r links-dup2, child="admin/md/courselinks.md"}
 ```
