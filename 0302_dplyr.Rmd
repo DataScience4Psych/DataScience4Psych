@@ -85,14 +85,14 @@ filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
 
 Compare with some base R code to accomplish the same things:
 
-```{r dplyr-example-1, eval = FALSE}
+```{r compare-base-r-filtering, eval = FALSE}
 gapminder[gapminder$lifeExp < 29, ] ## repeat `gapminder`, [i, j] indexing is distracting
 subset(gapminder, country == "Rwanda") ## almost same as filter; quite nice actually
 ```
 
 Under no circumstances should you subset your data the way I did at first:
 
-```{r dplyr-example-2, eval = FALSE}
+```{r demonstrate-fragile-subsetting, eval = FALSE}
 excerpt <- gapminder[241:252, ]
 ```
 
@@ -102,7 +102,7 @@ Why is this approach a terrible idea?
 * It is fragile. This line of code will produce different results if someone changes the row order of `gapminder`, e.g. sorts the data earlier in the script.
 * It is hard to modify. What if you later decide you want data for Canada and the US? You have to rewrite the code.
   
-```{r dplyr-example-3, eval = FALSE}
+```{r demonstrate-robust-filtering, eval = FALSE}
 filter(gapminder, country == "Canada")
 ```
 
