@@ -25,7 +25,7 @@ library(tidyverse)
 
 Also load gapminder.
 
-```{r dplyr-code-1, message = FALSE, warning = FALSE}
+```{r load-gapminder, message = FALSE, warning = FALSE}
 library(gapminder)
 ```
 
@@ -33,7 +33,7 @@ library(gapminder)
 
 The `gapminder` data frame is a special kind of data frame: a tibble.
 
-```{r dplyr-code-1-dup2, }
+```{r inspect-gapminder, }
 gapminder
 ```
 
@@ -41,7 +41,7 @@ It's tibble-ness is why we get nice compact printing. For a reminder of the prob
 
 Note how `gapminder`'s `class()` includes `tbl_df`; the "tibble" terminology is a nod to this.
 
-```{r dplyr-code-2, }
+```{r check-gapminder-class, }
 class(gapminder)
 ```
 
@@ -49,7 +49,7 @@ Some functions, like `print()`, know about tibbles and do something special. How
 
 To turn any data frame into a tibble, use `as_tibble()`:
 
-```{r dplyr-code-3, }
+```{r convert-iris-tibble, }
 as_tibble(iris)
 ```
 
@@ -57,7 +57,7 @@ as_tibble(iris)
 
 If you feel the urge to store a little snippet of your data:
 
-```{r dplyr-code-4, }
+```{r create-canada-excerpt, }
 (canada <- gapminder[241:252, ])
 ```
 
@@ -77,7 +77,7 @@ Reality can also lie somewhere in between. You will find the workflows presented
 
 `filter()` takes logical expressions and returns the rows for which all are `TRUE`.
 
-```{r dplyr-code-5, }
+```{r demo-filter-rows, }
 filter(gapminder, lifeExp < 29)
 filter(gapminder, country == "Rwanda", year > 1979)
 filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
@@ -116,7 +116,7 @@ Here's what it looks like: `%>%`. The RStudio keyboard shortcut: Ctrl+Shift+M (W
 
 Let's demo, then I'll explain.
 
-```{r dplyr-code-6, }
+```{r demo-pipe-basic, }
 gapminder %>% head()
 ```
 
@@ -124,7 +124,7 @@ This code is equivalent to `head(gapminder)`. The pipe operator takes the thing 
 
 Never fear, you can still specify other arguments to this function! To see the first 3 rows of `gapminder`, we could say `head(gapminder, 3)` or this:
 
-```{r dplyr-code-7, }
+```{r demo-pipe-with-args, }
 gapminder %>% head(3)
 ```
 
@@ -138,13 +138,13 @@ Back to dplyr....
 
 Use `select()` to subset the data on variables or columns. Here's a conventional call:
 
-```{r dplyr-code-8, }
+```{r demo-select-columns, }
 select(gapminder, year, lifeExp)
 ```
 
 And here's the same operation, but written with the pipe operator and piped through `head()`:
 
-```{r dplyr-code-9, }
+```{r demo-select-with-pipe, }
 gapminder %>%
   select(year, lifeExp) %>%
   head(4)
@@ -156,7 +156,7 @@ Think: "Take `gapminder`, then select the variables year and lifeExp, then show 
 
 Here's the data for Cambodia, but only certain variables:
 
-```{r dplyr-code-10, }
+```{r filter-select-cambodia, }
 gapminder %>%
   filter(country == "Cambodia") %>%
   select(year, lifeExp)
