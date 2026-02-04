@@ -99,7 +99,7 @@ We will start off by scraping data on the first 10 pieces in the collection from
 
 First, we define a new object called `first_url`, which is the link above. Then, we read the page at this url with the `read_html()` function from the **rvest** package. The code for this is already provided in `01-scrape-page-one.R`.
 
-```{r}
+```{r lab_art-code-data, }
 # set url
 first_url <- "https://collections.ed.ac.uk/art/search/*:*/Collection:%22edinburgh+college+of+art%7C%7C%7CEdinburgh+College+of+Art%22?offset=0"
 
@@ -117,7 +117,7 @@ Let's start with titles. We make use of the SelectorGadget to identify the tags 
 knitr::include_graphics("img/iteminfo-h3a.gif")
 ```
 
-```{r}
+```{r lab_art-code-extract-nodes, }
 page %>%
   html_nodes(".iteminfo") %>%
   html_node("h3 a")
@@ -125,7 +125,7 @@ page %>%
 
 Then we extract the text with `html_text()`:
 
-```{r}
+```{r lab_art-code-extract-text, }
 page %>%
   html_nodes(".iteminfo") %>%
   html_node("h3 a") %>%
@@ -138,7 +138,7 @@ And get rid of all the spurious whitespace in the text with `str_squish()`:
 Take a look at the help docs for `str_squish()` (with `?str_squish`) to
 ```
 
-```{r}
+```{r lab_art-code-squish-text, }
 page %>%
   html_nodes(".iteminfo") %>%
   html_node("h3 a") %>%
@@ -148,7 +148,7 @@ page %>%
 
 And finally save the resulting data as a vector of length 10:
 
-```{r}
+```{r lab_art-code-save-titles, }
 titles <- page %>%
   html_nodes(".iteminfo") %>%
   html_node("h3 a") %>%
@@ -183,7 +183,7 @@ To do this, we use the rvest function `html_attr("href")`, which extracts the va
 
 The links to individual art pieces are stored inside the same .iteminfo nodes as the titles. Using the html_attr("href") function, we can extract them:
 
-```{r}
+```{r lab_art-code-extract-links, }
 page %>%
   html_nodes(".iteminfo") %>% # same nodes
   html_node("h3 a") %>% # as before
@@ -232,7 +232,7 @@ You've been using R functions, now it's time to write your own!
 
 Let's start simple. Here is a function that takes in an argument `x`, and adds 2 to it.
 
-```{r}
+```{r lab_art-code-function-example, }
 add_two <- function(x) {
   x + 2
 }
@@ -240,14 +240,14 @@ add_two <- function(x) {
 
 Let's test it:
 
-```{r}
+```{r lab_art-code-test-function, }
 add_two(3)
 add_two(10)
 ```
 
 The skeleton for defining functions in R is as follows:
 
-```{r eval=FALSE}
+```{r lab_art-example-skeleton, eval=FALSE}
 function_name <- function(input) {
   # do something with the input(s)
   # return something
@@ -258,7 +258,7 @@ Then, a function for scraping a page should look something like:
 
 > **Tip:** Function names should be short but evocative verbs.
 
-```{r}
+```{r lab_art-code-function-template, }
 function_name <- function(url) {
   # read page at url
   # extract title, link, artist info for n pieces on page
@@ -270,7 +270,7 @@ function_name <- function(url) {
 
 6. Test out your new function by running the following in the console. Does the output look right?
 
-```{r eval=FALSE}
+```{r lab_art-example-test-function, eval=FALSE}
 scrape_page(first_url)
 scrape_page(second_url)
 ```
@@ -324,7 +324,7 @@ In our case:
 
 
 
-```{r eval=FALSE}
+```{r lab_art-example-map, eval=FALSE}
 map_dfr(urls, scrape_page)
 ```
 
@@ -334,7 +334,7 @@ map_dfr(urls, scrape_page)
 Be patient, this will take a few minutes to run. It's literally scraping `r trunc(as.numeric(num_pieces)/10)` pages of data.
 If its still running you'll see a stop sign in the corner of the console. 
 
-```{r, echo=FALSE}
+```{r lab_art-include-screenshot, echo=FALSE}
 # screenshot of the console
 knitr::include_graphics("img/lab8_screenshot.png")
 ```
