@@ -30,7 +30,7 @@ Go to the course GitHub organization and locate the lab repo, which should be na
 
 In this lab, we will use  **tidyverse** and **janitor** to clean and explore the data.
 
-```{r bias_lab-setup-config, eval=FALSE,include=FALSE}
+```{r bias_lab-install-fairness, eval=FALSE,include=FALSE}
 # Install the fairness package from GitHub
 install.packages("devtools")
 devtools::install_github("kozodoi/fairness")
@@ -87,7 +87,7 @@ Each observation in this dataset represents a defendant. Here are the key variab
 
 1. What are the dimensions of the COMPAS dataset? (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent? What are the variables?
 
-```{r bias_lab-setup-config, message=FALSE, include=FALSE}
+```{r bias_lab-explore-dimensions, message=FALSE, include=FALSE}
 # Getting the dimensions of the dataset
 dim(compas)
 
@@ -98,14 +98,14 @@ names(compas)
 
 2. How many unique defendants are in the dataset? Is this the same as the number of rows? If not, why might there be a difference?
 
-```{r bias_lab-setup-config, message=FALSE, include=FALSE}
+```{r bias_lab-count-unique, message=FALSE, include=FALSE}
 n_distinct(compas$id)
 ```
 
 3. Let's examine the  distribution of the COMPAS risk scores (`decile_score`)! What do you observe about the shape of this distribution?
 
 
-```{r bias_lab-setup-config, eval=FALSE, include=FALSE}
+```{r bias_lab-plot-scores, eval=FALSE, include=FALSE}
 ggplot(compas, aes(x = decile_score)) +
   geom_histogram(binwidth = 1, color = "black", fill = "skyblue") +
   labs(title = "Distribution of COMPAS Risk Scores")
@@ -118,7 +118,7 @@ ggplot(compas, aes(x = decile_score)) +
 
 For an extra challenge, try to create a single visualization that shows all three distributions side by side. You can use facets or color to differentiate between the different demographic groups.
 
-```{r bias_lab-setup-config, eval=FALSE, include=FALSE}
+```{r bias_lab-plot-demographics, eval=FALSE, include=FALSE}
 # Distribution by race
 compas <- compas %>% mutate( # refactor age_cat to factor
   age_cat = factor(age_cat,
@@ -210,7 +210,7 @@ Now let’s assess how well the COMPAS algorithm performs across different demog
    - False Positive Rate: Proportion of non-recidivists (two_year_recid = 0) who were classified as high risk (decile_score >= 7)
    - False Negative Rate: Proportion of recidivists (two_year_recid = 1) who were classified as low risk (decile_score <= 4)
 
-```{r bias_lab-code-demo, }
+```{r bias_lab-code-filter-recidivists, }
 # To filter for specific conditions:
 non_recidivists <- compas %>%
   filter(two_year_recid == 0)
@@ -230,7 +230,7 @@ Note that their are many ways to measure bias in an algorithm. In this exercise,
 
     Based on your analysis, do you see evidence supporting ProPublica's claim that the algorithm is biased? Explain your reasoning.
 
-```{r bias_lab-code-demo, }
+```{r bias_lab-code-check-calibration, }
 # To check calibration, you can calculate recidivism rates by score for each race
 # This is an advanced analysis - use what you've learned to approach this
 ```
@@ -260,7 +260,7 @@ Now let's investigate what factors might be contributing to the disparities we'v
     - `priors_count`
     - `c_charge_degree`
 
-```{r bias_lab-code-demo, }
+```{r bias_lab-code-model-basic, }
 # Create a logistic regression model
 recid_model <- glm(
   two_year_recid ~ age + priors_count + c_charge_degree,
@@ -280,7 +280,7 @@ compas <- compas %>%
 
 21. Now build a more complex model that includes race as a predictor:
 
-```{r bias_lab-code-demo, }
+```{r bias_lab-code-model-with-race, }
 # Create a logistic regression model with race
 recid_model_with_race <- glm(
   two_year_recid ~ age + priors_count + c_charge_degree + race,

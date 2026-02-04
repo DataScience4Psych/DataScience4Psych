@@ -31,39 +31,39 @@ try_include_tweet("https://twitter.com/Chops310/status/1382481152489979913")
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html) if you would like to open them full-screen. The embedded code for feature enginering can be found [here](#featurenotes)
 
-```{r cv-include-video, echo=FALSE}
+```{r cv-include-slides-intro, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#1" %>%
   include_url(height = "400px")
 ```
 
 ## Prediction
 
-```{r cv-include-video, echo=FALSE,eval = knitr::is_latex_output()}
+```{r cv-include-video-prediction, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("U70OmbO-DP4")
 ```
-```{r cv-include-video, echo=FALSE,eval = knitr::is_html_output()}
+```{r cv-include-video-prediction-html, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=U70OmbO-DP4" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r cv-include-video, echo=FALSE}
+```{r cv-include-slides-prediction, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#2" %>%
   include_url(height = "400px")
 ```
 
 ## Workflow
 
-```{r cv-include-video, echo=FALSE,eval = knitr::is_latex_output()}
+```{r cv-include-video-workflow, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("R4h9u-sQHwI")
 ```
-```{r cv-include-video, echo=FALSE,eval = knitr::is_html_output()}
+```{r cv-include-video-workflow-html, echo=FALSE,eval = knitr::is_html_output()}
 "https://www.youtube.com/watch?v=R4h9u-sQHwI" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r cv-include-slides, echo=FALSE}
+```{r cv-include-slides-workflow, echo=FALSE}
 "https://datascience4psych.github.io/slides/d24_overfitting/d24_overfitting.html#17" %>%
   include_url(height = "400px")
 ```
@@ -72,28 +72,28 @@ embed_youtube_alt("R4h9u-sQHwI")
 
 You can follow along with the slides [here](https://datascience4psych.github.io/slides/d25_crossvalidation/d25_crossvalidation.html) if you would like to open them full-screen.
 
-```{r cv-include-video, echo=FALSE}
+```{r cv-include-video-crossval, echo=FALSE}
 # CV
 "https://www.youtube.com/watch?v=KQ9f8s7RB5g" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r cv-include-video, echo=FALSE}
+```{r cv-include-slides-crossval, echo=FALSE}
 slide_url(ds4p_urls, "d25_crossvalidation") %>%
   include_url(height = "400px")
 ```
 
 ## V-Fold
 
-```{r cv-include-video, echo=FALSE}
+```{r cv-include-video-vfold, echo=FALSE}
 # v fold
 "https://www.youtube.com/watch?v=quEVKV-Tk0Y" %>%
   embed_url() %>%
   use_align("center")
 ```
 
-```{r cv-include-slides, echo=FALSE}
+```{r cv-include-slides-vfold, echo=FALSE}
 slide_url(ds4p_urls, "d25_crossvalidation", "#35") %>%
   include_url(height = "400px")
 ```
@@ -131,7 +131,7 @@ plot_colors <- c("#E48957", "#CA235F")
 
 ### Same training and testing sets as before
 
-```{r cv-code-demo, }
+```{r cv-code-split-data, }
 # Fix random numbers by setting the seed
 # Enables analysis to be reproducible when random numbers are used
 set.seed(1066)
@@ -146,7 +146,7 @@ test_data <- testing(email_split)
 
 ### A simple approach: `mutate()`
 
-```{r cv-code-demo, }
+```{r cv-code-mutate-features, }
 train_data %>%
   mutate(
     date = date(time),
@@ -180,30 +180,30 @@ email_rec <- recipe(
 summary(email_rec)
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-summary, echo=FALSE}
 summary(email_rec) %>% print(n = 21)
 ```
 
 ### Remove certain variables
 
-```{r cv-code-demo, }
+```{r cv-code-remove-vars, }
 email_rec <- email_rec %>%
   step_rm(from, sent_email)
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-remove, echo=FALSE}
 email_rec
 ```
 
 ### Feature engineer date
 
-```{r cv-code-demo, }
+```{r cv-code-engineer-date, }
 email_rec <- email_rec %>%
   step_date(time, features = c("dow", "month")) %>%
   step_rm(time)
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-date, echo=FALSE}
 email_rec
 ```
 
@@ -211,24 +211,24 @@ email_rec
 
 Proceed with major caution! And please be sure to read [MacCallum, R. C., Zhang, S., Preacher, K. J., & Rucker, D. D. (2002). On the practice of dichotomization of quantitative variables. Psychological Methods, 7, 19-40.](http://www.quantpsy.org/pubs/maccallum_zhang_preacher_rucker_2002.pdf) and play around with the demo data from Kris's website: <http://www.quantpsy.org/mzpr.htm>
 
-```{r cv-code-demo, }
+```{r cv-code-discretize, }
 email_rec <- email_rec %>%
   step_cut(cc, attach, dollar, breaks = c(0, 1)) %>%
   step_cut(inherit, password, breaks = c(0, 1, 5, 10, 20))
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-cut, echo=FALSE}
 email_rec
 ```
 
 ### Create dummy variables
 
-```{r cv-code-demo, }
+```{r cv-code-create-dummies, }
 email_rec <- email_rec %>%
   step_dummy(all_nominal(), -all_outcomes())
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-dummy, echo=FALSE}
 email_rec
 ```
 
@@ -236,18 +236,18 @@ email_rec
 
 Variables that contain only a single value
 
-```{r cv-code-demo, }
+```{r cv-code-remove-zv, }
 email_rec <- email_rec %>%
   step_zv(all_predictors())
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-recipe-zv, echo=FALSE}
 email_rec
 ```
 
 ### All in one place
 
-```{r cv-code-demo, }
+```{r cv-code-recipe-complete, }
 email_rec <- recipe(spam ~ ., data = email) %>%
   step_rm(from, sent_email) %>%
   step_date(time, features = c("dow", "month")) %>%
@@ -262,7 +262,7 @@ email_rec <- recipe(spam ~ ., data = email) %>%
 
 ### Define model
 
-```{r cv-code-demo, }
+```{r cv-code-define-model, }
 email_mod <- logistic_reg() %>%
   set_engine("glm")
 
@@ -273,30 +273,30 @@ email_mod
 
 **Workflows** bring together models and recipes so that they can be easily applied to both the training and test data.
 
-```{r cv-code-demo, }
+```{r cv-code-define-workflow, }
 email_wflow <- workflow() %>%
   add_model(email_mod) %>%
   add_recipe(email_rec)
 ```
 
-```{r cv-include-content, echo=FALSE}
+```{r cv-print-workflow, echo=FALSE}
 email_wflow
 ```
 
 ### Fit model to training data
 
-```{r cv-code-demo, }
+```{r cv-code-fit-model, }
 email_fit <- email_wflow %>%
   fit(data = train_data)
 ```
 
-```{r cv-code-demo, }
+```{r cv-code-tidy-fit, }
 tidy(email_fit) %>% print(n = 31)
 ```
 
 ### Make predictions for test data
 
-```{r cv-code-demo, }
+```{r cv-code-make-predictions, }
 email_pred <- predict(email_fit, test_data, type = "prob") %>%
   bind_cols(test_data)
 
@@ -315,7 +315,7 @@ email_pred %>%
   autoplot()
 ```
 
-```{r cv-code-demo, }
+```{r cv-code-calc-roc-auc, }
 email_pred %>%
   roc_auc(
     truth = spam,

@@ -29,7 +29,7 @@ glimpse(email)
 
 > Question: Would you expect longer or shorter emails to be spam?
 
-```{r logistic_notes-include-content, echo=FALSE, out.width="100%"}
+```{r logistic_notes-plot-density, echo=FALSE, out.width="100%"}
 # email$spam_num=email$spam
 email$spam <- as.factor(email$spam)
 ggplot(
@@ -53,7 +53,7 @@ ggplot(
   theme_bw()
 ```
 
-```{r logistic_notes-include-content, echo=FALSE}
+```{r logistic_notes-calc-mean-chars, echo=FALSE}
 email %>%
   group_by(spam) %>%
   summarize(mean_num_char = mean(num_char))
@@ -61,7 +61,7 @@ email %>%
 
 > Question: Would you expect emails that have subjects starting with "Re:", "RE:", "re:", or "rE:" to be spam or not?
 
-```{r logistic_notes-include-content, echo=FALSE}
+```{r logistic_notes-plot-re-subject, echo=FALSE}
 email %>%
   ggplot(aes(x = re_subj, fill = spam)) +
   geom_bar(position = "fill") +
@@ -83,7 +83,7 @@ email %>%
 
 We can't reasonably fit a linear model to this data-- we need something different!
 
-```{r logistic_notes-include-content, echo=FALSE, out.width="70%"}
+```{r logistic_notes-plot-jitter, echo=FALSE, out.width="70%"}
 means <- email %>%
   group_by(spam) %>%
   summarize(mean_num_char = mean(num_char)) %>%
