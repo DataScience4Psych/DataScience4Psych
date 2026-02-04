@@ -40,7 +40,7 @@ Consider we want to compute the average delay experienced by each airline. This 
 First, develop some working code for interactive use, using a representative input. I'll use flights operated by a specific airline as an example.
 
 R functions that will be useful: `mean()` and `filter()` from the `dplyr` package.
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-explore, }
 ## Investigate the structure of the flights dataset
 str(flights)
 ## get to know the functions mentioned above
@@ -64,7 +64,7 @@ Now lets go through some natural solutions to get the average delay for the airl
 
 This solution employs the dplyr package to filter flights by the airline code and then calculate the average departure delay.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-dplyr, }
 flights %>%
   filter(carrier == "AA") %>%
   summarize(average_delay = mean(dep_delay, na.rm = TRUE))
@@ -82,7 +82,7 @@ mean(flights$dep_delay[flights$carrier == "AA"], na.rm = TRUE)
 
 The with() function provides a convenient way to perform operations within a dataframe subset, making the code more readable.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-with, }
 with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
 ```
 
@@ -90,14 +90,14 @@ with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
 
 The `aggregate()` function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-aggregate, }
 aggregate(dep_delay ~ carrier, data = flights[flights$carrier == "AA", ], FUN = mean, na.rm = TRUE)$dep_delay
 ```
 
 ###  Using tapply() Function
 
 The tapply() function applies a function to subsets of a vector, which we can use to calculate the average delay for "AA" flights.
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-tapply, }
 tapply(flights$dep_delay, flights$carrier, mean, na.rm = TRUE)["AA"]
 ```
 
@@ -108,7 +108,7 @@ Now, internalize this "answer" because our informal testing relies on you notici
 When crafting your own functions in R, it's beneficial to start with a straightforward, minimal version that accomplishes the basic task at hand. This approach is akin to building a 'skateboard'—a simple, yet functional product. Let's apply this philosophy to our task of calculating the average delay for a specific airline in the nycflights13 dataset.
 
 ### Initial Simple Function: The 'Skateboard'
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-function-basic, }
 average_delay_by_airline <- function(airline_code) {
   flights %>%
     filter(carrier == airline_code) %>%
@@ -138,7 +138,7 @@ This idea is related to the valuable [Telescope Rule][telescope-rule]:
 
 Pick some new artificial inputs where you know (at least approximately) what your function should return.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-test-ua, }
 average_delay_by_airline("UA")
 ```
 
@@ -148,7 +148,7 @@ I know that UA had about 12 minutes of a delay.
 
 Back to the real world now. So typically, the next step is to check to see if your function can handle different data. This is a good way to check if your function is robust and generalizable. However, ours doesn't. It's hard-wired to the `flights` dataset. We'll fix that in the next section.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-function-data-param, }
 average_delay_by_airline <- function(data = flights, airline_code) {
   data %>%
     filter(carrier == airline_code) %>%
@@ -158,7 +158,7 @@ average_delay_by_airline <- function(data = flights, airline_code) {
 
 I've now added another variable to the function, `data`, which defaults to `flights`. This is a good habit to get into. It makes your function more flexible and more generalizable. It also makes it easier to test your function on different datasets. Now, we can test our function on a modified `flights` dataset, that I have named the `flights2` dataset. The only thing I have done to this dataset is multiplied all of the delays by 2.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-test-flights2, }
 flights2 <- flights
 
 flights2$dep_delay <- flights2$dep_delay * 2
@@ -173,7 +173,7 @@ Once you have a basic function that works, you can incrementally add features to
 
 Let's add the capability to choose between departure (dep_delay) and arrival (arr_delay) delays.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-function-enhanced, }
 # Enhanced function to calculate average delay, with options for delay type and error handling
 average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   data %>%
@@ -193,7 +193,7 @@ In this version, the function now accepts an additional argument, `delay_type`, 
 
 Now, let's try to break our function. Don't get truly diabolical (yet). Just make the kind of mistakes you can imagine making at 2am when, 3 years from now, you rediscover this useful function you wrote. Give your function inputs it's not expecting.
 
-```{r functionnotes-code-data, error = TRUE}
+```{r functionnotes-code-test-errors, error = TRUE}
 average_delay_by_airline(flights)
 
 average_delay_by_airline(airline_code = "AB")
@@ -209,7 +209,7 @@ How happy are you with those error messages? You must imagine that some entire _
 We'll add some simple checks to ensure that the airline code provided to the function is valid. If it's not, we'll return an informative error message. We'll also add a check to ensure that the delay type provided is valid.
 
 
-```{r functionnotes-code-dup2-demo,error=TRUE}
+```{r functionnotes-code-error-handling,error=TRUE}
 average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
   # Check if any of the provided airline codes are not in the dataset
   if (!any(airline_code %in% c(data$carrier, NA))) {
@@ -237,7 +237,7 @@ For functions that will be used again -- which is not all of them! -- it is good
 
 `stopifnot()` is the entry level solution. I use it here to make sure the input `data` is a data.frame.
 
-```{r functionnotes-code-demo, error = TRUE}
+```{r functionnotes-code-stopifnot, error = TRUE}
 mmm <- function(data = flights, airline_code, delay_type = "dep_delay") {
   stopifnot(is.data.frame(data))
   # Check if any of the provided airline codes are not in the dataset
@@ -262,7 +262,7 @@ And we see that it catches all of the self-inflicted damage we would like to avo
 
 `stopifnot()` doesn't provide a helpful error message. The next approach is widely used. Put your validity check inside an `if()` statement and call `stop()` yourself, with a custom error message, in the body.
 
-```{r functionnotes-code-demo, error = TRUE}
+```{r functionnotes-code-if-stop, error = TRUE}
 mmm2 <- function(x) {
   if (!is.numeric(x)) {
     stop(
@@ -322,7 +322,7 @@ library(gapminder)
 
 Let's keep our previous function around as a baseline.
 
-```{r functionnotes-code-dup2-demo, }
+```{r functionnotes-code-restore-mmm, }
 mmm <- function(x) {
   stopifnot(is.numeric(x))
   max(x) - min(x)
@@ -349,7 +349,7 @@ The eventual inputs to our new function will be the data `x` and two probabiliti
 
 First, play around with the `quantile()` function. Convince yourself you know how to use it, for example, by cross-checking your results with other built-in functions.
 
-```{r functionnotes-code-dup2-demo, }
+```{r functionnotes-code-quantile-explore, }
 quantile(gapminder$lifeExp)
 quantile(gapminder$lifeExp,
   probs = 0.5
@@ -363,7 +363,7 @@ boxplot(gapminder$lifeExp, plot = FALSE)$stats
 
 Now write a code snippet that takes the difference between two quantiles.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-quantile-diff, }
 the_probs <- c(0.25, 0.75)
 the_quantiles <- quantile(gapminder$lifeExp, probs = the_probs)
 max(the_quantiles) - min(the_quantiles)
@@ -373,7 +373,7 @@ max(the_quantiles) - min(the_quantiles)
 
 I'll use `qdiff` as the base of our function's name. I copy the overall structure from our previous "max minus min" work but replace the guts of the function with the more general code we just developed.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-qdiff1, }
 qdiff1 <- function(x, probs) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x = x, probs = probs)
@@ -393,7 +393,7 @@ I want you to understand the importance of argument names.
 
 I can name my arguments almost anything I like. Proof:
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-qdiff2-argnames, }
 qdiff2 <- function(zeus, hera) {
   stopifnot(is.numeric(zeus))
   the_quantiles <- quantile(x = zeus, probs = hera)
@@ -406,7 +406,7 @@ Although I can name my arguments after Greek gods, it's usually a bad idea. Take
 
 If you are going to pass the arguments of your function as arguments of a built-in function, consider copying the argument names. Unless you have a good reason to do your own thing (some argument names are bad!), be consistent with the existing function. Again, the reason is to reduce your cognitive load. This is what I've been doing all along and now you know why:
 
-```{r functionnotes-code-data, }
+```{r functionnotes-code-show-qdiff1, }
 qdiff1
 ```
 
@@ -418,7 +418,7 @@ By this point, I expect someone will have asked about the last line in my functi
 
 By default, a function returns the result of the last line of the body. I am just letting that happen with the line `max(the_quantiles) - min(the_quantiles)`. However, there is an explicit function for this: `return()`. I could just as easily make this the last line of my function's body:
 
-```{r functionnotes-example-example, eval = FALSE}
+```{r functionnotes-example-return, eval = FALSE}
 return(max(the_quantiles) - min(the_quantiles))
 ```
 
@@ -428,7 +428,7 @@ You absolutely must use `return()` if you want to return early based on some con
 
 What happens if we call our function but neglect to specify the probabilities?
 
-```{r functionnotes-code-demo, error = TRUE}
+```{r functionnotes-code-test-missing-probs, error = TRUE}
 qdiff1(gapminder$lifeExp)
 ```
 
@@ -436,7 +436,7 @@ Oops! At the moment, this causes a fatal error. It can be nice to provide some r
 
 We started by focusing on the max and the min, so I think those make reasonable defaults. Here's how to specify that in a function definition.
 
-```{r functionnotes-code-dup2-demo, }
+```{r functionnotes-code-qdiff3-defaults, }
 qdiff3 <- function(x, probs = c(0, 1)) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs)
@@ -446,7 +446,7 @@ qdiff3 <- function(x, probs = c(0, 1)) {
 
 Again we check how the function works, in old examples and new, specifying the `probs` argument and not.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-test-qdiff3, }
 qdiff3(gapminder$lifeExp)
 mmm(gapminder$lifeExp)
 qdiff3(gapminder$lifeExp, c(0.1, 0.9))
@@ -456,7 +456,7 @@ qdiff3(gapminder$lifeExp, c(0.1, 0.9))
 
 __Exercise:__ upgrade our argument validity checks in light of the new argument `probs`.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-validation-exercise, }
 ## problems identified during class
 ## we're not checking that probs is numeric
 ## we're not checking that probs is length 2
@@ -496,7 +496,7 @@ library(gapminder)
 
 Let's keep our previous function around as a baseline.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-restore-qdiff3, }
 qdiff3 <- function(x, probs = c(0, 1)) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs)
@@ -508,7 +508,7 @@ qdiff3 <- function(x, probs = c(0, 1)) {
 
 I am being gentle by letting you practice with the Gapminder data. In real life, missing data will make your life a living hell. If you are lucky, it will be properly indicated by the special value `NA`, but don't hold your breath. Many built-in R functions have an `na.rm =` argument through which you can specify how you want to handle `NA`s. Typically the default value is `na.rm = FALSE` and typical default behavior is to either let `NA`s propagate or to raise an error. Let's see how `quantile()` handles `NA`s:
 
-```{r functionnotes-code-demo, error = TRUE}
+```{r functionnotes-code-test-na, error = TRUE}
 z <- gapminder$lifeExp
 z[3] <- NA
 quantile(gapminder$lifeExp)
@@ -520,7 +520,7 @@ So `quantile()` simply will not operate in the presence of `NA`s unless `na.rm =
 
 If we wanted to hardwire `na.rm = TRUE`, we could. Focus on our call to `quantile()` inside our function definition.
 
-```{r functionnotes-code-dup2-demo, }
+```{r functionnotes-code-qdiff4-hardwire, }
 qdiff4 <- function(x, probs = c(0, 1)) {
   stopifnot(is.numeric(x))
   the_quantiles <- quantile(x, probs, na.rm = TRUE)
@@ -534,7 +534,7 @@ This works but it is dangerous to invert the default behavior of a well-known bu
 
 We could add an `na.rm =` argument to our own function. We might even enforce our preferred default -- but at least we're giving the user a way to control the behavior around `NA`s.
 
-```{r functionnotes-code-demo, error = TRUE}
+```{r functionnotes-code-qdiff5, error = TRUE}
 qdiff5 <- function(x,
                    probs = c(0, 1),
                    na.rm = TRUE) {
@@ -553,7 +553,7 @@ You probably could have lived a long and happy life without knowing there are at
 
 Let's say we want to give the user of our function the ability to specify how the quantiles are computed, but we want to accomplish with as little fuss as possible. In fact, we don't even want to clutter our function's interface with this! This calls for the very special `...` argument. In English, this set of three dots is frequently called an "ellipsis".
 
-```{r functionnotes-code-dup2-demo, }
+```{r functionnotes-code-qdiff6-ellipsis, }
 qdiff6 <- function(x, probs = c(0, 1), na.rm = TRUE, ...) {
   the_quantiles <- quantile(x = x, probs = probs, na.rm = na.rm, ...)
   max(the_quantiles) - min(the_quantiles)
@@ -562,7 +562,7 @@ qdiff6 <- function(x, probs = c(0, 1), na.rm = TRUE, ...) {
 
 The practical significance of the `type =` argument is virtually nonexistent, so we can't demo with the Gapminder data. Thanks to [\@wrathematics][twitter-wrathematics], here's a small example where we can (barely) detect a difference due to `type`.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-quantile-type, }
 set.seed(1234)
 z <- rnorm(10)
 quantile(z, type = 1)
@@ -572,7 +572,7 @@ all.equal(quantile(z, type = 1), quantile(z, type = 4))
 
 Now we can call our function, requesting that quantiles be computed in different ways.
 
-```{r functionnotes-code-data, }
+```{r functionnotes-code-test-qdiff6, }
 qdiff6(z, probs = c(0.25, 0.75), type = 1)
 qdiff6(z, probs = c(0.25, 0.75), type = 4)
 ```
@@ -595,7 +595,7 @@ The [testthat][testthat-web] package ([cran][testthat-cran]; [GitHub][testthat-g
 
 We will construct a test with `test_that()` and, within it, we put one or more *expectations* that check actual against expected results. You simply harden your informal, interactive tests into formal unit tests. Here are some examples of tests and indicative expectations.
 
-```{r functionnotes-example-example, eval = FALSE}
+```{r functionnotes-example-testthat, eval = FALSE}
 library(testthat)
 
 test_that("invalid args are detected", {
@@ -674,14 +674,14 @@ p + geom_point() + geom_smooth(method = "lm", se = FALSE)
 
 Fit the regression:
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-lm-basic, }
 j_fit <- lm(lifeExp ~ year, j_dat)
 coef(j_fit)
 ```
 
 Whoa, check out that wild intercept! Apparently the life expectancy in France around year 0 A.D. was minus 400 years! Never forget to sanity check a model. In this case, a reparametrization is in order. I think it makes more sense for the intercept to correspond to life expectancy in 1952, the earliest date in our dataset. Estimate the intercept eye-ball-o-metrically from the plot and confirm that we've got something sane and interpretable now.
 
-```{r functionnotes-code-data, }
+```{r functionnotes-code-lm-france, }
 j_fit <- lm(lifeExp ~ I(year - 1952), j_dat)
 coef(j_fit)
 ```
@@ -698,7 +698,7 @@ Second, what am I doing here: `lm(lifeExp ~ I(year - 1952))`? I want the interce
 
 Create the basic definition of a function and drop your working code inside. Add arguments and edit the inner code to match. Apply it to the practice data. Do you get the same result as before?
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-le-lin-fit-basic, }
 le_lin_fit <- function(dat, offset = 1952) {
   the_fit <- lm(lifeExp ~ I(year - offset), dat)
   coef(the_fit)
@@ -710,7 +710,7 @@ I had to decide how to handle the offset. Given that I will scale this code up t
 
 I loathe the names on this return value. This is not my first rodeo and I know that, downstream, these will contaminate variable names and factor levels and show up in public places like plots and tables. Fix names early!
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-le-lin-fit-names, }
 le_lin_fit <- function(dat, offset = 1952) {
   the_fit <- lm(lifeExp ~ I(year - offset), dat)
   setNames(coef(the_fit), c("intercept", "slope"))
@@ -736,7 +736,7 @@ The linear fit is comically bad, but yes I believe the visual line and the regre
 
 It's also a good idea to clean out the workspace, rerun the minimum amount of code, and retest your function. This will help you catch another common mistake: accidentally relying on objects that were lying around in the workspace during development but that are not actually defined in your function nor passed as formal arguments.
 
-```{r functionnotes-code-demo, }
+```{r functionnotes-code-clean-workspace, }
 rm(list = ls())
 le_lin_fit <- function(dat, offset = 1952) {
   the_fit <- lm(lifeExp ~ I(year - offset), dat)
