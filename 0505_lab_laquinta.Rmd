@@ -95,7 +95,7 @@ dn <- dennys
 lq <- laquinta
 ```
 
-```{r lab_laquinta-code-dup2-demo, echo=TRUE,results='hide'}
+```{r lab_laquinta-code-filter-alaska, echo=TRUE,results='hide'}
 dn_ak <- dn %>%
   filter(state == "AK")
 nrow(dn_ak)
@@ -103,7 +103,7 @@ nrow(dn_ak)
 
 Now, do the same for La Quinta data frame for Alaska (AK) and save the result as `lq_ak`. How many La Quinta locations are there in Alaska?
 
-```{r lab_laquinta-setup-config, include=FALSE,eval=TRUE}
+```{r lab_laquinta-setup-lq-alaska, include=FALSE,eval=TRUE}
 lq_ak <- lq %>%
   filter(state == "AK")
 ```
@@ -167,7 +167,7 @@ knitr::include_graphics("img/dennys-laquinta-sketches/dennys-laquinta-sketches.0
 
 Let's join the data on Denny's and La Quinta locations in Alaska, and take a look at what it looks like:
 
-```{r lab_laquinta-code-demo, echo=TRUE, message=TRUE, warning=FALSE,results='hide'}
+```{r lab_laquinta-code-join-alaska, echo=TRUE, message=TRUE, warning=FALSE,results='hide'}
 dn_lq_ak <- full_join(dn_ak, lq_ak,
   by = "state"
 )
@@ -191,7 +191,7 @@ knitr::include_graphics("img/Law-of-haversines.png")
 
 This function is not available in R, but we can save the following function to a file called `haversine.R` that we can load and then use:
 
-```{r lab_laquinta-code-dup2-demo, }
+```{r lab_laquinta-code-haversine-function, }
 haversine <- function(long1, lat1, long2, lat2, round = 3) {
   # convert to radians
   long1 <- long1 * pi / 180

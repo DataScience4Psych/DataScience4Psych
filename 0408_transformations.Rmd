@@ -34,7 +34,7 @@ download.file("http://socserv.socsci.mcmaster.ca/jfox/Books/Applied-Regression-3
 # if (!require("spida2")) devtools::install_github("smasongarrison/spida2",ref="patch-1")
 # devtools::install_github("gmonette/spida2")
 ```
-```{r transformations-code-packages,message=FALSE}
+```{r transformations-code-packages-main,message=FALSE}
 #if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
 #library(p3d)
 #library(extras)
@@ -206,7 +206,7 @@ pow(x, 2)
 
 Because functions are first-class objects in R, we can also define the exponential function and plot it directly.
 
-```{r transformations-code-plot, }
+```{r transformations-code-plot-power-curves, }
 
 plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
@@ -219,7 +219,7 @@ However, this approach works correctly only for a single value of $p$ because th
 
 Most operators in R are __vectorized__ so they work element-wise when their arguments are vectors. When the arguments have incompatible lengths, the shorter argument is __recycled__ to have the same length as the longer one. That is why the following produces sensible results:
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-recycling, }
 z <- c(3, 5, 9)
 z + c(1, 1, 1)
 z + 1 # 1 is recycled so the result is equivalent to the previous line
@@ -232,7 +232,7 @@ z^z
 
 We can use `ifelse` which works on a vector instead of a single value.
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-ifelse, }
 pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
   y <- rep(y, length.out = length(p))
@@ -250,7 +250,7 @@ pow(-1:4, 2)
 
 With a bit more work, we can avoid unnecessary evaluations:
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-optimized, }
 pow <- function(y, p) {
   p <- rep(p, length.out = length(y))
   y <- rep(y, length.out = length(p))
@@ -269,7 +269,7 @@ pow(1:10, -1:8)
 
 Let's plot this transformation for a range of values of $p$. The value of `expand.grid` is a data frame whose rows consist of the Cartesian product (i.e. all possible combinations) of its arguments.
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-cartesian, }
 expand.grid(a = c("A", "B"), x = 1:3)
 
 
@@ -307,7 +307,7 @@ xyplot(yval ~ y, dd,
 
 It's much better to have the legend in the same order as the lines in the graph. We can turn `p` into a factor and reverse its order.
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-factor-reorder, }
 dd$po <- factor(dd$p)
 dd$po <- reorder(dd$po, -dd$p)
 xyplot(yval ~ y, dd,
@@ -323,13 +323,13 @@ xyplot(yval ~ y, dd,
 
 Uniform quantiles let's us see how far a distribution is from normal.
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-uniform-quantile, }
 xqplot(un)
 ```
 
 Normal quantiles let's us see how far a distribution is from normal.
 
-```{r transformations-code-demo, }
+```{r transformations-code-demo-normal-quantile, }
 xqplot(un, ptype = "normal")
 ```
 
@@ -345,7 +345,7 @@ Note that the fact that $x$ or $y$ variables are not normal does not mean that t
 
 Let's explore wages of working women as a function of education.
 
-```{r transformations-code-packages, }
+```{r transformations-code-packages-lattice, }
 library(latticeExtra)
 un %>%
   xyplot(infantMortality ~ GDPperCapita, .) +
@@ -367,7 +367,7 @@ un %>% subset(country %in% c("United.States", "Canada"))
 
 Below would be a 3D plot showing curvature. However, we can't get the p3d package to install properly right now. The 3D plot would help visualize curvature between wage and education, and heteroskedasticity in wage as a function of education.
 
-```{r transformations-code-packages, }
+```{r transformations-code-packages-p3d, }
 
 if (require("p3d")) {
 if(FALSE){
@@ -403,10 +403,10 @@ The Box-Cox transformation is similar to Tukey's Ladder of Powers, with the para
 
 ### Video Explanation
 
-```{r transformations-include-video, echo=FALSE,eval = knitr::is_latex_output()}
+```{r transformations-include-video-latex, echo=FALSE,eval = knitr::is_latex_output()}
 embed_youtube_alt("vGOpEpjz2Ks")
 ```
-```{r transformations-include-video, echo=FALSE,eval = knitr::is_html_output()}
+```{r transformations-include-video-html, echo=FALSE,eval = knitr::is_html_output()}
 # not mine, but still good
 "https://www.youtube.com/watch?v=vGOpEpjz2Ks" %>%
   embed_url() %>%
