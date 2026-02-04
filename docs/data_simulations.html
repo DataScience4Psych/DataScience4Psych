@@ -614,9 +614,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="34" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html"><i class="fa fa-check"></i><b>34</b> ODD: Data Transformations and Tukey’s Ladder of Powers</a>
 <ul>
-<li class="chapter" data-level="34.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#transforming-data-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.1</b> Transforming Data: Tukey’s Ladder of Powers</a>
+<li class="chapter" data-level="34.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#why-transform"><i class="fa fa-check"></i><b>34.1</b> Why transform?</a>
 <ul>
-<li class="chapter" data-level="34.1.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#dataset-preparation-and-visualization"><i class="fa fa-check"></i><b>34.1.1</b> Dataset Preparation and Visualization</a></li>
+<li class="chapter" data-level="34.1.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#transforming-data-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.1.1</b> Transforming Data: Tukey’s Ladder of Powers</a></li>
+<li class="chapter" data-level="34.1.2" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#dataset-preparation-and-visualization"><i class="fa fa-check"></i><b>34.1.2</b> Dataset Preparation and Visualization</a></li>
 </ul></li>
 <li class="chapter" data-level="34.2" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#introduction-to-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.2</b> Introduction to Tukey’s Ladder of Powers</a>
 <ul>
@@ -1682,15 +1683,15 @@ div.csl-indent {
 <p>For example, to generate random values from these distributions, you would use:</p>
 <div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="data_simulations.html#cb514-1" tabindex="-1"></a><span class="co"># Generating five random normal values</span></span>
 <span id="cb514-2"><a href="data_simulations.html#cb514-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb514-3"><a href="data_simulations.html#cb514-3" tabindex="-1"></a><span class="co">#&gt; [1] -1.480  0.199 -0.671  0.232 -0.981</span></span>
+<span id="cb514-3"><a href="data_simulations.html#cb514-3" tabindex="-1"></a><span class="co">#&gt; [1]  2.707 -0.630 -0.155 -2.035 -1.599</span></span>
 <span id="cb514-4"><a href="data_simulations.html#cb514-4" tabindex="-1"></a></span>
 <span id="cb514-5"><a href="data_simulations.html#cb514-5" tabindex="-1"></a><span class="co"># Generating five uniform values between 0 and 1</span></span>
 <span id="cb514-6"><a href="data_simulations.html#cb514-6" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
-<span id="cb514-7"><a href="data_simulations.html#cb514-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.612 0.104 0.718 0.645 0.960</span></span>
+<span id="cb514-7"><a href="data_simulations.html#cb514-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.8845 0.0303 0.3500 0.2050 0.4408</span></span>
 <span id="cb514-8"><a href="data_simulations.html#cb514-8" tabindex="-1"></a></span>
 <span id="cb514-9"><a href="data_simulations.html#cb514-9" tabindex="-1"></a><span class="co"># Generating five Poisson-distributed values with a mean of 3</span></span>
 <span id="cb514-10"><a href="data_simulations.html#cb514-10" tabindex="-1"></a><span class="fu">rpois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">3</span>)</span>
-<span id="cb514-11"><a href="data_simulations.html#cb514-11" tabindex="-1"></a><span class="co">#&gt; [1] 1 4 1 4 0</span></span></code></pre></div>
+<span id="cb514-11"><a href="data_simulations.html#cb514-11" tabindex="-1"></a><span class="co">#&gt; [1] 1 3 6 2 4</span></span></code></pre></div>
 <p>The <code>r</code> functions for a chosen distribution all work similarly. Other distributions from the <code>stats</code> package. binomial, F, log-normal, beta, exponential, and gamma distributions. More exotic distributions are available through additional packages.</p>
 </div>
 <div id="deep-dive-into-the-normal-distribution-rnorm" class="section level3 hasAnchor" number="87.2.2">
@@ -1703,10 +1704,10 @@ div.csl-indent {
 </ul>
 <p>Generating five random numbers from a <span class="math inline">\(Normal(0, 1)\)</span> (aka the <em>standard</em> normal) distribution can be done as follows:</p>
 <div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="data_simulations.html#cb515-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb515-2"><a href="data_simulations.html#cb515-2" tabindex="-1"></a><span class="co">#&gt; [1]  1.435  0.158 -0.383 -1.359 -0.373</span></span></code></pre></div>
+<span id="cb515-2"><a href="data_simulations.html#cb515-2" tabindex="-1"></a><span class="co">#&gt; [1]  0.030  1.297  1.229 -1.087  0.763</span></span></code></pre></div>
 <p>Notice how I have written out the arguments explicitly. If I were coding “lazily”, I’d likely have written something like this…</p>
 <div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="data_simulations.html#cb516-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>) <span class="co"># This uses the default values for mean and sd</span></span>
-<span id="cb516-2"><a href="data_simulations.html#cb516-2" tabindex="-1"></a><span class="co">#&gt; [1] -0.996  0.658  1.142 -0.436 -1.047</span></span></code></pre></div>
+<span id="cb516-2"><a href="data_simulations.html#cb516-2" tabindex="-1"></a><span class="co">#&gt; [1]  0.553 -0.263 -0.852 -0.061  1.583</span></span></code></pre></div>
 <p>Lazy, concise, code can look pretty mysterious to someone reading my code (or to my future self reading my code). Because I used the default values for <code>mean</code> and <code>sd</code>, it’s not clear exactly what distribution I drew the numbers from. When future me revisits this code, she will have to remember what the defaults are. Is that a realistic request? Maybe, but future me has to remember a lot of things, so as a kindness to her, its worthwhile to make those arguments explicit. That way future me does not have to remember what the defaults are and she can quickly work her way through the code.</p>
 <p>In other words, specify the arguments explicitly, even if you are using default values. This practice makes your code self-documenting, meaning that anyone reading it can understand at a glance which distribution the data comes from, without needing to remember the default settings of the function.</p>
 <p>Here’s an even more readable version for generating five random numbers from a standard normal distribution, with explicit argument names:</p>
@@ -1715,7 +1716,7 @@ div.csl-indent {
 <span id="cb517-3"><a href="data_simulations.html#cb517-3" tabindex="-1"></a>  <span class="at">mean =</span> <span class="dv">0</span>,</span>
 <span id="cb517-4"><a href="data_simulations.html#cb517-4" tabindex="-1"></a>  <span class="at">sd =</span> <span class="dv">1</span></span>
 <span id="cb517-5"><a href="data_simulations.html#cb517-5" tabindex="-1"></a>)</span>
-<span id="cb517-6"><a href="data_simulations.html#cb517-6" tabindex="-1"></a><span class="co">#&gt; [1]  0.446  1.378  2.418  0.316 -1.117</span></span></code></pre></div>
+<span id="cb517-6"><a href="data_simulations.html#cb517-6" tabindex="-1"></a><span class="co">#&gt; [1]  0.713 -0.198 -1.068  0.675 -0.358</span></span></code></pre></div>
 <p>When I’m writing code for a project that I know will be shared with others, I always (try to) write out the arguments. When I’m writing code for myself, I’m more likely to use the defaults. It’s a balance between being kind to future me and being efficient in the moment.</p>
 <div id="setting-the-random-seed-for-reproducible-random-numbers" class="section level4 hasAnchor" number="87.2.2.1">
 <h4><span class="header-section-number">87.2.2.1</span> Setting the random seed for reproducible random numbers<a href="data_simulations.html#setting-the-random-seed-for-reproducible-random-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1811,7 +1812,7 @@ div.csl-indent {
 <span id="cb525-20"><a href="data_simulations.html#cb525-20" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;#56B4E9&quot;</span>, <span class="at">size =</span> <span class="dv">7</span>) <span class="sc">+</span></span>
 <span id="cb525-21"><a href="data_simulations.html#cb525-21" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb525-22"><a href="data_simulations.html#cb525-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Scatterplot of Two Random Variables&quot;</span>)</span></code></pre></div>
-<p><img src="1302_simulationnotes_files/figure-html/unnamed-chunk-12-1.png" alt="" width="672" /></p>
+<p><img src="1302_simulationnotes_files/figure-html/simulationnotes-code-spurious-cor-1.png" alt="" width="672" /></p>
 </div>
 <div id="runif-pulls-from-the-uniform-distribution" class="section level3 hasAnchor" number="87.2.4">
 <h3><span class="header-section-number">87.2.4</span> <code>runif()</code> pulls from the uniform distribution<a href="data_simulations.html#runif-pulls-from-the-uniform-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1896,7 +1897,7 @@ div.csl-indent {
 <span id="cb534-8"><a href="data_simulations.html#cb534-8" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Value&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span></span>
 <span id="cb534-9"><a href="data_simulations.html#cb534-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb534-10"><a href="data_simulations.html#cb534-10" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="1302_simulationnotes_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" /></p>
+<p><img src="1302_simulationnotes_files/figure-html/simulationnotes-code-plot-hist5-1.png" alt="" width="672" /></p>
 <p>Let’s do the same for a Poisson distribution with a mean of 100. The range of values is still pretty narrow; there are no values even remotely close to 0.</p>
 <div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="data_simulations.html#cb535-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">100</span>)</span>
 <span id="cb535-2"><a href="data_simulations.html#cb535-2" tabindex="-1"></a><span class="fu">summary</span>(y)</span>
@@ -1908,7 +1909,7 @@ div.csl-indent {
 <span id="cb536-3"><a href="data_simulations.html#cb536-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#CC79A7&quot;</span>) <span class="sc">+</span></span>
 <span id="cb536-4"><a href="data_simulations.html#cb536-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Poisson distribution with a mean of 100&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Value&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
 <span id="cb536-5"><a href="data_simulations.html#cb536-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="1302_simulationnotes_files/figure-html/unnamed-chunk-23-1.png" alt="" width="672" /></p>
+<p><img src="1302_simulationnotes_files/figure-html/simulationnotes-code-plot-hist100-1.png" alt="" width="672" /></p>
 <p>An alternative to the Poisson distribution for discrete integers is the negative binomial distribution. The <strong>MASS</strong> package has a function called <code>rnegbin()</code> for generating random numbers from the negative binomial distribution.</p>
 </div>
 </div>

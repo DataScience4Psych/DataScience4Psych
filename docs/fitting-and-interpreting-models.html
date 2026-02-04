@@ -614,9 +614,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="34" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html"><i class="fa fa-check"></i><b>34</b> ODD: Data Transformations and Tukey’s Ladder of Powers</a>
 <ul>
-<li class="chapter" data-level="34.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#transforming-data-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.1</b> Transforming Data: Tukey’s Ladder of Powers</a>
+<li class="chapter" data-level="34.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#why-transform"><i class="fa fa-check"></i><b>34.1</b> Why transform?</a>
 <ul>
-<li class="chapter" data-level="34.1.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#dataset-preparation-and-visualization"><i class="fa fa-check"></i><b>34.1.1</b> Dataset Preparation and Visualization</a></li>
+<li class="chapter" data-level="34.1.1" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#transforming-data-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.1.1</b> Transforming Data: Tukey’s Ladder of Powers</a></li>
+<li class="chapter" data-level="34.1.2" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#dataset-preparation-and-visualization"><i class="fa fa-check"></i><b>34.1.2</b> Dataset Preparation and Visualization</a></li>
 </ul></li>
 <li class="chapter" data-level="34.2" data-path="odd-data-transformations-and-tukeys-ladder-of-powers.html"><a href="odd-data-transformations-and-tukeys-ladder-of-powers.html#introduction-to-tukeys-ladder-of-powers"><i class="fa fa-check"></i><b>34.2</b> Introduction to Tukey’s Ladder of Powers</a>
 <ul>
@@ -1707,11 +1708,11 @@ div.csl-indent {
 <p>There are a few ways we can look at the residuals. Side-by-side boxplots give a broad overview:</p>
 <div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="fitting-and-interpreting-models.html#cb405-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> voice_part, <span class="at">y =</span> residual)) <span class="sc">+</span></span>
 <span id="cb405-2"><a href="fitting-and-interpreting-models.html#cb405-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-boxplot-1.png" alt="" width="672" /></p>
 <p>We can also look at the ecdfs of the residuals for each voice part.</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="fitting-and-interpreting-models.html#cb406-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">x =</span> residual, <span class="at">color =</span> voice_part)) <span class="sc">+</span></span>
 <span id="cb406-2"><a href="fitting-and-interpreting-models.html#cb406-2" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>()</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-ecdf-1.png" alt="" width="672" /></p>
 <p>From these plots, it seems like the residuals in each group have approximately the same variance.</p>
 </div>
 <div id="normality" class="section level3 hasAnchor" number="69.2.3">
@@ -1720,7 +1721,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="fitting-and-interpreting-models.html#cb407-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb407-2"><a href="fitting-and-interpreting-models.html#cb407-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb407-3"><a href="fitting-and-interpreting-models.html#cb407-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>voice_part, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-10-1.png" alt="" width="576" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-qq-facet-1.png" alt="" width="576" /></p>
 <p>Not only do the lines look reasonably straight, the scales look similar for all eight voice parts. This similarity suggests a model where all of the errors are normal with the <em>same</em> standard deviation. This is convenient because it is the form of a standard linear model:</p>
 <p>Singer height = Average height for their voice part + Normal(<span class="math inline">\(0, \sigma^2\)</span>) error.</p>
 </div>
@@ -1730,7 +1731,7 @@ div.csl-indent {
 <p>We’ve already checked for normality of the residuals within each voice part, but to get a little more power to see divergence from normality, we can pool the residuals and make a normal QQ plot of all the residuals together. This is a little more sensitive to non-normality than the separate QQ plots.</p>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="fitting-and-interpreting-models.html#cb408-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb408-2"><a href="fitting-and-interpreting-models.html#cb408-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-11-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-qq-pooled-1.png" alt="" width="672" /></p>
 <p>It’s easier to check normality if we plot the line that the points should fall on: if we think the points come from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> distribution, they should lie on a line with intercept <span class="math inline">\(\mu\)</span> and slope <span class="math inline">\(\sigma\)</span> (the standard deviation).</p>
 <p>In the linear model, we assume that the mean of the error terms is zero. We don’t know what their variance should be, but we can estimate it using the variance of the residuals.</p>
 <p>Therefore, we add a line with the mean of the residuals (which should be zero) as the intercept, and the SD of the residuals as the slope. This is:</p>
@@ -1742,7 +1743,7 @@ div.csl-indent {
 <span id="cb409-6"><a href="fitting-and-interpreting-models.html#cb409-6" tabindex="-1"></a>  ))</span>
 <span id="cb409-7"><a href="fitting-and-interpreting-models.html#cb409-7" tabindex="-1"></a><span class="co">#&gt; Warning: Use of `res_singer$residual` is discouraged.</span></span>
 <span id="cb409-8"><a href="fitting-and-interpreting-models.html#cb409-8" tabindex="-1"></a><span class="co">#&gt; ℹ Use `residual` instead.</span></span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-12-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-qq-line-1.png" alt="" width="672" /></p>
 </div>
 <div id="the-actually-correct-way" class="section level3 hasAnchor" number="69.2.5">
 <h3><span class="header-section-number">69.2.5</span> The actually correct way<a href="fitting-and-interpreting-models.html#the-actually-correct-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1756,7 +1757,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="fitting-and-interpreting-models.html#cb411-1" tabindex="-1"></a><span class="fu">ggplot</span>(res_singer, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
 <span id="cb411-2"><a href="fitting-and-interpreting-models.html#cb411-2" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb411-3"><a href="fitting-and-interpreting-models.html#cb411-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(res_singer<span class="sc">$</span>residual), <span class="at">slope =</span> <span class="fu">summary</span>(lm_singer)<span class="sc">$</span>sigma)</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-plot-qq-final-1.png" alt="" width="672" /></p>
 <p>The straight line isn’t absolutely perfect, but it’s doing a pretty good job. The residuals look like they come from a normal distribution with the same variance for each voice part.</p>
 </div>
 <div id="our-final-model" class="section level3 hasAnchor" number="69.2.6">
@@ -1785,18 +1786,18 @@ div.csl-indent {
 
 <div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="fitting-and-interpreting-models.html#cb412-1" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
 <span id="cb412-2"><a href="fitting-and-interpreting-models.html#cb412-2" tabindex="-1"></a><span class="fu">check_model</span>(lm_singer)</span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-16-1.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-packages-1.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="fitting-and-interpreting-models.html#cb413-1" tabindex="-1"></a><span class="co"># model_performance(lm_singer)</span></span>
 <span id="cb413-2"><a href="fitting-and-interpreting-models.html#cb413-2" tabindex="-1"></a></span>
 <span id="cb413-3"><a href="fitting-and-interpreting-models.html#cb413-3" tabindex="-1"></a><span class="co"># QQ-plot</span></span>
 <span id="cb413-4"><a href="fitting-and-interpreting-models.html#cb413-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;qq&quot;</span>)</span>
 <span id="cb413-5"><a href="fitting-and-interpreting-models.html#cb413-5" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-16-2.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-packages-2.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="fitting-and-interpreting-models.html#cb414-1" tabindex="-1"></a></span>
 <span id="cb414-2"><a href="fitting-and-interpreting-models.html#cb414-2" tabindex="-1"></a><span class="co"># PP-plot</span></span>
 <span id="cb414-3"><a href="fitting-and-interpreting-models.html#cb414-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">check_normality</span>(lm_singer), <span class="at">type =</span> <span class="st">&quot;pp&quot;</span>)</span>
 <span id="cb414-4"><a href="fitting-and-interpreting-models.html#cb414-4" tabindex="-1"></a><span class="co">#&gt; For confidence bands, please install `qqplotr`.</span></span></code></pre></div>
-<p><img src="1002_fitting_files/figure-html/unnamed-chunk-16-3.png" alt="" width="672" /></p>
+<p><img src="1002_fitting_files/figure-html/fitting-code-packages-3.png" alt="" width="672" /></p>
 </div>
 </div>
 </div>
