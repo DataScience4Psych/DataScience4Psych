@@ -96,7 +96,7 @@ The basic idea stems from the fact that functions of the form $y' = y^p, \quad y
 Here are some examples to illustrate these concepts:
 
 
-```{r transformations-fig-figure, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
+```{r transformations, caption = "Tukey's Ladder of Powers", echo=FALSE, fig.width=3}
 # Create a data frame for plotting
 x_vals <- seq(-2, 2, by = 0.1)
 df <- expand.grid(x = x_vals, type = c("Concave Up", "Concave Down"))
@@ -150,7 +150,7 @@ To make this concept more intuitive, imagine $y^p$ as a function that gets close
 
 We define a function that produces this transformation. The easy way to define it is:
 
-```{r transformations-code-demo, }
+```{r transformations-pow-demo, }
 pow <- function(y, p) {
   if (p == 0) {
     log(y)
@@ -191,7 +191,7 @@ ggplot(x_transformed_long, aes(x = x, y = Transformed, color = Power)) +
 
 Looking at the plot, we can see how different values of $p$ affect the transformation of the data. The transformation with $p=2$ shows a concave up shape, while $p=-1$ shows a concave down shape. The logarithmic transformation ($p=0$) provides a middle ground between these two extremes.
 
-```{r transformations-code-demo, }
+```{r transformations-seq-demo, }
 
 # test:
 x <- seq(-1, 3, by = .5)
@@ -206,7 +206,7 @@ pow(x, 2)
 
 Because functions are first-class objects in R, we can also define the exponential function and plot it directly.
 
-```{r transformations-code-demo, }
+```{r transformations-code-plot, }
 
 plot(exp) # easy plotting of a function
 plot(function(x) pow(x, p = 2)) # anonymous function or 'lambda'
