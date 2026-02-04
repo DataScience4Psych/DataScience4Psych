@@ -766,7 +766,7 @@ The **DT** package enables you and your readers to interact with tables in your 
 
 For more information visit <https://rstudio.github.io/DT/>
 
-```{r}
+```{r lab_rmarkdown-code-dt-package, }
 library(DT)
 
 datatable(iris)
@@ -802,7 +802,7 @@ ggplotly(p_scatter)
 
 For more information visit: <https://rstudio.github.io/leaflet/>
 
-```{r}
+```{r lab_rmarkdown-code-leaflet-basic, }
 library(leaflet)
 
 data("quakes")
@@ -829,7 +829,7 @@ leaflet(
 
 Another neat feature is the ability to cluster points to better visualize density. You can do this by setting `clusterOptions = markerClusterOptions()`.
 
-```{r}
+```{r lab_rmarkdown-code-leaflet-cluster, }
 library(leaflet)
 
 data("quakes")
@@ -941,7 +941,7 @@ Imagine you have a parent document that sources child sections which import your
 
 In this section we establish the file path to the folder that contains all the child documents. The names of the child documents are extracted and stored as a vector. The `grepl()` function is used to retain only the Rmd files stored in the vector.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-setup-paths, eval=FALSE}
 sections_path <- file.path(
   rprojroot::find_root("r_in_practice.Rproj"),
   "markdown",
@@ -953,7 +953,7 @@ r_files_vec <- r_files_vec[grepl(".Rmd", r_files_vec)]
 
 Next, a file path is specified for the R-scripts that will be extracted from the R Markdown documents; I place these files within a "raw_script/extracted" folder. The `map()` function from the purrr package is used to loop through each file in the vector (r_files_vec). Within the `map()` loop, the `purl()` function from knitr is used to extract the R-code from the R Markdown documents and save the code to the specified folder.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-extract-scripts, eval=FALSE}
 extracted_path <- file.path(
   rprojroot::find_root("r_in_practice.Rproj"),
   "markdown",
@@ -974,7 +974,7 @@ purrr::map(r_files_vec, function(file.i) {
 
 Finally, create a vector of file names (`vec_source`) stored in the "raw_script/extracted" folder. You will want to type these out manually (do not use `list.files()` functions) because in this format you can easily comment out certain scripts and only run the scripts of interest. `map()` is then used to loop through each specified file in `vec_source`. Keep in mind that the order of the file names specified in `vec_source` will determine the order that these files are executed in the `map()` function; therefore, order the files in `vec_source` from furthest upstream to furthest downstream. Each iteration of the loop, executes (sources) the specified R-script.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-read-scripts, eval=FALSE}
 vec_source <- c(
   "introduction.R",
   "quick_reference.R",
@@ -1035,7 +1035,7 @@ In the example below, I use inline code to insert the species name into the titl
 
 The parameters can also be used to filter the original data frame to a subset of interest. For example, the iris data frame can be filtered to only include the specified species of interest using the code below.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-process-functions, eval=FALSE}
 data(iris)
 
 iris_sub <- iris[iris$Species %in% params$species, ]
@@ -1071,7 +1071,7 @@ The document will then render.
 
 The **rmarkdown** function `render()` can also be used to compile the document. The `input` specifies the parameterized .Rmd file. The `params` argument species the parameter values to be used when rendering the document. Note that the value supplied to `params` must be wrapped by `list()`.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-combine-scripts, eval=FALSE}
 rmarkdown::render(
   input = "parameterized/param_template.Rmd",
   params = list(species = "setosa")
@@ -1080,7 +1080,7 @@ rmarkdown::render(
 
 It would not be efficient to specify each parameter of interest one-by-one. Instead a loop can be written to iteratively generate parameterized documents. Below the function `lapply()` is used to create the loop. `unique(iris$Species)` supplies a vector of unique species names (i.e., "setosa", "versicolor", and "virginica") to generate parameterized reports. `species.i` is specified as a placeholder to represent each unique species in the iris data set; therefore `species.i` is used to specify what the species parameter should equal and it is used to generate a unique and easy to interpret file name `output_file = paste0(species.i, ".HTML")`.
 
-```{r, eval=FALSE}
+```{r lab_rmarkdown-example-write-output, eval=FALSE}
 lapply(unique(iris$Species), function(species.i) {
   rmarkdown::render("parameterized/param_template.Rmd",
     params = list(species = species.i),

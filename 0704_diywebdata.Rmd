@@ -8,14 +8,14 @@ By the end, you’ll have a deeper understanding of how R interacts with APIs, a
 
 These notes, adapted from Jenny Bryan’s stat545 and originally written by Andrew MacDonald, provide a hands-on guide to these concepts with practical examples.
 
-```{r include = FALSE}
+```{r diywebdata-setup, include = FALSE}
 source("common.R")
 can_render <- Sys.getenv("OMDB_API_KEY", unset = "") != ""
 knitr::opts_chunk$set(eval = can_render)
 ```
 
 
-```{r eval = !can_render, echo = FALSE, comment = NA}
+```{r diywebdata-include-content, eval = !can_render, echo = FALSE, comment = NA}
 message("No OMDb key available. Code chunks will not be evaluated.")
 ```
 
@@ -28,7 +28,7 @@ Earlier, we experimented with several packages that "wrapped" APIs.  They handle
 
 We will be using the functions from the [tidyverse](https://www.tidyverse.org) throughout this chapter, so go ahead and load tidyverse package now.
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-tidyverse, message = FALSE, warning = FALSE}
 library(tidyverse)
 ```
 
@@ -94,7 +94,7 @@ This response tells us that we need an API key to access the OMDb API. We will s
 1. Check your email and follow the instructions to activate your key.
 1. Install/load the usethis package and run `edit_r_environ()` in the R Console:
 
-```{r message = FALSE, warning = FALSE, eval = FALSE}
+```{r diywebdata-setup-usethis, message = FALSE, warning = FALSE, eval = FALSE}
 # install.packages("usethis")
 library(usethis)
 edit_r_environ()
@@ -115,7 +115,7 @@ Sys.getenv("OMDB_API_KEY_FAKE")
 
 1. We can use this to easily add our API key to the request URL. Let's make this API key an object we can refer to as `movie_key`:
 
-```{r}
+```{r diywebdata-load-api-key, }
 # save it as an object
 movie_key <- Sys.getenv("OMDB_API_KEY")
 ```
@@ -136,7 +136,7 @@ Now we follow the rOpenSci [tutorial on API keys](https://github.com/ropensci/rO
 + Make a `.Rprofile` file ([windows tips](http://cran.r-project.org/bin/windows/rw-FAQ.html#What-are-HOME-and-working-directories_003f); [mac tips](http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#The-R-Console)).
 + Write the following in it:
 
-```{r eval = FALSE}
+```{r diywebdata-example-rprofile-option, eval = FALSE}
 options(OMBD_API_KEY = "YOUR_KEY")
 ```
 
@@ -147,7 +147,7 @@ This code adds another element to the list of options, which you can see by call
 1. Spelling is important when you set the option in your `.Rprofile`
 2. You can do a similar process for an arbitrary package or key. For example:
 
-```{r eval = FALSE}
+```{r diywebdata-example-custom-key, eval = FALSE}
 ## in .Rprofile
 options("this_is_my_key" = XXXX)
 ## later, in the R script:
@@ -173,14 +173,14 @@ Remember that using `.Rprofile` makes your code un-reproducible.  In this case, 
 
 How can we recreate the same request URLs in R? We could use the [`glue` package](https://glue.tidyverse.org/) to paste together the base URL, parameter labels, and parameter values:
 
-```{r}
+```{r diywebdata-demo-glue-basic, }
 request <- glue::glue("http://www.omdbapi.com/?t=Interstellar&y=2014&plot=short&r=xml&apikey={movie_key}")
 request
 ```
 
 This code works, but it only works for a movie titled `Interstellar` from `2014` where we want the `short` plot in an `XML` format. Let's try to pull out more variables and paste them in with `glue`:
 
-```{r}
+```{r diywebdata-demo-glue-variables, }
 glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&apikey={api_key}",
   title = "Interstellar",
   year = "2014",
@@ -192,7 +192,7 @@ glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&ap
 
 We could go even further and make this code into a function called `omdb()` that we can reuse more easily.
 
-```{r}
+```{r diywebdata-create-omdb-function, }
 omdb <- function(title, year, plot, format, api_key) {
   glue::glue("http://www.omdbapi.com/?t={title}&y={year}&plot={plot}&r={format}&apikey={api_key}")
 }
@@ -202,7 +202,7 @@ omdb <- function(title, year, plot, format, api_key) {
 
 Now we have a handy function that returns the API query. We can paste in the link, but we can also obtain data from within R using the [curl](https://CRAN.R-project.org/package=curl) package. Install/load the curl package first.
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-curl, message = FALSE, warning = FALSE}
 # install.packages("curl")
 library(curl)
 ```
@@ -304,21 +304,21 @@ You can see that both of these data structures are quite easy to read. They are 
 
 Our JSON response above can be parsed using `jsonlite::fromJSON()`. First install/load the jsonlite package.
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-jsonlite, message = FALSE, warning = FALSE}
 # install.packages("jsonlite")
 library(jsonlite)
 ```
 
 Parsing our JSON response with `fromJSON()`:
 
-```{r}
+```{r diywebdata-demo-parse-json, }
 answer_json %>%
   fromJSON()
 ```
 
 The output is a named list. A familiar and friendly R structure. Because data frames are lists and because this list has no nested lists-within-lists, we can coerce it very simply:
 
-```{r}
+```{r diywebdata-demo-json-tibble, }
 answer_json %>%
   fromJSON() %>%
   as_tibble() %>%
@@ -329,14 +329,14 @@ answer_json %>%
 
 We can use the [xml2][xml2-web] package to wrangle our XML response.
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-xml2, message = FALSE, warning = FALSE}
 # install.packages("xml2")
 library(xml2)
 ```
 
 Parsing our XML response with `read_xml()`:
 
-```{r}
+```{r diywebdata-demo-parse-xml, }
 (xml_parsed <- read_xml(answer_xml))
 ```
 
@@ -347,19 +347,19 @@ Not exactly the result we were hoping for! However, this does tell us about the 
 
 The xml2 package has various functions to assist in navigating through XML. We can use the `xml_children()` function to extract all of the children nodes (i.e. the single child, `<movie>`):
 
-```{r}
+```{r diywebdata-demo-xml-contents, }
 (contents <- xml_contents(xml_parsed))
 ```
 
 The `xml_attrs()` function "retrieves all attribute values as a named character vector". Let's use this to extract the information that we want from the `<movie>` node:
 
-```{r}
+```{r diywebdata-demo-xml-attrs, }
 (attrs <- xml_attrs(contents)[[1]])
 ```
 
 We can transform this named character vector into a data frame with the help of `dplyr::bind_rows()`:
 
-```{r}
+```{r diywebdata-demo-xml-tibble, }
 attrs %>%
   bind_rows() %>%
   glimpse()
@@ -386,7 +386,7 @@ httr also facilitates a variety of _**authentication**_ protocols.
 
 httr contains one function for every HTTP verb. The functions have the same names as the verbs (e.g. `GET()`, `POST()`).  They have more informative outputs than simply using curl and come with nice convenience functions for working with the output:
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-httr, message = FALSE, warning = FALSE}
 # install.packages("httr")
 library(httr)
 ```
@@ -435,13 +435,13 @@ content(response_xml, as = "parsed")
 
 httr also gives us access to lots of useful information about the quality of our response. For example, the header:
 
-```{r}
+```{r diywebdata-demo-httr-headers, }
 headers(response_xml)
 ```
 
 And also a handy means to extract specifically the HTTP status code:
 
-```{r}
+```{r diywebdata-demo-httr-status, }
 status_code(response_xml)
 ```
 
@@ -479,7 +479,7 @@ What if data is present on a website, but isn't provided in an API at all? It is
 
 HTML is a structured way of displaying information. It is very similar in structure to XML (in fact many modern html sites are actually XHTML5, [which is also valid XML](http://www.w3.org/TR/html5/the-xhtml-syntax.html)).
 
-```{r echo = FALSE, fig.cap = "From [xkcd](https://imgs.xkcd.com/comics/tags.png)"}
+```{r diywebdata-fig-xkcd-tags, echo = FALSE, fig.cap = "From [xkcd](https://imgs.xkcd.com/comics/tags.png)"}
 knitr::include_graphics("https://imgs.xkcd.com/comics/tags.png")
 ```
 
@@ -504,22 +504,22 @@ Let's make a simple HTML table and then parse it.
 
 Knit the document and click "View in Browser". It should look like this:
 
-```{r child = 'supporting-docs/scraping.Rmd'}
+```{r diywebdata-child, child = 'supporting-docs/scraping.Rmd'}
 ```
 
 We have created a simple HTML table with the head of `gapminder` in it! We can get our data back by parsing this table into a data frame again. Extracting data from HTML is called "scraping", and we can do it in R with the rvest package:
 
-```{r message = FALSE, warning = FALSE}
+```{r diywebdata-load-rvest, message = FALSE, warning = FALSE}
 # install.packages("rvest")
 library(rvest)
 ```
 
-```{r eval = FALSE}
+```{r diywebdata-demo-read-table, eval = FALSE}
 read_html("GapminderHead.html") %>%
   html_table()
 ```
 
-```{r echo = FALSE}
+```{r diywebdata-demo-read-table-real, echo = FALSE}
 read_html("supporting-docs/GapminderHead.html") %>%
   html_table()
 ```
@@ -528,13 +528,13 @@ read_html("supporting-docs/GapminderHead.html") %>%
 
 Let's practice scraping websites using our newfound abilities. Here is a table of research [publications by country](https://www.scimagojr.com/countryrank.php).
 
-```{r echo = FALSE, fig.cap = "From [Scimago Journal & Country Rank](https://www.scimagojr.com)"}
+```{r diywebdata-fig-scimago, echo = FALSE, fig.cap = "From [Scimago Journal & Country Rank](https://www.scimagojr.com)"}
 knitr::include_graphics("img/pubs.png")
 ```
 
 We can try to get this data directly into R using `read_html()` and `html_table()`:
 
-```{r}
+```{r diywebdata-demo-scrape-research, }
 research <- read_html("https://www.scimagojr.com/countryrank.php") %>%
   html_table(fill = TRUE)
 ```
@@ -543,7 +543,7 @@ If you look at the structure of `research` (i.e. via `str(research)`) you'll see
 
 Can we be more specific about what we obtain from this page? We can, by highlighting that table with CSS selectors:
 
-```{r}
+```{r diywebdata-demo-scrape-css, }
 research <- read_html("http://www.scimagojr.com/countryrank.php") %>%
   html_node(".tabla_datos") %>%
   html_table()
@@ -583,7 +583,7 @@ https://airport.api.aero/airport/distance/YVR/LAX?user_key={yourkey}
 
 Do you need just the US airports? [This API does that](https://github.com/Federal-Aviation-Administration/ASWS) (also see [this](https://www.fly.faa.gov/flyfaa/usmap.jsp)) and is free.
 
-```{r include = FALSE}
+```{r diywebdata-setup-config, include = FALSE}
 Sys.unsetenv("OMDB_API_KEY")
 ```
 

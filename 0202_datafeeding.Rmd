@@ -1,6 +1,6 @@
 # Basic care and feeding of data in R {#basiccare}
 
-```{r include = FALSE}
+```{r datafeeding-setup, include = FALSE}
 source("common.R")
 ```
 
@@ -10,7 +10,7 @@ set.seed(4561)
 
 Feel free to ignore this extra scaffolding if you don't need this bonus support. However, I strongly encourage you to take a look, even if you think you know what you're doing.
 
-```{r, echo=FALSE}
+```{r embed-data-tweet, echo=FALSE}
 try_include_tweet("https://twitter.com/ChelseaParlett/status/1439003000740085760")
 ```
 
@@ -44,13 +44,13 @@ Data frames -- unlike general arrays or, specifically, matrices in R -- can hold
 
 We will work with some of the data from the [Gapminder project](https://www.gapminder.org). Jenny Bryan has released this data as an [R package](https://CRAN.R-project.org/package=gapminder), so we can install it from CRAN like so:
 
-```{r eval = FALSE}
+```{r install-gapminder, eval = FALSE}
 install.packages("gapminder")
 ```
 
 Now load the package:
 
-```{r}
+```{r load-gapminder, }
 library(gapminder)
 ```
 
@@ -58,7 +58,7 @@ library(gapminder)
 
 By loading the gapminder package, we now have access to a data frame by the same name. Get an overview of this with `str()`, which displays the structure of an object.
 
-```{r message = FALSE, warning = FALSE}
+```{r inspect-gapminder-str, message = FALSE, warning = FALSE}
 str(gapminder)
 ```
 
@@ -70,19 +70,19 @@ This is the first big win for __tibbles__. The [tidyverse](https://tidyverse.tid
 
 If you have not already done so, install the tidyverse meta-package now:
 
-```{r eval = FALSE}
+```{r install-tidyverse, eval = FALSE}
 install.packages("tidyverse")
 ```
 
 Now load it:
 
-```{r}
+```{r load-tidyverse, }
 library(tidyverse)
 ```
 
 Now we can boldly print `gapminder` to screen! It is a tibble (and also a regular data frame) and the tidyverse provides a nice print method that shows the most important stuff and doesn't fill up your Console.
 
-```{r}
+```{r print-gapminder-tibble, }
 ## see? it's still a regular data frame, but also a tibble
 class(gapminder)
 gapminder
@@ -90,7 +90,7 @@ gapminder
 
 If you are dealing with plain vanilla data frames, you can rein in data frame printing explicitly with `head()` and `tail()`. Or turn it into a tibble with `as_tibble()`!
 
-```{r}
+```{r display-head-tail, }
 head(gapminder)
 tail(gapminder)
 as_tibble(iris)
@@ -98,7 +98,7 @@ as_tibble(iris)
 
 More ways to query basic info on a data frame:
 
-```{r}
+```{r query-gapminder-info, }
 names(gapminder)
 ncol(gapminder)
 length(gapminder)
@@ -108,7 +108,7 @@ nrow(gapminder)
 
 A statistical overview can be obtained with `summary()`:
 
-```{r}
+```{r summarize-gapminder, }
 summary(gapminder)
 ```
 
@@ -122,7 +122,7 @@ plot(lifeExp ~ log(gdpPercap), gapminder)
 
 Let's go back to the result of `str()` to talk about what a data frame is.
 
-```{r}
+```{r inspect-structure, }
 str(gapminder)
 ```
 
@@ -140,14 +140,14 @@ hist(gapminder$lifeExp)
 
 The year variable is an integer variable, but since there are so few unique values it also functions a bit like a categorical variable.
 
-```{r}
+```{r explore-year-variable, }
 summary(gapminder$year)
 table(gapminder$year)
 ```
 
 The variables for country and continent hold truly categorical information, which is stored as a *factor* in R.
 
-```{r}
+```{r explore-continent-factor, }
 class(gapminder$continent)
 summary(gapminder$continent)
 levels(gapminder$continent)
@@ -156,7 +156,7 @@ nlevels(gapminder$continent)
 
 The __levels__ of the factor `continent` are "Africa", "Americas", etc. and this is what's usually presented to your eyeballs by R. In general, the levels are friendly human-readable character strings, like "male/female" and "control/treated". But *never ever ever* forget that, under the hood, R is really storing integer codes 1, 2, 3, etc. Look at the result from `str(gapminder$continent)` if you are skeptical.
 
-```{r}
+```{r inspect-continent-structure, }
 str(gapminder$continent)
 ```
 
@@ -192,7 +192,7 @@ How many rows?
 How many observations per continent?
 Scatterplot life expectancy against GDP per capita.
 Variants of that: indicate continent by color, do for just one continent, do for multiple continents at once but in separate plots
-```{r}
+```{r subset-gapminder-by-year, }
 hDat <- subset(gapminder, subset = year == 2007)
 str(hDat)
 table(hDat$continent)

@@ -1,6 +1,6 @@
 # Importing data
 
-```{r include = FALSE}
+```{r import-setup, include = FALSE}
 source("common.R")
 ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
@@ -8,7 +8,7 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 ## Importing data!
 
-```{r, echo=FALSE}
+```{r import-embed-intro-video, echo=FALSE}
 "https://www.youtube.com/watch?v=hnUGwlyqx1M" %>%
   embed_url() %>%
   use_align("center") # 07
@@ -16,14 +16,14 @@ ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 
 You can follow along with the slides [here][d12_import] if you would like to open them full-screen.
 
-```{r, echo=FALSE}
+```{r import-show-import-slides, echo=FALSE}
 slide_url(ds4p_urls, "d12_import") %>%
   include_url(height = "400px")
 ```
 
 ## Importing and Variable Types
 
-```{r, echo=FALSE}
+```{r import-embed-vartypes-video, echo=FALSE}
 "https://www.youtube.com/watch?v=g7G8ZTnDSv8" %>%
   embed_url() %>%
   use_align("center") # 08
@@ -31,14 +31,14 @@ slide_url(ds4p_urls, "d12_import") %>%
 
 You can follow along with the slides [here][d12_import] if you would like to open them full-screen.
 
-```{r, echo=FALSE}
+```{r import-show-vartypes-slides, echo=FALSE}
 slide_url(ds4p_urls, "d12_import", "#17") %>%
   include_url(height = "400px")
 ```
 
 ### More Activity
 
-```{r, echo=FALSE}
+```{r import-show-activity-slides, echo=FALSE}
 slide_url(ds4p_urls, "d12_import", "#22") %>%
   include_url(height = "400px")
 ```
@@ -47,7 +47,7 @@ You can find the materials for the Nobels and sales activities [here](https://gi
 
 ## Vroom
 
-```{r, echo=FALSE}
+```{r import-embed-vroom-video, echo=FALSE}
 "https://www.youtube.com/watch?v=EmB1yyzRX0c" %>%
   embed_url() %>%
   use_align("center")
@@ -56,12 +56,12 @@ You can find the materials for the Nobels and sales activities [here](https://gi
 
 You can follow along with the slides [here][#d12_import] if you would like to open them full-screen.
 
-```{r, echo=FALSE}
+```{r import-show-vroom-slides, echo=FALSE}
 slide_url(ds4p_urls, "d12_import", "#30") %>%
   include_url(height = "400px")
 ```
 
-```{r, echo=FALSE}
+```{r import-embed-tweet, echo=FALSE}
 library(tweetrmd)
 try_include_tweet("https://twitter.com/statsepi/status/1323619993263755264")
 ```
@@ -112,7 +112,7 @@ library(tidyverse)
 
 We could load the data from the package as usual, but instead we will load it from tab delimited file. The gapminder package includes the data normally found in the `gapminder` data frame as a `.tsv`. So let's get the path to that file on *your* system using the [`fs` package](https://fs.r-lib.org/index.html).
 
-```{r}
+```{r import-locate-gapminder, }
 library(fs)
 (gap_tsv <- path_package("gapminder", "extdata", "gapminder.tsv"))
 ```
@@ -121,7 +121,7 @@ library(fs)
 
 The workhorse data import function of readr is `read_delim()`. Here we'll use a variant, `read_tsv()`, that anticipates tab-delimited data:
 
-```{r}
+```{r import-read-gapminder, }
 gapminder <- read_tsv(gap_tsv)
 str(gapminder, give.attr = FALSE)
 ```
@@ -132,7 +132,7 @@ There's a similar convenience wrapper for comma-separated values, `read_csv()`.
 
 The most noticeable difference between the readr functions and base is that readr does NOT convert strings to factors by default. In the grand scheme of things, this default behavior is better, although we go ahead and convert them to factor here. Do not be deceived -- in general, you will do less post-import fussing if you use readr.
 
-```{r}
+```{r import-convert-factors, }
 gapminder <- gapminder %>%
   mutate(
     country = factor(country),
@@ -151,7 +151,7 @@ The Gapminder data is too clean and simple to show off the great features of rea
 
 We need compute something worth writing to file. Let's create a country-level summary of maximum life expectancy.
 
-```{r}
+```{r import-summarize-lifeexp, }
 gap_life_exp <- gapminder %>%
   group_by(country, continent) %>%
   summarize(life_exp = max(lifeExp)) %>%
@@ -165,13 +165,13 @@ The `gap_life_exp` data frame is an example of an intermediate result that we wa
 
 The workhorse export function for rectangular data in readr is `write_delim()` and friends. Let's use `write_csv()` to get a comma-delimited file.
 
-```{r}
+```{r import-write-csv, }
 write_csv(gap_life_exp, "gap_life_exp.csv")
 ```
 
 Let's look at the first few lines of `gap_life_exp.csv`. If you're following along, you should be able to open this file or, in a shell, use `head()` on it.
 
-```{r echo = FALSE, comment = NA}
+```{r import-preview-csv, echo = FALSE, comment = NA}
 "gap_life_exp.csv" %>%
   readLines(n = 6) %>%
   cat(sep = "\n")
@@ -181,7 +181,7 @@ This output is pretty decent looking, though there is no visible alignment or se
 
 - It's not really fair to complain about the lack of visible alignment. Remember we are ["writing data for computers"](https://twitter.com/vsbuffalo/statuses/358699162679787521). If you really want to browse around the file, use `View()` in RStudio or open it in Microsoft Excel (!) but don't succumb to the temptation to start doing artisanal data manipulations there ... get back to R and construct commands that you can re-run the next 15 times you import/clean/aggregate/export the same dataset. Trust me, it will happen.
 
-```{r, echo=FALSE}
+```{r import-embed-vsbuffalo-tweet, echo=FALSE}
 "https://twitter.com/vsbuffalo/statuses/358699162679787521" %>%
   try_include_tweet()
 ```
@@ -205,7 +205,7 @@ I have toyed with the idea of writing import helper functions for a specific pro
 
 I reorder the country factor levels according to the life expectancy summary we've already computed.
 
-```{r}
+```{r import-reorder-countries, }
 head(levels(gap_life_exp$country)) # alphabetical order
 gap_life_exp <- gap_life_exp %>%
   mutate(country = fct_reorder(country, life_exp))
@@ -219,7 +219,7 @@ Note that the **row order of `gap_life_exp` has not changed**. I could choose to
 
 If you have a data frame AND you have exerted yourself to rationalize the factor levels, you have my blessing to save it to file in a way that will preserve this hard work upon re-import. Use `saveRDS()`.
 
-```{r}
+```{r import-save-rds, }
 saveRDS(gap_life_exp, "gap_life_exp.rds")
 ```
 
@@ -227,7 +227,7 @@ saveRDS(gap_life_exp, "gap_life_exp.rds")
 
 The opposite of `saveRDS()` is `readRDS()`. You must assign the return value to an object. I highly recommend you assign back to the same name as before. Why confuse yourself?!?
 
-```{r error = TRUE}
+```{r import-read-rds, error = TRUE}
 rm(gap_life_exp)
 gap_life_exp
 gap_life_exp <- readRDS("gap_life_exp.rds")
@@ -242,7 +242,7 @@ You will eventually hear about `save()` + `load()` and even `save.image()`. You 
 
 Here is a concrete demonstration of how non-alphabetical factor level order is lost with `write_delim()` / `read_delim()` workflows but maintained with `saveRDS()` / `readRDS()`.
 
-```{r error = TRUE}
+```{r import-compare-formats, error = TRUE}
 (country_levels <- tibble(original = head(levels(gap_life_exp$country))))
 write_csv(gap_life_exp, "gap_life_exp.csv")
 saveRDS(gap_life_exp, "gap_life_exp.rds")
@@ -265,7 +265,7 @@ Note how the original, post-reordering country factor levels are restored using 
 
 One last method of saving and restoring data deserves a mention: `dput()` and `dget()`. `dput()` offers this odd combination of features: it creates a plain text representation of an R object which still manages to be quite opaque. If you use the `file =` argument, `dput()` can write this representation to file but you won't be tempted to actually read that thing. `dput()` creates an R-specific-but-not-binary representation. Let's try it out.
 
-```{r}
+```{r import-use-dput, }
 ## first restore gap_life_exp with our desired country factor level order
 gap_life_exp <- readRDS("gap_life_exp.rds")
 dput(gap_life_exp, "gap_life_exp-dput.txt")
@@ -273,7 +273,7 @@ dput(gap_life_exp, "gap_life_exp-dput.txt")
 
 Now let's look at the first few lines of the file `gap_life_exp-dput.txt`.
 
-```{r echo = FALSE, comment = NA}
+```{r import-preview-dput, echo = FALSE, comment = NA}
 "gap_life_exp-dput.txt" %>%
   readLines(n = 6) %>%
   cat(sep = "\n")
@@ -281,7 +281,7 @@ Now let's look at the first few lines of the file `gap_life_exp-dput.txt`.
 
 Huh? Don't worry about it. Remember we are ["writing data for computers"](https://twitter.com/vsbuffalo/statuses/358699162679787521). The partner function `dget()` reads this representation back in.
 
-```{r}
+```{r import-use-dget, }
 gap_life_exp_dget <- dget("gap_life_exp-dput.txt")
 country_levels <- country_levels %>%
   mutate(via_dput = head(levels(gap_life_exp_dget$country)))

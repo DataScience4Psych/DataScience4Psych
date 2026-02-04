@@ -1,6 +1,6 @@
 # Notes on Logistic Regression
 
-```{r include = FALSE}
+```{r logistic_notes-setup, include = FALSE}
 source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
@@ -21,7 +21,7 @@ set.seed(1234)
 - Outcome: whether the email is spam or not
 - Predictors: number of characters, whether the email had "Re:" in the subject, time at which email was sent, number of times the word "inherit" shows up in the email, etc.
 
-```{r}
+```{r logistic_notes-code-packages, }
 library(openintro)
 data(email)
 glimpse(email)
@@ -29,7 +29,7 @@ glimpse(email)
 
 > Question: Would you expect longer or shorter emails to be spam?
 
-```{r echo=FALSE, out.width="100%"}
+```{r logistic_notes-plot-density, echo=FALSE, out.width="100%"}
 # email$spam_num=email$spam
 email$spam <- as.factor(email$spam)
 ggplot(
@@ -53,7 +53,7 @@ ggplot(
   theme_bw()
 ```
 
-```{r echo=FALSE}
+```{r logistic_notes-calc-mean-chars, echo=FALSE}
 email %>%
   group_by(spam) %>%
   summarize(mean_num_char = mean(num_char))
@@ -61,7 +61,7 @@ email %>%
 
 > Question: Would you expect emails that have subjects starting with "Re:", "RE:", "re:", or "rE:" to be spam or not?
 
-```{r echo=FALSE}
+```{r logistic_notes-plot-re-subject, echo=FALSE}
 email %>%
   ggplot(aes(x = re_subj, fill = spam)) +
   geom_bar(position = "fill") +
@@ -83,7 +83,7 @@ email %>%
 
 We can't reasonably fit a linear model to this data-- we need something different!
 
-```{r echo=FALSE, out.width="70%"}
+```{r logistic_notes-plot-jitter, echo=FALSE, out.width="70%"}
 means <- email %>%
   group_by(spam) %>%
   summarize(mean_num_char = mean(num_char)) %>%
@@ -150,7 +150,7 @@ $$logit(p) = \log\left(\frac{p}{1-p}\right)$$
 
 #### Logit function, visualized
 
-```{r}
+```{r logistic_notes-code-plot, }
 d <- tibble(p = seq(0.001, 0.999,
   length.out = 1000
 )) %>%
@@ -194,7 +194,7 @@ In R, we fit a GLM in the same way as a linear model except we
 - use `"glm"` instead of `"lm"` as the engine
 - define `family = "binomial"` for the link function to be used in the model
 
-```{r}
+```{r logistic_notes-spam_fit, }
 spam_fit <- logistic_reg() %>%
   set_engine("glm") %>%
   fit(spam ~ num_char,
@@ -207,7 +207,7 @@ spam_fit <- logistic_reg() %>%
 
 #### Spam model
 
-```{r}
+```{r logistic_notes-tidy-spam_fit, }
 tidy(spam_fit)
 ```
 

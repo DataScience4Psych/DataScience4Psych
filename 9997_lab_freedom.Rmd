@@ -50,14 +50,14 @@ Let’s begin by examining how academic freedom has changed in the U.S. across f
 
 **1.1.** Filter the `vdem` dataset to include only the **United States** in the years **2014** and **2024**. Then select the five indicators that make up the Academic Freedom Index.
 
-```{r exercise1.1, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-one-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 vdem <- vdemdata::vdem %>%
   select(country_name, year, v2cafres, v2cafexch, v2cainsaut, v2casurv, v2clacfree)
 ```
 
 **1.2.** Normalize these values so that they fall between 0 and 1, which is the format expected by `ggradar()`.
 
-```{r exercise1.2, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-one-part-two, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 vdem_scaled <- vdem %>%
   mutate(across(-c(year, country_name), scales::rescale))
 
@@ -83,7 +83,7 @@ u_data_scaled <- vdem %>% # vdem_scaled  %>%
 
 **2.1.** Now create a radar plot to compare the United States in 2014 and 2024 across the five indicators.
 
-```{r exercise2.1, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-two-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 u_data_scaled %>%
   filter(country_name == "United States of America") %>%
   select(-country_name) %>%
@@ -116,7 +116,7 @@ Let’s now explore whether this decline is unique to the U.S. or part of a broa
 
 **3.1.** Identify countries where **freedom to research and teach** declined by **more than 0.2 points** between 2014 and 2024.
 
-```{r exercise3.1, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-three-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 afi_declines <- vdem %>%
   filter(year %in% c(1954, 2014, 2024)) %>%
   select(country_name, year, v2cafres) %>%
@@ -128,7 +128,7 @@ afi_declines <- vdem %>%
 
 **3.2.** Choose **one country** from the list and repeat the radar plot analysis for that country.
 
-```{r exercise3.2, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-three-part-two, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 chosen_country <- "Hungary" # Replace this with your selected country
 
 country_data <- vdem %>%
