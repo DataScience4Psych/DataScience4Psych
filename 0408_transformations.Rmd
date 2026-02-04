@@ -5,9 +5,15 @@ source("common.R")
 ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
 ```
 
-This optional deep dive explores data transformations, focusing on Tukey's Ladder of Powers—an groundbreaking approach for reshaping data distributions and relationships between variables. Our journey through this topic is inspired by @fox2016applied (ch. 4, pp. 28 - 80)
+This optional deep dive introduces data transformations, focusing on Tukey’s Ladder of Powers: a simple family of power transforms that can make distributions easier to work with and relationships easier to model. The examples here follow @fox2016applied (ch. 4, pp. 28 - 80)
 
-## Transforming Data: Tukey's Ladder of Powers
+
+## Why transform?
+
+Transformations are often used to make a relationship closer to linear, reduce curvature, and stabilize variance. The classic example is a log transform, but Tukey’s ladder gives a small family of related choices to try.
+
+
+### Transforming Data: Tukey's Ladder of Powers
 
 
 John Tukey introduced a methodological toolkit, likened to a set of drill bits of varying sizes, for modifying the shapes of distributions and relationships between variables. This section delves into these transformations, particularly focusing on the mathematical formulations that underpin this approach.
@@ -85,6 +91,7 @@ p2 <- ggplot(un, aes(x = log(GDPperCapita), y = log(infantMortality))) +
 # Arrange the plots side by side
 grid.arrange(p1, p2, ncol = 2)
 ```
+
 The log transformation has straightened out the data, allowing us to fit a more useful regression line. However, we're not limited to just a log transformation. We can use an entire family of transformations called Tukey's Ladder of Powers.
 
 
@@ -321,13 +328,13 @@ xyplot(yval ~ y, dd,
 
 ## Quantile plots
 
-Uniform quantiles let's us see how far a distribution is from normal.
+Uniform quantiles let us see how far a distribution is from normal.
 
 ```{r}
 xqplot(un)
 ```
 
-Normal quantiles let's us see how far a distribution is from normal.
+Normal quantiles let us see how far a distribution is from normal.
 
 ```{r}
 xqplot(un, ptype = "normal")
@@ -391,7 +398,7 @@ if(FALSE){
 
 ## Box Cox Transformation
 
-This is another way to look at Tukey's Ladder of Powers. The Box-Cox transformation is defined as:
+Box-Cox is the same basic idea, framed as a parameter estimation problem. The transformation is:
 
 $$
 y(\lambda) = \begin{cases}
@@ -399,7 +406,8 @@ y(\lambda) = \begin{cases}
 \ln(y), & \text{if } \lambda = 0
 \end{cases}
 $$
-The Box-Cox transformation is similar to Tukey's Ladder of Powers, with the parameter $\lambda$ playing a role analogous to $p$. The transformation is used to stabilize variance and make the data more normally distributed. I won't go into more detail here since it's very similar to what we've already discussed. But I have published a paper that used the Box-Cox transformation: Garrison, S. M. \& Rodgers, J. L. (2019) Decomposing the causes of the socioeconomic status-health gradient with biometrical modeling. *Journal of Personality and Social Psychology, 116*(4), 616–634. https://doi.org/10.1037/pspp0000226
+
+The Box-Cox transformation is similar to Tukey's Ladder of Powers, with the parameter $\lambda$ playing a role analogous to $p$. The transformation is used to stabilize variance and make the data more normally distributed. I won't go into more detail here since it's very similar to what we've already discussed. But I have published a paper that used the Box-Cox transformation: Garrison, S. M. \& Rodgers, J. L. (2019) Decomposing the causes of the socioeconomic status-health gradient with biometrical modeling. *Journal of Personality and Social Psychology, 116*(4), 616–634. https://doi.org/10.1037/pspp0000226 if case you're curious to see it in action.
 
 ### Video Explanation
 
