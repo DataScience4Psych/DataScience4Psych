@@ -43,7 +43,7 @@ options(
 
 We will use tidyverse for data manipulation and titanic for data. You will also load readxl to import the Titanic3 file (provided in your project).
 
-```{r lab_crossvalidation-example-example, eval = FALSE}
+```{r lab_crossvalidation-packages-example, eval = FALSE}
 library(tidyverse)
 library(titanic)
 library(readxl)
@@ -87,7 +87,7 @@ We will work with:
 
 
 
-```{r lab_crossvalidation-code-data, }
+```{r lab_crossvalidation-load-data, }
 
 titanic3 <- read_excel("data/titanic3.xls", 
     col_types = c("numeric", "numeric", "text", 
@@ -103,7 +103,7 @@ data("titanic_test")
 
 Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titantic_train as well as create an ordinal level variable for passenger class.
 
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-data-prep, }
 # Rename columns to lowercase
 names(titanic3) <- names(titanic3) %>% tolower()
 names(titanic_train) <- names(titanic_train) %>% tolower()
@@ -138,7 +138,7 @@ Let’s do that on purpose.
 
 Save the model as `m_apparent`.
 
-```{r lab_crossvalidation-example-dup2-example, order.exercise-2-solution.1, error=TRUE, eval=FALSE}
+```{r lab_crossvalidation-exercise-one-draft, error=TRUE, eval=FALSE}
 m_apparent <- glm(
   survived ~ sex + pclass_ord,
   data = titanic3,
@@ -155,7 +155,7 @@ summary(m_apparent)
 
 ```
 
-```{r lab_crossvalidation-code-demo, exercise-2-solution.1, error=TRUE, eval=T}
+```{r lab_crossvalidation-exercise-one-solution, error=TRUE, eval=T}
 m_apparent <- glm(
   survived ~ sex + pclass,
   data = titanic3,
@@ -175,7 +175,7 @@ This model has access to every passenger and the final outcome. It is not being 
 Now we can use the model to generate predicted survival probabilities for every passenger.
 
 
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-predict-apparent, }
 p_apparent <- predict(m_apparent, type = "response")
 
 ```
@@ -184,14 +184,14 @@ Each probability represents the expected survival chance for that passenger, acc
 
 To turn probabilities into decisions (we're working for an insurance agency after all), we need a decision rule. To keep things simple, we will use a cutoff of 0.5: if the predicted probability is greater than 0.5, we predict survival (1); otherwise, we predict non-survival (0). 
 
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-classify-apparent, }
 yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
 ```
 
 
 Now, we can compute the model’s accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
 
-```{r lab_crossvalidation-code-data, }
+```{r lab_crossvalidation-accuracy-apparent, }
 
 acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
 
@@ -213,14 +213,14 @@ We’ll do this by splitting the data into two groups:
    
 Conveniently, the `titanic` package already provides such a split.
 
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-view-test-data, }
 titanic_test %>% glimpse()
 ```
 
 
 Now we fit the same model as before, but only on the training data.
 
-```{r exercise-two-part-two, error=TRUE}
+```{r exercise-two-part-two-split-model, error=TRUE}
 m_split <- glm(
   survived ~ sex + pclass,
   data = titanic_train,
@@ -328,7 +328,7 @@ Create `titanic_cv` by:
 - setting a seed,
 - adding a `fold` variable with values 1 through 10.
 
-```{r exercise-one-part-one, error=TRUE, eval=FALSE}
+```{r exercise-three-part-one-create-folds, error=TRUE, eval=FALSE}
 set.seed(___)
 
 titanic_cv <- titanic3 %>%
@@ -359,7 +359,7 @@ Use `rep(1:10, length.out = n())` so folds are roughly equal-sized.
 
 Complete the loop so each fold is used as test exactly once, and store fold accuracies in `cv_results`.
 
-```{r exercise-two-part-two, error=TRUE, eval=FALSE}
+```{r exercise-three-part-two-cv-loop, error=TRUE, eval=FALSE}
 cv_results <- data.frame(fold = sort(unique(titanic_cv$fold)), accuracy = NA_real_)
 for (j in cv_results$fold) {
 
@@ -383,7 +383,7 @@ for (j in cv_results$fold) {
 
 Compute mean, SD, min, and max of fold accuracy.
 
-```{r exercise-three-part-three, error=TRUE, eval=FALSE}
+```{r exercise-three-part-three-cv-summary, error=TRUE, eval=FALSE}
 cv_mean <- mean(___)
 cv_sd   <- sd(___)
 cv_min  <- min(___)
@@ -430,7 +430,7 @@ Using p_test from an earlier step, compute test accuracy for the following cutof
 
 Create a data frame called cutoff_results with columns cutoff and accuracy.
 
-```{r exercise-one-part-one, error=TRUE, eval=FALSE}
+```{r exercise-four-part-one-cutoff-eval, error=TRUE, eval=FALSE}
 cutoffs <- c(0.3, 0.5, 0.7)
 
 cutoff_results <- data.frame(
@@ -547,7 +547,7 @@ Lloyd’s will not price risk using only sex and class. Your job is to propose r
 
 Pick **two** additional predictors from the data set. (This can include a constructed variable that you create from existing variables.)
 
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-view-variable-names, }
 names(titanic3)
 ```
 
@@ -555,7 +555,7 @@ names(titanic3)
 Why do you think each predictor you selected should matter for survival?
 
 <
-```{r lab_crossvalidation-code-demo, }
+```{r lab_crossvalidation-extract-titles, }
 titanic3 %>% mutate(title = str_extract(name, "(?<=, )[^.]+")) %>% count(title) %>% arrange(desc(n))
 
 ```
@@ -569,7 +569,7 @@ Create two model formulas:
 
 Store them as `f_base` and `f_expanded`.
 
-```{r exercise-two-part-two, error=TRUE, eval=FALSE}
+```{r exercise-six-part-two-formulas, error=TRUE, eval=FALSE}
 f_base <- survived ~ ___ + ___
 f_expanded <- survived ~ ___ + ___ + ___ + ___
 ```
@@ -597,7 +597,7 @@ This is not always the best approach, but it is transparent.
 
 Create `cv_df` that keeps only rows with non-missing values for all variables needed in `f_expanded`.
 
-```{r exercise-one-part-one, error=TRUE, eval=FALSE}
+```{r exercise-seven-part-one-cv-dataset, error=TRUE, eval=FALSE}
 cv_df <- titanic3 %>%
   filter(!is.na(survived)) %>%
   filter(!is.na(___)) %>%
@@ -625,7 +625,7 @@ cv_df <- titanic3 %>%
 
 Assign each row to one of 10 folds.
 
-```{r exercise-two-part-two, error=TRUE, eval=FALSE}
+```{r exercise-seven-part-two-folds, error=TRUE, eval=FALSE}
 set.seed(___)
 
 cv_df <- cv_df %>%
@@ -649,7 +649,7 @@ cv_df <- cv_df %>%
 
 Complete the function below so it returns a data frame with fold accuracies for a given formula.
 
-```{r exercise-three-part-three, error=TRUE}
+```{r exercise-seven-part-three-cv-function, error=TRUE}
 cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
   out <- data.frame(fold = sort(unique(df$fold)), accuracy = NA_real_)
@@ -711,7 +711,7 @@ cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
 Use `cv_glm_accuracy()` to compute CV results for both formulas. Compute mean and SD of accuracy for each.
 
-```{r exercise-four-part-four, error=TRUE}
+```{r exercise-seven-part-four-compare, error=TRUE}
 cv_base <- cv_glm_accuracy(cv_df, formula = ___)
 cv_exp  <- cv_glm_accuracy(cv_df, formula = ___)
 
@@ -763,7 +763,7 @@ Compute the number of rows in:
 
 Report the proportion retained.
 
-```{r exercise-one-part-one, error=TRUE}
+```{r exercise-eight-part-one-missingness, error=TRUE}
 n_all <- sum(!is.na(titanic3$survived))
 n_kept <- nrow(cv_df)
 prop_kept <- n_kept / n_all
@@ -795,7 +795,7 @@ Choose one numeric predictor you used (for example, `age`). Complete the loop to
 
 Store results in `cv_imp`.
 
-```{r exercise-one-part-one, error=TRUE}
+```{r exercise-nine-part-one-imputation, error=TRUE}
 cv_imp <- data.frame(fold = sort(unique(cv_df$fold)), accuracy = NA_real_)
 
 for (j in cv_imp$fold) {
@@ -875,7 +875,7 @@ Pick a single fold (for example, fold 1). Using your chosen model and cutoff 0.5
 - compute TP, FP, TN, FN
 - compute sensitivity and specificity
 
-```{r exercise-one-part-one, error=TRUE}
+```{r exercise-ten-part-one-confusion, error=TRUE}
 # Choose a fold
 j <- 1
 
