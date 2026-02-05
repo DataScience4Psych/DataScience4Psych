@@ -33,7 +33,17 @@ Go to the course GitHub organization and locate the lab repo, which should be na
 
 ### Packages {.unnumbered}
 
-In this lab, we will use the **tidyverse** and **dsbox** packages. The *dsbox** package is on CRAN; but the most current version is hosted on GitHub. You may have to download and [install it yourself](https://github.com/rstudio-education/dsbox#installation). This piece of code should help get you started.
+<!-- check if dsbox is on cran -->
+
+```{r dsboxoncran, include=FALSE, eval=TRUE}
+library(pak)
+# error means not on cran
+dsbox_status <- tryCatch(pkg_history("dsbox"), error = function(e) "not on CRAN")
+
+```
+
+In this lab, we will use the **tidyverse** and **dsbox** packages. The **dsbox** package is currently `r ifelse(dsbox_status == "not on CRAN","not ","")` available on CRAN.  `r ifelse(dsbox_status == "not on CRAN","However","If you are curious")`, you can find the most current version hosted on GitHub. `r ifelse(dsbox_status == "not on CRAN","Therefore, you will need to download and","If you'd like\ the cutting edge version of dsbox from GitHub, you can")` [install it yourself](https://github.com/rstudio-education/dsbox#installation). This piece of code should help get you started.
+
 
 ```{r lab_dennys-example-install,eval=FALSE}
 install.packages("devtools")
@@ -45,6 +55,10 @@ library(tidyverse)
 library(dsbox)
 ```
 
+<!-- if dsbox is not on cran, provide alternative data loading instructions -->
+If you run into issues installing the **dsbox** package, don't worry! You can still complete the lab by downloading the datasets directly from GitHub. The code below will load the two datasets we will be using directly from GitHub. 
+<details>
+  <summary>Click to expand alternative data loading instructions</summary>
 If you cannot get `dsbox` to install, you can instead download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda).
 
 ```
@@ -56,6 +70,8 @@ load(url(githubURL_1))
 load(url(githubURL_2))
 
 ```
+</details>
+
 
 ### Project name {.unnumbered}
 
