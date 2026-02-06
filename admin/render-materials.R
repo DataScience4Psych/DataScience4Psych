@@ -66,7 +66,7 @@ if (!require("Biobase")) BiocManager::install("Biobase")
 if (!require("SpikeInSubset")) BiocManager::install("SpikeInSubset")
 if (!require("spida2")) devtools::install_github("gmonette/spida2")
 if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
-if (!require("dsbox")) devtools::install_github("rstudio-education/dsbox")
+if (!require("dsbox")) devtools::install_github("tidyverse/dsbox")
 # if (!require("genderdata")) install.packages("genderdata", repos = "https://dev.ropensci.org", type = "source")
 
 # xaringan ---------------------------------------------------------------------

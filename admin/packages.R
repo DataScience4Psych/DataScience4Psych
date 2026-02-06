@@ -48,7 +48,7 @@ lapply(cran_packages, install_if_missing)
 github_packages <- c(
   "gadenbuie/tweetrmd",
   "gmonette/spida2",
-  "rstudio-education/dsbox",
+  "tidyverse/dsbox",
   "crsh/citr",
   "hadley/emo",
   "lmullen/genderdata"
