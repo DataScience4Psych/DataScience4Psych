@@ -258,12 +258,18 @@ If you still have some time left, move on to the remaining exercises below. Thes
 
 13. Recreate the following plot, and interpret what you see in context of the data.
 
+<details>
+  <summary>Click to for hints about the library</summary>
+> Hint: You will need to use the `annotation_borders` function from the **ggplot2** package to add the borders of the world to the plot. You will also need the **mapproj** package to adjust the projection of the plot.
+
+</details>
+
 ```{r echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
 
 library(ggplot2)
 library(dplyr)
 library(dsbox)
-
+library(mapproj)
 lq_all <- lq_all %>%
   mutate(establishment = "La Quinta")
 dn_lq_all <- bind_rows(dn, lq_all)
@@ -275,8 +281,10 @@ dn_lq_all %>%
 #  filter(!state %in% c("AK", "HI")) %>%
   ggplot(aes(x = longitude, y = latitude)) +
   annotation_borders("world", fill = "grey90", color = "white")+
-  geom_path(aes(group = establishment_state, color=establishment), alpha = 0.2) +
-  geom_point(aes(color = establishment), alpha = 0.5, size = 0.7) +
+  geom_path(aes(group = establishment_state, color=establishment), 
+            alpha = 0.2,size = 0.25) +
+  geom_point(aes(color = establishment), 
+             alpha = 0.5, size = 0.7) +
   labs(
     title = "Denny's and La Quinta Locations in the Western Hemisphere",
     x = "Longitude",

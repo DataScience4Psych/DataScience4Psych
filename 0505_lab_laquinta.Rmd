@@ -27,19 +27,32 @@ In this lab, we revisit the Denny's and La Quinta Inn and Suites data we visuali
 
 ### Packages {.unnumbered}
 
-In this lab, we will use the **tidyverse** and **dsbox** packages. The **dsbox** package is not on CRAN yet; instead it is hosted on GitHub. You will have to download and [install it yourself](https://github.com/tidyverse/dsbox#installation). This piece of code should help get you started.
+
+```{r dsboxoncran, include=FALSE, eval=TRUE}
+library(pak)
+# error means not on cran
+dsbox_status <- tryCatch(pkg_history("dsbox"), error = function(e) "not on CRAN")
 
 ```
-# install.packages("devtools")
+
+In this lab, we will use the **tidyverse** and **dsbox** packages. The **dsbox** package is currently `r ifelse(dsbox_status == "not on CRAN","not ","")` available on CRAN.  `r ifelse(dsbox_status == "not on CRAN","However","If you are curious")`, you can find the most current version hosted on GitHub. `r ifelse(dsbox_status == "not on CRAN","Therefore, you will need to download and","If you'd like\ the cutting edge version of dsbox from GitHub, you can")` [install it yourself](https://github.com/tidyverse/dsbox#installation). This piece of code should help get you started.
+
+
+```{r lab_dennys-example-install,eval=FALSE}
+install.packages("devtools")
 devtools::install_github("tidyverse/dsbox")
 ```
 
-```{r lab_laquinta-code-packages, echo=TRUE, message=FALSE}
+```{r lab_dennys-code-packages, eval = TRUE, message = FALSE}
 library(tidyverse)
 library(dsbox)
 ```
 
-If you cannot get dsbox to install, you can also download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda).
+<!-- if dsbox is not on cran, provide alternative data loading instructions -->
+If you run into issues installing the **dsbox** package, don't worry! You can still complete the lab by downloading the datasets directly from GitHub. The code below will load the two datasets we will be using directly from GitHub. 
+<details>
+  <summary>Click to expand alternative data loading instructions</summary>
+If you cannot get `dsbox` to install, you can instead download the two datasets we will be using manually [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda) and [here](https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda).
 
 ```
 githubURL_1 <- "https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda"
@@ -48,7 +61,9 @@ githubURL_2 <- "https://github.com/DataScience4Psych/DataScience4Psych/raw/main/
 
 load(url(githubURL_1))
 load(url(githubURL_2))
+
 ```
+</details>
 
 ### Housekeeping {.unnumbered}
 
@@ -191,7 +206,7 @@ knitr::include_graphics("img/Law-of-haversines.png")
 
 This function is not available in R, but we can save the following function to a file called `haversine.R` that we can load and then use:
 
-```{r lab_laquinta-code-haversine-function, }
+```{r lab_laquinta-code-haversine-function}
 haversine <- function(long1, lat1, long2, lat2, round = 3) {
   # convert to radians
   long1 <- long1 * pi / 180
@@ -218,9 +233,10 @@ This function takes five arguments:
 
 7. Calculate the minimum distance between a Denny's and La Quinta for each Denny's location. To do so we group by Denny's locations and calculate a new variable that stores the information for the minimum distance.
 
-```{r lab_laquinta-solution_q7,eval=FALSE}
+```{r lab_laquinta-solution_q7, include=FALSE}
 dn_lq_ak_mindist <- dn_lq_ak %>%
   group_by(address.x) %>%
+  mutate(distance = haversine(longitude.x, latitude.x, longitude.y, latitude.y)) %>%
   summarize(closest = min(distance))
 ```
 
@@ -242,19 +258,153 @@ If you still have some time left, move on to the remaining exercises below. Thes
 
 13. Recreate the following plot, and interpret what you see in context of the data.
 
-```{r echo=FALSE, message=FALSE, eval=F, warning=FALSE}
-dn_lq_ak_mindist %>%
-  ggplot(aes(x = closest)) +
-  geom_histogram(binwidth = 10, fill = "lightblue", color = "black") +
-  labs(
-    title = "Distribution of Minimum Distances between Denny's and La Quinta Locations in AK",
-    x = "Minimum Distance (km)",
-    y = "Count"
-  ) +
-  theme_minimal()
+```{r echo=FALSE, message=FALSE, eval=T, warning=FALSE} 
+library(ggridges)
+dn_lq_full <- full_join(dn, lq, by = "state", 
+                        relationship = "many-to-many", 
+                        suffix = c(".d", ".l") ) 
+
+dn_lq_full_mindist <- dn_lq_full %>% 
+  group_by(address.d) %>% 
+  mutate(distance = haversine(longitude.d, latitude.d, longitude.l, latitude.l)) %>% 
+  summarize(closest = min(distance), state = first(state) )
+dn_lq_full_mindist<-
+dn_lq_full_mindist %>%
+  filter(grepl("^N", dn_lq_full_mindist$state))
+
+dn_lq_full_mindist %>% 
+  ggplot(aes(x = closest, y = state,fill = state)) +
+  geom_density_ridges() +
+scale_y_discrete(expand = c(0.04, 0)) +
+  labs( title = "Distribution of Minimum Distances", 
+       suptitle = "between Denny's and La Quinta Locations",
+        x = "Minimum Distance (miles)", y = "Count" ) + 
+  scale_fill_brewer(palette = 4) +
+  theme_ridges() + theme(legend.position = "none")
 ```
 
+14. Inspect the [source code](https://github.com/DataScience4Psych/DataScience4Psych/blob/main/0505_lab_laquinta.Rmd) used to create the plot below, and try to understand how it works. Then, modify the code to do something different. For example, you could change the bin width for the mini bar charts, or you could change the size of the mini bar charts, or you could change the color of the bars in the mini bar charts, etc.
 
+```{r lab_finalgraph, echo=FALSE}
+knitr::include_graphics("img/histogram-map.png")
+```
+
+<details>
+  <summary>Click to expand the code used to create the plot above</summary>
+```{r message=FALSE, warning=FALSE, echo=TRUE}
+# Source pattern: https://stackoverflow.com/a/36149654
+# Posted by inscaven
+# Retrieved 2026-02-08, License - CC BY-SA 3.0
+
+library(usmap) #import the package
+library(tidyverse)
+library(usmap)
+library(ggplot2)
+library(sf)
+library(grid)
+
+# 1) Closest La Quinta distance for each Denny's (all states)
+dn_lq_full <- full_join(
+  dn, lq,
+  by = "state",
+  suffix = c(".d", ".l")
+) %>%
+  filter(!is.na(latitude.d) & !is.na(latitude.l)) %>%
+   filter(!state %in% c("AK", "HI")) 
+
+dn_lq_full_mindist <- dn_lq_full %>%
+  group_by(address.d) %>%
+  mutate(distance = haversine(longitude.d, latitude.d, longitude.l, latitude.l)) %>%
+  summarize(
+    closest = min(distance, na.rm = TRUE),
+    state   = first(state),
+    .groups = "drop"
+  )
+
+# 2) Per-state binned distributions (these become the embedded mini bar charts)
+binwidth_m <- 25
+
+# Cap extreme tail so small charts remain legible
+x_cap <- as.numeric(quantile(dn_lq_full_mindist$closest, 0.99, na.rm = TRUE))
+x_max <- ceiling(x_cap / binwidth_m) * binwidth_m
+
+state_bins <- dn_lq_full_mindist %>%
+  mutate(
+    closest_cap = pmin(closest, x_max),
+    bin_left    = floor(closest_cap / binwidth_m) * binwidth_m,
+    bin_mid     = bin_left + binwidth_m / 2
+  ) %>%
+  count(state, bin_mid, name = "n")
+
+y_max <- max(state_bins$n, na.rm = TRUE)
+
+# 3) US map as sf + centroids 
+states_sf <- usmap::us_map(regions = "states") 
+
+state_centroids <- states_sf %>%
+  st_centroid() %>%
+  mutate(
+    x = st_coordinates(.)[, 1],
+    y = st_coordinates(.)[, 2]
+  ) %>%
+  st_drop_geometry() %>%
+  transmute(state = abbr, x = x, y = y)
+
+# Bounding box for scaling embedded plot sizes
+bb <- st_bbox(states_sf)
+x_range <- as.numeric(bb["xmax"] - bb["xmin"])
+y_range <- as.numeric(bb["ymax"] - bb["ymin"])
+
+# Size of embedded mini-plots in map coordinate units
+dx <- x_range * 0.04
+dy <- y_range * 0.04
+
+# 4) Base map
+base_map <- ggplot() +
+  geom_sf(data = states_sf, fill = "white", color = "gray60", linewidth = 0.2) +
+  coord_sf(clip = "off") +
+  theme_void()
+
+# 5) Build one mini-plot per state and place it at the state's centroid
+annotation_list <- purrr::pmap(
+  list(state_centroids$state, state_centroids$x, state_centroids$y),
+  function(st, cx, cy) {
+    st_dat <- state_bins %>% filter(state == st)
+    if (nrow(st_dat) < 2) return(NULL)
+    
+    mini <- ggplot(st_dat, aes(x = bin_mid, y = n)) +
+      geom_col(color = "black", linewidth = 0.2) +
+      scale_x_continuous(limits = c(0, x_max), expand = c(0, 0)) +
+      scale_y_continuous(limits = c(0, y_max), expand = c(0, 0)) +
+      theme_void() +
+      theme(
+        plot.background = element_rect(fill = scales::alpha("white", 0.3), color = NA),
+        plot.margin = margin(1, 1, 1, 1)
+      )
+    
+    annotation_custom(
+      grob = ggplotGrob(mini),
+      xmin = cx - dx, xmax = cx + dx,
+      ymin = cy - dy, ymax = cy + dy
+    )
+  }
+)
+
+annotation_list <- purrr::compact(annotation_list)
+
+result_plot <- Reduce(`+`, annotation_list, base_map)
+
+
+
+ggsave(
+  result_plot,
+  filename = "img/histogram-map.png",
+  width = 10, height = 6, units = "in", dpi = 300
+)
+
+```
+
+</details>
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
 
