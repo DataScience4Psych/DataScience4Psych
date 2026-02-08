@@ -21,7 +21,7 @@ include_graphics("img/mitch-hedgeberg-lqd.jpg")
 
 Have you ever taken a road trip in the US and thought to yourself "I wonder what La Quinta means". Well, the late comedian [Mitch Hedberg](https://en.wikipedia.org/wiki/Mitch_Hedberg) has joked that it's Spanish for *next to Denny's*.
 
-If you're not familiar with these two establishments, [Denny's](https://www.dennys.com/) is a casual diner chain that is open 24 hours and [La Quinta Inn and Suites](http://www.lq.com/) is a hotel chain.
+If you're not familiar with these two establishments, [Denny's](https://www.dennys.com/) is a casual diner chain that is open 24 hours and [La Quinta Inn and Suites](http://www.lq.com/) is a hotel chain. In the US, diners and mid-range chain hotels are common along interstate highways. It’s typical to see clusters of brands near highway exits where travelers stop for food and lodging.
 
 These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab, we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.
 
@@ -104,7 +104,12 @@ To help with our analysis we will also use a dataset on US states:
 states <- read_csv("data/states.csv")
 ```
 
-Each observation in this dataset represents a state, including DC. Along with the name of the state we have the two-letter abbreviation and we have the geographic area of the state (in square miles).
+Each observation in this dataset represents a state, including DC. 
+
+> Cultural context: In US datasets, “state” often refers to one of the 50 US states, and “DC” is the District of Columbia (Washington, DC), which is not a state but is often included like one. 
+
+Along with the name of the state we have two-letter abbreviations (like NC, TX, CA) and we have the geographic area of the state in square miles. If you are used to square kilometers, 1 square mile is about 2.59 square kilometers.
+
 
 ## Exercises  {.unnumbered}
 
@@ -124,7 +129,9 @@ We would like to limit our analysis to Denny's and La Quinta locations in the Un
 
 4. Now take a look at the data. What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites). Don't worry about whether you know how to implement this, just brainstorm some ideas. Write down at least one as your answer, but you're welcomed to write down a few options too.
 
-We will determine whether or not the establishment has a location outside the US using the `state` variable in the `dn` and `lq` datasets. We know exactly which states are in the US, and we have this information in the `states` data frame we loaded.
+We will determine whether or not the establishment has a location outside the US using the `state` variable in the `dn` and `lq` datasets. Because we have the `states` data frame, we know exactly which states are in the US.
+
+> Hint: 
 
 5. Find the Denny's locations that are outside the US, if any. To do so, filter the Denny's locations for observations where `state` is not in `states$abbreviation`. The code for this is given below. Note that the `%in%` operator matches the states listed in the `state` variable to those listed in `states$abbreviation`. The `!` operator means **not**. Are there any Denny's locations outside the US?
 
