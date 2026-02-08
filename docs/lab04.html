@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-05" />
+<meta name="date" content="2026-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -69,10 +69,10 @@
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
-<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -1662,7 +1662,7 @@ div.csl-indent {
 <!-- make it easier to find the lab, it was hard for students -->
 <p><img src="img/mitch-hedgeberg-lqd.jpg" alt="" width="640" /></p>
 <p>Have you ever taken a road trip in the US and thought to yourself “I wonder what La Quinta means”. Well, the late comedian <a href="https://en.wikipedia.org/wiki/Mitch_Hedberg">Mitch Hedberg</a> has joked that it’s Spanish for <em>next to Denny’s</em>.</p>
-<p>If you’re not familiar with these two establishments, <a href="https://www.dennys.com/">Denny’s</a> is a casual diner chain that is open 24 hours and <a href="http://www.lq.com/">La Quinta Inn and Suites</a> is a hotel chain.</p>
+<p>If you’re not familiar with these two establishments, <a href="https://www.dennys.com/">Denny’s</a> is a casual diner chain that is open 24 hours and <a href="http://www.lq.com/">La Quinta Inn and Suites</a> is a hotel chain. In the US, diners and mid-range chain hotels are common along interstate highways. It’s typical to see clusters of brands near highway exits where travelers stop for food and lodging.</p>
 <p>These two establishments tend to be clustered together, or at least this observation is a joke made famous by Mitch Hedberg. In this lab, we explore the validity of this joke and along the way learn some more data wrangling and tips for visualizing spatial data.</p>
 <p>This lab was inspired by John Reiser’s post in his <em>New Jersey geographer</em> blog. You can read that analysis <a href="http://njgeo.org/2014/01/30/mitch-hedberg-and-gis/">here</a>. Reiser’s blog post focuses on scraping data from Denny’s and La Quinta Inn and Suites websites using Python. In this lab, we focus on visualization and analysis of those data. However, it’s worth noting that the data scraping was also done in R. Later in the course,we will discuss web scraping using R . But for now, we’re focusing on the data that has already been scraped and tidied up for you.</p>
 </div>
@@ -1672,9 +1672,9 @@ div.csl-indent {
 <div id="packages-3" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab04.html#packages-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!-- check if dsbox is on cran -->
-<p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The <strong>dsbox</strong> package is currently not available on CRAN. However, you can find the most current version hosted on GitHub. Therefore, you will need to download and <a href="https://github.com/rstudio-education/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
+<p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The <strong>dsbox</strong> package is currently not available on CRAN. However, you can find the most current version hosted on GitHub. Therefore, you will need to download and <a href="https://github.com/tidyverse/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="lab04.html#cb173-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb173-2"><a href="lab04.html#cb173-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;rstudio-education/dsbox&quot;</span>)</span></code></pre></div>
+<span id="cb173-2"><a href="lab04.html#cb173-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;tidyverse/dsbox&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="lab04.html#cb174-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb174-2"><a href="lab04.html#cb174-2" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
 <!-- if dsbox is not on cran, provide alternative data loading instructions -->
@@ -1729,7 +1729,11 @@ Note that these data were scraped from <a href="https://locations.dennys.com/">h
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>Each observation in this dataset represents a state, including DC. Along with the name of the state we have the two-letter abbreviation and we have the geographic area of the state (in square miles).</p>
+<p>Each observation in this dataset represents a state, including DC.</p>
+<blockquote>
+<p>Cultural context: In US datasets, “state” often refers to one of the 50 US states, and “DC” is the District of Columbia (Washington, DC), which is not a state but is often included like one.</p>
+</blockquote>
+<p>Along with the name of the state we have two-letter abbreviations (like NC, TX, CA) and we have the geographic area of the state in square miles. If you are used to square kilometers, 1 square mile is about 2.59 square kilometers.</p>
 </div>
 <div id="exercises-3" class="section level2 unnumbered hasAnchor">
 <h2>Exercises<a href="lab04.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1742,7 +1746,10 @@ Note that these data were scraped from <a href="https://locations.dennys.com/">h
 <li><p>Take a look at the websites that the data come from (linked above). Are there any La Quinta’s locations outside of the US? If so, which countries? What about Denny’s?</p></li>
 <li><p>Now take a look at the data. What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites). Don’t worry about whether you know how to implement this, just brainstorm some ideas. Write down at least one as your answer, but you’re welcomed to write down a few options too.</p></li>
 </ol>
-<p>We will determine whether or not the establishment has a location outside the US using the <code>state</code> variable in the <code>dn</code> and <code>lq</code> datasets. We know exactly which states are in the US, and we have this information in the <code>states</code> data frame we loaded.</p>
+<p>We will determine whether or not the establishment has a location outside the US using the <code>state</code> variable in the <code>dn</code> and <code>lq</code> datasets. Because we have the <code>states</code> data frame, we know exactly which states are in the US.</p>
+<blockquote>
+<p>Hint:</p>
+</blockquote>
 <ol start="5" style="list-style-type: decimal">
 <li>Find the Denny’s locations that are outside the US, if any. To do so, filter the Denny’s locations for observations where <code>state</code> is not in <code>states$abbreviation</code>. The code for this is given below. Note that the <code>%in%</code> operator matches the states listed in the <code>state</code> variable to those listed in <code>states$abbreviation</code>. The <code>!</code> operator means <strong>not</strong>. Are there any Denny’s locations outside the US?</li>
 </ol>
@@ -1816,6 +1823,14 @@ Note that these data were scraped from <a href="https://locations.dennys.com/">h
 <ol start="13" style="list-style-type: decimal">
 <li>Recreate the following plot, and interpret what you see in context of the data.</li>
 </ol>
+<details>
+<summary>
+Click to for hints about the library
+</summary>
+<blockquote>
+<p>Hint: You will need to use the <code>annotation_borders</code> function from the <strong>ggplot2</strong> package to add the borders of the world to the plot. You will also need the <strong>mapproj</strong> package to adjust the projection of the plot.</p>
+</blockquote>
+</details>
 <p><img src="0409_lab_dennys_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" /></p>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 

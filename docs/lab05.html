@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-05" />
+<meta name="date" content="2026-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -69,10 +69,10 @@
 <link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
 <script src="libs/selectize-0.12.0/selectize.min.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
-<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -1670,18 +1670,26 @@ div.csl-indent {
 </ul>
 <div id="packages-4" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab05.html#packages-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The *dsbox** package is not on CRAN yet; instead it is hosted on github. You will have to download and <a href="https://github.com/rstudio-education/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
-<pre><code># install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;rstudio-education/dsbox&quot;)</code></pre>
+<p>In this lab, we will use the <strong>tidyverse</strong> and <strong>dsbox</strong> packages. The <strong>dsbox</strong> package is currently not available on CRAN. However, you can find the most current version hosted on GitHub. Therefore, you will need to download and <a href="https://github.com/tidyverse/dsbox#installation">install it yourself</a>. This piece of code should help get you started.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="lab05.html#cb228-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb228-2"><a href="lab05.html#cb228-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;tidyverse/dsbox&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="lab05.html#cb229-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb229-2"><a href="lab05.html#cb229-2" tabindex="-1"></a><span class="fu">library</span>(dsbox)</span></code></pre></div>
-<p>If you cannot get dsbox to install, you can also download the two datasets we will be using manually <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda">here</a> and <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda">here</a>.</p>
+<!-- if dsbox is not on cran, provide alternative data loading instructions -->
+If you run into issues installing the <strong>dsbox</strong> package, don’t worry! You can still complete the lab by downloading the datasets directly from GitHub. The code below will load the two datasets we will be using directly from GitHub.
+<details>
+<summary>
+Click to expand alternative data loading instructions
+</summary>
+<p>If you cannot get <code>dsbox</code> to install, you can instead download the two datasets we will be using manually <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda">here</a> and <a href="https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda">here</a>.</p>
 <pre><code>githubURL_1 &lt;- &quot;https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/laquinta.rda&quot;
 
 githubURL_2 &lt;- &quot;https://github.com/DataScience4Psych/DataScience4Psych/raw/main/data/raw-data/dennys.rda&quot;
 
 load(url(githubURL_1))
-load(url(githubURL_2))</code></pre>
+load(url(githubURL_2))
+</code></pre>
+</details>
 </div>
 <div id="housekeeping" class="section level3 unnumbered hasAnchor">
 <h3>Housekeeping<a href="lab05.html#housekeeping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1813,11 +1821,6 @@ Figure 43.1: <a href="https://commons.wikimedia.org/wiki/File:Law-of-haversines.
 <ol start="6" style="list-style-type: decimal">
 <li><p>Calculate the distances between all pairs of Denny’s and La Quinta locations and save this variable as <code>distance</code>. Make sure to save this variable in THE <code>dn_lq_ak</code> data frame, so that you can use it later.</p></li>
 <li><p>Calculate the minimum distance between a Denny’s and La Quinta for each Denny’s location. To do so we group by Denny’s locations and calculate a new variable that stores the information for the minimum distance.</p></li>
-</ol>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="lab05.html#cb237-1" tabindex="-1"></a>dn_lq_ak_mindist <span class="ot">&lt;-</span> dn_lq_ak <span class="sc">%&gt;%</span></span>
-<span id="cb237-2"><a href="lab05.html#cb237-2" tabindex="-1"></a>  <span class="fu">group_by</span>(address.x) <span class="sc">%&gt;%</span></span>
-<span id="cb237-3"><a href="lab05.html#cb237-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">closest =</span> <span class="fu">min</span>(distance))</span></code></pre></div>
-<ol start="8" style="list-style-type: decimal">
 <li><p>Describe the distribution of the distances Denny’s and the nearest La Quinta locations in Alaska. Also include an <strong>appropriate</strong> visualization and relevant summary statistics.</p></li>
 <li><p>Repeat the same analysis for North Carolina: (i) filter Denny’s and La Quinta Data Frames for NC, (ii) join these data frames to get a complete list of all possible pairings, (iii) calculate the distances between all possible pairings of Denny’s and La Quinta in NC, (iv) find the minimum distance between each Denny’s and La Quinta location, (v) visualize and describe the distribution of these shortest distances using appropriate summary statistics.</p></li>
 <li><p>Repeat the same analysis for Texas.</p></li>
@@ -1831,6 +1834,125 @@ Figure 43.1: <a href="https://commons.wikimedia.org/wiki/File:Law-of-haversines.
 <ol start="13" style="list-style-type: decimal">
 <li>Recreate the following plot, and interpret what you see in context of the data.</li>
 </ol>
+<p><img src="0505_lab_laquinta_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" /></p>
+<ol start="14" style="list-style-type: decimal">
+<li>Inspect the <a href="https://github.com/DataScience4Psych/DataScience4Psych/blob/main/0505_lab_laquinta.Rmd">source code</a> used to create the plot below, and try to understand how it works. Then, modify the code to do something different. For example, you could change the bin width for the mini bar charts, or you could change the size of the mini bar charts, or you could change the color of the bars in the mini bar charts, etc.</li>
+</ol>
+<p><img src="img/histogram-map.png" alt="" width="1500" /></p>
+<details>
+<summary>
+Click to expand the code used to create the plot above
+</summary>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="lab05.html#cb237-1" tabindex="-1"></a><span class="co"># Source pattern: https://stackoverflow.com/a/36149654</span></span>
+<span id="cb237-2"><a href="lab05.html#cb237-2" tabindex="-1"></a><span class="co"># Posted by inscaven</span></span>
+<span id="cb237-3"><a href="lab05.html#cb237-3" tabindex="-1"></a><span class="co"># Retrieved 2026-02-08, License - CC BY-SA 3.0</span></span>
+<span id="cb237-4"><a href="lab05.html#cb237-4" tabindex="-1"></a></span>
+<span id="cb237-5"><a href="lab05.html#cb237-5" tabindex="-1"></a><span class="fu">library</span>(usmap) <span class="co">#import the package</span></span>
+<span id="cb237-6"><a href="lab05.html#cb237-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb237-7"><a href="lab05.html#cb237-7" tabindex="-1"></a><span class="fu">library</span>(usmap)</span>
+<span id="cb237-8"><a href="lab05.html#cb237-8" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb237-9"><a href="lab05.html#cb237-9" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb237-10"><a href="lab05.html#cb237-10" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb237-11"><a href="lab05.html#cb237-11" tabindex="-1"></a></span>
+<span id="cb237-12"><a href="lab05.html#cb237-12" tabindex="-1"></a><span class="co"># 1) Closest La Quinta distance for each Denny&#39;s (all states)</span></span>
+<span id="cb237-13"><a href="lab05.html#cb237-13" tabindex="-1"></a>dn_lq_full <span class="ot">&lt;-</span> <span class="fu">full_join</span>(</span>
+<span id="cb237-14"><a href="lab05.html#cb237-14" tabindex="-1"></a>  dn, lq,</span>
+<span id="cb237-15"><a href="lab05.html#cb237-15" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">&quot;state&quot;</span>,</span>
+<span id="cb237-16"><a href="lab05.html#cb237-16" tabindex="-1"></a>  <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;.d&quot;</span>, <span class="st">&quot;.l&quot;</span>)</span>
+<span id="cb237-17"><a href="lab05.html#cb237-17" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-18"><a href="lab05.html#cb237-18" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(latitude.d) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(latitude.l)) <span class="sc">%&gt;%</span></span>
+<span id="cb237-19"><a href="lab05.html#cb237-19" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="sc">!</span>state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;AK&quot;</span>, <span class="st">&quot;HI&quot;</span>)) </span>
+<span id="cb237-20"><a href="lab05.html#cb237-20" tabindex="-1"></a></span>
+<span id="cb237-21"><a href="lab05.html#cb237-21" tabindex="-1"></a>dn_lq_full_mindist <span class="ot">&lt;-</span> dn_lq_full <span class="sc">%&gt;%</span></span>
+<span id="cb237-22"><a href="lab05.html#cb237-22" tabindex="-1"></a>  <span class="fu">group_by</span>(address.d) <span class="sc">%&gt;%</span></span>
+<span id="cb237-23"><a href="lab05.html#cb237-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distance =</span> <span class="fu">haversine</span>(longitude.d, latitude.d, longitude.l, latitude.l)) <span class="sc">%&gt;%</span></span>
+<span id="cb237-24"><a href="lab05.html#cb237-24" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb237-25"><a href="lab05.html#cb237-25" tabindex="-1"></a>    <span class="at">closest =</span> <span class="fu">min</span>(distance, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb237-26"><a href="lab05.html#cb237-26" tabindex="-1"></a>    <span class="at">state   =</span> <span class="fu">first</span>(state),</span>
+<span id="cb237-27"><a href="lab05.html#cb237-27" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb237-28"><a href="lab05.html#cb237-28" tabindex="-1"></a>  )</span>
+<span id="cb237-29"><a href="lab05.html#cb237-29" tabindex="-1"></a></span>
+<span id="cb237-30"><a href="lab05.html#cb237-30" tabindex="-1"></a><span class="co"># 2) Per-state binned distributions (these become the embedded mini bar charts)</span></span>
+<span id="cb237-31"><a href="lab05.html#cb237-31" tabindex="-1"></a>binwidth_m <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb237-32"><a href="lab05.html#cb237-32" tabindex="-1"></a></span>
+<span id="cb237-33"><a href="lab05.html#cb237-33" tabindex="-1"></a><span class="co"># Cap extreme tail so small charts remain legible</span></span>
+<span id="cb237-34"><a href="lab05.html#cb237-34" tabindex="-1"></a>x_cap <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">quantile</span>(dn_lq_full_mindist<span class="sc">$</span>closest, <span class="fl">0.99</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb237-35"><a href="lab05.html#cb237-35" tabindex="-1"></a>x_max <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(x_cap <span class="sc">/</span> binwidth_m) <span class="sc">*</span> binwidth_m</span>
+<span id="cb237-36"><a href="lab05.html#cb237-36" tabindex="-1"></a></span>
+<span id="cb237-37"><a href="lab05.html#cb237-37" tabindex="-1"></a>state_bins <span class="ot">&lt;-</span> dn_lq_full_mindist <span class="sc">%&gt;%</span></span>
+<span id="cb237-38"><a href="lab05.html#cb237-38" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb237-39"><a href="lab05.html#cb237-39" tabindex="-1"></a>    <span class="at">closest_cap =</span> <span class="fu">pmin</span>(closest, x_max),</span>
+<span id="cb237-40"><a href="lab05.html#cb237-40" tabindex="-1"></a>    <span class="at">bin_left    =</span> <span class="fu">floor</span>(closest_cap <span class="sc">/</span> binwidth_m) <span class="sc">*</span> binwidth_m,</span>
+<span id="cb237-41"><a href="lab05.html#cb237-41" tabindex="-1"></a>    <span class="at">bin_mid     =</span> bin_left <span class="sc">+</span> binwidth_m <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb237-42"><a href="lab05.html#cb237-42" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb237-43"><a href="lab05.html#cb237-43" tabindex="-1"></a>  <span class="fu">count</span>(state, bin_mid, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb237-44"><a href="lab05.html#cb237-44" tabindex="-1"></a></span>
+<span id="cb237-45"><a href="lab05.html#cb237-45" tabindex="-1"></a>y_max <span class="ot">&lt;-</span> <span class="fu">max</span>(state_bins<span class="sc">$</span>n, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb237-46"><a href="lab05.html#cb237-46" tabindex="-1"></a></span>
+<span id="cb237-47"><a href="lab05.html#cb237-47" tabindex="-1"></a><span class="co"># 3) US map as sf + centroids </span></span>
+<span id="cb237-48"><a href="lab05.html#cb237-48" tabindex="-1"></a>states_sf <span class="ot">&lt;-</span> usmap<span class="sc">::</span><span class="fu">us_map</span>(<span class="at">regions =</span> <span class="st">&quot;states&quot;</span>) </span>
+<span id="cb237-49"><a href="lab05.html#cb237-49" tabindex="-1"></a></span>
+<span id="cb237-50"><a href="lab05.html#cb237-50" tabindex="-1"></a>state_centroids <span class="ot">&lt;-</span> states_sf <span class="sc">%&gt;%</span></span>
+<span id="cb237-51"><a href="lab05.html#cb237-51" tabindex="-1"></a>  <span class="fu">st_centroid</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb237-52"><a href="lab05.html#cb237-52" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb237-53"><a href="lab05.html#cb237-53" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">st_coordinates</span>(.)[, <span class="dv">1</span>],</span>
+<span id="cb237-54"><a href="lab05.html#cb237-54" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">st_coordinates</span>(.)[, <span class="dv">2</span>]</span>
+<span id="cb237-55"><a href="lab05.html#cb237-55" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb237-56"><a href="lab05.html#cb237-56" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb237-57"><a href="lab05.html#cb237-57" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">state =</span> abbr, <span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb237-58"><a href="lab05.html#cb237-58" tabindex="-1"></a></span>
+<span id="cb237-59"><a href="lab05.html#cb237-59" tabindex="-1"></a><span class="co"># Bounding box for scaling embedded plot sizes</span></span>
+<span id="cb237-60"><a href="lab05.html#cb237-60" tabindex="-1"></a>bb <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(states_sf)</span>
+<span id="cb237-61"><a href="lab05.html#cb237-61" tabindex="-1"></a>x_range <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bb[<span class="st">&quot;xmax&quot;</span>] <span class="sc">-</span> bb[<span class="st">&quot;xmin&quot;</span>])</span>
+<span id="cb237-62"><a href="lab05.html#cb237-62" tabindex="-1"></a>y_range <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bb[<span class="st">&quot;ymax&quot;</span>] <span class="sc">-</span> bb[<span class="st">&quot;ymin&quot;</span>])</span>
+<span id="cb237-63"><a href="lab05.html#cb237-63" tabindex="-1"></a></span>
+<span id="cb237-64"><a href="lab05.html#cb237-64" tabindex="-1"></a><span class="co"># Size of embedded mini-plots in map coordinate units</span></span>
+<span id="cb237-65"><a href="lab05.html#cb237-65" tabindex="-1"></a>dx <span class="ot">&lt;-</span> x_range <span class="sc">*</span> <span class="fl">0.04</span></span>
+<span id="cb237-66"><a href="lab05.html#cb237-66" tabindex="-1"></a>dy <span class="ot">&lt;-</span> y_range <span class="sc">*</span> <span class="fl">0.04</span></span>
+<span id="cb237-67"><a href="lab05.html#cb237-67" tabindex="-1"></a></span>
+<span id="cb237-68"><a href="lab05.html#cb237-68" tabindex="-1"></a><span class="co"># 4) Base map</span></span>
+<span id="cb237-69"><a href="lab05.html#cb237-69" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb237-70"><a href="lab05.html#cb237-70" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> states_sf, <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb237-71"><a href="lab05.html#cb237-71" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">clip =</span> <span class="st">&quot;off&quot;</span>) <span class="sc">+</span></span>
+<span id="cb237-72"><a href="lab05.html#cb237-72" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb237-73"><a href="lab05.html#cb237-73" tabindex="-1"></a></span>
+<span id="cb237-74"><a href="lab05.html#cb237-74" tabindex="-1"></a><span class="co"># 5) Build one mini-plot per state and place it at the state&#39;s centroid</span></span>
+<span id="cb237-75"><a href="lab05.html#cb237-75" tabindex="-1"></a>annotation_list <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pmap</span>(</span>
+<span id="cb237-76"><a href="lab05.html#cb237-76" tabindex="-1"></a>  <span class="fu">list</span>(state_centroids<span class="sc">$</span>state, state_centroids<span class="sc">$</span>x, state_centroids<span class="sc">$</span>y),</span>
+<span id="cb237-77"><a href="lab05.html#cb237-77" tabindex="-1"></a>  <span class="cf">function</span>(st, cx, cy) {</span>
+<span id="cb237-78"><a href="lab05.html#cb237-78" tabindex="-1"></a>    st_dat <span class="ot">&lt;-</span> state_bins <span class="sc">%&gt;%</span> <span class="fu">filter</span>(state <span class="sc">==</span> st)</span>
+<span id="cb237-79"><a href="lab05.html#cb237-79" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(st_dat) <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb237-80"><a href="lab05.html#cb237-80" tabindex="-1"></a>    </span>
+<span id="cb237-81"><a href="lab05.html#cb237-81" tabindex="-1"></a>    mini <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(st_dat, <span class="fu">aes</span>(<span class="at">x =</span> bin_mid, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb237-82"><a href="lab05.html#cb237-82" tabindex="-1"></a>      <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb237-83"><a href="lab05.html#cb237-83" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, x_max), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb237-84"><a href="lab05.html#cb237-84" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, y_max), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb237-85"><a href="lab05.html#cb237-85" tabindex="-1"></a>      <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb237-86"><a href="lab05.html#cb237-86" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb237-87"><a href="lab05.html#cb237-87" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> scales<span class="sc">::</span><span class="fu">alpha</span>(<span class="st">&quot;white&quot;</span>, <span class="fl">0.3</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb237-88"><a href="lab05.html#cb237-88" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb237-89"><a href="lab05.html#cb237-89" tabindex="-1"></a>      )</span>
+<span id="cb237-90"><a href="lab05.html#cb237-90" tabindex="-1"></a>    </span>
+<span id="cb237-91"><a href="lab05.html#cb237-91" tabindex="-1"></a>    <span class="fu">annotation_custom</span>(</span>
+<span id="cb237-92"><a href="lab05.html#cb237-92" tabindex="-1"></a>      <span class="at">grob =</span> <span class="fu">ggplotGrob</span>(mini),</span>
+<span id="cb237-93"><a href="lab05.html#cb237-93" tabindex="-1"></a>      <span class="at">xmin =</span> cx <span class="sc">-</span> dx, <span class="at">xmax =</span> cx <span class="sc">+</span> dx,</span>
+<span id="cb237-94"><a href="lab05.html#cb237-94" tabindex="-1"></a>      <span class="at">ymin =</span> cy <span class="sc">-</span> dy, <span class="at">ymax =</span> cy <span class="sc">+</span> dy</span>
+<span id="cb237-95"><a href="lab05.html#cb237-95" tabindex="-1"></a>    )</span>
+<span id="cb237-96"><a href="lab05.html#cb237-96" tabindex="-1"></a>  }</span>
+<span id="cb237-97"><a href="lab05.html#cb237-97" tabindex="-1"></a>)</span>
+<span id="cb237-98"><a href="lab05.html#cb237-98" tabindex="-1"></a></span>
+<span id="cb237-99"><a href="lab05.html#cb237-99" tabindex="-1"></a>annotation_list <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">compact</span>(annotation_list)</span>
+<span id="cb237-100"><a href="lab05.html#cb237-100" tabindex="-1"></a></span>
+<span id="cb237-101"><a href="lab05.html#cb237-101" tabindex="-1"></a>result_plot <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>, annotation_list, base_map)</span>
+<span id="cb237-102"><a href="lab05.html#cb237-102" tabindex="-1"></a></span>
+<span id="cb237-103"><a href="lab05.html#cb237-103" tabindex="-1"></a></span>
+<span id="cb237-104"><a href="lab05.html#cb237-104" tabindex="-1"></a></span>
+<span id="cb237-105"><a href="lab05.html#cb237-105" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb237-106"><a href="lab05.html#cb237-106" tabindex="-1"></a>  result_plot,</span>
+<span id="cb237-107"><a href="lab05.html#cb237-107" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">&quot;img/histogram-map.png&quot;</span>,</span>
+<span id="cb237-108"><a href="lab05.html#cb237-108" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span></span>
+<span id="cb237-109"><a href="lab05.html#cb237-109" tabindex="-1"></a>)</span></code></pre></div>
+</details>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 
 </div>
