@@ -82,7 +82,9 @@ $$
 
 ## Example
 
-```{r cvnotes-code-demo, }
+
+
+```{r cvnotes-code-demo}
 n <- 100
 p <- 20
 X <- matrix(rnorm(n * p), nrow = n)
@@ -97,8 +99,24 @@ get_rss_submodels <- function(n_predictors, y, X) {
 }
 p_vec <- 0:p
 rss <- sapply(p_vec, get_rss_submodels, y, X)
-plot(rss ~ p_vec)
 ```
+
+Here is a plot of the residual sum of squares as a function of the number of predictors in the model. As we add more predictors, the residual sum of squares decreases. However, after a certain point, adding more predictors does not substantially improve the model fit. Cross-validation can help us identify the optimal number of predictors to include in the model.
+
+
+```{r cvnotes-code-demo-plot, echo=FALSE}
+df <- data.frame(p_vec, rss)
+
+ggplot(df, aes(y=rss, x = p_vec)) +
+  geom_line() +
+  geom_point() +
+  labs(y = "Residual Sum of Squares", x = "Number of Predictors") +
+  theme_minimal()
+```
+
+### Cross-validation to estimate prediction error
+
+The function below computes the cross-validated estimate of prediction error for a given number of predictors.
 
 ```{r cvnotes-code-crossval-function, }
 get_cv_error <- function(n_predictors,
@@ -117,7 +135,12 @@ get_cv_error <- function(n_predictors,
   }
   return(mean(cv_vec))
 }
+```
 
+
+This function computes the residual sum of squares on held-out data for a given number of predictors.
+
+```{r}
 rss_on_held_out <- function(n_predictors,
                             y_train,
                             X_train,
@@ -139,8 +162,19 @@ K <- 5
 folds <- rep(1:K, each = n / K)
 p_vec <- 0:p
 cv_errors <- sapply(p_vec, get_cv_error, y, X, folds)
-plot(cv_errors ~ p_vec)
 ```
+```{r cvnotes-code-crossval-plot, echo=FALSE}
+df_cv <- data.frame(p_vec, cv_errors)
+ggplot(df_cv, aes(y=cv_errors, x = p_vec)) +
+  geom_line() +
+  geom_point() +
+  labs(y = "Cross-Validated Prediction Error", x = "Number of Predictors") +
+  theme_minimal()
+
+```
+As we can see from the plot, the cross-validated prediction error initially decreases as we add more predictors to the model. However, after a certain point, adding more predictors leads to an increase in prediction error, indicating overfitting. The optimal number of predictors is the one that minimizes the cross-validated prediction error.
+
+
 
 ## Choice of $K$
 

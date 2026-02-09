@@ -25,7 +25,6 @@ We'll begin by loading the `nycflights13` dataset, which contains information ab
 library(nycflights13)
 library(dplyr)
 data("flights")
-# str(flights)
 ```
 
 ## Example Analysis: Average Delay by Airline
@@ -88,12 +87,15 @@ with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
 The `aggregate()` function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
 
 ```{r functionnotes-code-aggregate, }
-aggregate(dep_delay ~ carrier, data = flights[flights$carrier == "AA", ], FUN = mean, na.rm = TRUE)$dep_delay
+aggregate(dep_delay ~ carrier, 
+          data = flights[flights$carrier == "AA", ], 
+          FUN = mean, na.rm = TRUE)$dep_delay
 ```
 
 ###  Using tapply() Function
 
 The tapply() function applies a function to subsets of a vector, which we can use to calculate the average delay for "AA" flights.
+
 ```{r functionnotes-code-tapply, }
 tapply(flights$dep_delay, flights$carrier, mean, na.rm = TRUE)["AA"]
 ```
@@ -105,6 +107,7 @@ Now, internalize this "answer" because our informal testing relies on you notici
 When crafting your own functions in R, it's beneficial to start with a straightforward, minimal version that accomplishes the basic task at hand. This approach is akin to building a 'skateboard'—a simple, yet functional product. Let's apply this philosophy to our task of calculating the average delay for a specific airline in the nycflights13 dataset.
 
 ### Initial Simple Function: The 'Skateboard'
+
 ```{r functionnotes-code-function-basic, }
 average_delay_by_airline <- function(airline_code) {
   flights %>%
@@ -172,12 +175,12 @@ Let's add the capability to choose between departure (dep_delay) and arrival (ar
 
 ```{r functionnotes-code-function-enhanced, }
 # Enhanced function to calculate average delay, with options for delay type and error handling
-average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
+average_delay_by_airline <- function(data = flights, airline_code, 
+                                     delay_type = "dep_delay") {
   data %>%
     filter(carrier == airline_code) %>%
     summarize(average_delay = mean(get(delay_type), na.rm = TRUE))
 }
-
 
 # Test the enhanced function
 average_delay_by_airline(airline_code = "AA", delay_type = "arr_delay")
@@ -207,7 +210,8 @@ We'll add some simple checks to ensure that the airline code provided to the fun
 
 
 ```{r functionnotes-code-error-handling,error=TRUE}
-average_delay_by_airline <- function(data = flights, airline_code, delay_type = "dep_delay") {
+average_delay_by_airline <- function(data = flights, airline_code, 
+                                     delay_type = "dep_delay") {
   # Check if any of the provided airline codes are not in the dataset
   if (!any(airline_code %in% c(data$carrier, NA))) {
     stop("One or more airline codes not found in the dataset.")
@@ -355,6 +359,7 @@ median(gapminder$lifeExp)
 quantile(gapminder$lifeExp,
   robs = c(0.25, 0.75)
 )
+
 boxplot(gapminder$lifeExp, plot = FALSE)$stats
 ```
 
@@ -362,7 +367,9 @@ Now write a code snippet that takes the difference between two quantiles.
 
 ```{r functionnotes-code-quantile-diff, }
 the_probs <- c(0.25, 0.75)
+
 the_quantiles <- quantile(gapminder$lifeExp, probs = the_probs)
+
 max(the_quantiles) - min(the_quantiles)
 ```
 
