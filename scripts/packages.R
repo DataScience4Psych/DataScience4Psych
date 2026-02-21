@@ -38,7 +38,7 @@ cran_packages <- c(
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
   "tidymodels", "pacman", "gapminder", "nycflights13", "ggpedigree",
-  "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext", "titanic",
+  "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext", "titanic","rlang","pak","purrr","lubridate","stringr","ggplot2","dplyr","readr","tidyr","forcats","gganimate","ggrepel","mapproj"
 )
 
 # Install CRAN packages if missing
