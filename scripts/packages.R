@@ -48,7 +48,7 @@ lapply(cran_packages, install_if_missing)
 # GitHub Packages
 github_packages <- c(
   "gadenbuie/tweetrmd",
-  "smasongarrison/spida2@patch-1",
+  "gmonette/spida2",
   "tidyverse/dsbox",
   "crsh/citr",
   "hadley/emo",
