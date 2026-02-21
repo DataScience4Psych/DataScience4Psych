@@ -1670,8 +1670,8 @@ div.csl-indent {
 <h2>Learning Goals<a href="lab07.html#learning-goals-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Critiquing visualizations that misrepresent data</li>
-<li>Constructing datasets suitable for visual analysis</li>
-<li>Applying principles of effective data visualizationo to improve clarity and accuracy</li>
+<li>Exploring and understanding datasets for visual analysis</li>
+<li>Applying principles of effective data visualizations to improve clarity and accuracy</li>
 </ul>
 </div>
 <div id="getting-started-6" class="section level2 unnumbered hasAnchor">
@@ -1694,7 +1694,8 @@ You can load it by running the following in your Console:</p>
 </div>
 <div id="data-3" class="section level3 unnumbered hasAnchor">
 <h3>Data<a href="lab07.html#data-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this lab, you’ll be constructing the dataset!</p>
+<p>The visualization in this lab comes from a KDHE press conference on August 5, 2020. It compares
+COVID-19 case rates in Kansas counties with and without mask mandates. Since the original data was not released, the dataset used in this lab, <code>kansas_grouped_rolling_avg.csv</code>, was reconstructed from the publicly available data on <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/">USAFacts</a>.</p>
 </div>
 </div>
 <div id="exercises-6" class="section level2 unnumbered hasAnchor">
@@ -1705,22 +1706,11 @@ You can load it by running the following in your Console:</p>
 <p><img src="img/masks-v-nomasks.png" alt="" width="805" /></p>
 <p>Before you dive in, think about what is misleading about this visualization and how you might go about fixing it.</p>
 <ol style="list-style-type: decimal">
-<li>Create a data frame that can be used to re-construct this visualization. You may need to guess some of the numbers, that’s ok. You should first think about how many rows and columns you’ll need and what you want to call your variables. Then, you can use the <code>tribble()</code> function for this. For example, if you wanted to construct the following data frame</li>
+<li>check the repository, you’ll find a CSV file called <code>kansas_grouped_rolling_avg.csv</code>. Load it using:</li>
 </ol>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="lab07.html#cb323-1" tabindex="-1"></a>df</span>
-<span id="cb323-2"><a href="lab07.html#cb323-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 2</span></span>
-<span id="cb323-3"><a href="lab07.html#cb323-3" tabindex="-1"></a><span class="co">#&gt;   date     count</span></span>
-<span id="cb323-4"><a href="lab07.html#cb323-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt;</span></span>
-<span id="cb323-5"><a href="lab07.html#cb323-5" tabindex="-1"></a><span class="co">#&gt; 1 1/1/2020    15</span></span>
-<span id="cb323-6"><a href="lab07.html#cb323-6" tabindex="-1"></a><span class="co">#&gt; 2 2/1/2020    20</span></span>
-<span id="cb323-7"><a href="lab07.html#cb323-7" tabindex="-1"></a><span class="co">#&gt; 3 3/1/2020    22</span></span></code></pre></div>
-<p>you can write</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="lab07.html#cb324-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb324-2"><a href="lab07.html#cb324-2" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>count,</span>
-<span id="cb324-3"><a href="lab07.html#cb324-3" tabindex="-1"></a>  <span class="st">&quot;1/1/2020&quot;</span>, <span class="dv">15</span>,</span>
-<span id="cb324-4"><a href="lab07.html#cb324-4" tabindex="-1"></a>  <span class="st">&quot;2/1/2020&quot;</span>, <span class="dv">20</span>,</span>
-<span id="cb324-5"><a href="lab07.html#cb324-5" tabindex="-1"></a>  <span class="st">&quot;3/1/2020&quot;</span>, <span class="dv">22</span>,</span>
-<span id="cb324-6"><a href="lab07.html#cb324-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="lab07.html#cb323-1" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/kansas_grouped_rolling_avg.csv&quot;</span>)</span></code></pre></div>
+<p>Explore its structure and use it to re-construct the misleading visualization.</p>
+<p>Note: Since the original dataset for this plot was not publicly available, a former student did some impressive detective work to reconstruct it from other publicly available datasets. The re-constructed plot may still differ slightly from the original. If you’re interested in how the data was obtained and processed, you can refer to <a href="https://github.com/HollandSun/Reproduce_Lab7plot.git">this repository</a> for the full data pipeline and sources.</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Make a visualization that more accurately (and honestly) reflects the data and conveys a clear message.</p></li>
 <li><p>What message is more clear in your visualization than it was in the original visualization?</p></li>
