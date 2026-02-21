@@ -18,7 +18,7 @@ This repository contains the course materials for **Data Science for Psychologis
 .
 ├── .github/               # GitHub configuration and workflows
 ├── metadata/              # Course metadata CSVs (slide URLs, YouTube links, status)
-├── includes/              # Shared markdown snippets included in chapters
+├── includes/              # Shared child documents (.md and .Rmd) included in chapters
 ├── scripts/               # Maintenance R scripts (URL checking, data prep, etc.)
 ├── jose/                  # JOSE/JOSS academic publication materials
 ├── reference/             # Reference PDFs and documents
@@ -31,6 +31,7 @@ This repository contains the course materials for **Data Science for Psychologis
 ├── data/                  # Course datasets
 │   └── raw/               # Raw/original source data
 ├── docs/                  # Build output (HTML book — DO NOT EDIT)
+├── parameterized/         # Parameterized report examples (reproducibility chapter)
 ├── img/                   # Images used in chapters
 ├── *.Rmd                  # RMarkdown chapter files (numbered)
 ├── index.Rmd              # Book index/homepage

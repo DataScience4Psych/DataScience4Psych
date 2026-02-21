@@ -37,11 +37,12 @@ Output goes to `docs/`. Each chapter knits in a fresh R session (`new_session: t
 - `DESCRIPTION` — R package dependencies
 - `book.bib` — Bibliography
 - `metadata/` — Course metadata CSVs (slide URLs, YouTube links, status)
-- `includes/` — Shared markdown snippets included as children in chapters
+- `includes/` — Shared child documents (.md and .Rmd) included in chapters
 - `scripts/` — Maintenance R scripts (URL checking, data prep, package management)
 - `jose/` — JOSE/JOSS academic publication materials
 - `reference/` — Reference PDFs and documents
 - `drafts/` — Draft/inactive/template chapter files
+- `parameterized/` — Parameterized report examples (used by reproducibility chapter)
 - `assets/` — Web styling assets
   - `assets/css/` — Stylesheets (style.css, toc.css, fonts.css)
   - `assets/fonts/` — Web fonts
