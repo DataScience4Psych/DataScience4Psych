@@ -4,8 +4,8 @@
 
 ```{r include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 ```
 
 In this chapter, we'll explore how to harness the power of API-wrapping packages in R to streamline your data collection process. This content builds on Jenny Bryan's stat545 materials, with significant updates and additions to reflect current best practices.
@@ -132,5 +132,5 @@ Each of these packages opens up new realms of data for your analyses, following 
 
 API-wrapping packages in R provide a powerful means to access diverse datasets with minimal friction. By leveraging these tools, you can spend less time on data acquisition and more on meaningful analysis. As you continue your data science journey, experiment with different API wrappers and consider how they can enhance your research and projects.
 
-```{r links, child="admin/md/courselinks.md"}
+```{r links, child="includes/courselinks.md"}
 ```
