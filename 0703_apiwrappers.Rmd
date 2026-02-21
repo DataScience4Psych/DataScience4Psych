@@ -1,7 +1,7 @@
 ```{r apiwrappers-setup, include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 ```
 
 # ODD: Use API-wrapping packages {#api-wrappers}
@@ -26,7 +26,7 @@ We'll focus primarily on the second method, but now you know about the full spec
 For a comprehensive list of R tools for interacting with the internet, check out the [rOpenSci repository]( https://github.com/ropensci/webservices). These tools include packages for APIs, scraping, and more.
 
 
-## Direct Download
+### Direct Download
 
 In the simplest case, the data you need is already on the internet in a tabular format. Effectively, you just need to click and download whatever data you need. There are a couple of strategies here:
 
@@ -35,7 +35,7 @@ In the simplest case, the data you need is already on the internet in a tabular 
 
 The second case is most useful when the data you want has been provided in a format that needs cleanup. For example, the World Value Survey makes several datasets available as Excel sheets. The safest option here is to download the `.xls` file, then read it into R with `readxl::read_excel()` or something similar. An exception to this is data provided as Google Spreadsheets, which can be read straight into R using the [`googlesheets`](https://github.com/jennybc/googlesheets) package.
 
-### From rOpenSci web services page
+#### From rOpenSci web services page
 
 From rOpenSci's [CRAN Task View: Web Technologies and Services](https://github.com/ropensci/webservices):
 
@@ -46,13 +46,13 @@ From rOpenSci's [CRAN Task View: Web Technologies and Services](https://github.c
 
 What about packages that install data?
 
-## Data supplied on the web
+### Data supplied on the web
 
 Many times, the data that you want is not already organized into one or a few tables that you can read directly into R. More frequently, you find this data is given in the form of an API. **A**pplication **P**rogramming **I**nterfaces (APIs) are descriptions of the kind of requests that can be made of a certain piece of software, and descriptions of the kind of answers that are returned.
 
 Many sources of data -- databases, websites, services -- have made all (or part) of their data available via APIs over the internet. Computer programs ("clients") can make requests of the server, and the server will respond by sending data (or an error message). This client can be many kinds of other programs or websites, including R running from your laptop.
 
-## Streamlined Data Retrieval with API Wrappers
+### Streamlined Data Retrieval with API Wrappers
 
 Many common web services and APIs have been "wrapped", i.e. R functions have been written around them which send your query to the server and format the response. This is a great way to get started with APIs, as you don't need to worry about the details of the API itself. You can just focus on the data you want to get.
 
@@ -60,7 +60,7 @@ API-wrapping packages act as intermediaries between your R environment and web s
 
 
 
-### Case Study: Ornithological Data with rebird
+#### Case Study: Ornithological Data with rebird
 
 Let's dive into a practical example using the [rebird](https://github.com/ropensci/rebird) package, which interfaces with the [eBird](http://ebird.org/content/ebird/) database. eBird lets birders upload sightings of birds, and allows everyone access to those data. rebird makes it easy to access this data from R (as long as you request an API key)
 
@@ -73,7 +73,7 @@ library(rebird)
 First, let's fetch recent bird sightings from a specific location:
 
 
-#### Search birds by geography
+##### Search birds by geography
 
 The eBird website categorizes some popular locations as "Hotspots". These are areas where there are both lots of birds and lots of birders. One such location is at Iona Island, near Vancouver. You can see data for this Hotspot at [http://ebird.org/ebird/hotspot/L261851](http://ebird.org/ebird/hotspot/L261851).
 
@@ -90,20 +90,23 @@ The data already looks to be organized in a data frame! rebird allows us to read
 ebirdkey <- "SECRET API KEY"
 ```
 ```{r apiwrappers-setup-config, message=FALSE, warning=FALSE, include=FALSE, error=TRUE}
+ebirdkey_available <- TRUE
 
-
-if(exists("admin/secrets/ebird_api_key.txt")){
-  ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+if(exists("secrets/ebird_api_key.txt")){
+  ebirdkey <- read.table("secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
 } else {
   ebirdkey <- Sys.getenv("EBIRD_API_KEY")
+  if (ebirdkey == "") {
+    source(".Rprofile")
 }
-
+}
 if (is.null(ebirdkey) || ebirdkey == "") {
-  warning("No eBird API key found. Please set your API key in 'admin/secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
+  warning("No eBird API key found. Please set your API key in 'secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
+  ebirdkey_available <- FALSE
 }
 ```
 
-```{r apiwrappers-demo-ebirdregion, eval = TRUE,error=TRUE, cache=TRUE}
+```{r apiwrappers-demo-ebirdregion, eval = ebirdkey_available,error=TRUE, cache=TRUE}
 ebirdregion(loc = "L261851", key = ebirdkey) %>%
   head() %>%
   kable()
@@ -111,7 +114,7 @@ ebirdregion(loc = "L261851", key = ebirdkey) %>%
 
 We can use the function `ebirdgeo()` to get a list for an area (note that South and West are negative):
 
-```{r apiwrappers-demo-ebirdgeo-van, results = 'asis', eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-ebirdgeo-van, results = 'asis', eval = ebirdkey_available,error=TRUE,cache=TRUE}
 vanbirds <- ebirdgeo(lat = 49.2500, lng = -123.1000, key = ebirdkey)
 vanbirds %>%
   head() %>%
@@ -122,7 +125,7 @@ vanbirds %>%
 
 We can also search by "region", which refers to short codes which serve as common shorthands for different political units. For example, France is represented by the letters **FR**.
 
-```{r apiwrappers-demo-ebirdgeo-france, eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-ebirdgeo-france, eval = ebirdkey_available,error=TRUE,cache=TRUE}
 frenchbirds <- ebirdregion("FR", key = ebirdkey)
 frenchbirds %>%
   head() %>%
@@ -131,7 +134,7 @@ frenchbirds %>%
 
 Find out *when* a bird has been seen in a certain place! Choosing a name from `vanbirds` above (the Bald Eagle):
 
-```{r apiwrappers-demo-ebirdgeo-eagle, eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-ebirdgeo-eagle, eval = ebirdkey_available,error=TRUE,cache=TRUE}
 eagle <- ebirdgeo(
   species = "baleag",
   lat = 42, lng = -76, key = ebirdkey
@@ -143,11 +146,11 @@ eagle %>%
 
 rebird **knows where you are**:
 
-```{r apiwrappers-demo-ebirdgeo-local, eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-ebirdgeo-local, eval = ebirdkey_available,error=TRUE,cache=TRUE}
 ebirdgeo(species = "rolhaw", key = ebirdkey)
 ```
 
-### Searching geographic info: geonames {#geonames}
+#### Case Study: Searching geographic info: geonames {#geonames}
 
 [rOpenSci](https://ropensci.org) has a package called [geonames](https://docs.ropensci.org/geonames/) for accessing the [GeoNames API](https://www.geonames.org). First, install the geonames package from CRAN and load it.
 
@@ -170,8 +173,16 @@ options(geonamesUsername="my_user_name")
 ```
 
 ```{r apiwrappers-setup-geonames, include=FALSE,error=TRUE}
+geonamesUsername_available <- TRUE
 geonamesUsername <- Sys.getenv("GEONAMES_USERNAME")
+if (geonamesUsername == "") {
+    source(".Rprofile")
+}
 options(geonamesUsername=geonamesUsername)
+if (is.null(getOption("geonamesUsername")) || getOption("geonamesUsername") == "") {
+    warning("No GeoNames username found. Please set your username in your .Rprofile with options(geonamesUsername='your_username').")
+  geonamesUsername_available <- FALSE
+}
 ```
 
 ...but this is insecure. We don't want to risk committing this line and pushing it to our public GitHub page!
@@ -192,30 +203,30 @@ Save the file, close it, and restart R. Now we're ready to start using geonames 
 
 (Also see the [Cache credentials for HTTPS](https://happygitwithr.com/credential-caching.html) chapter of [Happy Git and GitHub for the useR](https://happygitwithr.com).)
 
-#### Using GeoNames
+##### Using GeoNames
 
 What can we do? We can get access to lots of geographical information via the various [GeoNames WebServices](http://www.geonames.org/export/ws-overview.html).
 
-```{r apiwrappers-demo-geonames-country, eval = TRUE,error=TRUE}
+```{r apiwrappers-demo-geonames-country, eval = geonamesUsername_available,error=TRUE}
 countryInfo <- geonames::GNcountryInfo()
 ```
 
-```{r apiwrappers-demo-geonames-glimpse, eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-geonames-glimpse, eval = geonamesUsername_available,error=TRUE,cache=TRUE}
 glimpse(countryInfo)
 ```
 
 This `countryInfo` dataset is very helpful for accessing the rest of the data because it gives us the standardized codes for country and language.
 
-#### Remixing geonames
+##### Remixing geonames
 
 What are the cities of France?
 
-```{r apiwrappers-demo-france-filter, eval = TRUE,cache=TRUE,error=TRUE}
+```{r apiwrappers-demo-france-filter, eval = geonamesUsername_available,cache=TRUE,error=TRUE}
 francedata <- countryInfo %>%
   filter(countryName == "France")
 ```
 
-```{r apiwrappers-demo-france-cities, eval = TRUE,error=TRUE,cache=TRUE}
+```{r apiwrappers-demo-france-cities, eval = geonamesUsername_available,error=TRUE,cache=TRUE}
 frenchcities <- with(francedata, GNcities(
   north = north, east = east,
   south = south, west = west,
@@ -223,15 +234,15 @@ frenchcities <- with(francedata, GNcities(
 ))
 ```
 
-```{r apiwrappers-demo-france-glimpse, eval = TRUE, cache=TRUE, error=TRUE}
+```{r apiwrappers-demo-france-glimpse, eval = geonamesUsername_available, cache=TRUE, error=TRUE}
 glimpse(frenchcities)
 ```
 
-### Wikipedia searching
+#### Wikipedia searching
 
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
 
-```{r apiwrappers-demo-wiki-rio, eval = TRUE,error=TRUE}
+```{r apiwrappers-demo-wiki-rio,eval = geonamesUsername_available,error=TRUE}
 rio_english <- geonames::GNfindNearbyWikipedia(
   lat = -22.9083, lng = -43.1964,
   radius = 20, lang = "en", maxRows = 500
@@ -242,13 +253,13 @@ rio_portuguese <- geonames::GNfindNearbyWikipedia(
 )
 ```
 
-```{r apiwrappers-demo-wiki-nrow, eval = TRUE,error=TRUE}
+```{r apiwrappers-demo-wiki-nrow, eval = geonamesUsername_available,error=TRUE}
 nrow(rio_english)
 nrow(rio_portuguese)
 ```
 
 
-### Is it a boy or a girl? gender-associated names throughout US history
+### Case Study: Is it a boy or a girl? Gender-associated names throughout US history
 
 The gender package allows you access to data on the gender of names in the US. Because names change gender over the years, the probability of a name belonging to a man or a woman also depends on the *year*.
 
@@ -256,20 +267,27 @@ First, install/load the gender package from CRAN. You may be prompted to also in
 
 ```{r apiwrappers-load-gender,error=TRUE}
 # install.packages("gender")
-# remotes::install_github("lmullen/genderdata")
+if (!require(genderdata)) {
+  remotes::install_github("lmullen/genderdata")
+}
+if (!require(genderdata)) {
+  genderdata_available <- FALSE
+  } else {
+  genderdata_available <- TRUE
+}
 library(gender)
 ```
 
 Let's do some searches for the name Kelsey.
 
-```{r apiwrappers-demo-gender-kelsey,error=TRUE}
+```{r apiwrappers-demo-gender-kelsey,error=TRUE, cache=TRUE, eval = genderdata_available}
 gender("Kelsey")
 gender("Kelsey", years = 1940)
 ```
 
 As you can see, the probability of a name belonging to a specific gender can change over time.
 
-```{r plot, cache=TRUE, error=TRUE}
+```{r plot, cache=TRUE, error=TRUE, cache=TRUE, eval = genderdata_available}
 df <- gender("Kelsey")
 
 years <- c(df$year_min:df$year_max)
@@ -292,12 +310,12 @@ df %>%
 
 In contrast, the name Mason has been more consistently male.
 
-```{r apiwrappers-demo-gender-mason,error=TRUE, cache=TRUE,error=TRUE}
+```{r apiwrappers-demo-gender-mason,error=TRUE, cache=TRUE, eval = genderdata_available}
 gender("Mason")
 gender("Mason", years = 1940)
 ```
 
-```{r plotMason, cache=TRUE,error=TRUE}
+```{r plotMason, cache=TRUE,error=TRUE, eval = genderdata_available}
 mason <- gender("Mason")
 years <- c(mason$year_min:mason$year_max)
 
@@ -323,7 +341,7 @@ df %>%
 
 And when we compare the two names, we see that Kelsey has changed a lot more over time than Mason.
 
-```{r plotCompare, cache=TRUE,error=TRUE}
+```{r plotCompare, cache=TRUE,error=TRUE, eval = genderdata_available}
 df %>%
   filter(year_min == year_max) %>%
   ggplot(aes(year_min, proportion_male)) +
@@ -345,8 +363,8 @@ df %>%
 API-wrapping packages in R provide powerful tools for accessing diverse data sources. As you progress in your data science journey, mastering these tools will greatly expand the range of data available for your analyses. Remember to always check the terms of service for any API you use, and be mindful of rate limits and data usage policies.
 
 
-```{r links-courselinks, child="admin/md/courselinks.md"}
+```{r links-courselinks, child="includes/courselinks.md"}
 ```
 
-```{r links-external, child="admin/md/links.md"}
+```{r links-external, child="includes/links.md"}
 ```
