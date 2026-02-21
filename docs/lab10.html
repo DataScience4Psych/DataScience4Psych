@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="79 LAB: Modeling professor attractiveness and course evaluations | Data Science for Psychologists" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
+  <meta property="og:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/images/logo.png" />
   <meta property="og:description" content="79 LAB: Modeling professor attractiveness and course evaluations | Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
   <meta name="github-repo" content="DataScience4Psych/DataScience4Psych" />
 
@@ -18,18 +18,18 @@
   <meta name="twitter:title" content="79 LAB: Modeling professor attractiveness and course evaluations | Data Science for Psychologists" />
   <meta name="twitter:site" content="@smasongarrison" />
   <meta name="twitter:description" content="79 LAB: Modeling professor attractiveness and course evaluations | Data Science for Psychologists: A Refreshed Exploratory and Graphical Data Analysis in R" />
-  <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/logo.png" />
+  <meta name="twitter:image" content="https://github.com/DataScience4Psych/DataScience4Psych/assets/images/logo.png" />
 
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-18" />
+<meta name="date" content="2026-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="odd-notes-on-logistic-regression.html"/>
 <link rel="next" href="welcome-to-overfitting-and-cross-validation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -199,7 +199,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="assets/style.css" type="text/css" />
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -212,7 +212,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li class="toc-logo"><a href="./"><img src="assets/logo.png" alt="Course logo for Data Science for Psychologists" style="border-radius: 00%;" ></a></li>
+<li class="toc-logo"><a href="./"><img src="assets/images/logo.png" alt="Course logo for Data Science for Psychologists" style="border-radius: 00%;" ></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>Front Matter</b></span></li>
@@ -1671,9 +1671,9 @@ div.csl-indent {
 <div id="packages-9" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab10.html#packages-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll use <strong>tidyverse</strong>, <strong>openintro</strong>, and <strong>broom</strong> to wrangle, model, and tidy up our regression output.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="lab10.html#cb423-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb423-2"><a href="lab10.html#cb423-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb423-3"><a href="lab10.html#cb423-3" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="lab10.html#cb422-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb422-2"><a href="lab10.html#cb422-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb422-3"><a href="lab10.html#cb422-3" tabindex="-1"></a><span class="fu">library</span>(openintro)</span></code></pre></div>
 </div>
 </div>
 <div id="the-data-4" class="section level2 unnumbered hasAnchor">
@@ -1721,13 +1721,13 @@ div.csl-indent {
 <h3>Part 3: Linear regression with a categorical predictor<a href="lab10.html#part-3-linear-regression-with-a-categorical-predictor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s switch gears from numeric predictors to categorical ones. Beauty scores might be (somewhat) continuous, but characteristics like <code>gender</code> and <code>rank</code> are categorical, meaning they fall into distinct groups.</p>
 <p>We’ll start by seeing whether evaluation scores differ by <code>gender</code>.</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="lab10.html#cb424-1" tabindex="-1"></a>m_gen <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> gender, <span class="at">data =</span> evals)</span>
-<span id="cb424-2"><a href="lab10.html#cb424-2" tabindex="-1"></a><span class="fu">tidy</span>(m_gen)</span>
-<span id="cb424-3"><a href="lab10.html#cb424-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span id="cb424-4"><a href="lab10.html#cb424-4" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic p.value</span></span>
-<span id="cb424-5"><a href="lab10.html#cb424-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb424-6"><a href="lab10.html#cb424-6" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)    4.09     0.0387    106.   0      </span></span>
-<span id="cb424-7"><a href="lab10.html#cb424-7" tabindex="-1"></a><span class="co">#&gt; 2 gendermale     0.142    0.0508      2.78 0.00558</span></span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="lab10.html#cb423-1" tabindex="-1"></a>m_gen <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> gender, <span class="at">data =</span> evals)</span>
+<span id="cb423-2"><a href="lab10.html#cb423-2" tabindex="-1"></a><span class="fu">tidy</span>(m_gen)</span>
+<span id="cb423-3"><a href="lab10.html#cb423-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span id="cb423-4"><a href="lab10.html#cb423-4" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic p.value</span></span>
+<span id="cb423-5"><a href="lab10.html#cb423-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb423-6"><a href="lab10.html#cb423-6" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)    4.09     0.0387    106.   0      </span></span>
+<span id="cb423-7"><a href="lab10.html#cb423-7" tabindex="-1"></a><span class="co">#&gt; 2 gendermale     0.142    0.0508      2.78 0.00558</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Take a look at the model output. What’s the reference level? What do the coefficients tell you about how evaluation scores differ between male and female professors? Write the predicted mean evaluation score for each gender.</li>
 </ol>

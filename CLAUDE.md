@@ -36,9 +36,20 @@ Output goes to `docs/`. Each chapter knits in a fresh R session (`new_session: t
 - `_bookdown.yml` / `_output.yml` — Bookdown and output format configuration
 - `DESCRIPTION` — R package dependencies
 - `book.bib` — Bibliography
-- `admin/` — Admin scripts, CSV data, JOSE/JOSS paper, URL checker
-- `assets/` — CSS (style.css, toc.css, fonts.css), logo, favicon
+- `metadata/` — Course metadata CSVs (slide URLs, YouTube links, status)
+- `includes/` — Shared child documents (.md and .Rmd) included in chapters
+- `scripts/` — Maintenance R scripts (URL checking, data prep, package management)
+- `jose/` — JOSE/JOSS academic publication materials
+- `reference/` — Reference PDFs and documents
+- `drafts/` — Draft/inactive/template chapter files
+- `parameterized/` — Parameterized report examples (used by reproducibility chapter)
+- `assets/` — Web styling assets
+  - `assets/css/` — Stylesheets (style.css, toc.css, fonts.css)
+  - `assets/fonts/` — Web fonts
+  - `assets/images/` — Logo, favicon, icons
+  - `assets/audio/` — Audio files
 - `data/` — Course datasets (.csv, .RData, .xls)
+  - `data/raw/` — Raw/original source datasets
 - `docs/` — Generated build output (DO NOT EDIT)
 - `img/` — Images used in chapters
 - `.Xmd` files — Draft/inactive chapters (excluded from build)
@@ -113,6 +124,9 @@ Key helpers defined in `common.R`:
 
 - This is a living document — some sections are under active development
 - Never edit files in `docs/` directly; they are generated output
-- The `data/` directory contains course datasets; keep data files small and documented
+- The `data/` directory contains course datasets (raw sources in `data/raw/`); keep data files small and documented
+- Course metadata CSVs (slide URLs, YouTube) live in `metadata/`
+- Shared markdown child documents live in `includes/`
+- Maintenance R scripts live in `scripts/`
 - Some chapters depend on external API keys (eBird, GeoNames, OMDB, OpenAI) — these may fail locally without the keys set
 - Packages installed from GitHub remotes are listed in the `Remotes:` field of `DESCRIPTION`
