@@ -199,7 +199,7 @@
 
 
 
-[worry-about-color]: https://github.com/DataScience4Psych/DataScience4Psych/blob/master/admin/pdfs/Why%20Should%20Engineers%20and%20Scientists%20Be%20Worried%20About%20Color.pdf
+[worry-about-color]: https://github.com/DataScience4Psych/DataScience4Psych/blob/master/reference/Why%20Should%20Engineers%20and%20Scientists%20Be%20Worried%20About%20Color.pdf
 [escaping-rgbland-pdf]: https://eeecon.uibk.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf
 [escaping-rgbland-doi]: https://doi.org/10.1016/j.csda.2008.11.033
 

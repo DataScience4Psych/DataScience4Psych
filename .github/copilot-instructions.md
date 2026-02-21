@@ -17,17 +17,28 @@ This repository contains the course materials for **Data Science for Psychologis
 ```
 .
 ├── .github/               # GitHub configuration and workflows
-├── admin/                 # Administrative files
-├── assets/               # Static assets (CSS, images, etc.)
-├── data/                 # Course datasets
-├── docs/                 # Build output (HTML book)
-├── img/                  # Image files
-├── *.Rmd                 # RMarkdown chapter files (numbered)
-├── index.Rmd             # Book index/homepage
-├── _bookdown.yml         # Bookdown configuration
-├── _output.yml           # Output format configuration
-├── book.bib              # Bibliography
-└── DESCRIPTION           # R package dependencies
+├── metadata/              # Course metadata CSVs (slide URLs, YouTube links, status)
+├── includes/              # Shared child documents (.md and .Rmd) included in chapters
+├── scripts/               # Maintenance R scripts (URL checking, data prep, etc.)
+├── jose/                  # JOSE/JOSS academic publication materials
+├── reference/             # Reference PDFs and documents
+├── drafts/                # Draft/inactive/template chapter files
+├── assets/                # Web styling assets
+│   ├── css/               # Stylesheets
+│   ├── fonts/             # Web fonts
+│   ├── images/            # Logo, favicon, icons
+│   └── audio/             # Audio files
+├── data/                  # Course datasets
+│   └── raw/               # Raw/original source data
+├── docs/                  # Build output (HTML book — DO NOT EDIT)
+├── parameterized/         # Parameterized report examples (reproducibility chapter)
+├── img/                   # Images used in chapters
+├── *.Rmd                  # RMarkdown chapter files (numbered)
+├── index.Rmd              # Book index/homepage
+├── _bookdown.yml          # Bookdown configuration
+├── _output.yml            # Output format configuration
+├── book.bib               # Bibliography
+└── DESCRIPTION            # R package dependencies
 ```
 
 ## File Naming Conventions
@@ -112,7 +123,7 @@ While there's no formal test suite for content, you should:
 
 ## Continuous Integration
 
-- GitHub Actions workflow builds PDF drafts for academic papers (JOSS/JOSE) when `.md` files in `admin/jose/` change
+- GitHub Actions workflow builds PDF drafts for academic papers (JOSS/JOSE) when `.md` files in `jose/` change
 - The main bookdown project is built and deployed via GitHub Pages
 - Check workflow status in the Actions tab
 

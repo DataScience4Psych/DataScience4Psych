@@ -39,4 +39,4 @@ df <- tibble(
   )
 
 # Save to CSV
-write_csv(df, "admin/csv/ds4p_urls.csv")
+write_csv(df, "metadata/ds4p_urls.csv")

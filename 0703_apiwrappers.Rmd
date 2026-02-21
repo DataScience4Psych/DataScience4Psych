@@ -1,7 +1,7 @@
 ```{r apiwrappers-setup, include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("admin/csv/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./admin/csv/ds4p_urls.csv")
+ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 ```
 
 # ODD: Use API-wrapping packages {#api-wrappers}
@@ -92,8 +92,8 @@ ebirdkey <- "SECRET API KEY"
 ```{r apiwrappers-setup-config, message=FALSE, warning=FALSE, include=FALSE, error=TRUE}
 ebirdkey_available <- TRUE
 
-if(exists("admin/secrets/ebird_api_key.txt")){
-  ebirdkey <- read.table("admin/secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
+if(exists("secrets/ebird_api_key.txt")){
+  ebirdkey <- read.table("secrets/ebird_api_key.txt", quote = "\"", comment.char = "")[1, 1]
 } else {
   ebirdkey <- Sys.getenv("EBIRD_API_KEY")
   if (ebirdkey == "") {
@@ -101,7 +101,7 @@ if(exists("admin/secrets/ebird_api_key.txt")){
 }
 }
 if (is.null(ebirdkey) || ebirdkey == "") {
-  warning("No eBird API key found. Please set your API key in 'admin/secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
+  warning("No eBird API key found. Please set your API key in 'secrets/ebird_api_key.txt' or as an environment variable 'EBIRD_API_KEY'.")
   ebirdkey_available <- FALSE
 }
 ```
@@ -363,8 +363,8 @@ df %>%
 API-wrapping packages in R provide powerful tools for accessing diverse data sources. As you progress in your data science journey, mastering these tools will greatly expand the range of data available for your analyses. Remember to always check the terms of service for any API you use, and be mindful of rate limits and data usage policies.
 
 
-```{r links-courselinks, child="admin/md/courselinks.md"}
+```{r links-courselinks, child="includes/courselinks.md"}
 ```
 
-```{r links-external, child="admin/md/links.md"}
+```{r links-external, child="includes/links.md"}
 ```

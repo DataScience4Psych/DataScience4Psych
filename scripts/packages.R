@@ -38,7 +38,8 @@ cran_packages <- c(
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
   "tidymodels", "pacman", "gapminder", "nycflights13", "ggpedigree",
-  "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext", "titanic"
+  "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext", "titanic","rlang","pak","purrr","lubridate","stringr","ggplot2","dplyr","readr","tidyr","forcats","gganimate","ggrepel","mapproj","usmap"
+
 )
 
 # Install CRAN packages if missing
@@ -74,3 +75,8 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 
 # Install Bioconductor packages if missing
 lapply(bioc_packages, install_bioc_if_missing)
+
+if (!requireNamespace("webshot", quietly = TRUE)) {
+  install.packages("webshot")
+  webshot::install_phantomjs()
+}
