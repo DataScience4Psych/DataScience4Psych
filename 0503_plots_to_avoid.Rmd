@@ -512,6 +512,128 @@ precision? This can be easily remedied:
 round(heights, 1)
 ```
 
+## Color as a Source of Bad Graphs
+
+Color is a powerful tool in data visualization, but choosing the right colors can be challenging. Two useful online tools for selecting and generating color palettes are:
+
+- [Coolors](https://coolors.co/) — a fast and intuitive color scheme generator
+- [ColorDesigner](https://colordesigner.io/) — a color design tool with palette generation and contrast checking
+
+
+### Common color pitfalls
+
+Color choices are one of the most common ways that otherwise competent graphs go wrong. Before reaching for a good palette, it helps to see what goes wrong with bad ones. Here are three common color pitfalls.
+
+
+**The rainbow trap.** R's `rainbow()` palette looks vibrant, but it is one of the worst choices for data visualization. The colors are perceptually uneven (yellow and cyan appear much lighter than red and blue), which creates a false sense of ordered importance. It is also unreadable for people who have difficulty distinguishing red and green.
+
+```{r plots_to_avoid-rainbow-bad}
+library(tidyverse)
+
+set.seed(42)
+demo_df <- data.frame(
+  group = rep(LETTERS[1:6], each = 30),
+  value = c(
+    rnorm(30, 5), rnorm(30, 5.5), rnorm(30, 4.8),
+    rnorm(30, 5.2), rnorm(30, 4.9), rnorm(30, 5.4)
+  )
+)
+# Bad: rainbow palette — perceptually uneven and inaccessible
+ggplot(demo_df, aes(x = group, y = value, fill = group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = rainbow(6)) +
+  labs(
+    title = "Rainbow palette: looks fun, reads poorly",
+    subtitle = "Uneven brightness and inaccessible to color-blind viewers"
+  ) +
+  theme(legend.position = "none")
+```
+
+**The red–green trap.** Red and green are the most common pair used to signal "good vs. bad" or "treatment vs. control," yet a sizable portion of the population (especially men) cannot distinguish between these colors due to red-green color blindness (deuteranopia and protanopia).
+Encoding information using red and green alone can make your visualizations unreadable to a sizable portion of your audience. Avoid using red and green together, especially for critical information.
+
+```{r plots_to_avoid-redgreen-bad}
+demo_df_ab <- demo_df %>% filter(group %in% c("A", "B"))
+
+# Bad: red/green encoding — invisible to red-green color-blind viewers
+ggplot(demo_df_ab, aes(x = group, y = value, fill = group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("A" = "#FF0000", "B" = "#00CC00")) +
+  labs(
+    title = "Red vs. green: invisible to ~8% of men",
+    subtitle = "Deuteranopia and protanopia make these colors indistinguishable"
+  ) +
+  theme(legend.position = "none")
+```
+
+**Too-similar colors.** Colors that differ only in lightness or are too close in hue become impossible to tell apart in small or overlapping plot elements.
+
+```{r plots_to_avoid-similar-colors-bad}
+# Bad: colors too similar to distinguish reliably
+similar_blues_palette <- c("#3333FF", "#4466FF", "#5599FF", "#66BBFF", "#77DDFF", "#88EEFF")
+ggplot(demo_df, aes(x = group, y = value, colour = group)) +
+  geom_jitter(width = 0.2, size = 2) +
+  scale_colour_manual(values = similar_blues_palette) +
+  labs(
+    title = "Too-similar blues: groups are indistinguishable",
+    subtitle = "Avoid palettes where colors differ only in lightness"
+  )
+```
+
+### Color-blind friendly palettes
+
+An important consideration when choosing colors is accessibility.  Roughly 8% of men and 0.5% of women have some form of color vision deficiency. Using color-blind friendly palettes ensures your visualizations are readable by everyone. Here are two widely used color-blind friendly palettes for R (based on [Wong 2011](https://www.nature.com/articles/nmeth.1618)) that avoid all three problems above:
+
+```{r plots_to_avoid-cb-palettes}
+# The palette with grey (color-blind friendly)
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# Display the palettes
+scales::show_col(cbPalette)
+
+# The palette with black (color-blind friendly)
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+
+scales::show_col(cbbPalette)
+```
+
+Now revisit the red–green example with the color-blind friendly palette:
+
+
+``{r plots_to_avoid-cb-palette-demo}
+# Good: color-blind friendly palette
+ggplot(demo_df %>% filter(group %in% c("A", "B")),
+       aes(x = group, y = value, fill = group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = cbPalette[c(7, 3)]) +
+  labs(
+    title = "Color-blind friendly: orange vs. blue",
+    subtitle = "Distinguishable under deuteranopia, protanopia, and tritanopia"
+  ) +
+  theme(legend.position = "none")
+```
+
+To use these palettes in ggplot2, pass them to `scale_colour_manual()` or `scale_fill_manual()`:
+
+```{r plots_to_avoid-cb-palette-usage, eval=FALSE}
+# For lines and points (colour aesthetic)
+ggplot(data, aes(x, y, colour = group)) +
+  geom_point() +
+  scale_colour_manual(values = cbPalette)
+
+# For filled elements (bars, areas)
+ggplot(data, aes(x, y, fill = group)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = cbPalette)
+```
+
+```{r plots_to_avoid-tweet-colors, echo=FALSE}
+try_include_tweet("https://x.com/AJThurston/status/1792694381063123443")
+```
+
 ## Displaying data well
 
 In general you should follow these principles:
@@ -521,6 +643,8 @@ In general you should follow these principles:
 * Show as much information as possible, taking care not to obscure the message.
 * Science not sales: avoid unnecessary frills (esp. gratuitous 3d).
 * In tables, every digit should be meaningful. Don't drop ending 0s.
+
+
 
 ## Some further reading
 
@@ -540,6 +664,7 @@ Turning tables into graphs. The American Statistician 56:121-130
 # ODD: Design choices in data visualization
 
 I have curated this collection of external video sources on design choices in data visualization.
+
 
 ## How to spot a misleading graph
 
@@ -598,108 +723,6 @@ try_include_tweet("https://twitter.com/bmwiernik/status/1362437077820968960")
 
 ```{r plots_to_avoid-include-tweet-terrible, echo=FALSE}
 try_include_tweet("https://twitter.com/latentchange/status/1380564902578913287")
-```
-
-## Choosing Good Color Palettes
-
-Color is a powerful tool in data visualization, but choosing the right colors can be challenging. Two useful online tools for selecting and generating color palettes are:
-
-- [Coolors](https://coolors.co/) — a fast and intuitive color scheme generator
-- [ColorDesigner](https://colordesigner.io/) — a color design tool with palette generation and contrast checking
-
-### Unhelpful color schemes
-
-Before reaching for a good palette, it helps to see what goes wrong with bad ones. Here are three common color pitfalls.
-
-**The rainbow trap.** R's `rainbow()` palette looks vibrant, but the colors are perceptually uneven (yellow and cyan are far lighter than red and blue), giving a false sense of ordered importance. It is also unreadable for people with color vision deficiency.
-
-```{r plots_to_avoid-rainbow-bad}
-library(tidyverse)
-
-set.seed(42)
-demo_df <- data.frame(
-  group = rep(LETTERS[1:6], each = 30),
-  value = c(
-    rnorm(30, 5), rnorm(30, 5.5), rnorm(30, 4.8),
-    rnorm(30, 5.2), rnorm(30, 4.9), rnorm(30, 5.4)
-  )
-)
-
-# Bad: rainbow palette — perceptually uneven and inaccessible
-ggplot(demo_df, aes(x = group, y = value, fill = group)) +
-  geom_boxplot() +
-  scale_fill_manual(values = rainbow(6)) +
-  labs(
-    title = "Rainbow palette: looks fun, reads poorly",
-    subtitle = "Uneven brightness and inaccessible to color-blind viewers"
-  ) +
-  theme(legend.position = "none")
-```
-
-**The red–green trap.** Red and green are the most common pair used to signal "good vs. bad" or "treatment vs. control," yet roughly 8% of men cannot distinguish them. Encoding a critical comparison in red and green is a fundamental accessibility failure.
-
-```{r plots_to_avoid-redgreen-bad}
-demo_df_ab <- demo_df %>% filter(group %in% c("A", "B"))
-
-# Bad: red/green encoding — invisible to red-green color-blind viewers
-ggplot(demo_df_ab, aes(x = group, y = value, fill = group)) +
-  geom_boxplot() +
-  scale_fill_manual(values = c("A" = "#FF0000", "B" = "#00CC00")) +
-  labs(
-    title = "Red vs. green: invisible to ~8% of men",
-    subtitle = "Deuteranopia and protanopia make these colors indistinguishable"
-  ) +
-  theme(legend.position = "none")
-```
-
-**Too-similar colors.** Colors that differ only in lightness or are too close in hue become impossible to tell apart in small or overlapping plot elements.
-
-```{r plots_to_avoid-similar-colors-bad}
-# Bad: colors too similar to distinguish reliably
-similar_blues_palette <- c("#3333FF", "#4466FF", "#5599FF", "#66BBFF", "#77DDFF", "#88EEFF")
-ggplot(demo_df, aes(x = group, y = value, colour = group)) +
-  geom_jitter(width = 0.2, size = 2) +
-  scale_colour_manual(values = similar_blues_palette) +
-  labs(
-    title = "Too-similar blues: groups are indistinguishable",
-    subtitle = "Avoid palettes where colors differ only in lightness"
-  )
-```
-
-### Color-blind friendly palettes
-
-An important consideration when choosing colors is accessibility. Roughly 8% of men and 0.5% of women have some form of color vision deficiency. Using color-blind friendly palettes ensures your visualizations are readable by everyone. Here are two widely used color-blind friendly palettes for R (based on [Wong 2011](https://www.nature.com/articles/nmeth.1618)):
-
-```{r plots_to_avoid-cb-palettes}
-# The palette with grey (color-blind friendly)
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
-               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-# The palette with black (color-blind friendly)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
-                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-# Display the palettes
-scales::show_col(cbPalette)
-scales::show_col(cbbPalette)
-```
-
-To use these palettes in ggplot2, pass them to `scale_colour_manual()` or `scale_fill_manual()`:
-
-```{r plots_to_avoid-cb-palette-usage, eval=FALSE}
-# For lines and points (colour aesthetic)
-ggplot(data, aes(x, y, colour = group)) +
-  geom_point() +
-  scale_colour_manual(values = cbPalette)
-
-# For filled elements (bars, areas)
-ggplot(data, aes(x, y, fill = group)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(values = cbPalette)
-```
-
-```{r plots_to_avoid-tweet-colors, echo=FALSE}
-try_include_tweet("https://twitter.com/AJThurston/status/1792694381063123443")
 ```
 
 ```{r courselinks, child="includes/courselinks.md"}
