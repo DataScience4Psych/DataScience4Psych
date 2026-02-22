@@ -32,12 +32,12 @@ install_bioc_if_missing <- function(package) {
 
 # CRAN Packages
 cran_packages <- c(
-  "devtools", "tidyverse", "rmarkdown", "bookdown", "discord", "addinslist",
+  "devtools", "tidyverse", "rmarkdown", "bookdown", "discord",
   "vembedr", "datasauRus", "DT", "gt", "car", "latticeExtra", "rworldmap", "maps",
   "manipulateWidget", "shiny", "rgl", "BGmisc", "leaflet",
   "mosaicData", "performance", "see", "plotly", "RefManageR",
   "tufte", "rafalib", "openintro", "ggridges", "robotstxt",
-  "tidymodels", "pacman", "gapminder", "nycflights13", "ggpedigree",
+  "tidymodels", "pacman", "gapminder", "nycflights13", "ggpedigree","countrycode",
   "gender", "geonames", "rebird", "rstan", "ggthemes", "tidytext", "titanic","rlang","pak","purrr","lubridate","stringr","ggplot2","dplyr","readr","tidyr","forcats","gganimate","ggrepel","mapproj","usmap"
 
 )
