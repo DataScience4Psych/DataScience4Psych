@@ -42,7 +42,7 @@ knitr::knit_hooks$set(chunk_envvar = function(before, options, envir) {
 
 ## Reading datasets
 ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+ds4p_urls <- read.csv("metadata/ds4p_urls.csv")
 
 ## Functions
 
