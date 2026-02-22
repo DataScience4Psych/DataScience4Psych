@@ -688,8 +688,13 @@ div.csl-indent {
 <li class="chapter" data-level="45.4" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#gratuitous-3d"><i class="fa fa-check"></i><b>45.4</b> Gratuitous 3D</a></li>
 <li class="chapter" data-level="45.5" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#ignoring-important-factors"><i class="fa fa-check"></i><b>45.5</b> Ignoring important factors</a></li>
 <li class="chapter" data-level="45.6" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#too-many-significant-digits"><i class="fa fa-check"></i><b>45.6</b> Too many significant digits</a></li>
-<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.7</b> Displaying data well</a></li>
-<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.8</b> Some further reading</a></li>
+<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-as-a-source-of-bad-graphs"><i class="fa fa-check"></i><b>45.7</b> Color as a Source of Bad Graphs</a>
+<ul>
+<li class="chapter" data-level="45.7.1" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#common-color-pitfalls"><i class="fa fa-check"></i><b>45.7.1</b> Common color pitfalls</a></li>
+<li class="chapter" data-level="45.7.2" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-blind-friendly-palettes"><i class="fa fa-check"></i><b>45.7.2</b> Color-blind friendly palettes</a></li>
+</ul></li>
+<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.8</b> Displaying data well</a></li>
+<li class="chapter" data-level="45.9" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.9</b> Some further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="46" data-path="odd-design-choices-in-data-visualization.html"><a href="odd-design-choices-in-data-visualization.html"><i class="fa fa-check"></i><b>46</b> ODD: Design choices in data visualization</a>
 <ul>
@@ -1681,9 +1686,9 @@ div.csl-indent {
 <div id="packages-10" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab11.html#packages-10" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will use tidyverse for data manipulation and titanic for data. You will also load readxl to import the Titanic3 file (provided in your project).</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="lab11.html#cb452-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb452-2"><a href="lab11.html#cb452-2" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
-<span id="cb452-3"><a href="lab11.html#cb452-3" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="lab11.html#cb458-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb458-2"><a href="lab11.html#cb458-2" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
+<span id="cb458-3"><a href="lab11.html#cb458-3" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code></pre></div>
 <!-- 
 ### Housekeeping
 
@@ -1722,32 +1727,32 @@ Update the name of your project to match the lab's title.
 <li><p><code>titanic_train</code> and <code>titanic_test</code> from the <code>titanic</code> package (a convenient train/test split often used in Kaggle contexts).</p></li>
 <li><p><code>titanic3</code> loaded from data/titanic3.xls, which includes additional fields. Originally from <a href="https://www.kaggle.com/datasets/vinicius150987/titanic3">here</a></p></li>
 </ul>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="lab11.html#cb453-1" tabindex="-1"></a></span>
-<span id="cb453-2"><a href="lab11.html#cb453-2" tabindex="-1"></a>titanic3 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/titanic3.xls&quot;</span>, </span>
-<span id="cb453-3"><a href="lab11.html#cb453-3" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;text&quot;</span>, </span>
-<span id="cb453-4"><a href="lab11.html#cb453-4" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, </span>
-<span id="cb453-5"><a href="lab11.html#cb453-5" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>, </span>
-<span id="cb453-6"><a href="lab11.html#cb453-6" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>)) </span>
-<span id="cb453-7"><a href="lab11.html#cb453-7" tabindex="-1"></a>  </span>
-<span id="cb453-8"><a href="lab11.html#cb453-8" tabindex="-1"></a></span>
-<span id="cb453-9"><a href="lab11.html#cb453-9" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;titanic_train&quot;</span>)</span>
-<span id="cb453-10"><a href="lab11.html#cb453-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;titanic_test&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="lab11.html#cb459-1" tabindex="-1"></a></span>
+<span id="cb459-2"><a href="lab11.html#cb459-2" tabindex="-1"></a>titanic3 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/titanic3.xls&quot;</span>, </span>
+<span id="cb459-3"><a href="lab11.html#cb459-3" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;text&quot;</span>, </span>
+<span id="cb459-4"><a href="lab11.html#cb459-4" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, </span>
+<span id="cb459-5"><a href="lab11.html#cb459-5" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>, </span>
+<span id="cb459-6"><a href="lab11.html#cb459-6" tabindex="-1"></a>        <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>, <span class="st">&quot;text&quot;</span>)) </span>
+<span id="cb459-7"><a href="lab11.html#cb459-7" tabindex="-1"></a>  </span>
+<span id="cb459-8"><a href="lab11.html#cb459-8" tabindex="-1"></a></span>
+<span id="cb459-9"><a href="lab11.html#cb459-9" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;titanic_train&quot;</span>)</span>
+<span id="cb459-10"><a href="lab11.html#cb459-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;titanic_test&quot;</span>)</span></code></pre></div>
 <p>Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titantic_train as well as create an ordinal level variable for passenger class.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="lab11.html#cb454-1" tabindex="-1"></a><span class="co"># Rename columns to lowercase</span></span>
-<span id="cb454-2"><a href="lab11.html#cb454-2" tabindex="-1"></a><span class="fu">names</span>(titanic3) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic3) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
-<span id="cb454-3"><a href="lab11.html#cb454-3" tabindex="-1"></a><span class="fu">names</span>(titanic_train) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic_train) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
-<span id="cb454-4"><a href="lab11.html#cb454-4" tabindex="-1"></a><span class="fu">names</span>(titanic_test) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic_test) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
-<span id="cb454-5"><a href="lab11.html#cb454-5" tabindex="-1"></a></span>
-<span id="cb454-6"><a href="lab11.html#cb454-6" tabindex="-1"></a><span class="co"># Convert pclass to factor</span></span>
-<span id="cb454-7"><a href="lab11.html#cb454-7" tabindex="-1"></a></span>
-<span id="cb454-8"><a href="lab11.html#cb454-8" tabindex="-1"></a>titanic_train <span class="ot">&lt;-</span> titanic_train <span class="sc">%&gt;%</span></span>
-<span id="cb454-9"><a href="lab11.html#cb454-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
-<span id="cb454-10"><a href="lab11.html#cb454-10" tabindex="-1"></a></span>
-<span id="cb454-11"><a href="lab11.html#cb454-11" tabindex="-1"></a>titanic_test <span class="ot">&lt;-</span> titanic_test <span class="sc">%&gt;%</span></span>
-<span id="cb454-12"><a href="lab11.html#cb454-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
-<span id="cb454-13"><a href="lab11.html#cb454-13" tabindex="-1"></a></span>
-<span id="cb454-14"><a href="lab11.html#cb454-14" tabindex="-1"></a>titanic3 <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
-<span id="cb454-15"><a href="lab11.html#cb454-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="lab11.html#cb460-1" tabindex="-1"></a><span class="co"># Rename columns to lowercase</span></span>
+<span id="cb460-2"><a href="lab11.html#cb460-2" tabindex="-1"></a><span class="fu">names</span>(titanic3) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic3) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
+<span id="cb460-3"><a href="lab11.html#cb460-3" tabindex="-1"></a><span class="fu">names</span>(titanic_train) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic_train) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
+<span id="cb460-4"><a href="lab11.html#cb460-4" tabindex="-1"></a><span class="fu">names</span>(titanic_test) <span class="ot">&lt;-</span> <span class="fu">names</span>(titanic_test) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>()</span>
+<span id="cb460-5"><a href="lab11.html#cb460-5" tabindex="-1"></a></span>
+<span id="cb460-6"><a href="lab11.html#cb460-6" tabindex="-1"></a><span class="co"># Convert pclass to factor</span></span>
+<span id="cb460-7"><a href="lab11.html#cb460-7" tabindex="-1"></a></span>
+<span id="cb460-8"><a href="lab11.html#cb460-8" tabindex="-1"></a>titanic_train <span class="ot">&lt;-</span> titanic_train <span class="sc">%&gt;%</span></span>
+<span id="cb460-9"><a href="lab11.html#cb460-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
+<span id="cb460-10"><a href="lab11.html#cb460-10" tabindex="-1"></a></span>
+<span id="cb460-11"><a href="lab11.html#cb460-11" tabindex="-1"></a>titanic_test <span class="ot">&lt;-</span> titanic_test <span class="sc">%&gt;%</span></span>
+<span id="cb460-12"><a href="lab11.html#cb460-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
+<span id="cb460-13"><a href="lab11.html#cb460-13" tabindex="-1"></a></span>
+<span id="cb460-14"><a href="lab11.html#cb460-14" tabindex="-1"></a>titanic3 <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
+<span id="cb460-15"><a href="lab11.html#cb460-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pclass_ord =</span> <span class="fu">factor</span>(pclass, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span></code></pre></div>
 </div>
 <div id="exercises-9" class="section level2 unnumbered hasAnchor">
 <h2>Exercises<a href="lab11.html#exercises-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1761,57 +1766,57 @@ If we use the same data to fit the model and to evaluate it, we are letting the 
 <li>Fit a logistic regression predicting survival from passenger sex and class as a numeric variable.</li>
 </ol>
 <p>Save the model as <code>m_apparent</code>.</p>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="lab11.html#cb455-1" tabindex="-1"></a>m_apparent <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb455-2"><a href="lab11.html#cb455-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass_ord,</span>
-<span id="cb455-3"><a href="lab11.html#cb455-3" tabindex="-1"></a>  <span class="at">data =</span> titanic3,</span>
-<span id="cb455-4"><a href="lab11.html#cb455-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
-<span id="cb455-5"><a href="lab11.html#cb455-5" tabindex="-1"></a>)</span>
-<span id="cb455-6"><a href="lab11.html#cb455-6" tabindex="-1"></a></span>
-<span id="cb455-7"><a href="lab11.html#cb455-7" tabindex="-1"></a></span>
-<span id="cb455-8"><a href="lab11.html#cb455-8" tabindex="-1"></a></span>
-<span id="cb455-9"><a href="lab11.html#cb455-9" tabindex="-1"></a><span class="fu">summary</span>(m_apparent)</span>
-<span id="cb455-10"><a href="lab11.html#cb455-10" tabindex="-1"></a></span>
-<span id="cb455-11"><a href="lab11.html#cb455-11" tabindex="-1"></a><span class="co">#  understand the variables with .L, .Q, and .C and ^4 are, respectively, the coefficients for the ordered factor coded with linear, quadratic, cubic, and quartic contrasts.</span></span>
-<span id="cb455-12"><a href="lab11.html#cb455-12" tabindex="-1"></a></span>
-<span id="cb455-13"><a href="lab11.html#cb455-13" tabindex="-1"></a><span class="co"># not really helpful for the lab to make the class ordinal</span></span></code></pre></div>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="lab11.html#cb456-1" tabindex="-1"></a>m_apparent <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb456-2"><a href="lab11.html#cb456-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
-<span id="cb456-3"><a href="lab11.html#cb456-3" tabindex="-1"></a>  <span class="at">data =</span> titanic3,</span>
-<span id="cb456-4"><a href="lab11.html#cb456-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
-<span id="cb456-5"><a href="lab11.html#cb456-5" tabindex="-1"></a>)</span>
-<span id="cb456-6"><a href="lab11.html#cb456-6" tabindex="-1"></a></span>
-<span id="cb456-7"><a href="lab11.html#cb456-7" tabindex="-1"></a></span>
-<span id="cb456-8"><a href="lab11.html#cb456-8" tabindex="-1"></a></span>
-<span id="cb456-9"><a href="lab11.html#cb456-9" tabindex="-1"></a><span class="fu">summary</span>(m_apparent)</span>
-<span id="cb456-10"><a href="lab11.html#cb456-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb456-11"><a href="lab11.html#cb456-11" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb456-12"><a href="lab11.html#cb456-12" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic3)</span></span>
-<span id="cb456-13"><a href="lab11.html#cb456-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb456-14"><a href="lab11.html#cb456-14" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb456-15"><a href="lab11.html#cb456-15" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
-<span id="cb456-16"><a href="lab11.html#cb456-16" tabindex="-1"></a><span class="co">#&gt; (Intercept)    2.963      0.235    12.6   &lt;2e-16</span></span>
-<span id="cb456-17"><a href="lab11.html#cb456-17" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.515      0.147   -17.1   &lt;2e-16</span></span>
-<span id="cb456-18"><a href="lab11.html#cb456-18" tabindex="-1"></a><span class="co">#&gt; pclass        -0.860      0.085   -10.1   &lt;2e-16</span></span>
-<span id="cb456-19"><a href="lab11.html#cb456-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb456-20"><a href="lab11.html#cb456-20" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
-<span id="cb456-21"><a href="lab11.html#cb456-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb456-22"><a href="lab11.html#cb456-22" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1741.0  on 1308  degrees of freedom</span></span>
-<span id="cb456-23"><a href="lab11.html#cb456-23" tabindex="-1"></a><span class="co">#&gt; Residual deviance: 1257.2  on 1306  degrees of freedom</span></span>
-<span id="cb456-24"><a href="lab11.html#cb456-24" tabindex="-1"></a><span class="co">#&gt; AIC: 1263</span></span>
-<span id="cb456-25"><a href="lab11.html#cb456-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb456-26"><a href="lab11.html#cb456-26" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="lab11.html#cb461-1" tabindex="-1"></a>m_apparent <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb461-2"><a href="lab11.html#cb461-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass_ord,</span>
+<span id="cb461-3"><a href="lab11.html#cb461-3" tabindex="-1"></a>  <span class="at">data =</span> titanic3,</span>
+<span id="cb461-4"><a href="lab11.html#cb461-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
+<span id="cb461-5"><a href="lab11.html#cb461-5" tabindex="-1"></a>)</span>
+<span id="cb461-6"><a href="lab11.html#cb461-6" tabindex="-1"></a></span>
+<span id="cb461-7"><a href="lab11.html#cb461-7" tabindex="-1"></a></span>
+<span id="cb461-8"><a href="lab11.html#cb461-8" tabindex="-1"></a></span>
+<span id="cb461-9"><a href="lab11.html#cb461-9" tabindex="-1"></a><span class="fu">summary</span>(m_apparent)</span>
+<span id="cb461-10"><a href="lab11.html#cb461-10" tabindex="-1"></a></span>
+<span id="cb461-11"><a href="lab11.html#cb461-11" tabindex="-1"></a><span class="co">#  understand the variables with .L, .Q, and .C and ^4 are, respectively, the coefficients for the ordered factor coded with linear, quadratic, cubic, and quartic contrasts.</span></span>
+<span id="cb461-12"><a href="lab11.html#cb461-12" tabindex="-1"></a></span>
+<span id="cb461-13"><a href="lab11.html#cb461-13" tabindex="-1"></a><span class="co"># not really helpful for the lab to make the class ordinal</span></span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="lab11.html#cb462-1" tabindex="-1"></a>m_apparent <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb462-2"><a href="lab11.html#cb462-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
+<span id="cb462-3"><a href="lab11.html#cb462-3" tabindex="-1"></a>  <span class="at">data =</span> titanic3,</span>
+<span id="cb462-4"><a href="lab11.html#cb462-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
+<span id="cb462-5"><a href="lab11.html#cb462-5" tabindex="-1"></a>)</span>
+<span id="cb462-6"><a href="lab11.html#cb462-6" tabindex="-1"></a></span>
+<span id="cb462-7"><a href="lab11.html#cb462-7" tabindex="-1"></a></span>
+<span id="cb462-8"><a href="lab11.html#cb462-8" tabindex="-1"></a></span>
+<span id="cb462-9"><a href="lab11.html#cb462-9" tabindex="-1"></a><span class="fu">summary</span>(m_apparent)</span>
+<span id="cb462-10"><a href="lab11.html#cb462-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb462-11"><a href="lab11.html#cb462-11" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb462-12"><a href="lab11.html#cb462-12" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic3)</span></span>
+<span id="cb462-13"><a href="lab11.html#cb462-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb462-14"><a href="lab11.html#cb462-14" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb462-15"><a href="lab11.html#cb462-15" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
+<span id="cb462-16"><a href="lab11.html#cb462-16" tabindex="-1"></a><span class="co">#&gt; (Intercept)    2.963      0.235    12.6   &lt;2e-16</span></span>
+<span id="cb462-17"><a href="lab11.html#cb462-17" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.515      0.147   -17.1   &lt;2e-16</span></span>
+<span id="cb462-18"><a href="lab11.html#cb462-18" tabindex="-1"></a><span class="co">#&gt; pclass        -0.860      0.085   -10.1   &lt;2e-16</span></span>
+<span id="cb462-19"><a href="lab11.html#cb462-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb462-20"><a href="lab11.html#cb462-20" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb462-21"><a href="lab11.html#cb462-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb462-22"><a href="lab11.html#cb462-22" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1741.0  on 1308  degrees of freedom</span></span>
+<span id="cb462-23"><a href="lab11.html#cb462-23" tabindex="-1"></a><span class="co">#&gt; Residual deviance: 1257.2  on 1306  degrees of freedom</span></span>
+<span id="cb462-24"><a href="lab11.html#cb462-24" tabindex="-1"></a><span class="co">#&gt; AIC: 1263</span></span>
+<span id="cb462-25"><a href="lab11.html#cb462-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb462-26"><a href="lab11.html#cb462-26" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
 <p>This model has access to every passenger and the final outcome. It is not being asked to predict the future. It is being asked to summarize the past.</p>
 <p>Now we can use the model to generate predicted survival probabilities for every passenger.</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="lab11.html#cb457-1" tabindex="-1"></a>p_apparent <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_apparent, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="lab11.html#cb463-1" tabindex="-1"></a>p_apparent <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_apparent, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <p>Each probability represents the expected survival chance for that passenger, according to the model. You can think about it like the chance of survival if you put that passenger on a large number of identical Titanic voyages. Out of 100 identical voyages, how many times would that passenger survive?</p>
 <p>To turn probabilities into decisions (we’re working for an insurance agency after all), we need a decision rule. To keep things simple, we will use a cutoff of 0.5: if the predicted probability is greater than 0.5, we predict survival (1); otherwise, we predict non-survival (0).</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="lab11.html#cb458-1" tabindex="-1"></a>yhat_apparent <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_apparent <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="lab11.html#cb464-1" tabindex="-1"></a>yhat_apparent <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_apparent <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div>
 <p>Now, we can compute the model’s accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="lab11.html#cb459-1" tabindex="-1"></a></span>
-<span id="cb459-2"><a href="lab11.html#cb459-2" tabindex="-1"></a>acc_apparent <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_apparent <span class="sc">==</span> titanic3<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb459-3"><a href="lab11.html#cb459-3" tabindex="-1"></a></span>
-<span id="cb459-4"><a href="lab11.html#cb459-4" tabindex="-1"></a>acc_apparent</span>
-<span id="cb459-5"><a href="lab11.html#cb459-5" tabindex="-1"></a><span class="co">#&gt; [1] 0.78</span></span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="lab11.html#cb465-1" tabindex="-1"></a></span>
+<span id="cb465-2"><a href="lab11.html#cb465-2" tabindex="-1"></a>acc_apparent <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_apparent <span class="sc">==</span> titanic3<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb465-3"><a href="lab11.html#cb465-3" tabindex="-1"></a></span>
+<span id="cb465-4"><a href="lab11.html#cb465-4" tabindex="-1"></a>acc_apparent</span>
+<span id="cb465-5"><a href="lab11.html#cb465-5" tabindex="-1"></a><span class="co">#&gt; [1] 0.78</span></span></code></pre></div>
 <p>At this point, the model looks fairly good. In fact, the number looks reassuring. But it answers the wrong question. The model is being evaluated on passengers it already “knows.” This is like asking, after the Titanic sank, whether you can explain who survived. Of course you can… Based on these data we correctly predict 78% of the passengers.</p>
 <p>Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.</p>
 </div>
@@ -1823,124 +1828,124 @@ If we use the same data to fit the model and to evaluate it, we are letting the 
 - a training set, used to fit the model
 - a test set, used only for evaluation</p>
 <p>Conveniently, the <code>titanic</code> package already provides such a split.</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="lab11.html#cb460-1" tabindex="-1"></a>titanic_test <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
-<span id="cb460-2"><a href="lab11.html#cb460-2" tabindex="-1"></a><span class="co">#&gt; Rows: 418</span></span>
-<span id="cb460-3"><a href="lab11.html#cb460-3" tabindex="-1"></a><span class="co">#&gt; Columns: 12</span></span>
-<span id="cb460-4"><a href="lab11.html#cb460-4" tabindex="-1"></a><span class="co">#&gt; $ passengerid &lt;int&gt; 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903…</span></span>
-<span id="cb460-5"><a href="lab11.html#cb460-5" tabindex="-1"></a><span class="co">#&gt; $ pclass      &lt;int&gt; 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, 3, 3, 3…</span></span>
-<span id="cb460-6"><a href="lab11.html#cb460-6" tabindex="-1"></a><span class="co">#&gt; $ name        &lt;chr&gt; &quot;Kelly, Mr. James&quot;, &quot;Wilkes, Mrs. James (Ellen Needs)&quot;, &quot;M…</span></span>
-<span id="cb460-7"><a href="lab11.html#cb460-7" tabindex="-1"></a><span class="co">#&gt; $ sex         &lt;chr&gt; &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;femal…</span></span>
-<span id="cb460-8"><a href="lab11.html#cb460-8" tabindex="-1"></a><span class="co">#&gt; $ age         &lt;dbl&gt; 34, 47, 62, 27, 22, 14, 30, 26, 18, 21, NA, 46, 23, 63, 47…</span></span>
-<span id="cb460-9"><a href="lab11.html#cb460-9" tabindex="-1"></a><span class="co">#&gt; $ sibsp       &lt;int&gt; 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0…</span></span>
-<span id="cb460-10"><a href="lab11.html#cb460-10" tabindex="-1"></a><span class="co">#&gt; $ parch       &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</span></span>
-<span id="cb460-11"><a href="lab11.html#cb460-11" tabindex="-1"></a><span class="co">#&gt; $ ticket      &lt;chr&gt; &quot;330911&quot;, &quot;363272&quot;, &quot;240276&quot;, &quot;315154&quot;, &quot;3101298&quot;, &quot;7538&quot;,…</span></span>
-<span id="cb460-12"><a href="lab11.html#cb460-12" tabindex="-1"></a><span class="co">#&gt; $ fare        &lt;dbl&gt; 7.8, 7.0, 9.7, 8.7, 12.3, 9.2, 7.6, 29.0, 7.2, 24.1, 7.9, …</span></span>
-<span id="cb460-13"><a href="lab11.html#cb460-13" tabindex="-1"></a><span class="co">#&gt; $ cabin       &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;B45&quot;, &quot;&quot;,…</span></span>
-<span id="cb460-14"><a href="lab11.html#cb460-14" tabindex="-1"></a><span class="co">#&gt; $ embarked    &lt;chr&gt; &quot;Q&quot;, &quot;S&quot;, &quot;Q&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;Q&quot;, &quot;S&quot;, &quot;C&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;…</span></span>
-<span id="cb460-15"><a href="lab11.html#cb460-15" tabindex="-1"></a><span class="co">#&gt; $ pclass_ord  &lt;ord&gt; 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, 3, 3, 3…</span></span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="lab11.html#cb466-1" tabindex="-1"></a>titanic_test <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
+<span id="cb466-2"><a href="lab11.html#cb466-2" tabindex="-1"></a><span class="co">#&gt; Rows: 418</span></span>
+<span id="cb466-3"><a href="lab11.html#cb466-3" tabindex="-1"></a><span class="co">#&gt; Columns: 12</span></span>
+<span id="cb466-4"><a href="lab11.html#cb466-4" tabindex="-1"></a><span class="co">#&gt; $ passengerid &lt;int&gt; 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903…</span></span>
+<span id="cb466-5"><a href="lab11.html#cb466-5" tabindex="-1"></a><span class="co">#&gt; $ pclass      &lt;int&gt; 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, 3, 3, 3…</span></span>
+<span id="cb466-6"><a href="lab11.html#cb466-6" tabindex="-1"></a><span class="co">#&gt; $ name        &lt;chr&gt; &quot;Kelly, Mr. James&quot;, &quot;Wilkes, Mrs. James (Ellen Needs)&quot;, &quot;M…</span></span>
+<span id="cb466-7"><a href="lab11.html#cb466-7" tabindex="-1"></a><span class="co">#&gt; $ sex         &lt;chr&gt; &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;femal…</span></span>
+<span id="cb466-8"><a href="lab11.html#cb466-8" tabindex="-1"></a><span class="co">#&gt; $ age         &lt;dbl&gt; 34, 47, 62, 27, 22, 14, 30, 26, 18, 21, NA, 46, 23, 63, 47…</span></span>
+<span id="cb466-9"><a href="lab11.html#cb466-9" tabindex="-1"></a><span class="co">#&gt; $ sibsp       &lt;int&gt; 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0…</span></span>
+<span id="cb466-10"><a href="lab11.html#cb466-10" tabindex="-1"></a><span class="co">#&gt; $ parch       &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</span></span>
+<span id="cb466-11"><a href="lab11.html#cb466-11" tabindex="-1"></a><span class="co">#&gt; $ ticket      &lt;chr&gt; &quot;330911&quot;, &quot;363272&quot;, &quot;240276&quot;, &quot;315154&quot;, &quot;3101298&quot;, &quot;7538&quot;,…</span></span>
+<span id="cb466-12"><a href="lab11.html#cb466-12" tabindex="-1"></a><span class="co">#&gt; $ fare        &lt;dbl&gt; 7.8, 7.0, 9.7, 8.7, 12.3, 9.2, 7.6, 29.0, 7.2, 24.1, 7.9, …</span></span>
+<span id="cb466-13"><a href="lab11.html#cb466-13" tabindex="-1"></a><span class="co">#&gt; $ cabin       &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;B45&quot;, &quot;&quot;,…</span></span>
+<span id="cb466-14"><a href="lab11.html#cb466-14" tabindex="-1"></a><span class="co">#&gt; $ embarked    &lt;chr&gt; &quot;Q&quot;, &quot;S&quot;, &quot;Q&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;Q&quot;, &quot;S&quot;, &quot;C&quot;, &quot;S&quot;, &quot;S&quot;, &quot;S&quot;…</span></span>
+<span id="cb466-15"><a href="lab11.html#cb466-15" tabindex="-1"></a><span class="co">#&gt; $ pclass_ord  &lt;ord&gt; 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, 3, 3, 3…</span></span></code></pre></div>
 <p>Now we fit the same model as before, but only on the training data.</p>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="lab11.html#cb461-1" tabindex="-1"></a>m_split <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb461-2"><a href="lab11.html#cb461-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
-<span id="cb461-3"><a href="lab11.html#cb461-3" tabindex="-1"></a>  <span class="at">data =</span> titanic_train,</span>
-<span id="cb461-4"><a href="lab11.html#cb461-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
-<span id="cb461-5"><a href="lab11.html#cb461-5" tabindex="-1"></a>)</span>
-<span id="cb461-6"><a href="lab11.html#cb461-6" tabindex="-1"></a></span>
-<span id="cb461-7"><a href="lab11.html#cb461-7" tabindex="-1"></a><span class="fu">summary</span>(m_split)</span>
-<span id="cb461-8"><a href="lab11.html#cb461-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb461-9"><a href="lab11.html#cb461-9" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb461-10"><a href="lab11.html#cb461-10" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic_train)</span></span>
-<span id="cb461-11"><a href="lab11.html#cb461-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb461-12"><a href="lab11.html#cb461-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb461-13"><a href="lab11.html#cb461-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
-<span id="cb461-14"><a href="lab11.html#cb461-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)    3.295      0.297   11.08   &lt;2e-16</span></span>
-<span id="cb461-15"><a href="lab11.html#cb461-15" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.643      0.184  -14.38   &lt;2e-16</span></span>
-<span id="cb461-16"><a href="lab11.html#cb461-16" tabindex="-1"></a><span class="co">#&gt; pclass        -0.961      0.106   -9.06   &lt;2e-16</span></span>
-<span id="cb461-17"><a href="lab11.html#cb461-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb461-18"><a href="lab11.html#cb461-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
-<span id="cb461-19"><a href="lab11.html#cb461-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb461-20"><a href="lab11.html#cb461-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1186.7  on 890  degrees of freedom</span></span>
-<span id="cb461-21"><a href="lab11.html#cb461-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  827.2  on 888  degrees of freedom</span></span>
-<span id="cb461-22"><a href="lab11.html#cb461-22" tabindex="-1"></a><span class="co">#&gt; AIC: 833.2</span></span>
-<span id="cb461-23"><a href="lab11.html#cb461-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb461-24"><a href="lab11.html#cb461-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span>
-<span id="cb461-25"><a href="lab11.html#cb461-25" tabindex="-1"></a></span>
-<span id="cb461-26"><a href="lab11.html#cb461-26" tabindex="-1"></a></span>
-<span id="cb461-27"><a href="lab11.html#cb461-27" tabindex="-1"></a>p_split <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb461-28"><a href="lab11.html#cb461-28" tabindex="-1"></a></span>
-<span id="cb461-29"><a href="lab11.html#cb461-29" tabindex="-1"></a></span>
-<span id="cb461-30"><a href="lab11.html#cb461-30" tabindex="-1"></a>yhat_split <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_split <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb461-31"><a href="lab11.html#cb461-31" tabindex="-1"></a></span>
-<span id="cb461-32"><a href="lab11.html#cb461-32" tabindex="-1"></a>acc_split <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_split <span class="sc">==</span> titanic_train<span class="sc">$</span>survived)</span>
-<span id="cb461-33"><a href="lab11.html#cb461-33" tabindex="-1"></a>acc_split</span>
-<span id="cb461-34"><a href="lab11.html#cb461-34" tabindex="-1"></a><span class="co">#&gt; [1] 0.79</span></span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="lab11.html#cb467-1" tabindex="-1"></a>m_split <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb467-2"><a href="lab11.html#cb467-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
+<span id="cb467-3"><a href="lab11.html#cb467-3" tabindex="-1"></a>  <span class="at">data =</span> titanic_train,</span>
+<span id="cb467-4"><a href="lab11.html#cb467-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
+<span id="cb467-5"><a href="lab11.html#cb467-5" tabindex="-1"></a>)</span>
+<span id="cb467-6"><a href="lab11.html#cb467-6" tabindex="-1"></a></span>
+<span id="cb467-7"><a href="lab11.html#cb467-7" tabindex="-1"></a><span class="fu">summary</span>(m_split)</span>
+<span id="cb467-8"><a href="lab11.html#cb467-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb467-9"><a href="lab11.html#cb467-9" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb467-10"><a href="lab11.html#cb467-10" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic_train)</span></span>
+<span id="cb467-11"><a href="lab11.html#cb467-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb467-12"><a href="lab11.html#cb467-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb467-13"><a href="lab11.html#cb467-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
+<span id="cb467-14"><a href="lab11.html#cb467-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)    3.295      0.297   11.08   &lt;2e-16</span></span>
+<span id="cb467-15"><a href="lab11.html#cb467-15" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.643      0.184  -14.38   &lt;2e-16</span></span>
+<span id="cb467-16"><a href="lab11.html#cb467-16" tabindex="-1"></a><span class="co">#&gt; pclass        -0.961      0.106   -9.06   &lt;2e-16</span></span>
+<span id="cb467-17"><a href="lab11.html#cb467-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb467-18"><a href="lab11.html#cb467-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb467-19"><a href="lab11.html#cb467-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb467-20"><a href="lab11.html#cb467-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1186.7  on 890  degrees of freedom</span></span>
+<span id="cb467-21"><a href="lab11.html#cb467-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  827.2  on 888  degrees of freedom</span></span>
+<span id="cb467-22"><a href="lab11.html#cb467-22" tabindex="-1"></a><span class="co">#&gt; AIC: 833.2</span></span>
+<span id="cb467-23"><a href="lab11.html#cb467-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb467-24"><a href="lab11.html#cb467-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span>
+<span id="cb467-25"><a href="lab11.html#cb467-25" tabindex="-1"></a></span>
+<span id="cb467-26"><a href="lab11.html#cb467-26" tabindex="-1"></a></span>
+<span id="cb467-27"><a href="lab11.html#cb467-27" tabindex="-1"></a>p_split <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb467-28"><a href="lab11.html#cb467-28" tabindex="-1"></a></span>
+<span id="cb467-29"><a href="lab11.html#cb467-29" tabindex="-1"></a></span>
+<span id="cb467-30"><a href="lab11.html#cb467-30" tabindex="-1"></a>yhat_split <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_split <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb467-31"><a href="lab11.html#cb467-31" tabindex="-1"></a></span>
+<span id="cb467-32"><a href="lab11.html#cb467-32" tabindex="-1"></a>acc_split <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_split <span class="sc">==</span> titanic_train<span class="sc">$</span>survived)</span>
+<span id="cb467-33"><a href="lab11.html#cb467-33" tabindex="-1"></a>acc_split</span>
+<span id="cb467-34"><a href="lab11.html#cb467-34" tabindex="-1"></a><span class="co">#&gt; [1] 0.79</span></span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="lab11.html#cb462-1" tabindex="-1"></a>m_split <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb462-2"><a href="lab11.html#cb462-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
-<span id="cb462-3"><a href="lab11.html#cb462-3" tabindex="-1"></a>  <span class="at">data =</span> titanic_train,</span>
-<span id="cb462-4"><a href="lab11.html#cb462-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
-<span id="cb462-5"><a href="lab11.html#cb462-5" tabindex="-1"></a>)</span>
-<span id="cb462-6"><a href="lab11.html#cb462-6" tabindex="-1"></a></span>
-<span id="cb462-7"><a href="lab11.html#cb462-7" tabindex="-1"></a><span class="fu">summary</span>(m_split)</span>
-<span id="cb462-8"><a href="lab11.html#cb462-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb462-9"><a href="lab11.html#cb462-9" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb462-10"><a href="lab11.html#cb462-10" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic_train)</span></span>
-<span id="cb462-11"><a href="lab11.html#cb462-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb462-12"><a href="lab11.html#cb462-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb462-13"><a href="lab11.html#cb462-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
-<span id="cb462-14"><a href="lab11.html#cb462-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)    3.295      0.297   11.08   &lt;2e-16</span></span>
-<span id="cb462-15"><a href="lab11.html#cb462-15" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.643      0.184  -14.38   &lt;2e-16</span></span>
-<span id="cb462-16"><a href="lab11.html#cb462-16" tabindex="-1"></a><span class="co">#&gt; pclass        -0.961      0.106   -9.06   &lt;2e-16</span></span>
-<span id="cb462-17"><a href="lab11.html#cb462-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb462-18"><a href="lab11.html#cb462-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
-<span id="cb462-19"><a href="lab11.html#cb462-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb462-20"><a href="lab11.html#cb462-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1186.7  on 890  degrees of freedom</span></span>
-<span id="cb462-21"><a href="lab11.html#cb462-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  827.2  on 888  degrees of freedom</span></span>
-<span id="cb462-22"><a href="lab11.html#cb462-22" tabindex="-1"></a><span class="co">#&gt; AIC: 833.2</span></span>
-<span id="cb462-23"><a href="lab11.html#cb462-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb462-24"><a href="lab11.html#cb462-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="lab11.html#cb468-1" tabindex="-1"></a>m_split <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb468-2"><a href="lab11.html#cb468-2" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> pclass,</span>
+<span id="cb468-3"><a href="lab11.html#cb468-3" tabindex="-1"></a>  <span class="at">data =</span> titanic_train,</span>
+<span id="cb468-4"><a href="lab11.html#cb468-4" tabindex="-1"></a>  <span class="at">family =</span> binomial</span>
+<span id="cb468-5"><a href="lab11.html#cb468-5" tabindex="-1"></a>)</span>
+<span id="cb468-6"><a href="lab11.html#cb468-6" tabindex="-1"></a></span>
+<span id="cb468-7"><a href="lab11.html#cb468-7" tabindex="-1"></a><span class="fu">summary</span>(m_split)</span>
+<span id="cb468-8"><a href="lab11.html#cb468-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb468-9"><a href="lab11.html#cb468-9" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb468-10"><a href="lab11.html#cb468-10" tabindex="-1"></a><span class="co">#&gt; glm(formula = survived ~ sex + pclass, family = binomial, data = titanic_train)</span></span>
+<span id="cb468-11"><a href="lab11.html#cb468-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb468-12"><a href="lab11.html#cb468-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb468-13"><a href="lab11.html#cb468-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
+<span id="cb468-14"><a href="lab11.html#cb468-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)    3.295      0.297   11.08   &lt;2e-16</span></span>
+<span id="cb468-15"><a href="lab11.html#cb468-15" tabindex="-1"></a><span class="co">#&gt; sexmale       -2.643      0.184  -14.38   &lt;2e-16</span></span>
+<span id="cb468-16"><a href="lab11.html#cb468-16" tabindex="-1"></a><span class="co">#&gt; pclass        -0.961      0.106   -9.06   &lt;2e-16</span></span>
+<span id="cb468-17"><a href="lab11.html#cb468-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb468-18"><a href="lab11.html#cb468-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb468-19"><a href="lab11.html#cb468-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb468-20"><a href="lab11.html#cb468-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 1186.7  on 890  degrees of freedom</span></span>
+<span id="cb468-21"><a href="lab11.html#cb468-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  827.2  on 888  degrees of freedom</span></span>
+<span id="cb468-22"><a href="lab11.html#cb468-22" tabindex="-1"></a><span class="co">#&gt; AIC: 833.2</span></span>
+<span id="cb468-23"><a href="lab11.html#cb468-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb468-24"><a href="lab11.html#cb468-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
 </details>
 <div id="training-accuracy" class="section level3 unnumbered hasAnchor">
 <h3>2.3 Training accuracy<a href="lab11.html#training-accuracy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="lab11.html#cb463-1" tabindex="-1"></a>p_train <span class="ot">&lt;-</span> <span class="fu">predict</span>(___, <span class="at">type =</span> ___)</span>
-<span id="cb463-2"><a href="lab11.html#cb463-2" tabindex="-1"></a>yhat_train <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb463-3"><a href="lab11.html#cb463-3" tabindex="-1"></a></span>
-<span id="cb463-4"><a href="lab11.html#cb463-4" tabindex="-1"></a>acc_train <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb463-5"><a href="lab11.html#cb463-5" tabindex="-1"></a>acc_train</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="lab11.html#cb469-1" tabindex="-1"></a>p_train <span class="ot">&lt;-</span> <span class="fu">predict</span>(___, <span class="at">type =</span> ___)</span>
+<span id="cb469-2"><a href="lab11.html#cb469-2" tabindex="-1"></a>yhat_train <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb469-3"><a href="lab11.html#cb469-3" tabindex="-1"></a></span>
+<span id="cb469-4"><a href="lab11.html#cb469-4" tabindex="-1"></a>acc_train <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb469-5"><a href="lab11.html#cb469-5" tabindex="-1"></a>acc_train</span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="lab11.html#cb464-1" tabindex="-1"></a>p_train <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb464-2"><a href="lab11.html#cb464-2" tabindex="-1"></a>yhat_train <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_train <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb464-3"><a href="lab11.html#cb464-3" tabindex="-1"></a></span>
-<span id="cb464-4"><a href="lab11.html#cb464-4" tabindex="-1"></a>acc_train <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_train <span class="sc">==</span> titanic_train<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb464-5"><a href="lab11.html#cb464-5" tabindex="-1"></a>acc_train</span>
-<span id="cb464-6"><a href="lab11.html#cb464-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.79</span></span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="lab11.html#cb470-1" tabindex="-1"></a>p_train <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb470-2"><a href="lab11.html#cb470-2" tabindex="-1"></a>yhat_train <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_train <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb470-3"><a href="lab11.html#cb470-3" tabindex="-1"></a></span>
+<span id="cb470-4"><a href="lab11.html#cb470-4" tabindex="-1"></a>acc_train <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_train <span class="sc">==</span> titanic_train<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb470-5"><a href="lab11.html#cb470-5" tabindex="-1"></a>acc_train</span>
+<span id="cb470-6"><a href="lab11.html#cb470-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.79</span></span></code></pre></div>
 </details>
 </div>
 <div id="test-accuracy" class="section level3 unnumbered hasAnchor">
 <h3>2.4 Test accuracy<a href="lab11.html#test-accuracy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We evaluate this model on passengers it has never seen, using <code>titanic_test</code>.</p>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="lab11.html#cb465-1" tabindex="-1"></a>p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(___, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
-<span id="cb465-2"><a href="lab11.html#cb465-2" tabindex="-1"></a>yhat_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb465-3"><a href="lab11.html#cb465-3" tabindex="-1"></a></span>
-<span id="cb465-4"><a href="lab11.html#cb465-4" tabindex="-1"></a>acc_test <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb465-5"><a href="lab11.html#cb465-5" tabindex="-1"></a>acc_test</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="lab11.html#cb471-1" tabindex="-1"></a>p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(___, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
+<span id="cb471-2"><a href="lab11.html#cb471-2" tabindex="-1"></a>yhat_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb471-3"><a href="lab11.html#cb471-3" tabindex="-1"></a></span>
+<span id="cb471-4"><a href="lab11.html#cb471-4" tabindex="-1"></a>acc_test <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb471-5"><a href="lab11.html#cb471-5" tabindex="-1"></a>acc_test</span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="lab11.html#cb466-1" tabindex="-1"></a>p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, </span>
-<span id="cb466-2"><a href="lab11.html#cb466-2" tabindex="-1"></a>                  <span class="at">newdata =</span> titanic_test, </span>
-<span id="cb466-3"><a href="lab11.html#cb466-3" tabindex="-1"></a>                  <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb466-4"><a href="lab11.html#cb466-4" tabindex="-1"></a>yhat_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_test <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb466-5"><a href="lab11.html#cb466-5" tabindex="-1"></a></span>
-<span id="cb466-6"><a href="lab11.html#cb466-6" tabindex="-1"></a>acc_test <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_test <span class="sc">==</span> titanic_test<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb466-7"><a href="lab11.html#cb466-7" tabindex="-1"></a>acc_test</span>
-<span id="cb466-8"><a href="lab11.html#cb466-8" tabindex="-1"></a><span class="co">#&gt; [1] NaN</span></span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="lab11.html#cb472-1" tabindex="-1"></a>p_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_split, </span>
+<span id="cb472-2"><a href="lab11.html#cb472-2" tabindex="-1"></a>                  <span class="at">newdata =</span> titanic_test, </span>
+<span id="cb472-3"><a href="lab11.html#cb472-3" tabindex="-1"></a>                  <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb472-4"><a href="lab11.html#cb472-4" tabindex="-1"></a>yhat_test <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_test <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb472-5"><a href="lab11.html#cb472-5" tabindex="-1"></a></span>
+<span id="cb472-6"><a href="lab11.html#cb472-6" tabindex="-1"></a>acc_test <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_test <span class="sc">==</span> titanic_test<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb472-7"><a href="lab11.html#cb472-7" tabindex="-1"></a>acc_test</span>
+<span id="cb472-8"><a href="lab11.html#cb472-8" tabindex="-1"></a><span class="co">#&gt; [1] NaN</span></span></code></pre></div>
 </details>
 </div>
 <div id="reflection" class="section level3 unnumbered hasAnchor">
@@ -1964,11 +1969,11 @@ Click for a solution
 <li>setting a seed,</li>
 <li>adding a <code>fold</code> variable with values 1 through 10.</li>
 </ul>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="lab11.html#cb467-1" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
-<span id="cb467-2"><a href="lab11.html#cb467-2" tabindex="-1"></a></span>
-<span id="cb467-3"><a href="lab11.html#cb467-3" tabindex="-1"></a>titanic_cv <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
-<span id="cb467-4"><a href="lab11.html#cb467-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___), <span class="sc">!</span><span class="fu">is.na</span>(___), <span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
-<span id="cb467-5"><a href="lab11.html#cb467-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(___, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="lab11.html#cb473-1" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb473-2"><a href="lab11.html#cb473-2" tabindex="-1"></a></span>
+<span id="cb473-3"><a href="lab11.html#cb473-3" tabindex="-1"></a>titanic_cv <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
+<span id="cb473-4"><a href="lab11.html#cb473-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___), <span class="sc">!</span><span class="fu">is.na</span>(___), <span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
+<span id="cb473-5"><a href="lab11.html#cb473-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(___, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
 <details>
 <summary>
 Click for a hint
@@ -1979,58 +1984,58 @@ Use <code>rep(1:10, length.out = n())</code> so folds are roughly equal-sized.
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="lab11.html#cb468-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb468-2"><a href="lab11.html#cb468-2" tabindex="-1"></a></span>
-<span id="cb468-3"><a href="lab11.html#cb468-3" tabindex="-1"></a>titanic_cv <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
-<span id="cb468-4"><a href="lab11.html#cb468-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived), <span class="sc">!</span><span class="fu">is.na</span>(sex), <span class="sc">!</span><span class="fu">is.na</span>(pclass)) <span class="sc">%&gt;%</span></span>
-<span id="cb468-5"><a href="lab11.html#cb468-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="lab11.html#cb474-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb474-2"><a href="lab11.html#cb474-2" tabindex="-1"></a></span>
+<span id="cb474-3"><a href="lab11.html#cb474-3" tabindex="-1"></a>titanic_cv <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
+<span id="cb474-4"><a href="lab11.html#cb474-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived), <span class="sc">!</span><span class="fu">is.na</span>(sex), <span class="sc">!</span><span class="fu">is.na</span>(pclass)) <span class="sc">%&gt;%</span></span>
+<span id="cb474-5"><a href="lab11.html#cb474-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
 </details>
 </div>
 <div id="fit-and-evaluate-10-models" class="section level3 unnumbered hasAnchor">
 <h3>3.2 Fit and evaluate 10 models<a href="lab11.html#fit-and-evaluate-10-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Complete the loop so each fold is used as test exactly once, and store fold accuracies in <code>cv_results</code>.</p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="lab11.html#cb469-1" tabindex="-1"></a>cv_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(titanic_cv<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb469-2"><a href="lab11.html#cb469-2" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_results<span class="sc">$</span>fold) {</span>
-<span id="cb469-3"><a href="lab11.html#cb469-3" tabindex="-1"></a></span>
-<span id="cb469-4"><a href="lab11.html#cb469-4" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> titanic_cv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
-<span id="cb469-5"><a href="lab11.html#cb469-5" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> titanic_cv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
-<span id="cb469-6"><a href="lab11.html#cb469-6" tabindex="-1"></a></span>
-<span id="cb469-7"><a href="lab11.html#cb469-7" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb469-8"><a href="lab11.html#cb469-8" tabindex="-1"></a>    <span class="at">formula =</span> ___,</span>
-<span id="cb469-9"><a href="lab11.html#cb469-9" tabindex="-1"></a>    <span class="at">data =</span> ___,</span>
-<span id="cb469-10"><a href="lab11.html#cb469-10" tabindex="-1"></a>    <span class="at">family =</span> ___</span>
-<span id="cb469-11"><a href="lab11.html#cb469-11" tabindex="-1"></a>  )</span>
-<span id="cb469-12"><a href="lab11.html#cb469-12" tabindex="-1"></a></span>
-<span id="cb469-13"><a href="lab11.html#cb469-13" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
-<span id="cb469-14"><a href="lab11.html#cb469-14" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb469-15"><a href="lab11.html#cb469-15" tabindex="-1"></a></span>
-<span id="cb469-16"><a href="lab11.html#cb469-16" tabindex="-1"></a>  cv_results<span class="sc">$</span>accuracy[cv_results<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb469-17"><a href="lab11.html#cb469-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="lab11.html#cb475-1" tabindex="-1"></a>cv_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(titanic_cv<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb475-2"><a href="lab11.html#cb475-2" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_results<span class="sc">$</span>fold) {</span>
+<span id="cb475-3"><a href="lab11.html#cb475-3" tabindex="-1"></a></span>
+<span id="cb475-4"><a href="lab11.html#cb475-4" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> titanic_cv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
+<span id="cb475-5"><a href="lab11.html#cb475-5" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> titanic_cv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
+<span id="cb475-6"><a href="lab11.html#cb475-6" tabindex="-1"></a></span>
+<span id="cb475-7"><a href="lab11.html#cb475-7" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb475-8"><a href="lab11.html#cb475-8" tabindex="-1"></a>    <span class="at">formula =</span> ___,</span>
+<span id="cb475-9"><a href="lab11.html#cb475-9" tabindex="-1"></a>    <span class="at">data =</span> ___,</span>
+<span id="cb475-10"><a href="lab11.html#cb475-10" tabindex="-1"></a>    <span class="at">family =</span> ___</span>
+<span id="cb475-11"><a href="lab11.html#cb475-11" tabindex="-1"></a>  )</span>
+<span id="cb475-12"><a href="lab11.html#cb475-12" tabindex="-1"></a></span>
+<span id="cb475-13"><a href="lab11.html#cb475-13" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
+<span id="cb475-14"><a href="lab11.html#cb475-14" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb475-15"><a href="lab11.html#cb475-15" tabindex="-1"></a></span>
+<span id="cb475-16"><a href="lab11.html#cb475-16" tabindex="-1"></a>  cv_results<span class="sc">$</span>accuracy[cv_results<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb475-17"><a href="lab11.html#cb475-17" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="summarize-cross-validation" class="section level3 unnumbered hasAnchor">
 <h3>3.3 Summarize cross validation<a href="lab11.html#summarize-cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Compute mean, SD, min, and max of fold accuracy.</p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="lab11.html#cb470-1" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(___)</span>
-<span id="cb470-2"><a href="lab11.html#cb470-2" tabindex="-1"></a>cv_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(___)</span>
-<span id="cb470-3"><a href="lab11.html#cb470-3" tabindex="-1"></a>cv_min  <span class="ot">&lt;-</span> <span class="fu">min</span>(___)</span>
-<span id="cb470-4"><a href="lab11.html#cb470-4" tabindex="-1"></a>cv_max  <span class="ot">&lt;-</span> <span class="fu">max</span>(___)</span>
-<span id="cb470-5"><a href="lab11.html#cb470-5" tabindex="-1"></a></span>
-<span id="cb470-6"><a href="lab11.html#cb470-6" tabindex="-1"></a><span class="fu">c</span>(<span class="at">cv_mean =</span> cv_mean, <span class="at">cv_sd =</span> cv_sd, <span class="at">cv_min =</span> cv_min, <span class="at">cv_max =</span> cv_max)</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="lab11.html#cb476-1" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(___)</span>
+<span id="cb476-2"><a href="lab11.html#cb476-2" tabindex="-1"></a>cv_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(___)</span>
+<span id="cb476-3"><a href="lab11.html#cb476-3" tabindex="-1"></a>cv_min  <span class="ot">&lt;-</span> <span class="fu">min</span>(___)</span>
+<span id="cb476-4"><a href="lab11.html#cb476-4" tabindex="-1"></a>cv_max  <span class="ot">&lt;-</span> <span class="fu">max</span>(___)</span>
+<span id="cb476-5"><a href="lab11.html#cb476-5" tabindex="-1"></a></span>
+<span id="cb476-6"><a href="lab11.html#cb476-6" tabindex="-1"></a><span class="fu">c</span>(<span class="at">cv_mean =</span> cv_mean, <span class="at">cv_sd =</span> cv_sd, <span class="at">cv_min =</span> cv_min, <span class="at">cv_max =</span> cv_max)</span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="lab11.html#cb471-1" tabindex="-1"></a></span>
-<span id="cb471-2"><a href="lab11.html#cb471-2" tabindex="-1"></a>cv_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(titanic_cv<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb471-3"><a href="lab11.html#cb471-3" tabindex="-1"></a></span>
-<span id="cb471-4"><a href="lab11.html#cb471-4" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(cv_results<span class="sc">$</span>accuracy)</span>
-<span id="cb471-5"><a href="lab11.html#cb471-5" tabindex="-1"></a>cv_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(cv_results<span class="sc">$</span>accuracy)</span>
-<span id="cb471-6"><a href="lab11.html#cb471-6" tabindex="-1"></a>cv_min  <span class="ot">&lt;-</span> <span class="fu">min</span>(cv_results<span class="sc">$</span>accuracy)</span>
-<span id="cb471-7"><a href="lab11.html#cb471-7" tabindex="-1"></a>cv_max  <span class="ot">&lt;-</span> <span class="fu">max</span>(cv_results<span class="sc">$</span>accuracy)</span>
-<span id="cb471-8"><a href="lab11.html#cb471-8" tabindex="-1"></a></span>
-<span id="cb471-9"><a href="lab11.html#cb471-9" tabindex="-1"></a><span class="fu">c</span>(<span class="at">cv_mean =</span> cv_mean, <span class="at">cv_sd =</span> cv_sd, <span class="at">cv_min =</span> cv_min, <span class="at">cv_max =</span> cv_max)</span>
-<span id="cb471-10"><a href="lab11.html#cb471-10" tabindex="-1"></a><span class="co">#&gt; cv_mean   cv_sd  cv_min  cv_max </span></span>
-<span id="cb471-11"><a href="lab11.html#cb471-11" tabindex="-1"></a><span class="co">#&gt;      NA      NA      NA      NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="lab11.html#cb477-1" tabindex="-1"></a></span>
+<span id="cb477-2"><a href="lab11.html#cb477-2" tabindex="-1"></a>cv_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(titanic_cv<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb477-3"><a href="lab11.html#cb477-3" tabindex="-1"></a></span>
+<span id="cb477-4"><a href="lab11.html#cb477-4" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(cv_results<span class="sc">$</span>accuracy)</span>
+<span id="cb477-5"><a href="lab11.html#cb477-5" tabindex="-1"></a>cv_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(cv_results<span class="sc">$</span>accuracy)</span>
+<span id="cb477-6"><a href="lab11.html#cb477-6" tabindex="-1"></a>cv_min  <span class="ot">&lt;-</span> <span class="fu">min</span>(cv_results<span class="sc">$</span>accuracy)</span>
+<span id="cb477-7"><a href="lab11.html#cb477-7" tabindex="-1"></a>cv_max  <span class="ot">&lt;-</span> <span class="fu">max</span>(cv_results<span class="sc">$</span>accuracy)</span>
+<span id="cb477-8"><a href="lab11.html#cb477-8" tabindex="-1"></a></span>
+<span id="cb477-9"><a href="lab11.html#cb477-9" tabindex="-1"></a><span class="fu">c</span>(<span class="at">cv_mean =</span> cv_mean, <span class="at">cv_sd =</span> cv_sd, <span class="at">cv_min =</span> cv_min, <span class="at">cv_max =</span> cv_max)</span>
+<span id="cb477-10"><a href="lab11.html#cb477-10" tabindex="-1"></a><span class="co">#&gt; cv_mean   cv_sd  cv_min  cv_max </span></span>
+<span id="cb477-11"><a href="lab11.html#cb477-11" tabindex="-1"></a><span class="co">#&gt;      NA      NA      NA      NA</span></span></code></pre></div>
 </details>
 </div>
 <div id="reflection-1" class="section level3 unnumbered hasAnchor">
@@ -2050,48 +2055,48 @@ Click for a solution
 <h3>4.1 Evaluate multiple cutoffs on the test set<a href="lab11.html#evaluate-multiple-cutoffs-on-the-test-set" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Using p_test from an earlier step, compute test accuracy for the following cutoffs: 0.3, 0.5, 0.7.</p>
 <p>Create a data frame called cutoff_results with columns cutoff and accuracy.</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="lab11.html#cb472-1" tabindex="-1"></a>cutoffs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>)</span>
-<span id="cb472-2"><a href="lab11.html#cb472-2" tabindex="-1"></a></span>
-<span id="cb472-3"><a href="lab11.html#cb472-3" tabindex="-1"></a>cutoff_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb472-4"><a href="lab11.html#cb472-4" tabindex="-1"></a>  <span class="at">cutoff =</span> cutoffs,</span>
-<span id="cb472-5"><a href="lab11.html#cb472-5" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="cn">NA_real_</span></span>
-<span id="cb472-6"><a href="lab11.html#cb472-6" tabindex="-1"></a>)</span>
-<span id="cb472-7"><a href="lab11.html#cb472-7" tabindex="-1"></a></span>
-<span id="cb472-8"><a href="lab11.html#cb472-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(cutoffs)) {</span>
-<span id="cb472-9"><a href="lab11.html#cb472-9" tabindex="-1"></a></span>
-<span id="cb472-10"><a href="lab11.html#cb472-10" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> cutoffs[i]</span>
-<span id="cb472-11"><a href="lab11.html#cb472-11" tabindex="-1"></a></span>
-<span id="cb472-12"><a href="lab11.html#cb472-12" tabindex="-1"></a>  yhat_c <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb472-13"><a href="lab11.html#cb472-13" tabindex="-1"></a>  cutoff_results<span class="sc">$</span>accuracy[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb472-14"><a href="lab11.html#cb472-14" tabindex="-1"></a></span>
-<span id="cb472-15"><a href="lab11.html#cb472-15" tabindex="-1"></a>}</span>
-<span id="cb472-16"><a href="lab11.html#cb472-16" tabindex="-1"></a></span>
-<span id="cb472-17"><a href="lab11.html#cb472-17" tabindex="-1"></a>cutoff_results</span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="lab11.html#cb478-1" tabindex="-1"></a>cutoffs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>)</span>
+<span id="cb478-2"><a href="lab11.html#cb478-2" tabindex="-1"></a></span>
+<span id="cb478-3"><a href="lab11.html#cb478-3" tabindex="-1"></a>cutoff_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb478-4"><a href="lab11.html#cb478-4" tabindex="-1"></a>  <span class="at">cutoff =</span> cutoffs,</span>
+<span id="cb478-5"><a href="lab11.html#cb478-5" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="cn">NA_real_</span></span>
+<span id="cb478-6"><a href="lab11.html#cb478-6" tabindex="-1"></a>)</span>
+<span id="cb478-7"><a href="lab11.html#cb478-7" tabindex="-1"></a></span>
+<span id="cb478-8"><a href="lab11.html#cb478-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(cutoffs)) {</span>
+<span id="cb478-9"><a href="lab11.html#cb478-9" tabindex="-1"></a></span>
+<span id="cb478-10"><a href="lab11.html#cb478-10" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> cutoffs[i]</span>
+<span id="cb478-11"><a href="lab11.html#cb478-11" tabindex="-1"></a></span>
+<span id="cb478-12"><a href="lab11.html#cb478-12" tabindex="-1"></a>  yhat_c <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb478-13"><a href="lab11.html#cb478-13" tabindex="-1"></a>  cutoff_results<span class="sc">$</span>accuracy[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb478-14"><a href="lab11.html#cb478-14" tabindex="-1"></a></span>
+<span id="cb478-15"><a href="lab11.html#cb478-15" tabindex="-1"></a>}</span>
+<span id="cb478-16"><a href="lab11.html#cb478-16" tabindex="-1"></a></span>
+<span id="cb478-17"><a href="lab11.html#cb478-17" tabindex="-1"></a>cutoff_results</span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="lab11.html#cb473-1" tabindex="-1"></a>cutoffs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>)</span>
-<span id="cb473-2"><a href="lab11.html#cb473-2" tabindex="-1"></a></span>
-<span id="cb473-3"><a href="lab11.html#cb473-3" tabindex="-1"></a>cutoff_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb473-4"><a href="lab11.html#cb473-4" tabindex="-1"></a>  <span class="at">cutoff =</span> cutoffs,</span>
-<span id="cb473-5"><a href="lab11.html#cb473-5" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="cn">NA_real_</span></span>
-<span id="cb473-6"><a href="lab11.html#cb473-6" tabindex="-1"></a>)</span>
-<span id="cb473-7"><a href="lab11.html#cb473-7" tabindex="-1"></a></span>
-<span id="cb473-8"><a href="lab11.html#cb473-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(cutoffs)) {</span>
-<span id="cb473-9"><a href="lab11.html#cb473-9" tabindex="-1"></a></span>
-<span id="cb473-10"><a href="lab11.html#cb473-10" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> cutoffs[i]</span>
-<span id="cb473-11"><a href="lab11.html#cb473-11" tabindex="-1"></a></span>
-<span id="cb473-12"><a href="lab11.html#cb473-12" tabindex="-1"></a>  yhat_c <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_test <span class="sc">&gt;</span> c0, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb473-13"><a href="lab11.html#cb473-13" tabindex="-1"></a>  cutoff_results<span class="sc">$</span>accuracy[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_c <span class="sc">==</span> titanic_test<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb473-14"><a href="lab11.html#cb473-14" tabindex="-1"></a></span>
-<span id="cb473-15"><a href="lab11.html#cb473-15" tabindex="-1"></a>}</span>
-<span id="cb473-16"><a href="lab11.html#cb473-16" tabindex="-1"></a></span>
-<span id="cb473-17"><a href="lab11.html#cb473-17" tabindex="-1"></a>cutoff_results</span>
-<span id="cb473-18"><a href="lab11.html#cb473-18" tabindex="-1"></a><span class="co">#&gt;   cutoff accuracy</span></span>
-<span id="cb473-19"><a href="lab11.html#cb473-19" tabindex="-1"></a><span class="co">#&gt; 1    0.3      NaN</span></span>
-<span id="cb473-20"><a href="lab11.html#cb473-20" tabindex="-1"></a><span class="co">#&gt; 2    0.5      NaN</span></span>
-<span id="cb473-21"><a href="lab11.html#cb473-21" tabindex="-1"></a><span class="co">#&gt; 3    0.7      NaN</span></span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="lab11.html#cb479-1" tabindex="-1"></a>cutoffs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>)</span>
+<span id="cb479-2"><a href="lab11.html#cb479-2" tabindex="-1"></a></span>
+<span id="cb479-3"><a href="lab11.html#cb479-3" tabindex="-1"></a>cutoff_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb479-4"><a href="lab11.html#cb479-4" tabindex="-1"></a>  <span class="at">cutoff =</span> cutoffs,</span>
+<span id="cb479-5"><a href="lab11.html#cb479-5" tabindex="-1"></a>  <span class="at">accuracy =</span> <span class="cn">NA_real_</span></span>
+<span id="cb479-6"><a href="lab11.html#cb479-6" tabindex="-1"></a>)</span>
+<span id="cb479-7"><a href="lab11.html#cb479-7" tabindex="-1"></a></span>
+<span id="cb479-8"><a href="lab11.html#cb479-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(cutoffs)) {</span>
+<span id="cb479-9"><a href="lab11.html#cb479-9" tabindex="-1"></a></span>
+<span id="cb479-10"><a href="lab11.html#cb479-10" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> cutoffs[i]</span>
+<span id="cb479-11"><a href="lab11.html#cb479-11" tabindex="-1"></a></span>
+<span id="cb479-12"><a href="lab11.html#cb479-12" tabindex="-1"></a>  yhat_c <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_test <span class="sc">&gt;</span> c0, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb479-13"><a href="lab11.html#cb479-13" tabindex="-1"></a>  cutoff_results<span class="sc">$</span>accuracy[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_c <span class="sc">==</span> titanic_test<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb479-14"><a href="lab11.html#cb479-14" tabindex="-1"></a></span>
+<span id="cb479-15"><a href="lab11.html#cb479-15" tabindex="-1"></a>}</span>
+<span id="cb479-16"><a href="lab11.html#cb479-16" tabindex="-1"></a></span>
+<span id="cb479-17"><a href="lab11.html#cb479-17" tabindex="-1"></a>cutoff_results</span>
+<span id="cb479-18"><a href="lab11.html#cb479-18" tabindex="-1"></a><span class="co">#&gt;   cutoff accuracy</span></span>
+<span id="cb479-19"><a href="lab11.html#cb479-19" tabindex="-1"></a><span class="co">#&gt; 1    0.3      NaN</span></span>
+<span id="cb479-20"><a href="lab11.html#cb479-20" tabindex="-1"></a><span class="co">#&gt; 2    0.5      NaN</span></span>
+<span id="cb479-21"><a href="lab11.html#cb479-21" tabindex="-1"></a><span class="co">#&gt; 3    0.7      NaN</span></span></code></pre></div>
 </details>
 </div>
 <div id="reflection-2" class="section level3 unnumbered hasAnchor">
@@ -2165,34 +2170,34 @@ Click for a solution
 <div id="choose-candidate-predictors" class="section level3 unnumbered hasAnchor">
 <h3>6.1 Choose candidate predictors<a href="lab11.html#choose-candidate-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Pick <strong>two</strong> additional predictors from the data set. (This can include a constructed variable that you create from existing variables.)</p>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="lab11.html#cb474-1" tabindex="-1"></a><span class="fu">names</span>(titanic3)</span>
-<span id="cb474-2"><a href="lab11.html#cb474-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;pclass&quot;     &quot;survived&quot;   &quot;name&quot;       &quot;sex&quot;        &quot;age&quot;       </span></span>
-<span id="cb474-3"><a href="lab11.html#cb474-3" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;sibsp&quot;      &quot;parch&quot;      &quot;ticket&quot;     &quot;fare&quot;       &quot;cabin&quot;     </span></span>
-<span id="cb474-4"><a href="lab11.html#cb474-4" tabindex="-1"></a><span class="co">#&gt; [11] &quot;embarked&quot;   &quot;boat&quot;       &quot;body&quot;       &quot;home.dest&quot;  &quot;pclass_ord&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="lab11.html#cb480-1" tabindex="-1"></a><span class="fu">names</span>(titanic3)</span>
+<span id="cb480-2"><a href="lab11.html#cb480-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;pclass&quot;     &quot;survived&quot;   &quot;name&quot;       &quot;sex&quot;        &quot;age&quot;       </span></span>
+<span id="cb480-3"><a href="lab11.html#cb480-3" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;sibsp&quot;      &quot;parch&quot;      &quot;ticket&quot;     &quot;fare&quot;       &quot;cabin&quot;     </span></span>
+<span id="cb480-4"><a href="lab11.html#cb480-4" tabindex="-1"></a><span class="co">#&gt; [11] &quot;embarked&quot;   &quot;boat&quot;       &quot;body&quot;       &quot;home.dest&quot;  &quot;pclass_ord&quot;</span></span></code></pre></div>
 <p>Why do you think each predictor you selected should matter for survival?</p>
 <p>&lt;</p>
-<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="lab11.html#cb475-1" tabindex="-1"></a>titanic3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">title =</span> <span class="fu">str_extract</span>(name, <span class="st">&quot;(?&lt;=, )[^.]+&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">count</span>(title) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
-<span id="cb475-2"><a href="lab11.html#cb475-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 18 × 2</span></span>
-<span id="cb475-3"><a href="lab11.html#cb475-3" tabindex="-1"></a><span class="co">#&gt;    title            n</span></span>
-<span id="cb475-4"><a href="lab11.html#cb475-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt;</span></span>
-<span id="cb475-5"><a href="lab11.html#cb475-5" tabindex="-1"></a><span class="co">#&gt;  1 Mr             757</span></span>
-<span id="cb475-6"><a href="lab11.html#cb475-6" tabindex="-1"></a><span class="co">#&gt;  2 Miss           260</span></span>
-<span id="cb475-7"><a href="lab11.html#cb475-7" tabindex="-1"></a><span class="co">#&gt;  3 Mrs            197</span></span>
-<span id="cb475-8"><a href="lab11.html#cb475-8" tabindex="-1"></a><span class="co">#&gt;  4 Master          61</span></span>
-<span id="cb475-9"><a href="lab11.html#cb475-9" tabindex="-1"></a><span class="co">#&gt;  5 Dr               8</span></span>
-<span id="cb475-10"><a href="lab11.html#cb475-10" tabindex="-1"></a><span class="co">#&gt;  6 Rev              8</span></span>
-<span id="cb475-11"><a href="lab11.html#cb475-11" tabindex="-1"></a><span class="co">#&gt;  7 Col              4</span></span>
-<span id="cb475-12"><a href="lab11.html#cb475-12" tabindex="-1"></a><span class="co">#&gt;  8 Major            2</span></span>
-<span id="cb475-13"><a href="lab11.html#cb475-13" tabindex="-1"></a><span class="co">#&gt;  9 Mlle             2</span></span>
-<span id="cb475-14"><a href="lab11.html#cb475-14" tabindex="-1"></a><span class="co">#&gt; 10 Ms               2</span></span>
-<span id="cb475-15"><a href="lab11.html#cb475-15" tabindex="-1"></a><span class="co">#&gt; 11 Capt             1</span></span>
-<span id="cb475-16"><a href="lab11.html#cb475-16" tabindex="-1"></a><span class="co">#&gt; 12 Don              1</span></span>
-<span id="cb475-17"><a href="lab11.html#cb475-17" tabindex="-1"></a><span class="co">#&gt; 13 Dona             1</span></span>
-<span id="cb475-18"><a href="lab11.html#cb475-18" tabindex="-1"></a><span class="co">#&gt; 14 Jonkheer         1</span></span>
-<span id="cb475-19"><a href="lab11.html#cb475-19" tabindex="-1"></a><span class="co">#&gt; 15 Lady             1</span></span>
-<span id="cb475-20"><a href="lab11.html#cb475-20" tabindex="-1"></a><span class="co">#&gt; 16 Mme              1</span></span>
-<span id="cb475-21"><a href="lab11.html#cb475-21" tabindex="-1"></a><span class="co">#&gt; 17 Sir              1</span></span>
-<span id="cb475-22"><a href="lab11.html#cb475-22" tabindex="-1"></a><span class="co">#&gt; 18 the Countess     1</span></span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="lab11.html#cb481-1" tabindex="-1"></a>titanic3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">title =</span> <span class="fu">str_extract</span>(name, <span class="st">&quot;(?&lt;=, )[^.]+&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">count</span>(title) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb481-2"><a href="lab11.html#cb481-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 18 × 2</span></span>
+<span id="cb481-3"><a href="lab11.html#cb481-3" tabindex="-1"></a><span class="co">#&gt;    title            n</span></span>
+<span id="cb481-4"><a href="lab11.html#cb481-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt;</span></span>
+<span id="cb481-5"><a href="lab11.html#cb481-5" tabindex="-1"></a><span class="co">#&gt;  1 Mr             757</span></span>
+<span id="cb481-6"><a href="lab11.html#cb481-6" tabindex="-1"></a><span class="co">#&gt;  2 Miss           260</span></span>
+<span id="cb481-7"><a href="lab11.html#cb481-7" tabindex="-1"></a><span class="co">#&gt;  3 Mrs            197</span></span>
+<span id="cb481-8"><a href="lab11.html#cb481-8" tabindex="-1"></a><span class="co">#&gt;  4 Master          61</span></span>
+<span id="cb481-9"><a href="lab11.html#cb481-9" tabindex="-1"></a><span class="co">#&gt;  5 Dr               8</span></span>
+<span id="cb481-10"><a href="lab11.html#cb481-10" tabindex="-1"></a><span class="co">#&gt;  6 Rev              8</span></span>
+<span id="cb481-11"><a href="lab11.html#cb481-11" tabindex="-1"></a><span class="co">#&gt;  7 Col              4</span></span>
+<span id="cb481-12"><a href="lab11.html#cb481-12" tabindex="-1"></a><span class="co">#&gt;  8 Major            2</span></span>
+<span id="cb481-13"><a href="lab11.html#cb481-13" tabindex="-1"></a><span class="co">#&gt;  9 Mlle             2</span></span>
+<span id="cb481-14"><a href="lab11.html#cb481-14" tabindex="-1"></a><span class="co">#&gt; 10 Ms               2</span></span>
+<span id="cb481-15"><a href="lab11.html#cb481-15" tabindex="-1"></a><span class="co">#&gt; 11 Capt             1</span></span>
+<span id="cb481-16"><a href="lab11.html#cb481-16" tabindex="-1"></a><span class="co">#&gt; 12 Don              1</span></span>
+<span id="cb481-17"><a href="lab11.html#cb481-17" tabindex="-1"></a><span class="co">#&gt; 13 Dona             1</span></span>
+<span id="cb481-18"><a href="lab11.html#cb481-18" tabindex="-1"></a><span class="co">#&gt; 14 Jonkheer         1</span></span>
+<span id="cb481-19"><a href="lab11.html#cb481-19" tabindex="-1"></a><span class="co">#&gt; 15 Lady             1</span></span>
+<span id="cb481-20"><a href="lab11.html#cb481-20" tabindex="-1"></a><span class="co">#&gt; 16 Mme              1</span></span>
+<span id="cb481-21"><a href="lab11.html#cb481-21" tabindex="-1"></a><span class="co">#&gt; 17 Sir              1</span></span>
+<span id="cb481-22"><a href="lab11.html#cb481-22" tabindex="-1"></a><span class="co">#&gt; 18 the Countess     1</span></span></code></pre></div>
 </div>
 <div id="define-candidate-formulas" class="section level3 unnumbered hasAnchor">
 <h3>6.2 Define candidate formulas<a href="lab11.html#define-candidate-formulas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2202,8 +2207,8 @@ Click for a solution
 <li>Expanded: <code>survived ~ sex + pclass + &lt;two predictors you chose&gt;</code></li>
 </ul>
 <p>Store them as <code>f_base</code> and <code>f_expanded</code>.</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="lab11.html#cb476-1" tabindex="-1"></a>f_base <span class="ot">&lt;-</span> survived <span class="sc">~</span> ___ <span class="sc">+</span> ___</span>
-<span id="cb476-2"><a href="lab11.html#cb476-2" tabindex="-1"></a>f_expanded <span class="ot">&lt;-</span> survived <span class="sc">~</span> ___ <span class="sc">+</span> ___ <span class="sc">+</span> ___ <span class="sc">+</span> ___</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="lab11.html#cb482-1" tabindex="-1"></a>f_base <span class="ot">&lt;-</span> survived <span class="sc">~</span> ___ <span class="sc">+</span> ___</span>
+<span id="cb482-2"><a href="lab11.html#cb482-2" tabindex="-1"></a>f_expanded <span class="ot">&lt;-</span> survived <span class="sc">~</span> ___ <span class="sc">+</span> ___ <span class="sc">+</span> ___ <span class="sc">+</span> ___</span></code></pre></div>
 <details>
 <summary>
 Click for a solution example
@@ -2218,133 +2223,133 @@ Click for a solution example
 <div id="create-a-cv-dataset-for-both-models" class="section level3 unnumbered hasAnchor">
 <h3>2.1 Create a CV dataset for both models<a href="lab11.html#create-a-cv-dataset-for-both-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Create <code>cv_df</code> that keeps only rows with non-missing values for all variables needed in <code>f_expanded</code>.</p>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="lab11.html#cb477-1" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
-<span id="cb477-2"><a href="lab11.html#cb477-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived)) <span class="sc">%&gt;%</span></span>
-<span id="cb477-3"><a href="lab11.html#cb477-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
-<span id="cb477-4"><a href="lab11.html#cb477-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
-<span id="cb477-5"><a href="lab11.html#cb477-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
-<span id="cb477-6"><a href="lab11.html#cb477-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___))</span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="lab11.html#cb483-1" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
+<span id="cb483-2"><a href="lab11.html#cb483-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived)) <span class="sc">%&gt;%</span></span>
+<span id="cb483-3"><a href="lab11.html#cb483-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
+<span id="cb483-4"><a href="lab11.html#cb483-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
+<span id="cb483-5"><a href="lab11.html#cb483-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___)) <span class="sc">%&gt;%</span></span>
+<span id="cb483-6"><a href="lab11.html#cb483-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(___))</span></code></pre></div>
 <details>
 <summary>
 Click for a solution example
 </summary>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="lab11.html#cb478-1" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
-<span id="cb478-2"><a href="lab11.html#cb478-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived)) <span class="sc">%&gt;%</span></span>
-<span id="cb478-3"><a href="lab11.html#cb478-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb478-4"><a href="lab11.html#cb478-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pclass)) <span class="sc">%&gt;%</span></span>
-<span id="cb478-5"><a href="lab11.html#cb478-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age)) <span class="sc">%&gt;%</span></span>
-<span id="cb478-6"><a href="lab11.html#cb478-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fare))</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="lab11.html#cb484-1" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> titanic3 <span class="sc">%&gt;%</span></span>
+<span id="cb484-2"><a href="lab11.html#cb484-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(survived)) <span class="sc">%&gt;%</span></span>
+<span id="cb484-3"><a href="lab11.html#cb484-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">%&gt;%</span></span>
+<span id="cb484-4"><a href="lab11.html#cb484-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pclass)) <span class="sc">%&gt;%</span></span>
+<span id="cb484-5"><a href="lab11.html#cb484-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age)) <span class="sc">%&gt;%</span></span>
+<span id="cb484-6"><a href="lab11.html#cb484-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fare))</span></code></pre></div>
 </details>
 </div>
 <div id="create-folds-1" class="section level3 unnumbered hasAnchor">
 <h3>7.2 Create folds<a href="lab11.html#create-folds-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Assign each row to one of 10 folds.</p>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="lab11.html#cb479-1" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
-<span id="cb479-2"><a href="lab11.html#cb479-2" tabindex="-1"></a></span>
-<span id="cb479-3"><a href="lab11.html#cb479-3" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span></span>
-<span id="cb479-4"><a href="lab11.html#cb479-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(___, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="lab11.html#cb485-1" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb485-2"><a href="lab11.html#cb485-2" tabindex="-1"></a></span>
+<span id="cb485-3"><a href="lab11.html#cb485-3" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span></span>
+<span id="cb485-4"><a href="lab11.html#cb485-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(___, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="lab11.html#cb480-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
-<span id="cb480-2"><a href="lab11.html#cb480-2" tabindex="-1"></a></span>
-<span id="cb480-3"><a href="lab11.html#cb480-3" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span></span>
-<span id="cb480-4"><a href="lab11.html#cb480-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="lab11.html#cb486-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
+<span id="cb486-2"><a href="lab11.html#cb486-2" tabindex="-1"></a></span>
+<span id="cb486-3"><a href="lab11.html#cb486-3" tabindex="-1"></a>cv_df <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span></span>
+<span id="cb486-4"><a href="lab11.html#cb486-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fold =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">n</span>())))</span></code></pre></div>
 </details>
 </div>
 <div id="write-a-function-to-compute-cv-accuracy" class="section level3 unnumbered hasAnchor">
 <h3>2.3 Write a function to compute CV accuracy<a href="lab11.html#write-a-function-to-compute-cv-accuracy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Complete the function below so it returns a data frame with fold accuracies for a given formula.</p>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="lab11.html#cb481-1" tabindex="-1"></a>cv_glm_accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula, <span class="at">cutoff =</span> <span class="fl">0.5</span>) {</span>
-<span id="cb481-2"><a href="lab11.html#cb481-2" tabindex="-1"></a></span>
-<span id="cb481-3"><a href="lab11.html#cb481-3" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb481-4"><a href="lab11.html#cb481-4" tabindex="-1"></a></span>
-<span id="cb481-5"><a href="lab11.html#cb481-5" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> out<span class="sc">$</span>fold) {</span>
-<span id="cb481-6"><a href="lab11.html#cb481-6" tabindex="-1"></a></span>
-<span id="cb481-7"><a href="lab11.html#cb481-7" tabindex="-1"></a>    train_j <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
-<span id="cb481-8"><a href="lab11.html#cb481-8" tabindex="-1"></a>    test_j  <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
-<span id="cb481-9"><a href="lab11.html#cb481-9" tabindex="-1"></a></span>
-<span id="cb481-10"><a href="lab11.html#cb481-10" tabindex="-1"></a>    m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb481-11"><a href="lab11.html#cb481-11" tabindex="-1"></a>      <span class="at">formula =</span> ___,</span>
-<span id="cb481-12"><a href="lab11.html#cb481-12" tabindex="-1"></a>      <span class="at">data =</span> ___,</span>
-<span id="cb481-13"><a href="lab11.html#cb481-13" tabindex="-1"></a>      <span class="at">family =</span> ___</span>
-<span id="cb481-14"><a href="lab11.html#cb481-14" tabindex="-1"></a>    )</span>
-<span id="cb481-15"><a href="lab11.html#cb481-15" tabindex="-1"></a></span>
-<span id="cb481-16"><a href="lab11.html#cb481-16" tabindex="-1"></a>    p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
-<span id="cb481-17"><a href="lab11.html#cb481-17" tabindex="-1"></a>    yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb481-18"><a href="lab11.html#cb481-18" tabindex="-1"></a></span>
-<span id="cb481-19"><a href="lab11.html#cb481-19" tabindex="-1"></a>    out<span class="sc">$</span>accuracy[out<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb481-20"><a href="lab11.html#cb481-20" tabindex="-1"></a>  }</span>
-<span id="cb481-21"><a href="lab11.html#cb481-21" tabindex="-1"></a></span>
-<span id="cb481-22"><a href="lab11.html#cb481-22" tabindex="-1"></a>  out</span>
-<span id="cb481-23"><a href="lab11.html#cb481-23" tabindex="-1"></a>}</span>
-<span id="cb481-24"><a href="lab11.html#cb481-24" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:7:39: unexpected input</span></span>
-<span id="cb481-25"><a href="lab11.html#cb481-25" tabindex="-1"></a><span class="co">#&gt; 6: </span></span>
-<span id="cb481-26"><a href="lab11.html#cb481-26" tabindex="-1"></a><span class="co">#&gt; 7:     train_j &lt;- df %&gt;% filter(fold != __</span></span>
-<span id="cb481-27"><a href="lab11.html#cb481-27" tabindex="-1"></a><span class="co">#&gt;                                          ^</span></span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="lab11.html#cb487-1" tabindex="-1"></a>cv_glm_accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula, <span class="at">cutoff =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb487-2"><a href="lab11.html#cb487-2" tabindex="-1"></a></span>
+<span id="cb487-3"><a href="lab11.html#cb487-3" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb487-4"><a href="lab11.html#cb487-4" tabindex="-1"></a></span>
+<span id="cb487-5"><a href="lab11.html#cb487-5" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> out<span class="sc">$</span>fold) {</span>
+<span id="cb487-6"><a href="lab11.html#cb487-6" tabindex="-1"></a></span>
+<span id="cb487-7"><a href="lab11.html#cb487-7" tabindex="-1"></a>    train_j <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
+<span id="cb487-8"><a href="lab11.html#cb487-8" tabindex="-1"></a>    test_j  <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
+<span id="cb487-9"><a href="lab11.html#cb487-9" tabindex="-1"></a></span>
+<span id="cb487-10"><a href="lab11.html#cb487-10" tabindex="-1"></a>    m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb487-11"><a href="lab11.html#cb487-11" tabindex="-1"></a>      <span class="at">formula =</span> ___,</span>
+<span id="cb487-12"><a href="lab11.html#cb487-12" tabindex="-1"></a>      <span class="at">data =</span> ___,</span>
+<span id="cb487-13"><a href="lab11.html#cb487-13" tabindex="-1"></a>      <span class="at">family =</span> ___</span>
+<span id="cb487-14"><a href="lab11.html#cb487-14" tabindex="-1"></a>    )</span>
+<span id="cb487-15"><a href="lab11.html#cb487-15" tabindex="-1"></a></span>
+<span id="cb487-16"><a href="lab11.html#cb487-16" tabindex="-1"></a>    p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
+<span id="cb487-17"><a href="lab11.html#cb487-17" tabindex="-1"></a>    yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb487-18"><a href="lab11.html#cb487-18" tabindex="-1"></a></span>
+<span id="cb487-19"><a href="lab11.html#cb487-19" tabindex="-1"></a>    out<span class="sc">$</span>accuracy[out<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb487-20"><a href="lab11.html#cb487-20" tabindex="-1"></a>  }</span>
+<span id="cb487-21"><a href="lab11.html#cb487-21" tabindex="-1"></a></span>
+<span id="cb487-22"><a href="lab11.html#cb487-22" tabindex="-1"></a>  out</span>
+<span id="cb487-23"><a href="lab11.html#cb487-23" tabindex="-1"></a>}</span>
+<span id="cb487-24"><a href="lab11.html#cb487-24" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:7:39: unexpected input</span></span>
+<span id="cb487-25"><a href="lab11.html#cb487-25" tabindex="-1"></a><span class="co">#&gt; 6: </span></span>
+<span id="cb487-26"><a href="lab11.html#cb487-26" tabindex="-1"></a><span class="co">#&gt; 7:     train_j &lt;- df %&gt;% filter(fold != __</span></span>
+<span id="cb487-27"><a href="lab11.html#cb487-27" tabindex="-1"></a><span class="co">#&gt;                                          ^</span></span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="lab11.html#cb482-1" tabindex="-1"></a>cv_glm_accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula, <span class="at">cutoff =</span> <span class="fl">0.5</span>) {</span>
-<span id="cb482-2"><a href="lab11.html#cb482-2" tabindex="-1"></a></span>
-<span id="cb482-3"><a href="lab11.html#cb482-3" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb482-4"><a href="lab11.html#cb482-4" tabindex="-1"></a></span>
-<span id="cb482-5"><a href="lab11.html#cb482-5" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> out<span class="sc">$</span>fold) {</span>
-<span id="cb482-6"><a href="lab11.html#cb482-6" tabindex="-1"></a></span>
-<span id="cb482-7"><a href="lab11.html#cb482-7" tabindex="-1"></a>    train_j <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
-<span id="cb482-8"><a href="lab11.html#cb482-8" tabindex="-1"></a>    test_j  <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
-<span id="cb482-9"><a href="lab11.html#cb482-9" tabindex="-1"></a></span>
-<span id="cb482-10"><a href="lab11.html#cb482-10" tabindex="-1"></a>    m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb482-11"><a href="lab11.html#cb482-11" tabindex="-1"></a>      <span class="at">formula =</span> formula,</span>
-<span id="cb482-12"><a href="lab11.html#cb482-12" tabindex="-1"></a>      <span class="at">data =</span> train_j,</span>
-<span id="cb482-13"><a href="lab11.html#cb482-13" tabindex="-1"></a>      <span class="at">family =</span> binomial</span>
-<span id="cb482-14"><a href="lab11.html#cb482-14" tabindex="-1"></a>    )</span>
-<span id="cb482-15"><a href="lab11.html#cb482-15" tabindex="-1"></a></span>
-<span id="cb482-16"><a href="lab11.html#cb482-16" tabindex="-1"></a>    p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb482-17"><a href="lab11.html#cb482-17" tabindex="-1"></a>    yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> cutoff, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb482-18"><a href="lab11.html#cb482-18" tabindex="-1"></a></span>
-<span id="cb482-19"><a href="lab11.html#cb482-19" tabindex="-1"></a>    out<span class="sc">$</span>accuracy[out<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_j <span class="sc">==</span> test_j<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb482-20"><a href="lab11.html#cb482-20" tabindex="-1"></a>  }</span>
-<span id="cb482-21"><a href="lab11.html#cb482-21" tabindex="-1"></a></span>
-<span id="cb482-22"><a href="lab11.html#cb482-22" tabindex="-1"></a>  out</span>
-<span id="cb482-23"><a href="lab11.html#cb482-23" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="lab11.html#cb488-1" tabindex="-1"></a>cv_glm_accuracy <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula, <span class="at">cutoff =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb488-2"><a href="lab11.html#cb488-2" tabindex="-1"></a></span>
+<span id="cb488-3"><a href="lab11.html#cb488-3" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb488-4"><a href="lab11.html#cb488-4" tabindex="-1"></a></span>
+<span id="cb488-5"><a href="lab11.html#cb488-5" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> out<span class="sc">$</span>fold) {</span>
+<span id="cb488-6"><a href="lab11.html#cb488-6" tabindex="-1"></a></span>
+<span id="cb488-7"><a href="lab11.html#cb488-7" tabindex="-1"></a>    train_j <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
+<span id="cb488-8"><a href="lab11.html#cb488-8" tabindex="-1"></a>    test_j  <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
+<span id="cb488-9"><a href="lab11.html#cb488-9" tabindex="-1"></a></span>
+<span id="cb488-10"><a href="lab11.html#cb488-10" tabindex="-1"></a>    m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb488-11"><a href="lab11.html#cb488-11" tabindex="-1"></a>      <span class="at">formula =</span> formula,</span>
+<span id="cb488-12"><a href="lab11.html#cb488-12" tabindex="-1"></a>      <span class="at">data =</span> train_j,</span>
+<span id="cb488-13"><a href="lab11.html#cb488-13" tabindex="-1"></a>      <span class="at">family =</span> binomial</span>
+<span id="cb488-14"><a href="lab11.html#cb488-14" tabindex="-1"></a>    )</span>
+<span id="cb488-15"><a href="lab11.html#cb488-15" tabindex="-1"></a></span>
+<span id="cb488-16"><a href="lab11.html#cb488-16" tabindex="-1"></a>    p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb488-17"><a href="lab11.html#cb488-17" tabindex="-1"></a>    yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> cutoff, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb488-18"><a href="lab11.html#cb488-18" tabindex="-1"></a></span>
+<span id="cb488-19"><a href="lab11.html#cb488-19" tabindex="-1"></a>    out<span class="sc">$</span>accuracy[out<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_j <span class="sc">==</span> test_j<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb488-20"><a href="lab11.html#cb488-20" tabindex="-1"></a>  }</span>
+<span id="cb488-21"><a href="lab11.html#cb488-21" tabindex="-1"></a></span>
+<span id="cb488-22"><a href="lab11.html#cb488-22" tabindex="-1"></a>  out</span>
+<span id="cb488-23"><a href="lab11.html#cb488-23" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 </div>
 <div id="compare-models" class="section level3 unnumbered hasAnchor">
 <h3>7.4 Compare models<a href="lab11.html#compare-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Use <code>cv_glm_accuracy()</code> to compute CV results for both formulas. Compute mean and SD of accuracy for each.</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="lab11.html#cb483-1" tabindex="-1"></a>cv_base <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> ___)</span>
-<span id="cb483-2"><a href="lab11.html#cb483-2" tabindex="-1"></a>cv_exp  <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> ___)</span>
-<span id="cb483-3"><a href="lab11.html#cb483-3" tabindex="-1"></a></span>
-<span id="cb483-4"><a href="lab11.html#cb483-4" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb483-5"><a href="lab11.html#cb483-5" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">&quot;base&quot;</span>, <span class="st">&quot;expanded&quot;</span>),</span>
-<span id="cb483-6"><a href="lab11.html#cb483-6" tabindex="-1"></a>  <span class="at">mean_acc =</span> <span class="fu">c</span>(<span class="fu">mean</span>(___), <span class="fu">mean</span>(___)),</span>
-<span id="cb483-7"><a href="lab11.html#cb483-7" tabindex="-1"></a>  <span class="at">sd_acc   =</span> <span class="fu">c</span>(<span class="fu">sd</span>(___), <span class="fu">sd</span>(___))</span>
-<span id="cb483-8"><a href="lab11.html#cb483-8" tabindex="-1"></a>)</span>
-<span id="cb483-9"><a href="lab11.html#cb483-9" tabindex="-1"></a></span>
-<span id="cb483-10"><a href="lab11.html#cb483-10" tabindex="-1"></a>summary_table</span>
-<span id="cb483-11"><a href="lab11.html#cb483-11" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:1:46: unexpected input</span></span>
-<span id="cb483-12"><a href="lab11.html#cb483-12" tabindex="-1"></a><span class="co">#&gt; 1: cv_base &lt;- cv_glm_accuracy(cv_df, formula = __</span></span>
-<span id="cb483-13"><a href="lab11.html#cb483-13" tabindex="-1"></a><span class="co">#&gt;                                                  ^</span></span></code></pre></div>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="lab11.html#cb489-1" tabindex="-1"></a>cv_base <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> ___)</span>
+<span id="cb489-2"><a href="lab11.html#cb489-2" tabindex="-1"></a>cv_exp  <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> ___)</span>
+<span id="cb489-3"><a href="lab11.html#cb489-3" tabindex="-1"></a></span>
+<span id="cb489-4"><a href="lab11.html#cb489-4" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb489-5"><a href="lab11.html#cb489-5" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">&quot;base&quot;</span>, <span class="st">&quot;expanded&quot;</span>),</span>
+<span id="cb489-6"><a href="lab11.html#cb489-6" tabindex="-1"></a>  <span class="at">mean_acc =</span> <span class="fu">c</span>(<span class="fu">mean</span>(___), <span class="fu">mean</span>(___)),</span>
+<span id="cb489-7"><a href="lab11.html#cb489-7" tabindex="-1"></a>  <span class="at">sd_acc   =</span> <span class="fu">c</span>(<span class="fu">sd</span>(___), <span class="fu">sd</span>(___))</span>
+<span id="cb489-8"><a href="lab11.html#cb489-8" tabindex="-1"></a>)</span>
+<span id="cb489-9"><a href="lab11.html#cb489-9" tabindex="-1"></a></span>
+<span id="cb489-10"><a href="lab11.html#cb489-10" tabindex="-1"></a>summary_table</span>
+<span id="cb489-11"><a href="lab11.html#cb489-11" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:1:46: unexpected input</span></span>
+<span id="cb489-12"><a href="lab11.html#cb489-12" tabindex="-1"></a><span class="co">#&gt; 1: cv_base &lt;- cv_glm_accuracy(cv_df, formula = __</span></span>
+<span id="cb489-13"><a href="lab11.html#cb489-13" tabindex="-1"></a><span class="co">#&gt;                                                  ^</span></span></code></pre></div>
 <details>
 <summary>
 Click for a solution
 </summary>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="lab11.html#cb484-1" tabindex="-1"></a>cv_base <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> f_base)</span>
-<span id="cb484-2"><a href="lab11.html#cb484-2" tabindex="-1"></a>cv_exp  <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> f_expanded)</span>
-<span id="cb484-3"><a href="lab11.html#cb484-3" tabindex="-1"></a></span>
-<span id="cb484-4"><a href="lab11.html#cb484-4" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb484-5"><a href="lab11.html#cb484-5" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">&quot;base&quot;</span>, <span class="st">&quot;expanded&quot;</span>),</span>
-<span id="cb484-6"><a href="lab11.html#cb484-6" tabindex="-1"></a>  <span class="at">mean_acc =</span> <span class="fu">c</span>(<span class="fu">mean</span>(cv_base<span class="sc">$</span>accuracy), <span class="fu">mean</span>(cv_exp<span class="sc">$</span>accuracy)),</span>
-<span id="cb484-7"><a href="lab11.html#cb484-7" tabindex="-1"></a>  <span class="at">sd_acc   =</span> <span class="fu">c</span>(<span class="fu">sd</span>(cv_base<span class="sc">$</span>accuracy), <span class="fu">sd</span>(cv_exp<span class="sc">$</span>accuracy))</span>
-<span id="cb484-8"><a href="lab11.html#cb484-8" tabindex="-1"></a>)</span>
-<span id="cb484-9"><a href="lab11.html#cb484-9" tabindex="-1"></a></span>
-<span id="cb484-10"><a href="lab11.html#cb484-10" tabindex="-1"></a>summary_table</span>
-<span id="cb484-11"><a href="lab11.html#cb484-11" tabindex="-1"></a><span class="co">#&gt;      model mean_acc sd_acc</span></span>
-<span id="cb484-12"><a href="lab11.html#cb484-12" tabindex="-1"></a><span class="co">#&gt; 1     base     0.78  0.039</span></span>
-<span id="cb484-13"><a href="lab11.html#cb484-13" tabindex="-1"></a><span class="co">#&gt; 2 expanded     0.78  0.036</span></span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="lab11.html#cb490-1" tabindex="-1"></a>cv_base <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> f_base)</span>
+<span id="cb490-2"><a href="lab11.html#cb490-2" tabindex="-1"></a>cv_exp  <span class="ot">&lt;-</span> <span class="fu">cv_glm_accuracy</span>(cv_df, <span class="at">formula =</span> f_expanded)</span>
+<span id="cb490-3"><a href="lab11.html#cb490-3" tabindex="-1"></a></span>
+<span id="cb490-4"><a href="lab11.html#cb490-4" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb490-5"><a href="lab11.html#cb490-5" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">&quot;base&quot;</span>, <span class="st">&quot;expanded&quot;</span>),</span>
+<span id="cb490-6"><a href="lab11.html#cb490-6" tabindex="-1"></a>  <span class="at">mean_acc =</span> <span class="fu">c</span>(<span class="fu">mean</span>(cv_base<span class="sc">$</span>accuracy), <span class="fu">mean</span>(cv_exp<span class="sc">$</span>accuracy)),</span>
+<span id="cb490-7"><a href="lab11.html#cb490-7" tabindex="-1"></a>  <span class="at">sd_acc   =</span> <span class="fu">c</span>(<span class="fu">sd</span>(cv_base<span class="sc">$</span>accuracy), <span class="fu">sd</span>(cv_exp<span class="sc">$</span>accuracy))</span>
+<span id="cb490-8"><a href="lab11.html#cb490-8" tabindex="-1"></a>)</span>
+<span id="cb490-9"><a href="lab11.html#cb490-9" tabindex="-1"></a></span>
+<span id="cb490-10"><a href="lab11.html#cb490-10" tabindex="-1"></a>summary_table</span>
+<span id="cb490-11"><a href="lab11.html#cb490-11" tabindex="-1"></a><span class="co">#&gt;      model mean_acc sd_acc</span></span>
+<span id="cb490-12"><a href="lab11.html#cb490-12" tabindex="-1"></a><span class="co">#&gt; 1     base     0.78  0.039</span></span>
+<span id="cb490-13"><a href="lab11.html#cb490-13" tabindex="-1"></a><span class="co">#&gt; 2 expanded     0.78  0.036</span></span></code></pre></div>
 </details>
 </div>
 <div id="reflection-3" class="section level3 unnumbered hasAnchor">
@@ -2367,13 +2372,13 @@ Click for a solution
 <li><code>cv_df</code></li>
 </ul>
 <p>Report the proportion retained.</p>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="lab11.html#cb485-1" tabindex="-1"></a>n_all <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(titanic3<span class="sc">$</span>survived))</span>
-<span id="cb485-2"><a href="lab11.html#cb485-2" tabindex="-1"></a>n_kept <span class="ot">&lt;-</span> <span class="fu">nrow</span>(cv_df)</span>
-<span id="cb485-3"><a href="lab11.html#cb485-3" tabindex="-1"></a>prop_kept <span class="ot">&lt;-</span> n_kept <span class="sc">/</span> n_all</span>
-<span id="cb485-4"><a href="lab11.html#cb485-4" tabindex="-1"></a></span>
-<span id="cb485-5"><a href="lab11.html#cb485-5" tabindex="-1"></a><span class="fu">c</span>(<span class="at">n_all =</span> n_all, <span class="at">n_kept =</span> n_kept, <span class="at">prop_kept =</span> prop_kept)</span>
-<span id="cb485-6"><a href="lab11.html#cb485-6" tabindex="-1"></a><span class="co">#&gt;     n_all    n_kept prop_kept </span></span>
-<span id="cb485-7"><a href="lab11.html#cb485-7" tabindex="-1"></a><span class="co">#&gt;    1309.0    1045.0       0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="lab11.html#cb491-1" tabindex="-1"></a>n_all <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(titanic3<span class="sc">$</span>survived))</span>
+<span id="cb491-2"><a href="lab11.html#cb491-2" tabindex="-1"></a>n_kept <span class="ot">&lt;-</span> <span class="fu">nrow</span>(cv_df)</span>
+<span id="cb491-3"><a href="lab11.html#cb491-3" tabindex="-1"></a>prop_kept <span class="ot">&lt;-</span> n_kept <span class="sc">/</span> n_all</span>
+<span id="cb491-4"><a href="lab11.html#cb491-4" tabindex="-1"></a></span>
+<span id="cb491-5"><a href="lab11.html#cb491-5" tabindex="-1"></a><span class="fu">c</span>(<span class="at">n_all =</span> n_all, <span class="at">n_kept =</span> n_kept, <span class="at">prop_kept =</span> prop_kept)</span>
+<span id="cb491-6"><a href="lab11.html#cb491-6" tabindex="-1"></a><span class="co">#&gt;     n_all    n_kept prop_kept </span></span>
+<span id="cb491-7"><a href="lab11.html#cb491-7" tabindex="-1"></a><span class="co">#&gt;    1309.0    1045.0       0.8</span></span></code></pre></div>
 </div>
 <div id="reflection-4" class="section level3 unnumbered hasAnchor">
 <h3>8.2 Reflection<a href="lab11.html#reflection-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2399,66 +2404,66 @@ Click for a solution
 <li>fit the expanded model and compute fold accuracy.</li>
 </ul>
 <p>Store results in <code>cv_imp</code>.</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="lab11.html#cb486-1" tabindex="-1"></a>cv_imp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(cv_df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb486-2"><a href="lab11.html#cb486-2" tabindex="-1"></a></span>
-<span id="cb486-3"><a href="lab11.html#cb486-3" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_imp<span class="sc">$</span>fold) {</span>
-<span id="cb486-4"><a href="lab11.html#cb486-4" tabindex="-1"></a></span>
-<span id="cb486-5"><a href="lab11.html#cb486-5" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
-<span id="cb486-6"><a href="lab11.html#cb486-6" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
-<span id="cb486-7"><a href="lab11.html#cb486-7" tabindex="-1"></a></span>
-<span id="cb486-8"><a href="lab11.html#cb486-8" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(train_j<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb486-9"><a href="lab11.html#cb486-9" tabindex="-1"></a></span>
-<span id="cb486-10"><a href="lab11.html#cb486-10" tabindex="-1"></a>  train_j<span class="sc">$</span>___[<span class="fu">is.na</span>(train_j<span class="sc">$</span>___)] <span class="ot">&lt;-</span> ___</span>
-<span id="cb486-11"><a href="lab11.html#cb486-11" tabindex="-1"></a>  test_j<span class="sc">$</span>___[<span class="fu">is.na</span>(test_j<span class="sc">$</span>___)] <span class="ot">&lt;-</span> ___</span>
-<span id="cb486-12"><a href="lab11.html#cb486-12" tabindex="-1"></a></span>
-<span id="cb486-13"><a href="lab11.html#cb486-13" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb486-14"><a href="lab11.html#cb486-14" tabindex="-1"></a>    <span class="at">formula =</span> ___,</span>
-<span id="cb486-15"><a href="lab11.html#cb486-15" tabindex="-1"></a>    <span class="at">data =</span> ___,</span>
-<span id="cb486-16"><a href="lab11.html#cb486-16" tabindex="-1"></a>    <span class="at">family =</span> ___</span>
-<span id="cb486-17"><a href="lab11.html#cb486-17" tabindex="-1"></a>  )</span>
-<span id="cb486-18"><a href="lab11.html#cb486-18" tabindex="-1"></a></span>
-<span id="cb486-19"><a href="lab11.html#cb486-19" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
-<span id="cb486-20"><a href="lab11.html#cb486-20" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
-<span id="cb486-21"><a href="lab11.html#cb486-21" tabindex="-1"></a></span>
-<span id="cb486-22"><a href="lab11.html#cb486-22" tabindex="-1"></a>  cv_imp<span class="sc">$</span>accuracy[cv_imp<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb486-23"><a href="lab11.html#cb486-23" tabindex="-1"></a>}</span>
-<span id="cb486-24"><a href="lab11.html#cb486-24" tabindex="-1"></a></span>
-<span id="cb486-25"><a href="lab11.html#cb486-25" tabindex="-1"></a><span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(cv_imp<span class="sc">$</span>accuracy), <span class="at">sd =</span> <span class="fu">sd</span>(cv_imp<span class="sc">$</span>accuracy))</span>
-<span id="cb486-26"><a href="lab11.html#cb486-26" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:5:40: unexpected input</span></span>
-<span id="cb486-27"><a href="lab11.html#cb486-27" tabindex="-1"></a><span class="co">#&gt; 4: </span></span>
-<span id="cb486-28"><a href="lab11.html#cb486-28" tabindex="-1"></a><span class="co">#&gt; 5:   train_j &lt;- cv_df %&gt;% filter(fold != __</span></span>
-<span id="cb486-29"><a href="lab11.html#cb486-29" tabindex="-1"></a><span class="co">#&gt;                                           ^</span></span></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="lab11.html#cb492-1" tabindex="-1"></a>cv_imp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(cv_df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb492-2"><a href="lab11.html#cb492-2" tabindex="-1"></a></span>
+<span id="cb492-3"><a href="lab11.html#cb492-3" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_imp<span class="sc">$</span>fold) {</span>
+<span id="cb492-4"><a href="lab11.html#cb492-4" tabindex="-1"></a></span>
+<span id="cb492-5"><a href="lab11.html#cb492-5" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> ___)</span>
+<span id="cb492-6"><a href="lab11.html#cb492-6" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> ___)</span>
+<span id="cb492-7"><a href="lab11.html#cb492-7" tabindex="-1"></a></span>
+<span id="cb492-8"><a href="lab11.html#cb492-8" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(train_j<span class="sc">$</span>___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb492-9"><a href="lab11.html#cb492-9" tabindex="-1"></a></span>
+<span id="cb492-10"><a href="lab11.html#cb492-10" tabindex="-1"></a>  train_j<span class="sc">$</span>___[<span class="fu">is.na</span>(train_j<span class="sc">$</span>___)] <span class="ot">&lt;-</span> ___</span>
+<span id="cb492-11"><a href="lab11.html#cb492-11" tabindex="-1"></a>  test_j<span class="sc">$</span>___[<span class="fu">is.na</span>(test_j<span class="sc">$</span>___)] <span class="ot">&lt;-</span> ___</span>
+<span id="cb492-12"><a href="lab11.html#cb492-12" tabindex="-1"></a></span>
+<span id="cb492-13"><a href="lab11.html#cb492-13" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb492-14"><a href="lab11.html#cb492-14" tabindex="-1"></a>    <span class="at">formula =</span> ___,</span>
+<span id="cb492-15"><a href="lab11.html#cb492-15" tabindex="-1"></a>    <span class="at">data =</span> ___,</span>
+<span id="cb492-16"><a href="lab11.html#cb492-16" tabindex="-1"></a>    <span class="at">family =</span> ___</span>
+<span id="cb492-17"><a href="lab11.html#cb492-17" tabindex="-1"></a>  )</span>
+<span id="cb492-18"><a href="lab11.html#cb492-18" tabindex="-1"></a></span>
+<span id="cb492-19"><a href="lab11.html#cb492-19" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> ___, <span class="at">type =</span> ___)</span>
+<span id="cb492-20"><a href="lab11.html#cb492-20" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(___ <span class="sc">&gt;</span> ___, ___, ___)</span>
+<span id="cb492-21"><a href="lab11.html#cb492-21" tabindex="-1"></a></span>
+<span id="cb492-22"><a href="lab11.html#cb492-22" tabindex="-1"></a>  cv_imp<span class="sc">$</span>accuracy[cv_imp<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(___ <span class="sc">==</span> ___, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb492-23"><a href="lab11.html#cb492-23" tabindex="-1"></a>}</span>
+<span id="cb492-24"><a href="lab11.html#cb492-24" tabindex="-1"></a></span>
+<span id="cb492-25"><a href="lab11.html#cb492-25" tabindex="-1"></a><span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(cv_imp<span class="sc">$</span>accuracy), <span class="at">sd =</span> <span class="fu">sd</span>(cv_imp<span class="sc">$</span>accuracy))</span>
+<span id="cb492-26"><a href="lab11.html#cb492-26" tabindex="-1"></a><span class="co">#&gt; Error in parse(text = input): &lt;text&gt;:5:40: unexpected input</span></span>
+<span id="cb492-27"><a href="lab11.html#cb492-27" tabindex="-1"></a><span class="co">#&gt; 4: </span></span>
+<span id="cb492-28"><a href="lab11.html#cb492-28" tabindex="-1"></a><span class="co">#&gt; 5:   train_j &lt;- cv_df %&gt;% filter(fold != __</span></span>
+<span id="cb492-29"><a href="lab11.html#cb492-29" tabindex="-1"></a><span class="co">#&gt;                                           ^</span></span></code></pre></div>
 <details>
 <summary>
 Click for a solution example
 </summary>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="lab11.html#cb487-1" tabindex="-1"></a>cv_imp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(cv_df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
-<span id="cb487-2"><a href="lab11.html#cb487-2" tabindex="-1"></a></span>
-<span id="cb487-3"><a href="lab11.html#cb487-3" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_imp<span class="sc">$</span>fold) {</span>
-<span id="cb487-4"><a href="lab11.html#cb487-4" tabindex="-1"></a></span>
-<span id="cb487-5"><a href="lab11.html#cb487-5" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
-<span id="cb487-6"><a href="lab11.html#cb487-6" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
-<span id="cb487-7"><a href="lab11.html#cb487-7" tabindex="-1"></a></span>
-<span id="cb487-8"><a href="lab11.html#cb487-8" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(train_j<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb487-9"><a href="lab11.html#cb487-9" tabindex="-1"></a></span>
-<span id="cb487-10"><a href="lab11.html#cb487-10" tabindex="-1"></a>  train_j<span class="sc">$</span>age[<span class="fu">is.na</span>(train_j<span class="sc">$</span>age)] <span class="ot">&lt;-</span> mu</span>
-<span id="cb487-11"><a href="lab11.html#cb487-11" tabindex="-1"></a>  test_j<span class="sc">$</span>age[<span class="fu">is.na</span>(test_j<span class="sc">$</span>age)] <span class="ot">&lt;-</span> mu</span>
-<span id="cb487-12"><a href="lab11.html#cb487-12" tabindex="-1"></a></span>
-<span id="cb487-13"><a href="lab11.html#cb487-13" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb487-14"><a href="lab11.html#cb487-14" tabindex="-1"></a>    <span class="at">formula =</span> f_expanded,</span>
-<span id="cb487-15"><a href="lab11.html#cb487-15" tabindex="-1"></a>    <span class="at">data =</span> train_j,</span>
-<span id="cb487-16"><a href="lab11.html#cb487-16" tabindex="-1"></a>    <span class="at">family =</span> binomial</span>
-<span id="cb487-17"><a href="lab11.html#cb487-17" tabindex="-1"></a>  )</span>
-<span id="cb487-18"><a href="lab11.html#cb487-18" tabindex="-1"></a></span>
-<span id="cb487-19"><a href="lab11.html#cb487-19" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb487-20"><a href="lab11.html#cb487-20" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb487-21"><a href="lab11.html#cb487-21" tabindex="-1"></a></span>
-<span id="cb487-22"><a href="lab11.html#cb487-22" tabindex="-1"></a>  cv_imp<span class="sc">$</span>accuracy[cv_imp<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_j <span class="sc">==</span> test_j<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb487-23"><a href="lab11.html#cb487-23" tabindex="-1"></a>}</span>
-<span id="cb487-24"><a href="lab11.html#cb487-24" tabindex="-1"></a></span>
-<span id="cb487-25"><a href="lab11.html#cb487-25" tabindex="-1"></a><span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(cv_imp<span class="sc">$</span>accuracy), <span class="at">sd =</span> <span class="fu">sd</span>(cv_imp<span class="sc">$</span>accuracy))</span>
-<span id="cb487-26"><a href="lab11.html#cb487-26" tabindex="-1"></a><span class="co">#&gt;  mean    sd </span></span>
-<span id="cb487-27"><a href="lab11.html#cb487-27" tabindex="-1"></a><span class="co">#&gt; 0.777 0.036</span></span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="lab11.html#cb493-1" tabindex="-1"></a>cv_imp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fold =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(cv_df<span class="sc">$</span>fold)), <span class="at">accuracy =</span> <span class="cn">NA_real_</span>)</span>
+<span id="cb493-2"><a href="lab11.html#cb493-2" tabindex="-1"></a></span>
+<span id="cb493-3"><a href="lab11.html#cb493-3" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> cv_imp<span class="sc">$</span>fold) {</span>
+<span id="cb493-4"><a href="lab11.html#cb493-4" tabindex="-1"></a></span>
+<span id="cb493-5"><a href="lab11.html#cb493-5" tabindex="-1"></a>  train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
+<span id="cb493-6"><a href="lab11.html#cb493-6" tabindex="-1"></a>  test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
+<span id="cb493-7"><a href="lab11.html#cb493-7" tabindex="-1"></a></span>
+<span id="cb493-8"><a href="lab11.html#cb493-8" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(train_j<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb493-9"><a href="lab11.html#cb493-9" tabindex="-1"></a></span>
+<span id="cb493-10"><a href="lab11.html#cb493-10" tabindex="-1"></a>  train_j<span class="sc">$</span>age[<span class="fu">is.na</span>(train_j<span class="sc">$</span>age)] <span class="ot">&lt;-</span> mu</span>
+<span id="cb493-11"><a href="lab11.html#cb493-11" tabindex="-1"></a>  test_j<span class="sc">$</span>age[<span class="fu">is.na</span>(test_j<span class="sc">$</span>age)] <span class="ot">&lt;-</span> mu</span>
+<span id="cb493-12"><a href="lab11.html#cb493-12" tabindex="-1"></a></span>
+<span id="cb493-13"><a href="lab11.html#cb493-13" tabindex="-1"></a>  m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb493-14"><a href="lab11.html#cb493-14" tabindex="-1"></a>    <span class="at">formula =</span> f_expanded,</span>
+<span id="cb493-15"><a href="lab11.html#cb493-15" tabindex="-1"></a>    <span class="at">data =</span> train_j,</span>
+<span id="cb493-16"><a href="lab11.html#cb493-16" tabindex="-1"></a>    <span class="at">family =</span> binomial</span>
+<span id="cb493-17"><a href="lab11.html#cb493-17" tabindex="-1"></a>  )</span>
+<span id="cb493-18"><a href="lab11.html#cb493-18" tabindex="-1"></a></span>
+<span id="cb493-19"><a href="lab11.html#cb493-19" tabindex="-1"></a>  p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb493-20"><a href="lab11.html#cb493-20" tabindex="-1"></a>  yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb493-21"><a href="lab11.html#cb493-21" tabindex="-1"></a></span>
+<span id="cb493-22"><a href="lab11.html#cb493-22" tabindex="-1"></a>  cv_imp<span class="sc">$</span>accuracy[cv_imp<span class="sc">$</span>fold <span class="sc">==</span> j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(yhat_j <span class="sc">==</span> test_j<span class="sc">$</span>survived, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb493-23"><a href="lab11.html#cb493-23" tabindex="-1"></a>}</span>
+<span id="cb493-24"><a href="lab11.html#cb493-24" tabindex="-1"></a></span>
+<span id="cb493-25"><a href="lab11.html#cb493-25" tabindex="-1"></a><span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(cv_imp<span class="sc">$</span>accuracy), <span class="at">sd =</span> <span class="fu">sd</span>(cv_imp<span class="sc">$</span>accuracy))</span>
+<span id="cb493-26"><a href="lab11.html#cb493-26" tabindex="-1"></a><span class="co">#&gt;  mean    sd </span></span>
+<span id="cb493-27"><a href="lab11.html#cb493-27" tabindex="-1"></a><span class="co">#&gt; 0.777 0.036</span></span></code></pre></div>
 </details>
 </div>
 <div id="reflection-5" class="section level3 unnumbered hasAnchor">
@@ -2479,28 +2484,28 @@ Click for a solution example
 <li>compute TP, FP, TN, FN</li>
 <li>compute sensitivity and specificity</li>
 </ul>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="lab11.html#cb488-1" tabindex="-1"></a><span class="co"># Choose a fold</span></span>
-<span id="cb488-2"><a href="lab11.html#cb488-2" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb488-3"><a href="lab11.html#cb488-3" tabindex="-1"></a></span>
-<span id="cb488-4"><a href="lab11.html#cb488-4" tabindex="-1"></a>train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
-<span id="cb488-5"><a href="lab11.html#cb488-5" tabindex="-1"></a>test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
-<span id="cb488-6"><a href="lab11.html#cb488-6" tabindex="-1"></a></span>
-<span id="cb488-7"><a href="lab11.html#cb488-7" tabindex="-1"></a>m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> f_expanded, <span class="at">data =</span> train_j, <span class="at">family =</span> binomial)</span>
-<span id="cb488-8"><a href="lab11.html#cb488-8" tabindex="-1"></a>p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb488-9"><a href="lab11.html#cb488-9" tabindex="-1"></a>yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb488-10"><a href="lab11.html#cb488-10" tabindex="-1"></a>y_j <span class="ot">&lt;-</span> test_j<span class="sc">$</span>survived</span>
-<span id="cb488-11"><a href="lab11.html#cb488-11" tabindex="-1"></a></span>
-<span id="cb488-12"><a href="lab11.html#cb488-12" tabindex="-1"></a>TP <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb488-13"><a href="lab11.html#cb488-13" tabindex="-1"></a>FP <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb488-14"><a href="lab11.html#cb488-14" tabindex="-1"></a>TN <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb488-15"><a href="lab11.html#cb488-15" tabindex="-1"></a>FN <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb488-16"><a href="lab11.html#cb488-16" tabindex="-1"></a></span>
-<span id="cb488-17"><a href="lab11.html#cb488-17" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN)</span>
-<span id="cb488-18"><a href="lab11.html#cb488-18" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> TN <span class="sc">/</span> (TN <span class="sc">+</span> FP)</span>
-<span id="cb488-19"><a href="lab11.html#cb488-19" tabindex="-1"></a></span>
-<span id="cb488-20"><a href="lab11.html#cb488-20" tabindex="-1"></a><span class="fu">c</span>(<span class="at">TP =</span> TP, <span class="at">FP =</span> FP, <span class="at">TN =</span> TN, <span class="at">FN =</span> FN, <span class="at">sensitivity =</span> sensitivity, <span class="at">specificity =</span> specificity)</span>
-<span id="cb488-21"><a href="lab11.html#cb488-21" tabindex="-1"></a><span class="co">#&gt;          TP          FP          TN          FN sensitivity specificity </span></span>
-<span id="cb488-22"><a href="lab11.html#cb488-22" tabindex="-1"></a><span class="co">#&gt;       24.00       13.00       53.00       15.00        0.62        0.80</span></span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="lab11.html#cb494-1" tabindex="-1"></a><span class="co"># Choose a fold</span></span>
+<span id="cb494-2"><a href="lab11.html#cb494-2" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb494-3"><a href="lab11.html#cb494-3" tabindex="-1"></a></span>
+<span id="cb494-4"><a href="lab11.html#cb494-4" tabindex="-1"></a>train_j <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">!=</span> j)</span>
+<span id="cb494-5"><a href="lab11.html#cb494-5" tabindex="-1"></a>test_j  <span class="ot">&lt;-</span> cv_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fold <span class="sc">==</span> j)</span>
+<span id="cb494-6"><a href="lab11.html#cb494-6" tabindex="-1"></a></span>
+<span id="cb494-7"><a href="lab11.html#cb494-7" tabindex="-1"></a>m_j <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> f_expanded, <span class="at">data =</span> train_j, <span class="at">family =</span> binomial)</span>
+<span id="cb494-8"><a href="lab11.html#cb494-8" tabindex="-1"></a>p_j <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_j, <span class="at">newdata =</span> test_j, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb494-9"><a href="lab11.html#cb494-9" tabindex="-1"></a>yhat_j <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_j <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb494-10"><a href="lab11.html#cb494-10" tabindex="-1"></a>y_j <span class="ot">&lt;-</span> test_j<span class="sc">$</span>survived</span>
+<span id="cb494-11"><a href="lab11.html#cb494-11" tabindex="-1"></a></span>
+<span id="cb494-12"><a href="lab11.html#cb494-12" tabindex="-1"></a>TP <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb494-13"><a href="lab11.html#cb494-13" tabindex="-1"></a>FP <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb494-14"><a href="lab11.html#cb494-14" tabindex="-1"></a>TN <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb494-15"><a href="lab11.html#cb494-15" tabindex="-1"></a>FN <span class="ot">&lt;-</span> <span class="fu">sum</span>(yhat_j <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> y_j <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb494-16"><a href="lab11.html#cb494-16" tabindex="-1"></a></span>
+<span id="cb494-17"><a href="lab11.html#cb494-17" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN)</span>
+<span id="cb494-18"><a href="lab11.html#cb494-18" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> TN <span class="sc">/</span> (TN <span class="sc">+</span> FP)</span>
+<span id="cb494-19"><a href="lab11.html#cb494-19" tabindex="-1"></a></span>
+<span id="cb494-20"><a href="lab11.html#cb494-20" tabindex="-1"></a><span class="fu">c</span>(<span class="at">TP =</span> TP, <span class="at">FP =</span> FP, <span class="at">TN =</span> TN, <span class="at">FN =</span> FN, <span class="at">sensitivity =</span> sensitivity, <span class="at">specificity =</span> specificity)</span>
+<span id="cb494-21"><a href="lab11.html#cb494-21" tabindex="-1"></a><span class="co">#&gt;          TP          FP          TN          FN sensitivity specificity </span></span>
+<span id="cb494-22"><a href="lab11.html#cb494-22" tabindex="-1"></a><span class="co">#&gt;       24.00       13.00       53.00       15.00        0.62        0.80</span></span></code></pre></div>
 </div>
 <div id="reflection-6" class="section level3 unnumbered hasAnchor">
 <h3>10.2 Reflection<a href="lab11.html#reflection-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>

@@ -688,8 +688,13 @@ div.csl-indent {
 <li class="chapter" data-level="45.4" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#gratuitous-3d"><i class="fa fa-check"></i><b>45.4</b> Gratuitous 3D</a></li>
 <li class="chapter" data-level="45.5" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#ignoring-important-factors"><i class="fa fa-check"></i><b>45.5</b> Ignoring important factors</a></li>
 <li class="chapter" data-level="45.6" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#too-many-significant-digits"><i class="fa fa-check"></i><b>45.6</b> Too many significant digits</a></li>
-<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.7</b> Displaying data well</a></li>
-<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.8</b> Some further reading</a></li>
+<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-as-a-source-of-bad-graphs"><i class="fa fa-check"></i><b>45.7</b> Color as a Source of Bad Graphs</a>
+<ul>
+<li class="chapter" data-level="45.7.1" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#common-color-pitfalls"><i class="fa fa-check"></i><b>45.7.1</b> Common color pitfalls</a></li>
+<li class="chapter" data-level="45.7.2" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-blind-friendly-palettes"><i class="fa fa-check"></i><b>45.7.2</b> Color-blind friendly palettes</a></li>
+</ul></li>
+<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.8</b> Displaying data well</a></li>
+<li class="chapter" data-level="45.9" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.9</b> Some further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="46" data-path="odd-design-choices-in-data-visualization.html"><a href="odd-design-choices-in-data-visualization.html"><i class="fa fa-check"></i><b>46</b> ODD: Design choices in data visualization</a>
 <ul>
@@ -2094,8 +2099,113 @@ precision? This can be easily remedied:</p>
 <span id="cb203-9"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb203-9" tabindex="-1"></a><span class="co">#&gt; team 7 68.4 73.0 79.1 71.2 77.2</span></span>
 <span id="cb203-10"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb203-10" tabindex="-1"></a><span class="co">#&gt; team 8 73.8 75.6 83.0 75.6 87.7</span></span></code></pre></div>
 </div>
-<div id="displaying-data-well" class="section level2 hasAnchor" number="45.7">
-<h2><span class="header-section-number">45.7</span> Displaying data well<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="color-as-a-source-of-bad-graphs" class="section level2 hasAnchor" number="45.7">
+<h2><span class="header-section-number">45.7</span> Color as a Source of Bad Graphs<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-as-a-source-of-bad-graphs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Color is a powerful tool in data visualization, but choosing the right colors can be challenging. Two useful online tools for selecting and generating color palettes are:</p>
+<ul>
+<li><a href="https://coolors.co/">Coolors</a> — a fast and intuitive color scheme generator</li>
+<li><a href="https://colordesigner.io/">ColorDesigner</a> — a color design tool with palette generation and contrast checking</li>
+</ul>
+<div id="common-color-pitfalls" class="section level3 hasAnchor" number="45.7.1">
+<h3><span class="header-section-number">45.7.1</span> Common color pitfalls<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#common-color-pitfalls" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Color choices are one of the most common ways that otherwise competent graphs go wrong. Before reaching for a good palette, it helps to see what goes wrong with bad ones. Here are three common color pitfalls.</p>
+<p><strong>The rainbow trap.</strong> R’s <code>rainbow()</code> palette looks vibrant, but it is one of the worst choices for data visualization. The colors are perceptually uneven (yellow and cyan appear much lighter than red and blue), which creates a false sense of ordered importance. It is also unreadable for people who have difficulty distinguishing red and green.</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb204-2"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-2" tabindex="-1"></a></span>
+<span id="cb204-3"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb204-4"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-4" tabindex="-1"></a>demo_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb204-5"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-5" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="at">each =</span> <span class="dv">30</span>),</span>
+<span id="cb204-6"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-6" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb204-7"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-7" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">5</span>), <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="fl">5.5</span>), <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="fl">4.8</span>),</span>
+<span id="cb204-8"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-8" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="fl">5.2</span>), <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="fl">4.9</span>), <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="fl">5.4</span>)</span>
+<span id="cb204-9"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-9" tabindex="-1"></a>  )</span>
+<span id="cb204-10"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-10" tabindex="-1"></a>)</span>
+<span id="cb204-11"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-11" tabindex="-1"></a><span class="co"># Bad: rainbow palette — perceptually uneven and inaccessible</span></span>
+<span id="cb204-12"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-12" tabindex="-1"></a><span class="fu">ggplot</span>(demo_df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb204-13"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-13" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb204-14"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-14" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">rainbow</span>(<span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb204-15"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-15" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb204-16"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-16" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Rainbow palette: looks fun, reads poorly&quot;</span>,</span>
+<span id="cb204-17"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-17" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Uneven brightness and inaccessible to color-blind viewers&quot;</span></span>
+<span id="cb204-18"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-18" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb204-19"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb204-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-rainbow-bad-1.png" alt="" width="672" /></p>
+<p><strong>The red–green trap.</strong> Red and green are the most common pair used to signal “good vs. bad” or “treatment vs. control,” yet a sizable portion of the population (especially men) cannot distinguish between these colors due to red-green color blindness (deuteranopia and protanopia).
+Encoding information using red and green alone can make your visualizations unreadable to a sizable portion of your audience. Avoid using red and green together, especially for critical information.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-1" tabindex="-1"></a>demo_df_ab <span class="ot">&lt;-</span> demo_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>))</span>
+<span id="cb205-2"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-2" tabindex="-1"></a></span>
+<span id="cb205-3"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-3" tabindex="-1"></a><span class="co"># Bad: red/green encoding — invisible to red-green color-blind viewers</span></span>
+<span id="cb205-4"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-4" tabindex="-1"></a><span class="fu">ggplot</span>(demo_df_ab, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb205-5"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-5" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb205-6"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-6" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span> <span class="ot">=</span> <span class="st">&quot;#FF0000&quot;</span>, <span class="st">&quot;B&quot;</span> <span class="ot">=</span> <span class="st">&quot;#00CC00&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb205-7"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-7" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb205-8"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-8" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Red vs. green: invisible to ~8% of men&quot;</span>,</span>
+<span id="cb205-9"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-9" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Deuteranopia and protanopia make these colors indistinguishable&quot;</span></span>
+<span id="cb205-10"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb205-11"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb205-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-redgreen-bad-1.png" alt="" width="672" /></p>
+<p><strong>Too-similar colors.</strong> Colors that differ only in lightness or are too close in hue become impossible to tell apart in small or overlapping plot elements.</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-1" tabindex="-1"></a><span class="co"># Bad: colors too similar to distinguish reliably</span></span>
+<span id="cb206-2"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-2" tabindex="-1"></a>similar_blues_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#3333FF&quot;</span>, <span class="st">&quot;#4466FF&quot;</span>, <span class="st">&quot;#5599FF&quot;</span>, <span class="st">&quot;#66BBFF&quot;</span>, <span class="st">&quot;#77DDFF&quot;</span>, <span class="st">&quot;#88EEFF&quot;</span>)</span>
+<span id="cb206-3"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-3" tabindex="-1"></a><span class="fu">ggplot</span>(demo_df, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value, <span class="at">colour =</span> group)) <span class="sc">+</span></span>
+<span id="cb206-4"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-4" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb206-5"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-5" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> similar_blues_palette) <span class="sc">+</span></span>
+<span id="cb206-6"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb206-7"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Too-similar blues: groups are indistinguishable&quot;</span>,</span>
+<span id="cb206-8"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-8" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Avoid palettes where colors differ only in lightness&quot;</span></span>
+<span id="cb206-9"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb206-9" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-similar-colors-bad-1.png" alt="" width="672" /></p>
+</div>
+<div id="color-blind-friendly-palettes" class="section level3 hasAnchor" number="45.7.2">
+<h3><span class="header-section-number">45.7.2</span> Color-blind friendly palettes<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-blind-friendly-palettes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An important consideration when choosing colors is accessibility. Roughly 8% of men and 0.5% of women have some form of color vision deficiency. Using color-blind friendly palettes ensures your visualizations are readable by everyone. Here are two widely used color-blind friendly palettes for R (based on <a href="https://www.nature.com/articles/nmeth.1618">Wong 2011</a>) that avoid all three problems above:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-1" tabindex="-1"></a><span class="co"># The palette with grey (color-blind friendly)</span></span>
+<span id="cb207-2"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-2" tabindex="-1"></a>cbPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>,</span>
+<span id="cb207-3"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-3" tabindex="-1"></a>               <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
+<span id="cb207-4"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-4" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-5" tabindex="-1"></a><span class="co"># Display the palettes</span></span>
+<span id="cb207-6"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb207-6" tabindex="-1"></a>scales<span class="sc">::</span><span class="fu">show_col</span>(cbPalette)</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-cb-palettes-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-1" tabindex="-1"></a></span>
+<span id="cb208-2"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-2" tabindex="-1"></a><span class="co"># The palette with black (color-blind friendly)</span></span>
+<span id="cb208-3"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-3" tabindex="-1"></a>cbbPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>,</span>
+<span id="cb208-4"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-4" tabindex="-1"></a>                <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
+<span id="cb208-5"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-5" tabindex="-1"></a></span>
+<span id="cb208-6"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-6" tabindex="-1"></a></span>
+<span id="cb208-7"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb208-7" tabindex="-1"></a>scales<span class="sc">::</span><span class="fu">show_col</span>(cbbPalette)</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-cb-palettes-2.png" alt="" width="672" /></p>
+<p>Now revisit the red–green example with the color-blind friendly palette:</p>
+<p>``{r plots_to_avoid-cb-palette-demo}
+# Good: color-blind friendly palette
+ggplot(demo_df %&gt;% filter(group %in% c(“A”, “B”)),
+aes(x = group, y = value, fill = group)) +
+geom_boxplot() +
+scale_fill_manual(values = cbPalette[c(7, 3)]) +
+labs(
+title = “Color-blind friendly: orange vs. blue”,
+subtitle = “Distinguishable under deuteranopia, protanopia, and tritanopia”
+) +
+theme(legend.position = “none”)</p>
+<pre><code>
+To use these palettes in ggplot2, pass them to `scale_colour_manual()` or `scale_fill_manual()`:
+
+
+``` r
+# For lines and points (colour aesthetic)
+ggplot(data, aes(x, y, colour = group)) +
+  geom_point() +
+  scale_colour_manual(values = cbPalette)
+
+# For filled elements (bars, areas)
+ggplot(data, aes(x, y, fill = group)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  scale_fill_manual(values = cbPalette)</code></pre>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr"># The palette with grey:<br>cbPalette &lt;- c(&quot;#999999&quot;, &quot;<a href="https://twitter.com/hashtag/E69F00?src=hash&amp;ref_src=twsrc%5Etfw">#E69F00</a>&quot;, &quot;<a href="https://twitter.com/hashtag/56B4E9?src=hash&amp;ref_src=twsrc%5Etfw">#56B4E9</a>&quot;, &quot;<a href="https://twitter.com/hashtag/009E73?src=hash&amp;ref_src=twsrc%5Etfw">#009E73</a>&quot;, &quot;<a href="https://twitter.com/hashtag/F0E442?src=hash&amp;ref_src=twsrc%5Etfw">#F0E442</a>&quot;, &quot;<a href="https://twitter.com/hashtag/0072B2?src=hash&amp;ref_src=twsrc%5Etfw">#0072B2</a>&quot;, &quot;<a href="https://twitter.com/hashtag/D55E00?src=hash&amp;ref_src=twsrc%5Etfw">#D55E00</a>&quot;, &quot;<a href="https://twitter.com/hashtag/CC79A7?src=hash&amp;ref_src=twsrc%5Etfw">#CC79A7</a>&quot;)<br><br># The palette with black:<br>cbbPalette &lt;- c(&quot;#000000&quot;, &quot;<a href="https://twitter.com/hashtag/E69F00?src=hash&amp;ref_src=twsrc%5Etfw">#E69F00</a>&quot;, &quot;<a href="https://twitter.com/hashtag/56B4E9?src=hash&amp;ref_src=twsrc%5Etfw">#56B4E9</a>&quot;, &quot;<a href="https://twitter.com/hashtag/009E73?src=hash&amp;ref_src=twsrc%5Etfw">#009E73</a>&quot;, &quot;<a href="https://twitter.com/hashtag/F0E442?src=hash&amp;ref_src=twsrc%5Etfw">#F0E442</a>&quot;, &quot;<a href="https://twitter.com/hashtag/0072B2?src=hash&amp;ref_src=twsrc%5Etfw">#0072B2</a>&quot;, &quot;<a href="https://twitter.com/hashtag/D55E00?src=hash&amp;ref_src=twsrc%5Etfw">#D55E00</a>&quot;, &quot;<a href="https://twitter.com/hashtag/CC79A7?src=hash&amp;ref_src=twsrc%5Etfw">#CC79A7</a>&quot;)</p>&mdash; AJ Thurston, PhD (@AJThurston) <a href="https://twitter.com/AJThurston/status/1792694381063123443?ref_src=twsrc%5Etfw">May 20, 2024</a></blockquote>
+
+</div>
+</div>
+<div id="displaying-data-well" class="section level2 hasAnchor" number="45.8">
+<h2><span class="header-section-number">45.8</span> Displaying data well<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In general you should follow these principles:</p>
 <ul>
 <li>Be accurate and clear.</li>
@@ -2105,8 +2215,8 @@ precision? This can be easily remedied:</p>
 <li>In tables, every digit should be meaningful. Don’t drop ending 0s.</li>
 </ul>
 </div>
-<div id="some-further-reading" class="section level2 hasAnchor" number="45.8">
-<h2><span class="header-section-number">45.8</span> Some further reading<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="some-further-reading" class="section level2 hasAnchor" number="45.9">
+<h2><span class="header-section-number">45.9</span> Some further reading<a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><p>ER Tufte (1983) The visual display of quantitative information.
 Graphics Press.</p></li>

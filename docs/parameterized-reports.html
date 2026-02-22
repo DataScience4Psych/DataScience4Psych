@@ -688,8 +688,13 @@ div.csl-indent {
 <li class="chapter" data-level="45.4" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#gratuitous-3d"><i class="fa fa-check"></i><b>45.4</b> Gratuitous 3D</a></li>
 <li class="chapter" data-level="45.5" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#ignoring-important-factors"><i class="fa fa-check"></i><b>45.5</b> Ignoring important factors</a></li>
 <li class="chapter" data-level="45.6" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#too-many-significant-digits"><i class="fa fa-check"></i><b>45.6</b> Too many significant digits</a></li>
-<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.7</b> Displaying data well</a></li>
-<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.8</b> Some further reading</a></li>
+<li class="chapter" data-level="45.7" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-as-a-source-of-bad-graphs"><i class="fa fa-check"></i><b>45.7</b> Color as a Source of Bad Graphs</a>
+<ul>
+<li class="chapter" data-level="45.7.1" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#common-color-pitfalls"><i class="fa fa-check"></i><b>45.7.1</b> Common color pitfalls</a></li>
+<li class="chapter" data-level="45.7.2" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#color-blind-friendly-palettes"><i class="fa fa-check"></i><b>45.7.2</b> Color-blind friendly palettes</a></li>
+</ul></li>
+<li class="chapter" data-level="45.8" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-data-well"><i class="fa fa-check"></i><b>45.8</b> Displaying data well</a></li>
+<li class="chapter" data-level="45.9" data-path="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html"><a href="odd-plots-behaving-badly-lessons-in-data-misrepresentation.html#some-further-reading"><i class="fa fa-check"></i><b>45.9</b> Some further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="46" data-path="odd-design-choices-in-data-visualization.html"><a href="odd-design-choices-in-data-visualization.html"><i class="fa fa-check"></i><b>46</b> ODD: Design choices in data visualization</a>
 <ul>
@@ -1677,9 +1682,9 @@ div.csl-indent {
 <p><img src="img/rmarkdown/param_yaml_dynamic_title.png" /></p>
 </center>
 <p>The parameters can also be used to filter the original data frame to a subset of interest. For example, the iris data frame can be filtered to only include the specified species of interest using the code below.</p>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="parameterized-reports.html#cb665-1" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb665-2"><a href="parameterized-reports.html#cb665-2" tabindex="-1"></a></span>
-<span id="cb665-3"><a href="parameterized-reports.html#cb665-3" tabindex="-1"></a>iris_sub <span class="ot">&lt;-</span> iris[iris<span class="sc">$</span>Species <span class="sc">%in%</span> params<span class="sc">$</span>species, ]</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="parameterized-reports.html#cb671-1" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb671-2"><a href="parameterized-reports.html#cb671-2" tabindex="-1"></a></span>
+<span id="cb671-3"><a href="parameterized-reports.html#cb671-3" tabindex="-1"></a>iris_sub <span class="ot">&lt;-</span> iris[iris<span class="sc">$</span>Species <span class="sc">%in%</span> params<span class="sc">$</span>species, ]</span></code></pre></div>
 <p>The parameter can be referenced frequently to update the text in the document or to filter to the data of interest. In the image below, the iris data set will be filtered by the specified parameter to generate <code>iris_sub</code>. <code>iris_sub</code> will be used to calculate the mean value for each flower characteristic.</p>
 <center>
 <p><img src="img/rmarkdown/param_iris-summary.png" /></p>
@@ -1699,17 +1704,17 @@ div.csl-indent {
 <div id="rmarkdownrender" class="section level2 hasAnchor" number="108.3">
 <h2><span class="header-section-number">108.3</span> rmarkdown::render()<a href="parameterized-reports.html#rmarkdownrender" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>rmarkdown</strong> function <code>render()</code> can also be used to compile the document. The <code>input</code> specifies the parameterized .Rmd file. The <code>params</code> argument species the parameter values to be used when rendering the document. Note that the value supplied to <code>params</code> must be wrapped by <code>list()</code>.</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="parameterized-reports.html#cb666-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(</span>
-<span id="cb666-2"><a href="parameterized-reports.html#cb666-2" tabindex="-1"></a>  <span class="at">input =</span> <span class="st">&quot;parameterized/param_template.Rmd&quot;</span>,</span>
-<span id="cb666-3"><a href="parameterized-reports.html#cb666-3" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">&quot;setosa&quot;</span>)</span>
-<span id="cb666-4"><a href="parameterized-reports.html#cb666-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="parameterized-reports.html#cb672-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(</span>
+<span id="cb672-2"><a href="parameterized-reports.html#cb672-2" tabindex="-1"></a>  <span class="at">input =</span> <span class="st">&quot;parameterized/param_template.Rmd&quot;</span>,</span>
+<span id="cb672-3"><a href="parameterized-reports.html#cb672-3" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">&quot;setosa&quot;</span>)</span>
+<span id="cb672-4"><a href="parameterized-reports.html#cb672-4" tabindex="-1"></a>)</span></code></pre></div>
 <p>It would not be efficient to specify each parameter of interest one-by-one. Instead a loop can be written to iteratively generate parameterized documents. Below the function <code>lapply()</code> is used to create the loop. <code>unique(iris$Species)</code> supplies a vector of unique species names (i.e., “setosa”, “versicolor”, and “virginica”) to generate parameterized reports. <code>species.i</code> is specified as a placeholder to represent each unique species in the iris data set; therefore <code>species.i</code> is used to specify what the species parameter should equal and it is used to generate a unique and easy to interpret file name <code>output_file = paste0(species.i, ".HTML")</code>.</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="parameterized-reports.html#cb667-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">unique</span>(iris<span class="sc">$</span>Species), <span class="cf">function</span>(species.i) {</span>
-<span id="cb667-2"><a href="parameterized-reports.html#cb667-2" tabindex="-1"></a>  rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;parameterized/param_template.Rmd&quot;</span>,</span>
-<span id="cb667-3"><a href="parameterized-reports.html#cb667-3" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">species =</span> species.i),</span>
-<span id="cb667-4"><a href="parameterized-reports.html#cb667-4" tabindex="-1"></a>    <span class="at">output_file =</span> <span class="fu">paste0</span>(species.i, <span class="st">&quot;.HTML&quot;</span>)</span>
-<span id="cb667-5"><a href="parameterized-reports.html#cb667-5" tabindex="-1"></a>  )</span>
-<span id="cb667-6"><a href="parameterized-reports.html#cb667-6" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="parameterized-reports.html#cb673-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">unique</span>(iris<span class="sc">$</span>Species), <span class="cf">function</span>(species.i) {</span>
+<span id="cb673-2"><a href="parameterized-reports.html#cb673-2" tabindex="-1"></a>  rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;parameterized/param_template.Rmd&quot;</span>,</span>
+<span id="cb673-3"><a href="parameterized-reports.html#cb673-3" tabindex="-1"></a>    <span class="at">params =</span> <span class="fu">list</span>(<span class="at">species =</span> species.i),</span>
+<span id="cb673-4"><a href="parameterized-reports.html#cb673-4" tabindex="-1"></a>    <span class="at">output_file =</span> <span class="fu">paste0</span>(species.i, <span class="st">&quot;.HTML&quot;</span>)</span>
+<span id="cb673-5"><a href="parameterized-reports.html#cb673-5" tabindex="-1"></a>  )</span>
+<span id="cb673-6"><a href="parameterized-reports.html#cb673-6" tabindex="-1"></a>})</span></code></pre></div>
 </div>
 <div id="your-turn-5" class="section level2 hasAnchor" number="108.4">
 <h2><span class="header-section-number">108.4</span> Your Turn<a href="parameterized-reports.html#your-turn-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1720,8 +1725,8 @@ div.csl-indent {
 <li>In your introductory paragraph, use inline code to specify that this document is specific to X Lake.</li>
 <li>Filter <code>df_thesis</code> to only represent the specified lake parameter</li>
 </ol>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="parameterized-reports.html#cb668-1" tabindex="-1"></a>df_thesis <span class="ot">&lt;-</span> df_thesis <span class="sc">%&gt;%</span></span>
-<span id="cb668-2"><a href="parameterized-reports.html#cb668-2" tabindex="-1"></a>  <span class="fu">filter</span>(lake <span class="sc">%in%</span> params<span class="sc">$</span>lake)</span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="parameterized-reports.html#cb674-1" tabindex="-1"></a>df_thesis <span class="ot">&lt;-</span> df_thesis <span class="sc">%&gt;%</span></span>
+<span id="cb674-2"><a href="parameterized-reports.html#cb674-2" tabindex="-1"></a>  <span class="fu">filter</span>(lake <span class="sc">%in%</span> params<span class="sc">$</span>lake)</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Update your conclusion section text to specify that the results are from X Lake and use inline code to specify:</p>
 <ul>
