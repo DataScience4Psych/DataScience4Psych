@@ -600,5 +600,48 @@ try_include_tweet("https://twitter.com/bmwiernik/status/1362437077820968960")
 try_include_tweet("https://twitter.com/latentchange/status/1380564902578913287")
 ```
 
+## Choosing Good Color Palettes
+
+Color is a powerful tool in data visualization, but choosing the right colors can be challenging. Two useful online tools for selecting and generating color palettes are:
+
+- [Coolors](https://coolors.co/) — a fast and intuitive color scheme generator
+- [ColorDesigner](https://colordesigner.io/) — a color design tool with palette generation and contrast checking
+
+### Color-blind friendly palettes
+
+An important consideration when choosing colors is accessibility. Roughly 8% of men and 0.5% of women have some form of color vision deficiency. Using color-blind friendly palettes ensures your visualizations are readable by everyone. Here are two widely used color-blind friendly palettes for R (based on [Wong 2011](https://www.nature.com/articles/nmeth.1618)):
+
+```{r plots_to_avoid-cb-palettes}
+# The palette with grey (color-blind friendly)
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black (color-blind friendly)
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# Display the palettes
+scales::show_col(cbPalette)
+scales::show_col(cbbPalette)
+```
+
+To use these palettes in ggplot2, pass them to `scale_colour_manual()` or `scale_fill_manual()`:
+
+```{r plots_to_avoid-cb-palette-usage, eval=FALSE}
+# For lines and points (colour aesthetic)
+ggplot(data, aes(x, y, colour = group)) +
+  geom_point() +
+  scale_colour_manual(values = cbPalette)
+
+# For filled elements (bars, areas)
+ggplot(data, aes(x, y, fill = group)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = cbPalette)
+```
+
+```{r plots_to_avoid-tweet-colors, echo=FALSE}
+try_include_tweet("https://twitter.com/AJThurston/status/1792694381063123443")
+```
+
 ```{r courselinks, child="includes/courselinks.md"}
 ```
