@@ -170,6 +170,44 @@ fisheries <- read_csv("data/fisheries.csv")
 
 `r emo::ji("white_check_mark")` `r emo::ji("arrow_up")` *Commit and push your changes to GitHub with an appropriate commit message again. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
+
+
+```{r lab_charts-code-fisheries, eval=FALSE, include=FALSE}
+# Potential code for improving the fisheries plot. This is not meant to be a complete solution, but rather a starting point for you to build on and modify as you see fit.
+
+library(dplyr)
+library(ggplot2)
+library(countrycode)
+
+fisheries %>%
+  mutate(
+    continent = countrycode(country, origin = "country.name", destination = "continent"),
+    continent = if_else(is.na(continent), "Other/Unknown", continent),
+    continent = factor(continent),
+    country = reorder(country, percentcapture)
+  ) %>%
+  ggplot(aes(x = country, y = percentcapture, fill = percentaquaculture)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ continent, scales = "free_y") +
+  labs(
+    x = "Country",
+    y = "Percentage of tons by capture",
+    title = "Fishery Production by Country due to Capture",
+    subtitle = "Including percentage due to aquaculture",
+    fill = "Percent due to aquaculture"
+    # font size for axes and title
+    
+  ) + 
+  theme(legend.position = "bottom",
+        axis.text.y = element_text(size = 4),  # Adjust y-axis text size
+        axis.title = element_text(size = 10),   # Adjust axis title size
+        plot.title = element_text(size = 14),   # Adjust plot title size
+        plot.subtitle = element_text(size = 12)) # Adjust subtitle size
+```
+</detail>
+
+
 ## Stretch Practice with Smokers in Whickham {.unnumbered}
 
 ```{r fig.margin=TRUE, eval=TRUE, echo=FALSE}
