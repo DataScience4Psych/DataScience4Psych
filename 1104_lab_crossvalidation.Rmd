@@ -7,9 +7,10 @@ source("common.R")
 
 ## Don't Judge the Ship After It Sinks {.unnumbered}
 
+
 In 1912, the RMS Titanic sank on its maiden voyage, killing over 1,500 of the roughly 2,200 people on board. The disaster sent shockwaves through the maritime insurance industry. Lloyd's of London, the world's oldest and most famous insurance market, had underwritten a significant portion of the Titanic's hull and cargo. The [claims that followed](https://www.lloyds.com/titanic) forced insurers to confront an uncomfortable question: could the risk have been quantified in advance?
 
-We've been hired by Lloyd's to help answer a version of that question retrospectively. Using passenger records, we will build classification models that predict survival and then evaluate how trustworthy those predictions really are. Along the way, you will discover a fundamental problem in predictive modeling: **a model that looks good on data it has already seen may perform poorly on data it has not.** Cross validation is the standard remedy, and this lab will teach you why it works and how to implement it.
+We've been hired by Lloyd's to help answer a version of that question retrospectively. Using passenger records, we will build classification models that predict survival and then evaluate how trustworthy those predictions really are. Along the way, you will discover a fundamental problem in predictive modeling: **a model that looks good on data it has already seen may perform poorly on data it has not.** Cross validation is a classic remedy, and this lab will teach you why it works and how to implement it.
 
 
 ## Learning goals {.unnumbered}
@@ -41,9 +42,11 @@ options(
 
 ## Getting started and warming up {.unnumbered}
 
+Go to the course GitHub organization and locate the lab repo, which should be named something like `lab-11-cross-validation`. Either Fork it or use the template. Then clone it in RStudio. First, open the R Markdown document `lab-11.Rmd` and Knit it. Make sure it compiles without errors.
+
 ### Packages {.unnumbered}
 
-We will use tidyverse for data manipulation and titanic for data. You will also load readxl to import the Titanic3 file (provided in your project).
+In this lab, we will use **tidyverse** for data manipulation, **titanic** for the classic train/test split, and **readxl** to import the extended Titanic3 dataset (provided in your project).
 
 ```{r lab_crossvalidation-packages-example, eval = FALSE}
 library(tidyverse)
@@ -62,7 +65,7 @@ Configure your Git user name and email. If you cannot remember the instructions,
 
 Update the name of your project to match the lab's title.
 
--->
+
 
 ## Warm up {.unnumbered}
 
@@ -78,6 +81,7 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 - View the **Diff** and confirm that you are happy with the changes.
 - Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
 - Click on **Push**. This will prompt a dialogue box where you first need to enter your user name, and then your password.
+-->
 
 ## The data {.unnumbered}
 
@@ -104,7 +108,26 @@ data("titanic_test")
 ```
 
 
+Each observation in these datasets represents a single passenger. Here are the key variables:
+ 
+- `pclass`: Passenger class (1 = 1st, 2 = 2nd, 3 = 3rd) — a proxy for socioeconomic status
+- `survived`: Whether the passenger survived (1 = yes, 0 = no)
+- `name`: Passenger name (includes title, e.g., Mr., Mrs., Dr.)
+- `sex`: Passenger sex (male, female)
+- `age`: Passenger age in years (fractional for children under 1)
+- `sibsp`: Number of siblings/spouses aboard
+- `parch`: Number of parents/children aboard
+- `ticket`: Ticket number
+- `fare`: Passenger fare in British pounds
+- `cabin`: Cabin number (many missing)
+- `embarked`: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
+- `boat`: Lifeboat number (if survived)
+- `body`: Body identification number (if did not survive and body was recovered)
+- `home.dest`: Home/destination
+
 Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titanic_train as well as create an ordinal level variable for passenger class. These are small steps, but they help keep the analysis tidy and reproducible.
+
+
 
 ```{r lab_crossvalidation-data-prep, }
 # Rename columns to lowercase
@@ -134,7 +157,7 @@ summary(titanic3)
 
 ## Exercises {.unnumbered}
 
-## Exercise 1: Apparent accuracy {.unnumbered}
+### Part 1: Apparent accuracy {.unnumbered}
 
 Before we talk about cross validation, we need to see the problem it is designed to fix.
 
@@ -143,9 +166,9 @@ If we use the same data to fit the model and to evaluate it, we are letting the 
 
 Let's do that on purpose and see what happens.
 
-### 1.1 Fit a logistic regression {.unnumbered}
+#### Exercise 1: Fitting a model on full data {.unnumbered}
 
-Fit a logistic regression predicting survival from passenger sex and class as a numeric variable.
+**1.1.** Fit a logistic regression predicting survival from passenger sex and class (as a numeric variable). Save the model as `m_apparent`.
 
 Save the model as `m_apparent`.
 
@@ -208,6 +231,8 @@ yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
 
 Now, we can compute the model's accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
 
+**1.3.** Compute the model's accuracy. We define accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
+
 ```{r lab_crossvalidation-accuracy-apparent, }
 
 acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
@@ -225,7 +250,7 @@ Cross validation exists because this number tells us very little about how well 
 2. Can you think of an analogy from everyday life where "testing on the same data you trained on" would give misleadingly good results?
 
 
-## Exercise 2: Holding passengers back {.unnumbered}
+### Part 2: Holding passengers back  {.unnumbered}
 
 To get a more honest answer, we need to pretend that some passengers are unknown.
 
@@ -233,7 +258,7 @@ We'll do this by splitting the data into two groups:
    - a **training set**, used to fit the model
    - a **test set**, used only for evaluation
 
-This is the simplest form of honest evaluation. The model never sees the test data during training, so its performance on that set reflects genuine predictive ability — not memory.
+This is the simplest form of honest evaluation. The model never sees the test data during training, so its performance on that set can't over capitalize on chance.
 
 Conveniently, the `titanic` package already provides such a split.
 
@@ -241,10 +266,12 @@ Conveniently, the `titanic` package already provides such a split.
 titanic_test %>% glimpse()
 ```
 
+#### Exercise 2: Train/test split {.unnumbered}
 
-### 2.1 Fit the model on training data only {.unnumbered}
+**2.1.** Fit the same model as before (`survived ~ sex + pclass`), but only on the training data. Save it as `m_split`.
 
-Now we fit the same model as before, but only on the training data.
+
+
 
 ```{r exercise-two-part-one-split-model, error=TRUE, eval=FALSE}
 m_split <- glm(
