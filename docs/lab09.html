@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-22" />
+<meta name="date" content="2026-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1682,22 +1682,22 @@ div.csl-indent {
 <div id="packages-8" class="section level3 unnumbered hasAnchor">
 <h3>Packages<a href="lab09.html#packages-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this lab, we will use <strong>tidyverse</strong> and <strong>janitor</strong> to clean and explore the data.</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="lab09.html#cb400-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb400-2"><a href="lab09.html#cb400-2" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="lab09.html#cb401-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb401-2"><a href="lab09.html#cb401-2" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
 </div>
 <div id="the-data-3" class="section level3 unnumbered hasAnchor">
 <h3>The data<a href="lab09.html#the-data-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For this lab, we’ll use the COMPAS dataset compiled by ProPublica. The data has been preprocessed and mostly cleaned for you. I recommend using the <code>janitor</code> package to clean the column names.</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="lab09.html#cb401-1" tabindex="-1"></a><span class="co"># Load the COMPAS data</span></span>
-<span id="cb401-2"><a href="lab09.html#cb401-2" tabindex="-1"></a>compas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/compas-scores-two-years.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb401-3"><a href="lab09.html#cb401-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb401-4"><a href="lab09.html#cb401-4" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb401-5"><a href="lab09.html#cb401-5" tabindex="-1"></a>    <span class="at">decile_score =</span> decile_score_12,</span>
-<span id="cb401-6"><a href="lab09.html#cb401-6" tabindex="-1"></a>    <span class="at">priors_count =</span> priors_count_15</span>
-<span id="cb401-7"><a href="lab09.html#cb401-7" tabindex="-1"></a>  )</span>
-<span id="cb401-8"><a href="lab09.html#cb401-8" tabindex="-1"></a></span>
-<span id="cb401-9"><a href="lab09.html#cb401-9" tabindex="-1"></a><span class="co"># Take a look at the data</span></span>
-<span id="cb401-10"><a href="lab09.html#cb401-10" tabindex="-1"></a><span class="fu">glimpse</span>(compas)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="lab09.html#cb402-1" tabindex="-1"></a><span class="co"># Load the COMPAS data</span></span>
+<span id="cb402-2"><a href="lab09.html#cb402-2" tabindex="-1"></a>compas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/compas-scores-two-years.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb402-3"><a href="lab09.html#cb402-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb402-4"><a href="lab09.html#cb402-4" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb402-5"><a href="lab09.html#cb402-5" tabindex="-1"></a>    <span class="at">decile_score =</span> decile_score_12,</span>
+<span id="cb402-6"><a href="lab09.html#cb402-6" tabindex="-1"></a>    <span class="at">priors_count =</span> priors_count_15</span>
+<span id="cb402-7"><a href="lab09.html#cb402-7" tabindex="-1"></a>  )</span>
+<span id="cb402-8"><a href="lab09.html#cb402-8" tabindex="-1"></a></span>
+<span id="cb402-9"><a href="lab09.html#cb402-9" tabindex="-1"></a><span class="co"># Take a look at the data</span></span>
+<span id="cb402-10"><a href="lab09.html#cb402-10" tabindex="-1"></a><span class="fu">glimpse</span>(compas)</span></code></pre></div>
 <p>Each observation in this dataset represents a defendant. Here are the key variables:</p>
 <ul>
 <li><code>id</code>: A unique identifier for each defendant</li>
@@ -1776,11 +1776,11 @@ Each individual in the dataset has both:
 <li>False Positive Rate: Proportion of non-recidivists (two_year_recid = 0) who were classified as high risk (decile_score &gt;= 7)</li>
 <li>False Negative Rate: Proportion of recidivists (two_year_recid = 1) who were classified as low risk (decile_score &lt;= 4)</li>
 </ul>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="lab09.html#cb403-1" tabindex="-1"></a><span class="co"># To filter for specific conditions:</span></span>
-<span id="cb403-2"><a href="lab09.html#cb403-2" tabindex="-1"></a>non_recidivists <span class="ot">&lt;-</span> compas <span class="sc">%&gt;%</span></span>
-<span id="cb403-3"><a href="lab09.html#cb403-3" tabindex="-1"></a>  <span class="fu">filter</span>(two_year_recid <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb403-4"><a href="lab09.html#cb403-4" tabindex="-1"></a></span>
-<span id="cb403-5"><a href="lab09.html#cb403-5" tabindex="-1"></a><span class="co"># Now calculate false positive rates by race</span></span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="lab09.html#cb404-1" tabindex="-1"></a><span class="co"># To filter for specific conditions:</span></span>
+<span id="cb404-2"><a href="lab09.html#cb404-2" tabindex="-1"></a>non_recidivists <span class="ot">&lt;-</span> compas <span class="sc">%&gt;%</span></span>
+<span id="cb404-3"><a href="lab09.html#cb404-3" tabindex="-1"></a>  <span class="fu">filter</span>(two_year_recid <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb404-4"><a href="lab09.html#cb404-4" tabindex="-1"></a></span>
+<span id="cb404-5"><a href="lab09.html#cb404-5" tabindex="-1"></a><span class="co"># Now calculate false positive rates by race</span></span></code></pre></div>
 <ol start="11" style="list-style-type: decimal">
 <li>Create a visualization comparing these metrics between Black and white defendants. What disparities do you observe?</li>
 </ol>
@@ -1793,8 +1793,8 @@ Each individual in the dataset has both:
 <li><p>In 2016, ProPublica and Northpointe (the company that created COMPAS) had a disagreement about how to measure fairness. ProPublica focused on error rates (false positives and false negatives), while Northpointe focused on calibration (whether the same score means the same probability of recidivism across groups).</p>
 <p>Based on your calibration analysis, do you see evidence supporting Northpointe’s claim that the algorithm is fair? Explain your reasoning.</p></li>
 </ol>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="lab09.html#cb404-1" tabindex="-1"></a><span class="co"># To check calibration, you can calculate recidivism rates by score for each race</span></span>
-<span id="cb404-2"><a href="lab09.html#cb404-2" tabindex="-1"></a><span class="co"># This is an advanced analysis - use what you&#39;ve learned to approach this</span></span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="lab09.html#cb405-1" tabindex="-1"></a><span class="co"># To check calibration, you can calculate recidivism rates by score for each race</span></span>
+<span id="cb405-2"><a href="lab09.html#cb405-2" tabindex="-1"></a><span class="co"># This is an advanced analysis - use what you&#39;ve learned to approach this</span></span></code></pre></div>
 </div>
 <div id="part-5-designing-fairer-algorithms" class="section level3 unnumbered hasAnchor">
 <h3>Part 5: Designing fairer algorithms<a href="lab09.html#part-5-designing-fairer-algorithms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1825,26 +1825,9 @@ Each individual in the dataset has both:
 <li><code>c_charge_degree</code></li>
 </ul></li>
 </ol>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="lab09.html#cb405-1" tabindex="-1"></a><span class="co"># Create a logistic regression model</span></span>
-<span id="cb405-2"><a href="lab09.html#cb405-2" tabindex="-1"></a>recid_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb405-3"><a href="lab09.html#cb405-3" tabindex="-1"></a>  two_year_recid <span class="sc">~</span> age <span class="sc">+</span> priors_count <span class="sc">+</span> c_charge_degree,</span>
-<span id="cb405-4"><a href="lab09.html#cb405-4" tabindex="-1"></a>  <span class="at">data =</span> compas,</span>
-<span id="cb405-5"><a href="lab09.html#cb405-5" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
-<span id="cb405-6"><a href="lab09.html#cb405-6" tabindex="-1"></a>)</span>
-<span id="cb405-7"><a href="lab09.html#cb405-7" tabindex="-1"></a></span>
-<span id="cb405-8"><a href="lab09.html#cb405-8" tabindex="-1"></a><span class="co"># Add predicted probabilities to the dataset</span></span>
-<span id="cb405-9"><a href="lab09.html#cb405-9" tabindex="-1"></a>compas <span class="ot">&lt;-</span> compas <span class="sc">%&gt;%</span></span>
-<span id="cb405-10"><a href="lab09.html#cb405-10" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb405-11"><a href="lab09.html#cb405-11" tabindex="-1"></a>    <span class="at">predicted_prob =</span> <span class="fu">predict</span>(recid_model, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb405-12"><a href="lab09.html#cb405-12" tabindex="-1"></a>    <span class="at">our_high_risk =</span> predicted_prob <span class="sc">&gt;=</span> <span class="fl">0.5</span></span>
-<span id="cb405-13"><a href="lab09.html#cb405-13" tabindex="-1"></a>  )</span></code></pre></div>
-<ol start="20" style="list-style-type: decimal">
-<li><p>Evaluate the fairness of your model using the same metrics we calculated for the COMPAS algorithm. Does your model show less bias than the COMPAS algorithm? If so, why might that be the case?</p></li>
-<li><p>Now build a more complex model that includes race as a predictor:</p></li>
-</ol>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="lab09.html#cb406-1" tabindex="-1"></a><span class="co"># Create a logistic regression model with race</span></span>
-<span id="cb406-2"><a href="lab09.html#cb406-2" tabindex="-1"></a>recid_model_with_race <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb406-3"><a href="lab09.html#cb406-3" tabindex="-1"></a>  two_year_recid <span class="sc">~</span> age <span class="sc">+</span> priors_count <span class="sc">+</span> c_charge_degree <span class="sc">+</span> race,</span>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="lab09.html#cb406-1" tabindex="-1"></a><span class="co"># Create a logistic regression model</span></span>
+<span id="cb406-2"><a href="lab09.html#cb406-2" tabindex="-1"></a>recid_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb406-3"><a href="lab09.html#cb406-3" tabindex="-1"></a>  two_year_recid <span class="sc">~</span> age <span class="sc">+</span> priors_count <span class="sc">+</span> c_charge_degree,</span>
 <span id="cb406-4"><a href="lab09.html#cb406-4" tabindex="-1"></a>  <span class="at">data =</span> compas,</span>
 <span id="cb406-5"><a href="lab09.html#cb406-5" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
 <span id="cb406-6"><a href="lab09.html#cb406-6" tabindex="-1"></a>)</span>
@@ -1852,9 +1835,26 @@ Each individual in the dataset has both:
 <span id="cb406-8"><a href="lab09.html#cb406-8" tabindex="-1"></a><span class="co"># Add predicted probabilities to the dataset</span></span>
 <span id="cb406-9"><a href="lab09.html#cb406-9" tabindex="-1"></a>compas <span class="ot">&lt;-</span> compas <span class="sc">%&gt;%</span></span>
 <span id="cb406-10"><a href="lab09.html#cb406-10" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb406-11"><a href="lab09.html#cb406-11" tabindex="-1"></a>    <span class="at">predicted_prob_with_race =</span> <span class="fu">predict</span>(recid_model_with_race, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb406-12"><a href="lab09.html#cb406-12" tabindex="-1"></a>    <span class="at">race_high_risk =</span> predicted_prob_with_race <span class="sc">&gt;=</span> <span class="fl">0.5</span></span>
+<span id="cb406-11"><a href="lab09.html#cb406-11" tabindex="-1"></a>    <span class="at">predicted_prob =</span> <span class="fu">predict</span>(recid_model, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb406-12"><a href="lab09.html#cb406-12" tabindex="-1"></a>    <span class="at">our_high_risk =</span> predicted_prob <span class="sc">&gt;=</span> <span class="fl">0.5</span></span>
 <span id="cb406-13"><a href="lab09.html#cb406-13" tabindex="-1"></a>  )</span></code></pre></div>
+<ol start="20" style="list-style-type: decimal">
+<li><p>Evaluate the fairness of your model using the same metrics we calculated for the COMPAS algorithm. Does your model show less bias than the COMPAS algorithm? If so, why might that be the case?</p></li>
+<li><p>Now build a more complex model that includes race as a predictor:</p></li>
+</ol>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="lab09.html#cb407-1" tabindex="-1"></a><span class="co"># Create a logistic regression model with race</span></span>
+<span id="cb407-2"><a href="lab09.html#cb407-2" tabindex="-1"></a>recid_model_with_race <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb407-3"><a href="lab09.html#cb407-3" tabindex="-1"></a>  two_year_recid <span class="sc">~</span> age <span class="sc">+</span> priors_count <span class="sc">+</span> c_charge_degree <span class="sc">+</span> race,</span>
+<span id="cb407-4"><a href="lab09.html#cb407-4" tabindex="-1"></a>  <span class="at">data =</span> compas,</span>
+<span id="cb407-5"><a href="lab09.html#cb407-5" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
+<span id="cb407-6"><a href="lab09.html#cb407-6" tabindex="-1"></a>)</span>
+<span id="cb407-7"><a href="lab09.html#cb407-7" tabindex="-1"></a></span>
+<span id="cb407-8"><a href="lab09.html#cb407-8" tabindex="-1"></a><span class="co"># Add predicted probabilities to the dataset</span></span>
+<span id="cb407-9"><a href="lab09.html#cb407-9" tabindex="-1"></a>compas <span class="ot">&lt;-</span> compas <span class="sc">%&gt;%</span></span>
+<span id="cb407-10"><a href="lab09.html#cb407-10" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb407-11"><a href="lab09.html#cb407-11" tabindex="-1"></a>    <span class="at">predicted_prob_with_race =</span> <span class="fu">predict</span>(recid_model_with_race, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb407-12"><a href="lab09.html#cb407-12" tabindex="-1"></a>    <span class="at">race_high_risk =</span> predicted_prob_with_race <span class="sc">&gt;=</span> <span class="fl">0.5</span></span>
+<span id="cb407-13"><a href="lab09.html#cb407-13" tabindex="-1"></a>  )</span></code></pre></div>
 <ol start="22" style="list-style-type: decimal">
 <li><p>Compare the fairness metrics for this model with your previous model. What happened to the disparities between racial groups? Does including race as a variable make the algorithm more or less fair?</p></li>
 <li><p>Based on your analysis, write a brief policy recommendation for how risk assessment algorithms should be used in the criminal justice system. Consider the following questions:</p>
