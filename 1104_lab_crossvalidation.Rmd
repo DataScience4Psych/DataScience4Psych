@@ -65,7 +65,7 @@ Configure your Git user name and email. If you cannot remember the instructions,
 
 Update the name of your project to match the lab's title.
 
--->
+
 
 ## Warm up {.unnumbered}
 
@@ -81,6 +81,7 @@ Open the R Markdown (Rmd) file in your project, change the author name to your n
 - View the **Diff** and confirm that you are happy with the changes.
 - Add a commit message like "Update team name" in the **Commit message** box and hit **Commit**.
 - Click on **Push**. This will prompt a dialogue box where you first need to enter your user name, and then your password.
+-->
 
 ## The data {.unnumbered}
 
@@ -107,7 +108,25 @@ data("titanic_test")
 ```
 
 
-Before modeling, we will do two small cleanups: standardize column names to lowercase for titanic_test and titantic_train as well as create an ordinal level variable for passenger class.
+Each observation in these datasets represents a single passenger. Here are the key variables:
+ 
+- `pclass`: Passenger class (1 = 1st, 2 = 2nd, 3 = 3rd) — a proxy for socioeconomic status
+- `survived`: Whether the passenger survived (1 = yes, 0 = no)
+- `name`: Passenger name (includes title, e.g., Mr., Mrs., Dr.)
+- `sex`: Passenger sex (male, female)
+- `age`: Passenger age in years (fractional for children under 1)
+- `sibsp`: Number of siblings/spouses aboard
+- `parch`: Number of parents/children aboard
+- `ticket`: Ticket number
+- `fare`: Passenger fare in British pounds
+- `cabin`: Cabin number (many missing)
+- `embarked`: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
+- `boat`: Lifeboat number (if survived)
+- `body`: Body identification number (if did not survive and body was recovered)
+- `home.dest`: Home/destination
+
+Before modeling, we will do two small cleanups: standardize column names to lowercase and create an ordinal-level variable for passenger class.
+
 
 ```{r lab_crossvalidation-data-prep, }
 # Rename columns to lowercase
@@ -131,7 +150,7 @@ titanic3 <- titanic3 %>%
 
 ## Exercises {.unnumbered}
 
-### Apparent accuracy {.unnumbered}
+### Part 1: Apparent accuracy {.unnumbered}
 
 Before we talk about cross validation, we need to see the problem it is designed to fix.
 
@@ -140,7 +159,9 @@ If we use the same data to fit the model and to evaluate it, we are letting the 
 
 Let’s do that on purpose.
 
-1. Fit a logistic regression predicting survival from passenger sex and class as a numeric variable.
+#### Exercise 1: Fitting a model on full data {.unnumbered}
+
+**1.1.** Fit a logistic regression predicting survival from passenger sex and class (as a numeric variable). Save the model as `m_apparent`.
 
 Save the model as `m_apparent`.
 
@@ -178,7 +199,8 @@ summary(m_apparent)
 
 This model has access to every passenger and the final outcome. It is not being asked to predict the future. It is being asked to summarize the past.
 
-Now we can use the model to generate predicted survival probabilities for every passenger.
+
+**1.2.** Now use the model to generate predicted survival probabilities for every passenger.
 
 
 ```{r lab_crossvalidation-predict-apparent, }
@@ -197,6 +219,8 @@ yhat_apparent <- ifelse(p_apparent > 0.5, 1, 0)
 
 Now, we can compute the model’s accuracy. Here we are defining accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
 
+**1.3.** Compute the model's accuracy. We define accuracy as the proportion of correct predictions (both survivors and non-survivors) out of all passengers.
+
 ```{r lab_crossvalidation-accuracy-apparent, }
 
 acc_apparent <- mean(yhat_apparent == titanic3$survived, na.rm = TRUE)
@@ -209,13 +233,13 @@ At this point, the model looks fairly good. In fact, the number looks reassuring
 Cross validation exists because this number tells us very little about how well the model would perform before the disaster. Real predictions are made before the ship hits the iceberg.
 
 
-## Holding passengers back {.unnumbered}
+### Part 2: Holding passengers back  {.unnumbered}
 
 To get a more honest answer, we need to pretend that some passengers are unknown.
 
 We’ll do this by splitting the data into two groups:
-   - a training set, used to fit the model
-   - a test set, used only for evaluation
+   - a **training set**, used to fit the model
+   - a **test set**, used only for evaluation
    
 Conveniently, the `titanic` package already provides such a split.
 
@@ -223,8 +247,10 @@ Conveniently, the `titanic` package already provides such a split.
 titanic_test %>% glimpse()
 ```
 
+#### Exercise 2: Train/test split {.unnumbered}
 
-Now we fit the same model as before, but only on the training data.
+**2.1.** Fit the same model as before (`survived ~ sex + pclass`), but only on the training data. Save it as `m_split`.
+
 
 ```{r exercise-two-part-two-split-model, error=TRUE}
 m_split <- glm(
