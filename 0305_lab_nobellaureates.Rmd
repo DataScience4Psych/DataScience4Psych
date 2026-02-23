@@ -111,25 +111,21 @@ In these cases the variables below reflect a different name than their counterpa
 
 As a quick exploratory step, let's create a world map that visualizes the number of Nobel laureates by their birth country. 
 
-```{r lab_nobellaureates-setup, message=FALSE, warning=FALSE, include=FALSE}
+```{r map-laureates-by-country, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
 library(maps)
 library(rworldmap)
 library(ggplot2)
 # A quick look at the data
+colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
 
 country_counts <- nobel %>%
   filter(!is.na(born_country_code)) %>%
   count(born_country_code) %>%
-  arrange(desc(n)) 
+  arrange(desc(n))
+
 country_counts$n_log <- log10(country_counts$n + 1)
 country_counts_map <- joinCountryData2Map(country_counts, joinCode="ISO2", nameJoinColumn="born_country_code") %>% suppressMessages() 
 
-
-colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
-```
-
-```{r map-laureates-by-country, message=FALSE, warning=FALSE, echo=FALSE}
- 
 mapCountryData(country_counts_map, nameColumnToPlot="n_log",
                            addLegend=T,
                            mapTitle="Number of Nobel laureates by birth country",
@@ -137,7 +133,7 @@ mapCountryData(country_counts_map, nameColumnToPlot="n_log",
                            catMethod = "fixedWidth",
                            missingCountryCol='white',
                            colourPalette = colourPalette
-                           ) 
+                           )
 ```
 
 This map provides a global overview of the distribution of Nobel laureates based on their birth countries. Countries with higher numbers of laureates are represented with darker shades, while those with fewer or no laureates are shown in lighter shades or white. These data have been log-transformed to ensure better visualization across countries with varying counts of laureates. To gain deeper insights, we will now proceed to analyze the data further through a series of exercises.
