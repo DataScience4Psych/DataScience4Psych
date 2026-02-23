@@ -7,10 +7,9 @@ source("common.R")
 
 ## Don’t Judge the Ship After It Sinks {.unnumbered}
 
-We’ve been hired by Lloyd’s of London to help quantify risk in maritime travel. After the Titanic disaster in 1912 and the [claims that followed]((https://www.lloyds.com/titanic)), Lloyd’s wants models that can predict survival outcomes using passenger information.
+We’ve been hired by Lloyd’s of London to help quantify risk in maritime travel. After the Titanic disaster in 1912 and the [claims that followed]((https://www.lloyds.com/titanic)), Lloyd’s wants models that can predict survival outcomes using passenger information. The catch? Lloyd's needs these predictions *before* the ship leaves port, not after we already know who lived and who died.
 
-
-In this lab, you will build classification models for Titanic survival and learn why apparent accuracy can be misleading. You’ll then evaluate performance more honestly using data splitting and cross validation.
+In this lab, you will build classification models for Titanic survival and discover why apparent accuracy can be dangerously misleading. You'll then evaluate performance more honestly using data splitting and k-fold cross validation, ultimately building toward models that Lloyd's could actually trust.
 
 ## Learning goals {.unnumbered}
 
@@ -18,7 +17,11 @@ In this lab, you will build classification models for Titanic survival and learn
 - Compute predicted probabilities, convert them into class predictions, and calculate accuracy.
 - Explain why apparent (in-sample) accuracy is optimistic.
 - Evaluate models using held-out data and implement k-fold cross validation.
-
+- Compare multiple candidate models using cross-validated accuracy.
+- Handle missing data with listwise deletion and simple imputation.
+- Avoid information leakage by imputing *within folds*.
+- Evaluate classifiers beyond accuracy using confusion matrices, sensitivity, and specificity.
+- Reason about performance vs. stability when recommending a model.
 
 
 ```{r lab_crossvalidation-setup-config, include=FALSE}
@@ -39,9 +42,11 @@ options(
 
 ## Getting started and warming up {.unnumbered}
 
+Go to the course GitHub organization and locate the lab repo, which should be named something like `lab-11-cross-validation`. Either Fork it or use the template. Then clone it in RStudio. First, open the R Markdown document `lab-11.Rmd` and Knit it. Make sure it compiles without errors.
+
 ### Packages {.unnumbered}
 
-We will use tidyverse for data manipulation and titanic for data. You will also load readxl to import the Titanic3 file (provided in your project).
+In this lab, we will use **tidyverse** for data manipulation, **titanic** for the classic train/test split, and **readxl** to import the extended Titanic3 dataset (provided in your project).
 
 ```{r lab_crossvalidation-packages-example, eval = FALSE}
 library(tidyverse)
