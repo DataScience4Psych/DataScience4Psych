@@ -115,7 +115,7 @@ staff_long <- staff %>%
 Let's take a look at what the new longer data frame looks like.
 
 ```{r lab_charts-code-view-staff, }
-staff_long
+staff_long %>% head()
 ```
 
 And now, let's plot it as a line graph. A possible approach for creating a line plot and differentiating the lines by faculty type is to use the following method:
@@ -208,7 +208,10 @@ fisheries %>%
 </detail>
 
 
-## Stretch Practice with Smokers in Whickham {.unnumbered}
+## Stretch Yourself with Smokers in Whickham {.unnumbered}
+
+If you still have some time left (or are a graduate student), move on to the remaining exercises below. These are optional stretch goals. They are designed to challenge you and hone your skills.
+
 
 ```{r fig.margin=TRUE, eval=TRUE, echo=FALSE}
 include_graphics("img/whickham.png")
@@ -241,53 +244,125 @@ Take a peek at the codebook with
 
 ```{r lab_charts-example-whickham-help, eval=FALSE}
 ?Whickham
-library(performance)
-performance::compare_performance() # might not be behaving as intented.
+
 ```
 
 ### Exercises {.unnumbered}
 
-1. What type of study do you think these data come from: observational or experiment? Why?
+4. What type of study do you think these data come from: observational or experiment? Why?
 
-2. How many observations are in this dataset? What does each observation
-   represent?
+5. How many observations are in this dataset? What does each observation represent?
 
-3. How many variables are in this dataset? What type of variable is each?
+6. How many variables are in this dataset? What type of variable is each?
    Display each variable using an appropriate visualization.
 
-4. What would you expect the relationship between smoking status and health outcome to be?
+7. What would you expect the relationship between smoking status and health outcome to be?
 
-5. Create a visualization depicting the relationship between smoking status and health outcome. Briefly describe the relationship, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative. Here is some code to get you started:
+8. Create a visualization depicting the relationship between smoking status and health outcome. Briefly describe the relationship, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative. Here is some code to get you started:
 
 ```{r lab_charts-example-whickham-count, eval = FALSE}
 Whickham %>%
   count(smoker, outcome)
 ```
 
-6. Create a new variable called `age_cat` using the following scheme:
+9. Create a new variable called `age_cat` using the following scheme:
 
 - `age <= 44 ~ "18-44"`
 - `age > 44 & age <= 64 ~ "45-64"`
 - `age > 64 ~ "65+"`
 
-7. Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. What changed? What might explain this change? Extend the contingency table from earlier by
-breaking it down by age category and use it to help your narrative. We can use the contingency table to examine how the relationship between smoking status and health outcome differs between different age groups. This extension will help us better understand the patterns we see in the visualization, and explain any changes we observe.
+10. Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. What changed? What might explain this change? 
+
+Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative. We can use the contingency table to examine how the relationship between smoking status and health outcome differs between different age groups. This extension will help us better understand the patterns we see in the visualization, and explain any changes we observe.
 
 ```{r lab_charts-example-whickham-age-cat, eval = FALSE}
 Whickham %>%
   count(smoker, age_cat, outcome)
 ```
 
+
+>  If you want to learn more about this data set,  you can read the original paper describing the phenomenon: [Appleton et al. 1996](https://www.tandfonline.com/doi/abs/10.1080/00031305.1996.10473563). This paper is published in the American Statistician.
+
+
+
+### Challenge Graph
+
+
+11. Recreate the following plot, and interpret what you see in context of the data.
+
+<details>
+  <summary>Click to for hints about the library</summary>
+> Hint: You will need to use the ggpattern package to create the pattern fill. The documentation for the package is available [here](https://coolbutuseless.github.io/ggpattern/).
+
+</details>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(ggpattern)
+
+df <- Whickham %>%
+  mutate(age_cat = case_when(
+    age <= 44 ~ "18-44",
+    age <= 64 ~ "45-64",
+    age >  64 ~ "65+",
+    TRUE ~ NA_character_
+  )  %>% factor(levels = c("18-44","45-64","65+"))) %>%
+  count(age_cat, smoker, outcome) %>%
+  group_by(age_cat, smoker) %>%
+  mutate(
+    percent = n / sum(n),
+    ymax = cumsum(percent),
+    ymin = lag(ymax, default = 0)
+  ) %>%
+  ungroup() %>%
+  mutate(
+    xmin = if_else(smoker == "No", 3, 2),
+    xmax = if_else(smoker == "No", 4, 3)
+  )
+
+
+
+# Make the plot
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax, fill = outcome ,
+               pattern = smoker)) +
+  geom_rect_pattern(aes( pattern_filename = smoker),
+    color = "white", linewidth = 0.3,
+    
+                    pattern = 'placeholder', # use a placeholder pattern to avoid warnings about missing patterns
+                   # pattern_type='keanu',
+                  #      pattern_fill = "black",      # color of the texture itself
+    pattern_alpha = 0.35,        # transparency of texture
+  #  pattern_density = 0.5,       # amount of texture
+  #  pattern_spacing = 0.03       # spacing between elements
+  ) +
+  coord_polar(theta = "y") +
+  xlim(1.5, 4) +
+  facet_wrap(~ age_cat) +
+  scale_pattern_filename_manual(values = c("Alive" = "bear", "Dead" = "keanu")) #+
+ theme_void()
+
+```
+
+
+
 ## Wrapping up {.unnumbered}
+
+If you want to learn more about this data set, you can check out the following resources: appleton1996ignoring
 
 Go back through your write up to make sure you're following coding style guidelines we discussed in class.
 Make any edits as needed.
 
 Also, make sure all of your R chunks are properly labeled, and your figures are reasonably sized.
 
+🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
+
+
+
 ## More ugly charts {.unnumbered}
 
-Want to see more ugly charts?
+Want to see more ugly charts? Check out the following resources:
 
 - [Flowing Data - Ugly Charts](https://flowingdata.com/category/visualization/ugly-visualization/)
 - [Reddit - Data is ugly](https://www.reddit.com/r/dataisugly/)
