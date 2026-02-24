@@ -1,0 +1,191 @@
+Title: OpenAI API in the Tidyverse — a hands-on data science activity
+
+Overview
+In this activity, students learn to call OpenAI’s API from R, handle and tidy the JSON responses with the Tidyverse, and analyze the results. Students will practice making API calls, extracting the useful parts of the response, summarizing the results with dplyr and friends, and reflecting on prompt design and model behavior.
+
+Learning objectives
+- Set up and authenticate with the OpenAI API in R.
+- Build and send API requests (chat/completions) and handle responses in a tidy workflow.
+- Extract useful fields from the API response (text content, usage tokens) and store them in a tibble.
+- Use dplyr, purrr, and stringr to summarize and visualize API results.
+- Compare prompts and discuss prompt design, response quality, and limitations.
+- (Optional) Extract and run R code snippets returned by the model in a safe, controlled way.
+
+Prerequisites
+- R and RStudio (or another R environment)
+- Install necessary packages: tidyverse, httr or httr2, jsonlite, purrr, stringr, readr
+- An OpenAI API key (keep it private). Set it in your environment as OPENAI_API_KEY.
+- Basic familiarity with dplyr/tidyverse for data wrangling
+
+What students will need to do
+- Create a small dataset context (e.g., the built-in mtcars dataset) to prompt the model about.
+- Design a set of prompts (questions) about that dataset.
+- Write an R function to call the OpenAI Chat API and return content and usage stats.
+- Run prompts, collect responses in a tidy data frame, and analyze response length and content.
+- (Optional) Identify and extract any R code blocks in the responses and run them in a safe environment.
+
+Activity setup (Step-by-step)
+1) Prepare the environment
+- Install and load packages
+  - R code:
+    install.packages(c("httr","jsonlite","tidyverse","purrr","stringr"))
+    library(httr)
+    library(jsonlite)
+    library(tidyverse)
+    library(purrr)
+    library(stringr)
+
+- Set your API key (do not commit keys to shared work)
+  - R code:
+    Sys.setenv(OPENAI_API_KEY = "your-api-key-here")  # replace with your key
+    # Optional: also set OPENAI_ORG if your account requires it
+    Sys.setenv(OPENAI_ORG = "")
+
+2) Prepare a small dataset context
+- Use mtcars as the prompt context; you can also use iris or another built-in dataset.
+- Create a short summary you’ll include in prompts if desired.
+
+- R code (optional data prep for context in prompts):
+  data <- mtcars
+  head(data)
+  summary(data)
+
+3) Build the API call function
+- Purpose: send a chat-style prompt to OpenAI and return the model’s content plus token usage.
+- Note: This example uses the chat/completions endpoint with a simple user message. You can switch to “gpt-4” if you have access, or stay with “gpt-3.5-turbo”.
+
+- R code:
+  call_openai <- function(prompt,
+                          model = "gpt-3.5-turbo",
+                          temperature = 0.3,
+                          max_tokens = 600) {
+    req <- httr::POST(
+      url = "https://api.openai.com/v1/chat/completions",
+      httr::add_headers(
+        Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY")),
+        "Content-Type" = "application/json"
+      ),
+      body = list(
+        model = model,
+        messages = list(list(role = "user", content = prompt)),
+        temperature = temperature,
+        max_tokens = max_tokens
+      ),
+      encode = "json"
+    )
+    if (httr::http_error(req)) {
+      stop("OpenAI API error: ", httr::status_code(req), " ",
+           httr::content(req, as = "text", encoding = "UTF-8"))
+    }
+    res <- httr::content(req, as = "parsed", type = "application/json")
+    content <- res$choices[[1]]$message$content
+    usage <- res$usage
+    list(content = content,
+         prompt_tokens = usage$prompt_tokens,
+         completion_tokens = usage$completion_tokens,
+         total_tokens = usage$total_tokens)
+  }
+
+4) Design prompts (in this activity, three prompts about mtcars)
+- Purpose: generate varied responses (descriptive, planning, and code).
+- R code:
+  prompts <- tibble(
+    id = 1:3,
+    prompt = c(
+      "Describe the mtcars dataset for a beginner data scientist. Include what each column represents, data types, and any obvious data quality notes.",
+      "Propose a simple data analysis plan for mtcars. Include at least three questions, a plan for summaries and visuals, and a modeling idea if appropriate.",
+      "Provide R code to compute the mean miles-per-gallon (mpg) by cylinder ('cyl') and create a bar plot showing mean mpg per cylinder."
+    )
+  )
+
+5) Run prompts and collect results
+- R code (collect responses into a tidy data frame)
+  results <- purrr::map2_df(prompts$prompt, prompts$id, ~{
+    r <- tryCatch(call_openai(.x),
+                  error = function(e) list(content = NA_character_, prompt_tokens = NA, completion_tokens = NA, total_tokens = NA))
+    tibble(
+      prompt_id = .y,
+      prompt_text = .x,
+      response_text = r$content,
+      prompt_tokens = r$prompt_tokens,
+      completion_tokens = r$completion_tokens,
+      total_tokens = r$total_tokens
+    )
+  })
+
+6) Basic cleanup and quick analysis
+- Compute some simple text metrics and summarize by prompt
+  results <- results %>%
+    mutate(
+      word_count = str_count(response_text, "\\S+"),
+      sentence_count = str_count(response_text, "[.!?]+"),
+      # optional: approximate response length in tokens
+      token_count = total_tokens
+    )
+
+- Visualize response length by prompt
+  # Simple bar chart of total_tokens by prompt
+  results %>%
+    mutate(prompt_id = factor(prompt_id, levels = unique(prompt_id))) %>%
+    ggplot(aes(x = prompt_id, y = total_tokens)) +
+    geom_col(fill = "steelblue") +
+    labs(x = "Prompt ID", y = "Total tokens (API usage)", title = "API usage by prompt")
+
+- Show a quick qualitative check
+  results %>%
+    select(prompt_id, prompt_text, response_text) %>%
+    arrange(prompt_id) %>%
+    print(n = 5)  # show a few responses; adjust n as needed
+
+7) Optional: identify and handle code blocks in responses
+- Some responses may include code (e.g., R) enclosed in backticks. You can detect and optionally extract/run code blocks.
+- R code:
+  has_r_code <- results %>% mutate(has_code = str_detect(response_text, regex("```r|```R", ignore_case = TRUE)))
+  has_r_code %>% count(has_code)
+
+- Extract code blocks (optional)
+  code_blocks <- results %>%
+    mutate(blocks = str_extract_all(response_text, regex("```r[\\s\\S]*?```", dotall = TRUE))) %>%
+    select(prompt_id, blocks)
+
+- If you choose to run code blocks, do so in a controlled environment and only after sanitizing the code. A safe approach is to extract the code, remove backticks and language tags, and then parse-eval inside a new environment:
+  safe_env <- new.env()
+  code_only <- str_replace_all(code, regex("^```r|```$", multiline = TRUE), "")
+  eval(parse(text = code_only), envir = safe_env)
+  # Note: Running arbitrary code from an LLM is potentially dangerous. Only do this with teacher oversight.
+
+8) Learning reflections and discussion questions
+- Which prompts produced the most useful or actionable content for your dataset?
+- How did the length of the response relate to perceived quality or usefulness?
+- How did you design prompts to elicit specific information (descriptions, plans, code)? How could prompts be improved?
+- What are the limitations of relying on an AI model for data science tasks (accuracy, bias, hallucinations, need for validation)?
+- If you were to run this activity again, what changes would you make to the prompts or the analysis?
+
+9) Deliverables to produce
+- A tidy data frame (the results object) with: prompt_id, prompt_text, response_text, tokens (prompt/completion/total), word_count, sentence_count.
+- A small visualization (e.g., a bar chart of total_tokens by prompt_id) and one qualitative snippet of a response you found particularly insightful.
+- (Optional) A short appendix showing any code blocks extracted and, if safe, executed.
+
+Tips and best practices
+- Start with a safe, educational, small prompt set. You can expand prompts or test with other datasets (e.g., iris) for different results.
+- Use a low temperature (e.g., 0.2–0.4) for more deterministic responses.
+- Be mindful of rate limits and plan for retries if you run the prompts in a loop. For example, add a small sleep() between requests if the API indicates a rate limit.
+- Encourage students to compare model responses across prompts and discuss prompt design (e.g., asking for bullet points, asking for R code, asking for a plan, etc.).
+- Emphasize responsible usage: do not share your API key, and avoid sending sensitive or private data to the API.
+
+Optional extensions
+- Use a second model (e.g., gpt-4 or a higher-capacity model if available) and compare results with gpt-3.5-turbo.
+- Build a small R Markdown report that automatically renders the prompts, responses, and analyses into a student-friendly summary.
+- Create a reusable workflow: wrap the prompt design, API call, and analysis into a small R package or a notebook, so students can reuse the pattern with any dataset.
+
+What to include in a short instructor guide
+- Expected outcomes: students will have created a small, tidy dataset of API responses, performed basic analyses of response length and content, and reflected on prompt design.
+- Possible rubrics: correct authentication setup, successful data collection into a tibble, clear summary/visualization of results, thoughtful reflection on prompt design, and safe handling of code blocks (optional).
+- Troubleshooting tips: ensure the API key is set, check the correct API endpoint (chat/completions), watch for rate limiting and timeouts, and handle JSON parsing issues gracefully.
+
+Safety and ethics note
+- OpenAI outputs can be incorrect or misleading (hallucinations). Treat AI-generated content as a starting point to be validated with traditional data science methods.
+- Do not expose private data or keys; use dummy or synthetic datasets when possible.
+- If running code blocks produced by the model, carefully review and run only trusted code in a controlled environment.
+
+You can adapt the prompts, dataset, and depth of analysis to fit your course length and student level. If you’d like, I can tailor this into a one-page handout or an RStudio project template with ready-to-run scripts.

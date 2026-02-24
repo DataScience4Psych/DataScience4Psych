@@ -1,6 +1,8 @@
-# LEC: Working with OpenAI's API
+# ACT: Working with OpenAI's API
 
-This module introduces the basics of interacting with OpenAI's API from R. We'll explore how to make API calls, handle responses, and integrate AI capabilities into data science workflows.
+This module introduces the basics of interacting with OpenAI's API from R. We'll explore how to make API calls, handle responses, and integrate AI capabilities into data science workflows. You can find the API documentation [here](https://platform.openai.com/docs/api-reference) and the R package documentation for `httr` and `jsonlite` for making HTTP requests and handling JSON data.
+
+
 
 ```{r llmapi-setup, include = FALSE}
 source("common.R")
@@ -68,12 +70,12 @@ generate_text <- function(prompt) {
     # -H "Content-Type: application/json"
     content_type_json(),
     # -d '{
-    #   "model": "gpt-3.5-turbo",
+    #   "model": "gpt-5-nano",
     #   "messages": [{"role": "user", "content": "What is a banana?"}]
     # }'
     encode = "json",
     body = list(
-      model = "gpt-3.5-turbo",
+      model = "gpt-5-nano",
       messages = list(list(role = "user", content = prompt))
     )
   )
@@ -86,6 +88,8 @@ generate_text <- function(prompt) {
 }
 ```
 
+I have included comments in the code to show how the API request corresponds to a typical `curl` command you might use in the terminal.
+
 
 ## Example Usage and Handling the Response
 
@@ -94,16 +98,18 @@ Now that we’ve defined our generate_text() function, let’s test it by sendin
 ### Step 1: Send a Request
 
 ```{r llmapi-code-data, cache=TRUE}
-prompt <- "Summarize the key steps in a data science workflow:"
+prompt <- "Write a haiku about data science."
 generated_text <- generate_text(prompt)
 ```
+
 
 ### Step 2: Examine the Raw API Response
 
 
 When we call the `generate_text(prompt)` function, OpenAI's API returns a structured response in JSON format, which R reads as a list. This response contains multiple components, but the most important part is the generated text.
 
-Let's print the raw response to see its structure. 
+Let's print the raw response to see its structure.
+
 ```{r llmapi-code-response-raw, cache=TRUE}
 print(generated_text)
 ```
@@ -131,6 +137,8 @@ Ok, so that wasn't really readable. Let's try to format it a bit better:
 cat(ai_response)
 ```
 
+Now we can see the haiku about data science that the model generated in response to our prompt. This is the core workflow for interacting with OpenAI's API: send a request, receive a structured response, and extract the relevant content for use in your applications.
+
 ### Step 4: Understanding Token Usage
 
 Since OpenAI charges based on token usage, it's useful to monitor how many tokens are used per request. The API response includes:
@@ -146,6 +154,8 @@ print(generated_text$usage$total_tokens) # Total tokens used
 print(generated_text$usage$completion_tokens) # Tokens used for output
 print(generated_text$usage$prompt_tokens) # Tokens used for input
 ```
+
+The token usage information can help you optimize your prompts and manage costs when using the API. 
 
 
 ## Error Handling
@@ -212,6 +222,7 @@ responses_df %>%
     )
   )
 ```
+
 As you can see, the table displays the prompts, AI-generated responses, token usage, model name, and completion time for each request. This information can help us monitor the API usage and response quality.
 
 
@@ -228,6 +239,47 @@ generate_text_throttled <- function(prompt) {
 
 This function adds a 1-second delay between requests to avoid exceeding OpenAI's rate limits. You can adjust the delay as needed based on the API's rate limits.
 
-## Conclusion
+## Your Turn!
 
-In this guide, we've covered how to generate text using OpenAI's GPT-3 API in R. We've defined a function to interact with the API, handled responses, extracted generated text, monitored token usage, and processed multiple requests. We've also discussed error handling, rate limiting, and best practices for working with the API. By following these steps, you can effectively use OpenAI's GPT-3 API to generate text in R for various applications. For the curious, yes, these prompts and responses are generated using the OpenAI API every time you render this notebook.
+Now it's your turn to experiment with the OpenAI API! Try different prompts, explore various models, and see how you can integrate AI-generated text into your projects. Remember to monitor your token usage and handle errors gracefully as you work with the API.
+
+I've crafted a prompt to generate your very own activity for this module. You can modify the prompt to create different activities or explore other topics. Here's the prompt I used: 
+```{r llmapi-code-activity-prompt, cache=TRUE}
+activity_prompt <- "Create a data science activity for students learning about using OpenAI's API in Tidyverse. The activity should involve making API calls, handling responses, and analyzing the results. Include clear instructions and learning objectives."
+
+
+activity_response <- generate_text(activity_prompt)
+
+writeLines(activity_response$choices$message$content, "includes/activity.txt")
+```
+
+Because the response is quite long, I've written it to a text file in the `includes` directory. You can open that file to see the generated activity. The activity is designed to help students learn how to use OpenAI's API in R, including making API calls, handling responses, and analyzing results. It includes clear instructions and learning objectives to guide students through the process. 
+
+You may notice that the activity is generated each time I render this book. If you want to keep a specific version of the activity, you can find it in the commit history of the `includes/activity.txt` file in the GitHub repository for this book. You can also modify the prompt to generate a new activity or explore different topics as you see fit. Happy experimenting!
+
+Now, a word of cauition that this activity is generated by the OpenAI API, so it requires careful review and editing to ensure it is accurate, clear, and appropriate. Always review AI-generated content before using it in an educational setting to ensure it meets your standards and learning objectives. Trust but verify, as they say.
+
+
+<details>
+<summary>Click to see the generated activity</summary>
+```{r llmapi-code-activity-response, cache=TRUE}
+cat(activity_response$choices$message$content)
+```
+</details>
+
+## Best Practices
+
+- Always keep your API key secure and never hard-code it in your scripts.
+- Monitor token usage to manage costs effectively.
+- Handle errors gracefully to ensure your application remains robust.
+- Use batching and throttling to manage multiple requests and respect rate limits.
+- Regularly check OpenAI's API documentation for updates and changes to endpoints, parameters, and best practices.
+
+## Next Steps and Further Exploration
+
+Now that you have the basics down, you can start experimenting with different prompts, models, and applications. The OpenAI API is powerful and flexible, allowing you to integrate AI capabilities into a wide range of projects, from chatbots to content generation to data analysis. Happy coding!
+
+
+### Conclusion
+
+In this guide, we've covered how to generate text using OpenAI's API in R. We've defined a function to interact with the API, handled responses, extracted generated text, monitored token usage, and processed multiple requests. We've also discussed error handling, rate limiting, and best practices for working with the API. By following these steps, you can effectively use OpenAI's API to generate text in R for various applications. For the curious, yes, these prompts and responses are generated using the OpenAI API every time you render this notebook.
