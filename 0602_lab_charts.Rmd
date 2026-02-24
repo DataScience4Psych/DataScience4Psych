@@ -296,7 +296,7 @@ Whickham %>%
 
 </details>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r lab_charts-code-challenge, echo=FALSE, message=FALSE, warning=FALSE}
 
 library(ggplot2)
 library(dplyr)
@@ -323,24 +323,21 @@ df <- Whickham %>%
   )
 
 
-
 # Make the plot
-ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax, fill = outcome ,
-               pattern = smoker)) +
-  geom_rect_pattern(aes( pattern_filename = smoker),
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax,fill = smoker)) +
+  geom_rect_pattern(
+    aes(pattern_fill = outcome,
+        pattern_type = smoker),
     color = "white", linewidth = 0.3,
-    
-                    pattern = 'placeholder', # use a placeholder pattern to avoid warnings about missing patterns
-                   # pattern_type='keanu',
-                  #      pattern_fill = "black",      # color of the texture itself
-    pattern_alpha = 0.35,        # transparency of texture
-  #  pattern_density = 0.5,       # amount of texture
-  #  pattern_spacing = 0.03       # spacing between elements
+                    pattern = 'polygon_tiling', 
+    pattern_alpha = 0.35
   ) +
   coord_polar(theta = "y") +
   xlim(1.5, 4) +
   facet_wrap(~ age_cat) +
-  scale_pattern_filename_manual(values = c("Alive" = "bear", "Dead" = "keanu")) #+
+  scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
+ scale_pattern_fill_manual(values = c( "Alive" = "#E67819", "Dead" = "#201a12"))+
+   scale_fill_manual(values = c( "Yes" = "black", "No" = "#dbcbb0"))+
  theme_void()
 
 ```
@@ -360,14 +357,7 @@ Also, make sure all of your R chunks are properly labeled, and your figures are 
 
 
 
-## More ugly charts {.unnumbered}
 
-Want to see more ugly charts? Check out the following resources:
-
-- [Flowing Data - Ugly Charts](https://flowingdata.com/category/visualization/ugly-visualization/)
-- [Reddit - Data is ugly](https://www.reddit.com/r/dataisugly/)
-- [Missed Opportunities and Graphical Failures](http://www.datavis.ca/gallery/missed.php)
-- [(Mostly Bad) Graphics and Tables](http://users.stat.umn.edu/~rend0020/Teaching/STAT8801-resources/graphics/index.html)
 
 ```{r courselinks, child="includes/courselinks.md"}
 ```
