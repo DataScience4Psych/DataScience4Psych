@@ -1,191 +1,229 @@
-Title: OpenAI API in the Tidyverse — a hands-on data science activity
+Meme-tastic data science activity: OpenAI API + Tidyverse for grad students
 
 Overview
-In this activity, students learn to call OpenAI’s API from R, handle and tidy the JSON responses with the Tidyverse, and analyze the results. Students will practice making API calls, extracting the useful parts of the response, summarizing the results with dplyr and friends, and reflecting on prompt design and model behavior.
+- Goal: Learn to call OpenAI's API from R, handle and parse responses, and analyze the outputs inside a tidyverse workflow.
+- Theme: Meme-inspired prompts to generate concise, educational, and humorous captions. Templates include classic memes like Doge, Distracted Boyfriend, Two-Button, Expanding Brain, Drake Hotline Bling, and Futurama Fry.
+- Deliverables: A reproducible R workflow (script or R Markdown) that makes API calls, stores results in a tidy data frame, computes simple analytics, and visualizes outputs.
 
 Learning objectives
-- Set up and authenticate with the OpenAI API in R.
-- Build and send API requests (chat/completions) and handle responses in a tidy workflow.
-- Extract useful fields from the API response (text content, usage tokens) and store them in a tibble.
-- Use dplyr, purrr, and stringr to summarize and visualize API results.
-- Compare prompts and discuss prompt design, response quality, and limitations.
-- (Optional) Extract and run R code snippets returned by the model in a safe, controlled way.
+- Practice making REST API calls to OpenAI from R (tidyverse-friendly workflow).
+- Learn to structure prompts, pass them through a system prompt, and handle responses (text + usage metadata).
+- Use dplyr, purrr, tidyr, and stringr to wrangle API results into tidy data frames.
+- Analyze and compare outputs across multiple meme-style prompts (length, token usage, readability proxies).
+- Create a simple “Memeboard” to showcase best-performing captions and potential improvements.
 
 Prerequisites
-- R and RStudio (or another R environment)
-- Install necessary packages: tidyverse, httr or httr2, jsonlite, purrr, stringr, readr
-- An OpenAI API key (keep it private). Set it in your environment as OPENAI_API_KEY.
-- Basic familiarity with dplyr/tidyverse for data wrangling
+- R and RStudio (or any editor with R support).
+- Packages: tidyverse (dplyr, purrr, tidyr, ggplot2, readr), httr, jsonlite, stringr, possibly glue.
+- OpenAI API key stored as an environment variable OPENAI_API_KEY (recommended) or read from an .Renviron file.
+- Basic familiarity with the tidyverse and basic API concepts.
 
-What students will need to do
-- Create a small dataset context (e.g., the built-in mtcars dataset) to prompt the model about.
-- Design a set of prompts (questions) about that dataset.
-- Write an R function to call the OpenAI Chat API and return content and usage stats.
-- Run prompts, collect responses in a tidy data frame, and analyze response length and content.
-- (Optional) Identify and extract any R code blocks in the responses and run them in a safe environment.
+Setup (one-time)
+- Install packages (if needed):
+  - install.packages(c("tidyverse", "httr", "jsonlite"))
+- Load libraries:
+  - library(tidyverse)
+  - library(httr)
+  - library(jsonlite)
 
-Activity setup (Step-by-step)
-1) Prepare the environment
-- Install and load packages
-  - R code:
-    install.packages(c("httr","jsonlite","tidyverse","purrr","stringr"))
-    library(httr)
-    library(jsonlite)
-    library(tidyverse)
-    library(purrr)
-    library(stringr)
+- Save your OpenAI API key (recommended):
+  - Sys.setenv(OPENAI_API_KEY = "your-key-here")
+  - Or place in ~/.Renviron: OPENAI_API_KEY=your-key-here
 
-- Set your API key (do not commit keys to shared work)
-  - R code:
-    Sys.setenv(OPENAI_API_KEY = "your-api-key-here")  # replace with your key
-    # Optional: also set OPENAI_ORG if your account requires it
-    Sys.setenv(OPENAI_ORG = "")
+- OpenAI Chat API endpoint:
+  - endpoint <- "https://api.openai.com/v1/chat/completions"
 
-2) Prepare a small dataset context
-- Use mtcars as the prompt context; you can also use iris or another built-in dataset.
-- Create a short summary you’ll include in prompts if desired.
+- System prompt (shared persona for all prompts):
+  - system_msg <- "You are a witty data-science meme generator. Produce a single concise meme caption tailored to the given meme template and concept. Keep it under 200 characters. If possible, reference the meme template by name in the caption."
 
-- R code (optional data prep for context in prompts):
-  data <- mtcars
-  head(data)
-  summary(data)
+R function to call the API
+- This function sends a chat-style prompt to gpt-3.5-turbo (or another model), returns the caption and usage data.
 
-3) Build the API call function
-- Purpose: send a chat-style prompt to OpenAI and return the model’s content plus token usage.
-- Note: This example uses the chat/completions endpoint with a simple user message. You can switch to “gpt-4” if you have access, or stay with “gpt-3.5-turbo”.
+- Code (paste into an R script or R Markdown cell):
 
-- R code:
-  call_openai <- function(prompt,
-                          model = "gpt-3.5-turbo",
-                          temperature = 0.3,
-                          max_tokens = 600) {
-    req <- httr::POST(
-      url = "https://api.openai.com/v1/chat/completions",
-      httr::add_headers(
-        Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY")),
-        "Content-Type" = "application/json"
-      ),
-      body = list(
-        model = model,
-        messages = list(list(role = "user", content = prompt)),
-        temperature = temperature,
-        max_tokens = max_tokens
-      ),
-      encode = "json"
-    )
-    if (httr::http_error(req)) {
-      stop("OpenAI API error: ", httr::status_code(req), " ",
-           httr::content(req, as = "text", encoding = "UTF-8"))
-    }
-    res <- httr::content(req, as = "parsed", type = "application/json")
-    content <- res$choices[[1]]$message$content
-    usage <- res$usage
-    list(content = content,
-         prompt_tokens = usage$prompt_tokens,
-         completion_tokens = usage$completion_tokens,
-         total_tokens = usage$total_tokens)
-  }
+```r
+library(httr)
+library(jsonlite)
+library(tidyverse)
 
-4) Design prompts (in this activity, three prompts about mtcars)
-- Purpose: generate varied responses (descriptive, planning, and code).
-- R code:
-  prompts <- tibble(
-    id = 1:3,
-    prompt = c(
-      "Describe the mtcars dataset for a beginner data scientist. Include what each column represents, data types, and any obvious data quality notes.",
-      "Propose a simple data analysis plan for mtcars. Include at least three questions, a plan for summaries and visuals, and a modeling idea if appropriate.",
-      "Provide R code to compute the mean miles-per-gallon (mpg) by cylinder ('cyl') and create a bar plot showing mean mpg per cylinder."
-    )
+endpoint <- "https://api.openai.com/v1/chat/completions"
+
+system_msg <- "You are a witty data-science meme generator. Produce a single concise meme caption tailored to the given meme template and concept. Keep it under 200 characters. If possible, reference the meme template by name in the caption."
+
+make_openai_call <- function(prompt_text, model = "gpt-3.5-turbo", temperature = 0.6, max_tokens = 180) {
+  body <- list(
+    model = model,
+    messages = list(
+      list(role = "system", content = system_msg),
+      list(role = "user", content = prompt_text)
+    ),
+    temperature = temperature,
+    max_tokens = max_tokens,
+    n = 1
   )
+  
+  res <- POST(
+    endpoint,
+    add_headers(Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY"))),
+    content_type_json(),
+    body = toJSON(body, auto_unbox = TRUE)
+  )
+  
+  stop_for_status(res)
+  raw <- content(res, as = "text", encoding = "UTF-8")
+  parsed <- fromJSON(raw, flatten = TRUE)
+  caption <- parsed$choices[[1]]$message$content
+  usage <- parsed$usage
+  list(caption = caption, usage = usage)
+}
+```
 
-5) Run prompts and collect results
-- R code (collect responses into a tidy data frame)
-  results <- purrr::map2_df(prompts$prompt, prompts$id, ~{
-    r <- tryCatch(call_openai(.x),
-                  error = function(e) list(content = NA_character_, prompt_tokens = NA, completion_tokens = NA, total_tokens = NA))
-    tibble(
-      prompt_id = .y,
-      prompt_text = .x,
-      response_text = r$content,
-      prompt_tokens = r$prompt_tokens,
-      completion_tokens = r$completion_tokens,
-      total_tokens = r$total_tokens
-    )
-  })
+Data: define prompts using meme templates and topics
+- Create a small data frame of meme templates and data-science topics you want to explain or illustrate.
 
-6) Basic cleanup and quick analysis
-- Compute some simple text metrics and summarize by prompt
-  results <- results %>%
-    mutate(
-      word_count = str_count(response_text, "\\S+"),
-      sentence_count = str_count(response_text, "[.!?]+"),
-      # optional: approximate response length in tokens
-      token_count = total_tokens
-    )
+```r
+prompts <- tibble(
+  id = 1:6,
+  template = c("Doge", "Distracted Boyfriend", "Two-Button", "Expanding Brain", "Drake Hotline Bling", "Futurama Fry"),
+  topic = c("gradient descent", "overfitting vs. underfitting", "cross-validation", "p-values vs. confidence intervals", "feature engineering vs. baselines", "Bayesian updating")
+)
 
-- Visualize response length by prompt
-  # Simple bar chart of total_tokens by prompt
-  results %>%
-    mutate(prompt_id = factor(prompt_id, levels = unique(prompt_id))) %>%
-    ggplot(aes(x = prompt_id, y = total_tokens)) +
-    geom_col(fill = "steelblue") +
-    labs(x = "Prompt ID", y = "Total tokens (API usage)", title = "API usage by prompt")
+prompts <- prompts %>% 
+  mutate(prompt = paste0(
+    "Explain ", topic, " in the style of the ", template, " meme. ",
+    "Provide a single concise caption suitable for a slide or social post. ",
+    "Reference the meme name where appropriate."
+  ))
+```
 
-- Show a quick qualitative check
-  results %>%
-    select(prompt_id, prompt_text, response_text) %>%
-    arrange(prompt_id) %>%
-    print(n = 5)  # show a few responses; adjust n as needed
+- Optional: print prompts to inspect
+```r
+prompts
+```
 
-7) Optional: identify and handle code blocks in responses
-- Some responses may include code (e.g., R) enclosed in backticks. You can detect and optionally extract/run code blocks.
-- R code:
-  has_r_code <- results %>% mutate(has_code = str_detect(response_text, regex("```r|```R", ignore_case = TRUE)))
-  has_r_code %>% count(has_code)
+Step-by-step activity (30–60 minutes, depending on group size)
+1) Generate meme captions
+- For every row in prompts, call the API and store the result.
 
-- Extract code blocks (optional)
-  code_blocks <- results %>%
-    mutate(blocks = str_extract_all(response_text, regex("```r[\\s\\S]*?```", dotall = TRUE))) %>%
-    select(prompt_id, blocks)
+```r
+prompts <- prompts %>%
+  mutate(result = map(prompt, ~ {
+    Sys.sleep(0.5)  # gently rate-limit if running many prompts
+    make_openai_call(.x)
+  }))
 
-- If you choose to run code blocks, do so in a controlled environment and only after sanitizing the code. A safe approach is to extract the code, remove backticks and language tags, and then parse-eval inside a new environment:
-  safe_env <- new.env()
-  code_only <- str_replace_all(code, regex("^```r|```$", multiline = TRUE), "")
-  eval(parse(text = code_only), envir = safe_env)
-  # Note: Running arbitrary code from an LLM is potentially dangerous. Only do this with teacher oversight.
+# Unnest the results into tidy columns
+results_tbl <- prompts %>%
+  mutate(
+    caption = map_chr(result, "caption"),
+    usage = map(result, "usage")
+  ) %>%
+  select(-result) %>%
+  unnest_wider(usage)
 
-8) Learning reflections and discussion questions
-- Which prompts produced the most useful or actionable content for your dataset?
-- How did the length of the response relate to perceived quality or usefulness?
-- How did you design prompts to elicit specific information (descriptions, plans, code)? How could prompts be improved?
-- What are the limitations of relying on an AI model for data science tasks (accuracy, bias, hallucinations, need for validation)?
-- If you were to run this activity again, what changes would you make to the prompts or the analysis?
+# If unnest_wider(usage) doesn't work due to structure, you can do:
+# results_tbl <- prompts %>% mutate(ut = map(usage, ~ as.list(.x))) %>% unnest_wider(ut)
+```
 
-9) Deliverables to produce
-- A tidy data frame (the results object) with: prompt_id, prompt_text, response_text, tokens (prompt/completion/total), word_count, sentence_count.
-- A small visualization (e.g., a bar chart of total_tokens by prompt_id) and one qualitative snippet of a response you found particularly insightful.
-- (Optional) A short appendix showing any code blocks extracted and, if safe, executed.
+2) Quick quality checks (tidyverse style)
+- Basic metadata
+```r
+results_tbl <- results_tbl %>%
+  mutate(
+    word_count = str_count(caption, "\\S+"),
+    char_count = str_length(caption)
+  )
+```
 
-Tips and best practices
-- Start with a safe, educational, small prompt set. You can expand prompts or test with other datasets (e.g., iris) for different results.
-- Use a low temperature (e.g., 0.2–0.4) for more deterministic responses.
-- Be mindful of rate limits and plan for retries if you run the prompts in a loop. For example, add a small sleep() between requests if the API indicates a rate limit.
-- Encourage students to compare model responses across prompts and discuss prompt design (e.g., asking for bullet points, asking for R code, asking for a plan, etc.).
-- Emphasize responsible usage: do not share your API key, and avoid sending sensitive or private data to the API.
+- Summaries
+```r
+results_tbl %>% 
+  select(id, template, topic, caption, word_count, char_count) %>%
+  arrange(id)
+```
 
-Optional extensions
-- Use a second model (e.g., gpt-4 or a higher-capacity model if available) and compare results with gpt-3.5-turbo.
-- Build a small R Markdown report that automatically renders the prompts, responses, and analyses into a student-friendly summary.
-- Create a reusable workflow: wrap the prompt design, API call, and analysis into a small R package or a notebook, so students can reuse the pattern with any dataset.
+3) Visualize meme captions (analysis and communication)
+- Caption length by meme template (for engagement intuition)
+```r
+ggplot(results_tbl, aes(x = template, y = word_count, fill = template)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Caption length by meme template",
+       x = "Meme template",
+       y = "Word count") +
+  theme_minimal()
+```
 
-What to include in a short instructor guide
-- Expected outcomes: students will have created a small, tidy dataset of API responses, performed basic analyses of response length and content, and reflected on prompt design.
-- Possible rubrics: correct authentication setup, successful data collection into a tibble, clear summary/visualization of results, thoughtful reflection on prompt design, and safe handling of code blocks (optional).
-- Troubleshooting tips: ensure the API key is set, check the correct API endpoint (chat/completions), watch for rate limiting and timeouts, and handle JSON parsing issues gracefully.
+- Optional: distribution of token usage vs caption length (if you want to explore API costs)
+```r
+results_tbl %>% 
+  ggplot(aes(x = total_tokens, y = word_count)) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, color = "steelblue") +
+  labs(title = "API usage vs caption length",
+       x = "Total tokens used",
+       y = "Caption word count")
+```
+Note: The usage data typically includes prompt_tokens, completion_tokens, total_tokens depending on model version.
 
-Safety and ethics note
-- OpenAI outputs can be incorrect or misleading (hallucinations). Treat AI-generated content as a starting point to be validated with traditional data science methods.
-- Do not expose private data or keys; use dummy or synthetic datasets when possible.
-- If running code blocks produced by the model, carefully review and run only trusted code in a controlled environment.
+4) Create a Memeboard (deliverable)
+- Save a cute, shareable table of the best captions and their metrics
+```r
+memeboard <- results_tbl %>%
+  select(id, template, topic, caption, word_count, total_tokens) %>%
+  arrange(desc(word_count), total_tokens)
 
-You can adapt the prompts, dataset, and depth of analysis to fit your course length and student level. If you’d like, I can tailor this into a one-page handout or an RStudio project template with ready-to-run scripts.
+write_csv(memeboard, "memeboard.csv")
+```
+
+5) Optional refinement: prompt experiment
+- If you have budget or want to compare prompts, duplicate the prompt column and add a variant prompt_variant (e.g., more or less humorous, or ask for 2 options). Run API calls again and compare captions and token usage.
+
+6) Reflection prompts (for students)
+- Which meme template produced the most informative caption for the concept?
+- Did any prompts produce overly long captions or ambiguous captions?
+- How did token usage vary by template or topic? What does this imply for cost-performance trade-offs?
+
+Clean-up and best practices
+- Respect rate limits and costs: insert small sleeps (e.g., Sys.sleep(0.5) between calls).
+- Handle errors gracefully: wrap API calls in tryCatch to collect failed prompts for retry.
+- Keep API keys secure: do not hard-code keys in scripts; rely on environment variables or .Renviron.
+- Version control: track API prompts and results, but avoid sharing sensitive keys in repos.
+- Reproducibility: pin a fixed seed for any randomness (if you add random prompts or sampling).
+
+Optional extensions (for more advanced groups)
+- Use a different model with higher quality (e.g., gpt-4-turbo if available; note cost).
+- Run a mini A/B test: compare two different system prompts or two different prompts for the same topic; analyze which produces captions with higher readability or perceived humor (students can rate captions on a scale).
+- Add sentiment or readability proxy metrics:
+  - Basic readabilty proxy: word_count, sentence_count (if captions contain punctuation), average word length.
+  - If you want more, bring in a simple Flesch-Kincaid-like proxy or use an external package for readability (e.g., quanteda or textstat, if you install extra packages).
+
+Deliverables for the course
+- A single R script or R Markdown notebook containing:
+  - Setup code (library load, API key handling, endpoint, system prompt).
+  - Data frame of prompts (meme templates and topics).
+  - The API call function (make_openai_call).
+  - The tidyverse pipeline to collect, unnest, and analyze results.
+  - Visualizations (caption length by meme template, token usage vs length).
+  - The Memeboard export (CSV) with the best captions and metrics.
+  - Short reflective prompts or discussion questions.
+
+Assessment rubric (quick guide)
+- API integration (40%): correct API call wiring, error handling, and response parsing.
+- Data wrangling (25%): tidy data frame construction, proper use of purrr and tidyr to flatten nested results.
+- Analysis and visualization (20%): meaningful metrics (length, token usage) and clear visuals.
+- Reproducibility and hygiene (10%): secure key handling, clear setup instructions, and an executable script.
+- Creativity and engagement (5%): meme-tastic prompts that are both entertaining and educational.
+
+Example outputs (mocked for illustration)
+- Caption example 1 (Doge, gradient descent): "Much descent. Very converge. Wow, optimization done."
+- Caption example 2 (Distracted Boyfriend, overfitting): "Boyfriend = model; Girlfriend = training data; New girl = real world. Overfit, whoops."
+- Caption example 3 (Two-Button, cross-validation): "Yes: Reboot model with CV. No: Stay with train/test split."
+- Caption example 4 (Expanding Brain, p-values): "Brain grows: p < .05 means significance. Brain bigger: confidence intervals tell the story."
+
+Safety and costs note
+- OpenAI API usage costs can accumulate quickly with many prompts; manage prompts and max_tokens intentionally.
+- Do not share or hard-code API keys; use environment variables.
+- Ensure prompts adhere to your institution’s safety and ethics guidelines; consider adding a brief discussion on bias, reliability, and the limitations of AI-generated explanations.
+
+If you’d like, I can tailor the prompts to your graduate course topics (e.g., statistics, ML theory, NLP, causal inference) or provide a ready-to-run R Markdown file with all steps pre-woven.
