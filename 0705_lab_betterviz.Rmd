@@ -37,6 +37,7 @@ You can load it by running the following in your Console:
 
 ```{r load-packages, message = FALSE}
 library(tidyverse)
+library(scales)
 ```
 
 ### Data {.unnumbered}
@@ -53,9 +54,85 @@ The following visualization was shared [on Twitter](https://twitter.com/JonBoeck
 try_include_tweet("https://twitter.com/JonBoeckenstedt/status/1291602888376999936")
 ```
 
-```{r fig.fullwidth = TRUE, echo = FALSE}
+```{r fig.fullwidth = TRUE, echo = FALSE,message = FALSE}
 knitr::include_graphics("img/masks-v-nomasks.png")
+
+
+offset <- 11
+df <- read_csv("data/kansas_grouped_rolling_avg.csv") %>%
+  mutate(date = as.Date(date) + .5, # add 12 hours to make the date labels more accurate
+    mask_mandate = ifelse(mask_mandate == "Mask", "Mask Counties", "No-Mask Mandate Counties") %>%
+           factor(levels = c("Mask Counties", "No-Mask Mandate Counties")),
+         rolling_avg = case_when(
+           mask_mandate == "No-Mask Mandate Counties" ~ rolling_avg + offset,
+           TRUE ~ rolling_avg
+         ))
 ```
+<details>
+  <summary>Here's a close attempt at reconstructing the original plot. Can you spot the differences?</summary>
+```{r fig.fullwidth = TRUE, echo = FALSE,message = FALSE}
+left_breaks  <- seq(15, 25, by = 2)
+right_breaks <- seq(4, 14, by = 2)       
+col_mask <- "#F28E2B"
+col_nomask <- "#4E79A7"         
+date_lo <- as.Date("2020-07-12")
+date_hi <- as.Date("2020-08-03")
+df %>% 
+  ggplot(
+    aes(x = date,
+        y = rolling_avg,
+        color = mask_mandate,
+        group = mask_mandate
+        )
+  ) +
+  geom_line(linewidth = 1,aes(group = mask_mandate)) +
+
+    scale_color_manual(values = c("Mask Counties" = col_mask,
+                                "No-Mask Mandate Counties" = col_nomask)) +
+  scale_x_date(
+    limits = c(date_lo-.5, date_hi+1),
+    breaks  = seq(date_lo+.5, date_hi+.5, by = "1 day"),
+    date_labels = "%m/%d/%Y",
+    expand = expansion(mult = c(0, 0))
+  ) +
+    scale_y_continuous(
+    name = NULL,
+    breaks = left_breaks,
+    labels = label_number(accuracy = 1),
+    limits = c(15, 25),
+    expand = expansion(mult = c(0, 0)),
+    sec.axis = sec_axis(~ . - offset, name = NULL,
+                        labels = label_number(accuracy = 1),
+                         breaks = right_breaks,
+                         )
+  ) +
+  labs(
+    title = "Kansas COVID-19 7-Day Rolling Average of Daily Cases/Per 100K Population",
+    subtitle = 
+      bquote(atop('Mask Counties Vs. No-Mask Mandate Counties' , scriptstyle('Source: Kansas Department of Health and Environment'))),
+    x = NULL,
+    y = NULL,
+    color = NULL
+  ) +
+  coord_cartesian(ylim = c(15, 25.5),clip = "off") +
+  theme_minimal() +
+  theme(legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 6),
+    legend.title = element_blank(),
+     plot.title = element_text(hjust = -0.5),
+     plot.subtitle = element_text(hjust = .5, size = 8),
+     panel.grid.minor = element_blank(),
+     axis.line = element_line(color= col_mix("black", "white", 0.80),
+                              size = 0.5)
+  ) + 
+   annotate("text", x = date_lo+.5, y = Inf, label = "Mask",
+           color = col_mask, vjust = -0.05, hjust = 2.05, size = 2.5) +
+  annotate("text", x = date_hi-.5, y = Inf, label = "No Mask",
+           color = col_nomask, vjust = -0.05, hjust = -.45, size = 2.5)
+
+
+```
+</details>
 
 Before you dive in, think about what is misleading about this visualization and how you might go about fixing it.
 
