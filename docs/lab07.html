@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-23" />
+<meta name="date" content="2026-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1702,7 +1702,8 @@ If anything is missing, commit and push again.</p>
 <p>We’ll use the <strong>tidyverse</strong> package for much of the data wrangling and visualization.
 This package is already installed for you.
 You can load it by running the following in your Console:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="lab07.html#cb330-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="lab07.html#cb330-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb330-2"><a href="lab07.html#cb330-2" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code></pre></div>
 </div>
 <div id="data-3" class="section level3 unnumbered hasAnchor">
 <h3>Data<a href="lab07.html#data-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1715,12 +1716,23 @@ COVID-19 case rates in Kansas counties with and without mask mandates. Since the
 <p>The following visualization was shared <a href="https://twitter.com/JonBoeckenstedt/status/1291602888376999936">on Twitter</a> as “extraordinary misleading”.</p>
 <blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Hey, <a href="https://twitter.com/maddow?ref_src=twsrc%5Etfw">@maddow</a> and <a href="https://twitter.com/MaddowBlog?ref_src=twsrc%5Etfw">@MaddowBlog</a> @SecNormanas as much as we&#39;d all hope everyone would wear masks, this chart is extraordinary misleading.  If you don&#39;t believe me, ask <a href="https://twitter.com/AlbertoCairo?ref_src=twsrc%5Etfw">@AlbertoCairo</a> who wrote the book on it. Check the scale on the two axes. <a href="https://t.co/JLxxgxzbua">pic.twitter.com/JLxxgxzbua</a></p>&mdash; Jon Boeckenstedt (@JonBoeckenstedt) <a href="https://twitter.com/JonBoeckenstedt/status/1291602888376999936?ref_src=twsrc%5Etfw">August 7, 2020</a></blockquote>
 
-<p><img src="img/masks-v-nomasks.png" alt="" width="805" /></p>
+<img src="img/masks-v-nomasks.png" alt="" width="805" />
+<details>
+<summary>
+Here’s a close attempt at reconstructing the original plot. Can you spot the differences?
+</summary>
+<pre><code>#&gt; Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+#&gt; ℹ Please use the `linewidth` argument instead.
+#&gt; This warning is displayed once per session.
+#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#&gt; generated.</code></pre>
+<img src="0705_lab_betterviz_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
+</details>
 <p>Before you dive in, think about what is misleading about this visualization and how you might go about fixing it.</p>
 <ol style="list-style-type: decimal">
-<li>check the repository, you’ll find a CSV file called <code>kansas_grouped_rolling_avg.csv</code>. Load it using:</li>
+<li>Check the lab repository, you’ll find a CSV file called <code>kansas_grouped_rolling_avg.csv</code>. Load it using:</li>
 </ol>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="lab07.html#cb331-1" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;kansas_grouped_rolling_avg.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="lab07.html#cb332-1" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;kansas_grouped_rolling_avg.csv&quot;</span>)</span></code></pre></div>
 <p>Explore its structure and use it to re-construct the misleading visualization.</p>
 <p>Note: Since the original dataset for this plot was not publicly available, a former student did some impressive detective work to reconstruct it from other publicly available datasets. The re-constructed plot may still differ slightly from the original. If you’re interested in how the data was obtained and processed, you can refer to <a href="https://github.com/HollandSun/Reproduce_Lab7plot.git">this repository</a> for the full data pipeline and sources.</p>
 <ol start="2" style="list-style-type: decimal">
@@ -1735,6 +1747,7 @@ Feel free to also comment on whether that lines up with what you know about mask
 <li><p>Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.</p></li>
 <li><p>Plan Your Opposite Visualization: Briefly determine what opposite message you want to covey. Consider the data you have available (or could easily add).</p></li>
 <li><p>Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.</p></li>
+<li><p>Now for the real challenge! Find your own misleading graph!</p></li>
 </ol>
 <p>🧶 ✅ ⬆️ Knit, <em>commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you’re happy with the final state of your work.</em></p>
 <!--DS4P Links-->

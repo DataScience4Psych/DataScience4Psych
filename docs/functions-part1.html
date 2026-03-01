@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-02-23" />
+<meta name="date" content="2026-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1684,9 +1684,9 @@ div.csl-indent {
 <div id="load-the-nycflights13-data" class="section level2 hasAnchor" number="63.2">
 <h2><span class="header-section-number">63.2</span> Load the nycflights13 data<a href="functions-part1.html#load-the-nycflights13-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll begin by loading the <code>nycflights13</code> dataset, which contains information about all flights that departed from New York City in 2013. This dataset provides a rich source of real-world data for practicing data manipulation and analysis</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="functions-part1.html#cb332-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb332-2"><a href="functions-part1.html#cb332-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb332-3"><a href="functions-part1.html#cb332-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;flights&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="functions-part1.html#cb333-1" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb333-2"><a href="functions-part1.html#cb333-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb333-3"><a href="functions-part1.html#cb333-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;flights&quot;</span>)</span></code></pre></div>
 </div>
 <div id="example-analysis-average-delay-by-airline" class="section level2 hasAnchor" number="63.3">
 <h2><span class="header-section-number">63.3</span> Example Analysis: Average Delay by Airline<a href="functions-part1.html#example-analysis-average-delay-by-airline" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1696,51 +1696,51 @@ div.csl-indent {
 <h2><span class="header-section-number">63.4</span> Get something that works<a href="functions-part1.html#get-something-that-works" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First, develop some working code for interactive use, using a representative input. I’ll use flights operated by a specific airline as an example.</p>
 <p>R functions that will be useful: <code>mean()</code> and <code>filter()</code> from the <code>dplyr</code> package.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="functions-part1.html#cb333-1" tabindex="-1"></a><span class="do">## Investigate the structure of the flights dataset</span></span>
-<span id="cb333-2"><a href="functions-part1.html#cb333-2" tabindex="-1"></a><span class="fu">str</span>(flights)</span>
-<span id="cb333-3"><a href="functions-part1.html#cb333-3" tabindex="-1"></a><span class="co">#&gt; tibble [336,776 × 19] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb333-4"><a href="functions-part1.html#cb333-4" tabindex="-1"></a><span class="co">#&gt;  $ year          : int [1:336776] 2013 2013 2013 2013 2013 2013 2013 2013 2013..</span></span>
-<span id="cb333-5"><a href="functions-part1.html#cb333-5" tabindex="-1"></a><span class="co">#&gt;  $ month         : int [1:336776] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb333-6"><a href="functions-part1.html#cb333-6" tabindex="-1"></a><span class="co">#&gt;  $ day           : int [1:336776] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb333-7"><a href="functions-part1.html#cb333-7" tabindex="-1"></a><span class="co">#&gt;  $ dep_time      : int [1:336776] 517 533 542 544 554 554 555 557 557 558 ...</span></span>
-<span id="cb333-8"><a href="functions-part1.html#cb333-8" tabindex="-1"></a><span class="co">#&gt;  $ sched_dep_time: int [1:336776] 515 529 540 545 600 558 600 600 600 600 ...</span></span>
-<span id="cb333-9"><a href="functions-part1.html#cb333-9" tabindex="-1"></a><span class="co">#&gt;  $ dep_delay     : num [1:336776] 2 4 2 -1 -6 -4 -5 -3 -3 -2 ...</span></span>
-<span id="cb333-10"><a href="functions-part1.html#cb333-10" tabindex="-1"></a><span class="co">#&gt;  $ arr_time      : int [1:336776] 830 850 923 1004 812 740 913 709 838 753 ...</span></span>
-<span id="cb333-11"><a href="functions-part1.html#cb333-11" tabindex="-1"></a><span class="co">#&gt;  $ sched_arr_time: int [1:336776] 819 830 850 1022 837 728 854 723 846 745 ...</span></span>
-<span id="cb333-12"><a href="functions-part1.html#cb333-12" tabindex="-1"></a><span class="co">#&gt;  $ arr_delay     : num [1:336776] 11 20 33 -18 -25 12 19 -14 -8 8 ...</span></span>
-<span id="cb333-13"><a href="functions-part1.html#cb333-13" tabindex="-1"></a><span class="co">#&gt;  $ carrier       : chr [1:336776] &quot;UA&quot; &quot;UA&quot; &quot;AA&quot; &quot;B6&quot; ...</span></span>
-<span id="cb333-14"><a href="functions-part1.html#cb333-14" tabindex="-1"></a><span class="co">#&gt;  $ flight        : int [1:336776] 1545 1714 1141 725 461 1696 507 5708 79 301 ..</span></span>
-<span id="cb333-15"><a href="functions-part1.html#cb333-15" tabindex="-1"></a><span class="co">#&gt;  $ tailnum       : chr [1:336776] &quot;N14228&quot; &quot;N24211&quot; &quot;N619AA&quot; &quot;N804JB&quot; ...</span></span>
-<span id="cb333-16"><a href="functions-part1.html#cb333-16" tabindex="-1"></a><span class="co">#&gt;  $ origin        : chr [1:336776] &quot;EWR&quot; &quot;LGA&quot; &quot;JFK&quot; &quot;JFK&quot; ...</span></span>
-<span id="cb333-17"><a href="functions-part1.html#cb333-17" tabindex="-1"></a><span class="co">#&gt;  $ dest          : chr [1:336776] &quot;IAH&quot; &quot;IAH&quot; &quot;MIA&quot; &quot;BQN&quot; ...</span></span>
-<span id="cb333-18"><a href="functions-part1.html#cb333-18" tabindex="-1"></a><span class="co">#&gt;  $ air_time      : num [1:336776] 227 227 160 183 116 150 158 53 140 138 ...</span></span>
-<span id="cb333-19"><a href="functions-part1.html#cb333-19" tabindex="-1"></a><span class="co">#&gt;  $ distance      : num [1:336776] 1400 1416 1089 1576 762 ...</span></span>
-<span id="cb333-20"><a href="functions-part1.html#cb333-20" tabindex="-1"></a><span class="co">#&gt;  $ hour          : num [1:336776] 5 5 5 5 6 5 6 6 6 6 ...</span></span>
-<span id="cb333-21"><a href="functions-part1.html#cb333-21" tabindex="-1"></a><span class="co">#&gt;  $ minute        : num [1:336776] 15 29 40 45 0 58 0 0 0 0 ...</span></span>
-<span id="cb333-22"><a href="functions-part1.html#cb333-22" tabindex="-1"></a><span class="co">#&gt;  $ time_hour     : POSIXct[1:336776], format: &quot;2013-01-01 05:00:00&quot; &quot;2013-01-&quot;..</span></span>
-<span id="cb333-23"><a href="functions-part1.html#cb333-23" tabindex="-1"></a><span class="do">## get to know the functions mentioned above</span></span>
-<span id="cb333-24"><a href="functions-part1.html#cb333-24" tabindex="-1"></a></span>
-<span id="cb333-25"><a href="functions-part1.html#cb333-25" tabindex="-1"></a><span class="fu">mean</span>(flights<span class="sc">$</span>dep_delay)</span>
-<span id="cb333-26"><a href="functions-part1.html#cb333-26" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
-<span id="cb333-27"><a href="functions-part1.html#cb333-27" tabindex="-1"></a></span>
-<span id="cb333-28"><a href="functions-part1.html#cb333-28" tabindex="-1"></a><span class="fu">filter</span>(<span class="at">.data =</span> flights, carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>)</span>
-<span id="cb333-29"><a href="functions-part1.html#cb333-29" tabindex="-1"></a><span class="co">#&gt; # A tibble: 32,729 × 19</span></span>
-<span id="cb333-30"><a href="functions-part1.html#cb333-30" tabindex="-1"></a><span class="co">#&gt;     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
-<span id="cb333-31"><a href="functions-part1.html#cb333-31" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;</span></span>
-<span id="cb333-32"><a href="functions-part1.html#cb333-32" tabindex="-1"></a><span class="co">#&gt;  1  2013     1     1      542            540         2      923            850</span></span>
-<span id="cb333-33"><a href="functions-part1.html#cb333-33" tabindex="-1"></a><span class="co">#&gt;  2  2013     1     1      558            600        -2      753            745</span></span>
-<span id="cb333-34"><a href="functions-part1.html#cb333-34" tabindex="-1"></a><span class="co">#&gt;  3  2013     1     1      559            600        -1      941            910</span></span>
-<span id="cb333-35"><a href="functions-part1.html#cb333-35" tabindex="-1"></a><span class="co">#&gt;  4  2013     1     1      606            610        -4      858            910</span></span>
-<span id="cb333-36"><a href="functions-part1.html#cb333-36" tabindex="-1"></a><span class="co">#&gt;  5  2013     1     1      623            610        13      920            915</span></span>
-<span id="cb333-37"><a href="functions-part1.html#cb333-37" tabindex="-1"></a><span class="co">#&gt;  6  2013     1     1      628            630        -2     1137           1140</span></span>
-<span id="cb333-38"><a href="functions-part1.html#cb333-38" tabindex="-1"></a><span class="co">#&gt;  7  2013     1     1      629            630        -1      824            810</span></span>
-<span id="cb333-39"><a href="functions-part1.html#cb333-39" tabindex="-1"></a><span class="co">#&gt;  8  2013     1     1      635            635         0     1028            940</span></span>
-<span id="cb333-40"><a href="functions-part1.html#cb333-40" tabindex="-1"></a><span class="co">#&gt;  9  2013     1     1      656            700        -4      854            850</span></span>
-<span id="cb333-41"><a href="functions-part1.html#cb333-41" tabindex="-1"></a><span class="co">#&gt; 10  2013     1     1      656            659        -3      949            959</span></span>
-<span id="cb333-42"><a href="functions-part1.html#cb333-42" tabindex="-1"></a><span class="co">#&gt; # ℹ 32,719 more rows</span></span>
-<span id="cb333-43"><a href="functions-part1.html#cb333-43" tabindex="-1"></a><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,</span></span>
-<span id="cb333-44"><a href="functions-part1.html#cb333-44" tabindex="-1"></a><span class="co">#&gt; #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
-<span id="cb333-45"><a href="functions-part1.html#cb333-45" tabindex="-1"></a><span class="co">#&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="functions-part1.html#cb334-1" tabindex="-1"></a><span class="do">## Investigate the structure of the flights dataset</span></span>
+<span id="cb334-2"><a href="functions-part1.html#cb334-2" tabindex="-1"></a><span class="fu">str</span>(flights)</span>
+<span id="cb334-3"><a href="functions-part1.html#cb334-3" tabindex="-1"></a><span class="co">#&gt; tibble [336,776 × 19] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb334-4"><a href="functions-part1.html#cb334-4" tabindex="-1"></a><span class="co">#&gt;  $ year          : int [1:336776] 2013 2013 2013 2013 2013 2013 2013 2013 2013..</span></span>
+<span id="cb334-5"><a href="functions-part1.html#cb334-5" tabindex="-1"></a><span class="co">#&gt;  $ month         : int [1:336776] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb334-6"><a href="functions-part1.html#cb334-6" tabindex="-1"></a><span class="co">#&gt;  $ day           : int [1:336776] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb334-7"><a href="functions-part1.html#cb334-7" tabindex="-1"></a><span class="co">#&gt;  $ dep_time      : int [1:336776] 517 533 542 544 554 554 555 557 557 558 ...</span></span>
+<span id="cb334-8"><a href="functions-part1.html#cb334-8" tabindex="-1"></a><span class="co">#&gt;  $ sched_dep_time: int [1:336776] 515 529 540 545 600 558 600 600 600 600 ...</span></span>
+<span id="cb334-9"><a href="functions-part1.html#cb334-9" tabindex="-1"></a><span class="co">#&gt;  $ dep_delay     : num [1:336776] 2 4 2 -1 -6 -4 -5 -3 -3 -2 ...</span></span>
+<span id="cb334-10"><a href="functions-part1.html#cb334-10" tabindex="-1"></a><span class="co">#&gt;  $ arr_time      : int [1:336776] 830 850 923 1004 812 740 913 709 838 753 ...</span></span>
+<span id="cb334-11"><a href="functions-part1.html#cb334-11" tabindex="-1"></a><span class="co">#&gt;  $ sched_arr_time: int [1:336776] 819 830 850 1022 837 728 854 723 846 745 ...</span></span>
+<span id="cb334-12"><a href="functions-part1.html#cb334-12" tabindex="-1"></a><span class="co">#&gt;  $ arr_delay     : num [1:336776] 11 20 33 -18 -25 12 19 -14 -8 8 ...</span></span>
+<span id="cb334-13"><a href="functions-part1.html#cb334-13" tabindex="-1"></a><span class="co">#&gt;  $ carrier       : chr [1:336776] &quot;UA&quot; &quot;UA&quot; &quot;AA&quot; &quot;B6&quot; ...</span></span>
+<span id="cb334-14"><a href="functions-part1.html#cb334-14" tabindex="-1"></a><span class="co">#&gt;  $ flight        : int [1:336776] 1545 1714 1141 725 461 1696 507 5708 79 301 ..</span></span>
+<span id="cb334-15"><a href="functions-part1.html#cb334-15" tabindex="-1"></a><span class="co">#&gt;  $ tailnum       : chr [1:336776] &quot;N14228&quot; &quot;N24211&quot; &quot;N619AA&quot; &quot;N804JB&quot; ...</span></span>
+<span id="cb334-16"><a href="functions-part1.html#cb334-16" tabindex="-1"></a><span class="co">#&gt;  $ origin        : chr [1:336776] &quot;EWR&quot; &quot;LGA&quot; &quot;JFK&quot; &quot;JFK&quot; ...</span></span>
+<span id="cb334-17"><a href="functions-part1.html#cb334-17" tabindex="-1"></a><span class="co">#&gt;  $ dest          : chr [1:336776] &quot;IAH&quot; &quot;IAH&quot; &quot;MIA&quot; &quot;BQN&quot; ...</span></span>
+<span id="cb334-18"><a href="functions-part1.html#cb334-18" tabindex="-1"></a><span class="co">#&gt;  $ air_time      : num [1:336776] 227 227 160 183 116 150 158 53 140 138 ...</span></span>
+<span id="cb334-19"><a href="functions-part1.html#cb334-19" tabindex="-1"></a><span class="co">#&gt;  $ distance      : num [1:336776] 1400 1416 1089 1576 762 ...</span></span>
+<span id="cb334-20"><a href="functions-part1.html#cb334-20" tabindex="-1"></a><span class="co">#&gt;  $ hour          : num [1:336776] 5 5 5 5 6 5 6 6 6 6 ...</span></span>
+<span id="cb334-21"><a href="functions-part1.html#cb334-21" tabindex="-1"></a><span class="co">#&gt;  $ minute        : num [1:336776] 15 29 40 45 0 58 0 0 0 0 ...</span></span>
+<span id="cb334-22"><a href="functions-part1.html#cb334-22" tabindex="-1"></a><span class="co">#&gt;  $ time_hour     : POSIXct[1:336776], format: &quot;2013-01-01 05:00:00&quot; &quot;2013-01-&quot;..</span></span>
+<span id="cb334-23"><a href="functions-part1.html#cb334-23" tabindex="-1"></a><span class="do">## get to know the functions mentioned above</span></span>
+<span id="cb334-24"><a href="functions-part1.html#cb334-24" tabindex="-1"></a></span>
+<span id="cb334-25"><a href="functions-part1.html#cb334-25" tabindex="-1"></a><span class="fu">mean</span>(flights<span class="sc">$</span>dep_delay)</span>
+<span id="cb334-26"><a href="functions-part1.html#cb334-26" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb334-27"><a href="functions-part1.html#cb334-27" tabindex="-1"></a></span>
+<span id="cb334-28"><a href="functions-part1.html#cb334-28" tabindex="-1"></a><span class="fu">filter</span>(<span class="at">.data =</span> flights, carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>)</span>
+<span id="cb334-29"><a href="functions-part1.html#cb334-29" tabindex="-1"></a><span class="co">#&gt; # A tibble: 32,729 × 19</span></span>
+<span id="cb334-30"><a href="functions-part1.html#cb334-30" tabindex="-1"></a><span class="co">#&gt;     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
+<span id="cb334-31"><a href="functions-part1.html#cb334-31" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;</span></span>
+<span id="cb334-32"><a href="functions-part1.html#cb334-32" tabindex="-1"></a><span class="co">#&gt;  1  2013     1     1      542            540         2      923            850</span></span>
+<span id="cb334-33"><a href="functions-part1.html#cb334-33" tabindex="-1"></a><span class="co">#&gt;  2  2013     1     1      558            600        -2      753            745</span></span>
+<span id="cb334-34"><a href="functions-part1.html#cb334-34" tabindex="-1"></a><span class="co">#&gt;  3  2013     1     1      559            600        -1      941            910</span></span>
+<span id="cb334-35"><a href="functions-part1.html#cb334-35" tabindex="-1"></a><span class="co">#&gt;  4  2013     1     1      606            610        -4      858            910</span></span>
+<span id="cb334-36"><a href="functions-part1.html#cb334-36" tabindex="-1"></a><span class="co">#&gt;  5  2013     1     1      623            610        13      920            915</span></span>
+<span id="cb334-37"><a href="functions-part1.html#cb334-37" tabindex="-1"></a><span class="co">#&gt;  6  2013     1     1      628            630        -2     1137           1140</span></span>
+<span id="cb334-38"><a href="functions-part1.html#cb334-38" tabindex="-1"></a><span class="co">#&gt;  7  2013     1     1      629            630        -1      824            810</span></span>
+<span id="cb334-39"><a href="functions-part1.html#cb334-39" tabindex="-1"></a><span class="co">#&gt;  8  2013     1     1      635            635         0     1028            940</span></span>
+<span id="cb334-40"><a href="functions-part1.html#cb334-40" tabindex="-1"></a><span class="co">#&gt;  9  2013     1     1      656            700        -4      854            850</span></span>
+<span id="cb334-41"><a href="functions-part1.html#cb334-41" tabindex="-1"></a><span class="co">#&gt; 10  2013     1     1      656            659        -3      949            959</span></span>
+<span id="cb334-42"><a href="functions-part1.html#cb334-42" tabindex="-1"></a><span class="co">#&gt; # ℹ 32,719 more rows</span></span>
+<span id="cb334-43"><a href="functions-part1.html#cb334-43" tabindex="-1"></a><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,</span></span>
+<span id="cb334-44"><a href="functions-part1.html#cb334-44" tabindex="-1"></a><span class="co">#&gt; #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
+<span id="cb334-45"><a href="functions-part1.html#cb334-45" tabindex="-1"></a><span class="co">#&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1819,40 +1819,40 @@ div.csl-indent {
 <div id="using-dplyr-for-data-filtering-and-summary" class="section level3 hasAnchor" number="63.4.1">
 <h3><span class="header-section-number">63.4.1</span> Using <code>dplyr</code> for Data Filtering and Summary<a href="functions-part1.html#using-dplyr-for-data-filtering-and-summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This solution employs the dplyr package to filter flights by the airline code and then calculate the average departure delay.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="functions-part1.html#cb334-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb334-2"><a href="functions-part1.html#cb334-2" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb334-3"><a href="functions-part1.html#cb334-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb334-4"><a href="functions-part1.html#cb334-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb334-5"><a href="functions-part1.html#cb334-5" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
-<span id="cb334-6"><a href="functions-part1.html#cb334-6" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
-<span id="cb334-7"><a href="functions-part1.html#cb334-7" tabindex="-1"></a><span class="co">#&gt; 1          8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="functions-part1.html#cb335-1" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb335-2"><a href="functions-part1.html#cb335-2" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb335-3"><a href="functions-part1.html#cb335-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb335-4"><a href="functions-part1.html#cb335-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb335-5"><a href="functions-part1.html#cb335-5" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
+<span id="cb335-6"><a href="functions-part1.html#cb335-6" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
+<span id="cb335-7"><a href="functions-part1.html#cb335-7" tabindex="-1"></a><span class="co">#&gt; 1          8.59</span></span></code></pre></div>
 </div>
 <div id="using-base-r-with-subsetting" class="section level3 hasAnchor" number="63.4.2">
 <h3><span class="header-section-number">63.4.2</span> Using Base R with Subsetting<a href="functions-part1.html#using-base-r-with-subsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here, we use base R to achieve the same task without the <code>dplyr</code> package, directly subsetting the dataframe.</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="functions-part1.html#cb335-1" tabindex="-1"></a><span class="fu">mean</span>(flights<span class="sc">$</span>dep_delay[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb335-2"><a href="functions-part1.html#cb335-2" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="functions-part1.html#cb336-1" tabindex="-1"></a><span class="fu">mean</span>(flights<span class="sc">$</span>dep_delay[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb336-2"><a href="functions-part1.html#cb336-2" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
 </div>
 <div id="using-with-function" class="section level3 hasAnchor" number="63.4.3">
 <h3><span class="header-section-number">63.4.3</span> Using <code>with()</code> Function<a href="functions-part1.html#using-with-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The with() function provides a convenient way to perform operations within a dataframe subset, making the code more readable.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="functions-part1.html#cb336-1" tabindex="-1"></a><span class="fu">with</span>(flights[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>, ], <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb336-2"><a href="functions-part1.html#cb336-2" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="functions-part1.html#cb337-1" tabindex="-1"></a><span class="fu">with</span>(flights[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>, ], <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb337-2"><a href="functions-part1.html#cb337-2" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
 </div>
 <div id="using-aggregate-function" class="section level3 hasAnchor" number="63.4.4">
 <h3><span class="header-section-number">63.4.4</span> Using <code>aggregate()</code> Function<a href="functions-part1.html#using-aggregate-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>aggregate()</code> function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by “AA”.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="functions-part1.html#cb337-1" tabindex="-1"></a><span class="fu">aggregate</span>(dep_delay <span class="sc">~</span> carrier, </span>
-<span id="cb337-2"><a href="functions-part1.html#cb337-2" tabindex="-1"></a>          <span class="at">data =</span> flights[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>, ], </span>
-<span id="cb337-3"><a href="functions-part1.html#cb337-3" tabindex="-1"></a>          <span class="at">FUN =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>dep_delay</span>
-<span id="cb337-4"><a href="functions-part1.html#cb337-4" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="functions-part1.html#cb338-1" tabindex="-1"></a><span class="fu">aggregate</span>(dep_delay <span class="sc">~</span> carrier, </span>
+<span id="cb338-2"><a href="functions-part1.html#cb338-2" tabindex="-1"></a>          <span class="at">data =</span> flights[flights<span class="sc">$</span>carrier <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>, ], </span>
+<span id="cb338-3"><a href="functions-part1.html#cb338-3" tabindex="-1"></a>          <span class="at">FUN =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>dep_delay</span>
+<span id="cb338-4"><a href="functions-part1.html#cb338-4" tabindex="-1"></a><span class="co">#&gt; [1] 8.59</span></span></code></pre></div>
 </div>
 <div id="using-tapply-function" class="section level3 hasAnchor" number="63.4.5">
 <h3><span class="header-section-number">63.4.5</span> Using tapply() Function<a href="functions-part1.html#using-tapply-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The tapply() function applies a function to subsets of a vector, which we can use to calculate the average delay for “AA” flights.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="functions-part1.html#cb338-1" tabindex="-1"></a><span class="fu">tapply</span>(flights<span class="sc">$</span>dep_delay, flights<span class="sc">$</span>carrier, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[<span class="st">&quot;AA&quot;</span>]</span>
-<span id="cb338-2"><a href="functions-part1.html#cb338-2" tabindex="-1"></a><span class="co">#&gt;   AA </span></span>
-<span id="cb338-3"><a href="functions-part1.html#cb338-3" tabindex="-1"></a><span class="co">#&gt; 8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="functions-part1.html#cb339-1" tabindex="-1"></a><span class="fu">tapply</span>(flights<span class="sc">$</span>dep_delay, flights<span class="sc">$</span>carrier, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[<span class="st">&quot;AA&quot;</span>]</span>
+<span id="cb339-2"><a href="functions-part1.html#cb339-2" tabindex="-1"></a><span class="co">#&gt;   AA </span></span>
+<span id="cb339-3"><a href="functions-part1.html#cb339-3" tabindex="-1"></a><span class="co">#&gt; 8.59</span></span></code></pre></div>
 <p>Now, internalize this “answer” because our informal testing relies on you noticing departures from this number when we generalize the function.</p>
 </div>
 </div>
@@ -1861,18 +1861,18 @@ div.csl-indent {
 <p>When crafting your own functions in R, it’s beneficial to start with a straightforward, minimal version that accomplishes the basic task at hand. This approach is akin to building a ‘skateboard’—a simple, yet functional product. Let’s apply this philosophy to our task of calculating the average delay for a specific airline in the nycflights13 dataset.</p>
 <div id="initial-simple-function-the-skateboard" class="section level3 hasAnchor" number="63.5.1">
 <h3><span class="header-section-number">63.5.1</span> Initial Simple Function: The ‘Skateboard’<a href="functions-part1.html#initial-simple-function-the-skateboard" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="functions-part1.html#cb339-1" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(airline_code) {</span>
-<span id="cb339-2"><a href="functions-part1.html#cb339-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
-<span id="cb339-3"><a href="functions-part1.html#cb339-3" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
-<span id="cb339-4"><a href="functions-part1.html#cb339-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb339-5"><a href="functions-part1.html#cb339-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="functions-part1.html#cb340-1" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(airline_code) {</span>
+<span id="cb340-2"><a href="functions-part1.html#cb340-2" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb340-3"><a href="functions-part1.html#cb340-3" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
+<span id="cb340-4"><a href="functions-part1.html#cb340-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb340-5"><a href="functions-part1.html#cb340-5" tabindex="-1"></a>}</span></code></pre></div>
 <p>Check that you’re getting the same answer as you did with your interactive code.</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="functions-part1.html#cb340-1" tabindex="-1"></a><span class="co"># Test the function with American Airlines (AA)</span></span>
-<span id="cb340-2"><a href="functions-part1.html#cb340-2" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="st">&quot;AA&quot;</span>)</span>
-<span id="cb340-3"><a href="functions-part1.html#cb340-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb340-4"><a href="functions-part1.html#cb340-4" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
-<span id="cb340-5"><a href="functions-part1.html#cb340-5" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
-<span id="cb340-6"><a href="functions-part1.html#cb340-6" tabindex="-1"></a><span class="co">#&gt; 1          8.59</span></span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="functions-part1.html#cb341-1" tabindex="-1"></a><span class="co"># Test the function with American Airlines (AA)</span></span>
+<span id="cb341-2"><a href="functions-part1.html#cb341-2" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="st">&quot;AA&quot;</span>)</span>
+<span id="cb341-3"><a href="functions-part1.html#cb341-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb341-4"><a href="functions-part1.html#cb341-4" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
+<span id="cb341-5"><a href="functions-part1.html#cb341-5" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
+<span id="cb341-6"><a href="functions-part1.html#cb341-6" tabindex="-1"></a><span class="co">#&gt; 1          8.59</span></span></code></pre></div>
 <p>This function represents our ‘skateboard’. It’s basic, and we have added no new functionality. Yet, it gets the job done by providing the average delay for a given airline code. It doesn’t include error handling or support for additional details like distinguishing between departure and arrival delays, but it serves as a solid starting point. This is a minimal viable product (MVP) that we can build upon to create a more complex function (the ‘car’).</p>
 <div class="figure"><span style="display:block;" id="fig:spotify-howtobuildmvp"></span>
 <img src="img/spotify-howtobuildmvp.jpg" alt="This image [widely attributed to the Spotify development team][min-viable-product] conveys an important point. From [Your ultimate guide to Minimum Viable Product (+great examples)](https://web.archive.org/web/20220318100638/https://blog.fastmonkeys.com/2014/06/18/minimum-viable-product-your-ultimate-guide-to-mvp-great-examples/)" width="60%" />
@@ -1891,31 +1891,31 @@ Figure 63.1: This image <a href="https://blog.fastmonkeys.com/">widely attribute
 <div id="test-on-new-inputs" class="section level3 hasAnchor" number="63.6.1">
 <h3><span class="header-section-number">63.6.1</span> Test on new inputs<a href="functions-part1.html#test-on-new-inputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Pick some new artificial inputs where you know (at least approximately) what your function should return.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="functions-part1.html#cb341-1" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="st">&quot;UA&quot;</span>)</span>
-<span id="cb341-2"><a href="functions-part1.html#cb341-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb341-3"><a href="functions-part1.html#cb341-3" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
-<span id="cb341-4"><a href="functions-part1.html#cb341-4" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
-<span id="cb341-5"><a href="functions-part1.html#cb341-5" tabindex="-1"></a><span class="co">#&gt; 1          12.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="functions-part1.html#cb342-1" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(<span class="st">&quot;UA&quot;</span>)</span>
+<span id="cb342-2"><a href="functions-part1.html#cb342-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb342-3"><a href="functions-part1.html#cb342-3" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
+<span id="cb342-4"><a href="functions-part1.html#cb342-4" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
+<span id="cb342-5"><a href="functions-part1.html#cb342-5" tabindex="-1"></a><span class="co">#&gt; 1          12.1</span></span></code></pre></div>
 <p>I know that UA had about 12 minutes of a delay.</p>
 </div>
 <div id="test-on-real-data-but-different-real-data" class="section level3 hasAnchor" number="63.6.2">
 <h3><span class="header-section-number">63.6.2</span> Test on real data but <em>different</em> real data<a href="functions-part1.html#test-on-real-data-but-different-real-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Back to the real world now. So typically, the next step is to check to see if your function can handle different data. This is a good way to check if your function is robust and generalizable. However, ours doesn’t. It’s hard-wired to the <code>flights</code> dataset. We’ll fix that in the next section.</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="functions-part1.html#cb342-1" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> flights, airline_code) {</span>
-<span id="cb342-2"><a href="functions-part1.html#cb342-2" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
-<span id="cb342-3"><a href="functions-part1.html#cb342-3" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
-<span id="cb342-4"><a href="functions-part1.html#cb342-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb342-5"><a href="functions-part1.html#cb342-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="functions-part1.html#cb343-1" tabindex="-1"></a>average_delay_by_airline <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> flights, airline_code) {</span>
+<span id="cb343-2"><a href="functions-part1.html#cb343-2" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb343-3"><a href="functions-part1.html#cb343-3" tabindex="-1"></a>    <span class="fu">filter</span>(carrier <span class="sc">==</span> airline_code) <span class="sc">%&gt;%</span></span>
+<span id="cb343-4"><a href="functions-part1.html#cb343-4" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb343-5"><a href="functions-part1.html#cb343-5" tabindex="-1"></a>}</span></code></pre></div>
 <p>I’ve now added another variable to the function, <code>data</code>, which defaults to <code>flights</code>. This is a good habit to get into. It makes your function more flexible and more generalizable. It also makes it easier to test your function on different datasets. Now, we can test our function on a modified <code>flights</code> dataset, that I have named the <code>flights2</code> dataset. The only thing I have done to this dataset is multiplied all of the delays by 2.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="functions-part1.html#cb343-1" tabindex="-1"></a>flights2 <span class="ot">&lt;-</span> flights</span>
-<span id="cb343-2"><a href="functions-part1.html#cb343-2" tabindex="-1"></a></span>
-<span id="cb343-3"><a href="functions-part1.html#cb343-3" tabindex="-1"></a>flights2<span class="sc">$</span>dep_delay <span class="ot">&lt;-</span> flights2<span class="sc">$</span>dep_delay <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb343-4"><a href="functions-part1.html#cb343-4" tabindex="-1"></a></span>
-<span id="cb343-5"><a href="functions-part1.html#cb343-5" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(flights2, <span class="st">&quot;AA&quot;</span>)</span>
-<span id="cb343-6"><a href="functions-part1.html#cb343-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
-<span id="cb343-7"><a href="functions-part1.html#cb343-7" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
-<span id="cb343-8"><a href="functions-part1.html#cb343-8" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
-<span id="cb343-9"><a href="functions-part1.html#cb343-9" tabindex="-1"></a><span class="co">#&gt; 1          17.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="functions-part1.html#cb344-1" tabindex="-1"></a>flights2 <span class="ot">&lt;-</span> flights</span>
+<span id="cb344-2"><a href="functions-part1.html#cb344-2" tabindex="-1"></a></span>
+<span id="cb344-3"><a href="functions-part1.html#cb344-3" tabindex="-1"></a>flights2<span class="sc">$</span>dep_delay <span class="ot">&lt;-</span> flights2<span class="sc">$</span>dep_delay <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb344-4"><a href="functions-part1.html#cb344-4" tabindex="-1"></a></span>
+<span id="cb344-5"><a href="functions-part1.html#cb344-5" tabindex="-1"></a><span class="fu">average_delay_by_airline</span>(flights2, <span class="st">&quot;AA&quot;</span>)</span>
+<span id="cb344-6"><a href="functions-part1.html#cb344-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span id="cb344-7"><a href="functions-part1.html#cb344-7" tabindex="-1"></a><span class="co">#&gt;   average_delay</span></span>
+<span id="cb344-8"><a href="functions-part1.html#cb344-8" tabindex="-1"></a><span class="co">#&gt;           &lt;dbl&gt;</span></span>
+<span id="cb344-9"><a href="functions-part1.html#cb344-9" tabindex="-1"></a><span class="co">#&gt; 1          17.2</span></span></code></pre></div>
 </div>
 </div>
 </div>

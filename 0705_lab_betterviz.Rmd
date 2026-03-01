@@ -63,11 +63,12 @@ df <- read_csv("data/kansas_grouped_rolling_avg.csv") %>%
   mutate(date = as.Date(date) + .5, # add 12 hours to make the date labels more accurate
     mask_mandate = ifelse(mask_mandate == "Mask", "Mask Counties", "No-Mask Mandate Counties") %>%
            factor(levels = c("Mask Counties", "No-Mask Mandate Counties")),
-         rolling_avg = case_when(
+           rolling_avg = case_when(
            mask_mandate == "No-Mask Mandate Counties" ~ rolling_avg + offset,
            TRUE ~ rolling_avg
          ))
 ```
+
 <details>
   <summary>Here's a close attempt at reconstructing the original plot. Can you spot the differences?</summary>
 ```{r fig.fullwidth = TRUE, echo = FALSE,message = FALSE}
@@ -123,7 +124,7 @@ df %>%
      plot.subtitle = element_text(hjust = .5, size = 8),
      panel.grid.minor = element_blank(),
      axis.line = element_line(color= col_mix("black", "white", 0.80),
-                              size = 0.5)
+                              linewidth = 0.5)
   ) + 
    annotate("text", x = date_lo+.5, y = Inf, label = "Mask",
            color = col_mask, vjust = -0.05, hjust = 2.05, size = 2.5) +
@@ -161,7 +162,7 @@ Using the same dataset you constructed, your goal now is to create a new visuali
 
 7. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
 
-8. Now for the real challenge! Find your own misleading graph!
+8. Now for the real challenge! Find your own misleading graph and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers. Analyze the graph to identify what makes it misleading and then attempt to recreate it using the same data (if available) or similar data. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
 
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
