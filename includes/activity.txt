@@ -1,322 +1,335 @@
-Meme-tastic data science with OpenAI in the Tidyverse
-A practical, hands-on activity for grad students to learn how to call OpenAI’s API from R, manage responses with the Tidyverse, and analyze the results like a data scientist.
+Meme-tastic OpenAI + Tidyverse Lab for Grad Students
 
 Overview
-This activity guides you through three interconnected parts:
-- Part 1: Generate meme captions about data science topics using OpenAI's chat completion API, and organize results with tidyverse tools.
-- Part 2: Prompt the API to generate R code for a simple data-science task, then attempt to sandbox-test and run the produced code.
-- Part 3: Analyze and visualize the API outputs (captions, token usage, and cost) with tidyverse, and reflect on prompt engineering choices.
+This graduate-level activity invites you to use OpenAI’s API from R, wrapped in a tidyverse workflow. You’ll generate meme-style captions for a set of topics, handle and parse API responses, and then analyze the results with tidyverse tools (tokenization, sentiment, embeddings, clustering, and visualization). The goal is to practice API calls, robust data handling, and rigorous analysis in a reproducible, tidyverse-friendly workflow.
 
 Learning objectives
-- Learn how to set up and call the OpenAI chat API from R (using the Tidyverse for data handling).
-- Practice prompt engineering: crafting system/user prompts to elicit meme captions and code snippets.
-- Learn to parse and handle API responses, including usage tokens and response content.
-- Build a reproducible tidyverse workflow to analyze results, visualize trends, and estimate API costs.
-- Safely test generated code in a sandboxed environment and reflect on reliability and safety.
+- Make OpenAI API calls from R (chat/completions and embeddings).
+- Safely manage API keys and rate-limit handling in code.
+- Build a reproducible, tidyverse-centric workflow to collect, clean, and analyze model outputs.
+- Use text analysis (tokenization, word counts, sentiment) via tidyverse/tidytext.
+- Use embeddings from the API to assess similarity and cluster generated captions.
+- Create visualizations that compare prompts, models, and results.
+- Reflect on model behavior, reliability, and ethical considerations of AI-generated text.
 
 Prerequisites
-- R (4.x recommended) and a recent RStudio session.
-- OpenAI API key (set as an environment variable OPENAI_API_KEY; do not hard-code keys).
-- Familiarity with:
-  - Tidyverse (dplyr, purrr, tidyr, tibble, ggplot2, readr)
-  - Basic HTTP requests in R (httr) and JSON parsing (jsonlite)
-- Optional: basic familiarity with prompt engineering concepts.
+- R (4.x) and RStudio (or any R IDE).
+- Packages: tidyverse, httr, jsonlite, tidytext, textdata, bslib (optional for dashboards), ggplot2, tibble, dplyr, tidyr, purrr, stringr.
+- An OpenAI API key. Set it as an environment variable OPENAI_API_KEY (or provide it securely in your session).
+- A basic understanding of the tidyverse and dplyr verbs.
 
-Environment setup (one-time)
-- Install required packages
-  - install.packages(c("httr", "jsonlite", "dplyr", "purrr", "tidyr", "tibble", "ggplot2", "stringr", "forcats", "readr", "tidytext"))
-- Load libraries
-  - library(httr); library(jsonlite); library(dplyr); library(purrr); library(tidyr); library(tibble); library(ggplot2); library(stringr); library(tidytext)
-- Ensure your API key is set
-  - Sys.setenv(OPENAI_API_KEY = "your-key-here")  # Alternatively, add to .Renviron and restart R
-- Optional: set a reproducible seed
-  - set.seed(42)
+Setup and quick test
+- Install packages (one-liners for convenience):
+  - install.packages(c("tidyverse","httr","jsonlite","tidytext","textdata"))
+- Set API key in your R session (do not hard-code keys in scripts):
+  - Sys.setenv(OPENAI_API_KEY = "your-key-here")
+- Quick test: a simple chat completion call to ensure the key works.
 
-Part 1. Meme caption generation with OpenAI and tidyverse
+Code snippets below are modular. You can copy-paste components as you progress.
 
-Goal: Use OpenAI’s chat completion endpoint to generate witty meme captions about data science topics, then organize and inspect the results with tidyverse.
+1) OpenAI helper functions (chat completions and embeddings)
+- These functions handle the API calls, parsing, and basic error handling. They are designed to be robust to transient rate limits.
 
-What you’ll do
-- Create a small list of data-science topics you want memes about.
-- For each topic, prompt the API to generate a concise meme caption in a meme-template style (e.g., Distracted Boyfriend, Two Buttons).
-- Record the caption along with token usage and an estimated cost.
-- Visualize and summarize the captions and costs.
+Code (R):
+```r
+library(httr)
+library(jsonlite)
 
-Key functions to implement (copy-paste into your R script)
+# Helper: safe POST with error handling
+openai_post <- function(endpoint, body) {
+  url <- paste0("https://api.openai.com/v1/", endpoint)
+  res <- tryCatch({
+    POST(url,
+         add_headers(Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY"))),
+         content_type_json(),
+         body = toJSON(body, auto_unbox = TRUE))
+  }, error = function(e) NULL)
 
-- API call helper (chat/completions)
-  - This function sends a chat-based prompt and returns the parsed response and usage.
+  if (is.null(res)) stop("OpenAI request failed (network/Error).")
 
-  call_openai_chat <- function(model = "gpt-4", messages, max_tokens = 200, temperature = 0.7) {
-    api_key <- Sys.getenv("OPENAI_API_KEY")
-    if (api_key == "") stop("OPENAI_API_KEY environment variable is not set.")
-    req <- httr::POST(
-      url = "https://api.openai.com/v1/chat/completions",
-      httr::add_headers(Authorization = paste0("Bearer ", api_key)),
-      httr::content_type_json(),
-      httr::body = jsonlite::toJSON(
-        list(model = model,
-             messages = messages,
-             max_tokens = max_tokens,
-             temperature = temperature),
-        auto_unbox = TRUE
-      )
-    )
-    httr::stop_for_status(req)
-    res <- httr::content(req, as = "parsed", simplifyVector = TRUE)
-    res
+  if (http_error(res)) {
+    status <- status_code(res)
+    content <- content(res, as = "parsed", type = "application/json")
+    msg <- if (!is.null(content$error$message)) content$error$message else "Unknown error"
+    stop(sprintf("OpenAI API error %s: %s", status, msg))
   }
 
-- Extract caption and usage
-  extract_caption <- function(res) {
-    # OpenAI chat responses place content at choices[[i]]$message$content
-    if (!is.null(res$choices) && length(res$choices) > 0) {
-      content <- res$choices[[1]]$message$content
-      return(content)
-    }
-    NA_character_
-  }
+  content(res, as = "text", encoding = "UTF-8") |> jsonlite::fromJSON(flatten = TRUE)
+}
 
-  extract_usage <- function(res) {
-    if (!is.null(res$usage)) res$usage
-    else NULL
-  }
+# Chat-completion helper (gpt-3.5-turbo or gpt-4-turbo)
+openai_chat <- function(messages, model = "gpt-3.5-turbo", temperature = 0.7, max_tokens = 200) {
+  body <- list(model = model,
+               messages = messages,
+               temperature = temperature,
+               max_tokens = max_tokens)
 
-- Build a single-caption generator (per topic)
-  generate_meme_caption <- function(topic, template = "Distracted Boyfriend", model = "gpt-4", max_tokens = 200, temperature = 0.7) {
-    prompt <- paste0(
-      "Create a witty, concise meme caption for a data science topic: '", topic, "'. ",
-      "Use a meme-template style like ", template, ". Keep it under 20 words and accessible to a data-science audience."
-    )
-    messages <- list(
-      list(role = "system", content = "You are a witty data science meme generator."),
-      list(role = "user", content = prompt)
-    )
-    resp <- call_openai_chat(model = model, messages = messages, max_tokens = max_tokens, temperature = temperature)
-    caption <- extract_caption(resp)
-    usage <- extract_usage(resp)
-    list(
-      caption = caption,
-      usage = usage,
-      model = model,
-      temperature = temperature,
-      template = template
-    )
-  }
+  res <- openai_post("chat/completions", body)
+  # extract content
+  content <- res$choices[[1]]$message$content
+  usage <- res$usage
+  list(content = content, usage = usage, raw = res)
+}
 
-- Cost estimation helper (rough, per-token pricing)
-  estimate_cost <- function(usage, model = "gpt-4") {
-    if (is.null(usage)) return(NA_real_)
-    # Costs (as of typical pricing; adjust to your plan)
-    # GPT-4 chat: ~$0.03 per 1k prompt tokens; $0.06 per 1k completion tokens
-    if (model %in% c("gpt-4", "gpt-4-0613", "gpt-4-8k")) {
-      prompt_tokens <- if (!is.null(usage$prompt_tokens)) usage$prompt_tokens else 0
-      completion_tokens <- if (!is.null(usage$completion_tokens)) usage$completion_tokens else 0
-      total_cost <- (prompt_tokens / 1000) * 0.03 + (completion_tokens / 1000) * 0.06
-      return(total_cost)
-    }
-    # GPT-3.5-turbo (cheaper, example)
-    if (model == "gpt-3.5-turbo") {
-      total_tokens <- if (!is.null(usage$total_tokens)) usage$total_tokens else 0
-      return((total_tokens / 1000) * 0.0015)
-    }
-    NA_real_
-  }
+# Embeddings helper
+openai_embeddings <- function(input_text, model = "text-embedding-ada-002") {
+  body <- list(input = input_text, model = model)
+  res <- openai_post("embeddings", body)
+  embedding <- res$data[[1]]$embedding
+  list(embedding = embedding, raw = res)
+}
+```
 
-- Run a batch of topics and collect results
-  topics <- tibble(
-    topic = c(
-      "Overfitting in small datasets",
-      "P-hacking and p-values misuse",
-      "Data wrangling with dplyr",
-      "Reproducible research practices",
-      "Model interpretability and SHAP"
-    ),
-    template = c("Distracted Boyfriend", "Two Buttons", "Mock Brand Meme Template", "Success Kid", "Drake Hotline Bling")
+2) Quick test to sanity-check
+Code:
+```r
+# Set a simple test message
+test_messages <- list(
+  list(role = "system", content = "You are a witty data science assistant."),
+  list(role = "user", content = "Tell me a one-liner meme caption about data cleaning.")
+)
+
+out <- openai_chat(test_messages, model = "gpt-3.5-turbo", temperature = 0.6, max_tokens = 60)
+cat(out$content)
+```
+
+3) Prepare the meme-topic dataset
+- We’ll define a small set of meme formats/topics (text-only prompts). You’ll generate captions per topic.
+
+Code:
+```r
+library(tidyverse)
+
+# Define meme topics (text-based prompts)
+memes <- tibble(
+  topic_id = 1:6,
+  topic = c(
+    "Late-night data wrangling",
+    "Model selection anxiety",
+    "Hyperparameter tuning obsession",
+    "P-hacking paranoia",
+    "Prompt engineering chaos",
+    "Replication crisis vibes"
+  ),
+  style = c("dry humor", "sarcastic", "playful", "academic", "pop culture references", "self-deprecating")
+)
+```
+
+4) Prompt design and API call plan
+- For each topic, generate multiple captions (e.g., 4 per topic) to explore variation across prompts and models.
+- Use a consistent prompt skeleton with a target length and a request for multiple options.
+- Example prompt: “Create 4 short, meme-style captions (no more than 12 words each) about the following topic. Use a witty, data-science-friendly tone. Label them Caption 1–Caption 4.”
+
+Code (generate captions for each topic):
+```r
+library(purrr)
+library(stringr)
+
+# Prompt generator
+make_prompts <- function(topic, n = 4) {
+  rep(sprintf("Create %d short meme-style captions about: %s. Use a witty data-science tone and keep each caption under 12 words. Label as Caption 1, Caption 2, ...", 
+              n, topic), 1)
+}
+
+# For each topic, call Chat API to generate 4 captions
+generate_captions_for_topic <- function(topic_row, model = "gpt-3.5-turbo", n_caps = 4) {
+  topic <- topic_row$topic
+  prompts <- make_prompts(topic, n = n_caps)
+
+  # We'll create a prompt that asks for 4 captions joined by "||" so we can split later
+  user_prompt <- paste0("Please provide ", n_caps, " captions for the meme topic: ", topic,
+                        ". Return exactly ", n_caps, " captions separated by the delimiter '|||'. Each caption should be a short, witty line under 12 words.")
+  messages <- list(
+    list(role = "system", content = "You are a witty data science meme assistant."),
+    list(role = "user", content = user_prompt)
   )
 
-  memes <- topics %>%
-    mutate(
-      # For each row, call the API and store results as a list column
-      api_out = pmap(list(topic, template), ~ generate_meme_caption(..1, template = ..2)),
-      caption = map(api_out, "caption"),
-      usage = map(api_out, "usage"),
-      model = map(api_out, "model"),
-      temperature = map(api_out, "temperature"),
-      template_used = map(api_out, "template")
-    )
+  res <- openai_chat(messages, model = model, temperature = 0.6, max_tokens = 400)
+  # split captions by delimiter
+  caps <- str_split(res$content, "\\|\\|\\|", simplify = TRUE)[1, ]
+  caps <- str_trim(caps)
+  tibble(
+    topic_id = topic_row$topic_id,
+    topic = topic_row$topic,
+    model = model,
+    caption = caps
+  )
+}
 
-  # Flatten the data into a tidy, analyzable table
-  memes_tbl <- memes %>%
-    select(topic, template, caption, usage, model, temperature, template_used) %>%
-    mutate(
-      prompt_tokens = map_int(usage, ~ if (!is.null(.x$prompt_tokens)) .x$prompt_tokens else NA_integer_),
-      completion_tokens = map_int(usage, ~ if (!is.null(.x$completion_tokens)) .x$completion_tokens else NA_integer_),
-      total_tokens = map_int(usage, ~ if (!is.null(.x$total_tokens)) .x$total_tokens else NA_integer_),
-      cost_usd = map_dbl(usage, ~ estimate_cost(.x, model = ifelse(is.null(.x$model), "gpt-4", .x$model)))
-    ) %>%
-    select(topic, caption, template, template_used, prompt_tokens, completion_tokens, total_tokens, cost_usd)
+# Run across topics (4 captions each)
+captions_all <- pmap_dfr(list(memes, ~generate_captions_for_topic(.x, model = "gpt-3.5-turbo", n_caps = 4)),
+                       .id = "rowid")
 
-- Quick checks and visualizations
-  - Caption length
-  memes_tbl <- memes_tbl %>% mutate(words = str_count(caption, "\\w+"), chars = str_length(caption))
+captions_all
+```
 
-  # Plot caption length by topic
-  ggplot(memes_tbl, aes(x = reorder(topic, words), y = words)) +
-    geom_col(fill = "steelblue") +
-    coord_flip() +
-    labs(title = "Meme Caption Word Count by Topic", x = "Topic", y = "Word count")
+Note: Depending on API behavior, you may need to adapt parsing. The important part is to collect a tidy data frame with topic_id, topic, model, caption.
 
-  # Cost distribution
-  ggplot(memes_tbl, aes(x = topic, y = cost_usd)) +
-    geom_col(fill = "tomato") +
-    coord_flip() +
-    labs(title = "Estimated OpenAI API Cost by Topic", x = "Topic", y = "Estimated cost (USD)")
+5) Handle and store API usage information
+- Track usage tokens per caption to monitor cost and usage.
 
-What you should observe
-- A small tibble with topic, caption, template, token usage, and estimated cost per caption.
-- Basic visualizations showing which topics produced longer captions and/or higher estimated costs.
+Code:
+```r
+# To capture usage, modify generate_captions_for_topic to return usage too.
+# Example (pseudo-structure; adjust based on actual API response):
+# usage <- res$usage
+# caps <- ... as above
+# Then:
+captions_all <- captions_all %>% mutate(tokens_approx = nchar(caption) %/% 4) # rough token proxy
+```
 
-Notes and caveats
-- OpenAI policies: Use safe, policy-conforming prompts (avoid disallowed content). You are responsible for prompt content.
-- API usage and costs vary by model and token counts. The cost estimates are rough guides, not precise invoices.
-- Network calls can fail; wrap API calls with tryCatch in production use for robust pipelines.
+6) Text analysis with tidyverse and tidytext
+- Tokenize captions, compute basic statistics, and sentiment.
 
-Part 2. Prompting for code: generate and test R code
+Code:
+```r
+library(tidytext)
+library(textdata)
 
-Goal: Have the model produce R code for a data-science task, then safely test the generated code in a sandboxed environment.
+# Ensure we have a sentiment lexicon
+# If needed, download lexicons:
+# get_sentiments("bing"); get_sentiments("afinn")
 
-What you’ll do
-- Prompt the model to output a self-contained R function or snippet that performs a defined task (e.g., fit a model and return a tidy summary).
-- Capture the generated code, then attempt to run it in a sandbox environment, catching errors instead of crashing.
-- Evaluate the output (does the function return reasonable results? Is the code self-contained and readable?).
+captions_tokens <- captions_all %>%
+  unnest_tokens(word, caption)
 
-Code prompts and test harness (one approach)
+# Sentiment counts using Bing
+sentiment_counts <- captions_tokens %>%
+  inner_join(get_sentiments("bing"), by = "word") %>%
+  count(topic, sentiment = sentiment, sort = TRUE)
 
-- Code prompt helper
-  generate_code_for_task <- function(task_description, model = "gpt-4", max_tokens = 400, temperature = 0.3) {
-    prompt <- paste0(
-      "Provide a complete, copy-pasteable R  code snippet that ", task_description,
-      ". The snippet should define a function named 'task_result' that takes a data.frame as input and returns a tidy tibble with summary results. Include comments and avoid external dependencies beyond base/tidyverse."
-    )
-    messages <- list(
-      list(role = "system", content = "You are an expert R data scientist who writes clean, reproducible code."),
-      list(role = "user", content = prompt)
-    )
-    resp <- call_openai_chat(model = model, messages = messages, max_tokens = max_tokens, temperature = temperature)
-    code <- extract_caption(resp)  # In this API usage, we’re treating the code as the "caption" of the result
-    list(code = code, usage = extract_usage(resp))
-  }
+# Summary by topic: word count, unique word count
+summary_stats <- captions_all %>%
+  mutate(word_count = str_count(caption, boundary("word"))) %>%
+  group_by(topic) %>%
+  summarize(mean_word_count = mean(word_count),
+            max_word_count = max(word_count),
+            n_captions = n()) %>%
+  ungroup()
 
-- Sandbox runner (very safe approach)
-  run_generated_code <- function(code_string) {
-    if (is.na(code_string) || code_string == "") return(list(ok = FALSE, error = "Empty code"))
-    env <- new.env(parent = emptyenv())
-    # Try to evaluate the code in a sandbox
-    result <- tryCatch(
-      {
-        eval(parse(text = code_string), envir = env)
-        # If the code defines a function named 'task_result', try running it on a sample dataset
-        if (exists("task_result", envir = env, inherits = FALSE)) {
-          # Example usage: run on mtcars with a simple return
-          res <- with(mtcars, task_result(mtcars))
-          list(ok = TRUE, result = res)
-        } else {
-          list(ok = FALSE, error = "Code did not define expected function 'task_result'")
-        }
-      },
-      error = function(e) list(ok = FALSE, error = e$message)
-    )
-    result
-  }
+sentiment_counts
+summary_stats
+```
 
-- Example workflow
-  task_desc <- "return a tibble with coef(3) and R-squared for a simple linear model mpg ~ wt using the input data.frame"
+7) Embeddings and clustering (optional, but powerful)
+- Use OpenAI embeddings to cluster captions by semantic similarity.
 
-  code_resp <- generate_code_for_task(task_desc)
-  code_string <- code_resp$code
-  test <- run_generated_code(code_string)
+Code:
+```r
+library(purrr)
+library(dplyr)
 
-  # Inspect test$result if ok, or inspect test$error if not ok.
+# Get embeddings for each caption
+embeds <- captions_all %>%
+  mutate(embedding = map(caption, ~openai_embeddings(.x, model = "text-embedding-ada-002")$embedding)) %>%
+  unnest(cols = c(embedding))
 
-Safety and helpful tips
-- Do not blindly execute code received from the API in a live environment. Use a dedicated sandbox (new R session, restricted environment).
-- The API’s output may be imperfect or partial; expect to edit and refine the code manually.
-- Encourage participants to comment and add error handling to the generated code.
+# The above unnest might require a different data shaping depending on how embeddings are returned.
+# For a robust approach:
+embeddings_list <- map(captions_all$caption, ~openai_embeddings(.x, model = "text-embedding-ada-002")$embedding)
+embeddings_mat <- do.call(rbind, embeddings_list)
 
-Part 3. Analyzing and interpreting API outputs with tidyverse
+# Simple clustering (k-means)
+set.seed(123)
+k <- 3
+km <- kmeans(embeddings_mat, centers = k)
 
-Goal: Use the results from Part 1 (captions and token usage) to perform a small analysis, produce visuals, and reflect on the quality and reliability of the outputs.
+captions_clustered <- captions_all %>%
+  mutate(cluster = factor(km$cluster))
 
-What you’ll do
-- Compare caption lengths and topics.
-- Explore token usage and estimated cost per caption.
-- Optionally perform a quick sentiment/quality check on the captions using tidytext (e.g., basic sentiment scores) to see if some topics yield more positive captions.
-- Save the results for reproducibility.
+captions_clustered
+```
 
-Suggested tidyverse steps
-- Add basic metrics to memes_tbl (already outlined above):
-  memes_tbl <- memes_tbl %>%
-    mutate(words = str_count(caption, boundary("word")),
-           chars = str_length(caption))
+Plotting cluster distribution:
+```r
+library(ggplot2)
 
-- Sentiment glance (optional, simple)
-  library(tidytext)
-  # A tiny, topic-level sentiment snapshot (requires a small sentiment lexicon)
-  sentiment_lexicon <- get_sentiments("bing") %>% select(word, sentiment)
-  captions_sentiment <- memes_tbl %>%
-    unnest_tokens(word, caption) %>%
-    inner_join(sentiment_lexicon, by = "word") %>%
-    group_by(topic) %>%
-    summarise(sentiment_score = mean(if_else(sentiment == "positive", 1, -1), na.rm = TRUE))
+ggplot(captions_clustered, aes(x = cluster, fill = cluster)) +
+  geom_bar(show.legend = FALSE) +
+  labs(title = "Caption clusters based on embeddings",
+       x = "Cluster",
+       y = "Count") +
+  theme_minimal()
+```
 
-- Visualizations
-  - Caption length by topic (already shown)
-  - Token usage distribution
-    ggplot(memes_tbl, aes(x = topic, y = total_tokens)) +
-      geom_boxplot() +
-      coord_flip() +
-      labs(title = "Total tokens by topic", x = "Topic", y = "Total tokens")
-  - Cost by topic (already shown)
+8) Optional: visualizing caption length and sentiment by topic
+Code:
+```r
+library(ggplot2)
 
-- Export results
-  write_csv(memes_tbl, "openai_memes_results.csv")
+captions_len_sent <- captions_all %>%
+  mutate(word_count = str_count(caption, boundary("word")),
+         sentiment_score = case_when(
+           str_detect(caption, "not") ~ -1,
+           str_detect(caption, "bad|awful|hate|boring") ~ -0.5,
+           str_detect(caption, "good|great|awesome|funny|love") ~ 0.5,
+           TRUE ~ 0
+         ))
 
-Discussion prompts for students
-- Which topics yielded the shortest or longest captions, and how did that relate to perceived meme effectiveness?
-- How stable are token counts and estimated costs across prompts for similar topics?
-- How could prompt templates influence caption quality or clarity? What changes would you test next?
+ggplot(captions_len_sent, aes(x = topic, y = word_count)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(title = "Caption length by topic",
+       x = "Topic",
+       y = "Word count") +
+  theme_minimal()
 
-Optional extensions
-- Cross-model comparison: run the same prompts with gpt-3.5-turbo and compare caption quality and cost.
-- Multi-turn prompts: incorporate a system message instructing the model to adopt a specific meme template across batches and compare results.
-- Additional metrics: compute readability scores (e.g., Flesch-Kurti Readability) or use simple lexical diversity metrics to compare captions.
+# If you have exact sentiment values from tidytext, you can plot them similarly
+```
 
-Deliverables and assessment
-- A reproducible R script or R Markdown notebook with:
-  - API call logic and error handling
-  - A small dataset of topics and meme templates
-  - A tidyverse-based pipeline to generate captions, collect usage data, and estimate costs
-  - Visualizations summarizing caption length and cost by topic
-  - A brief reflection on prompt design choices and reliability
-- Optional: a short module showing generated code for a task and a sandboxed test result
+9) Exporting results
+Code:
+```r
+# Save captions and metadata
+write_csv(captions_clustered, "captions_by_topic.csv")
 
-Tips for a successful session
-- Start with a quick demo: show a sample topic and a generated caption, then walk through the resulting tibble and visualizations.
-- Emphasize reproducibility: lock package versions with renv if you plan to share notebooks across cohorts.
-- Remind students to manage API usage mindfully; start with low max_tokens and moderate temperature to keep responses concise and cost-effective.
-- Encourage critical evaluation: not every caption will be perfect; use the activity to practice iterative prompt design.
+# Save sentiment/summary stats
+write_csv(sentiment_counts, "caption_sentiment_counts.csv")
+write_csv(summary_stats, "caption_length_summary.csv")
+```
 
-Safety and ethics notes
-- Respect API terms and usage policies.
-- Avoid prompts that produce disallowed content or biased or harmful material. Review prompts with a focus on safe, inclusive, and professional communication.
-- Do not expose or share API keys; use environment variables and local, reproducible environments.
+10) Memes, ethics, and reflection
+- Meme angle: Encourage students to treat the captions as data, not as the final product. Discuss how meme culture shapes language, but model outputs can be biased or repetitive.
+- Ethics quick-checks:
+  - Ensure prompts avoid disallowed content and copyrighted character usage beyond fair use.
+  - Be mindful of bias in generated content and in sentiment analyses.
+  - Monitor API usage costs and rate limits; implement retry/backoff logic in production.
 
-What a typical session might feel like
-- 15–20 minutes: setup and API call practice for Part 1
-- 25–35 minutes: run the meme-caption pipeline, collect data, and generate visualizations
-- 20–30 minutes: Part 2 (code generation) with sandbox testing
-- 15–20 minutes: Part 3 (analysis, reflections, and extensions)
-- 5–10 minutes: summary, discussion of results, and potential improvements
+Deliverables
+- A reproducible R script (or R Markdown notebook) implementing the steps above, with:
+  - A dataset of meme topics.
+  - Generated captions for each topic.
+  - Text analyses (token counts, sentiment).
+  - Optional embeddings-based clustering and visualizations.
+  - Summary tables and at least one visualization per analysis type.
+- A short reflective write-up (1–2 pages) addressing:
+  - How prompts influenced outputs.
+  - Observations on model behavior across topics.
+  - Potential improvements and next steps (e.g., different models, prompts, or more robust evaluation metrics).
 
-If you’d like, I can tailor the prompts, dataset topics, or suggested visualizations to a specific data-science subdomain (e.g., causal inference, NLP, time series) or to a particular meme-template you enjoy in your course.
+Assessment rubric (suggested)
+- API usage and reproducibility (30%): clean, well-documented code; robust error handling; reproducible results.
+- Data wrangling with tidyverse (25%): clean data structure, clear pipeline, correct joins/unnests.
+- Text analysis (25%): meaningful tokenization, sentiment, variety in analysis, sensible labeling.
+- Embeddings and clustering (10%): correct application, reasonable interpretation, good visuals.
+- Communication and reflection (10%): clear write-up, thoughtful interpretation, limitations acknowledged.
+
+Extensions (for more advanced work)
+- Compare multiple OpenAI models (gpt-3.5-turbo vs. gpt-4-turbo) and track differences in captions and sentiment.
+- Try few-shot prompt engineering: include a few example captions in the system prompt to steer style.
+- Build an R Markdown report that renders automatically with the captions, analyses, and visuals.
+- Implement rate-limit handling with exponential backoff and a retry policy.
+- Add a simple Shiny dashboard to explore topics, captions, and clusters interactively.
+
+Memes and tone guidance for prompts (fun, optional)
+- Use templates like:
+  - “Generate 4 short captions about [topic] in a witty data-science tone. Each caption under 12 words.”
+  - “Label them Caption 1 through Caption 4, separated by a clear delimiter. Return no more than four lines.”
+- Create playful prompts that reference common grad student situations (without targeting individuals): “noisy data, endless p-values, coffee as a priors metaphor,” etc.
+
+Tips for a smooth lab experience
+- Start with a very small batch (one or two topics, 2 captions each) to validate the workflow before scaling.
+- Use a local text file or a Git repo to version-control prompts and results.
+- Encourage students to compare model outputs side-by-side with human-written meme captions to discuss quality and creativity.
+
+If you want, I can tailor the dataset size, prompts, and specific analyses to fit a 2-, 3-, or 4-hour lab session, and provide an RMarkdown template you can drop into your course repo.
