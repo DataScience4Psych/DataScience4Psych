@@ -11,8 +11,10 @@ library(stringr)
 knitr::opts_chunk$set(
   comment = "#>",
   #  error = TRUE,
-  collapse = TRUE
-  # Additional options can be included as needed
+  collapse = TRUE,
+  cache = TRUE,        # Cache chunk output; only re-runs when code changes
+  cache.lazy = FALSE,  # Eagerly load cached objects (avoids issues with large data)
+  autodep = TRUE       # Auto-detect inter-chunk dependencies within a chapter
 )
 
 ## Global options
