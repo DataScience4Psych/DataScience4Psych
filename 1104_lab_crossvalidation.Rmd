@@ -791,8 +791,66 @@ Pick one additional predictor from `titanic3` that you think should matter (for 
 **Important:** decide how you will handle missing values for your added predictor (listwise deletion is allowed here; we will treat missingness more carefully in the super stretch exercises).
 
 <details>
+  <summary>Starter code</summary>
+```{r exercise-5-solution.1starter, error=TRUE, eval=FALSE}
+titanic_cv51 <- titanic3 %>%
+  filter(!is.na(survived)) %>%
+  filter(!is.na(sex)) %>%
+  filter(!is.na(pclass)) %>%
+  filter(!is.na(___))          # your added predictor
+
+set.seed(42)
+titanic_cv51 <- titanic_cv51 %>%
+  mutate(fold = sample(rep(1:10, length.out = n())))
+
+cv_results51 <- data.frame(fold = 1:10, accuracy = NA_real_)
+for (j in 1:10) {
+  train_j <- titanic_cv51 %>% filter(fold != j)
+  test_j  <- titanic_cv51 %>% filter(fold == j)
+  m_j     <- glm(survived ~ sex + pclass + ___, data = train_j, family = binomial)
+  p_j     <- predict(m_j, newdata = test_j, type = "response")
+  yhat_j  <- ifelse(p_j > 0.5, 1, 0)
+  cv_results51$accuracy[j] <- mean(yhat_j == test_j$survived, na.rm = TRUE)
+}
+
+c(cv_mean = mean(cv_results51$accuracy), cv_sd = sd(cv_results51$accuracy))
+```
+</details>
+
+```{r exercise-5-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
+titanic_cv51 <- titanic3 %>%
+  filter(!is.na(survived)) %>%
+  filter(!is.na(sex)) %>%
+  filter(!is.na(pclass)) %>%
+  filter(!is.na(age))
+
+set.seed(42)
+titanic_cv51 <- titanic_cv51 %>%
+  mutate(fold = sample(rep(1:10, length.out = n())))
+
+cv_results51 <- data.frame(fold = 1:10, accuracy = NA_real_)
+for (j in 1:10) {
+  train_j <- titanic_cv51 %>% filter(fold != j)
+  test_j  <- titanic_cv51 %>% filter(fold == j)
+  m_j     <- glm(survived ~ sex + pclass + age, data = train_j, family = binomial)
+  p_j     <- predict(m_j, newdata = test_j, type = "response")
+  yhat_j  <- ifelse(p_j > 0.5, 1, 0)
+  cv_results51$accuracy[j] <- mean(yhat_j == test_j$survived, na.rm = TRUE)
+}
+
+c(cv_mean = mean(cv_results51$accuracy), cv_sd = sd(cv_results51$accuracy))
+```
+
+<details>
   <summary>Click for a hint</summary>
-You can reuse the CV loop from Exercise 3 with a new formula. Just make sure to filter out rows where your new predictor is missing *before* creating folds, so that every fold has the same set of variables available.
+```{r exercise-5-solution.1-hint, ref.label="exercise-5-solution.1solution", echo=FALSE, error=TRUE}
+```
+</details>
+
+<details>
+  <summary>Click for a solution example</summary>
+```{r ref.label = "exercise-5-solution.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
 </details>
 
 ### 5.2 Competing models {.unnumbered}
@@ -803,6 +861,49 @@ Fit and compare at least two models using CV:
 - Model B: `sex + pclass + <two more predictors>`
 
 Report which model has higher `cv_mean`. If the difference is small, argue which one you would recommend to Lloyd's, considering simplicity vs performance. Remember that a simpler model is easier to explain to stakeholders and less likely to overfit.
+
+<details>
+  <summary>Starter code</summary>
+```{r exercise-5-solution.2starter, error=TRUE, eval=FALSE}
+f_A <- survived ~ sex + pclass
+f_B <- survived ~ sex + pclass + ___ + ___
+
+cv_A <- cv_glm_accuracy(cv_df, formula = ___)
+cv_B <- cv_glm_accuracy(cv_df, formula = ___)
+
+data.frame(
+  model   = c("A: base", "B: expanded"),
+  cv_mean = c(mean(cv_A$accuracy), mean(cv_B$accuracy)),
+  cv_sd   = c(sd(cv_A$accuracy),   sd(cv_B$accuracy))
+)
+```
+</details>
+
+```{r exercise-5-solution.2solution, include=FALSE, echo=FALSE, error=TRUE}
+f_A <- survived ~ sex + pclass
+f_B <- survived ~ sex + pclass + age + fare
+
+cv_A <- cv_glm_accuracy(cv_df, formula = f_A)
+cv_B <- cv_glm_accuracy(cv_df, formula = f_B)
+
+data.frame(
+  model   = c("A: base", "B: expanded"),
+  cv_mean = c(mean(cv_A$accuracy), mean(cv_B$accuracy)),
+  cv_sd   = c(sd(cv_A$accuracy),   sd(cv_B$accuracy))
+)
+```
+
+<details>
+  <summary>Click for a hint</summary>
+```{r exercise-5-solution.2-hint, ref.label="exercise-5-solution.2solution", echo=FALSE, error=TRUE}
+```
+</details>
+
+<details>
+  <summary>Click for a solution example</summary>
+```{r ref.label = "exercise-5-solution.2solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
 
 ### 5.3 Stability thought experiment {.unnumbered}
 
@@ -858,6 +959,17 @@ titanic3 %>%
   count(title) %>%
   arrange(desc(n))
 ```
+</details>
+
+<details>
+  <summary>Click for a sample answer</summary>
+Good candidate predictors include:
+
+- **`age`**: Children were prioritized during evacuation ("women and children first"), so younger passengers likely had higher survival rates. Age also correlates with physical ability to reach lifeboats.
+- **`fare`**: Fare is a proxy for wealth and cabin location. Higher fares corresponded to upper-deck cabins closer to the lifeboats, giving wealthier passengers a structural advantage in evacuation.
+- **`embarked`**: Port of embarkation (Cherbourg, Queenstown, Southampton) correlates with passenger demographics and class composition, which in turn predicts survival.
+
+You are not expected to use the same predictors — any two with a reasonable substantive justification are acceptable.
 </details>
 
 ### 6.2 Define candidate formulas {.unnumbered}
@@ -1110,13 +1222,36 @@ Compute the number of rows in:
 
 Report the proportion retained.
 
-```{r exercise-eight-part-one-missingness, error=TRUE}
+<details>
+  <summary>Starter code</summary>
+```{r exercise-eight-part-one-starter, error=TRUE, eval=FALSE}
+n_all    <- sum(!is.na(titanic3$___))
+n_kept   <- nrow(___)
+prop_kept <- ___ / ___
+
+c(n_all = ___, n_kept = ___, prop_kept = ___)
+```
+</details>
+
+```{r exercise-8-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
 n_all <- sum(!is.na(titanic3$survived))
 n_kept <- nrow(cv_df)
 prop_kept <- n_kept / n_all
 
 c(n_all = n_all, n_kept = n_kept, prop_kept = prop_kept)
 ```
+
+<details>
+  <summary>Click for a hint</summary>
+```{r exercise-8-solution.1-hint, ref.label="exercise-8-solution.1solution", echo=FALSE, error=TRUE}
+```
+</details>
+
+<details>
+  <summary>Click for a solution</summary>
+```{r ref.label = "exercise-8-solution.1solution", echo = TRUE, warning = FALSE, message=FALSE}
+```
+</details>
 
 ### 8.2 Investigate who is missing {.unnumbered}
 
