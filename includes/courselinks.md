@@ -67,6 +67,7 @@
 [d14_confound]: https://datascience4psych.github.io/slides/d14_confound/d14_confound.html
 [d15_goodtalk]: https://datascience4psych.github.io/slides/d15_goodtalk/d15_goodtalk.html
 [d16_webscraping]: https://datascience4psych.github.io/slides/d16_webscraping/d16_webscraping.html
+[d16b_apis]: https://datascience4psych.github.io/slides/d16b_apis/d16b_apis.html
 [d17_functions]: https://datascience4psych.github.io/slides/d17_functions/d17_functions.html
 [d18_ethics]: https://datascience4psych.github.io/slides/d18_ethics/d18_ethics.html
 [d19_bias]: https://datascience4psych.github.io/slides/d19_bias/d19_bias.html
