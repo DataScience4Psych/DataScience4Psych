@@ -187,7 +187,8 @@ summary(m_apparent)
 
 <details>
   <summary>Click for a hint</summary>
-The two predictor blanks are `sex` and `pclass`. The `family` argument specifies the error distribution — use `binomial` for logistic regression (binary outcomes). The `data` is already filled in as `titanic3`.
+```{r lab_crossvalidation-exercise-one-hint, ref.label="lab_crossvalidation-exercise-one-solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -220,7 +221,8 @@ p_apparent <- predict(___, type = ___)
 
 <details>
   <summary>Click for a hint</summary>
-Pass your fitted model (`m_apparent`) as the first argument. Use `type = "response"` to get predicted probabilities on the 0–1 scale — without this, `predict()` returns log-odds by default.
+```{r lab_crossvalidation-predict-apparent-hint, ref.label="lab_crossvalidation-predict-apparent", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -245,7 +247,8 @@ yhat_apparent <- ifelse(___ > ___, ___, ___)
 
 <details>
   <summary>Click for a hint</summary>
-The blanks are: (1) `p_apparent` (the predicted probabilities from 1.2), (2) `0.5` (the cutoff threshold), (3) `1` (assigned when the condition is TRUE — predicted survivor), and (4) `0` (assigned when FALSE — predicted non-survivor).
+```{r lab_crossvalidation-classify-apparent-hint, ref.label="lab_crossvalidation-classify-apparent", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -402,7 +405,8 @@ acc_test
 
 <details>
   <summary>Click for a hint</summary>
-Use `newdata = titanic_test` when calling `predict()` so the model makes predictions on the held-out passengers. The rest of the steps — applying the 0.5 cutoff and computing accuracy — follow exactly the same pattern as Exercise 2.2.
+```{r exercise-2-solution.3-hint, ref.label="exercise-2-solution.3solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-2-solution.3solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -462,7 +466,8 @@ titanic_cv <- titanic3 %>%
 
 <details>
   <summary>Click for a hint</summary>
-Use `rep(1:10, length.out = n())` so folds are roughly equal-sized. The `sample()` call shuffles the fold assignments randomly.
+```{r exercise-3-solution.1-hint, ref.label="exercise-3-solution.1solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -527,7 +532,8 @@ for (j in cv_results$fold) {
 
 <details>
   <summary>Click for a hint</summary>
-  The key idea: `filter(fold != j)` gives you all rows *except* fold j (your training set), and `filter(fold == j)` gives you just fold j (your test set). The formula, family, and prediction steps are the same as in Exercises 1 and 2.
+```{r exercise-3-solution.2-hint, ref.label="exercise-3-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -555,7 +561,8 @@ c(cv_mean = cv_mean, cv_sd = cv_sd, cv_min = cv_min, cv_max = cv_max)
 
 <details>
   <summary>Click for a hint</summary>
-The blanks all refer to the same column — `cv_results$accuracy`. Pass that vector to `mean()`, `sd()`, `min()`, and `max()`.
+```{r exercise-3-solution.3-hint, ref.label="exercise-3-solution.3solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-3-solution.3solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -594,7 +601,8 @@ ggplot(cv_results, aes(x = factor(fold), y = accuracy)) +
 
 <details>
   <summary>Click for a hint</summary>
-Map `fold` to `x` (wrap in `factor()` so ggplot treats it as discrete) and `accuracy` to `y`. The red dashed line at `mean(cv_results$accuracy)` gives you a visual reference for the average. No blanks to fill — run the code as-is once `cv_results` exists.
+```{r exercise-3-solution.4-hint, ref.label="exercise-3-solution.4solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -662,7 +670,8 @@ cutoff_results
 
 <details>
   <summary>Click for a hint</summary>
-Inside the loop, `c0` holds the current cutoff. Use `p_test` (from Exercise 2) as your predicted probabilities and compare `yhat_c` against `titanic_test$survived` to compute accuracy.
+```{r exercise-4-solution.1-hint, ref.label="exercise-4-solution.1solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-4-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -725,7 +734,8 @@ ggplot(cutoff_results_fine, aes(x = cutoff, y = accuracy)) +
 
 <details>
   <summary>Click for a hint</summary>
-The loop iterates over a fine grid of cutoffs from 0.1 to 0.9. For each cutoff `c0`, apply `ifelse(p_test > c0, 1, 0)` and then compute accuracy against `titanic_test$survived`. The ggplot maps `cutoff` to `x` and `accuracy` to `y`. No blanks to fill — run as-is once `p_test` is available.
+```{r exercise-4-solution.2-hint, ref.label="exercise-4-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
@@ -869,7 +879,8 @@ f_expanded <- survived ~ ___ + ___ + ___ + ___
 
 <details>
   <summary>Click for a hint</summary>
-`f_base` should be `survived ~ sex + pclass`. For `f_expanded`, add the two predictors you chose in 6.1. Store both as formula objects so you can pass them directly into `glm()` later.
+```{r exercise-6-solution.2-hint, ref.label="exercise-6-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-6-solution.2solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -909,7 +920,8 @@ cv_df <- titanic3 %>%
 
 <details>
   <summary>Click for a hint</summary>
-Filter to rows with non-missing values for each variable in `f_expanded`: `sex`, `pclass`, and the two predictors you added. Using the same filter for both the baseline and expanded models ensures you compare them on identical passengers.
+```{r exercise-7-solution.1-hint, ref.label="exercise-7-solution.1solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-7-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -943,7 +955,8 @@ cv_df <- cv_df %>%
 
 <details>
   <summary>Click for a hint</summary>
-Use `rep(1:10, length.out = n())` to create a balanced fold assignment, then wrap it in `sample()` to randomize which passengers fall in each fold. Set any seed you like for reproducibility.
+```{r exercise-7-solution.2-hint, ref.label="exercise-7-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-7-solution.2solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -996,7 +1009,8 @@ cv_glm_accuracy <- function(df, formula, cutoff = 0.5) {
 
 <details>
   <summary>Click for a hint</summary>
-The logic inside the function is identical to the loop in Exercise 3.2, with `j`, `formula`, `df`, and `cutoff` replacing their hard-coded equivalents. Fill the blanks with `j` (for fold filtering), `formula` (for `glm()`), `train_j` (data to fit), `test_j` (newdata), `cutoff` (ifelse threshold), and `test_j$survived` (true labels).
+```{r exercise-7-solution.3-hint, ref.label="exercise-7-solution.3solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-7-solution.3solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1053,7 +1067,8 @@ summary_table
 
 <details>
   <summary>Click for a hint</summary>
-Pass `f_base` and `f_expanded` (the formula objects from 6.2) into `cv_glm_accuracy()`. Then, inside `data.frame()`, use `cv_base$accuracy` and `cv_exp$accuracy` as the vectors you pass to `mean()` and `sd()`.
+```{r exercise-7-solution.4-hint, ref.label="exercise-7-solution.4solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-7-solution.4solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1125,7 +1140,8 @@ titanic3 %>%
 
 <details>
   <summary>Click for a hint</summary>
-No blanks to fill — the code is already complete. `mutate(age_missing = ifelse(is.na(age), ...))` creates a grouping variable, and `group_by() %>% summarize()` computes the statistics separately for passengers with and without a recorded age. Run it and compare the two rows.
+```{r exercise-8-solution.2-hint, ref.label="exercise-8-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-8-solution.2solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1204,7 +1220,8 @@ c(mean = mean(cv_imp$accuracy), sd = sd(cv_imp$accuracy))
 
 <details>
   <summary>Click for a hint</summary>
-The blanks in the imputation lines all refer to your numeric predictor (e.g., `age`). Compute `mu <- mean(train_j$age, na.rm = TRUE)`, then replace missing values with `mu` in both `train_j$age` and `test_j$age`. The rest of the loop (fold filtering, `glm()`, `predict()`, accuracy) follows the same pattern as Exercise 3.2.
+```{r exercise-9-solution.1-hint, ref.label="exercise-9-solution.1solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-9-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1300,7 +1317,8 @@ c(TP = TP, FP = FP, TN = TN, FN = FN, sensitivity = sensitivity, specificity = s
 
 <details>
   <summary>Click for a hint</summary>
-No blanks to fill — the code is already complete. `y_j` holds the true labels. TP counts rows where both `yhat_j` and `y_j` equal 1; FP where `yhat_j == 1` but `y_j == 0`; and so on. Sensitivity is TP / (TP + FN) and specificity is TN / (TN + FP).
+```{r exercise-10-solution.1-hint, ref.label="exercise-10-solution.1solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-10-solution.1solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1370,7 +1388,8 @@ cv_confusion
 
 <details>
   <summary>Click for a hint</summary>
-Fill the two blanks with `f_expanded` (the formula) and `train_j` (the data for `glm()`), and `test_j` (newdata for `predict()`). The TP/FP/TN/FN sums and the accuracy/sensitivity/specificity formulas are already complete — no changes needed there.
+```{r exercise-10-solution.2-hint, ref.label="exercise-10-solution.2solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 ```{r exercise-10-solution.2solution, include=FALSE, echo=FALSE, error=TRUE}
@@ -1436,7 +1455,8 @@ ggplot(cv_confusion_long, aes(x = factor(fold), y = value, fill = metric)) +
 
 <details>
   <summary>Click for a hint</summary>
-`pivot_longer()` reshapes `cv_confusion` from wide (one column per metric) to long (one row per metric per fold). Map `fold` to `x` (as a factor), `value` to `y`, and `metric` to `fill`. `geom_col(position = "dodge")` places bars side by side for easy comparison. No blanks to fill — run as-is once `cv_confusion` is built.
+```{r exercise-10-solution.3-hint, ref.label="exercise-10-solution.3solution", echo=FALSE, error=TRUE}
+```
 </details>
 
 <details>
