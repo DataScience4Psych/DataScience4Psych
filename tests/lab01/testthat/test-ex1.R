@@ -17,7 +17,7 @@ test_that("Ex 1: datasaurus_dozen has 1846 rows", {
 
 test_that("Ex 1: datasaurus_dozen has 3 columns", {
 
-  potential_answers <- c("3\s?columns", "(ncol|length)\\(datasaurus_dozen\\)")
+  potential_answers <- c("3\\s?columns", "(ncol|length)\\(datasaurus_dozen\\)")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
 
