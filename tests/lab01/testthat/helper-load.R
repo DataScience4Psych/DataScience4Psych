@@ -2,9 +2,9 @@
 # Tries to source the student's Rmd so their objects are available for testing.
 
 suppressPackageStartupMessages({
-  library(dplyr)
-  library(ggplot2)
-  library(datasauRus)
+#  library(dplyr)
+ # library(ggplot2)
+#  library(datasauRus)
 })
 
 # Find student Rmd in repo root (exclude common non-student filenames)
@@ -23,4 +23,10 @@ if (length(.rmd_files) > 0 && requireNamespace("knitr", quietly = TRUE)) {
     ))
     grDevices::dev.off()
   }, error = function(e) invisible(NULL))
+}
+
+.rmd_content <- if (length(.rmd_files) > 0) {
+  tryCatch(readLines(.rmd_files[1], warn = FALSE), error = function(e) character(0))
+} else {
+  character(0)
 }
