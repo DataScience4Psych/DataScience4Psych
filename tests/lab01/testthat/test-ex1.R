@@ -11,7 +11,7 @@ test_that("Ex 1: datasaurus_dozen has 1846 rows", {
 
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
 
-  expect_true(an_in_rmd, info = "Make sure to include the number of rows in the .rmd file")
+  expect_equal(answer_in_rmd, TRUE,info = "Make sure to include the number of rows in the .rmd file")
 
 })
 
@@ -23,7 +23,7 @@ test_that("Ex 1: datasaurus_dozen has 3 columns", {
 
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
 
-  expect_true(an_in_rmd, info = "Make sure to include the number of columns in the .rmd file")
+  expect_equal(answer_in_rmd, TRUE,info = "Make sure to include the number of columns in the .rmd file")
 })
 
 test_that("Ex 1: datasaurus_dozen has variables dataset, x, and y", {
