@@ -1,22 +1,59 @@
 # Part 4: Multiple linear regression
 
-test_that("Part 4 Ex 1: m_bty_gen model exists", {
+test_that("Ex 4: m_bty_gen object exists", {
   expect_true(exists("m_bty_gen"),
-              label = "m_bty_gen should be a model of score ~ bty_avg + gender")
+              label = "m_bty_gen should be created as lm(score ~ bty_avg + gender, data = evals)")
 })
 
-test_that("Part 4 Ex 1: m_bty_gen is a linear model with 2 predictors", {
+test_that("Ex 4: m_bty_gen is a linear model", {
   skip_if(!exists("m_bty_gen"))
   expect_s3_class(m_bty_gen, "lm")
-  # Should have intercept + bty_avg + gendermale = 3 coefficients
-  expect_equal(length(coef(m_bty_gen)), 3,
-               label = "m_bty_gen should have 3 coefficients (intercept + bty_avg + gender)")
 })
 
-test_that("Part 4 Ex 3: adjusted R-squared for m_bty_gen is slightly higher than m_bty", {
+test_that("Ex 4: m_bty_gen has 3 coefficients (intercept + bty_avg + gender)", {
+  skip_if(!exists("m_bty_gen"))
+  expect_equal(length(coef(m_bty_gen)), 3,
+               label = "m_bty_gen should have 3 coefficients: intercept, bty_avg, and gender")
+})
+
+test_that("Ex 4: m_bty_gen uses both bty_avg and gender as predictors", {
+  skip_if(!exists("m_bty_gen"))
+  model_terms <- attr(terms(m_bty_gen), "term.labels")
+  expect_true("bty_avg" %in% model_terms,
+              label = "m_bty_gen should include bty_avg as a predictor")
+  expect_true("gender" %in% model_terms,
+              label = "m_bty_gen should include gender as a predictor")
+})
+
+test_that("Ex 4: adjusted R-squared for m_bty_gen >= m_bty", {
   skip_if(!exists("m_bty") || !exists("m_bty_gen"))
   r2_bty <- summary(m_bty)$adj.r.squared
   r2_bty_gen <- summary(m_bty_gen)$adj.r.squared
   expect_true(r2_bty_gen >= r2_bty,
-              label = "Adding gender should not decrease adjusted R-squared")
+              label = "Adding gender should not decrease adjusted R-squared compared to m_bty")
+})
+
+test_that("Ex 4: m_bty_rank object exists", {
+  expect_true(exists("m_bty_rank"),
+              label = "m_bty_rank should be created as lm(score ~ bty_avg + rank, data = evals)")
+})
+
+test_that("Ex 4: m_bty_rank is a linear model", {
+  skip_if(!exists("m_bty_rank"))
+  expect_s3_class(m_bty_rank, "lm")
+})
+
+test_that("Ex 4: m_bty_rank has 4 coefficients (intercept + bty_avg + 2 rank levels)", {
+  skip_if(!exists("m_bty_rank"))
+  expect_equal(length(coef(m_bty_rank)), 4,
+               label = "m_bty_rank should have 4 coefficients: intercept, bty_avg, and 2 rank dummies")
+})
+
+test_that("Ex 4: m_bty_rank uses both bty_avg and rank as predictors", {
+  skip_if(!exists("m_bty_rank"))
+  model_terms <- attr(terms(m_bty_rank), "term.labels")
+  expect_true("bty_avg" %in% model_terms,
+              label = "m_bty_rank should include bty_avg as a predictor")
+  expect_true("rank" %in% model_terms,
+              label = "m_bty_rank should include rank as a predictor")
 })

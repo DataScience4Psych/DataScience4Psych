@@ -2,7 +2,13 @@
 
 test_that("Ex 1: dn_ak object exists", {
   expect_true(exists("dn_ak"),
-              label = "dn_ak should be created by filtering dennys for Alaska")
+              label = "dn_ak should be created by filtering Denny's data for Alaska (state == 'AK')")
+})
+
+test_that("Ex 1: dn_ak is a data frame", {
+  skip_if(!exists("dn_ak"))
+  expect_true(is.data.frame(dn_ak),
+              label = "dn_ak should be a data frame")
 })
 
 test_that("Ex 1: dn_ak contains only Alaska locations", {
@@ -19,7 +25,13 @@ test_that("Ex 1: dn_ak has 3 Denny's locations", {
 
 test_that("Ex 1: lq_ak object exists", {
   expect_true(exists("lq_ak"),
-              label = "lq_ak should be created by filtering laquinta for Alaska")
+              label = "lq_ak should be created by filtering La Quinta data for Alaska (state == 'AK')")
+})
+
+test_that("Ex 1: lq_ak is a data frame", {
+  skip_if(!exists("lq_ak"))
+  expect_true(is.data.frame(lq_ak),
+              label = "lq_ak should be a data frame")
 })
 
 test_that("Ex 1: lq_ak contains only Alaska locations", {

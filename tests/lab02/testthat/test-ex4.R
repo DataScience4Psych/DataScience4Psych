@@ -1,37 +1,34 @@
-# Exercise 4: Scatterplots of plastic waste relationships
+# Exercise 4: Scatterplots of plastic waste relationships colored by continent
 
-test_that("Ex 4: scatterplot of plastic_waste_per_cap vs mismanaged can be created", {
-  skip_if(!file.exists("data/plastic-waste.csv"))
-  plastic_waste <- read.csv("data/plastic-waste.csv")
-  p <- ggplot2::ggplot(
-    data = plastic_waste,
-    ggplot2::aes(x = mismanaged_plastic_waste_per_cap,
-                 y = plastic_waste_per_cap)
-  ) +
-    ggplot2::geom_point()
-  expect_s3_class(p, "ggplot")
+test_that("Ex 4: plastic_waste object exists for scatterplots", {
+  expect_true(exists("plastic_waste"),
+              label = "plastic_waste must exist before creating scatterplots")
 })
 
-test_that("Ex 4: scatterplot colored by continent can be created", {
-  skip_if(!file.exists("data/plastic-waste.csv"))
-  plastic_waste <- read.csv("data/plastic-waste.csv")
-  p <- ggplot2::ggplot(
-    data = plastic_waste,
-    ggplot2::aes(x = mismanaged_plastic_waste_per_cap,
-                 y = plastic_waste_per_cap,
-                 color = continent)
-  ) +
-    ggplot2::geom_point()
-  expect_s3_class(p, "ggplot")
+test_that("Ex 4: plastic_waste has mismanaged_plastic_waste_per_cap for scatterplot", {
+  skip_if(!exists("plastic_waste"))
+  expect_true("mismanaged_plastic_waste_per_cap" %in% names(plastic_waste),
+              label = "mismanaged_plastic_waste_per_cap is needed for the scatterplot")
 })
 
-test_that("Ex 4: plastic_waste_per_cap vs total_pop scatterplot can be created", {
-  skip_if(!file.exists("data/plastic-waste.csv"))
-  plastic_waste <- read.csv("data/plastic-waste.csv")
-  p <- ggplot2::ggplot(
-    data = plastic_waste,
-    ggplot2::aes(x = total_pop, y = plastic_waste_per_cap)
-  ) +
-    ggplot2::geom_point()
-  expect_s3_class(p, "ggplot")
+test_that("Ex 4: plastic_waste has total_pop for population scatterplot", {
+  skip_if(!exists("plastic_waste"))
+  expect_true("total_pop" %in% names(plastic_waste),
+              label = "total_pop is needed for the population vs plastic waste scatterplot")
+})
+
+test_that("Ex 4: plastic_waste has coastal_pop for coastal population scatterplot", {
+  skip_if(!exists("plastic_waste"))
+  expect_true("coastal_pop" %in% names(plastic_waste),
+              label = "coastal_pop is needed for the coastal population vs plastic waste scatterplot")
+})
+
+test_that("Ex 4: key numeric variables have sufficient non-missing values", {
+  skip_if(!exists("plastic_waste"))
+  expect_true(sum(!is.na(plastic_waste$mismanaged_plastic_waste_per_cap)) > 100,
+              label = "mismanaged_plastic_waste_per_cap should have many non-missing values")
+  expect_true(sum(!is.na(plastic_waste$total_pop)) > 100,
+              label = "total_pop should have many non-missing values")
+  expect_true(sum(!is.na(plastic_waste$coastal_pop)) > 100,
+              label = "coastal_pop should have many non-missing values")
 })

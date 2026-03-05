@@ -1,12 +1,16 @@
 # Exercise 5: Filter Denny's for non-US locations
 
+test_that("Ex 5: dn object exists for filtering", {
+  expect_true(exists("dn") || exists("dennys"),
+              label = "dn (or dennys) must exist to check for non-US locations")
+})
+
 test_that("Ex 5: Denny's has no locations outside the US", {
   skip_if(!exists("dn") && !exists("dennys"))
-  skip_if(!file.exists("data/states.csv"), message = "data/states.csv not found")
   d <- if (exists("dn")) dn else dennys
-  states <- read.csv("data/states.csv")
-  outside_us <- d %>%
-    dplyr::filter(!(state %in% states$abbreviation))
+  # Use state.abb from base R as reference for US state abbreviations plus DC
+  us_abbrevs <- c(state.abb, "DC")
+  outside_us <- d[!(d$state %in% us_abbrevs), ]
   expect_equal(nrow(outside_us), 0,
-               label = "All Denny's locations should be in US states")
+               label = "All Denny's locations should be in US states (filtering by state abbreviation)")
 })
