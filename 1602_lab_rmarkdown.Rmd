@@ -89,6 +89,39 @@ dir.create("output")
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
 
+<details>
+<summary>Deep Dive: R Projects and Workflow</summary>
+
+#### Navigate Between Projects
+
+Quickly navigate between recently opened R projects by clicking on the drop-down menu at the top right of RStudio and selecting the project of interest.
+
+![](img/r_project/nav_project.png){width="400px"}
+
+#### Recommended Workflow
+
+1. Set up a GitHub repository.
+2. Create an R-project connected to the GitHub repository.
+3. Develop R-scripts.
+4. Push and pull project changes to and from GitHub.
+
+![](img/r_project/workflow.png)
+
+#### Working with File Paths in Projects
+
+One of the biggest advantages of R Projects is that file paths are relative to the project root. For example, to read a CSV from a `data` folder, you only need:
+
+```{r deep-dive-file-path, eval=FALSE}
+df <- read.csv(
+  file.path("data", "my_data.csv"),
+  stringsAsFactors = FALSE
+)
+```
+
+Notice that the entire file path to the CSV was not specified — just `file.path("data", "my_data.csv")`. This makes your project portable: anyone who opens the `.Rproj` file will have the same working directory.
+
+</details>
+
 ### Part 2: Creating and Knitting an R Markdown Document {.unnumbered}
 
 R Markdown documents let you combine narrative text, code, and output in a single reproducible document. In this section, you'll create your first `.Rmd` file and learn how to compile (knit) it.
@@ -127,6 +160,67 @@ Examine the rendered HTML output. What elements do you see in the output that co
 </details>
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+<details>
+<summary>Deep Dive: Document Types and Output Formats</summary>
+
+#### HTML
+
+Knitting to a Hyper Text Markup Language (HTML) document is the default for R Markdown. Using HTML will enable you to add interactive features to your document. To view HTML documents, simply open them in your internet browser of choice — by default, your machine should open HTML documents in your default browser automatically.
+
+#### R Markdown vs. R Notebook
+
+R Markdown documents (`html_document`) and R Notebook documents (`html_notebook`) are very similar; in fact, an R Notebook document is a special type of R Markdown document. The main difference is that with an R Markdown document you have to knit (render) the entire document each time you want to preview it, even if you have made a minor change. However, using an R Notebook document you can view a preview of the final document without rendering the entire document.
+
+For all document types you can specify how you want to preview the rendered documents by clicking on the cog in the Source window toolbar to reveal a drop-down menu of options. The recommended setup for an R Notebook is to specify you want to view the preview in the Viewer pane (the bottom right pane shared with Files, Plots, Packages, and Help).
+
+![](img/rmarkdown/rmarkdown_cog_preview-chunk-output-inline.png)
+
+Then click on the "Preview" button in the Source window toolbar to render a preview of the final document.
+
+![](img/rmarkdown/rnotebook_preview-button.png)
+
+Keep the Viewer pane open and do not close the preview of the document. Now begin to edit the markdown syntax in the document. Each time you save the document the preview window will render the changes made to the markdown syntax. If you edit R code chunks, you must run the code chunks within the notebook file prior to saving to see the changes in the Viewer window.
+
+#### PDF
+
+You have the ability to knit to Portable Document Format (PDF) but you will not be able to include interactive features in the document. Knitting to a PDF requires you to have the program LaTeX installed. If you don't have LaTeX installed, you can install TinyTeX in R with `tinytex::install_tinytex()`.
+
+#### Word
+
+You have the ability to knit to Microsoft Word if you have Microsoft Word installed on your machine. Similarly to PDFs, you will not be able to include interactive features in your Word documents.
+
+#### Templates
+
+There are a number of templates you can install or that will come with packages you install, which you can view in the pop-up window that appears when you select that you want to create a new R Markdown file.
+
+![](img/rmarkdown/from_template.png)
+
+These templates may give you a jump-start to provide a large portion of the formatting specification to make specific documents. Some example templates from the package **pagedown** are:
+
+- Business Card
+- Letter
+- Paged HTML Documents
+- Resume
+- Journal Article
+- Poster
+- Thesis
+- Package Vignette
+
+#### Presentations
+
+You have the ability to create presentation slides using R Markdown. Below are the different format options available. Examples can be found at: <https://rmarkdown.rstudio.com/gallery.html>
+
+- ioslides (HTML)
+- Slidy (HTML)
+- Beamer (PDF) — requires LaTeX
+- Microsoft PowerPoint — requires Microsoft PowerPoint
+
+#### Shiny Documents
+
+Shiny documents enable you to embed a shiny application into an R Markdown document. This will enable you to insert custom interactive features into your document. The final document will need to be an HTML file.
+
+</details>
 
 ### Part 3: Markdown Syntax Essentials {.unnumbered}
 
@@ -193,6 +287,118 @@ You can center an image using HTML:
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
 
+<details>
+<summary>Deep Dive: Markdown Syntax Reference</summary>
+
+**Source:** <https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf>
+
+<center>
+
+![](img/rmarkdown/reference.png){width="800"}
+
+</center>
+
+#### Heading Text
+
+Heading text follows one or more hash-sign(s) (`#`). The number of hash-signs determines the hierarchy of headings. For example, `# Heading 1` would represent the primary heading, `## Heading 2` would represent the secondary heading, `### Heading 3` would represent the tertiary heading, and so forth.
+
+#### Plain Text
+
+Simply add text below the YAML header. To start a new paragraph, you will need to end your plain text line with two (2) spaces.
+
+#### **Bold** and *Italicized* Text
+
+There are two ways to format your text to be **bold** or *italicized*.
+
+- **Bold**
+  - Surround your text with two (2) asterisks (`*`) on each side.
+  - Surround your text with two (2) underscores (`_`) on each side.
+
+- *Italicized*
+  - Surround your text with one (1) asterisk (`*`) on each side.
+  - Surround your text with one (1) underscore (`_`) on each side.
+
+The markdown syntax...
+
+![](img/rmarkdown/bold_italics_syntax.png)
+
+which renders to...
+
+**Bold Text Example**
+
+*Italicize Text Example*
+
+#### Unordered Lists
+
+Unordered or bulleted lists can be generated by using a single asterisk (`*`) followed by a space and the plain text intended to represent the bullet. To add sub-bullets, insert two spaces and a plus sign (`+`) followed by a space and the text for the sub-bullet. You can do this at multiple levels.
+
+The markdown syntax...
+
+![](img/rmarkdown/unordered_list_syntax.png)
+
+which renders to...
+
+- Bullet 1
+- Bullet 2
+  - Sub-Bullet 1
+  - Sub-Bullet 2
+    - Sub-Sub-Bullet 1
+    - Sub-Sub-Bullet 2
+
+#### Ordered Lists
+
+Follow the steps in Unordered Lists but instead of using asterisk (`*`) use sequential numbers followed by a period (`.`) — this cannot be done for sub-bullets. For example, "1.", "2.", and "3.".
+
+The markdown syntax...
+
+![](img/rmarkdown/ordered_list_syntax.png)
+
+which renders to...
+
+1. Bullet 1
+    - Sub-Bullet 1
+2. Bullet 2
+    - Sub-Bullet 1
+    - Sub-Bullet 2
+        - Sub-Sub-Bullet 1
+
+#### Hyperlinks
+
+You simply need to paste in a full URL into your document and it will automatically be recognized as a hyperlink. For example: <https://bookdown.org/yihui/rmarkdown>
+
+If you want to hide the full link and represent it with text, then surround the text with square brackets followed by the URL in parentheses.
+
+The markdown syntax `[link](https://bookdown.org/yihui/rmarkdown/)` would render to: [link](https://bookdown.org/yihui/rmarkdown/).
+
+#### Insert Images
+
+You can insert images into your document using syntax similar to the hyperlink syntax above.
+
+- Without a caption: `![](img/hex_symbols/rmarkdown.png)`
+- With a caption: `![This is my caption.](img/hex_symbols/rmarkdown.png)`
+- Control the size: `![Caption](img/hex_symbols/rmarkdown.png){width=200px}`
+- Center with HTML:
+
+```
+<center>
+![Caption](img/hex_symbols/rmarkdown.png){width="100px"}
+</center>
+```
+
+#### Tabbed Sections
+
+Tabbed sections can be added to sections of an HTML document that will fold all of the subsequent sub-sections into separate tabs. To do this you specify a section header followed by `{.tabset}`. For example, `## My Section Header {.tabset}`.
+
+![](img/rmarkdown/tabset.png)
+
+Note this feature is not available for use with **bookdown**.
+
+#### Link to a Section
+
+You can link to a section within the document by surrounding the name of the section in square brackets. For example, `[Introduction]` would create a clickable link that jumps to the "Introduction" section.
+
+</details>
+
 ### Part 4: YAML Headers {.unnumbered}
 
 The YAML header (enclosed by `---` at the top of your document) controls the document's metadata and formatting. YAML stands for "YAML Ain't Markup Language."
@@ -246,6 +452,126 @@ Knit the document. How does the floating table of contents change navigation?
 
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+<details>
+<summary>Deep Dive: YAML Header Options</summary>
+
+#### Title and Subtitle
+
+The specified title (`title: "My Title"`) will appear at the head of the document with a larger font size than the rest of the document. You can also specify a subtitle (`subtitle: "My Subtitle"`), which will appear below and in slightly smaller font size than the title.
+
+#### Author(s)
+
+An author can be specified (`author: "S. Mason Garrison"`) and will appear at the head of the document but below the title(s). You can specify multiple authors by separating the names with a comma (`author: "S. Mason Garrison, Tukey Garrison"`).
+
+#### Date
+
+You can supply a date that will be added to the head of the document. You can specify a static date (`date: "March 3rd, 2020"`) or a dynamic date that will update each time you knit the document.
+
+<center>
+
+![](img/rmarkdown/yaml_dynamic-date.png)
+
+</center>
+
+You can reformat the date using the `format()` function:
+
+![](img/rmarkdown/inline_yaml-date-format.png)
+
+#### Table of Contents
+
+<center>
+
+![](img/rmarkdown/yaml_2.png)
+
+</center>
+
+#### Floating Table of Contents
+
+<center>
+
+![](img/rmarkdown/yaml_3.png)
+
+</center>
+
+#### Themes
+
+You can modify the YAML to specify the theme of the document, which will change document styling (e.g., font type, color, size). Browse examples at: <https://www.datadreaming.org/post/r-markdown-theme-gallery/>
+
+<center>
+
+![](img/rmarkdown/yaml_4.png)
+
+</center>
+
+#### Code Folding
+
+Code folding refers to the HTML YAML option to hide code chunks by default, but enable the reader to click a button to show the underlying code chunk.
+
+**Without code folding:**
+
+<center>
+
+![](img/rmarkdown/folding_non.png)
+
+</center>
+
+**With code folding (show):**
+
+<center>
+
+![](img/rmarkdown/folding_show.png)
+
+</center>
+
+**With code folding (hide):**
+
+<center>
+
+![](img/rmarkdown/folding_hide.png)
+
+</center>
+
+#### Output Options
+
+The `output` option allows you to specify the type of document you want to create. Some valid arguments include:
+
+- `html_document`
+- `html_notebook`
+- `pdf_document`
+- `word_document`
+
+You can have multiple document types render at once (e.g., a separate HTML and Word document are created with each knit call).
+
+<center>
+
+![](img/rmarkdown/yaml-two-outputs.png)
+
+</center>
+
+#### Custom Word Template
+
+You have the ability to specify custom templates in your YAML header. For example, you can create a new document within Microsoft Word with your preferred formatting and then reference it:
+
+<center>
+
+![](img/rmarkdown/yaml_word-template.png)
+
+</center>
+
+#### ymlthis Package
+
+**ymlthis** is an R package intended to make it easier for you to generate YAML headers. The package also includes an interactive addin that provides an intuitive user-interface for generating YAML headers. You can visit the following link to learn more: <https://ymlthis.r-lib.org/>
+
+Addins can be accessed by navigating to "Tools" in the RStudio banner, scrolling down to "Addins", and selecting "Browse Addins."
+
+<center>
+
+![](img/rmarkdown/ymlthis_popup.png)
+
+</center>
+
+</details>
 
 
 ### Part 5: Code Chunks and Inline Code {.unnumbered}
@@ -317,6 +643,106 @@ Set the chunk header to `include=FALSE` so this setup chunk doesn't appear in yo
 </details>
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+<details>
+<summary>Deep Dive: Code Chunk Options and Inline Code</summary>
+
+#### Code Chunk Interface
+
+Inside the code chunk you can write and run R-code. If you print the output of your R-code it will appear below the code chunk in the source pane and the printed output will appear in the final compiled document.
+
+![](img/rmarkdown/example_chunk_ouptut.png)
+
+On the far right of the code chunk you will see three buttons:
+
+- The cog makes it easy to specify code chunk options.
+- The middle button will execute all code chunks prior to a given chunk (`Ctrl + Alt + P`).
+- The far right button will execute all of the code in the chunk.
+
+<center>
+
+![](img/rmarkdown/code-chunk_tools.png)
+
+</center>
+
+#### Naming Chunks
+
+Best practice is to include a short and unique name within each code chunk header. This will be especially beneficial if you need to troubleshoot an error in your document as you will be able to track the source of the error down by code chunk name. The "name" is simply separated from the "r" by a space. For example, `{r addition}`.
+
+![](img/rmarkdown/code-chunk_name.png)
+
+#### echo
+
+A logical value (true or false) indicating if the code chunk should be visible in the rendered document. By default the code chunk will be visible upon knitting (`echo=TRUE`). To hide a specific code chunk set echo to false (`echo=FALSE`).
+
+Include the code chunk in the rendered document with `echo=TRUE`:
+![](img/rmarkdown/code-chunk_echo-true.png)
+
+Exclude the code chunk from the rendered document with `echo=FALSE`:
+![](img/rmarkdown/code-chunk_echo-false.png)
+
+#### fig.width, fig.height, and fig.cap
+
+The `fig.width` and `fig.height` options allow you to control the size of the figure generated from a given code chunk. `fig.cap` provides the ability to add a caption below the figure.
+
+Default plot output:
+![](img/rmarkdown/fig-options_default.png)
+
+With `fig.width`, `fig.height`, and `fig.cap` specified:
+![](img/rmarkdown/fig-options_fig-cap-default.png)
+
+For automatic figure numbering, install the **bookdown** package and set `output: bookdown::html_document2` in your YAML header. Then cross-reference figures with `\@ref(fig:figure_name)`. For more information visit <https://bookdown.org/yihui/rmarkdown-cookbook/figure-number.html>.
+
+![](img/rmarkdown/fig-options_fig-cap-bookdown-html2.png)
+
+#### message and warning
+
+Using `message=FALSE` and/or `warning=FALSE` will suppress messages and warnings preventing them from printing in the rendered document. **Warning:** Suppress these messages/warnings at your own risk.
+
+An example of messages produced with the default `message=TRUE`:
+![](img/rmarkdown/code-chunk_message-true.png)
+
+The messages suppressed with `message=FALSE`:
+![](img/rmarkdown/code-chunk_message-false.png)
+
+#### include
+
+Code chunk headers with `include=FALSE` will be ignored when the document is rendered. This can be useful during document development — for example, you may have a code chunk producing an error that prevents you from rendering the rest of your document.
+
+The default `include=TRUE` — all code chunks are present:
+![](img/rmarkdown/code-chunk_include-true.png)
+
+With `include=FALSE` on the second code chunk — it is excluded:
+![](img/rmarkdown/code-chunk_include-false.png)
+
+#### Setting Global Options
+
+It can be helpful to establish global options to produce a standard format throughout the document. You can set this with the **knitr** function `opts_chunk$set()`. The options specified become the default when rendering the document. However, you still have the ability to overwrite these options for specific code chunks.
+
+#### Inline Code
+
+Inline code enables you to insert R code into your document to dynamically update portions of your text.
+
+To insert inline code you need to encompass your R code within:
+![](img/rmarkdown/inline_syntax.png)
+
+For example, you could write:
+
+![](img/rmarkdown/inline_example_iris-mean-sepal-length.png)
+
+**Which would render to:** The mean sepal length found in the *iris* data set is `r mean(iris$Sepal.Length)`.
+
+Inline code is also frequently used to make the YAML header date update dynamically:
+
+<center>
+
+![](img/rmarkdown/inline_yaml-date.png)
+
+</center>
+
+A comprehensive list of chunk options can be found here: <https://yihui.org/knitr/options/>
+
+</details>
 
 
 ### Part 6: Interactive Features {.unnumbered}
@@ -406,6 +832,37 @@ leaflet(
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
 
+<details>
+<summary>Deep Dive: Interactive Features Reference</summary>
+
+#### DT
+
+The **DT** package enables you and your readers to interact with tables in your document. You can filter and sort the table to view data that you are most interested in exploring or understanding.
+
+For more information visit <https://rstudio.github.io/DT/>
+
+A word of caution: if you use interactive features too frequently your document will become cluttered and will likely load and run slowly.
+
+#### Plotly
+
+**Plotly** makes it easy to create interactive figures. Some of the most useful features are the ability to:
+
+- Roll over figure objects and see pop-up information related to specific features
+- Zoom in and zoom out
+- Take a picture of the figure
+
+For more information visit: <https://plot.ly/ggplot2/>
+
+The **plotly** function `ggplotly()` makes it simple to convert **ggplot2** figures to interactive **plotly** figures — you can use all the ggplot2 syntax you already know.
+
+#### Leaflet
+
+**Leaflet** is a great resource for creating interactive maps with a minimal amount of coding. The clustering feature (`clusterOptions = markerClusterOptions()`) is especially useful for visualizing density when you have many data points.
+
+For more information visit: <https://rstudio.github.io/leaflet/>
+
+</details>
+
 
 ## Stretch Tasks (Optional) {.unnumbered}
 
@@ -426,6 +883,159 @@ output:
 ```
 
 **7.4.** **Presentations**: Try creating a presentation using R Markdown. Change your output to `ioslides_presentation` or `slidy_presentation` and experiment with creating slides using markdown headers.
+
+<details>
+<summary>Deep Dive: Child Documents and Advanced Workflow</summary>
+
+#### Child Documents
+
+In general, a single R Markdown file quickly becomes unwieldy. Breaking the document up into multiple "child" documents and sourcing them in a parent document keeps things manageable. Child documents generally represent major subsections of the document.
+
+Store the parent R Markdown file in a folder labeled "markdown" (rproject/markdown) and the child R Markdown files in a sub-directory called "sections" (rproject/markdown/sections). In the parent file, the child files are sourced within the code chunk header using `child = 'sections/example.Rmd'`. After sourcing all the child chunks, the parent file can be knit like a normal R Markdown document.
+
+![](img/rmarkdown/child_document.png)
+
+#### Extract and Run R-Code from Child Documents
+
+The child documents cannot be executed within RStudio like a normal code chunk. Without the ability to easily execute the R code within the child documents it can become very difficult to develop new child documents because they often depend on upstream code execution.
+
+The most efficient approach is to extract the R-code chunks from each Rmd file, save them as `.R` scripts, and then source/execute the scripts. Here's how:
+
+**Step 1: Set up paths and identify child documents**
+
+```{r deep-dive-setup-paths, eval=FALSE}
+sections_path <- file.path(
+  rprojroot::find_root("my_project.Rproj"),
+  "markdown",
+  "sections"
+)
+r_files_vec <- list.files(sections_path)
+r_files_vec <- r_files_vec[grepl(".Rmd", r_files_vec)]
+```
+
+**Step 2: Extract R code from Rmd files**
+
+```{r deep-dive-extract-scripts, eval=FALSE}
+extracted_path <- file.path(
+  rprojroot::find_root("my_project.Rproj"),
+  "markdown",
+  "raw_scripts",
+  "extracted"
+)
+
+purrr::map(r_files_vec, function(file.i) {
+  file_name <- gsub(".Rmd", "", file.i)
+  extracted_file <- paste0(file_name, ".R")
+  knitr::purl(
+    file.path(sections_path, file.i),
+    file.path(extracted_path, extracted_file)
+  )
+})
+```
+
+**Step 3: Source the extracted scripts in order**
+
+```{r deep-dive-read-scripts, eval=FALSE}
+vec_source <- c(
+  "introduction.R",
+  "import_data.R",
+  "preprocessing.R",
+  "analysis.R"
+)
+
+purrr::map(vec_source, function(source_i) {
+  source(file.path(extracted_path, source_i))
+})
+```
+
+Once all the upstream R-scripts have been executed, you can begin or continue work on a new child R Markdown document.
+
+</details>
+
+<details>
+<summary>Deep Dive: Parameterized Reports</summary>
+
+Parameterized reports allow you to create a template for generating reports based on specific data. For example, imagine you are tasked with generating 100 one-page fact sheets for lakes in your state. Each fact sheet includes boilerplate language but needs to be customized with lake-specific data, metrics, and maps.
+
+Here is a link to a great lecture on creating parameterized reports: <https://www.coursera.org/lecture/reproducible-templates-analysis/adding-parameters-in-a-document-template-6fQwc>
+
+#### Adding Parameters
+
+To add parameters to your document, add the `params:` argument below `output: html_document`. Below `params:` you specify any parameter name and default value. For example:
+
+<center>
+
+![](img/rmarkdown/param_yaml.png)
+
+</center>
+
+The specified parameter can be used throughout the document with the syntax `params$species`. This acts as a placeholder until the document is rendered and the species is specified.
+
+You can use inline code to insert the parameter into the title:
+
+<center>
+
+![](img/rmarkdown/param_yaml_dynamic_title.png)
+
+</center>
+
+Parameters can also be used to filter data:
+
+```{r deep-dive-param-filter, eval=FALSE}
+data(iris)
+
+iris_sub <- iris[iris$Species %in% params$species, ]
+```
+
+The parameter can be referenced frequently to update the text or filter data. In this example, the iris data set is filtered by the specified parameter to calculate summary statistics:
+
+<center>
+
+![](img/rmarkdown/param_iris-summary.png)
+
+</center>
+
+#### Knitting with Parameters
+
+Click on the knit drop-down menu and select "Knit with Parameters..." A pop-up window will appear specifying the list of available parameters and their default values.
+
+<center>
+
+![](img/rmarkdown/params_knit-with-parameters.png)
+
+</center>
+
+The document will then render:
+
+<center>
+
+![](img/rmarkdown/param_rendered-example.png){width="600px"}
+
+</center>
+
+#### Automating with render()
+
+The **rmarkdown** function `render()` can also be used to compile the document programmatically:
+
+```{r deep-dive-render-single, eval=FALSE}
+rmarkdown::render(
+  input = "parameterized/param_template.Rmd",
+  params = list(species = "setosa")
+)
+```
+
+Use a loop to iteratively generate parameterized documents:
+
+```{r deep-dive-render-loop, eval=FALSE}
+lapply(unique(iris$Species), function(species.i) {
+  rmarkdown::render("parameterized/param_template.Rmd",
+    params = list(species = species.i),
+    output_file = paste0(species.i, ".HTML")
+  )
+})
+```
+
+</details>
 
 
 ## Conclusion {.unnumbered}
