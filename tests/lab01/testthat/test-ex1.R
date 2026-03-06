@@ -1,11 +1,9 @@
-# Exercise 1: datasaurus_dozen dataset structure
-# The help file says: 1846 rows, 3 columns (dataset, x, y)
+# 1.  Based on the help file, how many rows and how many columns does the `datasaurus_dozen` file have? What are the variables included in the data frame? Add your responses to your lab report.
 
-test_that("Ex 1: datasaurus_dozen has 1846 rows", {
+test_that("Ex 1: datasaurus_dozen object exists in student environment", {
+  skip_if(length(.rmd_content) == 0)
 
-  # check if 1846 is in the rmd file ".rmd_content"
-
-  potential_answers <- c("1846", "nrow\\(datasaurus_dozen\\)")
+  potential_answers <- c("data\(datasaurus_dozen\)", "library\(datasauRus\)")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
 
@@ -15,15 +13,48 @@ test_that("Ex 1: datasaurus_dozen has 1846 rows", {
 
 })
 
-test_that("Ex 1: datasaurus_dozen has 3 columns", {
 
-  potential_answers <- c("3\\s?columns", "(ncol|length)\\(datasaurus_dozen\\)")
+
+test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
+  skip_if(length(.rmd_content) == 0)
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution_nrow <- as.character(nrow(get("datasaurus_dozen", envir = environment())))
+  potential_answers <- c(solution_nrow, "nrow\\(datasaurus_dozen\\)", "names\\(datasaurus_dozen\\)")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include the number of rows in the .rmd file")
+})
+
+
+test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
+
+  potential_answers <- c("3\\s?(columns|variables)", "(ncol|length)\\(datasaurus_dozen\\)")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
 
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
 
-  expect_equal(answer_in_rmd, TRUE,info = "Make sure to include the number of columns in the .rmd file")
+  expect_equal(answer_in_rmd, TRUE, info = "Make sure to include the number of columns in the .rmd file")
+})
+
+
+test_that("Ex 1: datasaurus_dozen matches expected dimensions", {
+  skip_if(!exists("datasaurus_dozen"))
+  # Compute solution from the package
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution <- get("datasaurus_dozen", envir = environment())
+
+  potential_answers <- c(solution_ncol, "ncol\\(datasaurus_dozen\\)", "names\\(datasaurus_dozen\\)")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+
+
+  expect_equal(nrow(datasaurus_dozen), nrow(solution),
+               info = sprintf("Make sure datasaurus_dozen has %d rows", nrow(solution)))
+  expect_equal(ncol(datasaurus_dozen), ncol(solution),
+               info = sprintf("Make sure datasaurus_dozen has %d columns", ncol(solution)))
 })
 
 test_that("Ex 1: datasaurus_dozen has variables dataset, x, and y", {
