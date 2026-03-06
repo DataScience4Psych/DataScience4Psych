@@ -1,33 +1,22 @@
 # Exercise 8-11: Racial disparities in COMPAS scores
 
-test_that("Ex 8: Black defendants have higher average risk scores than white defendants", {
-  skip_if(!exists("compas"))
-  skip_if(!all(c("race", "decile_score") %in% names(compas)))
-  means <- compas %>%
-    dplyr::filter(race %in% c("African-American", "Caucasian")) %>%
-    dplyr::group_by(race) %>%
-    dplyr::summarize(mean_score = mean(decile_score, na.rm = TRUE), .groups = "drop")
-  skip_if(nrow(means) < 2,
-          message = "Could not find both African-American and Caucasian groups")
-  black_mean <- means$mean_score[means$race == "African-American"]
-  white_mean <- means$mean_score[means$race == "Caucasian"]
-  expect_true(black_mean > white_mean,
-              label = "Black defendants should have higher average COMPAS scores than white defendants")
+test_that("Ex 8: Rmd Exercise 8 contains racial disparity analysis code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "8", "9")
+  skip_if(is.null(section), "Could not locate Exercise 8 section in Rmd")
+  has_race <- any(grepl("race|African|Caucasian", section))
+  has_score <- any(grepl("decile_score|mean|group_by", section))
+  expect_true(has_race && has_score,
+              label = "Exercise 8 should contain code comparing risk scores across racial groups")
 })
 
-test_that("Ex 9: higher proportion of Black defendants classified as high risk", {
-  skip_if(!exists("compas"))
-  skip_if(!all(c("race", "decile_score") %in% names(compas)))
-  high_risk <- compas %>%
-    dplyr::filter(race %in% c("African-American", "Caucasian")) %>%
-    dplyr::group_by(race) %>%
-    dplyr::summarize(pct_high = mean(decile_score >= 7, na.rm = TRUE), .groups = "drop")
-  skip_if(nrow(high_risk) < 2,
-          message = "Could not find both African-American and Caucasian groups")
-  black_pct <- high_risk$pct_high[high_risk$race == "African-American"]
-  white_pct <- high_risk$pct_high[high_risk$race == "Caucasian"]
-  expect_true(black_pct > white_pct,
-              label = "A higher proportion of Black defendants should be classified as high risk")
+test_that("Ex 9: Rmd Exercise 9 contains high risk classification analysis", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "9", "10")
+  skip_if(is.null(section), "Could not locate Exercise 9 section in Rmd")
+  has_risk <- any(grepl("high.*risk|>= ?7|decile_score", section))
+  expect_true(has_risk,
+              label = "Exercise 9 should contain code analyzing high risk classification rates")
 })
 
 test_that("Ex 10: non_recidivists object exists", {
@@ -57,17 +46,12 @@ test_that("Ex 10: non_recidivists has race and decile_score for disparity analys
               label = "non_recidivists should have race and decile_score columns for false positive rate analysis")
 })
 
-test_that("Ex 10: false positive rate is higher for Black non-recidivists", {
-  skip_if(!exists("non_recidivists"))
-  skip_if(!all(c("race", "decile_score") %in% names(non_recidivists)))
-  fp_rates <- non_recidivists %>%
-    dplyr::filter(race %in% c("African-American", "Caucasian")) %>%
-    dplyr::group_by(race) %>%
-    dplyr::summarize(fp_rate = mean(decile_score >= 7, na.rm = TRUE), .groups = "drop")
-  skip_if(nrow(fp_rates) < 2,
-          message = "Could not find both racial groups in non_recidivists")
-  black_fp <- fp_rates$fp_rate[fp_rates$race == "African-American"]
-  white_fp <- fp_rates$fp_rate[fp_rates$race == "Caucasian"]
-  expect_true(black_fp > white_fp,
-              label = "Black non-recidivists should have a higher false positive rate (incorrectly labeled high risk)")
+test_that("Ex 10: Rmd Exercise 10 contains false positive rate analysis", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "10", "11")
+  skip_if(is.null(section), "Could not locate Exercise 10 section in Rmd")
+  has_fp <- any(grepl("false.*positive|fp_rate|non_recidiv|two_year_recid", section))
+  has_race <- any(grepl("race|African|Caucasian", section))
+  expect_true(has_fp && has_race,
+              label = "Exercise 10 should contain code analyzing false positive rates by race")
 })

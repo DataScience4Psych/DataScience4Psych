@@ -45,18 +45,12 @@ test_that("Ex 12: lowbirthweight has two categories", {
                label = "lowbirthweight should have exactly 2 categories (low/not low)")
 })
 
-test_that("Ex 12: proportion of low birth weight can be computed by mature status", {
-  skip_if(!exists("ncbirths"))
-  skip_if(!all(c("mature", "lowbirthweight") %in% names(ncbirths)))
-  props <- ncbirths %>%
-    dplyr::filter(!is.na(mature), !is.na(lowbirthweight)) %>%
-    dplyr::group_by(mature) %>%
-    dplyr::summarize(
-      pct_low = mean(lowbirthweight == "low"),
-      .groups = "drop"
-    )
-  expect_equal(nrow(props), 2,
-               label = "Should have proportions for both mature and younger mothers")
-  expect_true(all(props$pct_low >= 0 & props$pct_low <= 1),
-              label = "Proportions of low birth weight should be between 0 and 1")
+test_that("Ex 12: Rmd Exercise 12 contains low birth weight analysis code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "12", "13")
+  skip_if(is.null(section), "Could not locate Exercise 12 section in Rmd")
+  has_lbw <- any(grepl("lowbirthweight|low.*birth", section))
+  has_mature <- any(grepl("mature", section))
+  expect_true(has_lbw && has_mature,
+              label = "Exercise 12 should contain code analyzing low birth weight by mature status")
 })

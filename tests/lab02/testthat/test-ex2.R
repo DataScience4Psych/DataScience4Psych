@@ -5,20 +5,21 @@ test_that("Ex 2: plastic_waste object exists for density plots", {
               label = "plastic_waste must exist before creating density plots")
 })
 
-test_that("Ex 2: plastic_waste_per_cap variable is numeric", {
-  skip_if(!exists("plastic_waste"))
-  expect_true(is.numeric(plastic_waste$plastic_waste_per_cap),
-              label = "plastic_waste_per_cap should be numeric for plotting")
+test_that("Ex 2: Rmd Exercise 2 contains density plot code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "2", "3")
+  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
+  has_density <- any(grepl("geom_density|density", section))
+  has_ggplot <- any(grepl("ggplot", section))
+  expect_true(has_density && has_ggplot,
+              label = "Exercise 2 should contain ggplot code with geom_density")
 })
 
-test_that("Ex 2: continent variable exists for color/fill mapping", {
-  skip_if(!exists("plastic_waste"))
-  expect_true("continent" %in% names(plastic_waste),
-              label = "continent variable is needed for color and fill aesthetics in density plots")
-})
-
-test_that("Ex 2: plastic_waste_per_cap has non-missing values for plotting", {
-  skip_if(!exists("plastic_waste"))
-  expect_true(sum(!is.na(plastic_waste$plastic_waste_per_cap)) > 100,
-              label = "plastic_waste_per_cap should have many non-missing values for meaningful density plots")
+test_that("Ex 2: Rmd Exercise 2 uses continent for coloring", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "2", "3")
+  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
+  has_continent <- any(grepl("continent", section))
+  expect_true(has_continent,
+              label = "Exercise 2 density plots should use continent for color/fill mapping")
 })

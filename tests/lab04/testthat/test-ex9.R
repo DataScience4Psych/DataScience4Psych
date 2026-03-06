@@ -1,23 +1,13 @@
 # Exercises 9-12: State-level analysis, bind_rows, and visualization
 
-test_that("Ex 9: can count Denny's per state", {
-  skip_if(!exists("dn") && !exists("dennys"))
-  d <- if (exists("dn")) dn else dennys
-  state_counts <- as.data.frame(table(d$state))
-  expect_true(nrow(state_counts) > 0,
-              label = "Denny's state counts should have rows")
-  expect_true("CA" %in% d$state,
-              label = "California should appear in Denny's locations")
-})
-
-test_that("Ex 9: can count La Quinta per state", {
-  skip_if(!exists("lq") && !exists("laquinta"))
-  d <- if (exists("lq")) lq else laquinta
-  state_counts <- as.data.frame(table(d$state))
-  expect_true(nrow(state_counts) > 0,
-              label = "La Quinta state counts should have rows")
-  expect_true("TX" %in% d$state,
-              label = "Texas should appear in La Quinta locations")
+test_that("Ex 9: Rmd Exercise 9 contains state counting code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "9", "10")
+  skip_if(is.null(section), "Could not locate Exercise 9 section in Rmd")
+  has_count <- any(grepl("count|table|tally|n\\(\\)|group_by", section))
+  has_state <- any(grepl("state", section))
+  expect_true(has_count && has_state,
+              label = "Exercise 9 should contain code to count locations by state")
 })
 
 test_that("Ex 10-11: dn_lq combined data frame exists", {

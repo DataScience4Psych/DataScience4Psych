@@ -5,30 +5,22 @@ test_that("Ex 4: plastic_waste object exists for scatterplots", {
               label = "plastic_waste must exist before creating scatterplots")
 })
 
-test_that("Ex 4: plastic_waste has mismanaged_plastic_waste_per_cap for scatterplot", {
-  skip_if(!exists("plastic_waste"))
-  expect_true("mismanaged_plastic_waste_per_cap" %in% names(plastic_waste),
-              label = "mismanaged_plastic_waste_per_cap is needed for the scatterplot")
+test_that("Ex 4: Rmd Exercise 4 contains scatterplot code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "4", "5")
+  skip_if(is.null(section), "Could not locate Exercise 4 section in Rmd")
+  has_point <- any(grepl("geom_point", section))
+  has_ggplot <- any(grepl("ggplot", section))
+  expect_true(has_point && has_ggplot,
+              label = "Exercise 4 should contain ggplot code with geom_point for scatterplots")
 })
 
-test_that("Ex 4: plastic_waste has total_pop for population scatterplot", {
-  skip_if(!exists("plastic_waste"))
-  expect_true("total_pop" %in% names(plastic_waste),
-              label = "total_pop is needed for the population vs plastic waste scatterplot")
-})
-
-test_that("Ex 4: plastic_waste has coastal_pop for coastal population scatterplot", {
-  skip_if(!exists("plastic_waste"))
-  expect_true("coastal_pop" %in% names(plastic_waste),
-              label = "coastal_pop is needed for the coastal population vs plastic waste scatterplot")
-})
-
-test_that("Ex 4: key numeric variables have sufficient non-missing values", {
-  skip_if(!exists("plastic_waste"))
-  expect_true(sum(!is.na(plastic_waste$mismanaged_plastic_waste_per_cap)) > 100,
-              label = "mismanaged_plastic_waste_per_cap should have many non-missing values")
-  expect_true(sum(!is.na(plastic_waste$total_pop)) > 100,
-              label = "total_pop should have many non-missing values")
-  expect_true(sum(!is.na(plastic_waste$coastal_pop)) > 100,
-              label = "coastal_pop should have many non-missing values")
+test_that("Ex 4: Rmd Exercise 4 references key variables", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "4", "5")
+  skip_if(is.null(section), "Could not locate Exercise 4 section in Rmd")
+  has_mismanaged <- any(grepl("mismanaged_plastic_waste", section))
+  has_pop <- any(grepl("total_pop|coastal_pop", section))
+  expect_true(has_mismanaged || has_pop,
+              label = "Exercise 4 should reference mismanaged_plastic_waste_per_cap, total_pop, or coastal_pop")
 })

@@ -7,38 +7,20 @@ test_that("Ex 3: compas object exists with decile_score", {
               label = "compas should have a decile_score column")
 })
 
-test_that("Ex 3: decile_score is numeric", {
-  skip_if(!exists("compas") || !"decile_score" %in% names(compas))
-  expect_true(is.numeric(compas$decile_score),
-              label = "decile_score should be numeric")
+test_that("Ex 3: Rmd Exercise 3 contains risk score visualization code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "3", "4")
+  skip_if(is.null(section), "Could not locate Exercise 3 section in Rmd")
+  has_plot <- any(grepl("ggplot|geom_histogram|geom_bar|geom_density|decile_score", section))
+  expect_true(has_plot,
+              label = "Exercise 3 should contain code visualizing the distribution of risk scores")
 })
 
-test_that("Ex 3: decile_score ranges from 1 to 10", {
-  skip_if(!exists("compas") || !"decile_score" %in% names(compas))
-  scores <- compas$decile_score[!is.na(compas$decile_score)]
-  expect_true(min(scores) >= 1,
-              label = "Minimum decile_score should be at least 1")
-  expect_true(max(scores) <= 10,
-              label = "Maximum decile_score should be at most 10")
-})
-
-test_that("Ex 3: decile_score uses all 10 levels", {
-  skip_if(!exists("compas") || !"decile_score" %in% names(compas))
-  n_unique <- dplyr::n_distinct(compas$decile_score, na.rm = TRUE)
-  expect_equal(n_unique, 10,
-               label = "decile_score should have 10 distinct values (1 through 10)")
-})
-
-test_that("Ex 4: race column exists with multiple groups", {
-  skip_if(!exists("compas") || !"race" %in% names(compas))
-  n_races <- dplyr::n_distinct(compas$race)
-  expect_true(n_races >= 3,
-              label = "There should be at least 3 racial groups in the data")
-})
-
-test_that("Ex 4: sex column exists with both groups", {
-  skip_if(!exists("compas") || !"sex" %in% names(compas))
-  n_sex <- dplyr::n_distinct(compas$sex)
-  expect_equal(n_sex, 2,
-               label = "There should be exactly 2 sex groups")
+test_that("Ex 4: Rmd Exercise 4 contains demographic analysis code", {
+  skip_if(length(.rmd_content) == 0)
+  section <- .find_ex_section(.rmd_content, "4", "5")
+  skip_if(is.null(section), "Could not locate Exercise 4 section in Rmd")
+  has_demo <- any(grepl("race|sex|gender|demographic", section))
+  expect_true(has_demo,
+              label = "Exercise 4 should contain code examining demographic variables (race, sex)")
 })
