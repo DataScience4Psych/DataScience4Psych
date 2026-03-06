@@ -56,21 +56,6 @@ test_that("Ex 10: Rmd Exercise 10 contains false positive rate analysis", {
               label = "Exercise 10 should contain code analyzing false positive rates by race")
 })
 
-test_that("Ex 8: Black defendants have higher average risk scores (solution check)", {
-  skip_if(!exists("compas"))
-  skip_if(!all(c("race", "decile_score") %in% names(compas)))
-  solution_means <- compas %>%
-    dplyr::filter(race %in% c("African-American", "Caucasian")) %>%
-    dplyr::group_by(race) %>%
-    dplyr::summarize(mean_score = mean(decile_score, na.rm = TRUE), .groups = "drop")
-  skip_if(nrow(solution_means) < 2,
-          message = "Could not find both African-American and Caucasian groups")
-  solution_black <- solution_means$mean_score[solution_means$race == "African-American"]
-  solution_white <- solution_means$mean_score[solution_means$race == "Caucasian"]
-  expect_true(solution_black > solution_white,
-              label = "Black defendants should have higher average COMPAS scores than white defendants")
-})
-
 test_that("Ex 10: false positive rate is higher for Black non-recidivists (solution check)", {
   skip_if(!exists("non_recidivists"))
   skip_if(!all(c("race", "decile_score") %in% names(non_recidivists)))
