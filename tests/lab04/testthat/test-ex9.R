@@ -10,6 +10,26 @@ test_that("Ex 9: Rmd Exercise 9 contains state counting code", {
               label = "Exercise 9 should contain code to count locations by state")
 })
 
+test_that("Ex 9: Denny's data has California locations (solution check)", {
+  skip_if(!exists("dn") && !exists("dennys"))
+  d <- if (exists("dn")) dn else dennys
+  solution_state_counts <- as.data.frame(table(d$state))
+  expect_true(nrow(solution_state_counts) > 0,
+              label = "Denny's state counts should have rows")
+  expect_true("CA" %in% d$state,
+              label = "California should appear in Denny's locations")
+})
+
+test_that("Ex 9: La Quinta data has Texas locations (solution check)", {
+  skip_if(!exists("lq") && !exists("laquinta"))
+  d <- if (exists("lq")) lq else laquinta
+  solution_state_counts <- as.data.frame(table(d$state))
+  expect_true(nrow(solution_state_counts) > 0,
+              label = "La Quinta state counts should have rows")
+  expect_true("TX" %in% d$state,
+              label = "Texas should appear in La Quinta locations")
+})
+
 test_that("Ex 10-11: dn_lq combined data frame exists", {
   expect_true(exists("dn_lq"),
               label = "dn_lq should be created by bind_rows of dn and lq with establishment variable")

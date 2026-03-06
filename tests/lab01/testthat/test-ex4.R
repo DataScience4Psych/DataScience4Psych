@@ -13,9 +13,12 @@ test_that("Ex 4: circle_data contains only circle observations", {
   )
 })
 
-test_that("Ex 4: circle_data has 142 rows", {
+test_that("Ex 4: circle_data has correct number of rows", {
   skip_if(!exists("circle_data"))
-  expect_equal(nrow(circle_data), 142)
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution_n <- nrow(dplyr::filter(get("datasaurus_dozen", envir = environment()), dataset == "circle"))
+  expect_equal(nrow(circle_data), solution_n,
+               label = sprintf("circle_data should have %d rows", solution_n))
 })
 
 test_that("Ex 4: circle_data has columns dataset, x, y", {
@@ -29,6 +32,24 @@ test_that("Ex 4: correlation for circle is near zero (negative)", {
   expect_true(r_circle > -0.1 && r_circle < 0,
               label = sprintf("circle correlation should be between -0.1 and 0, got %.4f", r_circle)
   )
+})
+
+test_that("Ex 4: circle and dino correlations are similar (within 0.05)", {
+  skip_if(!exists("circle_data") || !exists("dino_data"))
+  r_dino <- cor(dino_data$x, dino_data$y)
+  r_circle <- cor(circle_data$x, circle_data$y)
+  expect_true(abs(r_dino - r_circle) < 0.05,
+              label = "dino and circle correlations should be very similar despite different shapes")
+})
+
+test_that("Ex 4: circle_data matches expected solution", {
+  skip_if(!exists("circle_data"))
+  data("datasaurus_dozen")
+  solution_circle_data <- dplyr::filter(datasaurus_dozen, dataset == "circle")
+  expect_equal(nrow(circle_data), nrow(solution_circle_data),
+               label = "circle_data should have same number of rows as the correct solution")
+  expect_equal(sort(circle_data$x), sort(solution_circle_data$x),
+               label = "circle_data x values should match the correct solution")
 })
 
 test_that("Ex 4: Rmd Exercise 4 contains circle dataset code", {

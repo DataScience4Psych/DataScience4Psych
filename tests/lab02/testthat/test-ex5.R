@@ -31,3 +31,25 @@ test_that("Ex 5: Rmd Exercise 5 filters for plastic_waste_per_cap < 3", {
   expect_true(has_filter,
               label = "Exercise 5 should filter out the outlier (plastic_waste_per_cap < 3)")
 })
+
+test_that("Ex 5: coastal_pop_prop solution values are between 0 and 1", {
+  skip_if(!exists("plastic_waste"))
+  skip_if(!all(c("coastal_pop", "total_pop") %in% names(plastic_waste)))
+  solution_pw <- plastic_waste
+  solution_pw$coastal_pop_prop <- solution_pw$coastal_pop / solution_pw$total_pop
+  solution_pw_clean <- solution_pw[!is.na(solution_pw$coastal_pop_prop), ]
+  solution_med <- median(solution_pw_clean$coastal_pop_prop, na.rm = TRUE)
+  expect_true(solution_med >= 0 && solution_med <= 1,
+              label = "Median coastal_pop_prop should be between 0 and 1")
+})
+
+test_that("Ex 5: filtering for plastic_waste_per_cap < 3 retains most rows", {
+  skip_if(!exists("plastic_waste"))
+  skip_if(!all(c("coastal_pop", "total_pop", "plastic_waste_per_cap") %in% names(plastic_waste)))
+  solution_pw <- plastic_waste
+  solution_pw$coastal_pop_prop <- solution_pw$coastal_pop / solution_pw$total_pop
+  solution_result <- solution_pw[!is.na(solution_pw$plastic_waste_per_cap) &
+                                   solution_pw$plastic_waste_per_cap < 3, ]
+  expect_true(nrow(solution_result) > 200,
+              label = "Filtering for plastic_waste_per_cap < 3 should retain most rows")
+})

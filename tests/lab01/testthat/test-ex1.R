@@ -1,5 +1,5 @@
 # Exercise 1: datasaurus_dozen dataset structure
-# The help file says: 1846 rows, 3 columns (dataset, x, y)
+# Compute solution values from the package data so we don't hardcode numbers
 
 test_that("Ex 1: Rmd Exercise 1 contains code exploring datasaurus_dozen", {
   skip_if(length(.rmd_content) == 0)
@@ -15,22 +15,29 @@ test_that("Ex 1: datasaurus_dozen object exists in student environment", {
               label = "datasaurus_dozen should be loaded (e.g., via data(datasaurus_dozen) or library(datasauRus))")
 })
 
-test_that("Ex 1: datasaurus_dozen has 1846 rows", {
+test_that("Ex 1: datasaurus_dozen matches expected dimensions", {
   skip_if(!exists("datasaurus_dozen"))
-  expect_equal(nrow(datasaurus_dozen), 1846)
-})
-
-test_that("Ex 1: datasaurus_dozen has 3 columns", {
-  skip_if(!exists("datasaurus_dozen"))
-  expect_equal(ncol(datasaurus_dozen), 3)
+  # Compute solution from the package
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution <- get("datasaurus_dozen", envir = environment())
+  expect_equal(nrow(datasaurus_dozen), nrow(solution),
+               label = sprintf("datasaurus_dozen should have %d rows", nrow(solution)))
+  expect_equal(ncol(datasaurus_dozen), ncol(solution),
+               label = sprintf("datasaurus_dozen should have %d columns", ncol(solution)))
 })
 
 test_that("Ex 1: datasaurus_dozen has variables dataset, x, and y", {
   skip_if(!exists("datasaurus_dozen"))
-  expect_setequal(names(datasaurus_dozen), c("dataset", "x", "y"))
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution <- get("datasaurus_dozen", envir = environment())
+  expect_setequal(names(datasaurus_dozen), names(solution))
 })
 
-test_that("Ex 1: datasaurus_dozen contains 13 datasets", {
+test_that("Ex 1: datasaurus_dozen contains expected number of datasets", {
   skip_if(!exists("datasaurus_dozen"))
-  expect_equal(dplyr::n_distinct(datasaurus_dozen$dataset), 13)
+  data("datasaurus_dozen", package = "datasauRus", envir = environment())
+  solution <- get("datasaurus_dozen", envir = environment())
+  solution_n <- dplyr::n_distinct(solution$dataset)
+  expect_equal(dplyr::n_distinct(datasaurus_dozen$dataset), solution_n,
+               label = sprintf("datasaurus_dozen should contain %d datasets", solution_n))
 })

@@ -54,3 +54,19 @@ test_that("Ex 12: Rmd Exercise 12 contains low birth weight analysis code", {
   expect_true(has_lbw && has_mature,
               label = "Exercise 12 should contain code analyzing low birth weight by mature status")
 })
+
+test_that("Ex 12: low birth weight proportions have expected properties (solution check)", {
+  skip_if(!exists("ncbirths"))
+  skip_if(!all(c("mature", "lowbirthweight") %in% names(ncbirths)))
+  solution_props <- ncbirths %>%
+    dplyr::filter(!is.na(mature), !is.na(lowbirthweight)) %>%
+    dplyr::group_by(mature) %>%
+    dplyr::summarize(
+      pct_low = mean(lowbirthweight == "low"),
+      .groups = "drop"
+    )
+  expect_equal(nrow(solution_props), 2,
+               label = "Should have proportions for both mature and younger mothers")
+  expect_true(all(solution_props$pct_low >= 0 & solution_props$pct_low <= 1),
+              label = "Proportions of low birth weight should be between 0 and 1")
+})

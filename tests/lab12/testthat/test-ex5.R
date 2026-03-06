@@ -64,3 +64,28 @@ test_that("Ex 7: observed difference in mean weight (nonsmoker - smoker) is posi
   expect_true(diff_val > 0,
               label = sprintf("Observed difference (nonsmoker - smoker) should be positive, got %.4f", diff_val))
 })
+
+test_that("Ex 7: student's observed difference matches solution", {
+  diff_val <- NULL
+  for (nm in c("obs_diff", "observed_diff", "diff_mean", "obs", "weight_diff")) {
+    if (exists(nm)) { diff_val <- get(nm); break }
+  }
+  skip_if(is.null(diff_val), message = "No observed difference object found")
+  if (is.data.frame(diff_val) && "stat" %in% names(diff_val)) {
+    diff_val <- diff_val$stat[1]
+  }
+  # Compute the solution from student's cleaned data
+  solution_d <- NULL
+  if (exists("ncbirths_clean")) solution_d <- ncbirths_clean
+  else if (exists("ncbirths_habitweight")) solution_d <- ncbirths_habitweight
+  skip_if(is.null(solution_d), message = "No cleaned dataset found to compare against")
+  skip_if(!all(c("habit", "weight") %in% names(solution_d)))
+  solution_means <- solution_d %>%
+    dplyr::group_by(habit) %>%
+    dplyr::summarize(mean_weight = mean(weight), .groups = "drop")
+  solution_diff <- solution_means$mean_weight[solution_means$habit == "nonsmoker"] -
+                   solution_means$mean_weight[solution_means$habit == "smoker"]
+  expect_true(abs(diff_val - solution_diff) < 0.1,
+              label = sprintf("Student's difference (%.4f) should be close to solution (%.4f)",
+                              diff_val, solution_diff))
+})

@@ -21,11 +21,8 @@ test_that("Ex 7: Rmd Exercise 7 contains min distance code", {
 test_that("Ex 7: dn_lq_ak has closest or min_dist column from student computation", {
   skip_if(!exists("dn_lq_ak"))
   skip_if(!"distance" %in% names(dn_lq_ak))
-  # Check that student computed something — either a closest column or
-  # grouped/sliced to show min distances
   has_closest <- any(grepl("closest|min_dist|minimum", names(dn_lq_ak), ignore.case = TRUE))
   if (!has_closest) {
-    # Alternative: check Rmd has the computation
     skip_if(length(.rmd_content) == 0)
     section <- .find_ex_section(.rmd_content, "7", "8")
     skip_if(is.null(section), "Could not locate Exercise 7 section in Rmd")
@@ -33,4 +30,18 @@ test_that("Ex 7: dn_lq_ak has closest or min_dist column from student computatio
     expect_true(has_code,
                 label = "Exercise 7 should compute minimum distances (e.g., summarize(closest = min(distance)))")
   }
+})
+
+test_that("Ex 7: minimum distances have expected properties (solution check)", {
+  skip_if(!exists("dn_lq_ak"))
+  skip_if(!"distance" %in% names(dn_lq_ak))
+  skip_if(!"address.x" %in% names(dn_lq_ak))
+  solution_min_dists <- tapply(dn_lq_ak$distance, dn_lq_ak$address.x, min)
+  expect_equal(length(solution_min_dists), 3,
+               label = "Should have one minimum distance per Denny's location (3 total)")
+  expect_true(all(solution_min_dists >= 0),
+              label = "All minimum distances should be non-negative")
+  solution_max_dists <- tapply(dn_lq_ak$distance, dn_lq_ak$address.x, max)
+  expect_true(all(solution_min_dists <= solution_max_dists),
+              label = "Minimum distance should be <= maximum distance for each Denny's")
 })
