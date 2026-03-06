@@ -10,7 +10,7 @@ test_that("Ex 3: in-sample accuracy object exists", {
     }
   }
   expect_true(has_accuracy,
-              label = "An in-sample accuracy object should exist (e.g., accuracy, in_sample_accuracy, train_accuracy)")
+              info = "Create an in-sample accuracy object (e.g., accuracy, in_sample_accuracy, train_accuracy)")
 })
 
 test_that("Ex 3: in-sample accuracy is reasonable (> 70% and < 100%)", {
@@ -31,16 +31,16 @@ test_that("Ex 3: in-sample accuracy is reasonable (> 70% and < 100%)", {
   # Handle both proportion (0-1) and percentage (0-100) forms
   if (acc_val > 1) acc_val <- acc_val / 100
   expect_true(acc_val > 0.7,
-              label = sprintf("In-sample accuracy should be > 70%%, got %.1f%%", acc_val * 100))
+              info = sprintf("Ensure your in-sample accuracy is above 70%%, got %.1f%%", acc_val * 100))
   expect_true(acc_val < 1.0,
-              label = "In-sample accuracy should not be perfect (< 100%)")
+              info = "Ensure your in-sample accuracy is not perfect (should be < 100%%)")
 })
 
 test_that("Ex 3: cross-validation results object exists", {
   has_cv <- exists("cv_accuracy") || exists("cv_results") || exists("cv_acc") ||
             exists("out_of_sample_accuracy") || exists("test_accuracy")
   expect_true(has_cv,
-              label = "Cross-validation accuracy results should exist (e.g., cv_accuracy, cv_results)")
+              info = "Create a cross-validation accuracy object (e.g., cv_accuracy, cv_results)")
 })
 
 test_that("Ex 3: out-of-sample accuracy is lower than in-sample accuracy", {
@@ -60,7 +60,7 @@ test_that("Ex 3: out-of-sample accuracy is lower than in-sample accuracy", {
   if (in_acc > 1) in_acc <- in_acc / 100
   if (out_acc > 1) out_acc <- out_acc / 100
   expect_true(out_acc <= in_acc,
-              label = sprintf("Out-of-sample accuracy (%.1f%%) should be <= in-sample (%.1f%%)",
+              info = sprintf("Ensure your out-of-sample accuracy (%.1f%%) is <= in-sample accuracy (%.1f%%)",
                               out_acc * 100, in_acc * 100))
 })
 
@@ -72,5 +72,5 @@ test_that("Ex 3: out-of-sample accuracy is still reasonable (> 60%)", {
   skip_if(is.null(out_acc), message = "No cross-validation accuracy object found")
   if (out_acc > 1) out_acc <- out_acc / 100
   expect_true(out_acc > 0.6,
-              label = sprintf("Out-of-sample accuracy should be > 60%%, got %.1f%%", out_acc * 100))
+              info = sprintf("Ensure your out-of-sample accuracy is above 60%%, got %.1f%%", out_acc * 100))
 })
