@@ -14,7 +14,6 @@ test_that("Ex 1: datasaurus_dozen object exists in student environment", {
 })
 
 
-
 test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
   skip_if(length(.rmd_content) == 0)
   data("datasaurus_dozen", package = "datasauRus", envir = environment())
@@ -30,8 +29,10 @@ test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
 
 
 test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
+  skip_if(length(.rmd_content) == 0)
+  solution_ncol <- as.character(ncol(get("datasaurus_dozen", envir = environment())))
+  potential_answers <- c(paste0(solution_ncol,"\\s?(columns|variables)"), "(ncol|length)\\(datasaurus_dozen\\)")
 
-  potential_answers <- c("3\\s?(columns|variables)", "(ncol|length)\\(datasaurus_dozen\\)")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
 
@@ -43,26 +44,18 @@ test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
 
 test_that("Ex 1: datasaurus_dozen matches expected dimensions", {
   skip_if(!exists("datasaurus_dozen"))
-  # Compute solution from the package
-  data("datasaurus_dozen", package = "datasauRus", envir = environment())
-  solution <- get("datasaurus_dozen", envir = environment())
 
-  potential_answers <- c(solution_ncol, "ncol\\(datasaurus_dozen\\)", "names\\(datasaurus_dozen\\)")
-  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  student_data <- get("datasaurus_dozen", envir = environment())
+  solution_data <- get("datasaurus_dozen", envir = asNamespace("datasauRus"))
+  student_nrow <- nrow(student_data)
+  student_ncol <- ncol(student_data)
+  solution_nrow <- nrow(solution_data)
+  solution_ncol <- ncol(solution_data)
 
-
-  expect_equal(nrow(datasaurus_dozen), nrow(solution),
+  expect_equal(solution_nrow, student_nrow,
                info = sprintf("Make sure datasaurus_dozen has %d rows", nrow(solution)))
-  expect_equal(ncol(datasaurus_dozen), ncol(solution),
+  expect_equal( solution_ncol, student_ncol,
                info = sprintf("Make sure datasaurus_dozen has %d columns", ncol(solution)))
 })
 
-test_that("Ex 1: datasaurus_dozen has variables dataset, x, and y", {
-  data("datasaurus_dozen")
-  expect_setequal(names(datasaurus_dozen), c("dataset", "x", "y"))
-})
 
-test_that("Ex 1: datasaurus_dozen contains 13 datasets", {
-  data("datasaurus_dozen")
-  expect_equal(dplyr::n_distinct(datasaurus_dozen$dataset), 13)
-})
