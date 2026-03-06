@@ -38,3 +38,25 @@ test_that("Ex 1: nobel has at least 6 prize categories", {
   expect_true(n_cats >= 6,
               label = "There should be at least 6 prize categories")
 })
+
+test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("nobel"))
+  solution_nrow <- as.character(nrow(nobel))
+  potential_answers <- c(solution_nrow, "nrow\\(nobel\\)")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include the number of observations in the .rmd file")
+})
+
+test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("nobel"))
+  solution_ncol <- as.character(ncol(nobel))
+  potential_answers <- c(solution_ncol, "ncol\\(nobel\\)", "names\\(nobel\\)")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include the number of variables in the .rmd file")
+})

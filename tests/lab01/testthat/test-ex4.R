@@ -60,3 +60,17 @@ test_that("Ex 4: Rmd Exercise 4 contains circle dataset code", {
   expect_true(has_circle,
               label = "Exercise 4 section should reference the 'circle' dataset")
 })
+
+test_that("Ex 4: Rmd Exercise 4 reports the circle correlation value", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("circle_data"))
+  solution_r <- cor(circle_data$x, circle_data$y)
+  potential_answers <- c(sprintf("%.4f", solution_r), sprintf("%.3f", solution_r),
+                         sprintf("%.2f", solution_r),
+                         "cor\\(circle_data\\$x", "cor\\(circle_data\\[")
+  potential_answers <- gsub("-", "\\\\-", potential_answers)
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include the circle correlation value in the .rmd file")
+})

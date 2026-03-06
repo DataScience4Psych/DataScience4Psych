@@ -45,3 +45,21 @@ test_that("Ex 7: minimum distances have expected properties (solution check)", {
   expect_true(all(solution_min_dists <= solution_max_dists),
               label = "Minimum distance should be <= maximum distance for each Denny's")
 })
+
+test_that("Ex 7: Rmd Exercise 7 reports minimum distance values or uses min() code", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("dn_lq_ak"))
+  skip_if(!"distance" %in% names(dn_lq_ak))
+  skip_if(!"address.x" %in% names(dn_lq_ak))
+  section <- .find_ex_section(.rmd_content, "7", "8")
+  skip_if(is.null(section), "Could not locate Exercise 7 section in Rmd")
+  solution_min_dists <- tapply(dn_lq_ak$distance, dn_lq_ak$address.x, min)
+  # Check if any rounded min distance value appears in Rmd
+  dist_patterns <- unlist(lapply(solution_min_dists, function(d) {
+    c(sprintf("%.1f", d), sprintf("%.2f", d), sprintf("%.0f", d))
+  }))
+  has_value <- any(sapply(dist_patterns, function(p) any(grepl(p, section, fixed = TRUE))))
+  has_code <- any(grepl("min\\(distance|slice_min|summarize|summarise", section))
+  expect_true(has_value || has_code,
+              label = "Exercise 7 should report minimum distance values or use min()/summarize() code")
+})
