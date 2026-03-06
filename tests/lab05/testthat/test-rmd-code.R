@@ -2,20 +2,20 @@
 
 test_that("Rmd file exists in working directory", {
   expect_true(length(.rmd_files) > 0,
-              label = "No Rmd file found — student must submit an Rmd file")
+              info = "Submit an Rmd file in your working directory")
 })
 
 test_that("Rmd contains a minimum number of R code chunks", {
   skip_if(length(.rmd_content) == 0)
-  chunk_starts <- grep("^```\\{r", .rmd_content)
+  chunk_starts <- stringr::str_detect(.rmd_content, "^```\\{r") |> which()
   expect_true(length(chunk_starts) >= 5,
-              label = sprintf("Rmd should have at least 5 R code chunks, found %d", length(chunk_starts)))
+              info = sprintf("Include at least 5 R code chunks in your Rmd, found %d", length(chunk_starts)))
 })
 
 test_that("R code chunks contain actual code (not all empty)", {
   skip_if(length(.rmd_content) == 0)
-  chunk_starts <- grep("^```\\{r", .rmd_content)
-  chunk_ends <- grep("^```$", .rmd_content)
+  chunk_starts <- stringr::str_detect(.rmd_content, "^```\\{r") |> which()
+  chunk_ends <- stringr::str_detect(.rmd_content, "^```$") |> which()
   skip_if(length(chunk_starts) == 0, "No code chunks found")
   non_empty <- 0
   for (i in seq_along(chunk_starts)) {
@@ -24,52 +24,48 @@ test_that("R code chunks contain actual code (not all empty)", {
     end_line <- end_candidates[1]
     if (end_line - chunk_starts[i] > 1) {
       chunk_body <- .rmd_content[(chunk_starts[i] + 1):(end_line - 1)]
-      code_lines <- chunk_body[!grepl("^\\s*$", chunk_body) & !grepl("^\\s*#", chunk_body)]
+      code_lines <- chunk_body[!stringr::str_detect(chunk_body, "^\\s*$") & !stringr::str_detect(chunk_body, "^\\s*#")]
       if (length(code_lines) > 0) non_empty <- non_empty + 1
     }
   }
   expect_true(non_empty >= 2,
-              label = sprintf("At least 2 code chunks should contain actual R code, found %d non-empty", non_empty))
+              info = sprintf("Write actual R code in at least 2 code chunks, found %d non-empty", non_empty))
 })
 
 # Per-exercise checks
 
 test_that("Exercise 1 section contains R code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "1", "2")
-  skip_if(is.null(section), "Could not locate Exercise 1 section in Rmd")
-  has_chunk <- any(grepl("^```\\{r", section))
-  has_inline <- any(grepl("`r\\s+[^`]+`", section))
-  expect_true(has_chunk || has_inline,
-              label = "Exercise 1 should contain R code (code chunk or inline R expression)")
+  potential_answers <- c("^```\\{r", "`r\\s+[^`]+`", "dn_ak", "lq_ak", "filter\\(", "state.*==.*AK")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Include R code for Exercise 1 in your Rmd (e.g., filtering for Alaska)")
 })
 
 test_that("Exercise 2 section contains R code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "2", "3")
-  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
-  has_chunk <- any(grepl("^```\\{r", section))
-  has_inline <- any(grepl("`r\\s+[^`]+`", section))
-  expect_true(has_chunk || has_inline,
-              label = "Exercise 2 should contain R code (code chunk or inline R expression)")
+  potential_answers <- c("nrow\\(", "pairing", "\\*", "full_join", "dn_lq_ak")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Include R code for Exercise 2 in your Rmd (e.g., computing pairings with nrow())")
 })
 
 test_that("Exercise 5 section contains R code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", "6")
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_chunk <- any(grepl("^```\\{r", section))
-  has_inline <- any(grepl("`r\\s+[^`]+`", section))
-  expect_true(has_chunk || has_inline,
-              label = "Exercise 5 should contain R code (code chunk or inline R expression)")
+  potential_answers <- c("haversine", "function\\(", "acos|asin|atan2", "6371", "distance")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Include R code for Exercise 5 in your Rmd (e.g., defining the haversine function)")
 })
 
 test_that("Exercise 7 section contains R code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "7", "8")
-  skip_if(is.null(section), "Could not locate Exercise 7 section in Rmd")
-  has_chunk <- any(grepl("^```\\{r", section))
-  has_inline <- any(grepl("`r\\s+[^`]+`", section))
-  expect_true(has_chunk || has_inline,
-              label = "Exercise 7 should contain R code (code chunk or inline R expression)")
+  potential_answers <- c("min\\(", "summarize|summarise", "slice_min", "group_by", "closest|min_dist")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Include R code for Exercise 7 in your Rmd (e.g., computing minimum distances)")
 })

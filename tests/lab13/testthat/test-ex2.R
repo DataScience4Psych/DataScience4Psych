@@ -3,14 +3,14 @@
 test_that("Ex 2.1: technical_skills variable exists in df_colonists", {
   skip_if(!exists("df_colonists"))
   expect_true("technical_skills" %in% names(df_colonists),
-              label = "df_colonists should have a technical_skills column")
+              info ="df_colonists should have a technical_skills column")
 })
 
 test_that("Ex 2.1: technical_skills is numeric", {
   skip_if(!exists("df_colonists"))
   skip_if(!"technical_skills" %in% names(df_colonists))
   expect_true(is.numeric(df_colonists$technical_skills),
-              label = "technical_skills should be numeric")
+              info ="technical_skills should be numeric")
 })
 
 test_that("Ex 2.1: technical_skills is strongly correlated with age", {
@@ -18,7 +18,7 @@ test_that("Ex 2.1: technical_skills is strongly correlated with age", {
   skip_if(!all(c("age", "technical_skills") %in% names(df_colonists)))
   r <- cor(df_colonists$age, df_colonists$technical_skills)
   expect_true(r > 0.5,
-              label = sprintf("technical_skills should be positively correlated with age (r > 0.5), got r=%.2f", r))
+              info =sprintf("technical_skills should be positively correlated with age (r > 0.5), got r=%.2f", r))
 })
 
 test_that("Ex 2.1: technical_skills is not a perfect linear function of age", {
@@ -26,20 +26,20 @@ test_that("Ex 2.1: technical_skills is not a perfect linear function of age", {
   skip_if(!all(c("age", "technical_skills") %in% names(df_colonists)))
   r <- cor(df_colonists$age, df_colonists$technical_skills)
   expect_true(r < 1.0,
-              label = "technical_skills should include noise (correlation < 1.0 with age)")
+              info ="technical_skills should include noise (correlation < 1.0 with age)")
 })
 
 test_that("Ex 2.2: problem_solving variable exists in df_colonists", {
   skip_if(!exists("df_colonists"))
   expect_true("problem_solving" %in% names(df_colonists),
-              label = "df_colonists should have a problem_solving column")
+              info ="df_colonists should have a problem_solving column")
 })
 
 test_that("Ex 2.2: problem_solving is numeric", {
   skip_if(!exists("df_colonists"))
   skip_if(!"problem_solving" %in% names(df_colonists))
   expect_true(is.numeric(df_colonists$problem_solving),
-              label = "problem_solving should be numeric")
+              info ="problem_solving should be numeric")
 })
 
 test_that("Ex 2.2: problem_solving differs by role", {
@@ -50,7 +50,7 @@ test_that("Ex 2.2: problem_solving differs by role", {
     dplyr::summarize(m = mean(problem_solving), .groups = "drop")
   # The means should not all be identical
   expect_true(diff(range(means$m)) > 1,
-              label = "Problem solving means should differ across roles (range of means > 1)")
+              info ="Problem solving means should differ across roles (range of means > 1)")
 })
 
 test_that("Ex 2.2: all roles have problem_solving values", {
@@ -60,5 +60,5 @@ test_that("Ex 2.2: all roles have problem_solving values", {
     dplyr::group_by(role) %>%
     dplyr::summarize(n = sum(!is.na(problem_solving)), .groups = "drop")
   expect_true(all(counts$n > 0),
-              label = "Every role should have non-missing problem_solving values")
+              info ="Every role should have non-missing problem_solving values")
 })

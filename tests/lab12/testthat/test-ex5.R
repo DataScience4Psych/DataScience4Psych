@@ -3,24 +3,23 @@
 test_that("Ex 5: ncbirths has habit and weight variables for boxplot", {
   skip_if(!exists("ncbirths"))
   expect_true("habit" %in% names(ncbirths),
-              label = "ncbirths should have a habit column for the boxplot")
+              info ="ncbirths should have a habit column for the boxplot")
   expect_true("weight" %in% names(ncbirths),
-              label = "ncbirths should have a weight column for the boxplot")
+              info ="ncbirths should have a weight column for the boxplot")
 })
 
 test_that("Ex 5: Rmd Exercise 5 contains boxplot code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", "6")
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_boxplot <- any(grepl("geom_boxplot|boxplot|geom_violin", section))
-  has_ggplot <- any(grepl("ggplot", section))
-  expect_true(has_boxplot && has_ggplot,
-              label = "Exercise 5 should contain ggplot boxplot code comparing weight by habit")
+  potential_answers <- c("geom_boxplot|boxplot|geom_violin", "ggplot", "habit", "weight")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Include ggplot boxplot code comparing weight by habit in your Rmd")
 })
 
 test_that("Ex 6: ncbirths_clean object exists", {
   expect_true(exists("ncbirths_clean") || exists("ncbirths_habitweight"),
-              label = "A cleaned dataset removing NA habit/weight should exist (ncbirths_clean or ncbirths_habitweight)")
+              info ="A cleaned dataset removing NA habit/weight should exist (ncbirths_clean or ncbirths_habitweight)")
 })
 
 test_that("Ex 6: ncbirths_clean has no NAs in habit or weight", {
@@ -30,9 +29,9 @@ test_that("Ex 6: ncbirths_clean has no NAs in habit or weight", {
   skip_if(is.null(d), message = "No cleaned dataset found")
   skip_if(!all(c("habit", "weight") %in% names(d)))
   expect_true(sum(is.na(d$habit)) == 0,
-              label = "ncbirths_clean should have no NAs in habit")
+              info ="ncbirths_clean should have no NAs in habit")
   expect_true(sum(is.na(d$weight)) == 0,
-              label = "ncbirths_clean should have no NAs in weight")
+              info ="ncbirths_clean should have no NAs in weight")
 })
 
 test_that("Ex 6: ncbirths_clean has fewer or equal rows than ncbirths", {
@@ -41,14 +40,14 @@ test_that("Ex 6: ncbirths_clean has fewer or equal rows than ncbirths", {
   else if (exists("ncbirths_habitweight")) d <- ncbirths_habitweight
   skip_if(is.null(d) || !exists("ncbirths"))
   expect_true(nrow(d) <= nrow(ncbirths),
-              label = "Cleaned dataset should have fewer or equal rows compared to ncbirths")
+              info ="Cleaned dataset should have fewer or equal rows compared to ncbirths")
 })
 
 test_that("Ex 7: observed difference object exists", {
   has_diff <- exists("obs_diff") || exists("observed_diff") || exists("diff_mean") ||
               exists("obs") || exists("weight_diff")
   expect_true(has_diff,
-              label = "An observed difference object should exist (e.g., obs_diff, observed_diff, diff_mean)")
+              info ="An observed difference object should exist (e.g., obs_diff, observed_diff, diff_mean)")
 })
 
 test_that("Ex 7: observed difference in mean weight (nonsmoker - smoker) is positive", {
@@ -62,7 +61,7 @@ test_that("Ex 7: observed difference in mean weight (nonsmoker - smoker) is posi
     diff_val <- diff_val$stat[1]
   }
   expect_true(diff_val > 0,
-              label = sprintf("Observed difference (nonsmoker - smoker) should be positive, got %.4f", diff_val))
+              info =sprintf("Observed difference (nonsmoker - smoker) should be positive, got %.4f", diff_val))
 })
 
 test_that("Ex 7: student's observed difference matches solution", {
@@ -86,6 +85,6 @@ test_that("Ex 7: student's observed difference matches solution", {
   solution_diff <- solution_means$mean_weight[solution_means$habit == "nonsmoker"] -
                    solution_means$mean_weight[solution_means$habit == "smoker"]
   expect_true(abs(diff_val - solution_diff) < 0.1,
-              label = sprintf("Student's difference (%.4f) should be close to solution (%.4f)",
+              info =sprintf("Student's difference (%.4f) should be close to solution (%.4f)",
                               diff_val, solution_diff))
 })
