@@ -2,29 +2,27 @@
 
 test_that("Ex 5: Rmd Exercise 5 contains group_by or summarize code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", NULL)
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_groupby <- any(grepl("group_by", section))
-  has_summarize <- any(grepl("summar", section))
-  expect_true(has_groupby || has_summarize,
-              label = "Exercise 5 should contain group_by and/or summarize code")
+  potential_answers <- c("group_by", "summar")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include group_by and/or summarize code in your Rmd file for Exercise 5")
 })
 
 test_that("Ex 5: Rmd Exercise 5 contains facet_wrap code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", NULL)
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_facet <- any(grepl("facet_wrap", section))
-  expect_true(has_facet,
-              label = "Exercise 5 should contain facet_wrap code for the faceted plot")
+  potential_answers <- c("facet_wrap")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to include facet_wrap code for the faceted plot in your Rmd file for Exercise 5")
 })
 
 test_that("Ex 5: Rmd Exercise 5 contains correlation code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", NULL)
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_cor <- any(grepl("\\bcor\\b", section))
-  expect_true(has_cor,
-              label = "Exercise 5 should compute correlations using cor()")
+  potential_answers <- c("\\bcor\\b")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to compute correlations using cor() in your Rmd file for Exercise 5")
 })
-

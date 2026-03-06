@@ -3,14 +3,14 @@
 
 test_that("Ex 3: star_data object exists", {
   expect_true(exists("star_data"),
-              label = "star_data should be created by filtering datasaurus_dozen for dataset == 'star'")
+              info = "Create star_data by filtering datasaurus_dozen for dataset == 'star'")
 })
 
 test_that("Ex 3: star_data contains only star observations", {
   skip_if(!exists("star_data"))
   expect_true(
     all(star_data$dataset == "star"),
-    label = "star_data should only contain rows where dataset == 'star'"
+    info = "Make sure star_data only contains rows where dataset == 'star'"
   )
 })
 
@@ -19,7 +19,7 @@ test_that("Ex 3: star_data has correct number of rows", {
   data("datasaurus_dozen", package = "datasauRus", envir = environment())
   solution_n <- nrow(dplyr::filter(get("datasaurus_dozen", envir = environment()), dataset == "star"))
   expect_equal(nrow(star_data), solution_n,
-               label = sprintf("star_data should have %d rows", solution_n))
+               info = sprintf("Make sure star_data has %d rows", solution_n))
 })
 
 test_that("Ex 3: star_data has columns dataset, x, y", {
@@ -31,7 +31,7 @@ test_that("Ex 3: correlation for star is near zero (negative)", {
   skip_if(!exists("star_data"))
   r_star <- cor(star_data$x, star_data$y)
   expect_true(r_star > -0.1 && r_star < 0,
-              label = sprintf("star correlation should be between -0.1 and 0, got %.4f", r_star)
+              info = sprintf("Check your star correlation calculation — it should be between -0.1 and 0, but got %.4f", r_star)
   )
 })
 
@@ -40,7 +40,7 @@ test_that("Ex 3: star and dino correlations are similar (within 0.05)", {
   r_dino <- cor(dino_data$x, dino_data$y)
   r_star <- cor(star_data$x, star_data$y)
   expect_true(abs(r_dino - r_star) < 0.05,
-              label = "dino and star correlations should be very similar despite different shapes")
+              info = "Verify that your dino and star correlations are very similar despite different shapes")
 })
 
 test_that("Ex 3: star_data matches expected solution", {
@@ -48,18 +48,18 @@ test_that("Ex 3: star_data matches expected solution", {
   data("datasaurus_dozen")
   solution_star_data <- dplyr::filter(datasaurus_dozen, dataset == "star")
   expect_equal(nrow(star_data), nrow(solution_star_data),
-               label = "star_data should have same number of rows as the correct solution")
+               info = "Make sure star_data has the same number of rows as the correct solution")
   expect_equal(sort(star_data$x), sort(solution_star_data$x),
-               label = "star_data x values should match the correct solution")
+               info = "Make sure star_data x values match the correct solution")
 })
 
 test_that("Ex 3: Rmd Exercise 3 contains star dataset code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "3", "4")
-  skip_if(is.null(section), "Could not locate Exercise 3 section in Rmd")
-  has_star <- any(grepl("star", section, ignore.case = TRUE))
-  expect_true(has_star,
-              label = "Exercise 3 section should reference the 'star' dataset")
+  potential_answers <- c("star")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Make sure to reference the 'star' dataset in your Rmd file")
 })
 
 test_that("Ex 3: Rmd Exercise 3 reports the star correlation value", {

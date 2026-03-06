@@ -2,25 +2,25 @@
 
 test_that("Ex 1: plastic_waste object exists", {
   expect_true(exists("plastic_waste"),
-              label = "plastic_waste should be created by reading data/plastic-waste.csv")
+              info = "Create the plastic_waste object by reading data/plastic-waste.csv")
 })
 
 test_that("Ex 1: plastic_waste is a data frame", {
   skip_if(!exists("plastic_waste"))
   expect_true(is.data.frame(plastic_waste),
-              label = "plastic_waste should be a data frame")
+              info = "Make sure plastic_waste is a data frame")
 })
 
 test_that("Ex 1: plastic_waste has 240 rows", {
   skip_if(!exists("plastic_waste"))
   expect_equal(nrow(plastic_waste), 240,
-               label = "plastic_waste should have 240 observations")
+               info = "Ensure plastic_waste has 240 observations")
 })
 
 test_that("Ex 1: plastic_waste has 10 columns", {
   skip_if(!exists("plastic_waste"))
   expect_equal(ncol(plastic_waste), 10,
-               label = "plastic_waste should have 10 columns")
+               info = "Ensure plastic_waste has 10 columns")
 })
 
 test_that("Ex 1: plastic_waste has expected column names", {
@@ -30,7 +30,7 @@ test_that("Ex 1: plastic_waste has expected column names", {
                      "mismanaged_plastic_waste_per_cap",
                      "mismanaged_plastic_waste", "coastal_pop", "total_pop")
   expect_true(all(expected_cols %in% names(plastic_waste)),
-              label = "plastic_waste should contain all expected variable names")
+              info = "Check that plastic_waste contains all expected variable names")
 })
 
 test_that("Ex 1: Trinidad and Tobago is the outlier above 3.5 kg/day", {
@@ -38,16 +38,16 @@ test_that("Ex 1: Trinidad and Tobago is the outlier above 3.5 kg/day", {
   outlier <- plastic_waste[!is.na(plastic_waste$plastic_waste_per_cap) &
                              plastic_waste$plastic_waste_per_cap > 3.5, ]
   expect_equal(nrow(outlier), 1,
-               label = "There should be exactly one country with plastic_waste_per_cap > 3.5")
-  expect_true(grepl("Trinidad", outlier$entity),
-              label = "The outlier country should be Trinidad and Tobago")
+               info = "There should be exactly one country with plastic_waste_per_cap > 3.5")
+  expect_true(stringr::str_detect(outlier$entity, "Trinidad"),
+              info = "Identify the outlier country as Trinidad and Tobago")
 })
 
 test_that("Ex 1: continent variable has at least 5 distinct values", {
   skip_if(!exists("plastic_waste"))
   n_continents <- length(unique(plastic_waste$continent[!is.na(plastic_waste$continent)]))
   expect_true(n_continents >= 5,
-              label = "There should be at least 5 continents in the data")
+              info = "Ensure there are at least 5 continents in the data")
 })
 
 test_that("Ex 1: Rmd Exercise 1 identifies the outlier country", {

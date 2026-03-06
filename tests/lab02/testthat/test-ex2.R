@@ -2,24 +2,26 @@
 
 test_that("Ex 2: plastic_waste object exists for density plots", {
   expect_true(exists("plastic_waste"),
-              label = "plastic_waste must exist before creating density plots")
+              info = "Create the plastic_waste object before making density plots")
 })
 
 test_that("Ex 2: Rmd Exercise 2 contains density plot code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "2", "3")
-  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
-  has_density <- any(grepl("geom_density|density", section))
-  has_ggplot <- any(grepl("ggplot", section))
+  potential_answers <- c("geom_density", "density")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  has_density <- stringr::str_detect(.rmd_content, pattern) |> any()
+  potential_answers_ggplot <- c("ggplot")
+  pattern_ggplot <- paste0("(", paste(potential_answers_ggplot, collapse = "|"), ")")
+  has_ggplot <- stringr::str_detect(.rmd_content, pattern_ggplot) |> any()
   expect_true(has_density && has_ggplot,
-              label = "Exercise 2 should contain ggplot code with geom_density")
+              info = "Add ggplot code with geom_density to create density plots in your Rmd")
 })
 
 test_that("Ex 2: Rmd Exercise 2 uses continent for coloring", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "2", "3")
-  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
-  has_continent <- any(grepl("continent", section))
+  potential_answers <- c("continent")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  has_continent <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_true(has_continent,
-              label = "Exercise 2 density plots should use continent for color/fill mapping")
+              info = "Use continent for color or fill mapping in your density plots")
 })

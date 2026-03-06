@@ -2,7 +2,7 @@
 
 test_that("Ex 2: dino_data object exists", {
   expect_true(exists("dino_data"),
-              label = "dino_data should be created by filtering datasaurus_dozen for dataset == 'dino'"
+              info = "Create dino_data by filtering datasaurus_dozen for dataset == 'dino'"
   )
 })
 
@@ -10,7 +10,7 @@ test_that("Ex 2: dino_data contains only dino observations", {
   skip_if(!exists("dino_data"))
   expect_true(
     all(dino_data$dataset == "dino"),
-    label = "dino_data should only contain rows where dataset == 'dino'"
+    info = "Make sure dino_data only contains rows where dataset == 'dino'"
   )
 })
 
@@ -19,7 +19,7 @@ test_that("Ex 2: dino_data has correct number of rows", {
   data("datasaurus_dozen", package = "datasauRus", envir = environment())
   solution_n <- nrow(dplyr::filter(get("datasaurus_dozen", envir = environment()), dataset == "dino"))
   expect_equal(nrow(dino_data), solution_n,
-               label = sprintf("dino_data should have %d rows", solution_n))
+               info = sprintf("Make sure dino_data has %d rows", solution_n))
 })
 
 test_that("Ex 2: dino_data has columns dataset, x, y", {
@@ -31,7 +31,7 @@ test_that("Ex 2: correlation between x and y for dino is near zero (negative)", 
   skip_if(!exists("dino_data"))
   r <- cor(dino_data$x, dino_data$y)
   expect_true(r > -0.1 && r < 0,
-              label = sprintf("dino correlation should be between -0.1 and 0, got %.4f", r)
+              info = sprintf("Check your dino correlation calculation — it should be between -0.1 and 0, but got %.4f", r)
   )
 })
 

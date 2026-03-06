@@ -2,16 +2,16 @@
 
 test_that("Ex 5: dn object exists for filtering", {
   expect_true(exists("dn") || exists("dennys"),
-              label = "dn (or dennys) must exist to check for non-US locations")
+              info = "Create the dn (or dennys) object so you can check for non-US locations")
 })
 
 test_that("Ex 5: Rmd Exercise 5 contains filtering code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "5", "6")
-  skip_if(is.null(section), "Could not locate Exercise 5 section in Rmd")
-  has_filter <- any(grepl("filter|state|nrow", section))
-  expect_true(has_filter,
-              label = "Exercise 5 should contain code filtering Denny's for non-US locations")
+  potential_answers <- c("filter", "state", "nrow")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = "Add code to filter Denny's for non-US locations in your Rmd file")
 })
 
 test_that("Ex 5: Denny's has no locations outside the US", {
@@ -20,7 +20,7 @@ test_that("Ex 5: Denny's has no locations outside the US", {
   us_abbrevs <- c(state.abb, "DC")
   outside_us <- d[!(d$state %in% us_abbrevs), ]
   expect_equal(nrow(outside_us), 0,
-               label = "All Denny's locations should be in US states (filtering by state abbreviation)")
+               info = "Filter Denny's so all locations are in US states (use state abbreviations)")
 })
 
 test_that("Ex 5: Rmd Exercise 5 reports correct number of non-US Denny's locations", {

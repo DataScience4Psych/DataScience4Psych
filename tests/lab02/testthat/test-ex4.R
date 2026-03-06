@@ -2,25 +2,26 @@
 
 test_that("Ex 4: plastic_waste object exists for scatterplots", {
   expect_true(exists("plastic_waste"),
-              label = "plastic_waste must exist before creating scatterplots")
+              info = "Create the plastic_waste object before making scatterplots")
 })
 
 test_that("Ex 4: Rmd Exercise 4 contains scatterplot code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "4", "5")
-  skip_if(is.null(section), "Could not locate Exercise 4 section in Rmd")
-  has_point <- any(grepl("geom_point", section))
-  has_ggplot <- any(grepl("ggplot", section))
+  potential_answers <- c("geom_point")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  has_point <- stringr::str_detect(.rmd_content, pattern) |> any()
+  potential_answers_ggplot <- c("ggplot")
+  pattern_ggplot <- paste0("(", paste(potential_answers_ggplot, collapse = "|"), ")")
+  has_ggplot <- stringr::str_detect(.rmd_content, pattern_ggplot) |> any()
   expect_true(has_point && has_ggplot,
-              label = "Exercise 4 should contain ggplot code with geom_point for scatterplots")
+              info = "Add ggplot code with geom_point to create scatterplots in your Rmd")
 })
 
 test_that("Ex 4: Rmd Exercise 4 references key variables", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "4", "5")
-  skip_if(is.null(section), "Could not locate Exercise 4 section in Rmd")
-  has_mismanaged <- any(grepl("mismanaged_plastic_waste", section))
-  has_pop <- any(grepl("total_pop|coastal_pop", section))
-  expect_true(has_mismanaged || has_pop,
-              label = "Exercise 4 should reference mismanaged_plastic_waste_per_cap, total_pop, or coastal_pop")
+  potential_answers <- c("mismanaged_plastic_waste", "total_pop", "coastal_pop")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  has_vars <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_true(has_vars,
+              info = "Reference mismanaged_plastic_waste_per_cap, total_pop, or coastal_pop in your scatterplot code")
 })

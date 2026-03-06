@@ -2,15 +2,17 @@
 
 test_that("Ex 3: plastic_waste object exists for violin plots", {
   expect_true(exists("plastic_waste"),
-              label = "plastic_waste must exist before creating violin plots")
+              info = "Create the plastic_waste object before making violin plots")
 })
 
 test_that("Ex 3: Rmd Exercise 3 contains violin plot code", {
   skip_if(length(.rmd_content) == 0)
-  section <- .find_ex_section(.rmd_content, "3", "4")
-  skip_if(is.null(section), "Could not locate Exercise 3 section in Rmd")
-  has_violin <- any(grepl("geom_violin|violin", section))
-  has_ggplot <- any(grepl("ggplot", section))
+  potential_answers <- c("geom_violin", "violin")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  has_violin <- stringr::str_detect(.rmd_content, pattern) |> any()
+  potential_answers_ggplot <- c("ggplot")
+  pattern_ggplot <- paste0("(", paste(potential_answers_ggplot, collapse = "|"), ")")
+  has_ggplot <- stringr::str_detect(.rmd_content, pattern_ggplot) |> any()
   expect_true(has_violin && has_ggplot,
-              label = "Exercise 3 should contain ggplot code with geom_violin")
+              info = "Add ggplot code with geom_violin to create violin plots in your Rmd")
 })

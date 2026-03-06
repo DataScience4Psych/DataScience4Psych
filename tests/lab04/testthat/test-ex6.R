@@ -3,20 +3,20 @@
 test_that("Ex 6: dn has a country variable", {
   skip_if(!exists("dn"))
   expect_true("country" %in% names(dn),
-              label = "dn should have a 'country' variable after mutate")
+              info = "Use mutate to add a 'country' variable to the dn data frame")
 })
 
 test_that("Ex 6: all Denny's locations have country 'United States'", {
   skip_if(!exists("dn"))
   skip_if(!"country" %in% names(dn))
   expect_true(all(dn$country == "United States"),
-              label = "All Denny's should have country == 'United States'")
+              info = "Set the country variable to 'United States' for all Denny's locations")
 })
 
 test_that("Ex 8: lq has a country variable", {
   skip_if(!exists("lq"))
   expect_true("country" %in% names(lq),
-              label = "lq should have a 'country' variable after using case_when")
+              info = "Use case_when to add a 'country' variable to the lq data frame")
 })
 
 test_that("Ex 8: lq country values are valid", {
@@ -25,7 +25,7 @@ test_that("Ex 8: lq country values are valid", {
   valid_countries <- c("United States", "Canada", "Colombia", "Mexico")
   lq_with_country <- lq[!is.na(lq$country), ]
   expect_true(all(lq_with_country$country %in% valid_countries),
-              label = "lq country values should be one of: United States, Canada, Colombia, Mexico")
+              info = "Make sure lq country values are one of: United States, Canada, Colombia, Mexico")
 })
 
 test_that("Ex 8: lq is filtered to US-only after adding country", {
@@ -37,5 +37,5 @@ test_that("Ex 8: lq is filtered to US-only after adding country", {
   us_abbrevs <- c(state.abb, "DC")
   all_us_states <- all(lq$state %in% us_abbrevs)
   expect_true(all_us_states,
-              label = "After filtering, lq should only contain US locations (state should be a valid US abbreviation)")
+              info = "Filter lq to keep only US locations after adding the country variable")
 })
