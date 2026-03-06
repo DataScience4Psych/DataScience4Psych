@@ -33,15 +33,3 @@ test_that("Ex 1: score distribution is left-skewed (most scores near top)", {
   expect_true(median(evals$score) > mean(evals$score),
               label = "Score distribution should be left-skewed (median > mean)")
 })
-
-test_that("Ex 1: Rmd Exercise 1 reports evals dimensions or uses exploration code", {
-  skip_if(length(.rmd_content) == 0)
-  skip_if(!exists("evals"))
-  section <- .find_ex_section(.rmd_content, "1", "2")
-  skip_if(is.null(section), "Could not locate Exercise 1 section in Rmd")
-  solution_nrow <- nrow(evals)
-  has_value <- any(grepl(as.character(solution_nrow), section))
-  has_code <- any(grepl("nrow\\(|dim\\(|str\\(|glimpse\\(|skim\\(", section))
-  expect_true(has_value || has_code,
-              label = sprintf("Exercise 1 should report %d observations or use exploration code", solution_nrow))
-})

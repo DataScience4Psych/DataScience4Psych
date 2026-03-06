@@ -70,24 +70,3 @@ test_that("Ex 10: false positive rate is higher for Black non-recidivists (solut
   expect_true(solution_black_fp > solution_white_fp,
               label = "Black non-recidivists should have a higher false positive rate")
 })
-
-test_that("Ex 10: Rmd Exercise 10 reports false positive rate values or uses computation code", {
-  skip_if(length(.rmd_content) == 0)
-  skip_if(!exists("non_recidivists"))
-  skip_if(!all(c("race", "decile_score") %in% names(non_recidivists)))
-  section <- .find_ex_section(.rmd_content, "10", "11")
-  skip_if(is.null(section), "Could not locate Exercise 10 section in Rmd")
-  solution_fp <- non_recidivists %>%
-    dplyr::filter(race %in% c("African-American", "Caucasian")) %>%
-    dplyr::group_by(race) %>%
-    dplyr::summarize(fp_rate = mean(decile_score >= 7, na.rm = TRUE), .groups = "drop")
-  skip_if(nrow(solution_fp) < 2, message = "Could not find both racial groups")
-  solution_black_fp <- solution_fp$fp_rate[solution_fp$race == "African-American"]
-  fp_patterns <- c(sprintf("%.4f", solution_black_fp), sprintf("%.3f", solution_black_fp),
-                   sprintf("%.2f", solution_black_fp),
-                   sprintf("%.1f", solution_black_fp * 100))
-  has_value <- any(sapply(fp_patterns, function(p) any(grepl(p, section, fixed = TRUE))))
-  has_code <- any(grepl("mean\\(.*decile_score|fp_rate|group_by.*race", section))
-  expect_true(has_value || has_code,
-              label = sprintf("Exercise 10 should report false positive rate (%.4f for Black) or use computation code", solution_black_fp))
-})

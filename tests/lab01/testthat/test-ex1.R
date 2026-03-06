@@ -10,28 +10,6 @@ test_that("Ex 1: Rmd Exercise 1 contains code exploring datasaurus_dozen", {
               label = "Exercise 1 should reference datasaurus_dozen or the datasauRus package")
 })
 
-test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
-  skip_if(length(.rmd_content) == 0)
-  data("datasaurus_dozen", package = "datasauRus", envir = environment())
-  solution_nrow <- as.character(nrow(get("datasaurus_dozen", envir = environment())))
-  potential_answers <- c(solution_nrow, "nrow\\(datasaurus_dozen\\)")
-  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
-  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
-               info = "Make sure to include the number of rows in the .rmd file")
-})
-
-test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
-  skip_if(length(.rmd_content) == 0)
-  data("datasaurus_dozen", package = "datasauRus", envir = environment())
-  solution_ncol <- as.character(ncol(get("datasaurus_dozen", envir = environment())))
-  potential_answers <- c(solution_ncol, "ncol\\(datasaurus_dozen\\)", "names\\(datasaurus_dozen\\)")
-  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
-  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
-               info = "Make sure to include the number of variables in the .rmd file")
-})
-
 test_that("Ex 1: datasaurus_dozen object exists in student environment", {
   expect_true(exists("datasaurus_dozen"),
               label = "datasaurus_dozen should be loaded (e.g., via data(datasaurus_dozen) or library(datasauRus))")

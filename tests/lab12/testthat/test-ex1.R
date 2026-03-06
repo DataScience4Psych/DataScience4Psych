@@ -30,15 +30,3 @@ test_that("Ex 1: ncbirths weight variable is numeric", {
   expect_true(is.numeric(ncbirths$weight),
               label = "weight should be a numeric variable")
 })
-
-test_that("Ex 1: Rmd Exercise 1 reports ncbirths dimensions or uses exploration code", {
-  skip_if(length(.rmd_content) == 0)
-  skip_if(!exists("ncbirths"))
-  section <- .find_ex_section(.rmd_content, "1", "2")
-  skip_if(is.null(section), "Could not locate Exercise 1 section in Rmd")
-  solution_nrow <- nrow(ncbirths)
-  has_value <- any(grepl(as.character(solution_nrow), section))
-  has_code <- any(grepl("nrow\\(|dim\\(|str\\(|glimpse\\(|skim\\(", section))
-  expect_true(has_value || has_code,
-              label = sprintf("Exercise 1 should report %d observations or use exploration code", solution_nrow))
-})

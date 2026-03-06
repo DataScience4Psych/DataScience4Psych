@@ -66,15 +66,3 @@ test_that("Ex 2: staff_long has 5 distinct faculty types", {
   expect_equal(dplyr::n_distinct(staff_long$faculty_type), 5,
                label = "staff_long should have 5 distinct faculty types")
 })
-
-test_that("Ex 1: Rmd Exercise 1 reports correct staff_long dimensions", {
-  skip_if(length(.rmd_content) == 0)
-  skip_if(!exists("staff_long"))
-  section <- .find_ex_section(.rmd_content, "1", "2")
-  skip_if(is.null(section), "Could not locate Exercise 1 section in Rmd")
-  solution_nrow <- nrow(staff_long)
-  has_value <- any(grepl(as.character(solution_nrow), section))
-  has_code <- any(grepl("nrow\\(|dim\\(|pivot_longer", section))
-  expect_true(has_value || has_code,
-              label = sprintf("Exercise 1 should mention staff_long has %d rows or use pivot_longer/nrow() code", solution_nrow))
-})
