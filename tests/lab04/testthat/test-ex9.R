@@ -30,6 +30,32 @@ test_that("Ex 9: La Quinta data has Texas locations (solution check)", {
               label = "Texas should appear in La Quinta locations")
 })
 
+test_that("Ex 9: Rmd Exercise 9 reports the state with the most Denny's locations", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("dn") && !exists("dennys"))
+  d <- if (exists("dn")) dn else dennys
+  solution_counts <- sort(table(d$state), decreasing = TRUE)
+  solution_top_state <- names(solution_counts)[1]
+  potential_answers <- c(solution_top_state, "count\\(.*state", "table\\(.*state", "tally")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = sprintf("Make sure to report that %s has the most Denny's locations in the .rmd file", solution_top_state))
+})
+
+test_that("Ex 9: Rmd Exercise 9 reports the state with the most La Quinta locations", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("lq") && !exists("laquinta"))
+  d <- if (exists("lq")) lq else laquinta
+  solution_counts <- sort(table(d$state), decreasing = TRUE)
+  solution_top_state <- names(solution_counts)[1]
+  potential_answers <- c(solution_top_state, "count\\(.*state", "table\\(.*state", "tally")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = sprintf("Make sure to report that %s has the most La Quinta locations in the .rmd file", solution_top_state))
+})
+
 test_that("Ex 10-11: dn_lq combined data frame exists", {
   expect_true(exists("dn_lq"),
               label = "dn_lq should be created by bind_rows of dn and lq with establishment variable")

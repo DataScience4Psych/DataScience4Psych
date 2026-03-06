@@ -42,3 +42,17 @@ test_that("Ex 2: m_bty was fit on all 463 evals observations", {
   expect_equal(nobs(m_bty), 463,
                label = "m_bty should be fit on all 463 observations in evals")
 })
+
+test_that("Ex 2: Rmd Exercise 2 reports model slope or uses summary/coef code", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("m_bty"))
+  section <- .find_ex_section(.rmd_content, "2", "3")
+  skip_if(is.null(section), "Could not locate Exercise 2 section in Rmd")
+  solution_slope <- coef(m_bty)["bty_avg"]
+  slope_patterns <- c(sprintf("%.4f", solution_slope), sprintf("%.3f", solution_slope),
+                      sprintf("%.2f", solution_slope))
+  has_value <- any(sapply(slope_patterns, function(p) any(grepl(p, section, fixed = TRUE))))
+  has_code <- any(grepl("summary\\(|coef\\(|tidy\\(", section))
+  expect_true(has_value || has_code,
+              label = sprintf("Exercise 2 should report the bty_avg slope (%.4f) or use summary()/coef()", solution_slope))
+})

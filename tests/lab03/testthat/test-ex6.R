@@ -52,3 +52,20 @@ test_that("Ex 6: frequency table has expected properties (solution check)", {
   expect_true(max(solution_freq$Freq) > 1,
               label = "At least one birth country should have more than one immigrant laureate")
 })
+
+test_that("Ex 6: Rmd Exercise 6 mentions the most common immigrant birth country", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("nobel_living_science"))
+  skip_if(!all(c("country_us", "born_country_us", "born_country") %in% names(nobel_living_science)))
+  solution_immigrants <- nobel_living_science[
+    nobel_living_science$country_us == "USA" &
+      nobel_living_science$born_country_us == "Other", ]
+  solution_freq <- as.data.frame(table(solution_immigrants$born_country))
+  solution_freq <- solution_freq[order(-solution_freq$Freq), ]
+  top_country <- as.character(solution_freq$Var1[1])
+  potential_answers <- c(top_country, "born_country.*count|count.*born_country|table.*born_country")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = sprintf("Make sure to mention %s as the most common birth country in the .rmd file", top_country))
+})

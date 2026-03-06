@@ -49,3 +49,15 @@ test_that("Ex 1: continent variable has at least 5 distinct values", {
   expect_true(n_continents >= 5,
               label = "There should be at least 5 continents in the data")
 })
+
+test_that("Ex 1: Rmd Exercise 1 identifies the outlier country", {
+  skip_if(length(.rmd_content) == 0)
+  skip_if(!exists("plastic_waste"))
+  solution_outlier <- plastic_waste$entity[!is.na(plastic_waste$plastic_waste_per_cap) &
+                                             plastic_waste$plastic_waste_per_cap > 3.5]
+  potential_answers <- c(as.character(solution_outlier), "filter\\(.*plastic_waste_per_cap")
+  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
+  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  expect_equal(answer_in_rmd, TRUE,
+               info = sprintf("Make sure to identify %s as the outlier in the .rmd file", solution_outlier))
+})
