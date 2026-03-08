@@ -3,7 +3,7 @@
 test_that("Ex 1: datasaurus_dozen object exists in student environment", {
   skip_if(length(.rmd_content) == 0)
 
-  potential_answers <- c("data\(datasaurus_dozen\)", "library\(datasauRus\)")
+  potential_answers <- c("data\\(datasaurus_dozen\\)", "library\\(datasauRus\\)")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
 
