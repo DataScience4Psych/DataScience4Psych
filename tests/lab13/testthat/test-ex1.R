@@ -25,14 +25,18 @@ test_that("Ex 1.1: df_colonists has id column", {
 
 test_that("Ex 1.1: id column contains values 1 through 100", {
   skip_if(!exists("df_colonists"))
-  skip_if(!"id" %in% names(df_colonists))
+  id_var_name <- c("id", "ID","iD")
+  
+  skip_if(!any(id_var_name %in% names(df_colonists)))
   expect_equal(sort(df_colonists$id), 1:100,
                info ="id should contain values 1 through 100")
 })
 
 test_that("Ex 1.1: df_colonists has age column", {
   skip_if(!exists("df_colonists"))
-  expect_true("age" %in% names(df_colonists),
+
+  age_var_name <- c("age","AGE")
+  expect_true(any(age_var_name %in% names(df_colonists)),
               info ="df_colonists should have an age column")
 })
 

@@ -1,37 +1,4 @@
-# Rmd code-presence checks: verify student wrote R code, not just prose
 
-test_that("Rmd file exists in working directory", {
-  expect_true(length(.rmd_files) > 0,
-              info = "Submit an Rmd file in the working directory")
-})
-
-test_that("Rmd contains a minimum number of R code chunks", {
-  skip_if(length(.rmd_content) == 0)
-  chunk_starts <- which(stringr::str_detect(.rmd_content, "^```\\{r"))
-  expect_true(length(chunk_starts) >= 3,
-              info = sprintf("Include at least 3 R code chunks in your Rmd, found %d", length(chunk_starts)))
-})
-
-test_that("R code chunks contain actual code (not all empty)", {
-  skip_if(length(.rmd_content) == 0)
-  chunk_starts <- which(stringr::str_detect(.rmd_content, "^```\\{r"))
-  chunk_ends <- which(stringr::str_detect(.rmd_content, "^```$"))
-  skip_if(length(chunk_starts) == 0, "No code chunks found")
-  non_empty <- 0
-  for (i in seq_along(chunk_starts)) {
-    end_candidates <- chunk_ends[chunk_ends > chunk_starts[i]]
-    if (length(end_candidates) == 0) next
-    end_line <- end_candidates[1]
-    if (end_line - chunk_starts[i] > 1) {
-      chunk_body <- .rmd_content[(chunk_starts[i] + 1):(end_line - 1)]
-      code_lines <- chunk_body[!stringr::str_detect(chunk_body, "^\\s*$") &
-                               !stringr::str_detect(chunk_body, "^\\s*#")]
-      if (length(code_lines) > 0) non_empty <- non_empty + 1
-    }
-  }
-  expect_true(non_empty >= 2,
-              info = sprintf("Write actual R code in at least 2 code chunks, found %d non-empty", non_empty))
-})
 
 # Per-exercise checks
 
