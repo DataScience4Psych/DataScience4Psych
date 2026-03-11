@@ -9,8 +9,7 @@ test_that("Ex 1: datasaurus_dozen object exists in student environment", {
 
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
 
-  expect_equal(answer_in_rmd, TRUE,info = "Make sure to include the number of rows in the .rmd file")
-
+  expect_equal(answer_in_rmd, TRUE, info = "Make sure to include the number of rows in the .rmd file")
 })
 
 
@@ -18,20 +17,23 @@ test_that("Ex 1: Rmd Exercise 1 reports correct number of rows", {
   skip_if(length(.rmd_content) == 0)
   data("datasaurus_dozen", package = "datasauRus", envir = environment())
   solution_nrow <- as.character(nrow(get("datasaurus_dozen", envir = environment())))
+
   potential_answers <- c(solution_nrow, "nrow\\(datasaurus_dozen\\)", "names\\(datasaurus_dozen\\)")
+
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
 
   expect_equal(answer_in_rmd, TRUE,
-               info = "Make sure to include the number of rows in the .rmd file")
+    info = "Make sure to include the number of rows in the .rmd file"
+  )
 })
 
 
 test_that("Ex 1: Rmd Exercise 1 reports correct number of variables", {
   skip_if(length(.rmd_content) == 0)
   solution_ncol <- as.character(ncol(get("datasaurus_dozen", envir = environment())))
-  potential_answers <- c(paste0(solution_ncol,"\\s?(columns|variables)"), "(ncol|length)\\(datasaurus_dozen\\)")
+  potential_answers <- c(paste0(solution_ncol, "\\s?(columns|variables)"), "(ncol|length)\\(datasaurus_dozen\\)")
 
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
 
@@ -53,9 +55,33 @@ test_that("Ex 1: datasaurus_dozen matches expected dimensions", {
   solution_ncol <- ncol(solution_data)
 
   expect_equal(solution_nrow, student_nrow,
-               info = sprintf("Make sure datasaurus_dozen has %d rows", nrow(solution)))
-  expect_equal( solution_ncol, student_ncol,
-               info = sprintf("Make sure datasaurus_dozen has %d columns", ncol(solution)))
+    info = sprintf("Make sure datasaurus_dozen has %d rows", nrow(solution))
+  )
+  expect_equal(solution_ncol, student_ncol,
+    info = sprintf("Make sure datasaurus_dozen has %d columns", ncol(solution))
+  )
+})
+
+test_that("Ex 1: datasaurus_dozen has variables dataset, x, and y", {
+  skip_if(!exists("datasaurus_dozen"))
+
+  student_data <- get("datasaurus_dozen", envir = environment())
+  solution_data <- get("datasaurus_dozen", envir = asNamespace("datasauRus"))
+
+
+  expect_setequal(names(solution_data), names(student_data),
+    info = "Make sure datasaurus_dozen has the variables dataset, x, and y"
+  )
 })
 
 
+test_that("Ex 1: datasaurus_dozen contains expected number of datasets", {
+  skip_if(!exists("datasaurus_dozen"))
+  student_data <- get("datasaurus_dozen", envir = environment())
+  solution_data <- get("datasaurus_dozen", envir = asNamespace("datasauRus"))
+
+  solution_n <- dplyr::n_distinct(solution_data$dataset)
+  expect_equal(dplyr::n_distinct(student_data$dataset), solution_n,
+    info = sprintf("Make sure datasaurus_dozen contains %d datasets", solution_n)
+  )
+})
