@@ -1,11 +1,7 @@
 ## Standard Libraries
-library(tweetrmd) # Embedding tweets
-library(vembedr) # Embedding YouTube videos
+library(vembedr) # Embedding YouTube videos (used directly: embed_url, use_align)
 library(knitr)
-library(webshot)
 library(tidyverse)
-library(htmlwidgets)
-library(stringr)
 
 ## Options for knitr chunks
 knitr::opts_chunk$set(
@@ -49,22 +45,6 @@ ds4p_urls <- read.csv("metadata/ds4p_urls.csv")
 
 ## Functions
 
-# Check and install packages quietly
-check_quietly <- purrr::quietly(devtools::check)
-install_quietly <- purrr::quietly(devtools::install)
-
-shhh_check <- function(..., quiet = TRUE) {
-  out <- check_quietly(..., quiet = quiet)
-  out$result
-}
-
-pretty_install <- function(...) {
-  out <- install_quietly(...)
-  output <- strsplit(out$output, split = "\n")[[1]]
-  output <- grep("^(\\s*|[-|])$", output, value = TRUE, invert = TRUE)
-  c(output, out$messages)
-}
-
 # Function to handle single or multiple samples
 sample_no_surprises <- function(x) {
   if (length(x) <= 1) {
@@ -97,7 +77,7 @@ embed_youtube_alt <- function(youtube_id) {
     dir_path <- "img/youtube"
     if (!dir.exists(dir_path)) dir.create(dir_path)
     file_path <- str_c(dir_path, "/", youtube_id, ".jpg")
-    if (!file.exists(file_path)) webshot(str_c("https://img.youtube.com/vi/", youtube_id, "/mqdefault.jpg"), vwidth = 320, vheight = 180, file = file_path)
+    if (!file.exists(file_path)) webshot::webshot(str_c("https://img.youtube.com/vi/", youtube_id, "/mqdefault.jpg"), vwidth = 320, vheight = 180, file = file_path)
     return(knitr::include_graphics(str_c(file_path)))
   }
 }

@@ -1,8 +1,6 @@
 ```{r apiwrappers-setup, include = FALSE}
 library(lubridate)
 source("common.R")
-ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 ```
 
 
@@ -213,7 +211,7 @@ if (is.null(getOption("geonamesUsername")) || getOption("geonamesUsername") == "
 
 Instead, we can add this line to our `.Rprofile` so it will be hidden. One way to edit your `.Rprofile` is with the helper function `edit_r_profile()` from the [usethis][usethis-web] package. Install/load the usethis package and run `edit_r_profile()` in the R Console:
 
-```{r apiwrappers-load-usethis, message = FALSE, warning = FALSE, eval = TRUE,error=TRUE}
+```{r apiwrappers-load-usethis, message = FALSE, warning = FALSE, eval = FALSE, error=TRUE}
 # install.packages("usethis")
 library(usethis)
 edit_r_profile()
@@ -231,7 +229,7 @@ Save the file, close it, and restart R. Now we're ready to start using geonames 
 
 What can we do? We can get access to lots of geographical information via the various [GeoNames WebServices](http://www.geonames.org/export/ws-overview.html).
 
-```{r apiwrappers-demo-geonames-country, eval = geonamesUsername_available,error=TRUE}
+```{r apiwrappers-demo-geonames-country, eval = geonamesUsername_available, cache = TRUE, error=TRUE}
 countryInfo <- geonames::GNcountryInfo()
 ```
 
@@ -266,7 +264,7 @@ glimpse(frenchcities)
 
 We can use geonames to search for georeferenced Wikipedia articles. Here are those within 20 km of Rio de Janerio, comparing results for English-language Wikipedia (`lang = "en"`) and Portuguese-language Wikipedia (`lang = "pt"`):
 
-```{r apiwrappers-demo-wiki-rio,eval = geonamesUsername_available,error=TRUE}
+```{r apiwrappers-demo-wiki-rio, eval = geonamesUsername_available, cache = TRUE, error=TRUE}
 rio_english <- geonames::GNfindNearbyWikipedia(
   lat = -22.9083, lng = -43.1964,
   radius = 20, lang = "en", maxRows = 500
@@ -277,7 +275,7 @@ rio_portuguese <- geonames::GNfindNearbyWikipedia(
 )
 ```
 
-```{r apiwrappers-demo-wiki-nrow, eval = geonamesUsername_available,error=TRUE}
+```{r apiwrappers-demo-wiki-nrow, eval = geonamesUsername_available, cache = TRUE, error=TRUE}
 nrow(rio_english)
 nrow(rio_portuguese)
 ```
@@ -289,7 +287,7 @@ The gender package allows you access to data on the gender of names in the US. B
 
 First, install/load the gender package from CRAN. You may be prompted to also install the companion package, genderdata. Go ahead and say yes. If you don't see this message no need to worry, it is a one-time install.
 
-```{r apiwrappers-load-gender,error=TRUE}
+```{r apiwrappers-load-gender, cache = FALSE, error=TRUE}
 # install.packages("gender")
 if (!require(genderdata)) {
   remotes::install_github("lmullen/genderdata")
