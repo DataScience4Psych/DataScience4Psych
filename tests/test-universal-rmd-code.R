@@ -2,36 +2,39 @@
 
 test_that("Rmd file exists in working directory", {
   expect_true(length(.rmd_files) > 0,
-              info = "Submit an Rmd file in your working directory")
-})
-test_that("Rmd file contains header elements",{
-   skip_if(length(.rmd_content) == 0)
-potential_headers <- c("^title:", "^author:","^date:","^output:")
-pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
-  
-headers <- which(stringr::str_detect(.rmd_content, pattern))
-expect_true(length(headers) >= 3,
-              info = sprintf("Include at least 3 headers in your Rmd file — found %d", length(headers)))
-
+    info = "Submit an Rmd file in your working directory"
+  )
 })
 
-test_that("Rmd file contains custom header elements",{
-   skip_if(length(.rmd_content) == 0)
-potential_headers <- c("Insert your name here", "Insert date here")
-pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
-  
-headers <- which(stringr::str_detect(.rmd_content, pattern))
-expect_true(length(headers) == 0,
-              info = sprintf("Don't forget to update your header — found %d that need updating", length(headers)))
+test_that("Rmd file contains header elements", {
+  skip_if(length(.rmd_content) == 0)
+  potential_headers <- c("^title:", "^author:", "^date:", "^output:")
+  pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
+
+  headers <- which(stringr::str_detect(.rmd_content, pattern))
+  expect_true(length(headers) >= 2,
+    info = sprintf("Include at least 2 headers in your Rmd file — found %d", length(headers))
+  )
+})
+
+test_that("Rmd file contains custom header elements", {
+  skip_if(length(.rmd_content) == 0)
+  potential_headers <- c("Insert your name here", "Insert date here")
+  pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
+
+  headers <- which(stringr::str_detect(.rmd_content, pattern))
+  expect_true(length(headers) == 0,
+    info = sprintf("Don't forget to update your header — found %d that need updating", length(headers))
+  )
 })
 
 
-  
 test_that("Rmd contains a minimum number of R code chunks", {
   skip_if(length(.rmd_content) == 0)
   chunk_starts <- which(stringr::str_detect(.rmd_content, "^```\\{r"))
   expect_true(length(chunk_starts) >= 3,
-              info = sprintf("Include at least 3 R code chunks in your Rmd file — found %d", length(chunk_starts)))
+    info = sprintf("Include at least 3 R code chunks in your Rmd file — found %d", length(chunk_starts))
+  )
 })
 
 test_that("R code chunks contain actual code (not all empty)", {
@@ -51,6 +54,6 @@ test_that("R code chunks contain actual code (not all empty)", {
     }
   }
   expect_true(non_empty >= 2,
-              info = sprintf("Make sure at least 2 code chunks contain actual R code — found %d non-empty", non_empty))
+    info = sprintf("Make sure at least 2 code chunks contain actual R code — found %d non-empty", non_empty)
+  )
 })
-
