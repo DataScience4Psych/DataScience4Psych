@@ -61,7 +61,7 @@ Everything in this course lives on **GitHub**. What it **looks** like:
 library(ggplot2)
 library(dplyr)
 library(grid)
-
+library(statebins)
 # Box definitions
 boxes <- tibble::tribble(
   ~id,             ~xmin, ~xmax, ~ymin, ~ymax, ~label,
@@ -89,19 +89,21 @@ arrows <- tibble::tribble(
 
 ggplot() +
   # Outer container
-  geom_rect(
+  statebins:::geom_rrect(
     data = filter(boxes, id == "outer"),
     aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-    fill = "white", color = "black", linewidth = 0.6
+    fill = "white", color = "black", linewidth = 0.6,
+    lineend = "round",
+    linejoin = "round"
   ) +
   # Inner repo boxes
-  geom_rect(
+  statebins:::geom_rrect(
     data = filter(boxes, id %in% c("course_notes", "labs_hw", "slides")),
     aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
     fill = "white", color = "black", linewidth = 0.6
   ) +
   # Lower output boxes
-  geom_rect(
+  statebins:::geom_rrect(
     data = filter(boxes, id %in% c("website", "slide_decks")),
     aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
     fill = "white", color = "black", linewidth = 0.6
