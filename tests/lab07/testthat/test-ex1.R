@@ -1,57 +1,37 @@
-# Exercise 1: Load data from a URL and explore it
+# Exercise 1: Download raw data from USAFacts URLs
 
-test_that("Ex 1: df object exists", {
-  expect_true(exists("df"),
-              info = "Create a data frame called 'df' by reading the Kansas COVID rolling average data"
+test_that("Ex 1: cases_raw object exists", {
+  expect_true(exists("cases_raw"),
+              info = "Create a data frame called 'cases_raw' by reading the USAFacts COVID confirmed cases CSV from its URL"
   )
 })
 
-test_that("Ex 1: df is a data frame", {
-  skip_if(!exists("df"))
-  expect_true(is.data.frame(df),
-              info = "Make sure 'df' is a data frame")
+test_that("Ex 1: cases_raw is a data frame", {
+  skip_if(!exists("cases_raw"))
+  expect_true(is.data.frame(cases_raw),
+              info = "Make sure 'cases_raw' is a data frame")
 })
 
-test_that("Ex 1: df has date column", {
-  skip_if(!exists("df"))
-  expect_true("date" %in% names(df),
-              info = "Make sure your data frame 'df' has a column named 'date'")
+test_that("Ex 1: cases_raw has expected identifier columns", {
+  skip_if(!exists("cases_raw"))
+  expect_true(all(c("countyFIPS", "State") %in% names(cases_raw)),
+              info = "Make sure 'cases_raw' has countyFIPS and State columns")
 })
 
-test_that("Ex 1: df has mask_mandate column", {
-  skip_if(!exists("df"))
-  expect_true("mask_mandate" %in% names(df),
-              info = "Make sure your data frame 'df' has a column named 'mask_mandate'")
+test_that("Ex 1: pop_raw object exists", {
+  expect_true(exists("pop_raw"),
+              info = "Create a data frame called 'pop_raw' by reading the USAFacts population CSV from its URL"
+  )
 })
 
-test_that("Ex 1: df has rolling_avg column", {
-  skip_if(!exists("df"))
-  expect_true("rolling_avg" %in% names(df),
-              info = "Make sure your data frame 'df' has a column named 'rolling_avg'")
+test_that("Ex 1: pop_raw is a data frame", {
+  skip_if(!exists("pop_raw"))
+  expect_true(is.data.frame(pop_raw),
+              info = "Make sure 'pop_raw' is a data frame")
 })
 
-test_that("Ex 1: df has exactly 2 mask_mandate groups", {
-  skip_if(!exists("df") || !"mask_mandate" %in% names(df))
-  n_groups <- dplyr::n_distinct(df$mask_mandate)
-  expect_equal(n_groups, 2,
-               info = "Your 'df' should have exactly 2 mask mandate groups (mask vs no mask)")
-})
-
-test_that("Ex 1: df has multiple dates (time series data)", {
-  skip_if(!exists("df") || !"date" %in% names(df))
-  n_dates <- dplyr::n_distinct(df$date)
-  expect_true(n_dates > 10,
-              info = "Your 'df' should contain multiple dates for a time series")
-})
-
-test_that("Ex 1: rolling_avg values are numeric", {
-  skip_if(!exists("df") || !"rolling_avg" %in% names(df))
-  expect_true(is.numeric(df$rolling_avg),
-              info = "Make sure 'rolling_avg' is numeric")
-})
-
-test_that("Ex 1: rolling_avg values are non-negative", {
-  skip_if(!exists("df") || !"rolling_avg" %in% names(df))
-  expect_true(all(df$rolling_avg >= 0, na.rm = TRUE),
-              info = "Check that 'rolling_avg' values are non-negative (case rates should be >= 0)")
+test_that("Ex 1: pop_raw has population column", {
+  skip_if(!exists("pop_raw"))
+  expect_true("population" %in% names(pop_raw),
+              info = "Make sure 'pop_raw' has a column named 'population'")
 })
