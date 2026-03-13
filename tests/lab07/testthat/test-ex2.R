@@ -1,15 +1,15 @@
-# Exercise 2: Accurate visualization of mask mandate data
+# Exercise 2: Explore data structure and compute group summaries
 
-test_that("Ex 2: df object exists for plotting", {
+test_that("Ex 2: df object exists for exploration", {
   expect_true(exists("df"),
-              info = "Create 'df' in Exercise 1 before creating the improved plot"
+              info = "Create 'df' in Exercise 1 before exploring it"
   )
 })
 
-test_that("Ex 2: df has required columns for an accurate plot", {
+test_that("Ex 2: df has required columns for exploration", {
   skip_if(!exists("df"))
   expect_true(all(c("date", "mask_mandate", "rolling_avg") %in% names(df)),
-              info = "Make sure 'df' has date, mask_mandate, and rolling_avg columns for the plot")
+              info = "Make sure 'df' has date, mask_mandate, and rolling_avg columns")
 })
 
 test_that("Ex 2: both mask mandate groups have data across multiple dates", {
@@ -36,5 +36,5 @@ test_that("Ex 2: mask counties show lower rolling average by end of period", {
   skip_if(length(mask_val) == 0 || length(nomask_val) == 0,
           message = "Could not identify mask vs no-mask groups")
   expect_true(mask_val[1] < nomask_val[1],
-              info = "Mask mandate counties should show lower case rates by end of period — check your plot reflects this")
+              info = "Mask mandate counties should show lower case rates by end of period — check your data reflects this")
 })

@@ -9,12 +9,14 @@ ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 
 ## Conveying the right message through visualization {.unnumbered}
 
-In this lab, our goal is to reconstruct and improve a data visualization concerning COVID-19 and mask-wearing practices. We aim to explore how data visualizations can sometimes mislead and learn techniques to correct these misrepresentations. 
+In this lab, our goal is to acquire, wrangle, and improve a data visualization concerning COVID-19 and mask-wearing practices. We aim to practice getting data from the web, preparing it for analysis, and exploring how data visualizations can sometimes mislead — and how to fix them.
 
 ## Learning Goals {.unnumbered}
 
+- Retrieving data directly from URLs using `read_csv()` and `httr`
+- Exploring and wrangling data with `glimpse()`, `filter()`, `mutate()`, and `case_when()`
+- Using `glue` to construct dynamic strings for labels and titles
 - Critiquing visualizations that misrepresent data
-- Exploring and understanding datasets for visual analysis
 - Applying principles of effective data visualizations to improve clarity and accuracy
 
 ## Getting started {.unnumbered}
@@ -31,18 +33,21 @@ If anything is missing, commit and push again.
 
 ### Packages {.unnumbered}
 
-We'll use the **tidyverse** package for much of the data wrangling and visualization.
+We'll use the **tidyverse** package for much of the data wrangling and visualization, along with several packages for working with web data that we've been learning about in this module.
 This package is already installed for you.
-You can load it by running the following in your Console:
+You can load them by running the following in your Console:
 
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(scales)
+library(httr)
+library(jsonlite)
+library(glue)
 ```
 
 ### Data {.unnumbered}
 
-The visualization in this lab comes from a KDHE press conference on August 5, 2020. It compares 
+The visualization in this lab comes from a KDHE press conference on August 5, 2020. It compares
 COVID-19 case rates in Kansas counties with and without mask mandates. Since the original data was not released, the dataset used in this lab, `kansas_grouped_rolling_avg.csv`, was reconstructed from the publicly available data on  [USAFacts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/).
 
 
@@ -73,12 +78,12 @@ df <- read_csv("data/kansas_grouped_rolling_avg.csv") %>%
   <summary>Here's a close attempt at reconstructing the original plot. Can you spot the differences?</summary>
 ```{r fig.fullwidth = TRUE, echo = FALSE,message = FALSE}
 left_breaks  <- seq(15, 25, by = 2)
-right_breaks <- seq(4, 14, by = 2)       
+right_breaks <- seq(4, 14, by = 2)
 col_mask <- "#F28E2B"
-col_nomask <- "#4E79A7"         
+col_nomask <- "#4E79A7"
 date_lo <- as.Date("2020-07-12")
 date_hi <- as.Date("2020-08-03")
-df %>% 
+df %>%
   ggplot(
     aes(x = date,
         y = rolling_avg,
@@ -109,7 +114,7 @@ df %>%
   ) +
   labs(
     title = "Kansas COVID-19 7-Day Rolling Average of Daily Cases/Per 100K Population",
-    subtitle = 
+    subtitle =
       bquote(atop('Mask Counties Vs. No-Mask Mandate Counties' , scriptstyle('Source: Kansas Department of Health and Environment'))),
     x = NULL,
     y = NULL,
@@ -125,7 +130,7 @@ df %>%
      panel.grid.minor = element_blank(),
      axis.line = element_line(color= col_mix("black", "white", 0.80),
                               linewidth = 0.5)
-  ) + 
+  ) +
    annotate("text", x = date_lo+.5, y = Inf, label = "Mask",
            color = col_mask, vjust = -0.05, hjust = 2.05, size = 2.5) +
   annotate("text", x = date_hi-.5, y = Inf, label = "No Mask",
@@ -137,32 +142,67 @@ df %>%
 
 Before you dive in, think about what is misleading about this visualization and how you might go about fixing it.
 
-1. Check the lab repository, you'll find a CSV file called `kansas_grouped_rolling_avg.csv`. Load it using:
+### Part 1: Acquiring and Exploring the Data {.unnumbered}
+
+In this module, we've been learning about different ways to get data from the web — from direct downloads to APIs. Let's practice some of those skills here.
+
+1. The data for this lab is available both locally and online. Start by loading it directly from a URL using `read_csv()`, just like a direct download from the data acquisition spectrum we discussed.
+
 ```r
-    df <- read_csv("kansas_grouped_rolling_avg.csv")
+    url <- "https://raw.githubusercontent.com/DataScience4Psych/lab_07_betterviz/main/kansas_grouped_rolling_avg.csv"
+    df <- read_csv(url)
 ```
 
-Explore its structure and use it to re-construct the misleading visualization. 
+Now use `httr::GET()` to check the HTTP status of that same URL. Confirm you get a `200` status code using `status_code()`. What would a non-200 status code tell you about the data source?
+
+2. Explore the structure of `df` using `glimpse()`. Then use `filter()` to look at just the mask-mandate counties and just the no-mask counties separately. Use `summarize()` to compute the mean and range of `rolling_avg` for each group. What do these summaries tell you about the two groups before you even plot anything?
+
+### Part 2: Wrangling the Data {.unnumbered}
+
+3. The original misleading plot manipulates the data in several ways. Use `mutate()` and `case_when()` to prepare the data for reconstruction:
+    - Convert `date` to a proper Date type with `as.Date()`.
+    - Recode the `mask_mandate` column to more descriptive labels (e.g., "Mask Counties" and "No-Mask Mandate Counties") using `ifelse()` or `case_when()`.
+    - Use `glue()` to construct a dynamic subtitle for your plot that includes the date range from the data. For example:
+
+```r
+    date_range <- glue("{min(df$date)} to {max(df$date)}")
+    plot_subtitle <- glue("Mask Counties vs. No-Mask Mandate Counties\n{date_range}")
+```
+
+Now use this wrangled data to reconstruct the misleading visualization.
 
 Note: Since the original dataset for this plot was not publicly available, a former student did some impressive detective work to reconstruct it from other publicly available datasets. The re-constructed plot may still differ slightly from the original. If you're interested in how the data was obtained and processed, you can refer to [this repository](https://github.com/HollandSun/Reproduce_Lab7plot.git) for the full data pipeline and sources.
 
-2. Make a visualization that more accurately (and honestly) reflects the data and conveys a clear message.
+### Part 3: Improving the Visualization {.unnumbered}
 
-3. What message is more clear in your visualization than it was in the original visualization?
+4. Make a visualization that more accurately (and honestly) reflects the data and conveys a clear message.
 
-4. What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
+5. What message is more clear in your visualization than it was in the original visualization?
+
+6. What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
     It'll be difficult to set aside what you already know about mask wearing, but you should try to focus only on what this visualization tells.
     Feel free to also comment on whether that lines up with what you know about mask wearing.
 
+### Part 4: Visualization as Rhetoric {.unnumbered}
+
 Using the same dataset you constructed, your goal now is to create a new visualization that intentionally conveys the opposite message of your previous, accurate visualization. This exercise is designed to highlight the impact of visualization choices on the interpretation of data. It's a practical exploration of how changing the presentation can alter the perceived message, underscoring the ethical implications of data visualization.
 
-5. Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.
+7. Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.
 
-6. Plan Your Opposite Visualization: Briefly determine what opposite message you want to covey. Consider the data you have available (or could easily add).
+8. Plan Your Opposite Visualization: Briefly determine what opposite message you want to convey. Consider the data you have available (or could easily add).
 
-7. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
+9. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
 
-8. Now for the real challenge! Find your own misleading graph and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers. Analyze the graph to identify what makes it misleading and then attempt to recreate it using the same data (if available) or similar data. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
+### Part 5: Finding Misleading Visualizations in the Wild {.unnumbered}
+
+10. Now for the real challenge! Find your own misleading graph online and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers.
+
+    Practice the data acquisition skills from this module to get the data you need:
+    - Can you download the data directly from a URL using `read_csv()` or `httr::GET()`?
+    - If the data is available through an API, try using `httr::GET()` with query parameters and parse the response with `jsonlite::fromJSON()`.
+    - If neither option works, you can manually reconstruct a small dataset that approximates the original.
+
+    Analyze the graph to identify what makes it misleading and then attempt to recreate it using the data you acquired. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
 
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*

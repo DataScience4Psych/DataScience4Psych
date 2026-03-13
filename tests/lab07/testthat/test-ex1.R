@@ -1,4 +1,4 @@
-# Exercise 1: Load and explore the Kansas COVID-19 mask mandate data
+# Exercise 1: Load data from a URL and explore it
 
 test_that("Ex 1: df object exists", {
   expect_true(exists("df"),
