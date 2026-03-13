@@ -23,7 +23,7 @@
 <meta name="author" content="S. Mason Garrison" />
 
 
-<meta name="date" content="2026-03-12" />
+<meta name="date" content="2026-03-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -942,7 +942,7 @@ div.csl-indent {
 <li class="chapter" data-level="64.15" data-path="rdd-where-were-we-where-are-we-going.html"><a href="rdd-where-were-we-where-are-we-going.html#the-useful-but-mysterious-...-argument"><i class="fa fa-check"></i><b>64.15</b> The useful but mysterious <code>...</code> argument</a></li>
 <li class="chapter" data-level="64.16" data-path="rdd-where-were-we-where-are-we-going.html"><a href="rdd-where-were-we-where-are-we-going.html#use-testthat-for-formal-unit-tests"><i class="fa fa-check"></i><b>64.16</b> Use testthat for formal unit tests</a></li>
 </ul></li>
-<li class="chapter" data-level="65" data-path="functions-practicum.html"><a href="functions-practicum.html"><i class="fa fa-check"></i><b>65</b> Function-writing practicum</a>
+<li class="chapter" data-level="65" data-path="functions-practicum.html"><a href="functions-practicum.html"><i class="fa fa-check"></i><b>65</b> ODD: Function-writing practicum</a>
 <ul>
 <li class="chapter" data-level="65.1" data-path="functions-practicum.html"><a href="functions-practicum.html#overview"><i class="fa fa-check"></i><b>65.1</b> Overview</a></li>
 <li class="chapter" data-level="65.2" data-path="functions-practicum.html"><a href="functions-practicum.html#load-the-gapminder-data-2"><i class="fa fa-check"></i><b>65.2</b> Load the Gapminder data</a></li>
@@ -1693,31 +1693,51 @@ div.csl-indent {
 </ul>
 <div id="the-problem-with-pie-charts" class="section level3 hasAnchor" number="45.1.1">
 <h3><span class="header-section-number">45.1.1</span> The Problem with Pie Charts<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#the-problem-with-pie-charts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Pie charts are criticized for their inefficiency in conveying information. They do not allow easy comparison of sections as humans are better at comparing lengths, not areas. Here’s an example using browser usage data from an August 2013 poll:</p>
-<div id="displaying-browser-usage-data-with-a-pie-chart" class="section level4 hasAnchor" number="45.1.1.1">
-<h4><span class="header-section-number">45.1.1.1</span> Displaying Browser Usage Data with a Pie Chart<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#displaying-browser-usage-data-with-a-pie-chart" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Consider a poll asking about browser preferences collected in August 2013. The typical display method would be a pie chart:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-1" tabindex="-1"></a>browsers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Opera =</span> <span class="dv">1</span>, <span class="at">Safari =</span> <span class="dv">9</span>, <span class="at">Firefox =</span> <span class="dv">20</span>, <span class="at">IE =</span> <span class="dv">26</span>, <span class="at">Chrome =</span> <span class="dv">44</span>)</span>
-<span id="cb189-2"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-2" tabindex="-1"></a><span class="fu">pie</span>(browsers, <span class="at">main =</span> <span class="st">&quot;Browser Usage (August 2013)&quot;</span>)</span></code></pre></div>
+<p>Pie charts are criticized for their inefficiency in conveying information. They do not allow easy comparison of sections as humans are better at comparing lengths, not areas. Here’s an example using browser usage data from StatCounter for the United States during
+the past year (specifically, from <code>survey_year_start</code>-<code>survey_month_start</code> to <code>survey_year_end</code>-<code>survey_month_end</code>). The pie chart is a common way to display this data, but it can be misleading and difficult to interpret accurately. The use of color and 3D effects can further distort the perception of the data, making it harder to compare the market shares of different browsers. Additionally, when there are many categories or when the differences between them are small, it becomes even more challenging to assess the relative proportions accurately.
+#### Displaying Browser Usage Data with a Pie Chart</p>
+<p>Consider a poll asking about browser preferences collected in the United States over the past year. The typical display method would be a pie chart:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-1" tabindex="-1"></a><span class="co"># https://gs.statcounter.com/browser-market-share/all/united-states-of-america</span></span>
+<span id="cb189-2"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-2" tabindex="-1"></a>statcounter_url <span class="ot">&lt;-</span><span class="fu">paste0</span>(<span class="st">&quot;https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&amp;device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&amp;multi-device=true&amp;statType_hidden=browser&amp;region_hidden=US&amp;granularity=monthly&amp;statType=Browser&amp;region=United%20States%20of%20America&amp;fromInt=&quot;</span>,survey_year_start, survey_month_start,<span class="st">&quot;&amp;toInt=&quot;</span>,survey_year_end, survey_month_end,<span class="st">&quot;&amp;fromMonthYear=&quot;</span>,survey_year_start, <span class="st">&quot;-&quot;</span>, survey_month_start,<span class="st">&quot;&amp;toMonthYear=&quot;</span>,survey_year_end, <span class="st">&quot;-&quot;</span>, survey_month_end,<span class="st">&quot;&amp;csv=1&quot;</span>)</span>
+<span id="cb189-3"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-3" tabindex="-1"></a>                         </span>
+<span id="cb189-4"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-4" tabindex="-1"></a>df_browsers <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(statcounter_url)</span>
+<span id="cb189-5"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-5" tabindex="-1"></a></span>
+<span id="cb189-6"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-6" tabindex="-1"></a>availablebrowsers <span class="ot">&lt;-</span> <span class="fu">names</span>(df_browsers <span class="sc">%&gt;%</span></span>
+<span id="cb189-7"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-7" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Date))</span>
+<span id="cb189-8"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-8" tabindex="-1"></a></span>
+<span id="cb189-9"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-9" tabindex="-1"></a></span>
+<span id="cb189-10"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-10" tabindex="-1"></a>browsers <span class="ot">&lt;-</span> df_browsers <span class="sc">%&gt;%</span></span>
+<span id="cb189-11"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-11" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Date) <span class="sc">%&gt;%</span></span>
+<span id="cb189-12"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-12" tabindex="-1"></a>  <span class="fu">summarise_all</span>(sum) <span class="sc">%&gt;%</span></span>
+<span id="cb189-13"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-13" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb189-14"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-14" tabindex="-1"></a><span class="fu">names</span>(browsers) <span class="ot">&lt;-</span> availablebrowsers</span>
+<span id="cb189-15"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-15" tabindex="-1"></a></span>
+<span id="cb189-16"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-16" tabindex="-1"></a></span>
+<span id="cb189-17"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-17" tabindex="-1"></a><span class="fu">pie</span>(browsers, </span>
+<span id="cb189-18"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb189-18" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">&quot;Browser Usage (&quot;</span>, survey_period, <span class="st">&quot;)&quot;</span>))</span></code></pre></div>
 <p><img src="0503_plots_to_avoid_files/figure-html/pie-chart-display-1.png" alt="" width="384" style="display: block; margin: auto;" /></p>
-</div>
-<div id="why-pie-charts-fail" class="section level4 hasAnchor" number="45.1.1.2">
-<h4><span class="header-section-number">45.1.1.2</span> Why Pie Charts Fail<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#why-pie-charts-fail" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now try to determine the exact market shares of the browsers from the pie chart above. It’s challenging to assess precise proportions just by looking at the angles and areas, which is a fundamental flaw of pie charts. The human eye is not adept at judging relative areas, making it difficult to compare the slices accurately, especially when there are many categories or when the differences between them are small.</p>
+<p>Now, even if we were to clean up the labels and remove the 3D effects, the fundamental issue remains: pie charts are not designed to facilitate accurate comparisons of proportions. The visual estimation required to interpret the data can lead to misinterpretation and confusion, which is why they are often criticized in data visualization circles.</p>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-fig-pie-1.png" alt="" width="672" /></p>
+<div id="why-pie-charts-fail" class="section level4 hasAnchor" number="45.1.1.1">
+<h4><span class="header-section-number">45.1.1.1</span> Why Pie Charts Fail<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#why-pie-charts-fail" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The <code>pie</code> function’s help file itself warns against using pie charts for presentation:</p>
 <blockquote>
 <p>Pie charts are a very bad way of displaying information. The eye is good at judging linear measures and bad at judging relative areas. A bar chart or dot chart is a preferable way of displaying this type of data.</p>
 </blockquote>
 <p>To test this, try determining the exact market shares of the browsers from the pie chart above. It’s challenging to assess precise proportions just by looking at the angles and areas.</p>
 </div>
-<div id="a-better-alternative-bar-charts" class="section level4 hasAnchor" number="45.1.1.3">
-<h4><span class="header-section-number">45.1.1.3</span> A Better Alternative: Bar Charts<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#a-better-alternative-bar-charts" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="a-better-alternative-bar-charts" class="section level4 hasAnchor" number="45.1.1.2">
+<h4><span class="header-section-number">45.1.1.2</span> A Better Alternative: Bar Charts<a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#a-better-alternative-bar-charts" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If we need to visualize this data more effectively, a bar chart is more appropriate:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb190-1" tabindex="-1"></a><span class="fu">barplot</span>(browsers, <span class="at">main =</span> <span class="st">&quot;Browser Usage (August 2013)&quot;</span>)</span></code></pre></div>
-<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-code-barplot-1.png" alt="" width="432" style="display: block; margin: auto;" />
-The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.)</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb190-1" tabindex="-1"></a></span>
+<span id="cb190-2"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb190-2" tabindex="-1"></a>browsers_normalized <span class="ot">&lt;-</span> browsers <span class="sc">/</span> <span class="fu">sum</span>(browsers) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb190-3"><a href="rdd-plots-behaving-badly-lessons-in-data-misrepresentation.html#cb190-3" tabindex="-1"></a><span class="fu">barplot</span>(browsers_normalized, <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">&quot;Browser Usage (&quot;</span>, survey_period, <span class="st">&quot;)&quot;</span>), <span class="at">ylab =</span> <span class="st">&quot;Percentage&quot;</span>, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-code-barplot-1.png" alt="" width="432" style="display: block; margin: auto;" /></p>
+<p>The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.) See below for an outdated example using data from August 2013:</p>
 <p><img src="img/fig2b.png" alt="" width="671" style="display: block; margin: auto;" /></p>
-<p>Note that even worse that piecharts are donut plots.</p>
-<p><img src="img/Donut-Chart.svg.png" alt="" width="1024" /></p>
+<p>Note that even worse than piecharts are donut plots. Here we have removed the center of the pie chart, which makes it even harder to compare the angles and areas, as we lose the visual cues that help us interpret the data.</p>
+<p><img src="0503_plots_to_avoid_files/figure-html/plots_to_avoid-fig-donut-1.png" alt="" width="672" /></p>
 <p>The reason is that by removing the center we remove one of the visual cues for determining the different areas: the angles. There is no reason to ever use a donut to display data.</p>
 </div>
 </div>
