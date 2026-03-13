@@ -1,7 +1,10 @@
 ```{r plots_to_avoid-setup, include = FALSE}
 source("common.R")
-ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
-
+survey_year_start <- format(Sys.Date() - 365, "%Y")
+survey_year_end <- format(Sys.Date(), "%Y")
+survey_month_start <- format(Sys.Date() - 365, "%m")
+survey_month_end <- format(Sys.Date() - 31, "%m")
+survey_period <- paste0(survey_year_start, "-", survey_month_start, " to ", survey_year_end, "-", survey_month_end)
 library(tidyverse)
 library(rafalib)
 ```
@@ -25,16 +28,76 @@ The aims of good data graphics is to display data accurately and clearly. Some r
 
 ### The Problem with Pie Charts
 
-Pie charts are criticized for their inefficiency in conveying information. They do not allow easy comparison of sections as humans are better at comparing lengths, not areas. Here's an example using browser usage data from an August 2013 poll:
+Pie charts are criticized for their inefficiency in conveying information. They do not allow easy comparison of sections as humans are better at comparing lengths, not areas. Here's an example using browser usage data from [StatCounter](https://gs.statcounter.com/browser-market-share/all/united-states-of-america) for the United States during 
+the past year (specifically, from `survey_year_start`-`survey_month_start` to `survey_year_end`-`survey_month_end`). The pie chart is a common way to display this data, but it can be misleading and difficult to interpret accurately. The use of color and 3D effects can further distort the perception of the data, making it harder to compare the market shares of different browsers. Additionally, when there are many categories or when the differences between them are small, it becomes even more challenging to assess the relative proportions accurately.
 
 #### Displaying Browser Usage Data with a Pie Chart
 
-Consider a poll asking about browser preferences collected in August 2013. The typical display method would be a pie chart:
+
+Consider a poll asking about browser preferences collected in the United States over the past year. The typical display method would be a pie chart:
 
 ```{r pie-chart-display, fig.align='center', fig.width=4}
-browsers <- c(Opera = 1, Safari = 9, Firefox = 20, IE = 26, Chrome = 44)
-pie(browsers, main = "Browser Usage (August 2013)")
+# https://gs.statcounter.com/browser-market-share/all/united-states-of-america
+statcounter_url <-paste0("https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser&region_hidden=US&granularity=monthly&statType=Browser&region=United%20States%20of%20America&fromInt=",survey_year_start, survey_month_start,"&toInt=",survey_year_end, survey_month_end,"&fromMonthYear=",survey_year_start, "-", survey_month_start,"&toMonthYear=",survey_year_end, "-", survey_month_end,"&csv=1")
+                         
+df_browsers <- read.csv(statcounter_url)
+
+availablebrowsers <- names(df_browsers %>%
+  select(-Date))
+
+
+browsers <- df_browsers %>%
+  select(-Date) %>%
+  summarise_all(sum) %>%
+  as.numeric()
+names(browsers) <- availablebrowsers
+
+
+pie(browsers, 
+    main = paste0("Browser Usage (", survey_period, ")"))
 ```
+
+Now try to determine the exact market shares of the browsers from the pie chart above. It's challenging to assess precise proportions just by looking at the angles and areas, which is a fundamental flaw of pie charts. The human eye is not adept at judging relative areas, making it difficult to compare the slices accurately, especially when there are many categories or when the differences between them are small.
+
+Now, even if we were to clean up the labels and remove the 3D effects, the fundamental issue remains: pie charts are not designed to facilitate accurate comparisons of proportions. The visual estimation required to interpret the data can lead to misinterpretation and confusion, which is why they are often criticized in data visualization circles.
+
+```{r plots_to_avoid-fig-pie, echo=FALSE, eval=TRUE,fig.align='middle'}
+library(ggplot2)
+library(dplyr)
+library(ggpattern)
+
+df <- data.frame(
+    browsers = names(browsers),
+    usage = browsers
+  ) %>%
+  count(usage, browsers) %>%
+#  group_by(browsers) %>%
+  mutate(
+    percent = n / sum(n),
+    ymax = cumsum(usage),
+    ymin = lag(ymax, default = 0)
+  ) %>%
+  ungroup()
+
+
+# Make the plot
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = 0, xmax = 1,fill = browsers)) +
+  geom_rect_pattern(
+    aes(pattern_fill = browsers,
+        pattern_type = browsers),
+    color = "white", linewidth = 0.3,
+                    pattern = 'polygon_tiling', 
+    pattern_alpha = 0.35
+  ) +
+  scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  ggtitle(paste0("Browser Usage (", survey_period, ")")) #+
+ # xlim(-1.5, 1.5) # Adjust x-axis limits to create a donut effect
+
+```
+
 
 #### Why Pie Charts Fail
 
@@ -50,18 +113,44 @@ To test this, try determining the exact market shares of the browsers from the p
 If we need to visualize this data more effectively, a bar chart is more appropriate:
 
 ```{r plots_to_avoid-code-barplot, fig.align='center', fig.width=4.5}
-barplot(browsers, main = "Browser Usage (August 2013)")
+
+browsers_normalized <- browsers / sum(browsers) * 100
+barplot(browsers_normalized, main = paste0("Browser Usage (", survey_period, ")"), ylab = "Percentage", col = "steelblue")
 ```
-The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.)
+
+The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.) See below for an outdated example using data from August 2013:
 
 ```{r plots_to_avoid-fig-3d-barplot, echo=FALSE, eval=TRUE,fig.align='center'}
 knitr::include_graphics("img/fig2b.png")
 ```
 
-Note that even worse that piecharts are donut plots.
+Note that even worse than piecharts are donut plots. Here we have removed the center of the pie chart, which makes it even harder to compare the angles and areas, as we lose the visual cues that help us interpret the data.
 
-```{r plots_to_avoid-fig-donut, echo=FALSE, eval=TRUE,fig.align='middle',fig.width=3}
-knitr::include_graphics("img/Donut-Chart.svg.png")
+```{r plots_to_avoid-fig-donut, echo=FALSE, eval=TRUE,fig.align='middle'}
+library(ggplot2)
+library(dplyr)
+library(ggpattern)
+
+
+# Make the plot
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = .15, xmax = 1,fill = browsers)) +
+  geom_rect_pattern(
+    aes(pattern_fill = browsers,
+        pattern_type = browsers),
+    color = "white", linewidth = 0.3,
+                    pattern = 'polygon_tiling', 
+    pattern_alpha = 0.35
+  ) +
+  scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  ggtitle(paste0("Browser Usage (", survey_period, ")")) +
+  xlim(-1.5, 1.5) # Adjust x-axis limits to create a donut effect
+
+
+
+
 ```
 
 The reason is that by removing the center we remove one of the visual cues for determining the different areas: the angles. There is no reason to ever use a donut to display data.
