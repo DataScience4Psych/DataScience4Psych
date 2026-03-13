@@ -9,7 +9,7 @@ ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
 
 ## Conveying the right message through visualization {.unnumbered}
 
-In this lab, our goal is to acquire data directly from the web, wrangle it into a usable form, and use it to reconstruct and improve a data visualization about COVID-19 and mask-wearing practices. Along the way, we'll practice the data acquisition and wrangling skills from this module and explore how visualizations can mislead — and how to fix them.
+In this lab, you'll play data detective. You'll start with a misleading visualization and no data, then track down the original sources on the web, wrangle raw data into shape, and use it to both reconstruct and improve the visualization. Along the way, you'll practice the data acquisition and wrangling skills from this module.
 
 ## Learning Goals {.unnumbered}
 
@@ -46,8 +46,7 @@ library(zoo)
 
 ### Data {.unnumbered}
 
-The visualization in this lab comes from a KDHE press conference on August 5, 2020. It compares
-COVID-19 case rates in Kansas counties with and without mask mandates. The original data was not released, but the underlying case counts and population data are publicly available from [USAFacts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/). A former student, Holland, did some impressive detective work to reconstruct the dataset from these public sources. In this lab, you'll retrace that journey yourself — downloading the raw data from the web, wrangling it into shape, and using it to critique and improve the visualization.
+Unlike previous labs, you won't be starting with a tidy, ready-to-use dataset. Instead, you'll be acquiring and building the dataset yourself from publicly available web sources — just like a former student, Holland, did when they first tried to fact-check this visualization. The data you need is out there, but it takes some detective work to find it and some wrangling to get it into a usable form. If you're interested in Holland's original approach, you can refer to [this repository](https://github.com/HollandSun/Reproduce_Lab7plot.git) for the full pipeline and sources.
 
 
 ## Exercises {.unnumbered}
@@ -141,11 +140,19 @@ df %>%
 
 Before you dive in, think about what is misleading about this visualization and how you might go about fixing it.
 
-### Part 1: Acquiring the Data from the Web {.unnumbered}
+### Part 1: The Problem — Where's the Data? {.unnumbered}
 
-The original KDHE visualization didn't come with its underlying data. But the case counts and population figures are publicly available from [USAFacts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), and the CDC's MMWR report ([Van Dyke et al., 2020](https://www.cdc.gov/mmwr/volumes/69/wr/mm6947e2.htm)) tells us which Kansas counties had mask mandates. In this section, you'll retrace the steps a former student took to reconstruct the dataset from these public sources — practicing the direct download skills from this module.
+This visualization was presented at a KDHE press conference, but the underlying data was never released. If you wanted to fact-check it, where would you even start? A former student, Holland, faced exactly this problem and did some impressive detective work to track down the data. Let's retrace that journey.
 
-1. Start by downloading the raw data directly from USAFacts URLs using `read_csv()`. This is a direct download — the simplest method on the data acquisition spectrum we discussed in this module.
+1. Look carefully at the original visualization. What information does it give you about where the data *might* come from? Read the title, subtitle, axis labels, and source line. Write down what you can infer about the data: What state? What time period? What's being measured? What are the two groups being compared? What does "per 100K population" tell you about how the data was calculated?
+
+2. Holland's first breakthrough was finding a [CDC MMWR report by Van Dyke et al. (2020)](https://www.cdc.gov/mmwr/volumes/69/wr/mm6947e2.htm) that analyzed this exact comparison. Skim the report (focus on the methods section). What key pieces of information does it reveal that the original visualization didn't?  In particular, look for: (a) the names of the counties that had mask mandates, and (b) any mention of where the case data came from.
+
+### Part 2: Acquiring the Raw Data {.unnumbered}
+
+The MMWR report tells us the case data came from [USAFacts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), which provides county-level COVID-19 data as downloadable CSV files. This is a *direct download* — the simplest method on the data acquisition spectrum we discussed in this module. No API key needed, no scraping required — just a URL and `read_csv()`.
+
+3. Download the confirmed cases data and the county population data directly from USAFacts:
 
 ```r
     cases_raw <- read_csv(
@@ -158,55 +165,67 @@ The original KDHE visualization didn't come with its underlying data. But the ca
     )
 ```
 
-Use `glimpse()` to explore the structure of both datasets. How many columns does `cases_raw` have? What does each row represent? What about `pop_raw`?
+Use `glimpse()` to explore both datasets. The cases data covers *every county in the United States* — how many rows and columns does it have? What does each row represent? Notice that the cases data is in *wide format* — each date gets its own column. Why would that be a problem for plotting with ggplot2?
 
-2. Now filter both datasets to just Kansas counties (`State == "KS"`) and exclude the statewide total row (`countyFIPS != 0`). The cases data is in wide format — each date is its own column. Use `pivot_longer()` to reshape it so that you have one row per county per date, with columns for `countyFIPS`, `County Name`, `date`, and `cumulative_cases`. Then use `lubridate::ymd()` to parse the date column into a proper Date type.
+4. We only need Kansas. Filter `cases_raw` to just Kansas counties (`State == "KS"`) and exclude the statewide total row (`countyFIPS != 0`). Then use `pivot_longer()` to reshape the data from wide to long format, so you have one row per county per date with columns for `countyFIPS`, `County Name`, `date`, and `cumulative_cases`. Use `lubridate::ymd()` to parse the date strings into proper Date objects.
 
-🧶 ✅ ⬆️ *Knit, commit, and push your changes. Good progress — you've acquired and reshaped real web data!*
+    Do the same filtering for `pop_raw` — keep only Kansas counties and select just `countyFIPS`, `County Name`, and `population`.
 
-### Part 2: Building the Analysis Dataset {.unnumbered}
+🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've acquired and reshaped real web data — just like Holland did!*
 
-3. You now have cumulative case counts, but the visualization shows *daily new cases*. Filter your Kansas cases to the window from July 5, 2020 through August 3, 2020. (We start on July 5 — seven extra days before the plot's start date of July 12 — to allow for the 7-day rolling average.) Then, within each county, calculate `daily_new_cases` as the difference between each day's cumulative count and the previous day's count using `lag()`.
+### Part 3: From Cumulative Counts to Daily Rates {.unnumbered}
 
-4. According to the [CDC MMWR report](https://www.cdc.gov/mmwr/volumes/69/wr/mm6947e2.htm), the following 24 Kansas counties had mask mandates in effect by July 3, 2020:
+You now have cumulative case counts for every Kansas county on every date. But the KDHE visualization shows *daily new cases per 100K population* as a *7-day rolling average*. Getting from what you have to what you need requires several wrangling steps.
+
+5. First, narrow the time window. The visualization covers July 12 through August 3, 2020 — but to compute a 7-day rolling average starting on July 12, you need data going back seven days before that. Filter your Kansas cases to dates from **July 5, 2020** through **August 3, 2020**.
+
+    Then, within each county (use `group_by()` and `arrange()`), calculate `daily_new_cases` as the difference between each day's cumulative count and the previous day's using `lag()`. Remove the resulting `NA` rows (the first day of each county has no previous day to subtract from).
+
+6. Now you need to know which counties had mask mandates. From the MMWR report, you learned that these 24 Kansas counties had mandates in effect by July 3, 2020:
 
     *Allen, Atchison, Bourbon, Crawford, Dickinson, Douglas, Franklin, Geary, Gove, Harvey, Jewell, Johnson, Mitchell, Montgomery, Morris, Pratt, Reno, Republic, Saline, Scott, Sedgwick, Shawnee, Stanton, Wyandotte*
 
-    Use `str_remove()` to strip the " County" suffix from the `County Name` column, then use `ifelse()` or `case_when()` to create a `mask_mandate` column that labels each county as `"Mask"` or `"No Mask"`. Finally, use `left_join()` to bring in the population data from `pop_raw`.
+    But there's a snag — your data has county names like `"Sedgwick County"` while this list uses just `"Sedgwick"`. Use `str_remove()` to strip the `" County"` suffix, then use `ifelse()` to create a `mask_mandate` column labeling each county as `"Mask"` or `"No Mask"`.
 
-🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've wrangled raw web data into an analysis-ready dataset!*
+    Finally, use `left_join()` to bring in each county's `population` from the population data you filtered earlier.
 
-### Part 3: Computing the Rolling Average {.unnumbered}
+🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've built an analysis-ready dataset from raw web data!*
 
-5. Now aggregate the county-level data up to the mask-mandate group level. Use `group_by()` and `summarize()` to compute the total new cases and total population for each `mask_mandate` group on each date. Then calculate the daily rate per 100K population, and use `zoo::rollmean()` with `k = 7` and `align = "right"` to compute the 7-day rolling average. Finally, filter to dates on or after July 12 (dropping the warm-up period) and remove any rows where the rolling average is `NA`.
+### Part 4: Computing the Rolling Average {.unnumbered}
 
-    Use `glimpse()` to inspect your final dataset. You should have three columns — `date`, `rolling_avg`, and `mask_mandate` — and the data should look similar to the `kansas_grouped_rolling_avg.csv` file provided in the lab repository.
+7. You now have daily new cases for each county, labeled by mask mandate status, with population data attached. But the visualization doesn't show individual counties — it shows *aggregate trends* for the two groups. Use `group_by(mask_mandate, date)` and `summarize()` to compute the total new cases and total population for each group on each date. Then:
 
-6. Use the dataset you just built to reconstruct the misleading visualization. Look carefully at the original — what specific choices make it misleading? (Hint: look at the y-axes.)
+    - Calculate the daily rate per 100K: `total_new / total_pop * 100000`
+    - Compute the 7-day rolling average using `zoo::rollmean(per_100k, k = 7, fill = NA, align = "right")` (grouped by `mask_mandate`)
+    - Filter to dates on or after July 12 and drop any `NA` rolling averages
 
-🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've gone from raw web data to a reconstructed visualization!*
+    Use `glimpse()` to check your result. You should have three columns — `date`, `rolling_avg`, and `mask_mandate`. Compare your values to the `kansas_grouped_rolling_avg.csv` file in the lab repository — they should be very close.
 
-### Part 4: Improving the Visualization {.unnumbered}
+8. Now use the dataset you just built to reconstruct the misleading visualization. Look carefully at the original — what specific choices make it misleading? (Hint: look at the y-axes. Are they the same? What effect does that have on how the viewer perceives the trends?)
 
-7. Make a visualization that more accurately (and honestly) reflects the data and conveys a clear message.
+🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've gone from a press conference screenshot all the way to a reconstructed visualization — all from publicly available web data!*
 
-8. What message is more clear in your visualization than it was in the original visualization?
+### Part 5: Improving the Visualization {.unnumbered}
 
-9. What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
+9. Make a visualization that more accurately (and honestly) reflects the data and conveys a clear message.
+
+10. What message is more clear in your visualization than it was in the original visualization?
+
+11. What, if any, useful information do these data and your visualization tell us about mask wearing and COVID?
     It'll be difficult to set aside what you already know about mask wearing, but you should try to focus only on what this visualization tells.
     Feel free to also comment on whether that lines up with what you know about mask wearing.
 
-### Part 5: Visualization as Rhetoric {.unnumbered}
+### Part 6: Visualization as Rhetoric {.unnumbered}
 
 Using the same dataset you constructed, your goal now is to create a new visualization that intentionally conveys the opposite message of your previous, accurate visualization. This exercise is designed to highlight the impact of visualization choices on the interpretation of data. It's a practical exploration of how changing the presentation can alter the perceived message, underscoring the ethical implications of data visualization.
 
-10. Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.
+12. Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.
 
-11. Plan Your Opposite Visualization: Briefly determine what opposite message you want to convey. Consider the data you have available (or could easily add).
+13. Plan Your Opposite Visualization: Briefly determine what opposite message you want to convey. Consider the data you have available (or could easily add).
 
-12. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
+14. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
 
-13. Now for the real challenge! Find your own misleading graph and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers. Analyze the graph to identify what makes it misleading and then attempt to recreate it using the same data (if available) or similar data. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
+15. Now for the real challenge! Find your own misleading graph and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers. Analyze the graph to identify what makes it misleading and then attempt to recreate it using the same data (if available) or similar data. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
 
