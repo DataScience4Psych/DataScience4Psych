@@ -3,8 +3,7 @@
 
 ```{r lab_betterviz-setup, include = FALSE}
 source("common.R")
-ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
-ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+refresh_data <- FALSE
 ```
 
 ## Conveying the right message through visualization {.unnumbered}
@@ -154,7 +153,7 @@ The MMWR report tells us the case data came from [USAFacts](https://usafacts.org
 
 3. Download the confirmed cases data and the county population data directly from USAFacts:
 
-```r
+```{r, error=TRUE, eval = refresh_data}
     cases_raw <- read_csv(
       "https://static.usafacts.org/public/data/covid-19/covid_confirmed_usafacts.csv",
       show_col_types = FALSE
@@ -165,11 +164,19 @@ The MMWR report tells us the case data came from [USAFacts](https://usafacts.org
     )
 ```
 
+```{r,include=FALSE}
+if(exists("cases_raw") && exists("pop_raw") && refresh_data) {
+write_csv(cases_raw, "data/cases_raw.csv")
+write_csv(pop_raw, "data/pop_raw.csv")
+} else {
+  cases_raw <- read_csv("data/cases_raw.csv", show_col_types = FALSE)
+  pop_raw <- read_csv("data/pop_raw.csv", show_col_types = FALSE)
+}
+```
+
 Use `glimpse()` to explore both datasets. The cases data covers *every county in the United States* — how many rows and columns does it have? What does each row represent? Notice that the cases data is in *wide format* — each date gets its own column. Why would that be a problem for plotting with ggplot2?
 
-4. We only need Kansas. Filter `cases_raw` to just Kansas counties (`State == "KS"`) and exclude the statewide total row (`countyFIPS != 0`). Then use `pivot_longer()` to reshape the data from wide to long format, so you have one row per county per date with columns for `countyFIPS`, `County Name`, `date`, and `cumulative_cases`. Use `lubridate::ymd()` to parse the date strings into proper Date objects.
-
-    Do the same filtering for `pop_raw` — keep only Kansas counties and select just `countyFIPS`, `County Name`, and `population`.
+4. We only need Kansas. Filter `cases_raw` to just Kansas counties (`State == "KS"`) and exclude the statewide total row (`countyFIPS != 0`). Then use `pivot_longer()` to reshape the data from wide to long format, so you have one row per county per date with columns for `countyFIPS`, `County Name`, `date`, and `cumulative_cases`. Use `lubridate::ymd()` to parse the date strings into proper Date objects. Do the same filtering for `pop_raw` — keep only Kansas counties and select just `countyFIPS`, `County Name`, and `population`.
 
 🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've acquired and reshaped real web data — just like Holland did!*
 
@@ -179,15 +186,15 @@ You now have cumulative case counts for every Kansas county on every date. But t
 
 5. First, narrow the time window. The visualization covers July 12 through August 3, 2020 — but to compute a 7-day rolling average starting on July 12, you need data going back seven days before that. Filter your Kansas cases to dates from **July 5, 2020** through **August 3, 2020**.
 
-    Then, within each county (use `group_by()` and `arrange()`), calculate `daily_new_cases` as the difference between each day's cumulative count and the previous day's using `lag()`. Remove the resulting `NA` rows (the first day of each county has no previous day to subtract from).
+Then, within each county (use `group_by()` and `arrange()`), calculate `daily_new_cases` as the difference between each day's cumulative count and the previous day's using `lag()`. Remove the resulting `NA` rows (the first day of each county has no previous day to subtract from).
 
 6. Now you need to know which counties had mask mandates. From the MMWR report, you learned that these 24 Kansas counties had mandates in effect by July 3, 2020:
 
     *Allen, Atchison, Bourbon, Crawford, Dickinson, Douglas, Franklin, Geary, Gove, Harvey, Jewell, Johnson, Mitchell, Montgomery, Morris, Pratt, Reno, Republic, Saline, Scott, Sedgwick, Shawnee, Stanton, Wyandotte*
 
-    But there's a snag — your data has county names like `"Sedgwick County"` while this list uses just `"Sedgwick"`. Use `str_remove()` to strip the `" County"` suffix, then use `ifelse()` to create a `mask_mandate` column labeling each county as `"Mask"` or `"No Mask"`.
+But there's a snag — your data has county names like `"Sedgwick County"` while this list uses just `"Sedgwick"`. Use `str_remove()` to strip the `" County"` suffix, then use `ifelse()` to create a `mask_mandate` column labeling each county as `"Mask"` or `"No Mask"`.
 
-    Finally, use `left_join()` to bring in each county's `population` from the population data you filtered earlier.
+Finally, use `left_join()` to bring in each county's `population` from the population data you filtered earlier.
 
 🧶 ✅ ⬆️ *Knit, commit, and push your changes. You've built an analysis-ready dataset from raw web data!*
 
@@ -217,13 +224,15 @@ You now have cumulative case counts for every Kansas county on every date. But t
 
 ### Part 6: Visualization as Rhetoric {.unnumbered}
 
-Using the same dataset you constructed, your goal now is to create a new visualization that intentionally conveys the opposite message of your previous, accurate visualization. This exercise is designed to highlight the impact of visualization choices on the interpretation of data. It's a practical exploration of how changing the presentation can alter the perceived message, underscoring the ethical implications of data visualization.
+Using the same underlying data you recovered, your goal now is to create a new visualization that intentionally conveys the opposite message of your previous, accurate visualization. This exercise is designed to highlight the impact of visualization choices on the interpretation of data. 
 
 12. Reflect on the message conveyed by your accurate visualization regarding mask-wearing and COVID-19. Discuss the key factors that contribute to this message, such as the variables used, the scale of the axes, and the type of visualization.
 
-13. Plan Your Opposite Visualization: Briefly determine what opposite message you want to convey. Consider the data you have available (or could easily add).
+13. Plan Your Opposite Visualization: Briefly determine what opposite message you want to convey. Consider the data you have available (or could easily add). For example, you could pull weather data for Kansas during the same time period, using the API we covered in the data acquisition module, and create a visualization that suggests a relationship between weather patterns and COVID-19 cases, rather than mask-wearing.
 
 14. Use visualization techniques to craft a chart or graph that conveys this contrary perspective. Pay careful attention to how different visualization choices, like altering the y-axis scale or changing the chart type, can influence the message received by the audience.
+
+## Stretch Goal: Find and Reconstruct Your Own Misleading Graph {.unnumbered}
 
 15. Now for the real challenge! Find your own misleading graph and try to reconstruct it. You can find misleading graphs in news articles, social media, or even academic papers. Analyze the graph to identify what makes it misleading and then attempt to recreate it using the same data (if available) or similar data. This exercise will help you understand the techniques used to mislead and how to critically evaluate visualizations.
 
