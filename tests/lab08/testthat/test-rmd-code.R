@@ -1,7 +1,7 @@
 # Per-exercise Rmd content checks for lab 8
 
 test_that("Exercise 1 contains URL-fixing or scraping code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "str_replace\\(", "read_html\\(", "html_nodes\\(",
     "first_url", "^```\\{r"
@@ -14,7 +14,7 @@ test_that("Exercise 1 contains URL-fixing or scraping code", {
 })
 
 test_that("Exercise 2 contains artist-scraping code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "\\.iteminfo", "artist", "html_nodes\\(|html_node\\(|html_elements\\(",
     "html_text\\(|html_attr\\("
@@ -27,7 +27,7 @@ test_that("Exercise 2 contains artist-scraping code", {
 })
 
 test_that("Exercise 3 contains tibble construction code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "tibble\\(", "data\\.frame\\(",
     "first_ten", "title.*artist.*link|artist.*link.*title"
@@ -40,7 +40,7 @@ test_that("Exercise 3 contains tibble construction code", {
 })
 
 test_that("Exercise 4 references a second page URL", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "second_url", "offset=10", "second_ten"
   )
@@ -52,7 +52,7 @@ test_that("Exercise 4 references a second page URL", {
 })
 
 test_that("Exercise 5 defines the scrape_page function", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "scrape_page\\s*<-\\s*function",
     "function\\(url\\)",
@@ -66,7 +66,7 @@ test_that("Exercise 5 defines the scrape_page function", {
 })
 
 test_that("Exercise 6 tests scrape_page with first_url and second_url", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "scrape_page\\(first_url\\)",
     "scrape_page\\(second_url\\)",
@@ -80,7 +80,7 @@ test_that("Exercise 6 tests scrape_page with first_url and second_url", {
 })
 
 test_that("Exercise 7 contains URL list construction code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "paste0\\(", "seq\\(", "urls\\s*<-", "root"
   )
@@ -92,7 +92,7 @@ test_that("Exercise 7 contains URL list construction code", {
 })
 
 test_that("Exercise 8 contains map iteration to build uoe_art", {
-  skip_if(length(.rmd_content) == 0)
+   skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "map_dfr|map_df\\b|map\\(",
     "purrr",
@@ -107,7 +107,7 @@ test_that("Exercise 8 contains map iteration to build uoe_art", {
 })
 
 test_that("Exercise 9 contains write_csv or equivalent to save uoe_art", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "write_csv\\(", "write\\.csv\\(",
     "saveRDS\\(", "save\\("
@@ -120,7 +120,7 @@ test_that("Exercise 9 contains write_csv or equivalent to save uoe_art", {
 })
 
 test_that("Exercise 10 contains separate() and year-extraction code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "separate\\(", "str_extract\\(", "str_remove\\(",
     "as\\.numeric\\(", "parse_number\\("
@@ -133,7 +133,7 @@ test_that("Exercise 10 contains separate() and year-extraction code", {
 })
 
 test_that("Exercise 11 contains skim() to report missing values", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "skim\\(", "skimr",
     "summary\\(.*uoe_art", "glimpse\\("
@@ -146,7 +146,7 @@ test_that("Exercise 11 contains skim() to report missing values", {
 })
 
 test_that("Exercise 12 contains a histogram of years", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "geom_histogram", "hist\\(",
     "ggplot\\(.*aes.*year|aes\\(.*year"
@@ -159,7 +159,7 @@ test_that("Exercise 12 contains a histogram of years", {
 })
 
 test_that("Exercise 13 contains year-correction code", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "mutate\\(",
     "if_else\\(|ifelse\\(|case_when\\("
@@ -172,7 +172,7 @@ test_that("Exercise 13 contains year-correction code", {
 })
 
 test_that("Exercise 14 contains code to identify the most common artist", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "count\\(", "n_distinct", "group_by.*artist|artist.*group_by",
     "sort.*artist|arrange.*artist"
@@ -185,7 +185,7 @@ test_that("Exercise 14 contains code to identify the most common artist", {
 })
 
 test_that("Exercise 15 contains str_detect or filter code for 'child' in title", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "str_detect\\(", "grepl\\(",
     "child", "filter\\("
