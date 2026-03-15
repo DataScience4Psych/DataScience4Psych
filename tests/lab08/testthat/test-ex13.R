@@ -4,8 +4,12 @@ test_that("Ex 13: all non-NA year values fall within a plausible historical rang
   skip_if(!exists("uoe_art") || !"year" %in% names(uoe_art))
   valid_years <- uoe_art$year[!is.na(uoe_art$year)]
   skip_if(length(valid_years) == 0, message = "No non-NA year values to check")
-  expect_true(all(valid_years >= 1400 & valid_years <= 2025),
-    info = "After correcting outliers in Exercise 13, all years should be between 1400 and 2025"
+  current_year <- as.integer(format(Sys.Date(), "%Y"))
+  expect_true(all(valid_years >= 1400 & valid_years <= current_year),
+    info = paste0(
+      "After correcting outliers in Exercise 13, all years should be between 1400 and ",
+      current_year
+    )
   )
 })
 
