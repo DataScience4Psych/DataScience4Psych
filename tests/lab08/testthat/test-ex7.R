@@ -1,4 +1,4 @@
-# Exercises 7-8: URL list construction and iteration over all pages
+# Exercise 7: Building the list of all page URLs
 
 test_that("Ex 7: urls object exists", {
   expect_true(exists("urls"),
@@ -62,37 +62,3 @@ test_that("Ex 7: Rmd contains code to construct urls using paste0() and seq()", 
   )
 })
 
-test_that("Ex 8: uoe_art was created by iterating over multiple pages", {
-  skip_if(!exists("uoe_art"))
-  expect_true(nrow(uoe_art) >= 100,
-    info = "uoe_art should contain art pieces from many pages — use map_dfr(urls, scrape_page)"
-  )
-})
-
-test_that("Ex 8: Rmd contains map or iteration code for scraping all pages", {
-  skip_if(length(.rmd_content) == 0)
-  potential_answers <- c(
-    "map_dfr|map_df\\b|map\\(",
-    "purrr",
-    "lapply",
-    "scrape_page"
-  )
-  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
-  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
-    info = "Include iteration code (e.g., map_dfr(urls, scrape_page)) in your Rmd for Exercise 8"
-  )
-})
-
-test_that("Ex 9: Rmd contains write_csv or write.csv to save uoe_art", {
-  skip_if(length(.rmd_content) == 0)
-  potential_answers <- c(
-    "write_csv\\(", "write\\.csv\\(", "saveRDS\\(",
-    "save\\(.*uoe_art"
-  )
-  pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
-  answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
-    info = "Use write_csv() to save 'uoe_art' to the data folder for Exercise 9"
-  )
-})

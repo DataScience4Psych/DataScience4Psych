@@ -149,7 +149,7 @@ test_that("Exercise 12 contains a histogram of years", {
   skip_if(length(.rmd_content) == 0)
   potential_answers <- c(
     "geom_histogram", "hist\\(",
-    "ggplot.*year|year.*ggplot"
+    "ggplot\\(.*aes.*year|aes\\(.*year"
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
