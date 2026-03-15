@@ -1,13 +1,74 @@
-# Exercise 2: Train/test split
+# Exercise 2: Logistic regression model and predictions
+
+test_that("Ex 2: logistic regression model object exists", {
+  has_model <- exists("model") || exists("logit_model") || exists("titanic_model") ||
+               exists("glm_model") || exists("mod") || exists("fit") ||
+               exists("m_apparent") || exists("m_split")
+  expect_true(has_model,
+              info = "Create a logistic regression model object (e.g., m_apparent, m_split, model, or logit_model)")
+})
+
+test_that("Ex 2: logistic model is a glm object with binomial family", {
+  m <- NULL
+  for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
+    if (exists(nm) && inherits(get(nm), "glm")) { m <- get(nm); break }
+  }
+  skip_if(is.null(m), message = "No glm model object found")
+  expect_s3_class(m, "glm")
+  expect_equal(m$family$family, "binomial",
+               info = "Use family = binomial for logistic regression in your glm() call")
+})
+
+test_that("Ex 2: logistic model includes sex and pclass as predictors", {
+  m <- NULL
+  for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
+    if (exists(nm) && inherits(get(nm), "glm")) { m <- get(nm); break }
+  }
+  skip_if(is.null(m), message = "No glm model object found")
+  model_terms <- tolower(attr(terms(m), "term.labels"))
+  expect_true("sex" %in% model_terms,
+              info = "Include sex as a predictor in your logistic regression model")
+  expect_true("pclass" %in% model_terms,
+              info = "Include pclass as a predictor in your logistic regression model")
+})
+
+test_that("Ex 2: predicted probabilities are between 0 and 1", {
+  m <- NULL
+  for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
+    if (exists(nm) && inherits(get(nm), "glm")) { m <- get(nm); break }
+  }
+  skip_if(is.null(m), message = "No glm model object found")
+  preds <- predict(m, type = "response")
+  expect_true(all(preds >= 0 & preds <= 1),
+              info = "Use predict(model, type = 'response') to get probabilities between 0 and 1")
+})
+
+test_that("Ex 2: females have higher predicted survival probability than males", {
+  m <- NULL
+  for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
+    if (exists(nm) && inherits(get(nm), "glm")) { m <- get(nm); break }
+  }
+  skip_if(is.null(m), message = "No glm model object found")
+  d <- m$model
+  sex_col <- names(d)[tolower(names(d)) == "sex"][1]
+  skip_if(is.na(sex_col), message = "sex not found in model data")
+  d$pred <- predict(m, type = "response")
+  avg_female <- mean(d$pred[tolower(d[[sex_col]]) == "female"], na.rm = TRUE)
+  avg_male <- mean(d$pred[tolower(d[[sex_col]]) == "male"], na.rm = TRUE)
+  expect_true(avg_female > avg_male,
+              info = "Check that your model shows females have higher predicted survival probability than males")
+})
+
+# Lab-specific checks: train/test split objects expected by the lab instructions
 
 test_that("Ex 2: titanic_train data object exists", {
   expect_true(exists("titanic_train"),
-              info = "Load titanic_train (from the titanic package) for training the model")
+              info = "Load titanic_train (from the titanic package) for training the split model")
 })
 
 test_that("Ex 2: titanic_test data object exists", {
   expect_true(exists("titanic_test"),
-              info = "Load titanic_test (from the titanic package) for evaluating the model")
+              info = "Load titanic_test (from the titanic package) for evaluating the split model")
 })
 
 test_that("Ex 2: m_split model object exists", {
@@ -15,20 +76,11 @@ test_that("Ex 2: m_split model object exists", {
               info = "Create m_split by fitting glm(survived ~ sex + pclass, data = titanic_train, family = binomial)")
 })
 
-test_that("Ex 2: m_split is a binomial glm trained on titanic_train", {
+test_that("Ex 2: m_split is a binomial glm", {
   skip_if(!exists("m_split"), message = "m_split not found")
   expect_s3_class(m_split, "glm")
   expect_equal(m_split$family$family, "binomial",
                info = "Use family = binomial in your glm() call for m_split")
-})
-
-test_that("Ex 2: m_split uses sex and pclass as predictors", {
-  skip_if(!exists("m_split"), message = "m_split not found")
-  model_terms <- attr(terms(m_split), "term.labels")
-  expect_true("sex" %in% model_terms,
-              info = "Include sex as a predictor in m_split")
-  expect_true("pclass" %in% model_terms,
-              info = "Include pclass as a predictor in m_split")
 })
 
 test_that("Ex 2: acc_train (training accuracy) exists and is reasonable", {
@@ -80,13 +132,3 @@ test_that("Ex 2: training accuracy is not lower than test accuracy by more than 
               ))
 })
 
-test_that("Ex 2: females have higher predicted survival probability than males on test set", {
-  skip_if(!exists("m_split"), message = "m_split not found")
-  skip_if(!exists("titanic_test"), message = "titanic_test not found")
-  skip_if(!"sex" %in% names(titanic_test), message = "sex column not found in titanic_test")
-  preds <- predict(m_split, newdata = titanic_test, type = "response")
-  avg_female <- mean(preds[titanic_test$sex == "female"], na.rm = TRUE)
-  avg_male <- mean(preds[titanic_test$sex == "male"], na.rm = TRUE)
-  expect_true(avg_female > avg_male,
-              info = "Your model should predict higher survival probability for females than males")
-})

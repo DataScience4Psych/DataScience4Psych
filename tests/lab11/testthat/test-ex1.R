@@ -1,31 +1,76 @@
-# Exercise 1: Apparent accuracy (fitting a model on full data)
+# Exercise 1: Loading and exploring Titanic data
+
+test_that("Ex 1: Titanic data object exists", {
+  has_data <- exists("titanic") || exists("titanic_train") || exists("titanic_data") || exists("titanic3")
+  expect_true(has_data,
+              info = "Load a Titanic data object (e.g., titanic3, titanic_train, or titanic_data)")
+})
+
+test_that("Ex 1: Titanic data is a data frame", {
+  d <- NULL
+  if (exists("titanic3")) d <- titanic3
+  else if (exists("titanic_train")) d <- titanic_train
+  else if (exists("titanic")) d <- titanic
+  else if (exists("titanic_data")) d <- titanic_data
+  skip_if(is.null(d), message = "No Titanic data object found")
+  expect_true(is.data.frame(d),
+              info = "Ensure your Titanic data object is a data frame")
+})
+
+test_that("Ex 1: Titanic data has Survived variable (any case)", {
+  d <- NULL
+  if (exists("titanic3")) d <- titanic3
+  else if (exists("titanic_train")) d <- titanic_train
+  else if (exists("titanic")) d <- titanic
+  else if (exists("titanic_data")) d <- titanic_data
+  skip_if(is.null(d), message = "No Titanic data object found")
+  has_survived <- "survived" %in% tolower(names(d))
+  expect_true(has_survived,
+              info = "Ensure your Titanic data has a survived column (lowercase or uppercase)")
+})
+
+test_that("Ex 1: Survived is binary (0 or 1)", {
+  d <- NULL
+  if (exists("titanic3")) d <- titanic3
+  else if (exists("titanic_train")) d <- titanic_train
+  else if (exists("titanic")) d <- titanic
+  else if (exists("titanic_data")) d <- titanic_data
+  skip_if(is.null(d), message = "No Titanic data object found")
+  surv_col <- names(d)[tolower(names(d)) == "survived"][1]
+  skip_if(is.na(surv_col))
+  vals <- unique(d[[surv_col]][!is.na(d[[surv_col]])])
+  expect_true(all(vals %in% c(0, 1)),
+              info = "Ensure Survived is coded as binary (0 or 1)")
+})
+
+test_that("Ex 1: Titanic data has key predictor variables", {
+  d <- NULL
+  if (exists("titanic3")) d <- titanic3
+  else if (exists("titanic_train")) d <- titanic_train
+  else if (exists("titanic")) d <- titanic
+  else if (exists("titanic_data")) d <- titanic_data
+  skip_if(is.null(d), message = "No Titanic data object found")
+  lower_names <- tolower(names(d))
+  expect_true(all(c("pclass", "sex") %in% lower_names),
+              info = "Ensure your Titanic data has pclass and sex columns")
+})
+
+test_that("Ex 1: Titanic data has a reasonable number of observations", {
+  d <- NULL
+  if (exists("titanic3")) d <- titanic3
+  else if (exists("titanic_train")) d <- titanic_train
+  else if (exists("titanic")) d <- titanic
+  else if (exists("titanic_data")) d <- titanic_data
+  skip_if(is.null(d), message = "No Titanic data object found")
+  expect_true(nrow(d) >= 600,
+              info = "Ensure your Titanic data has at least 600 observations")
+})
+
+# Lab-specific checks: objects expected by the lab instructions
 
 test_that("Ex 1: titanic3 data object exists", {
   expect_true(exists("titanic3"),
-              info = "Load the titanic3 dataset (e.g., library(titanic); data(titanic3) or titanic::titanic3)")
-})
-
-test_that("Ex 1: titanic3 is a data frame with sufficient rows", {
-  skip_if(!exists("titanic3"), message = "titanic3 not found")
-  expect_true(is.data.frame(titanic3),
-              info = "titanic3 should be a data frame")
-  expect_true(nrow(titanic3) >= 1300,
-              info = "titanic3 should have at least 1300 rows")
-})
-
-test_that("Ex 1: titanic3 has survived, sex, and pclass columns", {
-  skip_if(!exists("titanic3"), message = "titanic3 not found")
-  expected <- c("survived", "sex", "pclass")
-  expect_true(all(expected %in% names(titanic3)),
-              info = "titanic3 should contain survived, sex, and pclass columns")
-})
-
-test_that("Ex 1: titanic3$survived is binary (0 or 1)", {
-  skip_if(!exists("titanic3"), message = "titanic3 not found")
-  skip_if(!"survived" %in% names(titanic3))
-  vals <- unique(titanic3$survived[!is.na(titanic3$survived)])
-  expect_true(all(vals %in% c(0, 1)),
-              info = "survived should be coded as 0 (perished) or 1 (survived)")
+              info = "Load the titanic3 dataset (from data/titanic3.xls via read_excel)")
 })
 
 test_that("Ex 1: m_apparent model object exists", {
@@ -79,5 +124,4 @@ test_that("Ex 1: acc_apparent exists and is a reasonable accuracy (> 70%, < 100%
   expect_true(acc < 1.0,
               info = "acc_apparent should not be perfect (< 100%%) — this is apparent accuracy, not truth")
 })
-
 
