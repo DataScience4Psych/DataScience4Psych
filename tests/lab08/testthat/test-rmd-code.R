@@ -8,6 +8,8 @@ test_that("Exercise 1 contains URL-fixing or scraping code", {
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rscript|answer_in_rmd
   expect_equal(answer_in_rmd, TRUE,
     info = "Include R code for Exercise 1 (e.g., str_replace() to fix relative links, or read_html())"
   )
