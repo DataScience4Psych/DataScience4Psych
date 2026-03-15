@@ -92,13 +92,13 @@ test_that("Ex 1.2: Create a scatterplot of score versus bty_avg", {
     info = "Did you plot score versus bty_avg?"
   )
 
-  potential_answers <- c("geom_point\(")
+  potential_answers <- c("geom_point\\(")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
     info = "Did you use geom_point?"
   )
-  potential_answers <- c("geom_jitter\(")
+  potential_answers <- c("geom_jitter\\(")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
