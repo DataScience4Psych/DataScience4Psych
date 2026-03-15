@@ -53,11 +53,13 @@ test_that("Ex 7: urls offsets are multiples of 10", {
 })
 
 test_that("Ex 7: Rmd contains code to construct urls using paste0() and seq()", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c("paste0\\(", "seq\\(", "urls\\s*<-", "root")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Include code to build the 'urls' vector (e.g., paste0(root, seq(0, ..., by=10))) for Exercise 7"
   )
 })

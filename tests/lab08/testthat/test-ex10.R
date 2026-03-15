@@ -40,14 +40,16 @@ test_that("Ex 10: some NA values exist in year column (expected for non-year dat
 })
 
 test_that("Ex 10: Rmd contains separate() or str_extract() for year extraction", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "separate\\(", "str_extract\\(", "str_remove\\(",
     "as\\.numeric\\(", "parse_number\\("
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Use separate() or str_extract() to split the title and extract the year for Exercise 10"
   )
 })

@@ -19,6 +19,35 @@ suppressPackageStartupMessages({
   warning("No Rmd file found. Ensure your Rmd is in the repo root and not named with 'template', 'solution', or 'example'.")
   character(0)
 }
+# Find and read R scripts from scripts/ subdirectory
+.r_script_files <- list.files(file.path(.student_dir, "scripts"),
+                              pattern = "\\.R$", ignore.case = TRUE,
+                              full.names = TRUE)
+.r_script_content <- if (length(.r_script_files) > 0) {
+  tryCatch(
+    unlist(lapply(.r_script_files, readLines, warn = FALSE)),
+    error = function(e) character(0)
+  )
+} else {
+  character(0)
+}
+
+# Source R scripts from scripts/ subdirectory
+if (length(.r_script_files) > 0) {
+  for (.r_file in .r_script_files) {
+    tryCatch({
+      grDevices::pdf(NULL)
+      suppressMessages(suppressWarnings(
+        source(.r_file, local = FALSE, echo = FALSE)
+      ))
+      grDevices::dev.off()
+    }, error = function(e) {
+      tryCatch(grDevices::dev.off(), error = function(e2) invisible(NULL))
+      invisible(NULL)
+    })
+  }
+}
+
 if (length(.rmd_files) > 0 && requireNamespace("knitr", quietly = TRUE)) {
   .r_tmp <- tempfile(fileext = ".R")
   tryCatch({

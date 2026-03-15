@@ -8,7 +8,7 @@ test_that("Ex 8: uoe_art was created by iterating over multiple pages", {
 })
 
 test_that("Ex 8: Rmd contains map or iteration code for scraping all pages", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "map_dfr|map_df\\b|map\\(",
     "purrr",
@@ -17,7 +17,9 @@ test_that("Ex 8: Rmd contains map or iteration code for scraping all pages", {
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Include iteration code (e.g., map_dfr(urls, scrape_page)) in your Rmd for Exercise 8"
   )
 })
@@ -30,14 +32,16 @@ test_that("Ex 8: uoe_art has title, artist, and link columns", {
 })
 
 test_that("Ex 9: Rmd contains write_csv or write.csv to save uoe_art", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "write_csv\\(", "write\\.csv\\(", "saveRDS\\(",
     "save\\(.*uoe_art"
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Use write_csv() to save 'uoe_art' to the data folder for Exercise 9"
   )
 })
