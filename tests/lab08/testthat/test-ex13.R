@@ -14,14 +14,16 @@ test_that("Ex 13: all non-NA year values fall within a plausible historical rang
 })
 
 test_that("Ex 13: Rmd contains year-correction code using mutate() and if_else() or case_when()", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "mutate\\(",
     "if_else\\(|ifelse\\(|case_when\\("
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Use mutate() with if_else() or case_when() to correct the out-of-range year for Exercise 13"
   )
 })

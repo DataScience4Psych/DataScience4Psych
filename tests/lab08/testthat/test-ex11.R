@@ -1,14 +1,16 @@
 # Exercise 11: Summarising the data with skim()
 
 test_that("Ex 11: Rmd contains skim() to summarise uoe_art", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c(
     "skim\\(", "skimr",
     "summary\\(.*uoe_art", "glimpse\\(.*uoe_art"
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Use skim() from the skimr package to print a summary of uoe_art for Exercise 11"
   )
 })

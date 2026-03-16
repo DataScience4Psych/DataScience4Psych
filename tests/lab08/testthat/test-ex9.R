@@ -52,8 +52,9 @@ test_that("Ex 10: year values are plausible (within a reasonable range)", {
   skip_if(!exists("uoe_art") || !"year" %in% names(uoe_art))
   valid_years <- uoe_art$year[!is.na(uoe_art$year)]
   skip_if(length(valid_years) == 0, message = "No non-NA year values found")
-  expect_true(all(valid_years >= 1400 & valid_years <= 2025),
-              info = "Check that your 'year' values are plausible dates for artworks (between 1400 and 2025)")
+  current_year <- as.integer(format(Sys.Date(), "%Y"))
+  expect_true(all(valid_years >= 1400 & valid_years <= current_year),
+              info = paste0("Check that your 'year' values are plausible dates for artworks (between 1400 and ", current_year, ")"))
 })
 
 test_that("Ex 14: can identify the most common artist in uoe_art", {

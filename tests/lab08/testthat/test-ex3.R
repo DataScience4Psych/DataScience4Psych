@@ -36,11 +36,13 @@ test_that("Ex 3: first_ten link column contains full URLs (not relative paths)",
 })
 
 test_that("Ex 3: Rmd contains tibble or data.frame construction code for art pieces", {
-  skip_if(length(.rmd_content) == 0)
+  skip_if(length(.rmd_content) == 0 & length(.r_script_content) == 0)
   potential_answers <- c("tibble\\(", "data\\.frame\\(", "first_ten", "bind_rows")
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
-  expect_equal(answer_in_rmd, TRUE,
+  answer_in_rscript <- stringr::str_detect(.r_script_content, pattern) |> any()
+  answer_in_r <- answer_in_rmd | answer_in_rscript
+  expect_equal(answer_in_r, TRUE,
     info = "Include code to build a tibble of art pieces (with title, artist, link) for Exercise 3"
   )
 })
