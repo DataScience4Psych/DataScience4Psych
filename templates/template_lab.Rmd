@@ -1,8 +1,56 @@
 # LAB: Penguin Research Station {#labXX}
 
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║  TEMPLATE: LAB (single-file deep format)                            ║
+║  Based on: Lab 13 Mars Simulation                                   ║
+║                                                                      ║
+║  SCAFFOLDING PHILOSOPHY:                                             ║
+║  Labs use PROGRESSIVE SCAFFOLDING — exercises deliberately move      ║
+║  from high support to low support across the lab:                    ║
+║                                                                      ║
+║    Ex 1: GUIDED        — Code provided with small gaps to fill       ║
+║    Ex 2: FILL-IN       — Structure provided, key decisions left open ║
+║    Ex 3: HINTS-ONLY    — No starter code, nested hints available     ║
+║    Ex 4: INDEPENDENT   — Minimal guidance, solution available        ║
+║    Ex 5: STRETCH       — No solution provided at all                 ║
+║                                                                      ║
+║  This mirrors Vygotsky's zone of proximal development — each         ║
+║  exercise operates at the edge of what the student can do alone.     ║
+║                                                                      ║
+║  CHOOSING A SCAFFOLDING LEVEL FOR AN EXERCISE:                       ║
+║  - Use GUIDED when introducing a new function or concept             ║
+║  - Use FILL-IN when students know the functions but need to          ║
+║    practice combining them in the right order                        ║
+║  - Use HINTS-ONLY when the task is a new application of concepts     ║
+║    they've already practiced in guided/fill-in exercises             ║
+║  - Use INDEPENDENT when the task parallels something they've         ║
+║    already done (e.g., "now do the same thing for a different var")  ║
+║  - Use STRETCH for tasks that require genuine transfer or synthesis  ║
+║                                                                      ║
+║  SOLUTION VISIBILITY:                                                ║
+║  Every exercise except stretch tasks should have a solution.         ║
+║  Solutions use the include=FALSE + ref.label pattern so they:        ║
+║    1. Execute during build (catching errors)                         ║
+║    2. Stay hidden from students by default                           ║
+║    3. Can be revealed on-demand via <details>                        ║
+║                                                                      ║
+║  COMMIT CHECKPOINTS:                                                 ║
+║  Place 🧶 ✅ ⬆️ checkpoints every 2-3 exercises. This:              ║
+║    - Forces students to knit (catching errors early)                 ║
+║    - Creates a git history (recoverable if things break later)       ║
+║    - Builds the habit of incremental commits                         ║
+║    - Gives natural "pause and check your work" moments               ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->
+
 Welcome to the Penguin Research Station Lab! In this lab, we'll explore the Palmer Penguins dataset to practice data wrangling, visualization, and analysis skills. As researchers stationed in Antarctica, our mission is to understand the physical characteristics and behaviors of three penguin species: Adelie, Chinstrap, and Gentoo. This lab teaches you to explore, visualize, and model real ecological data using R.
 
 ## Learning goals {.unnumbered}
+
+<!-- LEARNING GOALS: List 3-4 specific, measurable skills. Each goal
+     should map to at least one exercise. Students should be able to
+     read these and know exactly what they'll practice. -->
 
 - Explore and summarize a dataset using `dplyr` functions such as `filter()`, `group_by()`, and `summarize()`.
 - Create publication-quality visualizations using `ggplot2` to reveal patterns in ecological data.
@@ -14,6 +62,10 @@ Welcome to the Penguin Research Station Lab! In this lab, we'll explore the Palm
 
 Go to the course GitHub organization and locate your lab repo, which should be named `lab-XX-YOUR-NAME`. Grab the URL of the repo, and clone it in RStudio. First, open the R Markdown document `lab-XX.Rmd` and Knit it. Make sure it compiles without errors.
 
+<!-- SETUP CHUNK: include=FALSE hides everything. This runs silently
+     when the book builds. The knitr::opts_chunk$set(echo = TRUE)
+     means student code chunks show their code by default — important
+     for labs where students need to see what they wrote. -->
 ```{r setup, include=FALSE}
 source("common.R")
 library(tidyverse)
@@ -31,6 +83,12 @@ options(
 
 ### Packages {.unnumbered}
 
+<!-- PACKAGE LOADING: message=FALSE, warning=FALSE suppresses the
+     tidyverse startup banner and any masking warnings. Without these,
+     the output is cluttered and confusing for beginners.
+     The if(!require()) pattern auto-installs missing packages —
+     important because students' environments vary. -->
+
 In this lab, we will work with the **tidyverse** and **palmerpenguins** packages. We can install and load them with the following code:
 
 ```{r load-packages, message=FALSE, warning=FALSE}
@@ -44,8 +102,15 @@ library(tidyverse)
 
 ### Data {.unnumbered}
 
+<!-- INLINE R: Using `r nrow(penguins)` instead of hardcoding "344"
+     means this text auto-updates if the dataset changes. Good habit
+     to model for students. -->
+
 The `penguins` dataset from the **palmerpenguins** package contains measurements for `r nrow(penguins)` penguins from `r n_distinct(penguins$species)` species collected at the Palmer Station in Antarctica. Variables include species, island, bill dimensions, flipper length, body mass, sex, and year.
 
+<!-- DATA GLIMPSE: echo=TRUE so students see the glimpse() call and
+     can reproduce it. This orients them to the dataset before
+     exercises begin. Always include a data overview before exercises. -->
 ```{r glimpse-data, echo=TRUE}
 glimpse(penguins)
 ```
@@ -58,15 +123,42 @@ Rather than analyzing someone else's summary, we'll be working hands-on with rea
 
 ## Exercise 1: Getting to Know Our Penguins {.unnumbered}
 
+<!-- ┌──────────────────────────────────────────────────────────────┐
+     │ SCAFFOLDING LEVEL: GUIDED                                    │
+     │                                                              │
+     │ This is the first exercise, so scaffolding is HIGH:          │
+     │ - 1.1: error=TRUE workspace with most code provided          │
+     │ - 1.3: eval=FALSE fill-in-the-blank with ___ placeholders    │
+     │ - 1.4: open "your code here" but with detailed instructions  │
+     │                                                              │
+     │ WHY GUIDED HERE: Students are just getting oriented to the   │
+     │ dataset. The goal is building confidence, not problem-solving.│
+     │ They should succeed quickly and see results immediately.     │
+     └──────────────────────────────────────────────────────────────┘ -->
+
 Let's start by understanding the basic structure of our dataset. Before diving into analysis, it's important to know what we're working with — how many penguins, how many species, and what the data looks like.
 
 **1.1.** How many penguins of each species are in the dataset? Use `count()` to find out, and store the result in a variable called `species_counts`.
 
+<!-- STUDENT WORKSPACE: error=TRUE means this chunk won't crash the
+     build even though `1` is not valid dplyr code. The student
+     replaces `1` with their answer. We provide everything except
+     the one function they need to type.
+
+     USE error=TRUE WHEN: the placeholder code would cause an R error
+     USE eval=FALSE WHEN: you want to show template code that students
+       copy and modify (the ___ pattern) — no error risk but also
+       no output shown in rendered version -->
 ```{r exercise-one-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 species_counts <- penguins %>%
   1 # replace this with your code
 ```
 
+<!-- HIDDEN SOLUTION: include=FALSE hides BOTH the code AND output.
+     The chunk still RUNS during build, so you'll catch errors.
+     This is the "master copy" of the solution that ref.label
+     points back to. Always name solution chunks consistently:
+     exercise-N-solution.Xsolution -->
 ```{r exercise-1-solution.1solution, error=TRUE, include=FALSE}
 species_counts <- penguins %>%
   count(species)
@@ -74,6 +166,10 @@ species_counts <- penguins %>%
 
 Here's what the species breakdown looks like:
 
+<!-- PREVIEW PLOT: echo=FALSE hides the code but shows the output.
+     Use this to show students "here's what your result should
+     look like" without revealing exactly how you made it.
+     This motivates them to get their code working. -->
 ```{r exercise-1-plot.1plot, echo=FALSE, message=FALSE}
 penguins %>%
   count(species) %>%
@@ -89,11 +185,29 @@ penguins %>%
 ```
 
 
+<!-- REFLECTION QUESTION: No code needed — just writing. These should
+     ask students to INTERPRET what they see, not just describe it.
+     "Why might X happen?" is better than "What do you see?"
+     Include 1-2 reflection questions per exercise block. -->
 **1.2.** Look at the bar chart above. Which species has the most observations? Why might sample sizes differ across species in ecological research? Write 2-3 sentences reflecting on what might cause unequal group sizes in a real dataset.
 
 
 **1.3.** Create a summary table showing the mean and standard deviation of `body_mass_g` for each species. Drop any rows with missing values first using `drop_na()`.
 
+<!-- FILL-IN-THE-BLANK: eval=FALSE with ___ placeholders.
+
+     USE THIS PATTERN WHEN:
+     - Students know the individual functions but need practice
+       assembling them in the right order
+     - The pipeline structure matters and you want to show it
+     - You want students to make specific decisions (which variable
+       to group by, which to summarize)
+
+     DON'T USE WHEN:
+     - The exercise is early enough that students need full code
+       (use error=TRUE workspace instead)
+     - The exercise is late enough that students should write from
+       scratch (use "# Your code here" instead) -->
 ```{r exercise-one-part-three, eval=FALSE}
 mass_summary <- penguins %>%
   drop_na(body_mass_g) %>%
@@ -104,6 +218,10 @@ mass_summary <- penguins %>%
   )
 ```
 
+<!-- SINGLE HINT: Use a single <details> block for simple hints.
+     Good when one sentence of guidance is enough.
+     Keep hints actionable: name the function, not just "think about
+     what you learned." -->
 <details>
   <summary>Click for a hint</summary>
   Use `group_by(species)` followed by `summarize()` with `mean()` and `sd()` inside it. Replace the `___` placeholders with the appropriate variable names.
@@ -119,6 +237,13 @@ mass_summary <- penguins %>%
   )
 ```
 
+<!-- SOLUTION DISPLAY via ref.label: This re-runs the hidden solution
+     chunk and shows the code inside a collapsible <details> block.
+     Students can click to reveal it if stuck.
+
+     echo=TRUE shows the code; warning=FALSE suppresses any warnings.
+     The chunk body is empty — ref.label pulls in the code from the
+     named chunk above. -->
 <details>
   <summary>Click to see the solution</summary>
 ```{r ref.label = "exercise-1-solution.3solution", echo = TRUE, warning = FALSE}
@@ -128,6 +253,10 @@ mass_summary <- penguins %>%
 
 **1.4.** Using `ggplot2`, create a histogram of `body_mass_g` faceted by species. Use `fill` to color by species and add a `viridis` color scale.
 
+<!-- OPEN WORKSPACE: error=TRUE with just a comment.
+     This is the least-scaffolded version within the GUIDED level.
+     Still early in the lab, but by 1.4 students have seen enough
+     examples to attempt code from scratch with just instructions. -->
 ```{r exercise-one-part-four, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 # Your code here
 ```
@@ -148,6 +277,10 @@ penguins %>%
 ```
 
 
+<!-- COMMIT CHECKPOINT: Place after the first exercise block.
+     This forces an early knit, which catches setup problems
+     (wrong working directory, missing packages) before students
+     are deep into the lab. -->
 This is a good time to save your progress.
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Exercise 1: species exploration". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
@@ -155,8 +288,29 @@ This is a good time to save your progress.
 
 ## Exercise 2: Visualizing Relationships {.unnumbered}
 
+<!-- ┌──────────────────────────────────────────────────────────────┐
+     │ SCAFFOLDING LEVEL: FILL-IN                                   │
+     │                                                              │
+     │ Students have warmed up with Exercise 1. Now we provide the  │
+     │ data pipeline but leave the geom layers for them to add.     │
+     │ This is harder than 1.1 (where only one function was blank)  │
+     │ but easier than 3.1 (where no code is provided at all).     │
+     │                                                              │
+     │ WHY FILL-IN HERE: The ggplot aesthetic mapping is provided   │
+     │ because it's complex (three aesthetics). The geom layers are │
+     │ left blank because that's the skill being practiced.        │
+     └──────────────────────────────────────────────────────────────┘ -->
+
 Now let's explore how different physical measurements relate to each other. Scatter plots are one of the most powerful tools for spotting patterns and relationships in data.
 
+<!-- CONTEXTUAL IMAGE: echo=FALSE hides the code. fig.alt provides
+     accessibility text for screen readers. out.width controls display
+     size without changing resolution.
+
+     USE include_graphics WHEN: showing diagrams, screenshots, or
+     reference images that help students understand the task.
+     DON'T USE WHEN: the image IS the exercise output (use a code
+     chunk to generate it instead). -->
 ```{r exercise-2-penguin-sketch, echo=FALSE, fig.alt="Illustration of penguin bill measurements showing where bill length and bill depth are measured", out.width="60%"}
 knitr::include_graphics("img/culmen_depth.png")
 ```
@@ -202,6 +356,36 @@ penguins %>%
 
 
 ## Exercise 3: Modeling Penguin Traits {.unnumbered}
+
+<!-- ┌──────────────────────────────────────────────────────────────┐
+     │ SCAFFOLDING LEVEL: HINTS-ONLY                                │
+     │                                                              │
+     │ No starter code at all — just "# Your code here". But we     │
+     │ provide NESTED HINTS that progressively reveal the approach.  │
+     │                                                              │
+     │ NESTED HINTS follow a deliberate structure:                   │
+     │   1. Big Picture — what's the general approach?               │
+     │   2. Step 1 — what's the first concrete action?               │
+     │   3. Step 2 — what function/syntax do you need?               │
+     │   4. Step 3 — how do you check your work?                    │
+     │                                                              │
+     │ Students choose how many hints to open. This respects         │
+     │ different skill levels: strong students open none, struggling │
+     │ students open all four, most open 1-2.                       │
+     │                                                              │
+     │ USE NESTED HINTS WHEN:                                        │
+     │ - The task has 3+ distinct steps                              │
+     │ - Each step builds on the previous one                        │
+     │ - You want students to attempt each step before getting help │
+     │                                                              │
+     │ USE SINGLE HINT WHEN:                                         │
+     │ - One sentence of guidance is enough                          │
+     │ - The task is conceptually simple but syntactically tricky    │
+     │                                                              │
+     │ USE NO HINTS WHEN:                                            │
+     │ - The task closely mirrors a previous exercise                │
+     │ - It's a stretch task (struggle is the point)                │
+     └──────────────────────────────────────────────────────────────┘ -->
 
 Let's go beyond visualization and fit some models. Understanding how to quantify relationships — not just see them in plots — is a core data science skill.
 
@@ -253,6 +437,11 @@ summary(gentoo_model)
 
 Here's a visualization of the model fit:
 
+<!-- CAPTIONED FIGURE: fig.cap creates a numbered, cross-referenceable
+     caption. In bookdown, this auto-generates "Figure 3.1:" etc.
+     Use fig.cap when you want to reference the figure elsewhere
+     with \@ref(fig:chunk-label). Skip fig.cap for decorative or
+     transient figures that don't need numbering. -->
 ```{r exercise-3-plot.1plot, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Linear model of flipper length predicting body mass in Gentoo penguins. The regression equation is annotated on the plot."}
 gentoo_data <- penguins %>%
   filter(species == "Gentoo") %>%
@@ -284,11 +473,29 @@ ggplot(gentoo_data, aes(x = flipper_length_mm, y = body_mass_g)) +
 
 **3.2.** Interpret the model output. What does the slope tell you in plain language? Is the relationship statistically significant? What proportion of the variance in body mass does flipper length explain?
 
+<!-- INTERPRETATION QUESTIONS: Always pair a modeling exercise with
+     a plain-language interpretation question. Students who can run
+     lm() but can't explain the output haven't actually learned
+     modeling. Ask specifically about slope, significance, R-squared
+     rather than a vague "what do the results mean?" -->
+
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Exercises 2-3: visualization and modeling". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
 
 
 ## Exercise 4: Comparing Across Species {.unnumbered}
+
+<!-- ┌──────────────────────────────────────────────────────────────┐
+     │ SCAFFOLDING LEVEL: INDEPENDENT                               │
+     │                                                              │
+     │ Just "# Your code here" with a single hint and a solution.   │
+     │ Students have done filtering, grouping, modeling, and        │
+     │ plotting individually — now they combine them.               │
+     │                                                              │
+     │ The DT table at the end is a bonus: it shows students that   │
+     │ the same data can be presented interactively, and models      │
+     │ the DT::datatable() pattern they might use in their own work.│
+     └──────────────────────────────────────────────────────────────┘ -->
 
 Now let's scale up and compare across all three species at once. This exercise brings together everything you've practiced: filtering, grouping, modeling, and visualization.
 
@@ -323,6 +530,17 @@ model_results
 
 Here's the result as an interactive table:
 
+<!-- DT TABLE: echo=FALSE because this is a display element, not
+     something students need to code. Use DT::datatable() when:
+     - The table has many rows that benefit from search/sort
+     - You want to model professional data presentation
+     - The data is a result worth exploring interactively
+
+     Skip DT and use regular print() when:
+     - The table is small (< 10 rows)
+     - It's inside a student exercise (DT adds complexity)
+     - You're in a context where interactivity doesn't matter -->
+     
 ```{r exercise-4-dt-table, echo=FALSE, message=FALSE, warning=FALSE}
 model_results %>%
   DT::datatable(
@@ -372,6 +590,30 @@ penguins %>%
 
 ## Stretch Tasks (Optional) {.unnumbered}
 
+<!-- ┌──────────────────────────────────────────────────────────────┐
+     │ SCAFFOLDING LEVEL: STRETCH (no solution provided)            │
+     │                                                              │
+     │ Stretch tasks have:                                           │
+     │ - A single hint at most (not a solution)                     │
+     │ - No starter code                                            │
+     │ - A clear description of the desired output                  │
+     │                                                              │
+     │ PURPOSE: Differentiation. Strong students need a challenge;  │
+     │ struggling students need to know they can skip these without │
+     │ penalty. Always label as "Optional" and frame positively:    │
+     │ "for those who want to push further" not "extra credit."     │
+     │                                                              │
+     │ GOOD STRETCH TASKS:                                           │
+     │ - Require combining 2+ skills from earlier exercises         │
+     │ - Have a genuinely interesting answer worth discovering       │
+     │ - Are open-ended enough to reward creative approaches        │
+     │                                                              │
+     │ BAD STRETCH TASKS:                                            │
+     │ - Just repeat earlier exercises with different variables      │
+     │ - Require knowledge not covered in the course                │
+     │ - Are so hard that even strong students can't finish          │
+     └──────────────────────────────────────────────────────────────┘ -->
+
 These tasks are optional extensions for those who want to push further. They are not graded but are great practice.
 
 
@@ -387,6 +629,16 @@ These tasks are optional extensions for those who want to push further. They are
 
 
 ## Conclusion {.unnumbered}
+
+<!-- CONCLUSION STRUCTURE: Every lab ends with three sections:
+     1. Final Checklist — concrete items to verify
+     2. Reflect on Learning — metacognitive questions
+     3. Next Steps — the final commit/push
+
+     The checklist catches common oversights (e.g., un-run chunks).
+     The reflection questions encourage transfer ("how does this
+     apply beyond penguins?"). The final commit ensures everything
+     is pushed before the deadline. -->
 
 Congratulations on completing the Penguin Research Station Lab! Today, you've practiced exploring real ecological data, creating informative visualizations, and fitting linear models to quantify relationships between variables.
 
@@ -409,5 +661,8 @@ __Reflect on Your Learning__
 
 🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.
 
+<!-- CHILD INCLUDE: This pulls in shared footer links (courselinks.md)
+     that are reused across all chapters. Every chapter should end
+     with this. The chunk body is ignored — only the child= matters. -->
 ```{r courselinks, child="includes/courselinks.md"}
 ```
