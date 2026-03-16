@@ -19,6 +19,7 @@ source("common.R")
 library(tidyverse)
 library(palmerpenguins)
 library(viridis)
+library(DT)
 
 knitr::opts_chunk$set(echo = TRUE)
 options(
@@ -43,7 +44,7 @@ library(tidyverse)
 
 ### Data {.unnumbered}
 
-The `penguins` dataset from the **palmerpenguins** package contains measurements for `r nrow(penguins)` penguins from three species collected at the Palmer Station in Antarctica. Variables include species, island, bill dimensions, flipper length, body mass, sex, and year.
+The `penguins` dataset from the **palmerpenguins** package contains measurements for `r nrow(penguins)` penguins from `r n_distinct(penguins$species)` species collected at the Palmer Station in Antarctica. Variables include species, island, bill dimensions, flipper length, body mass, sex, and year.
 
 ```{r glimpse-data, echo=TRUE}
 glimpse(penguins)
@@ -93,15 +94,19 @@ penguins %>%
 
 **1.3.** Create a summary table showing the mean and standard deviation of `body_mass_g` for each species. Drop any rows with missing values first using `drop_na()`.
 
-```{r exercise-one-part-three, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```{r exercise-one-part-three, eval=FALSE}
 mass_summary <- penguins %>%
   drop_na(body_mass_g) %>%
-  1 # replace this with your code
+  group_by(___) %>%
+  summarize(
+    mean_mass = mean(___),
+    sd_mass = sd(___)
+  )
 ```
 
 <details>
   <summary>Click for a hint</summary>
-  Use `group_by(species)` followed by `summarize()` with `mean()` and `sd()` inside it.
+  Use `group_by(species)` followed by `summarize()` with `mean()` and `sd()` inside it. Replace the `___` placeholders with the appropriate variable names.
 </details>
 
 ```{r exercise-1-solution.3solution, error=TRUE, include=FALSE}
@@ -151,6 +156,12 @@ This is a good time to save your progress.
 ## Exercise 2: Visualizing Relationships {.unnumbered}
 
 Now let's explore how different physical measurements relate to each other. Scatter plots are one of the most powerful tools for spotting patterns and relationships in data.
+
+```{r exercise-2-penguin-sketch, echo=FALSE, fig.alt="Illustration of penguin bill measurements showing where bill length and bill depth are measured", out.width="60%"}
+knitr::include_graphics("img/culmen_depth.png")
+```
+
+The figure above shows where bill length and bill depth are measured on a penguin. Keep these in mind as you build your visualizations.
 
 
 **2.1.** Create a scatter plot of `bill_length_mm` (x-axis) vs. `bill_depth_mm` (y-axis), colored by `species`. Add a linear trend line for each species using `geom_smooth()`.
@@ -242,7 +253,7 @@ summary(gentoo_model)
 
 Here's a visualization of the model fit:
 
-```{r exercise-3-plot.1plot, echo=FALSE, message=FALSE, warning=FALSE}
+```{r exercise-3-plot.1plot, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Linear model of flipper length predicting body mass in Gentoo penguins. The regression equation is annotated on the plot."}
 gentoo_data <- penguins %>%
   filter(species == "Gentoo") %>%
   drop_na(body_mass_g, flipper_length_mm)
@@ -309,6 +320,22 @@ model_results
 ```{r ref.label = "exercise-4-solution.1solution", echo = TRUE, warning = FALSE}
 ```
 </details>
+
+Here's the result as an interactive table:
+
+```{r exercise-4-dt-table, echo=FALSE, message=FALSE, warning=FALSE}
+model_results %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    options = list(
+      pageLength = 5,
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE
+    )
+  )
+```
 
 
 **4.2.** Create a faceted scatter plot showing the relationship between `flipper_length_mm` and `body_mass_g` for each species, with trend lines and labeled regression equations.

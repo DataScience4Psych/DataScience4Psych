@@ -13,20 +13,44 @@ library(vembedr)
 
 # Recommended R Packages for Psychology {.unnumbered}
 
-This page collects useful R packages organized by the type of task you're trying to accomplish. Whether you're cleaning data, making visualizations, or running statistical models, there's likely a package that can help. Think of this as your field guide to the R ecosystem.
+This page collects `r 30 + 5` useful R packages organized by the type of task you're trying to accomplish. Whether you're cleaning data, making visualizations, or running statistical models, there's likely a package that can help. Think of this as your field guide to the R ecosystem.
 
 
 ## Data Wrangling {.unnumbered}
 
 The tidyverse provides the core toolkit for getting data into shape:
 
-| Package | Purpose | Key Functions |
-|---------|---------|---------------|
-| **dplyr** | Data manipulation | `filter()`, `mutate()`, `summarize()`, `group_by()` |
-| **tidyr** | Reshaping data | `pivot_longer()`, `pivot_wider()`, `separate()` |
-| **stringr** | String manipulation | `str_detect()`, `str_replace()`, `str_extract()` |
-| **forcats** | Working with factors | `fct_relevel()`, `fct_reorder()`, `fct_lump()` |
-| **lubridate** | Dates and times | `ymd()`, `mdy()`, `interval()` |
+```{r specXX-wrangling-table, echo=FALSE, message=FALSE, warning=FALSE}
+tibble(
+  Package = c("**dplyr**", "**tidyr**", "**stringr**", "**forcats**", "**lubridate**"),
+  Purpose = c(
+    "Data manipulation",
+    "Reshaping data",
+    "String manipulation",
+    "Working with factors",
+    "Dates and times"
+  ),
+  `Key Functions` = c(
+    "`filter()`, `mutate()`, `summarize()`, `group_by()`",
+    "`pivot_longer()`, `pivot_wider()`, `separate()`",
+    "`str_detect()`, `str_replace()`, `str_extract()`",
+    "`fct_relevel()`, `fct_reorder()`, `fct_lump()`",
+    "`ymd()`, `mdy()`, `interval()`"
+  )
+) %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    escape = FALSE,
+    options = list(
+      pageLength = 10,
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE,
+      searching = FALSE
+    )
+  )
+```
 
 > If you're new to R, start with **dplyr** and **ggplot2**. These two packages will carry you through 80% of your data tasks.
 
@@ -92,10 +116,28 @@ penguins %>%
 
 ## Useful Learning Resources {.unnumbered}
 
+
+### Raw List 
+
 - [R for Data Science](https://r4ds.had.co.nz/) — free online textbook by Hadley Wickham & Garrett Grolemund
 - [STAT 545](https://stat545.com/) — Jenny Bryan's excellent course on data wrangling
 - [Data Science in a Box](https://datasciencebox.org/) — Mine Cetinkaya-Rundel's course materials
 - [RStudio Cheatsheets](https://rstudio.com/resources/cheatsheets/) — printable quick-reference guides
+
+### R-based List
+
+```{r specXX-resources-list, results='asis', echo=FALSE}
+resources <- list(
+  list(name = "R for Data Science", url = "https://r4ds.had.co.nz/", desc = "free online textbook by Hadley Wickham & Garrett Grolemund"),
+  list(name = "STAT 545", url = "https://stat545.com/", desc = "Jenny Bryan's excellent course on data wrangling"),
+  list(name = "Data Science in a Box", url = "https://datasciencebox.org/", desc = "Mine Cetinkaya-Rundel's course materials"),
+  list(name = "RStudio Cheatsheets", url = "https://rstudio.com/resources/cheatsheets/", desc = "printable quick-reference guides")
+)
+
+for (r in resources) {
+  cat(sprintf("- [%s](%s) — %s\n", r$name, r$url, r$desc))
+}
+```
 
 ```{r specXX-include-tweet, echo=FALSE}
 try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
@@ -105,6 +147,10 @@ try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179"
 ## Fun Stuff {.unnumbered}
 
 Because data science should be fun sometimes.
+
+```{r specXX-fun-image, echo=FALSE, fig.fullwidth=TRUE, fig.alt="A wide decorative image related to data science"}
+knitr::include_graphics("img/data-science-workflow.png")
+```
 
 ```{r specXX-fun-video, echo=FALSE}
 # Gromit Placing Rail Tracks for 10 Hours
@@ -123,6 +169,49 @@ if (knitr::is_html_output()) {
 ## How to Suggest Additions {.unnumbered}
 
 Found a package or resource that should be on this list? Open a pull request on the [course repo][course_git] or let me know in class. This page is a living document — your contributions make it better for everyone.
+
+
+```{r specXX-generate-package-bib, include = FALSE}
+# Auto-generate .bib entries for loaded R packages
+knitr::write_bib(
+  c(.packages(), "bookdown", "knitr", "rmarkdown"),
+  "packages.bib"
+)
+```
+
+
+# Colophon {.unnumbered}
+
+These notes were written in [bookdown](http://bookdown.org/) inside [RStudio](http://www.rstudio.com/ide/). The [website][course_web] is hosted with [GitHub](https://www.github.com). The complete source is available from [GitHub][course_git].
+
+This version of the notes was built with:
+
+```{r specXX-session-platform, message=FALSE, error=TRUE, warning=FALSE, echo=FALSE}
+all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>%
+  pull(Package)
+
+session <- devtools::session_info(pkgs = all_pkgs)
+
+session$platform
+```
+
+Along with these packages:
+
+```{r specXX-session-packages, message=FALSE, error=TRUE, warning=FALSE, echo=FALSE}
+session$packages %>%
+  select(package, loadedversion, date, source) %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    filter = list(position = "top"),
+    options = list(
+      pageLength = nrow(session$packages),
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE
+    )
+  )
+```
 
 
 ```{r links-courselinks, child="includes/courselinks.md"}

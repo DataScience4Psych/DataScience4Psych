@@ -10,8 +10,13 @@ library(knitr)
 
 This module introduces the basics of working with strings and text data in R using the **stringr** package. Whether you're cleaning messy survey responses, extracting information from file names, or preparing text for analysis, string manipulation is a skill you'll use constantly. We'll focus on the most common tasks: detecting patterns, extracting substrings, and replacing text.
 
+
 ```{r ddXX-include-tweet, echo=FALSE}
 try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
+```
+
+```{r ddXX-concept-image, echo=FALSE, fig.alt="Diagram showing how str_detect, str_extract, and str_replace each work on an example string", out.width="70%"}
+knitr::include_graphics("img/stringr-overview.png")
 ```
 
 
@@ -95,7 +100,41 @@ str_extract(ids, "\\d+")
 
 The pattern `\\d+` means "one or more digits." This is a **regular expression** — a mini-language for describing text patterns.
 
+### Common regex patterns
+
+```{r ddXX-regex-reference-table, echo=FALSE, message=FALSE, warning=FALSE}
+regex_ref <- tibble(
+  Pattern = c("\\\\d", "\\\\w", "[A-Z]", ".", "+", "*", "^", "$", "\\\\s", "( )"),
+  Meaning = c(
+    "Any digit", "Any word character", "Any uppercase letter",
+    "Any character", "One or more of previous", "Zero or more of previous",
+    "Start of string", "End of string", "Any whitespace", "Capture group"
+  ),
+  `Example Match` = c(
+    '"5"', '"a", "Z", "3"', '"B"',
+    "anything", '\\\\d+ matches "123"', '\\\\w* matches "" or "hello"',
+    '^a matches "apple"', 'y$ matches "cherry"', '" ", "\\t"', "grouped extraction"
+  )
+)
+
+regex_ref %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    options = list(
+      pageLength = 10,
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = FALSE,
+      searching = FALSE
+    )
+  )
+```
+
+
+
 Some commonly useful patterns:
+
 
 | Pattern | Meaning | Example Match |
 |---------|---------|---------------|
@@ -107,7 +146,6 @@ Some commonly useful patterns:
 | `*` | Zero or more of previous | `\\w*` matches "" or "hello" |
 | `^` | Start of string | `^a` matches "apple" |
 | `$` | End of string | `y$` matches "cherry" |
-
 
 ## Replacing and Cleaning Text
 
@@ -177,6 +215,39 @@ participants_clean
 ```
 
 In just a few lines, we've gone from messy, inconsistent text data to a clean, analysis-ready dataset. Each stringr function handles one specific task, and they compose beautifully in a pipeline.
+
+
+## Applying Regex at Scale
+
+What does it look like when we apply these patterns to a larger, real-world-ish dataset? Let's detect patterns across the `starwars` character names and see which names match various regex rules:
+
+```{r ddXX-regex-at-scale, cache=TRUE, fig.width=8, fig.height=5, fig.cap="Number of Star Wars character names matching common regex patterns. This demonstrates how regex can be used for exploratory text analysis."}
+library(dplyr)
+
+patterns <- c(
+  "starts with vowel" = "^[AEIOUaeiou]",
+  "ends with vowel" = "[aeiou]$",
+  "contains hyphen" = "-",
+  "contains space" = " ",
+  "two+ syllables (approx)" = "[aeiou].*[aeiou]",
+  "all lowercase" = "^[a-z ]+$"
+)
+
+pattern_counts <- tibble(
+  pattern_name = names(patterns),
+  regex = patterns,
+  n_matches = map_int(patterns, ~ sum(str_detect(starwars$name, .x)))
+)
+
+ggplot(pattern_counts, aes(x = reorder(pattern_name, n_matches), y = n_matches)) +
+  geom_col(fill = "#56B4E9", color = "black") +
+  coord_flip() +
+  labs(
+    title = "Regex Pattern Matches in Star Wars Names",
+    x = NULL, y = "Number of matching names"
+  ) +
+  theme_minimal()
+```
 
 
 ## Common Pitfalls
