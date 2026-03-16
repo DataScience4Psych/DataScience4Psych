@@ -1,0 +1,157 @@
+# (PART) Module XX {-}
+
+```{r modXX-setup, include = FALSE}
+source("common.R")
+ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd)
+library(vembedr)
+```
+```{r links, child="links.md"}
+```
+
+
+# Welcome to Data Exploration!
+
+This module is designed to introduce you to exploratory data analysis with R. Please watch the videos and work your way through the notes. **The videos start on the next page.** You can find the video playlist for this module [here][pl_01]. Most of the slides used to make the videos in this module can be found in the [slides repo][course_slides].
+
+
+## Module Materials
+
+* Slides from Lectures
+  * [Exploring Data](https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html)
+  * [Visualizing Distributions](https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html)
+* Activities
+  * [Penguin Exploration](https://github.com/DataScience4Psych/ae-XX-penguins)
+* Suggested Readings
+  * All subchapters of this module
+  * [R4DS: Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html)
+  * [R4DS: Data Visualization](https://r4ds.had.co.nz/data-visualisation.html)
+* Lab
+  * [Penguin Research Station](#labXX)
+
+### Estimated Video Length
+
+<!--https://www.youtube.com/playlist?list=PLKrrdtYgOUYao_7t5ycK4KDXNKaY-ECup & https://ytplaylist-len.herokuapp.com/ -->
+
+No of videos : 5
+
+Average length of video: 10 minutes, 30 seconds
+
+Total length of playlist: 52 minutes, 30 seconds
+
+
+# LEC: Introduction to Exploratory Data Analysis {-}
+
+```{r modXX-intro-video-latex, echo=FALSE, eval = knitr::is_latex_output()}
+embed_youtube_alt("VIDEO_ID_HERE")
+```
+```{r modXX-intro-video-html, echo=FALSE, eval = knitr::is_html_output()}
+"https://www.youtube.com/watch?v=VIDEO_ID_HERE" %>%
+  embed_url() %>%
+  use_align("center")
+```
+
+You can follow along with the slides [here][d01_welcome] if they are too small or do not appear below.
+
+```{r modXX-embed-intro-slides, echo=FALSE, error=TRUE}
+slide_url(ds4p_urls, "d01_welcome") %>%
+  include_url(height = "400px")
+```
+
+## Learning goals
+
+By the end of this lecture, you should be able to:
+
+- Describe the role of exploratory data analysis in the data science workflow
+- Identify appropriate visualizations for different variable types
+- Use summary statistics to characterize distributions
+
+```{r modXX-embed-learning-goals-slides, echo=FALSE, error=TRUE}
+slide_url(ds4p_urls, "d01_welcome", "#4") %>%
+  include_url(height = "400px")
+```
+
+## Key Concepts
+
+Exploratory data analysis (EDA) is about asking questions of your data and searching for answers using visualization and transformation. As Tukey (1977) wrote:
+
+> "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise."
+
+The EDA cycle involves:
+
+1. Generate questions about your data
+2. Search for answers by visualizing, transforming, and modeling
+3. Use what you learn to refine your questions or generate new ones
+
+```{r modXX-include-tweet, echo=FALSE}
+try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
+```
+
+## Hands-On Practice
+
+Now it's your turn. Try exploring the `mpg` dataset that comes with ggplot2:
+
+```{r modXX-mpg-exploration, eval=FALSE}
+library(tidyverse)
+glimpse(mpg)
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  labs(
+    title = "Engine Displacement vs. Highway MPG",
+    x = "Engine Displacement (L)",
+    y = "Highway Miles per Gallon"
+  ) +
+  theme_minimal()
+```
+
+
+# LEC: Visualizing Distributions {-}
+
+```{r modXX-dist-video-latex, echo=FALSE, eval = knitr::is_latex_output()}
+embed_youtube_alt("VIDEO_ID_HERE")
+```
+```{r modXX-dist-video-html, echo=FALSE, eval = knitr::is_html_output()}
+"https://www.youtube.com/watch?v=VIDEO_ID_HERE" %>%
+  embed_url() %>%
+  use_align("center")
+```
+
+You can follow along with the slides [here](https://datascience4psych.github.io/slides/d02_toolkit/d02_toolkit.html) if you would like to open them full-screen.
+
+```{r modXX-embed-dist-slides, echo=FALSE, error=TRUE}
+slide_url(ds4p_urls, "d02_toolkit") %>%
+  include_url(height = "400px")
+```
+
+
+## ACT: Penguin Exploration {-}
+
+```{r modXX-embed-act-slides, echo=FALSE, error=TRUE}
+slide_url(ds4p_urls, "d01_welcome", "#53") %>%
+  include_url(height = "400px")
+```
+
+You can find the materials for this activity [here](https://github.com/DataScience4Psych/ae-XX-penguins). The compiled version should look something like the following...
+
+```{r modXX-embed-act-preview, echo=FALSE}
+"https://datascience4psych.github.io/ae-XX-penguins/penguins.html" %>%
+  include_url(height = "400px")
+```
+
+
+# Wrapping Up {-}
+
+In this module, you've learned about the foundations of exploratory data analysis. Remember that EDA is iterative — you'll revisit these techniques throughout the course as we work with increasingly complex datasets.
+
+```{r modXX-filler-video, echo=FALSE}
+video_url <- sample_no_surprises(ds4p_funyoutube$funyoutube)
+embed_url(video_url) %>%
+  use_align("center")
+```
+
+```{r courselinks, child="includes/courselinks.md"}
+```

@@ -1,0 +1,688 @@
+# Chunk Reference: All R Markdown Chunk Types {#chunk_reference}
+
+```{r chunkref-setup, include = FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ SETUP CHUNK                                                     │
+# │ Purpose: Load packages, source shared setup, set chapter-wide  │
+# │          knitr options. Always use include=FALSE.               │
+# │ Options: include = FALSE                                        │
+# │ Notes: Every chapter needs this. common.R sets global defaults  │
+# │        (comment = "#>", collapse = TRUE). You can override here.│
+# └─────────────────────────────────────────────────────────────────┘
+source("common.R")
+library(tidyverse)
+library(palmerpenguins)
+library(DT)
+library(knitr)
+
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd)
+library(vembedr)
+
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+```
+
+This page is a reference catalog of **every type of R Markdown code chunk** used in this course. Copy the patterns you need into your own chapters. Each chunk type is annotated with its purpose, key options, and when to use it.
+
+
+## Setup and Configuration Chunks
+
+### Standard Setup
+
+Every chapter starts with a setup chunk that sources `common.R` and loads needed packages:
+
+````markdown
+```{r chapterXX-setup, include = FALSE}`r ''`
+source("common.R")
+library(tidyverse)
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+```
+````
+
+### Chapter-Wide Default Override
+
+Labs often override the global default so student code chunks don't auto-run:
+
+````markdown
+```{r labXX-setup, include = FALSE}`r ''`
+knitr::opts_chunk$set(eval = FALSE)
+```
+````
+
+Or force everything to run (useful for lab answer keys):
+
+````markdown
+```{r labXX-setup, include = FALSE}`r ''`
+knitr::opts_chunk$set(eval = TRUE)
+```
+````
+
+
+## Package Loading
+
+```{r chunkref-packages, message=FALSE, warning=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ PACKAGE LOADING CHUNK                                           │
+# │ Purpose: Install-if-needed and load packages.                  │
+# │ Options: message=FALSE, warning=FALSE                           │
+# │ Notes: Suppresses startup messages (tidyverse logo, etc.)      │
+# │        The if(!require()) pattern auto-installs missing pkgs.  │
+# └─────────────────────────────────────────────────────────────────┘
+if (!require("palmerpenguins")) install.packages("palmerpenguins")
+library(palmerpenguins)
+
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+## Data Loading and Glimpse
+
+```{r chunkref-data-glimpse, echo=TRUE, message=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ DATA LOADING / GLIMPSE CHUNK                                    │
+# │ Purpose: Load data and show structure to orient the reader.     │
+# │ Options: echo=TRUE (show the code), message=FALSE               │
+# │ Notes: glimpse() is preferred over str() for tidyverse style.  │
+# └─────────────────────────────────────────────────────────────────┘
+glimpse(penguins)
+```
+
+
+## Video Embedding (Dual HTML/LaTeX)
+
+The course uses **paired chunks** — one for HTML output, one for LaTeX/PDF. This ensures videos render correctly in both formats.
+
+```{r chunkref-video-latex, echo=FALSE, eval = knitr::is_latex_output()}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ VIDEO EMBED — LaTeX/PDF VERSION                                 │
+# │ Purpose: Embed a clickable YouTube thumbnail in PDF output.     │
+# │ Options: echo=FALSE, eval = knitr::is_latex_output()           │
+# │ Notes: embed_youtube_alt() is defined in common.R. It creates  │
+# │        a static thumbnail with a hyperlink in non-HTML formats.│
+# └─────────────────────────────────────────────────────────────────┘
+embed_youtube_alt("VIDEO_ID_HERE")
+```
+```{r chunkref-video-html, echo=FALSE, eval = knitr::is_html_output()}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ VIDEO EMBED — HTML VERSION                                      │
+# │ Purpose: Embed a playable YouTube iframe in HTML output.        │
+# │ Options: echo=FALSE, eval = knitr::is_html_output()            │
+# │ Notes: Uses vembedr's embed_url() for responsive iframes.     │
+# │        The pipe to use_align("center") centers the video.      │
+# └─────────────────────────────────────────────────────────────────┘
+"https://www.youtube.com/watch?v=VIDEO_ID_HERE" %>%
+  embed_url() %>%
+  use_align("center")
+```
+
+### Simplified Video Embed (HTML-only chapters)
+
+If your chapter is HTML-only, you can use a single combined chunk:
+
+```{r chunkref-video-simple, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ VIDEO EMBED — SIMPLIFIED (HTML-only)                            │
+# │ Purpose: Embed video with automatic format detection.           │
+# │ Options: echo=FALSE                                             │
+# │ Notes: Uses if/else to pick the right format in one chunk.     │
+# └─────────────────────────────────────────────────────────────────┘
+if (knitr::is_html_output()) {
+  "https://www.youtube.com/watch?v=VIDEO_ID_HERE" %>%
+    embed_url() %>%
+    use_align("center")
+} else if (knitr::is_latex_output()) {
+  embed_youtube_alt("VIDEO_ID_HERE")
+}
+```
+
+
+## Slide Embedding
+
+```{r chunkref-slides-from-csv, echo=FALSE, error=TRUE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ SLIDE EMBED — FROM METADATA CSV                                 │
+# │ Purpose: Embed slides using URL from ds4p_urls.csv.            │
+# │ Options: echo=FALSE, error=TRUE                                 │
+# │ Notes: slide_url() is defined in common.R. It looks up the URL │
+# │        from the CSV by slide deck name. The optional third arg │
+# │        jumps to a specific slide (e.g., "#4").                 │
+# │        error=TRUE prevents build failure if URL is missing.    │
+# └─────────────────────────────────────────────────────────────────┘
+slide_url(ds4p_urls, "d01_welcome") %>%
+  include_url(height = "400px")
+
+# Jump to a specific slide:
+slide_url(ds4p_urls, "d01_welcome", "#4") %>%
+  include_url(height = "400px")
+```
+
+```{r chunkref-slides-direct-url, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ SLIDE EMBED — DIRECT URL                                        │
+# │ Purpose: Embed slides using a hardcoded URL.                    │
+# │ Options: echo=FALSE                                             │
+# │ Notes: Use when the slide URL isn't in the metadata CSV.       │
+# │        include_url() creates an iframe.                        │
+# └─────────────────────────────────────────────────────────────────┘
+"https://datascience4psych.github.io/slides/d01_welcome/d01_welcome.html" %>%
+  include_url(height = "400px")
+```
+
+
+## Tweet Embedding
+
+```{r chunkref-tweet, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ TWEET EMBED                                                     │
+# │ Purpose: Safely embed a tweet (graceful failure if unavailable).│
+# │ Options: echo=FALSE                                             │
+# │ Notes: try_include_tweet() is defined in common.R. It wraps    │
+# │        tweetrmd::include_tweet() in a tryCatch so the build   │
+# │        doesn't fail if the tweet is deleted or API is down.    │
+# └─────────────────────────────────────────────────────────────────┘
+"https://twitter.com/hadleywickham/status/1363920786416562179" %>%
+  try_include_tweet()
+```
+
+
+## Image/Graphic Display
+
+```{r chunkref-image-basic, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — BASIC                                                    │
+# │ Purpose: Display a static image from the img/ directory.        │
+# │ Options: echo=FALSE                                             │
+# │ Notes: include_graphics() is preferred over markdown ![](). It │
+# │        respects knitr figure options and works in all formats.  │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/example-image.png")
+```
+
+```{r chunkref-image-margin, fig.margin=TRUE, echo=FALSE, fig.width=3, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — MARGIN FIGURE                                            │
+# │ Purpose: Display a small image in the page margin (tufte-style).│
+# │ Options: fig.margin=TRUE, echo=FALSE, fig.width=3              │
+# │ Notes: Only works in tufte/bookdown formats that support margin │
+# │        content. Falls back to inline in standard HTML.         │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/example-image.png")
+```
+
+```{r chunkref-image-fullwidth, fig.fullwidth=TRUE, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — FULL WIDTH                                               │
+# │ Purpose: Display an image spanning the full page width.         │
+# │ Options: fig.fullwidth=TRUE, echo=FALSE                        │
+# │ Notes: Useful for wide figures, comparison images, screenshots. │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/wide-example.png")
+```
+
+```{r chunkref-image-captioned, echo=FALSE, fig.cap="A descriptive caption that appears below the figure.", eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — WITH CAPTION                                             │
+# │ Purpose: Display an image with a numbered figure caption.       │
+# │ Options: echo=FALSE, fig.cap="..."                              │
+# │ Notes: bookdown auto-numbers figures with captions. Use this   │
+# │        when you want to cross-reference with \@ref(fig:label). │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/example-image.png")
+```
+
+```{r chunkref-image-alt, echo=FALSE, fig.alt="Alt text describing the image for screen readers", eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — WITH ALT TEXT (ACCESSIBILITY)                            │
+# │ Purpose: Provide screen-reader-friendly alt text for images.    │
+# │ Options: echo=FALSE, fig.alt="..."                              │
+# │ Notes: fig.alt adds an alt attribute to the <img> tag. Use for │
+# │        accessibility. Different from fig.cap (visual caption). │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/example-image.png")
+```
+
+```{r chunkref-image-sized, echo=FALSE, out.width="50%", eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ IMAGE — CUSTOM SIZE (out.width)                                  │
+# │ Purpose: Control the display width of an image.                 │
+# │ Options: echo=FALSE, out.width="50%"                            │
+# │ Notes: out.width controls the CSS/LaTeX display size. Common   │
+# │        values: "50%", "80%", "300px". Does not change the     │
+# │        actual image resolution.                                │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_graphics("img/example-image.png")
+```
+
+
+## Interactive Tables (DT)
+
+```{r chunkref-dt-table, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ INTERACTIVE TABLE (DT::datatable)                                │
+# │ Purpose: Display a searchable, sortable, paginated table.       │
+# │ Options: message=FALSE, warning=FALSE, echo=FALSE              │
+# │ Notes: DT tables only render in HTML output. Common options:   │
+# │   - rownames=FALSE: hide row numbers                           │
+# │   - class="cell-border stripe": alternating row colors         │
+# │   - filter=list(position='top'): column search boxes           │
+# │   - pageLength: rows per page (set to nrow() to show all)     │
+# │   - paging=FALSE: disable pagination entirely                 │
+# └─────────────────────────────────────────────────────────────────┘
+penguins %>%
+  drop_na() %>%
+  DT::datatable(
+    rownames = FALSE,
+    class = "cell-border stripe",
+    filter = list(position = "top"),
+    options = list(
+      pageLength = 10,
+      autoWidth = TRUE,
+      bInfo = FALSE,
+      paging = TRUE
+    )
+  )
+```
+
+
+## Shiny App Embedding
+
+````markdown
+```{r chunkref-shiny-app, echo=FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ SHINY APP EMBED                                                  │
+# │ Purpose: Embed a live Shiny app in the HTML output.             │
+# │ Options: echo=FALSE                                             │
+# │ Notes: Only works in HTML output. The app must be deployed to  │
+# │        shinyapps.io or similar hosting. include_app() creates  │
+# │        an iframe with appropriate sizing.                      │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::include_app("https://minecr.shinyapps.io/unvotes/")
+```
+````
+
+
+## External Page Embedding (include_url)
+
+```{r chunkref-include-url, echo=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ EXTERNAL PAGE EMBED                                              │
+# │ Purpose: Embed any webpage in an iframe.                        │
+# │ Options: echo=FALSE                                             │
+# │ Notes: Used for activity previews, slide decks, compiled HTML. │
+# │        height parameter controls iframe height.                │
+# └─────────────────────────────────────────────────────────────────┘
+"https://datascience4psych.github.io/ae01a_unvotes/unvotes.html" %>%
+  include_url(height = "400px")
+```
+
+
+## Data Visualization / Plot Chunks
+
+```{r chunkref-plot-basic, echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ PLOT — BASIC (code shown)                                       │
+# │ Purpose: Show code AND output for teaching.                     │
+# │ Options: echo=TRUE (default), message=FALSE, warning=FALSE    │
+# │ Notes: This is the bread-and-butter teaching chunk. Students   │
+# │        see both the code and the resulting plot.               │
+# └─────────────────────────────────────────────────────────────────┘
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.7) +
+  scale_color_viridis_d() +
+  theme_minimal()
+```
+
+```{r chunkref-plot-hidden-code, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ PLOT — HIDDEN CODE (output only)                                │
+# │ Purpose: Show a plot without revealing the code that made it.  │
+# │ Options: echo=FALSE, message=FALSE, warning=FALSE             │
+# │ Notes: Used for "here's what your result should look like"     │
+# │        previews, or decorative/contextual figures.             │
+# └─────────────────────────────────────────────────────────────────┘
+ggplot(penguins, aes(x = species, fill = species)) +
+  geom_bar() +
+  scale_fill_viridis_d() +
+  theme_minimal()
+```
+
+```{r chunkref-plot-fullwidth, fig.fullwidth=TRUE, echo=TRUE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ PLOT — FULL WIDTH                                                │
+# │ Purpose: Display a wide plot spanning the full page.            │
+# │ Options: fig.fullwidth=TRUE                                     │
+# │ Notes: Good for faceted plots or plots with many groups.       │
+# └─────────────────────────────────────────────────────────────────┘
+ggplot(penguins, aes(x = body_mass_g, fill = species)) +
+  geom_histogram(binwidth = 200) +
+  facet_wrap(~species, ncol = 3) +
+  theme_minimal()
+```
+
+```{r chunkref-plot-custom-dims, fig.width=8, fig.height=4, echo=TRUE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ PLOT — CUSTOM DIMENSIONS                                         │
+# │ Purpose: Control the aspect ratio of a plot.                    │
+# │ Options: fig.width=8, fig.height=4                              │
+# │ Notes: fig.width/fig.height set the R graphics device size in  │
+# │        inches. Wider = better for time series, taller = better │
+# │        for vertical comparisons.                               │
+# └─────────────────────────────────────────────────────────────────┘
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point() +
+  theme_minimal()
+```
+
+
+## Student Workspace / Exercise Chunks
+
+```{r chunkref-student-workspace, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ STUDENT WORKSPACE                                                │
+# │ Purpose: Provide a scaffolded code template for students.       │
+# │ Options: error=TRUE, message=FALSE, warning=FALSE, echo=TRUE  │
+# │ Notes: error=TRUE prevents build failure from incomplete code. │
+# │        Students fill in the blanks and run the chunk.          │
+# │        Use eval=FALSE if the placeholder code would error.    │
+# └─────────────────────────────────────────────────────────────────┘
+species_counts <- penguins %>%
+  1 # replace this with your code
+```
+
+```{r chunkref-student-fillin, eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ STUDENT FILL-IN-THE-BLANK                                       │
+# │ Purpose: Show a code template with blanks for students to fill.│
+# │ Options: eval=FALSE                                             │
+# │ Notes: eval=FALSE means the chunk is displayed but not run.   │
+# │        Students copy to their own file and complete the code.  │
+# │        Use ___ as placeholders for missing parts.             │
+# └─────────────────────────────────────────────────────────────────┘
+penguins %>%
+  group_by(___) %>%
+  summarize(
+    mean_mass = mean(___),
+    sd_mass = sd(___)
+  )
+```
+
+
+## Hidden Solutions (ref.label pattern)
+
+This is the key pedagogical pattern. You write the solution once in a hidden chunk, then display it on-demand inside a `<details>` block.
+
+```{r chunkref-solution-hidden, error=TRUE, include=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ HIDDEN SOLUTION CHUNK                                            │
+# │ Purpose: Store executable solution code, hidden from students.  │
+# │ Options: include=FALSE (hides EVERYTHING — code AND output)    │
+# │ Notes: This chunk RUNS during the build (so errors are caught) │
+# │        but nothing appears in the rendered output. It is       │
+# │        re-displayed via ref.label in a <details> block.       │
+# └─────────────────────────────────────────────────────────────────┘
+species_summary <- penguins %>%
+  drop_na() %>%
+  group_by(species) %>%
+  summarize(
+    mean_mass = mean(body_mass_g),
+    sd_mass = sd(body_mass_g)
+  )
+```
+
+Then display it inside collapsible details using `ref.label`:
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "chunkref-solution-hidden", echo = TRUE, warning = FALSE}
+```
+</details>
+
+````markdown
+<!-- The raw markdown for the pattern above looks like this: -->
+
+```{r my-solution, error=TRUE, include=FALSE}`r ''`
+# Solution code here — runs but is hidden
+result <- penguins %>%
+  count(species)
+```
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "my-solution", echo = TRUE, warning = FALSE}`r ''`
+```
+</details>
+````
+
+
+## Nested Hints (details within details)
+
+<details>
+  <summary>Click here to see hints</summary>
+
+<details>
+  <summary>Big Picture Hint</summary>
+Start by thinking about what function groups rows together...
+</details>
+.
+<details>
+  <summary>Step 1 Hint</summary>
+Use `group_by(species)` to group the data by species.
+</details>
+.
+<details>
+  <summary>Step 2 Hint</summary>
+Inside `summarize()`, use `mean()` and `sd()` on the variable of interest.
+</details>
+</details>
+
+````markdown
+<!-- The raw markdown for nested hints: -->
+
+<details>
+  <summary>Click here to see hints</summary>
+
+<details>
+  <summary>Big Picture Hint</summary>
+Start by thinking about what function groups rows together...
+</details>
+.
+<details>
+  <summary>Step 1 Hint</summary>
+Use `group_by(species)` to group the data by species.
+</details>
+.
+<details>
+  <summary>Step 2 Hint</summary>
+Inside `summarize()`, use `mean()` and `sd()`.
+</details>
+</details>
+````
+
+
+## Conditional Evaluation (API-gated chunks)
+
+````markdown
+```{r api-setup, include=FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ API KEY AVAILABILITY CHECK                                       │
+# │ Purpose: Define booleans for conditional chunk evaluation.      │
+# │ Options: include=FALSE                                          │
+# │ Notes: Checks environment variables for API keys. Downstream   │
+# │        chunks use eval=[variable] to skip if key is missing.   │
+# └─────────────────────────────────────────────────────────────────┘
+ebirdkey_available <- Sys.getenv("EBIRD_API_KEY") != ""
+geonamesUsername_available <- Sys.getenv("GEONAMES_USERNAME") != ""
+```
+
+```{r api-demo, eval = ebirdkey_available, error=TRUE, cache=TRUE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ API-GATED CHUNK                                                  │
+# │ Purpose: Run code only when an API key is available.            │
+# │ Options: eval=[boolean_variable], error=TRUE, cache=TRUE       │
+# │ Notes: eval takes a variable name (no quotes). error=TRUE      │
+# │        prevents build failure. cache=TRUE avoids re-calling    │
+# │        the API on every build.                                 │
+# └─────────────────────────────────────────────────────────────────┘
+library(rebird)
+ebirdgeo(species = "Haliaeetus leucocephalus", lat = 42, lng = -76)
+```
+````
+
+
+## Cached Chunks (Expensive Computations)
+
+````markdown
+```{r expensive-computation, cache=TRUE, message=FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ CACHED CHUNK                                                     │
+# │ Purpose: Cache results of slow computations.                    │
+# │ Options: cache=TRUE                                             │
+# │ Notes: Results are stored in a cache directory and reused on   │
+# │        subsequent builds if the code hasn't changed. Use for:  │
+# │        - API calls                                             │
+# │        - Large data processing                                 │
+# │        - Model fitting                                         │
+# │        Be careful: cache invalidation can be tricky.           │
+# └─────────────────────────────────────────────────────────────────┘
+big_result <- penguins %>%
+  drop_na() %>%
+  group_by(species, island, sex) %>%
+  summarize(across(where(is.numeric), list(mean = mean, sd = sd)))
+```
+````
+
+
+## Raw Output (results='asis')
+
+````markdown
+```{r raw-output, results='asis', echo=FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ RAW MARKDOWN/HTML OUTPUT                                         │
+# │ Purpose: Output raw markdown or HTML that bookdown renders.     │
+# │ Options: results='asis', echo=FALSE                             │
+# │ Notes: Normally, R output is wrapped in a code block. With     │
+# │        results='asis', cat() output is treated as raw markup.  │
+# │        Useful for dynamically generated markdown tables,       │
+# │        HTML elements, or conditional content.                  │
+# └─────────────────────────────────────────────────────────────────┘
+cat("### This heading was generated by R code\n\n")
+cat("And this paragraph too. You can use **markdown** here.\n")
+```
+````
+
+
+## Child Document Includes
+
+```{r chunkref-child-courselinks, child="includes/courselinks.md", eval=FALSE}
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ CHILD DOCUMENT INCLUDE                                           │
+# │ Purpose: Include shared content from another file.              │
+# │ Options: child="path/to/file.md"                                │
+# │ Notes: The child file is read and rendered inline as if its    │
+# │        content were pasted at this location. Used for:         │
+# │        - courselinks.md (footer links on every page)           │
+# │        - links.md (reference-style link definitions)           │
+# │        - Shared content across multiple chapters               │
+# │        The chunk body is ignored when child is specified.      │
+# └─────────────────────────────────────────────────────────────────┘
+```
+
+````markdown
+<!-- Common child includes you'll use: -->
+
+```{r courselinks, child="includes/courselinks.md"}`r ''`
+```
+
+```{r links-general, child="includes/links.md"}`r ''`
+```
+````
+
+
+## Bibliography Generation
+
+````markdown
+```{r generate-package-bib, include = FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ BIBLIOGRAPHY GENERATION                                          │
+# │ Purpose: Auto-generate .bib entries for loaded R packages.      │
+# │ Options: include = FALSE                                        │
+# │ Notes: Creates packages.bib with citation info for all packages│
+# │        used in the session. Typically in front matter only.    │
+# └─────────────────────────────────────────────────────────────────┘
+knitr::write_bib(
+  c(.packages(), "bookdown", "knitr", "rmarkdown"),
+  "packages.bib"
+)
+```
+````
+
+
+## Session Info / Colophon
+
+````markdown
+```{r session-info, message=FALSE, error=TRUE, warning=FALSE, echo=FALSE}`r ''`
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ SESSION INFO                                                     │
+# │ Purpose: Display R version and package versions for             │
+# │          reproducibility documentation.                        │
+# │ Options: message=FALSE, error=TRUE, warning=FALSE, echo=FALSE │
+# │ Notes: error=TRUE because devtools::session_info() can fail   │
+# │        in some build environments. Typically in back matter.   │
+# └─────────────────────────────────────────────────────────────────┘
+all_pkgs <- renv::dependencies(path = "DESCRIPTION") %>%
+  pull(Package)
+session <- devtools::session_info(pkgs = all_pkgs)
+session$platform
+```
+````
+
+
+## Inline R Code
+
+Inline code lets you weave computed values into prose text:
+
+````markdown
+The dataset contains `r knitr::inline_expr("nrow(penguins)")` penguins
+from `r knitr::inline_expr("n_distinct(penguins$species)")` species.
+````
+
+Renders as: The dataset contains `r nrow(penguins)` penguins from `r n_distinct(penguins$species)` species.
+
+
+## Emoji Commit Checkpoint Pattern
+
+This isn't a chunk type, but a recurring markdown pattern used in labs between exercise sections:
+
+````markdown
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the
+commit message "Completed Exercise 1". Make sure to commit and push
+all changed files so that your Git pane is cleared up afterwards.
+````
+
+
+## Quick Reference: Option Cheat Sheet
+
+| Option | Values | Purpose |
+|--------|--------|---------|
+| `echo` | `TRUE`/`FALSE` | Show/hide the code |
+| `eval` | `TRUE`/`FALSE`/variable | Run/skip the code |
+| `include` | `TRUE`/`FALSE` | Show/hide everything (code + output) |
+| `message` | `TRUE`/`FALSE` | Show/hide messages (e.g., package loading) |
+| `warning` | `TRUE`/`FALSE` | Show/hide warnings |
+| `error` | `TRUE`/`FALSE` | `TRUE` = continue build on error; `FALSE` = stop |
+| `cache` | `TRUE`/`FALSE` | Cache results for faster rebuilds |
+| `results` | `'markup'`/`'asis'`/`'hide'` | How to format output |
+| `fig.width` | number (inches) | R device width |
+| `fig.height` | number (inches) | R device height |
+| `fig.fullwidth` | `TRUE`/`FALSE` | Span full page width |
+| `fig.margin` | `TRUE`/`FALSE` | Place in margin (tufte) |
+| `fig.cap` | string | Numbered figure caption |
+| `fig.alt` | string | Alt text for accessibility |
+| `out.width` | `"50%"`, `"300px"` | CSS display width |
+| `child` | file path | Include another document |
+| `ref.label` | chunk label | Re-display another chunk's code |
+
+
+```{r courselinks, child="includes/courselinks.md"}
+```

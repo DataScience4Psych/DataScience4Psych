@@ -1,0 +1,132 @@
+# (PART) Supplementary Materials {-}
+
+```{r specXX-setup, include = FALSE}
+source("common.R")
+library(tidyverse)
+library(DT)
+library(knitr)
+
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd)
+library(vembedr)
+```
+
+# Recommended R Packages for Psychology {.unnumbered}
+
+This page collects useful R packages organized by the type of task you're trying to accomplish. Whether you're cleaning data, making visualizations, or running statistical models, there's likely a package that can help. Think of this as your field guide to the R ecosystem.
+
+
+## Data Wrangling {.unnumbered}
+
+The tidyverse provides the core toolkit for getting data into shape:
+
+| Package | Purpose | Key Functions |
+|---------|---------|---------------|
+| **dplyr** | Data manipulation | `filter()`, `mutate()`, `summarize()`, `group_by()` |
+| **tidyr** | Reshaping data | `pivot_longer()`, `pivot_wider()`, `separate()` |
+| **stringr** | String manipulation | `str_detect()`, `str_replace()`, `str_extract()` |
+| **forcats** | Working with factors | `fct_relevel()`, `fct_reorder()`, `fct_lump()` |
+| **lubridate** | Dates and times | `ymd()`, `mdy()`, `interval()` |
+
+> If you're new to R, start with **dplyr** and **ggplot2**. These two packages will carry you through 80% of your data tasks.
+
+
+## Visualization {.unnumbered}
+
+### Static plots
+
+```{r specXX-example-plot, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+library(palmerpenguins)
+
+penguins %>%
+  drop_na() %>%
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, formula = "y ~ x") +
+  scale_color_viridis_d() +
+  labs(
+    title = "Palmer Penguins: Flipper Length vs. Body Mass",
+    subtitle = "Data from the palmerpenguins package",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)"
+  ) +
+  theme_minimal()
+```
+
+| Package | Purpose |
+|---------|---------|
+| **ggplot2** | Grammar of graphics — the foundation for R visualization |
+| **patchwork** | Combine multiple ggplots into one figure |
+| **ggrepel** | Non-overlapping text labels on plots |
+| **scales** | Nice axis formatting (commas, percentages, dollars) |
+
+### Interactive plots
+
+| Package | Purpose |
+|---------|---------|
+| **plotly** | Turn ggplots interactive with `ggplotly()` |
+| **DT** | Interactive data tables |
+| **leaflet** | Interactive maps |
+
+
+## Statistical Modeling {.unnumbered}
+
+| Package | Purpose |
+|---------|---------|
+| **broom** | Tidy model output into data frames |
+| **lme4** | Mixed-effects / multilevel models |
+| **psych** | Psychometric tools: factor analysis, reliability, descriptives |
+| **lavaan** | Structural equation modeling |
+| **brms** | Bayesian regression models (via Stan) |
+
+
+## Reproducibility {.unnumbered}
+
+| Package | Purpose |
+|---------|---------|
+| **rmarkdown** | Dynamic documents combining code and prose |
+| **bookdown** | Write books and long documents (like these course notes!) |
+| **here** | Project-relative file paths that work everywhere |
+| **renv** | Package version management for reproducible environments |
+
+
+## Useful Learning Resources {.unnumbered}
+
+- [R for Data Science](https://r4ds.had.co.nz/) — free online textbook by Hadley Wickham & Garrett Grolemund
+- [STAT 545](https://stat545.com/) — Jenny Bryan's excellent course on data wrangling
+- [Data Science in a Box](https://datasciencebox.org/) — Mine Cetinkaya-Rundel's course materials
+- [RStudio Cheatsheets](https://rstudio.com/resources/cheatsheets/) — printable quick-reference guides
+
+```{r specXX-include-tweet, echo=FALSE}
+try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
+```
+
+
+## Fun Stuff {.unnumbered}
+
+Because data science should be fun sometimes.
+
+```{r specXX-fun-video, echo=FALSE}
+# Gromit Placing Rail Tracks for 10 Hours
+if (knitr::is_html_output()) {
+  "https://www.youtube.com/watch?v=fwJHNw9jU_U" %>%
+    embed_url() %>%
+    use_align("center")
+} else if (knitr::is_latex_output()) {
+  embed_youtube_alt("fwJHNw9jU_U")
+}
+```
+
+> "The best thing about R is that it was developed by statisticians. The worst thing about R is that... it was developed by statisticians." — Bo Cowgill
+
+
+## How to Suggest Additions {.unnumbered}
+
+Found a package or resource that should be on this list? Open a pull request on the [course repo][course_git] or let me know in class. This page is a living document — your contributions make it better for everyone.
+
+
+```{r links-courselinks, child="includes/courselinks.md"}
+```
+
+```{r links-general, child="includes/links.md"}
+```

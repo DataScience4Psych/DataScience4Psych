@@ -1,0 +1,158 @@
+# ACT: Exploring the Starwars Dataset {#aeXX}
+
+```{r actscXX-setup, include = FALSE}
+source("common.R")
+
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd)
+library(vembedr)
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+
+library(tidyverse)
+```
+
+In this activity, you'll practice data wrangling and visualization using the `starwars` dataset that comes built into the `dplyr` package. This dataset contains information about 87 characters from the Star Wars universe, including their physical characteristics, homeworld, and species.
+
+
+## Getting Started {.unnumbered}
+
+### Packages {.unnumbered}
+
+```{r actscXX-install-packages, eval = FALSE}
+# Install packages if needed
+install.packages("tidyverse")
+```
+
+```{r actscXX-load-packages, message=FALSE}
+library(tidyverse)
+```
+
+### Data {.unnumbered}
+
+The `starwars` dataset is automatically available when you load `dplyr` (part of the tidyverse). Let's take a first look:
+
+```{r actscXX-glimpse-data}
+glimpse(starwars)
+```
+
+> The `starwars` dataset contains `r nrow(starwars)` characters and `r ncol(starwars)` variables. Some columns are list-columns (films, vehicles, starships) — we'll ignore those for now and focus on the simpler columns.
+
+
+## Part 1: Exploring the Data {.unnumbered}
+
+**Task 1.** How many distinct species are represented in the dataset? Which species has the most characters?
+
+```{r actscXX-task-one, eval=FALSE}
+starwars %>%
+  count(___) %>%
+  arrange(desc(n))
+```
+
+> Hint: The `count()` function groups and counts in one step. Use `arrange(desc(n))` to see the most common species first.
+
+
+**Task 2.** What is the average height and mass for each species that has at least 3 representatives? Remember to handle missing values.
+
+```{r actscXX-task-two, eval=FALSE}
+starwars %>%
+  group_by(species) %>%
+  filter(n() >= 3) %>%
+  summarize(
+    n = n(),
+    avg_height = ___,
+    avg_mass = ___
+  )
+```
+
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Part 1: data exploration". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+
+## Part 2: Visualization {.unnumbered}
+
+**Task 3.** Create a scatter plot of `height` vs. `mass`, colored by `species`. Only include species with at least 3 characters (to reduce clutter). What do you notice about the relationship? Is there an outlier?
+
+```{r actscXX-task-three, fig.fullwidth=TRUE, eval=FALSE}
+starwars %>%
+  group_by(species) %>%
+  filter(n() >= 3) %>%
+  ungroup() %>%
+  ggplot(aes(x = ___, y = ___, color = ___)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(
+    title = "Height vs. Mass of Star Wars Characters",
+    x = "Height (cm)",
+    y = "Mass (kg)"
+  ) +
+  theme_minimal()
+```
+
+
+**Task 4.** The outlier in the previous plot is Jabba the Hutt (mass = 1358 kg!). Remove Jabba and recreate the plot. Add a trend line using `geom_smooth(method = "lm")`. How does the relationship look now?
+
+```{r actscXX-task-four, fig.fullwidth=TRUE, eval=FALSE}
+# Your code here — filter out Jabba, then create the plot
+```
+
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Part 2: visualization". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+
+## Part 3: Data Wrangling Challenge {.unnumbered}
+
+**Task 5.** Create a summary table that shows, for each homeworld with at least 2 characters:
+
+- Number of characters
+- Average height
+- Most common eye color (mode)
+
+Sort the result by number of characters, descending.
+
+<details>
+  <summary>Click for a hint about finding the mode</summary>
+
+  There's no built-in `mode()` function for categorical data in R (confusingly, `mode()` returns the storage type!). Instead, you can use this approach inside `summarize()`:
+
+  ```r
+  most_common_eye = names(sort(table(eye_color), decreasing = TRUE))[1]
+  ```
+
+  Or more tidyverse-style:
+
+  ```r
+  most_common_eye = eye_color[which.max(tabulate(match(eye_color, unique(eye_color))))]
+  ```
+</details>
+
+
+## Stretch Goal {.unnumbered}
+
+**Task 6.** Which films feature characters from the most diverse set of homeworlds? To answer this, you'll need to work with the `films` list-column using `unnest()`.
+
+```{r actscXX-task-six, eval=FALSE}
+starwars %>%
+  select(name, homeworld, films) %>%
+  unnest(films) %>%
+  group_by(films) %>%
+  summarize(
+    n_characters = n_distinct(name),
+    n_homeworlds = n_distinct(homeworld, na.rm = TRUE)
+  ) %>%
+  arrange(desc(n_homeworlds))
+```
+
+
+## Wrap Up {.unnumbered}
+
+In this activity, you practiced:
+
+- Exploring data with `glimpse()`, `count()`, and `filter()`
+- Summarizing data with `group_by()` and `summarize()`
+- Visualizing relationships with `ggplot2`
+- Handling outliers and missing data
+- Working with list-columns using `unnest()`
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+```{r courselinks, child="includes/courselinks.md"}
+```

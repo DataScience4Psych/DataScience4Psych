@@ -1,0 +1,199 @@
+# ODD: Getting Started with String Manipulation in R {#string_manipulation}
+
+
+```{r ddXX-setup, include = FALSE}
+source("common.R")
+library(tidyverse)
+library(DT)
+library(knitr)
+```
+
+This module introduces the basics of working with strings and text data in R using the **stringr** package. Whether you're cleaning messy survey responses, extracting information from file names, or preparing text for analysis, string manipulation is a skill you'll use constantly. We'll focus on the most common tasks: detecting patterns, extracting substrings, and replacing text.
+
+```{r ddXX-include-tweet, echo=FALSE}
+try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
+```
+
+
+## Learning Goals
+
+By the end of these notes, you will be able to:
+
+1. Detect patterns in strings using `str_detect()` and filter data based on text content.
+2. Extract substrings using `str_extract()`, `str_sub()`, and regular expressions.
+3. Replace and clean text using `str_replace()`, `str_to_lower()`, and related functions.
+4. Combine string operations into data wrangling pipelines with `mutate()` and `filter()`.
+
+
+## Why Strings Matter in Data Science
+
+Data scientists spend a surprising amount of time working with text. Survey responses arrive with inconsistent capitalization. Variable names need cleaning. Dates come as character strings that need parsing. IDs contain embedded information that needs extracting.
+
+The **stringr** package (part of the tidyverse) provides a consistent, human-readable set of functions for these tasks. Every stringr function starts with `str_`, making them easy to discover and remember.
+
+
+## Detecting Patterns with `str_detect()`
+
+The most fundamental string operation is asking: "Does this string contain a pattern?" The `str_detect()` function returns `TRUE` or `FALSE`.
+
+```{r ddXX-str-detect-basic}
+fruits <- c("apple", "banana", "cherry", "apricot", "blueberry")
+
+# Which fruits contain the letter "b"?
+str_detect(fruits, "b")
+```
+
+This is especially powerful combined with `filter()`:
+
+```{r ddXX-str-detect-filter}
+fruit_df <- tibble(
+  name = fruits,
+  price = c(1.20, 0.50, 2.50, 1.80, 3.00)
+)
+
+# Filter to fruits containing "berry"
+fruit_df %>%
+  filter(str_detect(name, "berry"))
+```
+
+You can also negate the detection with `negate = TRUE` or by wrapping in `!`:
+
+```{r ddXX-str-detect-negate}
+# Fruits that do NOT start with "a"
+fruit_df %>%
+  filter(!str_detect(name, "^a"))
+```
+
+The `^` character is a **regular expression** anchor meaning "start of string." We'll see more of these shortly.
+
+
+## Extracting Substrings
+
+### By position with `str_sub()`
+
+When you know the exact position of the characters you want, use `str_sub()`:
+
+```{r ddXX-str-sub-demo}
+# Extract the first 3 characters
+str_sub(fruits, start = 1, end = 3)
+
+# Extract the last 2 characters
+str_sub(fruits, start = -2)
+```
+
+### By pattern with `str_extract()`
+
+When you want to extract text matching a pattern, use `str_extract()`:
+
+```{r ddXX-str-extract-demo}
+# Strings with embedded numbers
+ids <- c("participant_01_session_A", "participant_12_session_B", "participant_03_session_A")
+
+# Extract the participant number
+str_extract(ids, "\\d+")
+```
+
+The pattern `\\d+` means "one or more digits." This is a **regular expression** — a mini-language for describing text patterns.
+
+Some commonly useful patterns:
+
+| Pattern | Meaning | Example Match |
+|---------|---------|---------------|
+| `\\d` | Any digit | "5" |
+| `\\w` | Any word character | "a", "Z", "3" |
+| `[A-Z]` | Any uppercase letter | "B" |
+| `.` | Any character | anything |
+| `+` | One or more of previous | `\\d+` matches "123" |
+| `*` | Zero or more of previous | `\\w*` matches "" or "hello" |
+| `^` | Start of string | `^a` matches "apple" |
+| `$` | End of string | `y$` matches "cherry" |
+
+
+## Replacing and Cleaning Text
+
+### Basic replacement with `str_replace()`
+
+```{r ddXX-str-replace-basic}
+# Replace first occurrence
+str_replace("hello world hello", "hello", "hi")
+
+# Replace ALL occurrences
+str_replace_all("hello world hello", "hello", "hi")
+```
+
+### Case conversion
+
+```{r ddXX-case-conversion}
+messy_names <- c("JOHN SMITH", "jane doe", "Bob Jones")
+
+str_to_lower(messy_names)
+str_to_upper(messy_names)
+str_to_title(messy_names)
+```
+
+### Trimming whitespace
+
+Survey data often has trailing spaces or inconsistent whitespace:
+
+```{r ddXX-str-trim-demo}
+messy_responses <- c("  yes ", "no  ", " maybe ", "  yes")
+str_trim(messy_responses)
+str_squish("too    many     spaces    here")
+```
+
+
+## Putting It All Together: A Data Cleaning Pipeline
+
+Let's clean a messy dataset of psychology study participants:
+
+```{r ddXX-full-pipeline}
+# Simulated messy data
+participants <- tibble(
+  raw_id = c("PID-001_v2", "pid-012_v1", "PID-003_V2", "pid-045_v1", "PID-078_V3"),
+  response = c("  Strongly Agree ", "agree", "NEUTRAL", "  disagree  ", "Strongly Disagree"),
+  age_field = c("age:25", "age:31", "age:22", "age:19", "age:28")
+)
+
+participants
+```
+
+Now let's clean it up:
+
+```{r ddXX-full-pipeline-clean}
+participants_clean <- participants %>%
+  mutate(
+    # Standardize ID format
+    id = str_extract(raw_id, "\\d+") %>% as.integer(),
+    # Extract version number
+    version = str_extract(raw_id, "[vV](\\d+)") %>% str_extract("\\d+") %>% as.integer(),
+    # Clean response: trim whitespace, standardize case
+    response_clean = response %>% str_trim() %>% str_to_title(),
+    # Extract age as number
+    age = str_extract(age_field, "\\d+") %>% as.integer()
+  ) %>%
+  select(id, version, response_clean, age)
+
+participants_clean
+```
+
+In just a few lines, we've gone from messy, inconsistent text data to a clean, analysis-ready dataset. Each stringr function handles one specific task, and they compose beautifully in a pipeline.
+
+
+## Common Pitfalls
+
+1. **Forgetting the double backslash**: In R strings, `\d` means nothing — you need `\\d` to get the regex `\d`. This trips up everyone at first.
+
+2. **`str_replace()` vs `str_replace_all()`**: The first only replaces the _first_ match. If you want all matches replaced, use `str_replace_all()`.
+
+3. **Case sensitivity**: `str_detect("Apple", "apple")` returns `FALSE`. Use `regex("apple", ignore_case = TRUE)` or `str_to_lower()` first.
+
+
+## Further Reading
+
+- [R for Data Science: Strings](https://r4ds.had.co.nz/strings.html) — comprehensive introduction to stringr
+- [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) — quick reference for all stringr functions
+- [Regular Expressions in R](https://stringr.tidyverse.org/articles/regular-expressions.html) — deep dive into regex patterns
+- [regex101.com](https://regex101.com/) — interactive regex tester (use the "PCRE" flavor for R compatibility)
+
+```{r courselinks, child="includes/courselinks.md"}
+```

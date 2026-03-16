@@ -1,0 +1,386 @@
+# LAB: Penguin Research Station {#labXX}
+
+Welcome to the Penguin Research Station Lab! In this lab, we'll explore the Palmer Penguins dataset to practice data wrangling, visualization, and analysis skills. As researchers stationed in Antarctica, our mission is to understand the physical characteristics and behaviors of three penguin species: Adelie, Chinstrap, and Gentoo. This lab teaches you to explore, visualize, and model real ecological data using R.
+
+## Learning goals {.unnumbered}
+
+- Explore and summarize a dataset using `dplyr` functions such as `filter()`, `group_by()`, and `summarize()`.
+- Create publication-quality visualizations using `ggplot2` to reveal patterns in ecological data.
+- Practice building and interpreting simple linear models to quantify relationships between variables.
+- Strengthen your Git/GitHub workflow by committing and pushing your work at regular intervals.
+
+
+## Getting started {.unnumbered}
+
+Go to the course GitHub organization and locate your lab repo, which should be named `lab-XX-YOUR-NAME`. Grab the URL of the repo, and clone it in RStudio. First, open the R Markdown document `lab-XX.Rmd` and Knit it. Make sure it compiles without errors.
+
+```{r setup, include=FALSE}
+source("common.R")
+library(tidyverse)
+library(palmerpenguins)
+library(viridis)
+
+knitr::opts_chunk$set(echo = TRUE)
+options(
+  htmltools.dir.version = FALSE,
+  show.signif.stars = FALSE,
+  digits = 2
+)
+```
+
+### Packages {.unnumbered}
+
+In this lab, we will work with the **tidyverse** and **palmerpenguins** packages. We can install and load them with the following code:
+
+```{r load-packages, message=FALSE, warning=FALSE}
+if (!require("palmerpenguins")) install.packages("palmerpenguins")
+library(palmerpenguins)
+
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+### Data {.unnumbered}
+
+The `penguins` dataset from the **palmerpenguins** package contains measurements for `r nrow(penguins)` penguins from three species collected at the Palmer Station in Antarctica. Variables include species, island, bill dimensions, flipper length, body mass, sex, and year.
+
+```{r glimpse-data, echo=TRUE}
+glimpse(penguins)
+```
+
+
+## Exercises {.unnumbered}
+
+Rather than analyzing someone else's summary, we'll be working hands-on with real penguin measurement data! You will explore species differences, build visualizations, and model relationships between physical traits.
+
+
+## Exercise 1: Getting to Know Our Penguins {.unnumbered}
+
+Let's start by understanding the basic structure of our dataset. Before diving into analysis, it's important to know what we're working with — how many penguins, how many species, and what the data looks like.
+
+**1.1.** How many penguins of each species are in the dataset? Use `count()` to find out, and store the result in a variable called `species_counts`.
+
+```{r exercise-one-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+species_counts <- penguins %>%
+  1 # replace this with your code
+```
+
+```{r exercise-1-solution.1solution, error=TRUE, include=FALSE}
+species_counts <- penguins %>%
+  count(species)
+```
+
+Here's what the species breakdown looks like:
+
+```{r exercise-1-plot.1plot, echo=FALSE, message=FALSE}
+penguins %>%
+  count(species) %>%
+  ggplot(aes(x = reorder(species, -n), y = n, fill = species)) +
+  geom_col(color = "black") +
+  scale_fill_viridis_d() +
+  labs(
+    title = "Number of Penguins by Species",
+    x = "Species", y = "Count"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+**1.2.** Look at the bar chart above. Which species has the most observations? Why might sample sizes differ across species in ecological research? Write 2-3 sentences reflecting on what might cause unequal group sizes in a real dataset.
+
+
+**1.3.** Create a summary table showing the mean and standard deviation of `body_mass_g` for each species. Drop any rows with missing values first using `drop_na()`.
+
+```{r exercise-one-part-three, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+mass_summary <- penguins %>%
+  drop_na(body_mass_g) %>%
+  1 # replace this with your code
+```
+
+<details>
+  <summary>Click for a hint</summary>
+  Use `group_by(species)` followed by `summarize()` with `mean()` and `sd()` inside it.
+</details>
+
+```{r exercise-1-solution.3solution, error=TRUE, include=FALSE}
+mass_summary <- penguins %>%
+  drop_na(body_mass_g) %>%
+  group_by(species) %>%
+  summarize(
+    mean_mass = mean(body_mass_g),
+    sd_mass = sd(body_mass_g)
+  )
+```
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "exercise-1-solution.3solution", echo = TRUE, warning = FALSE}
+```
+</details>
+
+
+**1.4.** Using `ggplot2`, create a histogram of `body_mass_g` faceted by species. Use `fill` to color by species and add a `viridis` color scale.
+
+```{r exercise-one-part-four, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+# Your code here
+```
+
+```{r exercise-1-solution.4solution, error=TRUE, include=FALSE}
+penguins %>%
+  drop_na(body_mass_g) %>%
+  ggplot(aes(x = body_mass_g, fill = species)) +
+  geom_histogram(binwidth = 200, color = "black") +
+  scale_fill_viridis_d() +
+  facet_wrap(~species, ncol = 1) +
+  labs(
+    title = "Distribution of Body Mass by Species",
+    x = "Body Mass (g)", y = "Count"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+This is a good time to save your progress.
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Exercise 1: species exploration". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+
+## Exercise 2: Visualizing Relationships {.unnumbered}
+
+Now let's explore how different physical measurements relate to each other. Scatter plots are one of the most powerful tools for spotting patterns and relationships in data.
+
+
+**2.1.** Create a scatter plot of `bill_length_mm` (x-axis) vs. `bill_depth_mm` (y-axis), colored by `species`. Add a linear trend line for each species using `geom_smooth()`.
+
+```{r exercise-two-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+penguins %>%
+  drop_na(bill_length_mm, bill_depth_mm) %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  1 # add your geom layers here
+```
+
+```{r exercise-2-solution.1solution, error=TRUE, include=FALSE}
+penguins %>%
+  drop_na(bill_length_mm, bill_depth_mm) %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, formula = "y ~ x") +
+  scale_color_viridis_d() +
+  labs(
+    title = "Bill Length vs. Bill Depth by Species",
+    x = "Bill Length (mm)", y = "Bill Depth (mm)"
+  ) +
+  theme_minimal()
+```
+
+<details>
+  <summary>Click for a hint</summary>
+  You need two geom layers: `geom_point()` for the dots and `geom_smooth(method = "lm")` for the trend lines. The `color = species` aesthetic in the main `aes()` will automatically group both layers by species.
+</details>
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "exercise-2-solution.1solution", echo = TRUE, warning = FALSE}
+```
+</details>
+
+**2.2.** Look at your scatter plot carefully. What happens when you ignore species and look at the overall trend? This is a famous example of **Simpson's Paradox**. Without the `color = species` aesthetic, the relationship between bill length and bill depth appears _negative_ overall, but is _positive_ within each species. Write 2-3 sentences explaining why this matters for data analysis.
+
+
+## Exercise 3: Modeling Penguin Traits {.unnumbered}
+
+Let's go beyond visualization and fit some models. Understanding how to quantify relationships — not just see them in plots — is a core data science skill.
+
+
+**3.1.** Fit a linear model predicting `body_mass_g` from `flipper_length_mm` for Gentoo penguins only. Print the model summary.
+
+```{r exercise-three-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+# Your code here
+```
+
+<details>
+  <summary>Click here to see hints</summary>
+
+<details>
+  <summary>Big Picture Hint</summary>
+  Filter the data to Gentoo penguins first, then use `lm()` to fit the model.
+</details>
+.
+<details>
+  <summary>Step 1 Hint</summary>
+  Use `filter(species == "Gentoo")` to subset the data.
+</details>
+.
+<details>
+  <summary>Step 2 Hint</summary>
+  The `lm()` function takes a formula like `y ~ x` and a `data` argument.
+</details>
+.
+<details>
+  <summary>Step 3 Hint</summary>
+  Use `summary()` on the model object to see coefficients, R-squared, etc.
+</details>
+</details>
+
+```{r exercise-3-solution.1solution, error=TRUE, include=FALSE}
+gentoo_data <- penguins %>%
+  filter(species == "Gentoo") %>%
+  drop_na(body_mass_g, flipper_length_mm)
+
+gentoo_model <- lm(body_mass_g ~ flipper_length_mm, data = gentoo_data)
+summary(gentoo_model)
+```
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "exercise-3-solution.1solution", echo = TRUE, warning = FALSE}
+```
+</details>
+
+Here's a visualization of the model fit:
+
+```{r exercise-3-plot.1plot, echo=FALSE, message=FALSE, warning=FALSE}
+gentoo_data <- penguins %>%
+  filter(species == "Gentoo") %>%
+  drop_na(body_mass_g, flipper_length_mm)
+
+gentoo_model <- lm(body_mass_g ~ flipper_length_mm, data = gentoo_data)
+
+intercept <- coef(gentoo_model)[1]
+slope <- coef(gentoo_model)[2]
+
+equation <- sprintf("y == %.1f + %.1f * x", intercept, slope)
+
+viridis_color <- viridis(1, option = "D")[1]
+
+ggplot(gentoo_data, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = viridis_color, formula = "y ~ x") +
+  geom_label(
+    x = Inf, y = Inf, label = equation,
+    hjust = 1.1, vjust = 1.1, parse = TRUE, color = viridis_color
+  ) +
+  labs(
+    title = "Gentoo: Flipper Length vs. Body Mass",
+    x = "Flipper Length (mm)", y = "Body Mass (g)"
+  ) +
+  theme_minimal()
+```
+
+
+**3.2.** Interpret the model output. What does the slope tell you in plain language? Is the relationship statistically significant? What proportion of the variance in body mass does flipper length explain?
+
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with the commit message "Completed Exercises 2-3: visualization and modeling". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+
+## Exercise 4: Comparing Across Species {.unnumbered}
+
+Now let's scale up and compare across all three species at once. This exercise brings together everything you've practiced: filtering, grouping, modeling, and visualization.
+
+
+**4.1.** Fit a separate linear model of `body_mass_g ~ flipper_length_mm` for _each_ species. Extract the slope and R-squared for each model and present them in a table.
+
+```{r exercise-four-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+# Your code here
+```
+
+```{r exercise-4-solution.1solution, error=TRUE, include=FALSE}
+model_results <- penguins %>%
+  drop_na(body_mass_g, flipper_length_mm) %>%
+  group_by(species) %>%
+  summarize(
+    slope = coef(lm(body_mass_g ~ flipper_length_mm))[2],
+    r_squared = summary(lm(body_mass_g ~ flipper_length_mm))$r.squared
+  )
+model_results
+```
+
+<details>
+  <summary>Click for a hint</summary>
+  You can use `group_by(species)` with `summarize()`. Inside `summarize()`, fit the model inline: `coef(lm(body_mass_g ~ flipper_length_mm))[2]` extracts the slope.
+</details>
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "exercise-4-solution.1solution", echo = TRUE, warning = FALSE}
+```
+</details>
+
+
+**4.2.** Create a faceted scatter plot showing the relationship between `flipper_length_mm` and `body_mass_g` for each species, with trend lines and labeled regression equations.
+
+```{r exercise-four-part-two, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+# Your code here
+```
+
+```{r exercise-4-solution.2solution, error=TRUE, include=FALSE}
+penguins %>%
+  drop_na(body_mass_g, flipper_length_mm) %>%
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, formula = "y ~ x") +
+  scale_color_viridis_d() +
+  facet_wrap(~species, scales = "free") +
+  labs(
+    title = "Flipper Length vs. Body Mass by Species",
+    x = "Flipper Length (mm)", y = "Body Mass (g)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+<details>
+  <summary>Click to see the solution</summary>
+```{r ref.label = "exercise-4-solution.2solution", echo = TRUE, warning = FALSE}
+```
+</details>
+
+
+🧶 ✅ ⬆️ Now is a good time to knit your document and commit and push your changes to GitHub with the commit message "Completed Exercise 4: cross-species comparison". Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.
+
+
+## Stretch Tasks (Optional) {.unnumbered}
+
+These tasks are optional extensions for those who want to push further. They are not graded but are great practice.
+
+
+**5.1.** Investigate whether the relationship between `bill_length_mm` and `body_mass_g` differs by `sex` within each species. Create a visualization that shows this interaction and write a brief interpretation.
+
+<details>
+  <summary>Click for a hint</summary>
+  Try using `facet_grid(sex ~ species)` or mapping both `color` and `shape` to different variables.
+</details>
+
+
+**5.2.** Using what you learned about `group_by()` and `summarize()`, create a "penguin profile" table that shows the mean of every numeric variable for each species-island combination. Which island has the largest Adelie penguins on average?
+
+
+## Conclusion {.unnumbered}
+
+Congratulations on completing the Penguin Research Station Lab! Today, you've practiced exploring real ecological data, creating informative visualizations, and fitting linear models to quantify relationships between variables.
+
+__Final Checklist__
+
+- Ensure that you have executed all codes and documented your findings.
+- Review your visualizations and confirm that all plots are correctly generated and annotated.
+- Check that your model interpretations are written in plain language.
+
+__Reflect on Your Learning__
+
+- What surprised you about the relationships between penguin traits?
+- How might Simpson's Paradox show up in psychological research?
+- What would you do differently if you had more variables or a larger dataset?
+
+### Next Steps {.unnumbered}
+
+- Commit all your changes to your project repository. Use a comprehensive commit message that reflects the completion of this lab.
+- Push your changes to ensure everything is updated in your remote repository.
+
+🧶 ✅ ⬆️ Knit, commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.
+
+```{r courselinks, child="includes/courselinks.md"}
+```

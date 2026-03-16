@@ -1,0 +1,158 @@
+```{r lecXX-setup, include = FALSE}
+source("common.R")
+ds4p_urls <- read.csv("./metadata/ds4p_urls.csv")
+
+if (!require("tweetrmd")) devtools::install_github("gadenbuie/tweetrmd")
+library(tweetrmd)
+library(vembedr)
+```
+
+# LEC: Hands on Data Transformation {#handson_transform}
+
+## Reshaping data with pivot functions
+
+```{r lecXX-reshape-video-latex, echo=FALSE, eval = knitr::is_latex_output()}
+embed_youtube_alt("VIDEO_ID_HERE")
+```
+```{r lecXX-reshape-video-html, echo=FALSE, eval = knitr::is_html_output()}
+"https://www.youtube.com/watch?v=VIDEO_ID_HERE" %>%
+  embed_url() %>%
+  use_align("center")
+```
+
+You can follow along with the slides [here][d09_wrangle] if you would like to open them full-screen.
+
+```{r lecXX-embed-reshape-slides, echo=FALSE, error=TRUE}
+ds4p_urls %>%
+  slide_url("d09_wrangle") %>%
+  include_url(height = "400px")
+```
+
+
+## Getting started
+
+We'll be working with the `table1` dataset from the **tidyr** package, which comes loaded with the tidyverse. This dataset contains tuberculosis case counts for three countries across two years.
+
+```{r lecXX-load-packages, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Let's take a look at the data in its tidy form:
+
+```{r lecXX-glimpse-data}
+table1
+```
+
+This is "tidy" because each variable has its own column, each observation has its own row, and each value has its own cell. But data doesn't always arrive this way!
+
+
+## Wide vs. long format
+
+Data often comes in "wide" format, where each time point or category gets its own column. Compare `table1` (tidy/long) with `table4a` (wide):
+
+```{r lecXX-show-wide}
+table4a # cases in wide format
+```
+
+To make this tidy, we need to **pivot longer** — gathering the year columns into key-value pairs:
+
+```{r lecXX-pivot-longer-demo}
+table4a %>%
+  pivot_longer(
+    cols = c(`1999`, `2000`),
+    names_to = "year",
+    values_to = "cases"
+  )
+```
+
+Notice how we went from 3 rows and 3 columns to 6 rows and 3 columns. Each row now represents one country in one year — a single observation.
+
+
+## ACT: Hotels
+
+```{r lecXX-embed-act-slide, echo=FALSE, error=TRUE}
+ds4p_urls %>%
+  slide_url("d09_wrangle", "#18") %>%
+  include_url(height = "400px")
+```
+
+You can find the materials for the Hotels activity [here](https://github.com/DataScience4Psych/ae-04-hotels-datawrangling). The compiled version should look something like the following...
+
+```{r lecXX-embed-act-preview, echo=FALSE}
+"https://datascience4psych.github.io/ae-04-hotels-datawrangling/hotels-datawrangling.html" %>%
+  include_url(height = "400px")
+```
+
+
+## Going wider with `pivot_wider()`
+
+Sometimes you need the reverse operation. If your data is _too_ long, you can spread it wider:
+
+```{r lecXX-pivot-wider-demo}
+table2 %>%
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  )
+```
+
+
+## Separating and uniting columns
+
+Sometimes a single column contains two pieces of information. The `separate()` function splits one column into multiple:
+
+```{r lecXX-separate-demo}
+table3 %>%
+  separate(rate, into = c("cases", "population"), sep = "/")
+```
+
+The reverse operation, `unite()`, pastes columns together:
+
+```{r lecXX-unite-demo}
+table3 %>%
+  separate(rate, into = c("cases", "population"), sep = "/") %>%
+  unite(rate_combined, cases, population, sep = " out of ")
+```
+
+
+## Putting it all together
+
+Let's practice the full pipeline. Starting with `table4a` (wide cases) and `table4b` (wide population), let's create a tidy dataset with a computed rate:
+
+```{r lecXX-full-pipeline}
+tidy_cases <- table4a %>%
+  pivot_longer(
+    cols = c(`1999`, `2000`),
+    names_to = "year",
+    values_to = "cases"
+  )
+
+tidy_pop <- table4b %>%
+  pivot_longer(
+    cols = c(`1999`, `2000`),
+    names_to = "year",
+    values_to = "population"
+  )
+
+# Join and compute rate
+left_join(tidy_cases, tidy_pop, by = c("country", "year")) %>%
+  mutate(rate = cases / population * 10000)
+```
+
+This gives us the TB rate per 10,000 people — much more interpretable than raw counts!
+
+
+## Resources
+
+Tidying data:
+
+* [R for Data Science: Tidy Data](https://r4ds.had.co.nz/tidy-data.html)
+* [Pivoting vignette](https://tidyr.tidyverse.org/articles/pivot.html) from the tidyr package
+* [RStudio Data Import Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+
+```{r lecXX-include-tweet, echo=FALSE}
+try_include_tweet("https://twitter.com/hadleywickham/status/1363920786416562179")
+```
+
+```{r courselinks, child="includes/courselinks.md"}
+```
