@@ -209,8 +209,12 @@ responses_df <- tibble(
 )
 responses_df <- responses_df %>%
   mutate(completion_time = as.POSIXct(completion_time, tz = "UTC"))
-
+if (Sys.getenv("GITHUB_ACTIONS") != "true"){
 saveRDS(responses_df, "includes/responses.rds")
+} else {
+  message("Running on GitHub Actions, skipping data save")
+}
+
 
 ```
 

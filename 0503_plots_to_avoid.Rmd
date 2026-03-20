@@ -11,7 +11,7 @@ library(rafalib)
 
 # RDD: Plots Behaving Badly: Lessons in Data Misrepresentation
 
-This section explores common pitfalls in data visualization, inspired by Karl W. Broman's talk on how default plotting choices, like those in Microsoft Excel, can "obscure your data and annoy your readers". We'll examine how to intentionally create bad plots to understand good design practices better. Broman's lecture was inspired by (Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147)[https://www.jstor.org/stable/2683253]. Wainer was the first to set forth the principles of the bad display of data. But according to [Karl](https://github.com/kbroman/Talk_Graphs/blob/master/plots_to_avoid.Rmd) "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
+This section explores common pitfalls in data visualization, inspired by Karl W. Broman's talk on how default plotting choices, like those in Microsoft Excel, can "obscure your data and annoy your readers". We'll examine how to intentionally create bad plots to understand good design practices better. Broman's lecture was inspired by [Howard Wainer's 1984 paper: How to display data badly. American Statistician 38(2): 137--147](https://www.jstor.org/stable/2683253). Wainer was the first to set forth the principles of the bad display of data. But according to [Karl](https://github.com/kbroman/Talk_Graphs/blob/master/plots_to_avoid.Rmd) "The now widespread use of Microsoft Excel has resulted in remarkable advances in the field."
 
 
 
@@ -36,15 +36,27 @@ the past year (specifically, from `survey_year_start`-`survey_month_start` to `s
 
 Consider a poll asking about browser preferences collected in the United States over the past year. The typical display method would be a pie chart:
 
-```{r pie-chart-display, fig.align='center', fig.width=4}
+```{r include=FALSE}
+
 # https://gs.statcounter.com/browser-market-share/all/united-states-of-america
-statcounter_url <-paste0("https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser&region_hidden=US&granularity=monthly&statType=Browser&region=United%20States%20of%20America&fromInt=",survey_year_start, survey_month_start,"&toInt=",survey_year_end, survey_month_end,"&fromMonthYear=",survey_year_start, "-", survey_month_start,"&toMonthYear=",survey_year_end, "-", survey_month_end,"&csv=1")
+statcounter_url <- paste0("https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser&region_hidden=US&granularity=monthly&statType=Browser&region=United%20States%20of%20America&fromInt=",survey_year_start, survey_month_start,"&toInt=",survey_year_end, survey_month_end,"&fromMonthYear=",survey_year_start, "-", survey_month_start,"&toMonthYear=",survey_year_end, "-", survey_month_end,"&csv=1")
                          
-df_browsers <- read.csv(statcounter_url)
+
+
+if (Sys.getenv("GITHUB_ACTIONS") != "true"){
+tryCatch(
+  df_browsers <- read.csv(statcounter_url), error = function(e) message("Could not source update_data.R"), silent = TRUE)
+write.csv(df_browsers, "data/browser_usage.csv")
+} else {
+  message("Running on GitHub Actions, skipping data download.")
+}
+```
+
+```{r pie-chart-display, fig.align='center', fig.width=4}
+df_browsers <- read.csv("data/browser_usage.csv")
 
 availablebrowsers <- names(df_browsers %>%
   select(-Date))
-
 
 browsers <- df_browsers %>%
   select(-Date) %>%
@@ -490,7 +502,7 @@ This plot can be made better by simply using color to distinguish the three line
 
 ```{r plots_to_avoid-code-dose-response,fig.align='center',fig.width=5}
 # download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig8dat.csv",tmpfile)
-x <- read.table("data//fig8dat.csv", sep = ",", header = TRUE)
+x <- read.table("data/fig8dat.csv", sep = ",", header = TRUE)
 plot(
   x[, 1],
   x[, 2],
