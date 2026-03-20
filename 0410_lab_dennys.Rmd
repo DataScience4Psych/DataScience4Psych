@@ -39,7 +39,6 @@ Go to the course GitHub organization and locate the lab repo, which should be na
 library(pak)
 # error means not on cran
 dsbox_status <- tryCatch(pkg_history("dsbox"), error = function(e) "not on CRAN")
-
 ```
 
 In this lab, we will use the **tidyverse** and **dsbox** packages. The **dsbox** package is currently `r ifelse(dsbox_status == "not on CRAN","not ","")` available on CRAN.  `r ifelse(dsbox_status == "not on CRAN","However","If you are curious")`, you can find the most current version hosted on GitHub. `r ifelse(dsbox_status == "not on CRAN","Therefore, you will need to download and","If you'd like\ the cutting edge version of dsbox from GitHub, you can")` [install it yourself](https://github.com/tidyverse/dsbox#installation). This piece of code should help get you started.
@@ -174,19 +173,17 @@ lq %>%
 ```
 
 ```{r include=FALSE, eval=TRUE}
-
 lq <- lq %>%
   mutate(country = case_when(
     state %in% state.abb ~ "United States",
     state %in% c("ON", "BC") ~ "Canada",
     state == "ANT" ~ "Colombia",
     state == "JAL" ~ "Mexico",
-    state %in% c("NLE","NL","AG", "BCS","SIN","YUC", "QR", "CH","PU", "VE", "SL", "FM")
-                ~ "Mexico"
+    state %in% c("NLE", "NL", "AG", "BCS", "SIN", "YUC", "QR", "CH", "PU", "VE", "SL", "FM")
+    ~ "Mexico"
   ))
 lq_all <- lq
-#lq %>% filter(is.na(country))
-  
+# lq %>% filter(is.na(country))
 ```
 
 Make sure to save the result of this as `lq` again so that the stored data frame contains the new variable going forward.
@@ -265,7 +262,6 @@ If you still have some time left, move on to the remaining exercises below. Thes
 </details>
 
 ```{r echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
-
 library(ggplot2)
 library(dplyr)
 library(dsbox)
@@ -276,27 +272,32 @@ dn_lq_all <- bind_rows(dn, lq_all)
 
 
 dn_lq_all %>%
-  mutate(establishment_state = paste0(establishment, "-", state),
-    establishment = factor(establishment, levels = c("Denny's", "La Quinta")) ) %>%
-#  filter(!state %in% c("AK", "HI")) %>%
+  mutate(
+    establishment_state = paste0(establishment, "-", state),
+    establishment = factor(establishment, levels = c("Denny's", "La Quinta"))
+  ) %>%
+  #  filter(!state %in% c("AK", "HI")) %>%
   ggplot(aes(x = longitude, y = latitude)) +
-  annotation_borders("world", fill = "grey90", color = "white")+
-  geom_path(aes(group = establishment_state, color=establishment), 
-            alpha = 0.2,size = 0.25) +
-  geom_point(aes(color = establishment), 
-             alpha = 0.5, size = 0.7) +
+  annotation_borders("world", fill = "grey90", color = "white") +
+  geom_path(aes(group = establishment_state, color = establishment),
+    alpha = 0.2, size = 0.25
+  ) +
+  geom_point(aes(color = establishment),
+    alpha = 0.5, size = 0.7
+  ) +
   labs(
     title = "Denny's and La Quinta Locations in the Western Hemisphere",
     x = "Longitude",
     y = "Latitude",
     color = "Establishment"
   ) + # trim x and y axis to focus on US
-  theme_minimal() + coord_map("ortho", orientation = c(36, -95, 10), clip = "on",
-                        xlim = c(-170, -50), ylim = c(-10, 60)      
-                              )+
-   scale_color_manual(values=c("#E69F00", "#56B4E9")) +
-scale_size_area()
-
+  theme_minimal() +
+  coord_map("ortho",
+    orientation = c(36, -95, 10), clip = "on",
+    xlim = c(-170, -50), ylim = c(-10, 60)
+  ) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9")) +
+  scale_size_area()
 ```
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*

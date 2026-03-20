@@ -2,9 +2,11 @@
 
 test_that("Ex 3: compas object exists with decile_score", {
   skip_if(!exists("compas"),
-          message = "compas must be loaded before testing risk scores")
+    message = "compas must be loaded before testing risk scores"
+  )
   expect_true("decile_score" %in% names(compas),
-              info ="compas should have a decile_score column")
+    info = "compas should have a decile_score column"
+  )
 })
 
 test_that("Ex 3: Rmd Exercise 3 contains risk score visualization code", {
@@ -13,7 +15,8 @@ test_that("Ex 3: Rmd Exercise 3 contains risk score visualization code", {
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
-               info = "Include code visualizing the distribution of risk scores in your Rmd")
+    info = "Include code visualizing the distribution of risk scores in your Rmd"
+  )
 })
 
 test_that("Ex 4: Rmd Exercise 4 contains demographic analysis code", {
@@ -22,5 +25,6 @@ test_that("Ex 4: Rmd Exercise 4 contains demographic analysis code", {
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
-               info = "Include code examining demographic variables (race, sex) in your Rmd")
+    info = "Include code examining demographic variables (race, sex) in your Rmd"
+  )
 })

@@ -37,16 +37,16 @@ the past year (specifically, from `survey_year_start`-`survey_month_start` to `s
 Consider a poll asking about browser preferences collected in the United States over the past year. The typical display method would be a pie chart:
 
 ```{r include=FALSE}
-
 # https://gs.statcounter.com/browser-market-share/all/united-states-of-america
-statcounter_url <- paste0("https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser&region_hidden=US&granularity=monthly&statType=Browser&region=United%20States%20of%20America&fromInt=",survey_year_start, survey_month_start,"&toInt=",survey_year_end, survey_month_end,"&fromMonthYear=",survey_year_start, "-", survey_month_start,"&toMonthYear=",survey_year_end, "-", survey_month_end,"&csv=1")
-                         
+statcounter_url <- paste0("https://gs.statcounter.com/browser-market-share/all/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser&region_hidden=US&granularity=monthly&statType=Browser&region=United%20States%20of%20America&fromInt=", survey_year_start, survey_month_start, "&toInt=", survey_year_end, survey_month_end, "&fromMonthYear=", survey_year_start, "-", survey_month_start, "&toMonthYear=", survey_year_end, "-", survey_month_end, "&csv=1")
 
 
-if (Sys.getenv("GITHUB_ACTIONS") != "true"){
-tryCatch(
-  df_browsers <- read.csv(statcounter_url), error = function(e) message("Could not source update_data.R"), silent = TRUE)
-write.csv(df_browsers, "data/browser_usage.csv")
+if (Sys.getenv("GITHUB_ACTIONS") != "true") {
+  tryCatch(
+    df_browsers <- read.csv(statcounter_url),
+    error = function(e) message("Could not source update_data.R"), silent = TRUE
+  )
+  write.csv(df_browsers, "data/browser_usage.csv")
 } else {
   message("Running on GitHub Actions, skipping data download.")
 }
@@ -65,8 +65,9 @@ browsers <- df_browsers %>%
 names(browsers) <- availablebrowsers
 
 
-pie(browsers, 
-    main = paste0("Browser Usage (", survey_period, ")"))
+pie(browsers,
+  main = paste0("Browser Usage (", survey_period, ")")
+)
 ```
 
 Now try to determine the exact market shares of the browsers from the pie chart above. It's challenging to assess precise proportions just by looking at the angles and areas, which is a fundamental flaw of pie charts. The human eye is not adept at judging relative areas, making it difficult to compare the slices accurately, especially when there are many categories or when the differences between them are small.
@@ -79,11 +80,11 @@ library(dplyr)
 library(ggpattern)
 
 df <- data.frame(
-    browsers = names(browsers),
-    usage = browsers
-  ) %>%
+  browsers = names(browsers),
+  usage = browsers
+) %>%
   count(usage, browsers) %>%
-#  group_by(browsers) %>%
+  #  group_by(browsers) %>%
   mutate(
     percent = n / sum(n),
     ymax = cumsum(usage),
@@ -93,12 +94,14 @@ df <- data.frame(
 
 
 # Make the plot
-ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = 0, xmax = 1,fill = browsers)) +
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = 0, xmax = 1, fill = browsers)) +
   geom_rect_pattern(
-    aes(pattern_fill = browsers,
-        pattern_type = browsers),
+    aes(
+      pattern_fill = browsers,
+      pattern_type = browsers
+    ),
     color = "white", linewidth = 0.3,
-                    pattern = 'polygon_tiling', 
+    pattern = "polygon_tiling",
     pattern_alpha = 0.35
   ) +
   scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
@@ -106,8 +109,7 @@ ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = 0, xmax = 1,fill = browsers)) +
   theme_void() +
   theme(legend.position = "bottom") +
   ggtitle(paste0("Browser Usage (", survey_period, ")")) #+
- # xlim(-1.5, 1.5) # Adjust x-axis limits to create a donut effect
-
+# xlim(-1.5, 1.5) # Adjust x-axis limits to create a donut effect
 ```
 
 
@@ -125,7 +127,6 @@ To test this, try determining the exact market shares of the browsers from the p
 If we need to visualize this data more effectively, a bar chart is more appropriate:
 
 ```{r plots_to_avoid-code-barplot, fig.align='center', fig.width=4.5}
-
 browsers_normalized <- browsers / sum(browsers) * 100
 barplot(browsers_normalized, main = paste0("Browser Usage (", survey_period, ")"), ylab = "Percentage", col = "steelblue")
 ```
@@ -145,12 +146,14 @@ library(ggpattern)
 
 
 # Make the plot
-ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = .15, xmax = 1,fill = browsers)) +
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = .15, xmax = 1, fill = browsers)) +
   geom_rect_pattern(
-    aes(pattern_fill = browsers,
-        pattern_type = browsers),
+    aes(
+      pattern_fill = browsers,
+      pattern_type = browsers
+    ),
     color = "white", linewidth = 0.3,
-                    pattern = 'polygon_tiling', 
+    pattern = "polygon_tiling",
     pattern_alpha = 0.35
   ) +
   scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
@@ -159,10 +162,6 @@ ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = .15, xmax = 1,fill = browsers)) 
   theme(legend.position = "bottom") +
   ggtitle(paste0("Browser Usage (", survey_period, ")")) +
   xlim(-1.5, 1.5) # Adjust x-axis limits to create a donut effect
-
-
-
-
 ```
 
 The reason is that by removing the center we remove one of the visual cues for determining the different areas: the angles. There is no reason to ever use a donut to display data.
@@ -687,15 +686,19 @@ An important consideration when choosing colors is accessibility.  Roughly 8% of
 
 ```{r plots_to_avoid-cb-palettes}
 # The palette with grey (color-blind friendly)
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
-               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c(
+  "#999999", "#E69F00", "#56B4E9", "#009E73",
+  "#F0E442", "#0072B2", "#D55E00", "#CC79A7"
+)
 
 # Display the palettes
 scales::show_col(cbPalette)
 
 # The palette with black (color-blind friendly)
-cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
-                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette <- c(
+  "#000000", "#E69F00", "#56B4E9", "#009E73",
+  "#F0E442", "#0072B2", "#D55E00", "#CC79A7"
+)
 
 
 scales::show_col(cbbPalette)
@@ -706,8 +709,10 @@ Now revisit the red–green example with the color-blind friendly palette:
 
 ```{r plots_to_avoid-cb-palette-demo}
 # Good: color-blind friendly palette
-ggplot(demo_df %>% filter(group %in% c("A", "B")),
-       aes(x = group, y = value, fill = group)) +
+ggplot(
+  demo_df %>% filter(group %in% c("A", "B")),
+  aes(x = group, y = value, fill = group)
+) +
   geom_boxplot() +
   scale_fill_manual(values = cbPalette[c(7, 3)]) +
   labs(

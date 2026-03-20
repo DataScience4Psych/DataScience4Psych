@@ -25,7 +25,7 @@ reinstall_all_packages <- function(lib = .libPaths()[1],
 
   # Ensure recommended helpers are available if we will use them
   if (also_bioc && !requireNamespace("BiocManager", quietly = TRUE)) {
-    install.packages("BiocManager", ask = ask,force = TRUE)
+    install.packages("BiocManager", ask = ask, force = TRUE)
   }
   if (also_remotes && !requireNamespace("remotes", quietly = TRUE)) {
     install.packages("remotes", ask = ask)
@@ -38,11 +38,11 @@ reinstall_all_packages <- function(lib = .libPaths()[1],
     remote_username <- ip[, "RemoteUsername"]
 
     gh_idx <- which(!is.na(remote_type) & remote_type == "github" &
-                      !is.na(remote_repo) & !is.na(remote_username))
+      !is.na(remote_repo) & !is.na(remote_username))
     if (length(gh_idx) > 0L) {
       gh_specs <- paste0(remote_username[gh_idx], "/", remote_repo[gh_idx])
       message("Reinstalling ", length(gh_specs), " GitHub remote packages via remotes::install_github()")
-      remotes::install_github(gh_specs, dependencies = TRUE, upgrade = "never", quiet = TRUE,force = TRUE)
+      remotes::install_github(gh_specs, dependencies = TRUE, upgrade = "never", quiet = TRUE, force = TRUE)
       pkgs <- setdiff(pkgs, ip[gh_idx, "Package"])
     }
   }
@@ -57,7 +57,7 @@ reinstall_all_packages <- function(lib = .libPaths()[1],
       bioc_pkgs <- intersect(pkgs, avail_bioc)
       if (length(bioc_pkgs) > 0L) {
         message("Reinstalling ", length(bioc_pkgs), " Bioconductor packages via BiocManager::install()")
-        BiocManager::install(bioc_pkgs, ask = ask, update = FALSE,force = TRUE)
+        BiocManager::install(bioc_pkgs, ask = ask, update = FALSE, force = TRUE)
         pkgs <- setdiff(pkgs, bioc_pkgs)
       }
     }

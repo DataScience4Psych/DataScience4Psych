@@ -7,11 +7,11 @@ metadata.df <- read.csv("https://www.epa.gov/sites/production/files/2015-09/extb
 
 
 write.csv(nrsa.df,
-    "data/nrsa_metrics.csv",
+  "data/nrsa_metrics.csv",
   row.names = FALSE
 )
 
 write.csv(metadata.df,
-          "data/nrsa_metrics_metadata.csv",
+  "data/nrsa_metrics_metadata.csv",
   row.names = FALSE
 )

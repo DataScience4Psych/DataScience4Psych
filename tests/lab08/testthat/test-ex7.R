@@ -61,4 +61,3 @@ test_that("Ex 7: Rmd contains code to construct urls using paste0() and seq()", 
     info = "Include code to build the 'urls' vector (e.g., paste0(root, seq(0, ..., by=10))) for Exercise 7"
   )
 })
-

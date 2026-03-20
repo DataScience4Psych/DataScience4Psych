@@ -36,7 +36,8 @@ test_that("Ex 5: Rmd references mask mandate counties from the MMWR report", {
 test_that("Ex 5: an object with a mask_mandate column exists", {
   result <- .find_obj_with_col("mask_mandate")
   expect_true(!is.null(result),
-              info = "Create a data frame with a 'mask_mandate' column using ifelse() after str_remove()")
+    info = "Create a data frame with a 'mask_mandate' column using ifelse() after str_remove()"
+  )
 })
 
 test_that("Ex 5: mask_mandate has exactly two distinct values", {
@@ -44,7 +45,8 @@ test_that("Ex 5: mask_mandate has exactly two distinct values", {
   skip_if(is.null(result))
   n_vals <- dplyr::n_distinct(result$obj$mask_mandate)
   expect_equal(n_vals, 2L,
-               info = "mask_mandate should have exactly two values — 'Mask' and 'No Mask' (or similar)")
+    info = "mask_mandate should have exactly two values — 'Mask' and 'No Mask' (or similar)"
+  )
 })
 
 test_that("Ex 5: mask_mandate values indicate mask and no-mask groups", {
@@ -54,16 +56,19 @@ test_that("Ex 5: mask_mandate values indicate mask and no-mask groups", {
   has_mask <- any(.is_mask_group(vals))
   has_no_mask <- any(.is_nomask_group(vals))
   expect_true(has_mask,
-              info = paste("Expected a 'Mask' group in mask_mandate — found values:", paste(vals, collapse = ", ")))
+    info = paste("Expected a 'Mask' group in mask_mandate — found values:", paste(vals, collapse = ", "))
+  )
   expect_true(has_no_mask,
-              info = paste("Expected a 'No Mask' group in mask_mandate — found values:", paste(vals, collapse = ", ")))
+    info = paste("Expected a 'No Mask' group in mask_mandate — found values:", paste(vals, collapse = ", "))
+  )
 })
 
 test_that("Ex 5: an object with both mask_mandate and population columns exists", {
   result <- .find_obj_with_col("mask_mandate")
   skip_if(is.null(result))
   expect_true("population" %in% names(result$obj),
-              info = "After left_join(), the data frame with mask_mandate should also have a 'population' column")
+    info = "After left_join(), the data frame with mask_mandate should also have a 'population' column"
+  )
 })
 
 test_that("Ex 5: population column is numeric", {
@@ -71,7 +76,8 @@ test_that("Ex 5: population column is numeric", {
   skip_if(is.null(result))
   skip_if(!"population" %in% names(result$obj))
   expect_true(is.numeric(result$obj$population),
-              info = "population should be a numeric column after joining with pop data")
+    info = "population should be a numeric column after joining with pop data"
+  )
 })
 
 test_that("Ex 5: population values are positive", {
@@ -80,7 +86,8 @@ test_that("Ex 5: population values are positive", {
   skip_if(!"population" %in% names(result$obj))
   pop_vals <- result$obj$population[!is.na(result$obj$population)]
   expect_true(all(pop_vals > 0),
-              info = "All population values should be positive — check your join keys (countyFIPS)")
+    info = "All population values should be positive — check your join keys (countyFIPS)"
+  )
 })
 
 test_that("Ex 5: mask group covers 24 counties and no-mask covers remaining Kansas counties", {
@@ -95,7 +102,9 @@ test_that("Ex 5: mask group covers 24 counties and no-mask covers remaining Kans
   no_mask_rows <- group_counts$n[.is_nomask_group(group_counts$mask_mandate)]
   skip_if(length(mask_rows) == 0 || length(no_mask_rows) == 0)
   expect_equal(mask_rows[1], 24L,
-               info = "The mask mandate group should include exactly 24 Kansas counties per the MMWR report")
+    info = "The mask mandate group should include exactly 24 Kansas counties per the MMWR report"
+  )
   expect_true(no_mask_rows[1] > 24,
-               info = "The no-mask group should cover the remaining Kansas counties (more than 24)")
+    info = "The no-mask group should cover the remaining Kansas counties (more than 24)"
+  )
 })

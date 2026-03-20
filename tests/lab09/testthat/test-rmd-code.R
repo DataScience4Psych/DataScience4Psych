@@ -62,8 +62,10 @@ test_that("Exercise 6 section contains accuracy calculation code", {
 
 test_that("Exercise 7 section contains risk score comparison by race", {
   skip_if(length(.rmd_content) == 0)
-  potential_answers <- c("ggplot", "geom_histogram|geom_density|geom_boxplot|geom_violin",
-                         "race", "decile_score", "fill\\s*=|color\\s*=")
+  potential_answers <- c(
+    "ggplot", "geom_histogram|geom_density|geom_boxplot|geom_violin",
+    "race", "decile_score", "fill\\s*=|color\\s*="
+  )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
@@ -83,8 +85,10 @@ test_that("Exercise 8 section contains R code", {
 
 test_that("Exercise 9 section contains group-level accuracy metrics code", {
   skip_if(length(.rmd_content) == 0)
-  potential_answers <- c("group_by.*race", "race.*group_by", "filter.*race", "African|Caucasian",
-                         "accuracy|TP|FP|TN|FN|classification")
+  potential_answers <- c(
+    "group_by.*race", "race.*group_by", "filter.*race", "African|Caucasian",
+    "accuracy|TP|FP|TN|FN|classification"
+  )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,
@@ -104,8 +108,10 @@ test_that("Exercise 10 section contains R code", {
 
 test_that("Exercise 11 section contains fairness debate discussion", {
   skip_if(length(.rmd_content) == 0)
-  potential_answers <- c("[Pp]ro[Pp]ublica", "[Nn]orthpointe", "calibrat", "error\\.rate|error rate",
-                         "false.positive|false.negative", "fairness|fair", "disparit")
+  potential_answers <- c(
+    "[Pp]ro[Pp]ublica", "[Nn]orthpointe", "calibrat", "error\\.rate|error rate",
+    "false.positive|false.negative", "fairness|fair", "disparit"
+  )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
   expect_equal(answer_in_rmd, TRUE,

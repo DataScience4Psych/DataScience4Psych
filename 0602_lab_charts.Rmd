@@ -187,7 +187,7 @@ fisheries %>%
   ggplot(aes(x = country, y = percentcapture, fill = percentaquaculture)) +
   geom_col() +
   coord_flip() +
-  facet_wrap(~ continent, scales = "free_y") +
+  facet_wrap(~continent, scales = "free_y") +
   labs(
     x = "Country",
     y = "Percentage of tons by capture",
@@ -195,13 +195,14 @@ fisheries %>%
     subtitle = "Including percentage due to aquaculture",
     fill = "Percent due to aquaculture"
     # font size for axes and title
-    
-  ) + 
-  theme(legend.position = "bottom",
-        axis.text.y = element_text(size = 4),  # Adjust y-axis text size
-        axis.title = element_text(size = 10),   # Adjust axis title size
-        plot.title = element_text(size = 14),   # Adjust plot title size
-        plot.subtitle = element_text(size = 12)) # Adjust subtitle size
+  ) +
+  theme(
+    legend.position = "bottom",
+    axis.text.y = element_text(size = 4), # Adjust y-axis text size
+    axis.title = element_text(size = 10), # Adjust axis title size
+    plot.title = element_text(size = 14), # Adjust plot title size
+    plot.subtitle = element_text(size = 12)
+  ) # Adjust subtitle size
 ```
 </detail>
 
@@ -242,7 +243,6 @@ Take a peek at the codebook with
 
 ```{r lab_charts-example-whickham-help, eval=FALSE}
 ?Whickham
-
 ```
 
 ### Exercises {.unnumbered}
@@ -295,7 +295,6 @@ Whickham %>%
 </details>
 
 ```{r lab_charts-code-challenge, echo=FALSE, message=FALSE, warning=FALSE}
-
 library(ggplot2)
 library(dplyr)
 library(ggpattern)
@@ -304,9 +303,9 @@ df <- Whickham %>%
   mutate(age_cat = case_when(
     age <= 44 ~ "18-44",
     age <= 64 ~ "45-64",
-    age >  64 ~ "65+",
+    age > 64 ~ "65+",
     TRUE ~ NA_character_
-  )  %>% factor(levels = c("18-44","45-64","65+"))) %>%
+  ) %>% factor(levels = c("18-44", "45-64", "65+"))) %>%
   count(age_cat, smoker, outcome) %>%
   group_by(age_cat, smoker) %>%
   mutate(
@@ -322,22 +321,23 @@ df <- Whickham %>%
 
 
 # Make the plot
-ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax,fill = smoker)) +
+ggplot(df, aes(ymin = ymin, ymax = ymax, xmin = xmin, xmax = xmax, fill = smoker)) +
   geom_rect_pattern(
-    aes(pattern_fill = outcome,
-        pattern_type = smoker),
+    aes(
+      pattern_fill = outcome,
+      pattern_type = smoker
+    ),
     color = "white", linewidth = 0.3,
-                    pattern = 'polygon_tiling', 
+    pattern = "polygon_tiling",
     pattern_alpha = 0.35
   ) +
   coord_polar(theta = "y") +
   xlim(1.5, 4) +
-  facet_wrap(~ age_cat) +
+  facet_wrap(~age_cat) +
   scale_pattern_type_discrete(choices = gridpattern::names_polygon_tiling) +
- scale_pattern_fill_manual(values = c( "Alive" = "#E67819", "Dead" = "#201a12"))+
-   scale_fill_manual(values = c( "Yes" = "black", "No" = "#dbcbb0"))+
- theme_void()
-
+  scale_pattern_fill_manual(values = c("Alive" = "#E67819", "Dead" = "#201a12")) +
+  scale_fill_manual(values = c("Yes" = "black", "No" = "#dbcbb0")) +
+  theme_void()
 ```
 
 
