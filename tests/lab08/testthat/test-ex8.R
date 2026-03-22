@@ -1,10 +1,9 @@
 # Exercise 8: Mapping scrape_page over all URLs to build uoe_art
 
 test_that("Ex 8: uoe_art was created by iterating over multiple pages", {
-  .art <- .find_art_df()
-  skip_if(is.null(.art), message = "No scraped art data frame found")
-  expect_true(nrow(.art) >= 100,
-    info = "The scraped art data frame should contain art pieces from many pages — use map_dfr(urls, scrape_page)"
+  skip_if(!exists("uoe_art"))
+  expect_true(nrow(uoe_art) >= 100,
+    info = "uoe_art should contain art pieces from many pages — use map_dfr(urls, scrape_page)"
   )
 })
 
@@ -26,10 +25,9 @@ test_that("Ex 8: Rmd or scripts contain map or iteration code for scraping all p
 })
 
 test_that("Ex 8: uoe_art has title, artist, and link columns", {
-  .art <- .find_art_df()
-  skip_if(is.null(.art), message = "No scraped art data frame found")
-  expect_true(all(c("title", "artist", "link") %in% names(.art)),
-    info = "The scraped art data frame should have title, artist, and link columns — same structure as a single page result"
+  skip_if(!exists("uoe_art"))
+  expect_true(all(c("title", "artist", "link") %in% names(uoe_art)),
+    info = "uoe_art should have title, artist, and link columns — same structure as a single page result"
   )
 })
 

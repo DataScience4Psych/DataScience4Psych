@@ -14,17 +14,15 @@ test_that("Ex 11: Rmd contains skim() to summarise uoe_art", {
 })
 
 test_that("Ex 11: uoe_art has some missing artist values (expected)", {
-  .art <- .find_art_df()
-  skip_if(is.null(.art) || !"artist" %in% names(.art))
-  expect_true(any(is.na(.art$artist) | .art$artist == ""),
+  skip_if(!exists("uoe_art") || !"artist" %in% names(uoe_art))
+  expect_true(any(is.na(uoe_art$artist) | uoe_art$artist == ""),
     info = "Some art pieces won't have artist information — the skim() output should show this"
   )
 })
 
 test_that("Ex 11: uoe_art has some missing year values (expected)", {
-  .art <- .find_art_df()
-  skip_if(is.null(.art) || !"year" %in% names(.art))
-  expect_true(any(is.na(.art$year)),
+  skip_if(!exists("uoe_art") || !"year" %in% names(uoe_art))
+  expect_true(any(is.na(uoe_art$year)),
     info = "Some art pieces won't have year information — the skim() output should show this"
   )
 })
