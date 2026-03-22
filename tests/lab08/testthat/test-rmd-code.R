@@ -80,7 +80,8 @@ test_that("Exercise 6 tests scrape_page with first_url and second_url", {
   potential_answers <- c(
     "scrape_page\\(first_url\\)",
     "scrape_page\\(second_url\\)",
-    "scrape_page\\("
+    "scrape_page\\(",
+    "map_dfr\\([^)]*scrape_page|map\\([^)]*scrape_page|lapply\\([^)]*scrape_page"
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()

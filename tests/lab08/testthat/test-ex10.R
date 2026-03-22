@@ -1,9 +1,10 @@
 # Exercise 10: Separating title from date and extracting year
 
-test_that("Ex 10: uoe_art has a date column after title separation", {
+test_that("Ex 10: uoe_art has a date or year column after title separation", {
   skip_if(!exists("uoe_art"))
-  expect_true("date" %in% names(uoe_art),
-    info = "Create a 'date' column by separating the title at '(' using separate() for Exercise 10"
+  has_date_or_year <- "date" %in% names(uoe_art) || "year" %in% names(uoe_art)
+  expect_true(has_date_or_year,
+    info = "Create a 'date' column by separating the title at '(' using separate() for Exercise 10, then extract 'year'"
   )
 })
 
