@@ -14,8 +14,9 @@ test_that("Ex 12: Rmd contains histogram code for years", {
 })
 
 test_that("Ex 12: year column has non-NA values to visualise", {
-  skip_if(!exists("uoe_art") || !"year" %in% names(uoe_art))
-  n_valid <- sum(!is.na(uoe_art$year))
+  .art <- .find_art_df()
+  skip_if(is.null(.art) || !"year" %in% names(.art))
+  n_valid <- sum(!is.na(.art$year))
   expect_true(n_valid > 10,
     info = "There should be enough non-NA year values to produce a meaningful histogram"
   )
