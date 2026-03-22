@@ -1,7 +1,7 @@
 # Rmd code-presence checks: verify student wrote R code, not just prose
 
 
-test_that(, {
+test_that("Rmd file contains headers", {
   pattern <- paste0("(", paste(, collapse = "|"), ")")
 
   headers <- which(stringr::str_detect(.rmd_content, pattern))
