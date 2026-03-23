@@ -2,13 +2,15 @@
 
 
 test_that("Rmd file contains headers", {
-  pattern <- paste0("(", paste(, collapse = "|"), ")")
+  potential_headers <- c("output: ","author: ","date: ","title: ")
+  pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
+
 
   headers <- which(stringr::str_detect(.rmd_content, pattern))
   expect_true(
-    length(headers) >= 2,
+    length(headers) >= 3,
     info = sprintf(
-      "Include at least 2 headers in your Rmd file — found %d",
+      "Include at least 3 headers in your Rmd file — found %d",
       length(headers)
     )
   )
