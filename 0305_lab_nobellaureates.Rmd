@@ -12,8 +12,8 @@ library(ggplot2)
 library(tidyr)
 
 # only run when not via github actions
-if (Sys.getenv("GITHUB_ACTIONS") != "true"){
-tryCatch(source("https://github.com/DataScience4Psych/lab-03-nobel-laureates/raw/refs/heads/main/data/update_data.R"), error = function(e) message("Could not source update_data.R"), silent = TRUE)
+if (Sys.getenv("GITHUB_ACTIONS") != "true") {
+  tryCatch(source("https://github.com/DataScience4Psych/lab-03-nobel-laureates/raw/refs/heads/main/data/update_data.R"), error = function(e) message("Could not source update_data.R"), silent = TRUE)
 }
 ```
 
@@ -116,7 +116,7 @@ library(maps)
 library(rworldmap)
 library(ggplot2)
 # A quick look at the data
-colourPalette <- RColorBrewer::brewer.pal(7,'RdPu')
+colourPalette <- RColorBrewer::brewer.pal(7, "RdPu")
 
 country_counts <- nobel %>%
   filter(!is.na(born_country_code)) %>%
@@ -124,16 +124,17 @@ country_counts <- nobel %>%
   arrange(desc(n))
 
 country_counts$n_log <- log10(country_counts$n + 1)
-country_counts_map <- joinCountryData2Map(country_counts, joinCode="ISO2", nameJoinColumn="born_country_code") %>% suppressMessages() 
+country_counts_map <- joinCountryData2Map(country_counts, joinCode = "ISO2", nameJoinColumn = "born_country_code") %>% suppressMessages()
 
-mapCountryData(country_counts_map, nameColumnToPlot="n_log",
-                           addLegend=T,
-                           mapTitle="Number of Nobel laureates by birth country",
-                           oceanCol='lightblue',
-                           catMethod = "fixedWidth",
-                           missingCountryCol='white',
-                           colourPalette = colourPalette
-                           )
+mapCountryData(country_counts_map,
+  nameColumnToPlot = "n_log",
+  addLegend = T,
+  mapTitle = "Number of Nobel laureates by birth country",
+  oceanCol = "lightblue",
+  catMethod = "fixedWidth",
+  missingCountryCol = "white",
+  colourPalette = colourPalette
+)
 ```
 
 This map provides a global overview of the distribution of Nobel laureates based on their birth countries. Countries with higher numbers of laureates are represented with darker shades, while those with fewer or no laureates are shown in lighter shades or white. These data have been log-transformed to ensure better visualization across countries with varying counts of laureates. To gain deeper insights, we will now proceed to analyze the data further through a series of exercises.

@@ -32,7 +32,6 @@ In this lab, we revisit the Denny's and La Quinta Inn and Suites data we visuali
 library(pak)
 # error means not on cran
 dsbox_status <- tryCatch(pkg_history("dsbox"), error = function(e) "not on CRAN")
-
 ```
 
 In this lab, we will use the **tidyverse** and **dsbox** packages. The **dsbox** package is currently `r ifelse(dsbox_status == "not on CRAN","not ","")` available on CRAN.  `r ifelse(dsbox_status == "not on CRAN","However","If you are curious")`, you can find the most current version hosted on GitHub. `r ifelse(dsbox_status == "not on CRAN","Therefore, you will need to download and","If you'd like\ the cutting edge version of dsbox from GitHub, you can")` [install it yourself](https://github.com/tidyverse/dsbox#installation). This piece of code should help get you started.
@@ -261,27 +260,32 @@ If you still have some time left, move on to the remaining exercises below. Thes
 
 ```{r echo=FALSE, message=FALSE, eval=T, warning=FALSE} 
 library(ggridges)
-dn_lq_full <- full_join(dn, lq, by = "state", 
-                        relationship = "many-to-many", 
-                        suffix = c(".d", ".l") ) 
+dn_lq_full <- full_join(dn, lq,
+  by = "state",
+  relationship = "many-to-many",
+  suffix = c(".d", ".l")
+)
 
-dn_lq_full_mindist <- dn_lq_full %>% 
-  group_by(address.d) %>% 
-  mutate(distance = haversine(longitude.d, latitude.d, longitude.l, latitude.l)) %>% 
-  summarize(closest = min(distance), state = first(state) )
-dn_lq_full_mindist<-
-dn_lq_full_mindist %>%
+dn_lq_full_mindist <- dn_lq_full %>%
+  group_by(address.d) %>%
+  mutate(distance = haversine(longitude.d, latitude.d, longitude.l, latitude.l)) %>%
+  summarize(closest = min(distance), state = first(state))
+dn_lq_full_mindist <-
+  dn_lq_full_mindist %>%
   filter(grepl("^N", dn_lq_full_mindist$state))
 
-dn_lq_full_mindist %>% 
-  ggplot(aes(x = closest, y = state,fill = state)) +
+dn_lq_full_mindist %>%
+  ggplot(aes(x = closest, y = state, fill = state)) +
   geom_density_ridges() +
-scale_y_discrete(expand = c(0.04, 0)) +
-  labs( title = "Distribution of Minimum Distances", 
-       suptitle = "between Denny's and La Quinta Locations",
-        x = "Minimum Distance (miles)", y = "Count" ) + 
+  scale_y_discrete(expand = c(0.04, 0)) +
+  labs(
+    title = "Distribution of Minimum Distances",
+    suptitle = "between Denny's and La Quinta Locations",
+    x = "Minimum Distance (miles)", y = "Count"
+  ) +
   scale_fill_brewer(palette = 4) +
-  theme_ridges() + theme(legend.position = "none")
+  theme_ridges() +
+  theme(legend.position = "none")
 ```
 
 <details>
@@ -302,7 +306,7 @@ knitr::include_graphics("img/histogram-map.png")
 # Posted by inscaven
 # Retrieved 2026-02-08, License - CC BY-SA 3.0
 
-library(usmap) #import the package
+library(usmap) # import the package
 library(sf)
 library(grid)
 
@@ -313,7 +317,7 @@ dn_lq_full <- full_join(
   suffix = c(".d", ".l")
 ) %>%
   filter(!is.na(latitude.d) & !is.na(latitude.l)) %>%
-   filter(!state %in% c("AK", "HI")) 
+  filter(!state %in% c("AK", "HI"))
 
 dn_lq_full_mindist <- dn_lq_full %>%
   group_by(address.d) %>%
@@ -341,8 +345,8 @@ state_bins <- dn_lq_full_mindist %>%
 
 y_max <- max(state_bins$n, na.rm = TRUE)
 
-# 3) US map as sf + centroids 
-states_sf <- usmap::us_map(regions = "states") 
+# 3) US map as sf + centroids
+states_sf <- usmap::us_map(regions = "states")
 
 state_centroids <- states_sf %>%
   st_centroid() %>%
@@ -373,8 +377,10 @@ annotation_list <- purrr::pmap(
   list(state_centroids$state, state_centroids$x, state_centroids$y),
   function(st, cx, cy) {
     st_dat <- state_bins %>% filter(state == st)
-    if (nrow(st_dat) < 2) return(NULL)
-    
+    if (nrow(st_dat) < 2) {
+      return(NULL)
+    }
+
     mini <- ggplot(st_dat, aes(x = bin_mid, y = n)) +
       geom_col(color = "black", linewidth = 0.2) +
       scale_x_continuous(limits = c(0, x_max), expand = c(0, 0)) +
@@ -384,7 +390,7 @@ annotation_list <- purrr::pmap(
         plot.background = element_rect(fill = scales::alpha("white", 0.3), color = NA),
         plot.margin = margin(1, 1, 1, 1)
       )
-    
+
     annotation_custom(
       grob = ggplotGrob(mini),
       xmin = cx - dx, xmax = cx + dx,
@@ -398,13 +404,11 @@ annotation_list <- purrr::compact(annotation_list)
 result_plot <- Reduce(`+`, annotation_list, base_map)
 
 
-
 ggsave(
   result_plot,
   filename = "img/histogram-map.png",
   width = 10, height = 6, units = "in", dpi = 300
 )
-
 ```
 
 </details>

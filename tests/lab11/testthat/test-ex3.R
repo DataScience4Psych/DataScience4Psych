@@ -2,28 +2,38 @@
 
 test_that("Ex 3: in-sample accuracy object exists", {
   has_accuracy <- exists("accuracy") || exists("in_sample_accuracy") ||
-                  exists("train_accuracy") || exists("acc") || exists("acc_apparent") ||
-                  exists("acc_train")
+    exists("train_accuracy") || exists("acc") || exists("acc_apparent") ||
+    exists("acc_train")
   # Also accept if we can derive from a model
   if (!has_accuracy) {
     for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
-      if (exists(nm) && inherits(get(nm), "glm")) { has_accuracy <- TRUE; break }
+      if (exists(nm) && inherits(get(nm), "glm")) {
+        has_accuracy <- TRUE
+        break
+      }
     }
   }
   expect_true(has_accuracy,
-              info = "Create an in-sample accuracy object (e.g., acc_apparent, acc_train, accuracy)")
+    info = "Create an in-sample accuracy object (e.g., acc_apparent, acc_train, accuracy)"
+  )
 })
 
 test_that("Ex 3: in-sample accuracy is reasonable (> 70% and < 100%)", {
   acc_val <- NULL
   for (nm in c("acc_apparent", "acc_train", "accuracy", "in_sample_accuracy", "train_accuracy", "acc")) {
-    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) { acc_val <- get(nm); break }
+    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) {
+      acc_val <- get(nm)
+      break
+    }
   }
   # If no explicit accuracy object, derive from model
   if (is.null(acc_val)) {
     m <- NULL
     for (nm in c("m_apparent", "m_split", "model", "logit_model", "titanic_model", "glm_model", "mod", "fit")) {
-      if (exists(nm) && inherits(get(nm), "glm")) { m <- get(nm); break }
+      if (exists(nm) && inherits(get(nm), "glm")) {
+        m <- get(nm)
+        break
+      }
     }
     skip_if(is.null(m), message = "No accuracy object or glm model found")
     preds <- ifelse(predict(m, type = "response") >= 0.5, 1, 0)
@@ -32,83 +42,106 @@ test_that("Ex 3: in-sample accuracy is reasonable (> 70% and < 100%)", {
   # Handle both proportion (0-1) and percentage (0-100) forms
   if (acc_val > 1) acc_val <- acc_val / 100
   expect_true(acc_val > 0.7,
-              info = sprintf("Ensure your in-sample accuracy is above 70%%, got %.1f%%", acc_val * 100))
+    info = sprintf("Ensure your in-sample accuracy is above 70%%, got %.1f%%", acc_val * 100)
+  )
   expect_true(acc_val < 1.0,
-              info = "Ensure your in-sample accuracy is not perfect (should be < 100%%)")
+    info = "Ensure your in-sample accuracy is not perfect (should be < 100%%)"
+  )
 })
 
 test_that("Ex 3: cross-validation results object exists", {
   has_cv <- exists("cv_accuracy") || exists("cv_results") || exists("cv_acc") ||
-            exists("out_of_sample_accuracy") || exists("test_accuracy") ||
-            exists("acc_test")
+    exists("out_of_sample_accuracy") || exists("test_accuracy") ||
+    exists("acc_test")
   expect_true(has_cv,
-              info = "Create a cross-validation or test accuracy object (e.g., cv_results, cv_accuracy, acc_test)")
+    info = "Create a cross-validation or test accuracy object (e.g., cv_results, cv_accuracy, acc_test)"
+  )
 })
 
 test_that("Ex 3: out-of-sample accuracy is lower than in-sample accuracy", {
   # Find in-sample accuracy
   in_acc <- NULL
   for (nm in c("acc_apparent", "acc_train", "accuracy", "in_sample_accuracy", "train_accuracy", "acc")) {
-    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) { in_acc <- get(nm); break }
+    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) {
+      in_acc <- get(nm)
+      break
+    }
   }
   # Find out-of-sample accuracy
   out_acc <- NULL
   for (nm in c("cv_accuracy", "cv_acc", "out_of_sample_accuracy", "test_accuracy", "acc_test")) {
-    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) { out_acc <- get(nm); break }
+    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) {
+      out_acc <- get(nm)
+      break
+    }
   }
   skip_if(is.null(in_acc) || is.null(out_acc),
-          message = "Need both in-sample and out-of-sample accuracy to compare")
+    message = "Need both in-sample and out-of-sample accuracy to compare"
+  )
   # Normalize to proportion scale
   if (in_acc > 1) in_acc <- in_acc / 100
   if (out_acc > 1) out_acc <- out_acc / 100
   expect_true(out_acc <= in_acc + 0.05,
-              info = sprintf("Ensure your out-of-sample accuracy (%.1f%%) is not much higher than in-sample accuracy (%.1f%%)",
-                              out_acc * 100, in_acc * 100))
+    info = sprintf(
+      "Ensure your out-of-sample accuracy (%.1f%%) is not much higher than in-sample accuracy (%.1f%%)",
+      out_acc * 100, in_acc * 100
+    )
+  )
 })
 
 test_that("Ex 3: out-of-sample accuracy is still reasonable (> 60%)", {
   out_acc <- NULL
   for (nm in c("cv_accuracy", "cv_acc", "out_of_sample_accuracy", "test_accuracy", "acc_test")) {
-    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) { out_acc <- get(nm); break }
+    if (exists(nm) && is.numeric(get(nm)) && length(get(nm)) == 1) {
+      out_acc <- get(nm)
+      break
+    }
   }
   skip_if(is.null(out_acc), message = "No cross-validation or test accuracy object found")
   if (out_acc > 1) out_acc <- out_acc / 100
   expect_true(out_acc > 0.6,
-              info = sprintf("Ensure your out-of-sample accuracy is above 60%%, got %.1f%%", out_acc * 100))
+    info = sprintf("Ensure your out-of-sample accuracy is above 60%%, got %.1f%%", out_acc * 100)
+  )
 })
 
 # Lab-specific checks: CV objects expected by the lab instructions
 
 test_that("Ex 3: titanic_cv dataset with fold variable exists", {
   expect_true(exists("titanic_cv"),
-              info = "Create titanic_cv by filtering titanic3 to complete cases and assigning fold numbers (1–10)")
+    info = "Create titanic_cv by filtering titanic3 to complete cases and assigning fold numbers (1–10)"
+  )
 })
 
 test_that("Ex 3: titanic_cv has a fold column with 10 folds", {
   skip_if(!exists("titanic_cv"), message = "titanic_cv not found")
   expect_true("fold" %in% names(titanic_cv),
-              info = "titanic_cv should have a fold column")
+    info = "titanic_cv should have a fold column"
+  )
   n_folds <- length(unique(titanic_cv$fold))
   expect_equal(n_folds, 10L,
-               info = "titanic_cv should have exactly 10 folds")
+    info = "titanic_cv should have exactly 10 folds"
+  )
 })
 
 test_that("Ex 3: cv_results data frame exists with fold and accuracy columns", {
   expect_true(exists("cv_results"),
-              info = "Create cv_results data frame with at least fold and accuracy columns from the CV loop")
+    info = "Create cv_results data frame with at least fold and accuracy columns from the CV loop"
+  )
 })
 
 test_that("Ex 3: cv_results has 10 rows (one per fold)", {
   skip_if(!exists("cv_results"), message = "cv_results not found")
   expect_equal(nrow(cv_results), 10L,
-               info = "cv_results should have one row per fold (10 folds)")
+    info = "cv_results should have one row per fold (10 folds)"
+  )
 })
 
 test_that("Ex 3: cv_results accuracy values are all between 0 and 1", {
   skip_if(!exists("cv_results"), message = "cv_results not found")
   skip_if(!"accuracy" %in% names(cv_results))
   expect_true(all(cv_results$accuracy >= 0 & cv_results$accuracy <= 1, na.rm = TRUE),
-              info = "All fold accuracies in cv_results should be between 0 and 1")
+    info = "All fold accuracies in cv_results should be between 0 and 1"
+  )
 })
 
 test_that("Ex 3: cv_mean (mean CV accuracy) exists and is reasonable", {
@@ -118,9 +151,11 @@ test_that("Ex 3: cv_mean (mean CV accuracy) exists and is reasonable", {
   val <- cv_mean
   if (val > 1) val <- val / 100
   expect_true(val > 0.65,
-              info = sprintf("cv_mean should be above 65%%, got %.1f%%", val * 100))
+    info = sprintf("cv_mean should be above 65%%, got %.1f%%", val * 100)
+  )
   expect_true(val < 1.0,
-              info = "cv_mean should not be perfect (< 100%%)")
+    info = "cv_mean should not be perfect (< 100%%)"
+  )
 })
 
 test_that("Ex 3: cv_sd (SD of CV accuracy) exists and is positive", {
@@ -128,8 +163,9 @@ test_that("Ex 3: cv_sd (SD of CV accuracy) exists and is positive", {
   has_cv_sd <- exists("cv_sd")
   if (!has_cv_sd) skip("cv_sd not found")
   expect_true(is.numeric(cv_sd),
-              info = "cv_sd should be a numeric value")
+    info = "cv_sd should be a numeric value"
+  )
   expect_true(cv_sd > 0,
-              info = "cv_sd should be positive — some fold-to-fold variability is expected")
+    info = "cv_sd should be positive — some fold-to-fold variability is expected"
+  )
 })
-

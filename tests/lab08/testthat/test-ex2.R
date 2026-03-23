@@ -12,4 +12,3 @@ test_that("Ex 2: Rmd contains code to scrape artist names", {
     info = "Include code to scrape artist names using rvest (e.g., html_nodes('.iteminfo'), html_text())"
   )
 })
-

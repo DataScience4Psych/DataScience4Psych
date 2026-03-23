@@ -1,8 +1,9 @@
 # Exercise 13: Finding and correcting the out-of-range year
 
 test_that("Ex 13: all non-NA year values fall within a plausible historical range", {
-  skip_if(!exists("uoe_art") || !"year" %in% names(uoe_art))
-  valid_years <- uoe_art$year[!is.na(uoe_art$year)]
+  .art <- if (exists("uoe_art")) uoe_art else .find_art_df()
+  skip_if(is.null(.art) || !"year" %in% names(.art))
+  valid_years <- .art$year[!is.na(.art$year)]
   skip_if(length(valid_years) == 0, message = "No non-NA year values to check")
   current_year <- as.integer(format(Sys.Date(), "%Y"))
   expect_true(all(valid_years >= 1400 & valid_years <= current_year),

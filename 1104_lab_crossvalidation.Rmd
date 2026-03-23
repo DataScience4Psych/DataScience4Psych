@@ -320,6 +320,7 @@ Conveniently, the `titanic` package already provides such a split.
 titanic_test %>% glimpse()
 ```
 
+But inconveniently, the test set doesn't have all the variables we'll need later to evaluate the accuracy of our predictions. To get around this, we'll have to do some data management down the road. For now, let's just focus on the mechanics of fitting a model on the training data and evaluating it on the test data.
 
 
 #### Exercise 2: Train/test split {.unnumbered}
@@ -393,7 +394,14 @@ acc_train
 
 ### 2.3 Test accuracy {.unnumbered}
 
-Now the real test. We evaluate this model on passengers it has never seen, using `titanic_test`. Notice the crucial difference: we pass `newdata = titanic_test` to `predict()`. This forces the model to make predictions for passengers that played no role in fitting its coefficients.
+Now the real test. We evaluate this model on passengers it has never seen, using `titanic_test`. Notice the crucial difference: we pass `newdata = titanic_test` to `predict()`. This forces the model to make predictions for passengers that played no role in fitting its coefficients. However, the test data doesn't have the outcome variable `survived`, so we can't compute accuracy directly. To get around this, we need extract the outcome variable from the original `titanic3` dataset, which contains all passengers. About `r round(mean(titanic3$name %in% titanic_test$name)*100,digits=2)`% of the passengers in `titanic3` are in the test set. But be careful about how you merge these datasets. You don't want to accidentally give the model access to the true survival outcomes for the test passengers during training. This is called **information leakage** and it can lead to over-optimistic estimates of test accuracy. To avoid this, we will merge `titanic_test` with `titanic3` *after* fitting the model on the training data.
+
+
+
+<!-- then predict -->
+
+
+Calculate the predicted probabilities, convert them to class predictions using the same cutoff, and compute the test accuracy.
 
 <details>
   <summary>Starter code</summary>
@@ -408,19 +416,23 @@ acc_test
 
 <details>
   <summary>Click for a hint</summary>
-```{r exercise-2-solution.3-hint, ref.label="exercise-2-solution.3solution", echo=FALSE, error=TRUE}
+```{r exercise-2-solution.3.2-hint, ref.label="exercise-2-solution.3.2solution", echo=FALSE, error=TRUE}
 ```
 </details>
 
 <details>
   <summary>Click for a solution</summary>
-```{r exercise-2-solution.3solution, echo = TRUE, warning = FALSE, message=FALSE}
+```{r exercise-2-solution.3.2solution, echo = TRUE, warning = FALSE, message=FALSE}
+
+titanic_test_survival <- titanic_test %>%
+  left_join(titanic3 %>% select(name, survived,ticket), by = c("name","ticket"))
+
 p_test <- predict(m_split,
-                  newdata = titanic_test,
+                  newdata = titanic_test_survival,
                   type = "response")
 yhat_test <- ifelse(p_test > 0.5, 1, 0)
 
-acc_test <- mean(yhat_test == titanic_test$survived, na.rm = TRUE)
+acc_test <- mean(yhat_test == titanic_test_survival$survived, na.rm = TRUE)
 acc_test
 ```
 
@@ -693,7 +705,7 @@ for (i in seq_along(cutoffs)) {
   c0 <- cutoffs[i]
 
   yhat_c <- ifelse(p_test > c0, 1, 0)
-  cutoff_results$accuracy[i] <- mean(yhat_c == titanic_test$survived, na.rm = TRUE)
+  cutoff_results$accuracy[i] <- mean(yhat_c == titanic_test_survival$survived, na.rm = TRUE)
 
 }
 
@@ -744,7 +756,7 @@ cutoff_results_fine <- data.frame(
 for (i in seq_along(cutoffs_fine)) {
   c0 <- cutoffs_fine[i]
   yhat_c <- ifelse(p_test > c0, 1, 0)
-  cutoff_results_fine$accuracy[i] <- mean(yhat_c == titanic_test$survived, na.rm = TRUE)
+  cutoff_results_fine$accuracy[i] <- mean(yhat_c == titanic_test_survival$survived, na.rm = TRUE)
 }
 
 ggplot(cutoff_results_fine, aes(x = cutoff, y = accuracy)) +

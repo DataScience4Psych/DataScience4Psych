@@ -2,7 +2,8 @@
 
 test_that("Ex 3: plastic_waste object exists for violin plots", {
   expect_true(exists("plastic_waste"),
-              info = "Create the plastic_waste object before making violin plots")
+    info = "Create the plastic_waste object before making violin plots"
+  )
 })
 
 test_that("Ex 3: Rmd Exercise 3 contains violin plot code", {
@@ -14,5 +15,6 @@ test_that("Ex 3: Rmd Exercise 3 contains violin plot code", {
   pattern_ggplot <- paste0("(", paste(potential_answers_ggplot, collapse = "|"), ")")
   has_ggplot <- stringr::str_detect(.rmd_content, pattern_ggplot) |> any()
   expect_true(has_violin && has_ggplot,
-              info = "Add ggplot code with geom_violin to create violin plots in your Rmd")
+    info = "Add ggplot code with geom_violin to create violin plots in your Rmd"
+  )
 })

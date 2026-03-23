@@ -11,15 +11,15 @@ library(stringr)
 knitr::opts_chunk$set(
   comment = "#>",
   #  error = TRUE,
-  collapse = TRUE#,
-#  cache = TRUE,        # Cache chunk output; only re-runs when code changes
-#  cache.lazy = FALSE#,  # Eagerly load cached objects (avoids issues with large data)
-#  autodep = TRUE       # Auto-detect inter-chunk dependencies within a chapter
+  collapse = TRUE # ,
+  #  cache = TRUE,        # Cache chunk output; only re-runs when code changes
+  #  cache.lazy = FALSE#,  # Eagerly load cached objects (avoids issues with large data)
+  #  autodep = TRUE       # Auto-detect inter-chunk dependencies within a chapter
 )
 
 ## Global options
 options(
-#  rlang_trace_top_env = rlang::current_env(),
+  #  rlang_trace_top_env = rlang::current_env(),
   rlang__backtrace_on_error = "none",
   digits = 3,
   str = strOptions(strict.width = "cut")
@@ -32,16 +32,16 @@ if (knitr::is_latex_output()) {
 }
 
 ## Knit hooks
-if(FALSE){
-knitr::knit_hooks$set(chunk_envvar = function(before, options, envir) {
-  envvar_ <- options$chunk_envvar
-  if (before && !is.null(envvar_)) {
-    old_envvar <<- Sys.getenv(names(envvar_), names = TRUE, unset = NA)
-    do.call("Sys.setenv", as.list(envvar_))
-  } else {
-    do.call("Sys.setenv", as.list(old_envvar))
-  }
-})
+if (FALSE) {
+  knitr::knit_hooks$set(chunk_envvar = function(before, options, envir) {
+    envvar_ <- options$chunk_envvar
+    if (before && !is.null(envvar_)) {
+      old_envvar <<- Sys.getenv(names(envvar_), names = TRUE, unset = NA)
+      do.call("Sys.setenv", as.list(envvar_))
+    } else {
+      do.call("Sys.setenv", as.list(old_envvar))
+    }
+  })
 }
 ## Reading datasets
 ds4p_funyoutube <- read.csv("metadata/ds4p_funyoutube.csv", sep = "")

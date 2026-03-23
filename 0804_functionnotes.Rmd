@@ -87,9 +87,10 @@ with(flights[flights$carrier == "AA", ], mean(dep_delay, na.rm = TRUE))
 The `aggregate()` function in R can be used to compute summary statistics for subgroups of data, which in this case are flights operated by "AA".
 
 ```{r functionnotes-code-aggregate, }
-aggregate(dep_delay ~ carrier, 
-          data = flights[flights$carrier == "AA", ], 
-          FUN = mean, na.rm = TRUE)$dep_delay
+aggregate(dep_delay ~ carrier,
+  data = flights[flights$carrier == "AA", ],
+  FUN = mean, na.rm = TRUE
+)$dep_delay
 ```
 
 ###  Using tapply() Function
@@ -175,7 +176,7 @@ Let's add the capability to choose between departure (dep_delay) and arrival (ar
 
 ```{r functionnotes-code-function-enhanced, }
 # Enhanced function to calculate average delay, with options for delay type and error handling
-average_delay_by_airline <- function(data = flights, airline_code, 
+average_delay_by_airline <- function(data = flights, airline_code,
                                      delay_type = "dep_delay") {
   data %>%
     filter(carrier == airline_code) %>%
@@ -210,7 +211,7 @@ We'll add some simple checks to ensure that the airline code provided to the fun
 
 
 ```{r functionnotes-code-error-handling,error=TRUE}
-average_delay_by_airline <- function(data = flights, airline_code, 
+average_delay_by_airline <- function(data = flights, airline_code,
                                      delay_type = "dep_delay") {
   # Check if any of the provided airline codes are not in the dataset
   if (!any(airline_code %in% c(data$carrier, NA))) {
