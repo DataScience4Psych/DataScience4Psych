@@ -282,9 +282,10 @@ compas <- compas %>%
 
 20. Evaluate the fairness of your model using the same metrics we calculated for the COMPAS algorithm. Does your model show less bias than the COMPAS algorithm? If so, why might that be the case?
 
-21. Now build a more complex model that includes race as a predictor:
+21. Now build a more complex model that includes race as a predictor and add those predicted probabilities to our dataset.
 
-```{r bias_lab-code-model-with-race, }
+
+```{r bias_lab-code-model-with-race, error=TRUE,echo=FALSE} 
 # Create a logistic regression model with race
 recid_model_with_race <- glm(
   two_year_recid ~ age + priors_count + c_charge_degree + race,
@@ -299,6 +300,13 @@ compas <- compas %>%
     race_high_risk = predicted_prob_with_race >= 0.5
   )
 ```
+
+<details>
+  <summary>Click this to see a solution</summary>
+```{r ref.label = "bias_lab-code-model-with-race", echo = TRUE, warning = FALSE}
+```
+</details>
+
 
 22. Compare the fairness metrics for this model with your previous model. What happened to the disparities between racial groups? Does including race as a variable make the algorithm more or less fair?
 
