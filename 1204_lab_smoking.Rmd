@@ -122,8 +122,11 @@ Our alternative hypothesis should reflect the research question, i.e., some chan
 
 Use graphical summaries (histogram, boxplot) and/or numerical summaries to support your answer. Refer back to your plots or output from Exercise 1.
 
+## Bootstrapping logic
 
-Let's discuss how this test would work. Our goal is to simulate what the distribution of sample means might look like if the true population mean were 7.43 pounds. To do that, we’ll use bootstrapping and then shift the resulting distribution to be centered under the null hypothesis.
+Let's discuss how this test would work. Our goal is to create an approximate null distribution of sample means under the assumption that the true population mean is 7.43 pounds. To do that, we’ll use bootstrapping and then recenter the resulting distribution at the null hypothesis value.
+
+You saw this process in the bootstrapping lecture (the "Rent in Edinburgh" example), where we estimated a sampling distribution from a real dataset, then aligned it with a hypothetical population value in order to test whether the data were consistent with that value. The same logic applies here.
 
 You saw this process in the bootstrapping lecture (the "Rent in Edinburgh" example)—where we estimated a sampling distribution from a real dataset, then aligned it with a hypothetical population value in order to test whether the data were consistent with that value. The same logic applies here.
 
@@ -132,26 +135,28 @@ Here’s the general procedure:
 - Calculate the mean of this bootstrapped resample.
 - Repeat these two steps many times (e.g., 1,000 or more) to create a bootstrap distribution of sample means.
 - This distribution will be centered at the observed sample mean.
-- To simulate the null hypothesis, shift the entire distribution so that its mean equals 7.43. You can do this by subtracting the bootstrap distribution’s mean from each value, and then adding 7.43 back.
-- Once shifted, compare the observed mean to this distribution: calculate the proportion of simulated means that are at least as extreme as the observed mean (i.e., the p-value).
+- To create an approximate null distribution, recenter the entire distribution so that its mean equals 7.43. 
+- This recentering step keeps the estimated spread of the bootstrap distribution the same, but moves its center to the null value.
+- (You can do this by subtracting the bootstrap distribution’s mean from each value, and then adding 7.43 back.)
+- Once recentered, compare the observed mean to this distribution: calculate the proportion of simulated means that are at least as extreme as the observed mean (i.e., the p-value).
 
-> 📌 If this logic feels abstract, go back and review the Lecture on Bootstrapping. The same shifting strategy was used there to simulate a null centered at a hypothesized rent value. 
+> 📌 This recentered distribution is an approximate null distribution. It is centered at 7.43, as the null hypothesis specifies, while keeping the spread of the bootstrap distribution the same.
 
-4. Run a hypothesis test using simulation-based inference. Your goal is to simulate a null distribution of sample means assuming a population mean of 7.43 pounds, and then assess how unusual the observed sample mean is within that distribution.
+4. Run a hypothesis test using simulation-based inference. Your goal is to create an approximate null distribution of sample means under the assumption that the population mean is 7.43 pounds, and then assess how unusual the observed sample mean is relative to that distribution.
 
 To structure your analysis, work through the following steps:
 
 4a. Use bootstrapping to simulate a distribution of sample means from ncbirths_white.
 
-4b. Shift the distribution so that its center aligns with the null hypothesis value (7.43 pounds).
+4b. Recenter the distribution so that its center aligns with the null hypothesis value of 7.43 pounds.
 
 4c. Create a histogram of your shifted null distribution. Overlay a dashed vertical line to show your observed sample mean.
 
 4d. Calculate the two-tailed p-value: what proportion of simulated means are at least as extreme (in both directions) as your observed value?
 
-4e. Interpret your results. Based on the p-value and your visualization, what do you conclude about whether birth weight has changed since 1995?
+4e. Interpret your results. Based on the p-value and your visualization, what do you conclude about whether the mean birth weight differs from 7.43 pounds? Because 7.43 pounds is the benchmark from the 1995 study, explain how that result informs the question of whether birth weight has changed since 1995.
 
-### Baby weight vs. smoking
+### Baby weight vs. smoking {-}
 
 Consider the relationship between a mother's smoking habit and the weight of her baby. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.
 
@@ -159,9 +164,7 @@ Consider the relationship between a mother's smoking habit and the weight of her
 
 > Use this visualization to inform the question you’ll test in the next few exercises.
 
-
 6. Before comparing the two groups, remove any rows with missing values in either habit or weight. Name this version `ncbirths_clean`. Why is it important to do this before calculating group summaries?
-
 
 
 7. What is the observed difference in mean birth weight between babies born to smoking and non-smoking mothers?
@@ -173,9 +176,11 @@ ncbirths_clean %>%
   group_by(habit) %>%
   summarize(mean_weight = mean(weight))
 ```
+
 > This observed difference is the statistic you’ll use to anchor your inference in the next step.
 
 We can see that there's an observable difference, but is this difference meaningful? Is it statistically significant? We can answer this question by conducting a hypothesis test.
+
 <!-- better scaffolding here to prep students -->
 
 8. What are the hypotheses for testing whether smoking is associated with a difference in birth weight?
@@ -250,6 +255,7 @@ Construct a 95% confidence interval for the difference in proportions of low bir
 ## Wrap up
 
 In this lab, you practiced using non-parametric inference to analyze the impact of maternal smoking during pregnancy on the weight of the baby. Specifically, you used bootstrapping and permutation testing to analyze real-world health data from North Carolina birth records. You tested whether:
+
 - The average birth weight of White babies has changed since 1995
 - Maternal smoking is associated with lower average birth weight
 - Mature mothers are more likely to have babies with low birth weight
