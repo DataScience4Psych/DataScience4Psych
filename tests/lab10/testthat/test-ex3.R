@@ -33,14 +33,21 @@ test_that("Ex 3: rank_relevel variable is created in evals", {
   )
 })
 
-test_that("Ex 3: rank_relevel is a factor with tenure track as reference", {
+test_that("Ex 3: rank_relevel is a factor", {
   skip_if(!exists("evals"))
   skip_if(!"rank_relevel" %in% names(evals))
+
   expect_true(is.factor(evals$rank_relevel),
     info = "Ensure rank_relevel is a factor variable"
   )
-  expect_equal(levels(evals$rank_relevel)[1], "tenure track",
-    info = "Set 'tenure track' as the reference level of rank_relevel"
+}
+  test_that("Ex 3: rank_relevel is tenure track as reference", {
+    skip_if(!exists("evals"))
+    skip_if(!"rank_relevel" %in% names(evals))
+
+    skip_if(!is.factor(evals$rank_relevel))
+    expect_equal(levels(evals$rank_relevel)[1], "tenure track",
+    info = "Set 'tenure track' as the reference level of rank_relevel. You may have used a different name for the variable"
   )
 })
 
