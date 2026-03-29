@@ -23,16 +23,16 @@ test_that("Ex 5.2: Rmd fits a single-predictor model for the worst predictor che
   skip_if(length(.rmd_content) == 0)
   # Any lm with one of the candidate predictors
   potential_answers <- c(
-    "lm\\(score\\s*~\\s*rank\\b",
-    "lm\\(score\\s*~\\s*ethnicity\\b",
-    "lm\\(score\\s*~\\s*language\\b",
-    "lm\\(score\\s*~\\s*age\\b",
-    "lm\\(score\\s*~\\s*cls_perc_eval\\b",
-    "lm\\(score\\s*~\\s*cls_did_eval\\b",
-    "lm\\(score\\s*~\\s*cls_students\\b",
-    "lm\\(score\\s*~\\s*cls_level\\b",
-    "lm\\(score\\s*~\\s*cls_profs\\b",
-    "lm\\(score\\s*~\\s*cls_credits\\b"
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*rank\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*ethnicity\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*language\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*age\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_perc_eval\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_did_eval\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_students\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_level\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_profs\\b",
+    "lm\\((\\s*formula\\s*=\\s*)?score\\s*~\\s*cls_credits\\b"
   )
   pattern <- paste0("(", paste(potential_answers, collapse = "|"), ")")
   answer_in_rmd <- stringr::str_detect(.rmd_content, pattern) |> any()
@@ -68,7 +68,7 @@ test_that("Ex 5.3: Rmd explains why cls_did_eval should be excluded (collinearit
 
 # Part 5, Question 4: Full model
 test_that("Ex 5.4: full model object exists", {
-  has_full <- exists("m_full") || exists("full_model") || exists("model_full")
+  has_full <- exists("m_full") || exists("full_model") || exists("model_full")|| exists("full")
   expect_true(has_full,
     info = "Fit a full model with all candidate predictors except cls_did_eval (e.g., m_full)"
   )
@@ -76,7 +76,7 @@ test_that("Ex 5.4: full model object exists", {
 
 test_that("Ex 5.4: full model is a linear model", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full")) {
+  for (nm in c("m_full", "full_model", "model_full","full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -88,7 +88,7 @@ test_that("Ex 5.4: full model is a linear model", {
 
 test_that("Ex 5.4: full model has many predictors (at least 8 term labels)", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full")) {
+  for (nm in c("m_full", "full_model", "model_full","full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -103,7 +103,7 @@ test_that("Ex 5.4: full model has many predictors (at least 8 term labels)", {
 
 test_that("Ex 5.4: full model does not include cls_did_eval", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full")) {
+  for (nm in c("m_full", "full_model", "model_full","full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -118,7 +118,7 @@ test_that("Ex 5.4: full model does not include cls_did_eval", {
 
 test_that("Ex 5.4: full model includes bty_avg", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full")) {
+  for (nm in c("m_full", "full_model", "model_full","full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -133,7 +133,7 @@ test_that("Ex 5.4: full model includes bty_avg", {
 
 test_that("Ex 5.4: full model is fit on evals data (463 observations)", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full")) {
+  for (nm in c("m_full", "full_model", "model_full","full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
