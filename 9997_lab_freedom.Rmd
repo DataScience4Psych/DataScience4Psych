@@ -44,16 +44,29 @@ library(tidyverse)
 library(ggradar)
 ```
 
+```{r years, error=TRUE, message=FALSE, warning=FALSE, include=FALSE}
+year_max <- vdemdata::vdem %>%
+  select(year) %>% max()
+
+year_2010s <- year_max - 10
+year_1950s <- year_max - 70
+```
+
+
 ### Exercise 1: Academic Freedom in the United States {.unnumbered}
 
-Let’s begin by examining how academic freedom has changed in the U.S. across five indicators from 2014 to 2024.
+Let’s begin by examining how academic freedom has changed in the U.S. across five indicators from the latest year available `r year_max` and the decade before that..
 
-**1.1.** Filter the `vdem` dataset to include only the **United States** in the years **2014** and **2024**. Then select the five indicators that make up the Academic Freedom Index.
+**1.1.** Filter the `vdem` dataset to include only the **United States** in the relevant years. Then select the five indicators that make up the Academic Freedom Index.
 
 ```{r exercise-one-part-one, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
 vdem <- vdemdata::vdem %>%
   select(country_name, year, v2cafres, v2cafexch, v2cainsaut, v2casurv, v2clacfree)
 ```
+
+```{r years, error=TRUE, message=FALSE, warning=FALSE, echo=TRUE}
+```
+
 
 **1.2.** Normalize these values so that they fall between 0 and 1, which is the format expected by `ggradar()`.
 
@@ -62,8 +75,9 @@ vdem_scaled <- vdem %>%
   mutate(across(-c(year, country_name), scales::rescale))
 
 
+
 u_data_scaled <- vdem %>% # vdem_scaled  %>%
-  filter(country_name %in% c("United States of America"), year %in% c(1954, 2014, 2024)) %>%
+  filter(country_name %in% c("United States of America"), year %in% c(year_1950s, year_2010s, year_max)) %>%
   select(year,
     country_name,
     research_teach = v2cafres,

@@ -234,7 +234,7 @@ Examine the arguments for `runif()`, using the `?runif` command in R. Notice tha
 
 On Mars, health is measured using the MARSGAR (Martian Adult Resilience Score Gauging Astronaut Readiness; Musk, `r round(as.numeric(format(Sys.Date(), "%Y"))+1,digits=0)`) scale, which ranges from 0 to 100. Like the suspiciously-similar Apgar score for newborns, a score of 0 indicates that a colonist has no signs of life: no heartbeat, no breathing, no response to stimulation, no muscle tone, and central cyanosis/pallor. A score of 100 indicates a colonist in perfect health. Take this scoring into consideration when you simulate the health of your colonists.
 
-**1.4.**  Add a uniformally-distributed MARSGAR variable to your colony.
+**1.4.**  Add a uniformly-distributed MARSGAR variable to your colony.
 
 ```{r exercise-four-part-four, error=TRUE} 
 set.seed(123)
@@ -291,8 +291,8 @@ What a contrived plot! It seems that there's no relationship between age and hea
 Next, we'll simulate the relationship among several attributes of our colonists. We'll consider technical skills, problem-solving abilities, psychological resilience, teamwork, and adaptability. These attributes are crucial for the success of our Mars colony, ensuring that our colonists can work together effectively and overcome challenges.
 
 There are several ways to simulate variables with specific correlations. I will show two approaches: 
-- using multiple steps with `rnorm`, which is a less coputationally efficient, but more accessible approach and 
-- using `mvrnorm`, which generates data from a multivariate distribustion.
+- using multiple steps with `rnorm`, which is a less computationally efficient, but more accessible approach and 
+- using `mvrnorm`, which generates data from a multivariate distribution.
 
 ### Basic method  {.unnumbered}
 
@@ -315,7 +315,7 @@ df_colonists$technical_skills <- 2 * df_colonists$age + rnorm(100, mean = 0, sd 
 
 Now, let's visualize the relationship between age and technical skills using a scatter plot.
 
-```{r lab_mars-include-scatterplot2,echo=FALSE,message=FALSE, warnings=FALSE}
+```{r lab_mars-include-scatterplot2,echo=FALSE,message=FALSE, warning=FALSE}
 # Fit a linear model
 model <- lm(technical_skills ~ age, data = df_colonists)
 
@@ -347,9 +347,9 @@ ggplot(df_colonists, aes(x = age, y = technical_skills)) +
 
 **2.2.**  Simulate problem-solving abilities based on their assigned role
 
-Now its your turn! Simulate problem-solving abilities based on their assigned role. Recall that the options are "engineer", "scientist", "medic". First you need to think about the relationship between the role AND the variable being simulated. Then you can write up the equation that would create that relationship. And then you can write the code to simulate the variable.
+Now it's your turn! Simulate problem-solving abilities based on their assigned role. Recall that the options are "engineer", "scientist", "medic". First you need to think about the relationship between the role AND the variable being simulated. Then you can write up the equation that would create that relationship. And then you can write the code to simulate the variable.
 
-<!-- not that this isn't behaving intuitively when you use case when with rnorm. it repeats the first value for the entire group -->
+<!-- Note: this isn't behaving intuitively when you use case_when with rnorm. It repeats the first value for the entire group -->
 
 ```{r exercise-two-part-two, error=TRUE}
 df_colonists$problem_solving <- 1 # replace this with your code
@@ -363,7 +363,7 @@ df_colonists$problem_solving[df_colonists$role == "medic"] <- rnorm(sum(df_colon
     
 <details>
   <summary>Click this to see a hint</summary>
-  If you're stuck, you can check the source code for the solution by examining the following chuck in this corresponding rmd file exercise-2-solution.2solution.
+  If you're stuck, you can check the source code for the solution by examining the following chunk in this corresponding Rmd file exercise-2-solution.2solution.
 </details>
 
 <details>

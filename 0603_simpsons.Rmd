@@ -86,7 +86,7 @@ ucb_overall <- ucb %>%
 ucb_overall
 ```
 
-```{r simpsons-ucb-overall-plot, fig.width=5, fig.height=3.5, fig.cap="Overall admission rates by gender at UC Berkeley, 1973. Men appear to be admitted at a higher rate."}
+```{r simpsons-ucb-overall-plot, fig.width=5, fig.height=3.5, fig.cap="Overall admission rates by gender at UC Berkeley, 1973. Men appear to be admitted at a higher rate.", echo=FALSE}
 ggplot(ucb_overall, aes(x = Gender, y = prop, fill = Gender)) +
   geom_col(width = 0.5, show.legend = FALSE) +
   scale_y_continuous(labels = scales::percent_format(), limits = c(0, 0.55)) +
@@ -115,7 +115,7 @@ ucb_dept %>% arrange(Dept, Gender) %>%
   kable(digits = 3, col.names = c("Department", "Gender", "Admitted", "Total", "Admission Rate"))
 ```
 
-```{r simpsons-ucb-dept-plot, fig.width=8, fig.height=5, fig.cap="Admission rates by department and gender. In most departments, the gender gap disappears or reverses."}
+```{r simpsons-ucb-dept-plot, fig.width=8, fig.height=5, fig.cap="Admission rates by department and gender. In most departments, the gender gap disappears or reverses.", echo=FALSE}
 ggplot(ucb_dept, aes(x = Gender, y = prop, fill = Gender)) +
   geom_col(width = 0.6, show.legend = FALSE) +
   geom_text(aes(label = scales::percent(prop, accuracy = 0.1)), vjust = -0.5, size = 3) +
@@ -198,7 +198,7 @@ The two columns are identical --- the overall rate *is* the weighted average. Th
 
 To see this concretely, look at the weights themselves:
 
-```{r simpsons-ucb-weight-table}
+```{r simpsons-ucb-weight-table, echo=FALSE}
 ucb_weights %>%
   select(Dept, Gender, total, rate) %>%
   pivot_wider(names_from = Gender, values_from = c(total, rate)) %>%
@@ -278,7 +278,7 @@ patients <- bind_rows(mild, severe)
 
 ### Overall recovery rates
 
-```{r simpsons-sim-overall}
+```{r simpsons-sim-overall, echo=FALSE}
 patients %>%
   group_by(group) %>%
   summarise(
@@ -293,7 +293,7 @@ The control group has a higher overall recovery rate! Should we conclude that th
 
 ### Recovery rates by severity
 
-```{r simpsons-sim-by-severity}
+```{r simpsons-sim-by-severity, echo=FALSE}
 patients %>%
   group_by(severity, group) %>%
   summarise(
@@ -421,7 +421,9 @@ model_overall <- lm(y ~ x, data = continuous_example)
 
 # Model 2: Include group as a covariate
 model_grouped <- lm(y ~ x + group, data = continuous_example)
+```
 
+```{r simpsons-continuous-regression-results, echo=FALSE}
 # Compare the slope of x in each model
 tibble(
   Model = c("Ignoring groups (y ~ x)", "Controlling for group (y ~ x + group)"),
@@ -459,14 +461,55 @@ Judea Pearl (who is listed in the module's suggested readings) formalized why Si
 
 In the Berkeley admissions example, the causal structure looks roughly like this:
 
-```
-    Gender ──────> Department Choice
-       │                  │
-       │                  ▼
-       └──────────> Admission Decision
+```{r simpsons-dag, echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="A directed acyclic graph (DAG) for the Berkeley admissions example. Department is a mediator on the path from Gender to Admission, and also a confounder of the marginal Gender–Admission association."}
+# Build the DAG with base ggplot2 — no extra dependencies
+# Key: draw labels FIRST as a bottom layer, then arrows ON TOP so arrowheads are visible.
+# Shorten the segments so they start/end outside the label boxes.
+
+dag_nodes <- tibble(
+  label = c("Gender", "Department\nChoice", "Admission\nDecision"),
+  x = c(0, 2, 2),
+  y = c(1, 1, 0)
+)
+
+# Shortened edges: pull start/end points away from node centers
+# so arrowheads don't get hidden behind labels
+dag_edges <- tibble(
+  x    = c(0.45, 0.45, 2),
+  y    = c(1,    0.88, 0.82),
+  xend = c(1.35, 1.50, 2),
+  yend = c(1,    0.22, 0.22),
+  type = c("Gender to Dept", "Gender to Admission", "Dept to Admission")
+)
+
+ggplot() +
+  # Layer 1: Node labels (drawn first = behind)
+  geom_label(
+    data = dag_nodes,
+    aes(x = x, y = y, label = label),
+    size = 4, fontface = "bold",
+    fill = "white", linewidth = 0.5,
+    label.padding = unit(0.5, "lines")
+  ) +
+  # Layer 2: Arrows (drawn on top so arrowheads are visible)
+  geom_segment(
+    data = dag_edges,
+    aes(x = x, y = y, xend = xend, yend = yend),
+    arrow = arrow(length = unit(0.25, "cm"), type = "closed"),
+    linewidth = 0.8, color = "gray30"
+  ) +
+  # Edge annotations
+  annotate("text", x = 0.9, y = 1.12, label = "influences\napplication",
+           size = 2.8, color = "gray40") +
+  annotate("text", x = 2.30, y = 0.52, label = "determines\nadmission rate",
+           size = 2.8, color = "gray40") +
+  annotate("text", x = 0.55, y = 0.48, label = "direct effect\n(bias?)",
+           size = 2.8, color = "#CA235F", fontface = "italic") +
+  coord_cartesian(xlim = c(-0.8, 3.2), ylim = c(-0.3, 1.4)) +
+  theme_void()
 ```
 
-Gender influences which department a student applies to (some departments attracted more men or women). Department choice, in turn, strongly influences admission (some departments are far more competitive). The direct arrow from Gender to Admission represents any actual gender bias in the process.
+Gender influences which department a student applies to (some departments attracted more men or women). Department choice, in turn, strongly influences admission (some departments are far more competitive). The direct arrow from Gender to Admission represents any actual gender bias in the process --- the question mark is the whole point of the analysis.
 
 The paradox arises because **Department** is a **confounding variable** --- it sits on a path between Gender and Admission. When we look at the marginal (overall) data, we are mixing together two effects: any direct gender effect *and* the indirect path through department choice. When we condition on Department (by looking within departments), we block the indirect path and isolate the direct effect.
 
