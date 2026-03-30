@@ -68,7 +68,7 @@ test_that("Ex 5.3: Rmd explains why cls_did_eval should be excluded (collinearit
 
 # Part 5, Question 4: Full model
 test_that("Ex 5.4: full model object exists", {
-  has_full <- exists("m_full") || exists("full_model") || exists("model_full")|| exists("full")
+  has_full <- exists("m_full") || exists("full_model") || exists("model_full") || exists("full")
   expect_true(has_full,
     info = "Fit a full model with all candidate predictors except cls_did_eval (e.g., m_full)"
   )
@@ -76,7 +76,7 @@ test_that("Ex 5.4: full model object exists", {
 
 test_that("Ex 5.4: full model is a linear model", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full","full")) {
+  for (nm in c("m_full", "full_model", "model_full", "full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -88,7 +88,7 @@ test_that("Ex 5.4: full model is a linear model", {
 
 test_that("Ex 5.4: full model has many predictors (at least 8 term labels)", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full","full")) {
+  for (nm in c("m_full", "full_model", "model_full", "full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -103,7 +103,7 @@ test_that("Ex 5.4: full model has many predictors (at least 8 term labels)", {
 
 test_that("Ex 5.4: full model does not include cls_did_eval", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full","full")) {
+  for (nm in c("m_full", "full_model", "model_full", "full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -118,7 +118,7 @@ test_that("Ex 5.4: full model does not include cls_did_eval", {
 
 test_that("Ex 5.4: full model includes bty_avg", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full","full")) {
+  for (nm in c("m_full", "full_model", "model_full", "full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break
@@ -133,7 +133,7 @@ test_that("Ex 5.4: full model includes bty_avg", {
 
 test_that("Ex 5.4: full model is fit on evals data (463 observations)", {
   m <- NULL
-  for (nm in c("m_full", "full_model", "model_full","full")) {
+  for (nm in c("m_full", "full_model", "model_full", "full")) {
     if (exists(nm) && inherits(get(nm), "lm")) {
       m <- get(nm)
       break

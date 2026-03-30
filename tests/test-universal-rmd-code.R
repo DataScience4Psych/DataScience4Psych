@@ -2,7 +2,7 @@
 
 
 test_that("Rmd file contains headers", {
-  potential_headers <- c("output: ","author: ","date: ","title: ")
+  potential_headers <- c("output: ", "author: ", "date: ", "title: ")
   pattern <- paste0("(", paste(potential_headers, collapse = "|"), ")")
 
 
