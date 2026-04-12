@@ -678,7 +678,7 @@ summary_stats
 
 ## Exercise 4: Preparing for the Unexpected {.unnumbered}
 
-Generate the big five for 100 colonies of 100 colonists, repeating this process multiple times to how much our colony might look if we settled on 100 different planets. We've already made the colonists for one planet, so we'll just need to replicate that process 99 more times. There are two major approaches to take here. You can either use replicate, which is easier, or a for loop, which is more flexible.
+Generate the Big Five for 100 colonies of 100 colonists, repeating this process multiple times to how much our colony might look if we settled on 100 different planets. We've already made the colonists for one planet, so we'll just need to replicate that process 99 more times. There are two major approaches to take here. You can either use replicate, which is easier, or a for loop, which is more flexible.
 
 **4.1.** Generate 100 colonies and extract the mean and standard deviation for extraversion.
 
@@ -698,11 +698,11 @@ Please plot the distribution of the correlation coefficients to see how consiste
 </details>
 
 <details>
-  <summary>Click this text for a hint about implementing with a forloop</summary>
+  <summary>Click this text for a hint about implementing with a for-loop</summary>
     You can use a for loop to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
     After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness. 
 <details> 
-  <summary>Click this text for forloop based solution</summary>
+  <summary>Click this text for for-loop based solution</summary>
 ```{r ref.label = "exercise-4-solutionsolution", echo = TRUE, warning = FALSE, message=FALSE}
 ```
 </details>
@@ -762,23 +762,27 @@ summary_stats_cor <- simulated_data %>%
 
 ## Stretch Tasks (Optional) {.unnumbered}
 
-In space colonization, just like in any complex project management, we must prepare for variability and uncertainty. To test the resilience of our simulated Mars colony against the chaotic nature of space travel, we'll generate multiple batches of potential colonists at different sample sizes. By examining these various crews, we can determine our optimal colony size (too few humans and one meteor strike could doom us; too many and our life support systems might collapse under the strain!) and analyze how population size affects the summary statistics of our brave Martian pioneers.
+In space colonization, just like in any complex project management, we must prepare for variability and uncertainty. 
 
-**5.1.** Simulate the colonists using a for loop and plot the average covariance for each sample size.
+
+To test the resilience of our simulated Mars colony against the chaotic nature of space travel, we'll generate multiple batches of potential colonists at different sample sizes. By examining these various crews, we can determine our optimal colony size (too few humans and one meteor strike could doom us; too many and our life support systems might collapse under the strain!) and analyze how population size affects the summary statistics of our brave Martian pioneers.
+
+**5.1.** Simulate the colonists using a for-loop and plot the average covariance for each sample size.
 
 Your plot might look something like this:
 
 ```{r ref.label = "exercise-5-solutionsolution", echo = FALSE, warning = FALSE, message=FALSE}
 ```
 
+However, I encourage you to experiment with different plot types and aesthetics to find the best way to visualize the relationship between sample size and covariance. Consider using something that shows the relationship between changes in sample size and the distribution of covariance values.
 
 <details>
-  <summary>Click this text for a hint about implementing with a forloop</summary>
+  <summary>Click this text for a hint about implementing with for-loop</summary>
     You can use a for loop to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset. 
     After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness.
 
 <details> 
-  <summary>Click this text for forloop based solution</summary>
+  <summary>Click this text for a for-loop based solution</summary>
 ```{r ref.label = "exercise-5-solutionsolution", echo = TRUE, warning = FALSE, message=FALSE, eval=FALSE}
 ```
 </details>
@@ -844,7 +848,8 @@ simulation_results_cov <- data.frame(
   Condition = integer(),
   SampleSize = integer(),
   Repetition = integer(),
-  Covariance = numeric()
+  Covariance = numeric(),
+  StandardError = numeric()
 )
 
 # Nested loop for simulations
@@ -852,7 +857,7 @@ for (size in sample_sizes) {
   for (rep in 1:repetitions_per_condition) {
     skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
     current_covariance <- cov(skills_data[, 1], skills_data[, 2])
-
+ 
     # Append results
     simulation_results_cov <- rbind(simulation_results_cov, data.frame(
       SampleSize = size,
@@ -879,7 +884,151 @@ ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
     ```
 
 
+Now, another way to do this is to use the `replicate` function, which is a more concise way to repeat the simulation process multiple times. Here's how you can implement it using `replicate`:
 
+
+```{r exercise-5-solutionsolution-replicate, error=TRUE,include=FALSE, message=FALSE,echo=FALSE}
+library(dplyr)
+set.seed(124)
+sample_sizes <- seq(30, 300, by = 15) # Varying
+repetitions_per_condition <- 20 # Number of repetitions for each sample size
+mean_skills <- c(50, 50) # Mean technical skills and problem-solving abilities
+cov_skills <- matrix(c(100, 50, 50, 100),  ncol = 2) # Covariance matrix for skills
+
+# Initialize a DataFrame to store results
+
+
+
+simulation_results_cov <- data.frame(
+  Condition = integer(),
+  SampleSize = integer(),
+  Repetition = integer(),
+  Covariance = numeric()
+)
+for (size in sample_sizes) {
+  covariances <- replicate(repetitions_per_condition, {
+    skills_data <- mvrnorm(n = size, mu = mean_skills, Sigma = cov_skills, empirical = FALSE)
+    cov(skills_data[, 1], skills_data[, 2])
+  })
+
+  # Append results
+  simulation_results_cov <- rbind(simulation_results_cov, data.frame(
+    SampleSize = size,
+    Repetition = 1:repetitions_per_condition,
+    Covariance = covariances
+  ))
+}
+
+# Plotting the average covariance for each sample size
+average_covariances <- simulation_results_cov %>%
+  group_by(SampleSize) %>%
+  summarize(AverageCovariance = mean(Covariance))
+simulation_results_cov$SampleSize_factor <- as.factor(simulation_results_cov$SampleSize)
+
+ggplot(simulation_results_cov, aes(x = Covariance, fill = SampleSize_factor)) +
+  #  geom_histogram(position = position_dodge()) +
+  geom_density(position = position_dodge(), alpha = .6) +
+  labs(title = "Average Covariance by Sample Size", ) +
+  scale_fill_viridis_d() + # This adds a nice color gradient based on the 'method'
+  theme_minimal()
+```
+
+
+<details>
+  <summary>Click this text for a hint about implementing with replicate</summary>
+    You can use the `replicate` function to repeat the simulation process multiple times. Remember to append the results of each simulation to a single dataset.
+    After running the simulations, you can use the `group_by` and `summarize` functions to get the mean and standard deviation for extraversion and its correlation with openness.
+
+<details> 
+  <summary>Click this text for a replicate-based solution</summary>
+```{r ref.label = "exercise-5-solutionsolution-replicate", echo = TRUE, warning = FALSE, message=FALSE, eval=FALSE}
+```
+</details>
+</details>
+
+
+```{r ref.label = "exercise-5-solutionsolution-replicate", echo = FALSE, warning = FALSE, message=FALSE}
+```
+
+
+**5.2.** Plot the distributions of some additional statistics from your new empire of colonies, and include an annotation in the plot to show the population parameters.
+
+Now that you've generated multiple colonies with varying sample sizes, you can plot the distributions of additional statistics such as the mean and standard deviation for extraversion, as well as its correlation with openness. Be sure to include annotations in your plots to indicate the population parameters for these statistics, allowing you to visually assess how closely your simulated colonies align with the expected values.
+
+
+
+### Pick your favorite sample of colonists from your empire of colonies and watch them thrive on Mars! 
+
+Now, you can select one of the simulated colonies that you find most interesting and we can simulate how they might fare on Mars based on their personality traits and skills. Try using the similatePedigree function from the BGmisc package to create a family tree for your chosen colony. This will allow you to explore how traits might be inherited across generations and how family dynamics could influence the success of your Martian settlers. You can visualize the family tree using the ggpedigree package, which provides a clear and informative way to display genealogical relationships.
+
+```{r, exercise-5-solution.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
+
+library(BGmisc)
+library(ggpedigree)
+df_colonists_fam <- simulatePedigree(
+  kpc = 3,
+  Ngen = 5,
+  sexR = 0.5,
+  marR = 4/5,
+  rd_kpc = FALSE,
+  balancedSex = TRUE,
+  balancedMar = TRUE,
+  verbose = FALSE,
+  personID = "id",
+  momID = "momID",
+  dadID = "dadID",
+  spouseID = "spouseID",
+  code_male = "M",
+  code_female = "F",
+  fam_shift = 1L,
+  beta = FALSE
+)
+
+df_colonists_slim <- df_colonists[1:length(df_colonists_fam$id), ]
+df_colonists_slim$colonist_id <- df_colonists_slim$id
+df_colonists_slim$id <- df_colonists_fam$id
+df_colonists_fam <- left_join(df_colonists_fam, df_colonists_slim, by = "id") %>%
+  rename(Resilience = resilience)
+
+ggpedigree(df_colonists_fam, personID  = "id", focal_fill_column  = "Resilience",
+           config = list(
+             code_male = "M",
+             focal_fill_include = TRUE,
+             sex_color_include = FALSE,
+             label_column = "colonist_id",
+             focal_fill_legend_title = "Resilience"
+           )) +
+  labs(title = "Family Tree of Simulated Mars Colonists",
+       subtitle = "Node color represents resilience") +
+  # remove lengend for shape
+  theme(legend.position = "right",
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 8),
+        plot.title = element_text(size = 14, face = "bold"),
+        plot.subtitle = element_text(size = 12)) +
+  guides(shape=FALSE, 
+         color=FALSE,
+         size=FALSE,
+         group=FALSE,
+         linetype=FALSE,
+         fill=FALSE) # remove legend for shape and add legend for fill
+
+
+```
+
+
+<details>
+  <summary>Click this text for a hint about implementing the family tree</summary>
+    You can use the `simulatePedigree` function from the BGmisc package to create a family tree for your chosen colony. This will allow you to explore how traits might be inherited across generations and how family dynamics could influence the success of your Martian settlers. You can visualize the family tree using the ggpedigree package, which provides a clear and informative way to display genealogical relationships.
+</details>
+    
+
+<details>
+  <summary>Click this text for a solution about implementing the family tree</summary>
+  ```{r, exercise-5-solution.2plot, error=TRUE, echo=FALSE,warning=FALSE,message=FALSE}
+  ```
+</details>
+      
 
 
 ## Conclusion {.unnumbered}
