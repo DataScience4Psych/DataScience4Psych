@@ -126,9 +126,10 @@ To test this, try determining the exact market shares of the browsers from the p
 
 If we need to visualize this data more effectively, a bar chart is more appropriate:
 
-```{r plots_to_avoid-code-barplot, fig.align='center', fig.width=4.5}
+```{r plots_to_avoid-code-barplot, fig.align='center', fig.width=4.5}, eval=TRUE, echo=FALSE}
 browsers_normalized <- browsers / sum(browsers) * 100
-barplot(browsers_normalized, main = paste0("Browser Usage (", survey_period, ")"), ylab = "Percentage", col = "steelblue")
+barplot(browsers_normalized, main = paste0("Browser Usage (", survey_period, ")"), 
+        ylab = "Percentage", col = "steelblue")
 ```
 
 The bar chart aligns the data vertically, allowing for easy comparison across browsers. You can follow a horizontal line across to the x-axis to find precise percentages, avoiding the visual estimation errors common with pie charts. (Do avoid 3-D version as they obfuscate the plot and remove this particular advantage.) See below for an outdated example using data from August 2013:
@@ -176,7 +177,7 @@ knitr::include_graphics("img/fig1c.png")
 
 Much more informative is to summarizing with a boxplot. If the number of points is small enough, we might as well add them to the plot. When the number of points is too large for us to see them, just showing a boxplot is preferable.
 
-```{r plots_to_avoid-code-boxplot-fig1, fig.align="center",fig.width=4,fig.height=4}
+```{r plots_to_avoid-code-boxplot-fig1, fig.align="center",fig.width=4,fig.height=4,echo=FALSE, eval=TRUE}
 # library("downloader")
 # tmpfile <- tempfile()
 # download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig1.RData")
@@ -217,7 +218,7 @@ knitr::include_graphics("img/fig3c.png")
 
 A quick look at the data demonstrates that this difference is mostly driven by just two points. A version showing the data in the log-scale is much more informative.
 
-```{r plots_to_avoid-code-boxplot-log, fig.align="center",fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-boxplot-log, fig.align="center",fig.width=7,fig.height=4,echo=FALSE, eval=TRUE}
 df_fig3 <- read.csv("data/bromanfig3.csv")
 
 library(rafalib)
@@ -266,7 +267,7 @@ dat %>%
 
 The purpose of many statistical analyses is to determine relationships between two variables. Sample correlations are typically reported and sometimes plots are displayed to show this. However, showing just the regression line is one way to display your data baldy as it hides the scatter. Surprisingly plots such as the following are commonly seen:
 
-```{r plots_to_avoid-code-regression-line,warning=FALSE}
+```{r plots_to_avoid-code-regression-line,warning=FALSE, fig.width=7.5 , fig.height=4, fig.align='center',echo=FALSE}
 df_fig4 <- read.csv("data/bromanfig4.csv")
 
 fit <- lm(y ~ x,
@@ -305,7 +306,7 @@ ggplot(
 
 Showing the data is much more informative:
 
-```{r plots_to_avoid-code-scatterplot-regression,warning=FALSE}
+```{r plots_to_avoid-code-scatterplot-regression,warning=FALSE,echo=FALSE, eval=TRUE}
 ggplot(data = df_fig4, aes(x = x, y = y)) +
   geom_point() +
   geom_abline(
@@ -340,7 +341,7 @@ library(Biobase)
 library(SpikeInSubset)
 ```
 
-```{r plots_to_avoid-code-correlation-plot, fig.width=7.5 , fig.height=4, fig.align='center'}
+```{r plots_to_avoid-code-correlation-plot, fig.width=7.5 , fig.height=4, fig.align='center',echo=FALSE, eval=TRUE}
 data(mas95)
 mypar(1, 2)
 
@@ -406,7 +407,7 @@ ggplot(
 
 Although the correlation is reduced in the log-scale, it is still close to 1. Does this mean these data are reproduced? To examine how well the second vector reproduces the first, we need to study the differences. Therefore, we should instead plot the difference (in the log scale) versus the average:
 
-```{r plots_to_avoid-code-ma-plot,fig.align='center',fig.width=5,fig.height=5}
+```{r plots_to_avoid-code-ma-plot,fig.align='center',fig.width=5,fig.height=5,echo=FALSE, eval=TRUE}
 df_mas95 <- df_mas95 %>%
   mutate(
     x = (r + g) / 2,
@@ -436,7 +437,7 @@ knitr::include_graphics("img/fig6r_e.png")
 
 There are various better ways of showing these data to illustrate there is an increase after treatment. One is to simply make a scatterplot and which shows that most points are above the identity line. Another alternative is plot the differences against the before values.
 
-```{r plots_to_avoid-code-paired-scatter,fig.align='center',fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-paired-scatter,fig.align='center',fig.width=7,fig.height=4,echo=FALSE, eval=TRUE}
 set.seed(12201970)
 before <- runif(6, 5, 8)
 after <- rnorm(6, before * 1.05, 2)
@@ -468,7 +469,7 @@ abline(h = 0, lty = 2, col = 1)
 
 Line plots are not a bad choice, although I find them harder to follow than the previous two. Boxplots show you the increase, but lose the paired information.
 
-```{r plots_to_avoid-code-paired-lineplot,fig.align='center',fig.width=7,fig.height=4}
+```{r plots_to_avoid-code-paired-lineplot,fig.align='center',fig.width=7,fig.height=4,echo=FALSE, eval=TRUE}
 z <- rep(c(0, 1), rep(6, 2))
 mypar(1, 2)
 plot(
@@ -499,7 +500,7 @@ knitr::include_graphics("img/fig8b.png")
 
 This plot can be made better by simply using color to distinguish the three lines:
 
-```{r plots_to_avoid-code-dose-response,fig.align='center',fig.width=5}
+```{r plots_to_avoid-code-dose-response,fig.align='center',fig.width=5,echo=FALSE, eval=TRUE}
 # download("https://github.com/kbroman/Talk_Graphs/raw/master/R/fig8dat.csv",tmpfile)
 x <- read.table("data/fig8dat.csv", sep = ",", header = TRUE)
 plot(
@@ -554,7 +555,7 @@ knitr::include_graphics("img/fig9d.png")
 
 Instead we should show each curve. We can use color to distinguish treatment and control and dashed and solid lines to distinguish the original data from the mean of the three groups.
 
-```{r plots_to_avoid-code-dose-curves,fig.align='center',fig.width=5}
+```{r plots_to_avoid-code-dose-curves,fig.align='center',fig.width=5,echo=FALSE, eval=TRUE}
 plot(
   x,
   y1,
@@ -592,7 +593,7 @@ legend("bottomleft",
 
 By default, statistical software like R return many significant digits. This does not mean we should report them. Cutting and pasting directly from R is a bad idea as you might end up showing a table like this for, say, heights of basketball players:
 
-```{r plots_to_avoid-code-sigfigs-bad, }
+```{r plots_to_avoid-code-sigfigs-bad,,echo=FALSE, eval=TRUE}
 heights <- cbind(
   rnorm(8, 73, 3),
   rnorm(8, 73, 3),
@@ -608,7 +609,7 @@ heights
 Note we are reporting precision up to 0.00001 inches. Do you know of a tape measure with that much
 precision? This can be easily remedied:
 
-```{r plots_to_avoid-code-sigfigs-good, }
+```{r plots_to_avoid-code-sigfigs-good,echo=FALSE, eval=TRUE}
 round(heights, 1)
 ```
 
@@ -627,7 +628,7 @@ Color choices are one of the most common ways that otherwise competent graphs go
 
 **The rainbow trap.** R's `rainbow()` palette looks vibrant, but it is one of the worst choices for data visualization. The colors are perceptually uneven (yellow and cyan appear much lighter than red and blue), which creates a false sense of ordered importance. It is also unreadable for people who have difficulty distinguishing red and green.
 
-```{r plots_to_avoid-rainbow-bad}
+```{r plots_to_avoid-rainbow-bad,echo=FALSE, eval=TRUE}
 library(tidyverse)
 
 set.seed(42)
@@ -652,7 +653,7 @@ ggplot(demo_df, aes(x = group, y = value, fill = group)) +
 **The red–green trap.** Red and green are the most common pair used to signal "good vs. bad" or "treatment vs. control," yet a sizable portion of the population (especially men) cannot distinguish between these colors due to red-green color blindness (deuteranopia and protanopia).
 Encoding information using red and green alone can make your visualizations unreadable to a sizable portion of your audience. Avoid using red and green together, especially for critical information.
 
-```{r plots_to_avoid-redgreen-bad}
+```{r plots_to_avoid-redgreen-bad,echo=FALSE, eval=TRUE}
 demo_df_ab <- demo_df %>% filter(group %in% c("A", "B"))
 
 # Bad: red/green encoding — invisible to red-green color-blind viewers
@@ -668,7 +669,7 @@ ggplot(demo_df_ab, aes(x = group, y = value, fill = group)) +
 
 **Too-similar colors.** Colors that differ only in lightness or are too close in hue become impossible to tell apart in small or overlapping plot elements.
 
-```{r plots_to_avoid-similar-colors-bad}
+```{r plots_to_avoid-similar-colors-bad,echo=FALSE, eval=TRUE}
 # Bad: colors too similar to distinguish reliably
 similar_blues_palette <- c("#3333FF", "#4466FF", "#5599FF", "#66BBFF", "#77DDFF", "#88EEFF")
 ggplot(demo_df, aes(x = group, y = value, colour = group)) +
@@ -684,7 +685,7 @@ ggplot(demo_df, aes(x = group, y = value, colour = group)) +
 
 An important consideration when choosing colors is accessibility.  Roughly 8% of men and 0.5% of women have some form of color vision deficiency. Using color-blind friendly palettes ensures your visualizations are readable by everyone. Here are two widely used color-blind friendly palettes for R (based on [Wong 2011](https://www.nature.com/articles/nmeth.1618)) that avoid all three problems above:
 
-```{r plots_to_avoid-cb-palettes}
+```{r plots_to_avoid-cb-palettes,echo=FALSE, eval=TRUE}
 # The palette with grey (color-blind friendly)
 cbPalette <- c(
   "#999999", "#E69F00", "#56B4E9", "#009E73",
@@ -707,7 +708,7 @@ scales::show_col(cbbPalette)
 Now revisit the red–green example with the color-blind friendly palette:
 
 
-```{r plots_to_avoid-cb-palette-demo}
+```{r plots_to_avoid-cb-palette-demo,echo=FALSE, eval=TRUE}
 # Good: color-blind friendly palette
 ggplot(
   demo_df %>% filter(group %in% c("A", "B")),
