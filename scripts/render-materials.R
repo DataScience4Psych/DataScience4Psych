@@ -68,6 +68,7 @@ if (!require("spida2")) devtools::install_github("smasongarrison/spida2", ref = 
 if (!require("p3d")) install.packages("p3d", repos = "http://R-Forge.R-project.org")
 if (!require("dsbox")) devtools::install_github("tidyverse/dsbox")
 # if (!require("genderdata")) install.packages("genderdata", repos = "https://dev.ropensci.org", type = "source")
+if (!require("tweetrmd"))  devtools::install_github("gadenbuie/tweetrmd")
 
 # xaringan ---------------------------------------------------------------------
 
