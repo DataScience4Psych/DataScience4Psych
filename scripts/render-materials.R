@@ -58,7 +58,9 @@ pacman::p_load(
   xfun,
   xml2,
   statebins,
-  rworldmap
+  rworldmap,
+  robotstxt,
+  titanic
 )
 
 
