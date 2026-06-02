@@ -1,0 +1,470 @@
+---
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+---
+
+# RDD: Lily's Quick Guide {#lily_quick_guide}
+## Lily Botha's Quick Guide to Getting Started in Data Science for Psychologists {.unnumbered} 
+
+```{r packages, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+<style>
+/* Overall page */
+body {
+  font-size: 16px;
+  line-height: 1.65;
+  background-color: #f7f9fb;
+  color: #263238;
+}
+
+/* Main content area */
+.main-container {
+  max-width: 980px;
+  background-color: #ffffff;
+  padding: 35px 45px;
+  margin-top: 25px;
+  margin-bottom: 40px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+h1.title {
+  font-size: 38px;
+  font-weight: 800;
+  color: #244f6e;
+  margin-bottom: 8px;
+  border-bottom: 4px solid #9ec5d6;
+  padding-bottom: 12px;
+}
+
+/* Author/date area */
+.author {
+  color: #5c6f7b;
+  font-size: 17px;
+}
+
+/* Headings */
+h2, h3 {
+  margin-top: 38px;
+  color: #244f6e;
+  font-weight: 700;
+}
+
+h3 {
+  border-left: 6px solid #7fb3c8;
+  padding-left: 12px;
+  background-color: #eef6f9;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 6px;
+}
+
+/* Links */
+a {
+  color: #2c7da0;
+  font-weight: 600;
+}
+
+a:hover {
+  color: #1b4965;
+}
+
+/* Callout boxes */
+.tip-box {
+  background-color: #f0f7f4;
+  border-left: 6px solid #5c9478;
+  padding: 15px 18px;
+  margin: 22px 0;
+  border-radius: 8px;
+}
+
+.warning-box {
+  background-color: #fff7e6;
+  border-left: 6px solid #d99a2b;
+  padding: 15px 18px;
+  margin: 22px 0;
+  border-radius: 8px;
+}
+
+.reminder-box {
+  background-color: #eef4ff;
+  border-left: 6px solid #5b7fc4;
+  padding: 15px 18px;
+  margin: 22px 0;
+  border-radius: 8px;
+}
+
+.success-box {
+  background-color: #f3f8ee;
+  border-left: 6px solid #7aa95c;
+  padding: 15px 18px;
+  margin: 22px 0;
+  border-radius: 8px;
+}
+
+/* Tables */
+.table {
+  margin-top: 18px;
+  margin-bottom: 28px;
+  background-color: #ffffff;
+}
+
+.table thead {
+  background-color: #244f6e;
+  color: white;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #eef6f9;
+}
+
+/* Lists */
+li {
+  margin-bottom: 6px;
+}
+
+/* Block quotes */
+blockquote {
+  border-left: 5px solid #9ec5d6;
+  padding-left: 15px;
+  color: #455a64;
+  font-style: italic;
+  background-color: #f4f8fa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+}
+
+/* Floating table of contents */
+.tocify {
+  border-radius: 10px;
+  border: 1px solid #d6e4ea;
+}
+
+.tocify .active {
+  background-color: #244f6e !important;
+  color: white !important;
+}
+</style>
+
+## Welcome to Data Science for Psychologists! {.unnumbered}
+
+<div class="reminder-box">
+<strong>Purpose of this guide:</strong> This guide is meant to help future students get oriented and understand how the different parts of the class fit together. It is not a replacement for the course materials, but it can help you figure out where to start, what tools you will use, and how to build a workflow that makes the class feel more manageable.
+</div>
+
+### Start with the Course Website {.unnumbered} 
+
+The course website is your home base. This is where you should begin when you are trying to figure out what to do for a module, lab, activity, or assignment. The website links together the major course materials, including lecture notes, videos, slides, labs, readings, and GitHub resources. Dr. Garrison notes that while course materials can also be accessed through GitHub, the course notes website is usually the easiest place to navigate from.
+
+<div class="tip-box">
+<strong>Hint:</strong> When you feel lost, start by going back to the course website. It is much easier than digging through old files or trying to remember where something was posted.
+</div>
+
+### Big Picture {.unnumbered} 
+
+This class isn't just about memorizing R functions. Data Science introduces students to data wrangling, modeling, visualization, and communication. 
+
+The course is built around five major ideas: 
+
+```{r big_ideas}
+big_ideas <- tribble(
+  ~`Big Idea`, ~`What It Means`,
+  "Reproducibility", "Your work should be possible to rerun, check, and verify.",
+  "Replication", "Data work should support trustworthy and repeatable scientific practice.",
+  "Robust Methods", "Your analyses should be thoughtful, reliable, and appropriate for the question.",
+  "Resplendent Visualizations", "Graphs should communicate clearly, honestly, and effectively.",
+  "R Programming", "You will learn to use R as a practical tool for working with data."
+)
+
+big_ideas %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+The main goal is to help you build a thoughtful workflow for working with data. In other words, this course is not only about learning how to code. It is about learning how to organize, document, analyze, visualize, and communicate data in a reproducible way.
+
+### Course Materials {.unnumbered} 
+
+The different materials, including videos, lecture notes, tutorials, activities, readings, and labs, can feel like a lot at first. However, they are designed to work together. After going through the course, my advice is to start by using as many materials as you can. Over time, you will learn which ones are most helpful for your own learning style.
+
+You do not necessarily need to use every single material every single time, but early in the course, it helps to explore all of them so you understand what each resource is for.
+
+```{r course_materials}
+materials <- tribble(
+  ~`Resource`, ~`How to Use It`,
+  "Course notes website", "Start here for each module, lab, activity, and assignment.",
+  "Videos", "Use these to see concepts and workflows explained step-by-step.",
+  "Slides", "Use these to review lecture material and follow along with class content.",
+  "Textbook/readings", "Use these for deeper explanations when concepts are confusing.",
+  "Activities", "Use these to practice smaller pieces of the workflow.",
+  "Labs", "Use these to apply skills in a fuller, project-like format.",
+  "GitHub", "Use this to store, track, and share your work.",
+  "Portfolio", "Use this to show your growth, process, and data science practice over time."
+)
+
+materials %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+### Meet the Tools {.unnumbered} 
+
+A lot of the class will involve learning how different tools work together. The basic toolkit includes R, RStudio, Git, and GitHub. 
+
+```{r tools}
+tools <- tribble(
+  ~`Tool`, ~`What It Is`, ~`Why It Matters`,
+  "R", "A free software environment for statistics and graphics.", "This is the main coding language used in the course.",
+  "RStudio", "An interface, or IDE, for using R.", "This is where you write, run, and organize code.",
+  "R Markdown", "A document format that combines writing, code, tables, and figures.", "This helps make reports reproducible.",
+  "Git", "A version control system.", "This tracks changes to your files over time.",
+  "GitHub", "An online platform for Git-tracked projects.", "This stores, shares, and organizes your work."
+)
+
+tools %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+One helpful way to think about it is this: R is the language, RStudio is where you use it, Git tracks your changes, and GitHub stores those changes online.
+
+### Git and GitHub: Don't Panic! {.unnumbered} 
+
+Git and GitHub are related, but they are not the same. Git tracks changes to files over time. GitHub is the web-based platform where Git-tracked projects can be stored and shared.
+
+Getting Git, GitHub, RStudio, and your computer to work together can be frustrating at first. Installation and configuration can be half the battle. If it feels confusing in the beginning, that does not mean you are doing anything wrong. It is a normal part of learning the workflow.
+
+At the beginning, it is helpful to focus on the main GitHub cycle:
+
+1. Make changes to your work.
+2. Save your files.
+3. Commit your changes.
+4. Push your changes to GitHub.
+5. Check GitHub to make sure your work appeared online.
+
+<div class="warning-box">
+<strong>Hint:</strong> GitHub is confusing at first for almost everyone. Focus on the basic cycle: save, commit, push, and check GitHub.
+</div>
+
+### Build a Thoughtful Workflow {.unnumbered} 
+
+*Workflow matters.* The workflow can be just as important as learning the language itself. A strong workflow means knowing:
+
+- where your files live
+
+- where your data is stored
+
+- how your code is saved
+
+- how your results are created
+
+- how your work is documented
+
+- how your progress is tracked through GitHub
+
+In this class, you are not just learning isolated R functions. You are learning how to work like a data scientist by keeping your work organized, transparent, and reproducible.
+
+<div class="success-box">
+<strong>Hint:</strong> The goal is not to become perfect at R overnight. The goal is to build a workflow that helps you organize your work, find mistakes, and return to your projects later.
+</div>
+
+### Use RStudio Projects {.unnumbered} 
+
+RStudio Projects can really help with organizing your work. A project keeps all the files for one analysis together, including data, scripts, figures, outputs, and reports. Organizing work into projects helps you avoid getting confused about where your files are and where R is looking for data.
+
+A good project folder might include:
+
+```{r project_folder}
+project_folder <- tribble(
+  ~`File Type`, ~`Examples`,
+  "Data", "CSV files, Excel files, or raw datasets.",
+  "Scripts", ".R files that contain saved code.",
+  "Reports", ".Rmd or Quarto files that combine code, writing, and output.",
+  "Figures", "Plots or images saved from R.",
+  "Outputs", "Rendered reports, tables, PDFs, or HTML files."
+)
+
+project_folder %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+Try not to rely only on the Console. Save your code in scripts or R Markdown documents so you can rerun it later. Your future self will thank you!
+
+### Remember: R is Literal {.unnumbered} 
+
+R is very powerful, but it is also very picky. If your object is named yay_lily but you type yaylily, R will not understand. Typos, capitalization, spaces, and punctuation matter.
+
+It is also helpful to practice building your own personal code rules, such as consistently using snake_case for object names. If you use R in the future, consistency will make your code much easier to read and fix.
+
+A few beginner habits that might help: 
+
+```{r beginner_habits}
+beginner_habits <- tribble(
+  ~`Habit`, ~`Why It Helps`,
+  "Use clear object names", "Makes your code easier to understand later.",
+  "Use snake_case", "Keeps names readable and consistent.",
+  "Add comments with #", "Explains what your code is doing.",
+  "Run code from the beginning", "Checks whether your work is reproducible.",
+  "Save code in scripts or R Markdown files", "Lets you reuse, revise, and troubleshoot your work later.",
+  "Check spelling carefully", "Prevents small typos from causing confusing errors."
+)
+
+beginner_habits %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+<div class="warning-box">
+<strong>Hint:</strong> Tiny details matter in R. A missing underscore, capital letter, or quotation mark can change whether your code works.
+</div>
+
+### Understand Reproducibility {.unnumbered} 
+
+Reproducibility means that someone else, or your future self, can recreate your work from your code and data. Reproducibility is central to data science practice.
+
+One thing that helped me in this class was writing little notes to myself within the code explaining what each section does. You can do this by putting # in front of the sentence. These comments may feel unnecessary in the moment, but they are extremely helpful when you return to your work later.
+
+In this class, reproducible work means:
+
+```{r reproducibility}
+reproducibility <- tribble(
+  ~`Goal`, ~`What It Means`,
+  "Tables and figures come from code", "Avoid manually copying and pasting results when R can generate them.",
+  "Code works when rerun", "Run everything from the beginning to make sure it still works.",
+  "Code is organized", "Keep files in clear project folders.",
+  "Code is documented", "Use comments and written explanation.",
+  "Decisions are understandable", "Explain why you made choices in your analysis.",
+  "Work can be extended", "Write code that you or someone else could adapt later."
+)
+
+reproducibility %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+A simple test: could you reopen your project in a month and understand what you did? If not, add more comments, organize your files more clearly, and make your workflow easier to follow.
+
+### Portfolios {.unnumbered} 
+
+The portfolio is more than just a collection of final products. It is a record of your practice. It should show how your thinking developed over time through trying, revising, exploring, and reflecting.
+
+Each portfolio could include: 
+
+```{r portfolio}
+portfolio <- tribble(
+  ~`Section`, ~`What to Explain`,
+  "Goal", "What question, idea, or challenge were you exploring?",
+  "Product", "What did you create, such as a plot, app, function, dashboard, or code?",
+  "Data", "What data did you use, and how did you prepare it?",
+  "Interpretation", "What did you notice, learn, or want to try next?"
+)
+
+portfolio  %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+The portfolio is a place to show growth. Some pieces may be finished and polished, while others may be experimental or unfinished. What matters is that they show your process.
+
+### A Typical Weekly Workflow {.unnumbered} 
+
+It took me a while to figure out all the moving parts of this class, so do not feel bad if there is a big learning curve. That is why I wrote this guide!
+
+Here is a simple workflow you can follow for most modules or assignments:
+
+1. Start on the course notes website.
+2. Find the correct module.
+3. Watch the assigned videos.
+4. Review the slides and lecture notes.
+5. Read the assigned textbook or tutorial sections.
+6. Open the activity or lab instructions.
+7. Open the correct RStudio Project.
+8. Work in an R script or R Markdown document.
+9. Run your code carefully.
+10. Add comments and written explanations.
+11. Knit or render your document if needed.
+12. Commit your changes.
+13. Push your work to GitHub.
+14. Check GitHub to make sure your work is there.
+15. Ask Dr. Garrison a LOT of questions. 
+
+### Troubleshooting Tips: What to Try First {.unnumbered} 
+
+Be prepared to mess up. A lot. Errors are normal. They are a big part of learning R and GitHub. Remember that Dr. Garrison is super smart and loves to help!
+
+Here are some common errors I encountered and some things you can try:
+
+```{r troubleshooting}
+troubleshooting <- tribble(
+  ~`Problem`, ~`What to Try First`,
+  "Object not found", "Check spelling, capitalization, and whether you ran the earlier code that created the object.",
+  "Package will not load", "Install it first with install.packages() and then load it with library().",
+  "File not found", "Check your working directory and make sure the file is in your project folder.",
+  "Plot looks wrong", "Check variable names, grouping, missing values, and whether the correct data frame is being used.",
+  "R Markdown will not knit", "Restart R, run chunks from the top, and read the first error message carefully.",
+  "GitHub push fails", "Make sure you committed your changes first. You may also need to pull before pushing.",
+  "Code worked before but not now", "Restart RStudio, clear your workspace if needed, and rerun everything from the beginning."
+)
+
+troubleshooting %>% 
+  kable() %>% 
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = TRUE,
+    position = "center"
+  )
+```
+
+### Final advice {.unnumbered} 
+
+My biggest advice is to focus on building good habits. You probably will not memorize the entire R language in one class, and even if you do, you may forget some of it later. What matters more is learning how to build a reproducible workflow, communicate clearly with R, troubleshoot errors, and know where to look when you get stuck.
+
+Start with the course website, keep your files organized, use RStudio Projects, comment your code, commit and push regularly, and ask specific questions when something does not work. Over time, the process will start to feel much less intimidating.
+
+Good luck!
