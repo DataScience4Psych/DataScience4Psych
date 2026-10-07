@@ -82,8 +82,9 @@
 [d28_interactive]: https://datascience4psych.github.io/slides/d28_interactive/d28_interactive.html
 [d29_machine]: https://datascience4psych.github.io/slides/d29_machinelearning/d29_machine.html
 [d30_simulations]: https://datascience4psych.github.io/slides/d30_simulations/d30_simulations.html
-[d31_llmintro]: https://datascience4psych.github.io/slides/d31_llmintro/d31_llmintro.html
-[d32_llmapplications]: https://datascience4psych.github.io/slides/d32_llmapplications/d32_llmapplications.html
+[d31_moresimulations]: 	 https://datascience4psych.github.io/slides/d31_moresimulations/d31_moresimulations.html
+[d32_llmintro]: https://datascience4psych.github.io/slides/d32_llmintro/d32_llmintro.html
+[d33_llmapplications]: https://datascience4psych.github.io/slides/d33_llmapplications/d33_llmapplications.html
 
 <!--externals-->
 
